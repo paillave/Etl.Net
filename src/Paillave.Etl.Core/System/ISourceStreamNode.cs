@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Paillave.Etl.Core.System
 {
-    public interface ISourceStreamNode : IAttachable
+    public interface ISourceStreamNode
     {
         void Start();
     }

@@ -10,13 +10,13 @@ namespace Paillave.Etl.Core.System
     public abstract class StreamProcessTraceBase : ProcessTrace
     {
         public string Side { get; private set; }
-        public StreamProcessTraceBase(string streamOperatorName, string side, TraceLevel level, string message) : base(streamOperatorName, message, level)
+        public StreamProcessTraceBase(IEnumerable<string> sourceNodeName, string side, TraceLevel level, string message) : base(sourceNodeName, message, level)
         {
             this.Side = side;
         }
         public override string ToString()
         {
-            return $"{this.StreamOperatorName}.{this.Side}:[{this.Level}]-{this.Message}";
+            return $"[{string.Join("].[", this.SourceNodeName)}].{this.Side}:({this.Level})-{this.Message}";
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Paillave.Etl.Core.System
     public class CounterProcessTrace : StreamProcessTraceBase
     {
         public int Counter { get; private set; }
-        public CounterProcessTrace(string streamOperatorName, string side, int counter) : base(streamOperatorName, side, TraceLevel.Verbose, $"counter={counter}")
+        public CounterProcessTrace(IEnumerable<string> sourceNodeName, string side, int counter) : base(sourceNodeName, side, TraceLevel.Verbose, $"counter={counter}")
         {
             this.Counter = counter;
         }

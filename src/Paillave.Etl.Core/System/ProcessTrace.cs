@@ -9,19 +9,19 @@ namespace Paillave.Etl.Core.System
 {
     public class ProcessTrace
     {
-        public string StreamOperatorName { get; private set; }
+        public IEnumerable<string> SourceNodeName { get; private set; }
         public string Message { get; private set; }
         public TraceLevel Level { get; private set; }
 
-        public ProcessTrace(string streamOperatorName, string message, TraceLevel level = TraceLevel.Info)
+        public ProcessTrace(IEnumerable<string> sourceNodeName, string message, TraceLevel level = TraceLevel.Info)
         {
             this.Level = level;
             this.Message = message;
-            this.StreamOperatorName = streamOperatorName;
+            this.SourceNodeName = sourceNodeName;
         }
         public override string ToString()
         {
-            return $"{this.StreamOperatorName}:[{this.Level}]-{this.Message}";
+            return $"[{string.Join("].[", this.SourceNodeName)}]:({this.Level})-{this.Message}";
         }
     }
 }

@@ -14,7 +14,12 @@ namespace ConsoleApp1
             {
                 ctx.ProcessTraceStream.Observable.Where(i => i.ProcessTrace.Level <= System.Diagnostics.TraceLevel.Info).Subscribe(Console.WriteLine);
                 var src = new DataStreamSourceNode(ctx, "text file source") { InputDataStream = File.OpenRead(@"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\test.txt") };
-                src.OutputStream.Observable.Subscribe();
+                var tmp1 = src.OutputStream.Take("take first header line only", 1);
+                var tmp2 = src.OutputStream.Skip("take everything after the first line", 1);
+                tmp1.Merge("merge streams", tmp2).Observable.Subscribe(Console.WriteLine);
+                src.OutputStream.Observable.Subscribe(Console.WriteLine);
+                tmp1.Observable.Subscribe(Console.WriteLine);
+                tmp2.Observable.Subscribe(Console.WriteLine);
                 ctx.StartAsync().Wait();
             }
             Console.WriteLine("Done");

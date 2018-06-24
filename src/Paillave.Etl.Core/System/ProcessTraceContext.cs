@@ -19,7 +19,7 @@ namespace Paillave.Etl.Core.System
         public ProcessTrace ProcessTrace { get; private set; }
         public override string ToString()
         {
-            return $"{this.ExecutionId}/{this.ProcessTrace}";
+            return $"{this.ExecutionId}-{this.ProcessTrace}";
         }
     }
 }

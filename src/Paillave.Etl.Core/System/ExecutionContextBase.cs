@@ -7,52 +7,24 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl.Core.System
 {
-    public abstract class ExecutionContextBase : IDisposable
+    public abstract class ExecutionContextBase
     {
         public Guid ExecutionId { get; private set; }
-        private IList<IDisposable> _disposables;
-        private IList<ISourceStreamNode> _startables;
-        public virtual void Attach(ISourceStreamNode attachable)
+        private IList<ISourceStreamNode> _sourceStreamNodes;
+        public virtual void Attach(ISourceStreamNode sourceStreamNode)
         {
-            this._startables.Add(attachable);
-            attachable.Trace.Subscribe(this.OnNextProcessTrace);
-        }
-        public virtual void Attach(IAttachable attachable)
-        {
-            this._disposables.Add(attachable);
-            attachable.Trace.Subscribe(this.OnNextProcessTrace);
+            this._sourceStreamNodes.Add(sourceStreamNode);
         }
 
         public abstract void OnNextProcessTrace(ProcessTrace processTrace);
         public ExecutionContextBase()
         {
-            this._disposables = new List<IDisposable>();
-            this._startables = new List<ISourceStreamNode>();
+            this._sourceStreamNodes = new List<ISourceStreamNode>();
             this.ExecutionId = Guid.NewGuid();
         }
         public Task StartAsync()
         {
-            return Task.WhenAll(this._startables.Select(startable => Task.Run(() => startable.Start())));
+            return Task.WhenAll(this._sourceStreamNodes.Select(startable => Task.Run(() => startable.Start())));
         }
-        #region IDisposable Support
-        private bool _disposedValue = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposedValue)
-            {
-                if (disposing)
-                {
-                    foreach (var startable in this._startables) startable.Dispose();
-                    foreach (var stream in this._disposables) stream.Dispose();
-                }
-                _disposedValue = true;
-            }
-        }
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-        #endregion
     }
 }
