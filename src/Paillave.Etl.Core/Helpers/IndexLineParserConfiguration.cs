@@ -9,11 +9,11 @@ using System.Text;
 
 namespace Paillave.Etl.Core.Helpers
 {
-    public class LineIndexParserConfiguration<TDest> where TDest : new()
+    public class IndexLineParserConfiguration<TDest> where TDest : new()
     {
         protected Dictionary<int, PropertyMap> IndexToPropertyDictionary { get; } = new Dictionary<int, PropertyMap>();
         protected CultureInfo CultureInfo { get; private set; }
-        public LineIndexParserConfiguration<TDest> MapColumnToProperty<TField>(int index, Expression<Func<TDest, TField>> memberLamda, CultureInfo cultureInfo = null)
+        public IndexLineParserConfiguration<TDest> MapColumnToProperty<TField>(int index, Expression<Func<TDest, TField>> memberLamda, CultureInfo cultureInfo = null)
         {
             PropertyInfo propertyInfo = this.GetPropertyInfo(memberLamda);
             this.IndexToPropertyDictionary[index] = new PropertyMap
@@ -24,7 +24,7 @@ namespace Paillave.Etl.Core.Helpers
             };
             return this;
         }
-        public LineIndexParserConfiguration<TDest> WithGlobalCultureInfo(CultureInfo cultureInfo)
+        public IndexLineParserConfiguration<TDest> WithGlobalCultureInfo(CultureInfo cultureInfo)
         {
             this.CultureInfo = cultureInfo;
             return this;
@@ -39,9 +39,9 @@ namespace Paillave.Etl.Core.Helpers
             }
             throw new ArgumentException("Not a navigation expression", nameof(memberLamda));
         }
-        public virtual ILineProcessor<TDest> GetLineProcessor()
+        public virtual Func<string[], TDest> GetLineParser()
         {
-            return new LineProcessor<TDest>(this.IndexToPropertyDictionary, this.CultureInfo);
+            return new LineParser<TDest>(this.IndexToPropertyDictionary, this.CultureInfo).Parse;
         }
     }
 }

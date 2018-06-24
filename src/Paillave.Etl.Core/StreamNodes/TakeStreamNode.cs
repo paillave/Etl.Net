@@ -10,7 +10,7 @@ namespace Paillave.Etl.Core.StreamNodes
     {
         public TakeStreamNode(Stream<I> inputStream, int count, string name, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
         {
-            this.Output = base.CreateStream(nameof(Output), inputStream.Observable.Take(count));
+            this.Output = base.CreateOutputStream(inputStream.Observable.Take(count));
         }
     }
     public static partial class StreamEx

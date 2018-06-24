@@ -10,7 +10,7 @@ namespace Paillave.Etl.Core.StreamNodes
     {
         public MergeStreamNode(Stream<I> inputStream, Stream<I> inputStream2, string name, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
         {
-            this.Output = base.CreateStream(nameof(Output), inputStream.Observable.Merge(inputStream2.Observable));
+            this.Output = base.CreateOutputStream(inputStream.Observable.Merge(inputStream2.Observable));
         }
     }
     public static partial class StreamEx

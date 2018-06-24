@@ -10,7 +10,7 @@ namespace Paillave.Etl.Core.StreamNodes
     {
         public WhereStreamNode(Stream<I> inputStream, Func<I, bool> predicate, string name, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
         {
-            this.Output = base.CreateStream(nameof(Output), inputStream.Observable.Where(predicate));
+            this.Output = base.CreateOutputStream(inputStream.Observable.Where(predicate));
         }
     }
     public static partial class StreamEx

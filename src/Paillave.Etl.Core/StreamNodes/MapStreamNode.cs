@@ -10,11 +10,11 @@ namespace Paillave.Etl.Core.StreamNodes
     {
         public MapStreamNode(Stream<I> inputStream, Func<I, O> mapper, string name, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
         {
-            this.Output = base.CreateStream(nameof(Output), inputStream.Observable.Select(mapper));
+            this.Output = base.CreateOutputStream(inputStream.Observable.Select(mapper));
         }
         public MapStreamNode(Stream<I> inputStream, Func<I, int, O> mapper, string name, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
         {
-            this.Output = base.CreateStream(nameof(Output), inputStream.Observable.Select(mapper));
+            this.Output = base.CreateOutputStream(inputStream.Observable.Select(mapper));
         }
     }
     public static partial class StreamEx

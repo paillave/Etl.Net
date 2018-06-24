@@ -10,7 +10,7 @@ namespace Paillave.Etl.Core.StreamNodes
     {
         public SkipStreamNode(Stream<I> inputStream, int count, string name, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
         {
-            this.Output = base.CreateStream(nameof(Output), inputStream.Observable.Skip(count));
+            this.Output = base.CreateOutputStream(inputStream.Observable.Skip(count));
         }
     }
     public static partial class StreamEx

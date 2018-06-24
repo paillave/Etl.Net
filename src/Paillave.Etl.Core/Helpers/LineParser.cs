@@ -6,11 +6,11 @@ using System.Linq;
 
 namespace Paillave.Etl.Core.Helpers
 {
-    public class LineProcessor<TDest> : ILineProcessor<TDest> where TDest : new()
+    public class LineParser<TDest> where TDest : new()
     {
         private IDictionary<int, PropertyMap> _indexToPropertyDictionary;
         private CultureInfo _cultureInfo;
-        public LineProcessor(IDictionary<int, PropertyMap> indexToPropertyDictionary, CultureInfo cultureInfo)
+        public LineParser(IDictionary<int, PropertyMap> indexToPropertyDictionary, CultureInfo cultureInfo)
         {
             this._indexToPropertyDictionary = indexToPropertyDictionary;
             this._cultureInfo = cultureInfo;
