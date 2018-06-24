@@ -6,11 +6,11 @@ using System.Reactive.Linq;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
-    public class TakeStreamNode<I> : TransformStreamNodeBase<I, I>
+    public class TakeStreamNode<I> : OutputStreamNodeBase<I>
     {
         public TakeStreamNode(Stream<I> inputStream, int count, string name, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
         {
-            this.Output = base.CreateOutputStream(inputStream.Observable.Take(count));
+            this.CreateOutputStream(inputStream.Observable.Take(count));
         }
     }
     public static partial class StreamEx

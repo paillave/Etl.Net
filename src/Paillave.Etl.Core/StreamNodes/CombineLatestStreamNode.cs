@@ -6,11 +6,12 @@ using System.Reactive.Linq;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
-    public class CombineLatestStreamNode<I, I2, O> : TransformStreamNodeBase<I, O>
+    public class CombineLatestStreamNode<I, I2, O> : OutputStreamNodeBase<O>
     {
-        public CombineLatestStreamNode(Stream<I> inputStream, Stream<I2> inputStream2, Func<I, I2, O> resultSelector, string name, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
+        public CombineLatestStreamNode(Stream<I> inputStream, Stream<I2> inputStream2, Func<I, I2, O> resultSelector, string name, IEnumerable<string> parentsName = null)
+            : base(inputStream, name, parentsName)
         {
-            this.Output = base.CreateOutputStream(inputStream.Observable.CombineLatest(inputStream2.Observable, resultSelector));
+            this.CreateOutputStream(inputStream.Observable.CombineLatest(inputStream2.Observable, resultSelector));
         }
     }
     public static partial class StreamEx

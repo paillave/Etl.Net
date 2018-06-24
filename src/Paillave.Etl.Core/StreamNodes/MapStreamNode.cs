@@ -6,15 +6,15 @@ using System.Reactive.Linq;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
-    public class MapStreamNode<I, O> : TransformStreamNodeBase<I, O>
+    public class MapStreamNode<I, O> : OutputStreamNodeBase<O>
     {
         public MapStreamNode(Stream<I> inputStream, Func<I, O> mapper, string name, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
         {
-            this.Output = base.CreateOutputStream(inputStream.Observable.Select(mapper));
+            this.CreateOutputStream(inputStream.Observable.Select(mapper));
         }
         public MapStreamNode(Stream<I> inputStream, Func<I, int, O> mapper, string name, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
         {
-            this.Output = base.CreateOutputStream(inputStream.Observable.Select(mapper));
+            this.CreateOutputStream(inputStream.Observable.Select(mapper));
         }
     }
     public static partial class StreamEx

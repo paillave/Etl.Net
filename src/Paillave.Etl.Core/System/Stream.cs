@@ -9,17 +9,17 @@ using ObservableType = System.Reactive.Linq.Observable;
 
 namespace Paillave.Etl.Core.System
 {
-    public class Stream<T>
+    public class Stream<T> : IContextual
     {
-        public Stream(ExecutionContextBase traceContext, IEnumerable<string> sourceNodeName, string sourceOutputName, IObservable<T> observable)
+        public Stream(ExecutionContextBase context, IEnumerable<string> sourceNodeName, string sourceOutputName, IObservable<T> observable)
         {
-            if (traceContext != null)
+            if (context != null)
             {
-                this.Context = traceContext;
+                this.Context = context;
                 ObservableType.Merge<ProcessTrace>(
                     observable.Count().Select(count => new CounterSummaryProcessTrace(this.SourceNodeName, this.SourceOutputName, count)),
                     observable.Select((e, i) => i).Select(counter => new CounterProcessTrace(sourceNodeName, sourceOutputName, counter + 1))
-                ).Subscribe(traceContext.OnNextProcessTrace);
+                ).Subscribe(context.OnNextProcessTrace);
             }
             this.Observable = observable;
             this.SourceNodeName = sourceNodeName;

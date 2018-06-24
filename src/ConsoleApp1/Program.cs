@@ -28,7 +28,7 @@ namespace ConsoleApp1
                 ctx.ProcessTraceStream.Observable.Where(i => i.ProcessTrace.Level <= System.Diagnostics.TraceLevel.Info).Subscribe(Console.WriteLine);
 
                 var splittedLineS = new DataStreamSourceNode(ctx, "text file source") { InputDataStream = File.OpenRead(@"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\test - Copy.txt") }
-                    .OutputStream
+                    .Output
                     .Map("split lines", lineSplitter.Split);
 
                 var lineParserS = splittedLineS

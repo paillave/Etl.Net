@@ -22,6 +22,7 @@ namespace Paillave.Etl.Core.Helpers
         public ColumnNameLineParserConfiguration(IEnumerable<string> columnNames)
         {
             this._indexDictionary = columnNames.Select((name, idx) => new { name, idx }).ToDictionary(i => i.name, i => i.idx);
+            this._ignoreCaseIndexDictionary = _indexDictionary.ToDictionary(i => i.Key.ToLowerInvariant(), i => i.Value);
         }
         public ColumnNameLineParserConfiguration<TDest> RespectCase()
         {

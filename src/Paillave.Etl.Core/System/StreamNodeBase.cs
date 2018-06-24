@@ -13,10 +13,14 @@ namespace Paillave.Etl.Core.System
     {
         public StreamNodeBase(ExecutionContextBase executionContext, string name, IEnumerable<string> parentNodeNamePath = null)
         {
-            this.ExecutionContext = executionContext;
+            this.Context = executionContext;
             this.NodeNamePath = (parentNodeNamePath ?? new string[] { }).Concat(new[] { name }).ToArray();
         }
         public IEnumerable<string> NodeNamePath { get; private set; }
-        protected ExecutionContextBase ExecutionContext { get; private set; }
+        protected ExecutionContextBase Context { get; private set; }
+        protected Stream<T> CreateStream<T>(string streamName, IObservable<T> observable)
+        {
+            return new Stream<T>(this.Context, this.NodeNamePath, streamName, observable);
+        }
     }
 }

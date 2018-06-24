@@ -6,11 +6,11 @@ using System.Reactive.Linq;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
-    public class WhereStreamNode<I> : TransformStreamNodeBase<I, I>
+    public class WhereStreamNode<I> : OutputStreamNodeBase<I>
     {
         public WhereStreamNode(Stream<I> inputStream, Func<I, bool> predicate, string name, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
         {
-            this.Output = base.CreateOutputStream(inputStream.Observable.Where(predicate));
+            this.CreateOutputStream(inputStream.Observable.Where(predicate));
         }
     }
     public static partial class StreamEx
