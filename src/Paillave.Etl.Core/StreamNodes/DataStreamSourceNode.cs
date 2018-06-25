@@ -25,7 +25,7 @@ namespace Paillave.Etl.Core.StreamNodes
             }
             catch (Exception ex)
             {
-                base.Context.OnNextProcessTrace(new DataStreamReadExceptionProcessTrace(base.NodeNamePath, ex));
+                base.Context.OnNextExceptionProcessTrace(new DataStreamReadExceptionProcessTrace(base.NodeNamePath, ex));
             }
             this.OnCompleted();
         }

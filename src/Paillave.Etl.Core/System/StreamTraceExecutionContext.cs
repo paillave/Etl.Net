@@ -43,6 +43,11 @@ namespace Paillave.Etl.Core.System
         {
             Dispose(true);
         }
+
+        public override void OnNextExceptionProcessTrace(ExceptionProcessTrace processTrace)
+        {
+            this._subject.OnNext(new ExceptionProcessTraceContext(this.ExecutionId, processTrace));
+        }
         #endregion
     }
 }

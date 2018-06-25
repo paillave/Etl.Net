@@ -16,6 +16,7 @@ namespace Paillave.Etl.Core.System
             this._sourceStreamNodes.Add(sourceStreamNode);
         }
 
+        public abstract void OnNextExceptionProcessTrace(ExceptionProcessTrace processTrace);
         public abstract void OnNextProcessTrace(ProcessTrace processTrace);
         public ExecutionContextBase()
         {

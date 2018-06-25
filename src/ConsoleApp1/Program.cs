@@ -5,6 +5,8 @@ using System.Reactive.Linq;
 using System.IO;
 using Paillave.Etl.Core.Helpers;
 using System.Globalization;
+using System.Reactive.Subjects;
+using System.Linq;
 
 namespace ConsoleApp1
 {
@@ -14,9 +16,9 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             CultureInfo ci = CultureInfo.CreateSpecificCulture("en-GB");
-            ci.DateTimeFormat.FullDateTimePattern = "yyyy-MM-dd HH:mm:ss";
-            ci.DateTimeFormat.LongDatePattern = "yyyy-MM-dd";
-            ci.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
+            ci.DateTimeFormat.FullDateTimePattern = "yyyy-dd-MM HH:mm:ss";
+            ci.DateTimeFormat.LongDatePattern = "yyyy-dd-MM";
+            ci.DateTimeFormat.ShortDatePattern = "yyyy-dd-MM";
             ci.NumberFormat.NumberDecimalSeparator = ",";
             ci.NumberFormat.CurrencyDecimalSeparator = ",";
             ci.NumberFormat.PercentDecimalSeparator = ",";
@@ -41,7 +43,7 @@ namespace ConsoleApp1
                         .MapColumnToProperty("Comment", i => i.Col4)
                         .GetLineParser());
                 var dataLineS = splittedLineS.Skip("take everything after the first line", 1);
-                var parsedLineS = dataLineS.CombineLatest("parse every line", lineParserS, (dataLine, lineParser) => lineParser(dataLine));
+                var parsedLineS = dataLineS.CombineLatest("parse every line", lineParserS, (dataLine, lineParser) => lineParser(dataLine), true);
 
                 //tmp1.Merge("merge streams", tmp2).Observable.Subscribe(Console.WriteLine);
                 //src.OutputStream.Observable.Subscribe(Console.WriteLine);
