@@ -8,7 +8,7 @@ namespace Paillave.Etl.Core.StreamNodes
 {
     public class WhereStreamNode<I> : OutputErrorStreamNodeBase<I, ErrorRow<I>>
     {
-        public WhereStreamNode(Stream<I> inputStream, Func<I, bool> predicate, string name, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
+        public WhereStreamNode(IStream<I> inputStream, Func<I, bool> predicate, string name, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
         {
             if (redirectErrorsInsteadOfFail)
             {
@@ -22,9 +22,15 @@ namespace Paillave.Etl.Core.StreamNodes
     }
     public static partial class StreamEx
     {
-        public static Stream<I> Where<I>(this Stream<I> stream, string name, Func<I, bool> predicate, bool redirectErrorsInsteadOfFail = false)
+        public static IStream<I> Where<I>(this IStream<I> stream, string name, Func<I, bool> predicate)
         {
-            return new WhereStreamNode<I>(stream, predicate, name, redirectErrorsInsteadOfFail).Output;
+            return new WhereStreamNode<I>(stream, predicate, name, false).Output;
+        }
+
+        public static NodeOutput<I, I> WhereKeepErrors<I>(this IStream<I> stream, string name, Func<I, bool> predicate)
+        {
+            var ret = new WhereStreamNode<I>(stream, predicate, name, true);
+            return new NodeOutput<I, I>(ret.Output, ret.Error);
         }
     }
 }

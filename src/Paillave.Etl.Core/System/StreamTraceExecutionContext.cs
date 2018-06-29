@@ -13,12 +13,12 @@ namespace Paillave.Etl.Core.System
     {
         private ISubject<ProcessTraceContext> _subject;
         private readonly SortedStream<ProcessTraceContext> _processTraceContextStream;
-        public Stream<ProcessTraceContext> ProcessTraceStream { get { return this._processTraceContextStream; } }
+        public IStream<ProcessTraceContext> ProcessTraceStream { get { return this._processTraceContextStream; } }
 
         public StreamTraceExecutionContext()
         {
             this._subject = new Subject<ProcessTraceContext>();
-            this._processTraceContextStream = new SortedStream<ProcessTraceContext>(null, null, null, this._subject, new SortCriteria<ProcessTraceContext>(i => i.DateTime));
+            this._processTraceContextStream = new SortedStream<ProcessTraceContext>(null, null, null, this._subject, new[] { new SortCriteria<ProcessTraceContext>(i => i.DateTime) });
         }
         public override void OnNextProcessTrace(ProcessTrace processTrace)
         {

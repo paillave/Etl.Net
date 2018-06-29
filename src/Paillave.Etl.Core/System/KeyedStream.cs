@@ -9,10 +9,10 @@ using System.Reactive.Subjects;
 
 namespace Paillave.Etl.Core.System
 {
-    public class SortedStream<T> : Stream<T>, ISortedStream<T>
+    public class KeyedStream<T> : Stream<T>, IKeyedStream<T>
     {
         private IComparer<T> _comparer;
-        public SortedStream(ExecutionContextBase traceContext, IEnumerable<string> sourceNodeName, string sourceOutputName, IObservable<T> observable, IEnumerable<SortCriteria<T>> sortCriterias) : base(traceContext, sourceNodeName, sourceOutputName, observable)
+        public KeyedStream(ExecutionContextBase traceContext, IEnumerable<string> sourceNodeName, string sourceOutputName, IObservable<T> observable, IEnumerable<SortCriteria<T>> sortCriterias) : base(traceContext, sourceNodeName, sourceOutputName, observable)
         {
             if (sortCriterias.Count() == 0) throw new ArgumentOutOfRangeException(nameof(sortCriterias), "sorting criteria list cannot be empty");
             if (traceContext != null)
@@ -23,8 +23,8 @@ namespace Paillave.Etl.Core.System
                     .PairWithPrevious()
                     .Select((Pair, Index) => new { Pair, Index })
                     .Skip(1)
-                    .Where(i => this._comparer.Compare(i.Pair.Item1, i.Pair.Item2) > 0)
-                    .Select(i => new NotSortedStreamProcessTrace(this.SourceNodeName, this.SourceOutputName, i.Index))
+                    .Where(i => this._comparer.Compare(i.Pair.Item1, i.Pair.Item2) >= 0)
+                    .Select(i => new NotKeyedStreamProcessTrace(this.SourceNodeName, this.SourceOutputName, i.Index))
                     .Subscribe(traceContext.OnNextProcessTrace);
             }
         }

@@ -18,9 +18,17 @@ namespace Paillave.Etl.Core.System
         }
         public IEnumerable<string> NodeNamePath { get; private set; }
         protected ExecutionContextBase Context { get; private set; }
-        protected Stream<T> CreateStream<T>(string streamName, IObservable<T> observable)
+        protected IStream<T> CreateStream<T>(string streamName, IObservable<T> observable)
         {
             return new Stream<T>(this.Context, this.NodeNamePath, streamName, observable);
+        }
+        protected ISortedStream<T> CreateSortedStream<T>(string streamName, IObservable<T> observable, IEnumerable< SortCriteria<T>> sortCriterias)
+        {
+            return new SortedStream<T>(this.Context, this.NodeNamePath, streamName, observable, sortCriterias);
+        }
+        protected IKeyedStream<T> CreateKeyedStream<T>(string streamName, IObservable<T> observable, IEnumerable< SortCriteria<T>> sortCriterias)
+        {
+            return new KeyedStream<T>(this.Context, this.NodeNamePath, streamName, observable, sortCriterias);
         }
     }
 }

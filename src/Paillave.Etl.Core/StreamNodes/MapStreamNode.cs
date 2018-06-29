@@ -8,7 +8,7 @@ namespace Paillave.Etl.Core.StreamNodes
 {
     public class MapStreamNode<I, O> : OutputErrorStreamNodeBase<O, ErrorRow<I>>
     {
-        public MapStreamNode(Stream<I> inputStream, Func<I, O> mapper, string name, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
+        public MapStreamNode(IStream<I> inputStream, Func<I, O> mapper, string name, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
         {
             //http://www.introtorx.com/Content/v1.0.10621.0/11_AdvancedErrorHandling.html#Catch
             if (redirectErrorsInsteadOfFail)
@@ -20,7 +20,7 @@ namespace Paillave.Etl.Core.StreamNodes
             else
                 this.CreateOutputStream(inputStream.Observable.Select(mapper));
         }
-        public MapStreamNode(Stream<I> inputStream, Func<I, int, O> mapper, string name, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
+        public MapStreamNode(IStream<I> inputStream, Func<I, int, O> mapper, string name, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
         {
             if (redirectErrorsInsteadOfFail)
             {
@@ -34,13 +34,23 @@ namespace Paillave.Etl.Core.StreamNodes
     }
     public static partial class StreamEx
     {
-        public static Stream<O> Map<I, O>(this Stream<I> stream, string name, Func<I, O> mapper, bool redirectErrorsInsteadOfFail = false)
+        public static IStream<O> Map<I, O>(this IStream<I> stream, string name, Func<I, O> mapper)
         {
-            return new MapStreamNode<I, O>(stream, mapper, name, redirectErrorsInsteadOfFail).Output;
+            return new MapStreamNode<I, O>(stream, mapper, name, false).Output;
         }
-        public static Stream<O> Map<I, O>(this Stream<I> stream, string name, Func<I, int, O> mapper, bool redirectErrorsInsteadOfFail = false)
+        public static IStream<O> Map<I, O>(this IStream<I> stream, string name, Func<I, int, O> mapper)
         {
-            return new MapStreamNode<I, O>(stream, mapper, name, redirectErrorsInsteadOfFail).Output;
+            return new MapStreamNode<I, O>(stream, mapper, name, false).Output;
+        }
+        public static NodeOutput<O, I> MapKeepErrors<I, O>(this IStream<I> stream, string name, Func<I, O> mapper)
+        {
+            var ret= new MapStreamNode<I, O>(stream, mapper, name, true);
+            return new NodeOutput<O, I>(ret.Output, ret.Error);
+        }
+        public static NodeOutput<O, I> MapKeepErrors<I, O>(this IStream<I> stream, string name, Func<I, int, O> mapper)
+        {
+            var ret = new MapStreamNode<I, O>(stream, mapper, name, true);
+            return new NodeOutput<O, I>(ret.Output, ret.Error);
         }
     }
 }

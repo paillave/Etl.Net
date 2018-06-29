@@ -3,7 +3,12 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <StartupObject>ConsoleApp1.Program</StartupObject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Reactive" Version="4.1.0-preview.84" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Etl.Core\Paillave.Etl.Core.csproj" />

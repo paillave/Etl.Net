@@ -19,7 +19,7 @@ namespace Paillave.Etl.Core.System
         {
             this.Error = this.CreateStream<E>(nameof(Error), observable);
         }
-        public Stream<E> Error { get; private set; }
+        public IStream<E> Error { get; private set; }
         protected Func<I, ErrorManagementItem<I, O2>> ErrorManagementWrapFunction<I, O2>(Func<I, O2> call)
         {
             return (I input) =>
