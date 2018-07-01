@@ -17,5 +17,16 @@ namespace Paillave.Etl.Core.System
         public SortOrder SortOrder { get; private set; }
         public Expression<Func<S, IComparable>> Field { get; private set; }
     }
+    public static class SortCriteria
+    {
+        public static SortCriteria<S> Create<S>(Expression<Func<S, IComparable>> field, SortOrder sortOrder = SortOrder.Ascending)
+        {
+            return new SortCriteria<S>(field, sortOrder);
+        }
+        public static SortCriteria<S> Create<S>(S prototye, Expression<Func<S, IComparable>> field, SortOrder sortOrder = SortOrder.Ascending)
+        {
+            return new SortCriteria<S>(field, sortOrder);
+        }
+    }
     public enum SortOrder { Ascending, Descending }
 }
