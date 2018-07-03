@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Core.System
+namespace Paillave.Etl.Core.SystemOld
 {
     public class ExceptionProcessTraceContext : ProcessTraceContext
     {

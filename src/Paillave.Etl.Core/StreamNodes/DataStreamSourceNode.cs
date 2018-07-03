@@ -1,5 +1,5 @@
 ﻿using Paillave.Etl.Core.System;
-using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -7,13 +7,16 @@ using System.Text;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
-    public class DataStreamSourceNode : SourceStreamNodeBase<string>
+    public class DataStreamSourceNode : StreamNodeBase, IConfigurable<Stream>, IStreamNodeOutput<string>
     {
-        public DataStreamSourceNode(ExecutionContextBase traceContext, string name, IEnumerable<string> parentsName = null) : base(traceContext, name, parentsName)
-        {
-        }
+        private Stream _stream;
 
-        public Stream InputDataStream { get; set; }
+        public IStream<string> Output => throw new global::System.NotImplementedException();
+
+        public void Configure(Stream stream)
+        {
+            this._stream = stream;
+        }
 
         public override void Start()
         {
@@ -25,7 +28,7 @@ namespace Paillave.Etl.Core.StreamNodes
             }
             catch (Exception ex)
             {
-                base.Context.OnNextExceptionProcessTrace(new DataStreamReadExceptionProcessTrace(base.NodeNamePath, ex));
+                base.Tracer.OnNextExceptionProcessTrace(new DataStreamReadExceptionProcessTrace(base.NodeNamePath, ex));
             }
             this.OnCompleted();
         }

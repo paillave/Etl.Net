@@ -6,26 +6,28 @@ using System.Text;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
-    public class EnsureKeyedNode<I> : KeyedOutputStreamNodeBase<I>
+    public class EnsureKeyedNode<TIn> : StreamNodeBase, IKeyedStreamNodeOutput<TIn>
     {
-        public EnsureKeyedNode(IStream<I> inputStream, string name, IEnumerable<SortCriteria<I>> sortCriterias, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
+        public IKeyedStream<TIn> Output { get; }
+        public EnsureKeyedNode(IStream<TIn> inputStream, string name, IEnumerable<SortCriteria<TIn>> sortCriterias, IEnumerable<string> parentNodeNamePath = null)
         {
-            this.CreateOutputStream(inputStream.Observable, sortCriterias);
+            base.Initialize(inputStream.ExecutionContext, name, parentNodeNamePath);
+            this.Output = base.CreateKeyedStream(nameof(Output), inputStream.Observable, sortCriterias);
         }
     }
     public static partial class StreamEx
     {
-        public static IKeyedStream<I> EnsureKeyed<I>(this IStream<I> stream, string name, params SortCriteria<I>[] sortCriterias)
+        public static IKeyedStream<TIn> EnsureKeyed<TIn>(this IStream<TIn> stream, string name, params SortCriteria<TIn>[] sortCriterias)
         {
-            return new EnsureKeyedNode<I>(stream, name, sortCriterias).Output;
+            return new EnsureKeyedNode<TIn>(stream, name, sortCriterias).Output;
         }
-        public static IKeyedStream<I> EnsureKeyed<I>(this IStream<I> stream, string name, Func<I, IEnumerable<SortCriteria<I>>> sortCriteriasBuilder)
+        public static IKeyedStream<TIn> EnsureKeyed<TIn>(this IStream<TIn> stream, string name, Func<TIn, IEnumerable<SortCriteria<TIn>>> sortCriteriasBuilder)
         {
-            return new EnsureKeyedNode<I>(stream, name, sortCriteriasBuilder(default(I)).ToList()).Output;
+            return new EnsureKeyedNode<TIn>(stream, name, sortCriteriasBuilder(default(TIn)).ToList()).Output;
         }
-        public static IKeyedStream<I> EnsureKeyed<I>(this IStream<I> stream, string name, Func<I, SortCriteria<I>> sortCriteriasBuilder)
+        public static IKeyedStream<TIn> EnsureKeyed<TIn>(this IStream<TIn> stream, string name, Func<TIn, SortCriteria<TIn>> sortCriteriasBuilder)
         {
-            return new EnsureKeyedNode<I>(stream, name, new[] { sortCriteriasBuilder(default(I)) }).Output;
+            return new EnsureKeyedNode<TIn>(stream, name, new[] { sortCriteriasBuilder(default(TIn)) }).Output;
         }
     }
 }

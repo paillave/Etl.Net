@@ -6,26 +6,28 @@ using System.Text;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
-    public class EnsureSortedNode<I> : SortedOutputStreamNodeBase<I>
+    public class EnsureSortedNode<TIn> : StreamNodeBase, ISortedStreamNodeOutput<TIn>
     {
-        public EnsureSortedNode(IStream<I> inputStream, string name, IEnumerable<SortCriteria<I>> sortCriterias, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
+        public ISortedStream<TIn> Output { get; }
+        public EnsureSortedNode(IStream<TIn> inputStream, string name, IEnumerable<SortCriteria<TIn>> sortCriterias, IEnumerable<string> parentNodeNamePath = null)
         {
-            this.CreateOutputStream(inputStream.Observable, sortCriterias);
+            base.Initialize(inputStream.ExecutionContext, name, parentNodeNamePath);
+            this.Output = base.CreateSortedStream(nameof(Output), inputStream.Observable, sortCriterias);
         }
     }
     public static partial class StreamEx
     {
-        public static ISortedStream<I> EnsureSorted<I>(this IStream<I> stream, string name, params SortCriteria<I>[] sortCriterias)
+        public static ISortedStream<TIn> EnsureSorted<TIn>(this IStream<TIn> stream, string name, params SortCriteria<TIn>[] sortCriterias)
         {
-            return new EnsureSortedNode<I>(stream, name, sortCriterias).Output;
+            return new EnsureSortedNode<TIn>(stream, name, sortCriterias).Output;
         }
-        public static ISortedStream<I> EnsureSorted<I>(this IStream<I> stream, string name, Func<I, IEnumerable<SortCriteria<I>>> sortCriteriasBuilder)
+        public static ISortedStream<TIn> EnsureSorted<TIn>(this IStream<TIn> stream, string name, Func<TIn, IEnumerable<SortCriteria<TIn>>> sortCriteriasBuilder)
         {
-            return new EnsureSortedNode<I>(stream, name, sortCriteriasBuilder(default(I)).ToList()).Output;
+            return new EnsureSortedNode<TIn>(stream, name, sortCriteriasBuilder(default(TIn)).ToList()).Output;
         }
-        public static ISortedStream<I> EnsureSorted<I>(this IStream<I> stream, string name, Func<I, SortCriteria<I>> sortCriteriasBuilder)
+        public static ISortedStream<TIn> EnsureSorted<TIn>(this IStream<TIn> stream, string name, Func<TIn, SortCriteria<TIn>> sortCriteriasBuilder)
         {
-            return new EnsureSortedNode<I>(stream, name, new[] { sortCriteriasBuilder(default(I)) }).Output;
+            return new EnsureSortedNode<TIn>(stream, name, new[] { sortCriteriasBuilder(default(TIn)) }).Output;
         }
     }
 }

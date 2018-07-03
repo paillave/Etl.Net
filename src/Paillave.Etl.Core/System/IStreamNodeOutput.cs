@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Paillave.Etl.Core.System
 {
-    public interface IContextual
+    public interface IStreamNodeOutput<TRow>
     {
-        ExecutionContextBase Context { get; }
+        IStream<TRow> Output { get; }
     }
 }

@@ -5,14 +5,14 @@ using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Core.System
+namespace Paillave.Etl.Core.SystemOld
 {
     public abstract class OutputStreamNodeBase<O> : StreamNodeBase
     {
-        public OutputStreamNodeBase(ExecutionContextBase context, string name, IEnumerable<string> parentNodeNamePath = null) : base(context, name, parentNodeNamePath)
+        public OutputStreamNodeBase(ExecutionContext context, string name, IEnumerable<string> parentNodeNamePath = null) : base(context, name, parentNodeNamePath)
         {
         }
-        public OutputStreamNodeBase(IContextual contextual, string name, IEnumerable<string> parentNodeNamePath = null) : base(contextual.Context, name, parentNodeNamePath)
+        public OutputStreamNodeBase(ITracer contextual, string name, IEnumerable<string> parentNodeNamePath = null) : base(contextual.Context, name, parentNodeNamePath)
         {
         }
         protected virtual void CreateOutputStream(IObservable<O> observable)
@@ -23,10 +23,10 @@ namespace Paillave.Etl.Core.System
     }
     public abstract class SortedOutputStreamNodeBase<O> : StreamNodeBase
     {
-        public SortedOutputStreamNodeBase(ExecutionContextBase context, string name, IEnumerable<string> parentNodeNamePath = null) : base(context, name, parentNodeNamePath)
+        public SortedOutputStreamNodeBase(ExecutionContext context, string name, IEnumerable<string> parentNodeNamePath = null) : base(context, name, parentNodeNamePath)
         {
         }
-        public SortedOutputStreamNodeBase(IContextual contextual, string name, IEnumerable<string> parentNodeNamePath = null) : base(contextual.Context, name, parentNodeNamePath)
+        public SortedOutputStreamNodeBase(ITracer contextual, string name, IEnumerable<string> parentNodeNamePath = null) : base(contextual.Context, name, parentNodeNamePath)
         {
         }
         protected virtual void CreateOutputStream(IObservable<O> observable, IEnumerable<SortCriteria<O>> sortCriterias)
@@ -37,10 +37,10 @@ namespace Paillave.Etl.Core.System
     }
     public abstract class KeyedOutputStreamNodeBase<O> : StreamNodeBase
     {
-        public KeyedOutputStreamNodeBase(ExecutionContextBase context, string name, IEnumerable<string> parentNodeNamePath = null) : base(context, name, parentNodeNamePath)
+        public KeyedOutputStreamNodeBase(ExecutionContext context, string name, IEnumerable<string> parentNodeNamePath = null) : base(context, name, parentNodeNamePath)
         {
         }
-        public KeyedOutputStreamNodeBase(IContextual contextual, string name, IEnumerable<string> parentNodeNamePath = null) : base(contextual.Context, name, parentNodeNamePath)
+        public KeyedOutputStreamNodeBase(ITracer contextual, string name, IEnumerable<string> parentNodeNamePath = null) : base(contextual.Context, name, parentNodeNamePath)
         {
         }
         protected virtual void CreateOutputStream(IObservable<O> observable, IEnumerable<SortCriteria<O>> sortCriterias)

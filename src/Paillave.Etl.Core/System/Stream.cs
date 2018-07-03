@@ -11,23 +11,21 @@ namespace Paillave.Etl.Core.System
 {
     public class Stream<T> : IStream<T>
     {
-        public Stream(ExecutionContextBase context, IEnumerable<string> sourceNodeName, string sourceOutputName, IObservable<T> observable)
+        public Stream(ITracer tracer, IExecutionContext executionContext, string sourceOutputName, IObservable<T> observable)
         {
-            if (context != null)
+            this.ExecutionContext = executionContext;
+            if (tracer != null)
             {
-                this.Context = context;
-                ObservableType.Merge<ProcessTrace>(
-                    observable.Count().Select(count => new CounterSummaryProcessTrace(this.SourceNodeName, this.SourceOutputName, count)),
-                    observable.Select((e, i) => new RowProcessTrace<T>(sourceNodeName, sourceOutputName, i + 1, e))//.Select(counter => new RowProcessTrace(sourceNodeName, sourceOutputName, counter + 1,))
-                ).Subscribe(context.OnNextProcessTrace);
+                ObservableType.Merge<ITraceContent>(
+                    observable.Count().Select(count => new CounterSummaryStreamTraceContent(sourceOutputName, count)),
+                    observable.Select((e, i) => new RowProcessStreamTraceContent(sourceOutputName, i + 1, e))
+                ).Subscribe(tracer.Trace);
             }
             this.Observable = observable;
-            this.SourceNodeName = sourceNodeName;
-            this.SourceOutputName = sourceOutputName;
         }
-        public ExecutionContextBase Context { get; private set; }
-        public IEnumerable<string> SourceNodeName { get; private set; }
-        public string SourceOutputName { get; private set; }
+
         public IObservable<T> Observable { get; private set; }
+
+        public IExecutionContext ExecutionContext { get; }
     }
 }

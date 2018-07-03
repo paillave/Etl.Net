@@ -6,18 +6,46 @@ using System.Reactive.Linq;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
-    public class TakeStreamNode<I> : OutputStreamNodeBase<I>
+    public class TakeStreamNode<TIn> : StreamNodeBase, IStreamNodeOutput<TIn>
     {
-        public TakeStreamNode(IStream<I> inputStream, int count, string name, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
+        public IStream<TIn> Output { get; }
+        public TakeStreamNode(IStream<TIn> inputStream, string name, int count, IEnumerable<string> parentNodeNamePath = null)
         {
-            this.CreateOutputStream(inputStream.Observable.Take(count));
+            base.Initialize(inputStream.ExecutionContext, name, parentNodeNamePath);
+            this.Output = base.CreateStream(nameof(Output), inputStream.Observable.Take(count));
+        }
+    }
+    public class TakeSortedStreamNode<TIn> : StreamNodeBase, ISortedStreamNodeOutput<TIn>
+    {
+        public ISortedStream<TIn> Output { get; }
+        public TakeSortedStreamNode(ISortedStream<TIn> inputStream, string name, int count, IEnumerable<string> parentNodeNamePath = null)
+        {
+            base.Initialize(inputStream.ExecutionContext, name, parentNodeNamePath);
+            this.Output = base.CreateSortedStream(nameof(Output), inputStream.Observable.Take(count), inputStream.SortCriterias);
+        }
+    }
+    public class TakeKeyedStreamNode<TIn> : StreamNodeBase, IKeyedStreamNodeOutput<TIn>
+    {
+        public IKeyedStream<TIn> Output { get; }
+        public TakeKeyedStreamNode(IKeyedStream<TIn> inputStream, string name, int count, IEnumerable<string> parentNodeNamePath = null)
+        {
+            base.Initialize(inputStream.ExecutionContext, name, parentNodeNamePath);
+            this.Output = base.CreateKeyedStream(nameof(Output), inputStream.Observable.Take(count), inputStream.SortCriterias);
         }
     }
     public static partial class StreamEx
     {
-        public static IStream<I> Take<I>(this IStream<I> stream, string name, int count)
+        public static ISortedStream<TIn> Take<TIn>(this ISortedStream<TIn> stream, string name, int count)
         {
-            return new TakeStreamNode<I>(stream, count, name).Output;
+            return new TakeSortedStreamNode<TIn>(stream, name, count).Output;
+        }
+        public static IKeyedStream<TIn> Take<TIn>(this IKeyedStream<TIn> stream, string name, int count)
+        {
+            return new TakeKeyedStreamNode<TIn>(stream, name, count).Output;
+        }
+        public static IStream<TIn> Take<TIn>(this IStream<TIn> stream, string name, int count)
+        {
+            return new TakeStreamNode<TIn>(stream, name, count).Output;
         }
     }
 }

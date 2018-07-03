@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Core.System
+namespace Paillave.Etl.Core.SystemOld
 {
     public class ProcessTrace
     {
-        public IEnumerable<string> SourceNodeName { get; private set; }
+        public IEnumerable<StreamNodeBase> StreamNodeSources { get; private set; }
         public string Message { get; private set; }
         public TraceLevel Level { get; private set; }
 

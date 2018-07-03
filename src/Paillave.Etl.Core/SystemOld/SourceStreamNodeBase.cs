@@ -5,13 +5,13 @@ using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Core.System
+namespace Paillave.Etl.Core.SystemOld
 {
     public abstract class SourceStreamNodeBase<O> : OutputStreamNodeBase<O>, ISourceStreamNode
     {
         private ISubject<O> _outputSubject;
 
-        public SourceStreamNodeBase(ExecutionContextBase traceContext, string name, IEnumerable<string> parentsName = null) : base(traceContext, name, parentsName)
+        public SourceStreamNodeBase(ExecutionContext traceContext, string name, IEnumerable<string> parentsName = null) : base(traceContext, name, parentsName)
         {
             var sourceNodeNames = (parentsName ?? new string[] { }).Concat(new[] { name }).ToList();
             this._outputSubject = new Subject<O>();

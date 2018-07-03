@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Paillave.Etl.Core.System
+namespace Paillave.Etl.Core.SystemOld
 {
     public interface ISourceStreamNode
     {

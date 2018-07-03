@@ -6,51 +6,54 @@ using System.Reactive.Linq;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
-    public class MapStreamNode<I, O> : OutputErrorStreamNodeBase<O, ErrorRow<I>>
+    public class MapStreamNode<TIn, TOut> : StreamNodeBase, IStreamNodeOutput<TOut>, IStreamNodeError<ErrorRow<TIn>>
     {
-        public MapStreamNode(IStream<I> inputStream, Func<I, O> mapper, string name, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
+        public MapStreamNode(IStream<TIn> inputStream, string name, Func<TIn, TOut> mapper, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentNodeNamePath = null)
         {
-            //http://www.introtorx.com/Content/v1.0.10621.0/11_AdvancedErrorHandling.html#Catch
+            base.Initialize(inputStream.ExecutionContext, name, parentNodeNamePath);
             if (redirectErrorsInsteadOfFail)
             {
                 var errorManagedResult = inputStream.Observable.Select(base.ErrorManagementWrapFunction(mapper));
-                this.CreateOutputStream(errorManagedResult.Where(i => !i.OnException).Select(i => i.Output));
-                this.CreateErrorStream(errorManagedResult.Where(i => i.OnException).Select(i => new ErrorRow<I>(i.Input, i.Exception)));
+                this.Output = base.CreateStream(nameof(this.Output), errorManagedResult.Where(i => !i.OnException).Select(i => i.Output));
+                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Where(i => i.OnException).Select(i => new ErrorRow<TIn>(i.Input, i.Exception)));
             }
             else
-                this.CreateOutputStream(inputStream.Observable.Select(mapper));
+                this.Output = base.CreateStream(nameof(this.Output), inputStream.Observable.Select(mapper));
         }
-        public MapStreamNode(IStream<I> inputStream, Func<I, int, O> mapper, string name, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
+        public MapStreamNode(IStream<TIn> inputStream, string name, Func<TIn, int, TOut> mapper, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentNodeNamePath = null)
         {
+            base.Initialize(inputStream.ExecutionContext, name, parentNodeNamePath);
             if (redirectErrorsInsteadOfFail)
             {
                 var errorManagedResult = inputStream.Observable.Select(base.ErrorManagementWrapFunction(mapper));
-                this.CreateOutputStream(errorManagedResult.Where(i => !i.OnException).Select(i => i.Output));
-                this.CreateErrorStream(errorManagedResult.Where(i => i.OnException).Select(i => new ErrorRow<I>(i.Input, i.Exception)));
+                this.Output = base.CreateStream(nameof(this.Output), errorManagedResult.Where(i => !i.OnException).Select(i => i.Output));
+                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Where(i => i.OnException).Select(i => new ErrorRow<TIn>(i.Input, i.Exception)));
             }
             else
-                this.CreateOutputStream(inputStream.Observable.Select(mapper));
+                this.Output = base.CreateStream(nameof(this.Output), inputStream.Observable.Select(mapper));
         }
+        public IStream<TOut> Output { get; }
+        public IStream<ErrorRow<TIn>> Error { get; }
     }
     public static partial class StreamEx
     {
-        public static IStream<O> Map<I, O>(this IStream<I> stream, string name, Func<I, O> mapper)
+        public static IStream<TOut> Map<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper)
         {
-            return new MapStreamNode<I, O>(stream, mapper, name, false).Output;
+            return new MapStreamNode<TIn, TOut>(stream, name, mapper, false).Output;
         }
-        public static IStream<O> Map<I, O>(this IStream<I> stream, string name, Func<I, int, O> mapper)
+        public static IStream<TOut> Map<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, int, TOut> mapper)
         {
-            return new MapStreamNode<I, O>(stream, mapper, name, false).Output;
+            return new MapStreamNode<TIn, TOut>(stream, name, mapper, false).Output;
         }
-        public static NodeOutput<O, I> MapKeepErrors<I, O>(this IStream<I> stream, string name, Func<I, O> mapper)
+        public static NodeOutputError<TOut, TIn> MapKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper)
         {
-            var ret= new MapStreamNode<I, O>(stream, mapper, name, true);
-            return new NodeOutput<O, I>(ret.Output, ret.Error);
+            var ret = new MapStreamNode<TIn, TOut>(stream, name, mapper, true);
+            return new NodeOutputError<TOut, TIn>(ret.Output, ret.Error);
         }
-        public static NodeOutput<O, I> MapKeepErrors<I, O>(this IStream<I> stream, string name, Func<I, int, O> mapper)
+        public static NodeOutputError<TOut, TIn> MapKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, int, TOut> mapper)
         {
-            var ret = new MapStreamNode<I, O>(stream, mapper, name, true);
-            return new NodeOutput<O, I>(ret.Output, ret.Error);
+            var ret = new MapStreamNode<TIn, TOut>(stream, name, mapper, true);
+            return new NodeOutputError<TOut, TIn>(ret.Output, ret.Error);
         }
     }
 }

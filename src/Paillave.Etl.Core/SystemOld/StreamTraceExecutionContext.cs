@@ -7,9 +7,9 @@ using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Core.System
+namespace Paillave.Etl.Core.SystemOld
 {
-    public class StreamTraceExecutionContext : ExecutionContextBase, IDisposable
+    public class StreamTraceExecutionContext : ExecutionContext, IDisposable
     {
         private ISubject<ProcessTraceContext> _subject;
         private readonly SortedStream<ProcessTraceContext> _processTraceContextStream;

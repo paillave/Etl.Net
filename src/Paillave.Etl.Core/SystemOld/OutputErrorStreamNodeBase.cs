@@ -5,14 +5,14 @@ using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Core.System
+namespace Paillave.Etl.Core.SystemOld
 {
     public abstract class OutputErrorStreamNodeBase<O, E> : OutputStreamNodeBase<O>
     {
-        public OutputErrorStreamNodeBase(ExecutionContextBase context, string name, IEnumerable<string> parentNodeNamePath = null) : base(context, name, parentNodeNamePath)
+        public OutputErrorStreamNodeBase(ExecutionContext context, string name, IEnumerable<string> parentNodeNamePath = null) : base(context, name, parentNodeNamePath)
         {
         }
-        public OutputErrorStreamNodeBase(IContextual contextual, string name, IEnumerable<string> parentNodeNamePath = null) : base(contextual.Context, name, parentNodeNamePath)
+        public OutputErrorStreamNodeBase(ITracer contextual, string name, IEnumerable<string> parentNodeNamePath = null) : base(contextual.Context, name, parentNodeNamePath)
         {
         }
         protected virtual void CreateErrorStream(IObservable<E> observable)
@@ -49,17 +49,17 @@ namespace Paillave.Etl.Core.System
             };
         }
     }
-    public class ErrorRow<I>
-    {
-        public ErrorRow(I input, Exception exception)
-        {
-            this.Input = input;
-            this.Exception = exception;
-        }
+    //public class ErrorRow<I>
+    //{
+    //    public ErrorRow(I input, Exception exception)
+    //    {
+    //        this.Input = input;
+    //        this.Exception = exception;
+    //    }
 
-        public I Input { get; }
-        public Exception Exception { get; }
-    }
+    //    public I Input { get; }
+    //    public Exception Exception { get; }
+    //}
     public class ErrorManagementItem<I, I2, O> : ErrorManagementItem<I, O>
     {
         public I2 Input2 { get; }

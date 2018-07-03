@@ -6,31 +6,33 @@ using System.Reactive.Linq;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
-    public class CombineLatestStreamNode<I1, I2, O> : OutputErrorStreamNodeBase<O, ErrorRow<I1>>
+    public class CombineLatestStreamNode<TIn1, TIn2, TOut> : StreamNodeBase, IStreamNodeError<ErrorRow<TIn1, TIn2>>, IStreamNodeOutput<TOut>
     {
-        public CombineLatestStreamNode(IStream<I1> inputStream, IStream<I2> inputStream2, Func<I1, I2, O> resultSelector, string name, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentsName = null)
-            : base(inputStream, name, parentsName)
+        public CombineLatestStreamNode(IStream<TIn1> inputStream1, string name, IStream<TIn2> inputStream2, Func<TIn1, TIn2, TOut> resultSelector, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentNodeNamePath = null)
         {
+            base.Initialize(inputStream1.ExecutionContext ?? inputStream2.ExecutionContext, name, parentNodeNamePath);
             if (redirectErrorsInsteadOfFail)
             {
-                var errorManagedResult = inputStream.Observable.CombineLatest(inputStream2.Observable, base.ErrorManagementWrapFunction(resultSelector));
-                this.CreateOutputStream(errorManagedResult.Where(i => !i.OnException).Select(i => i.Output));
-                this.CreateErrorStream(errorManagedResult.Where(i => i.OnException).Select(i => new ErrorRow<I1>(i.Input, i.Exception)));
+                var errorManagedResult = inputStream1.Observable.CombineLatest(inputStream2.Observable, base.ErrorManagementWrapFunction(resultSelector));
+                this.Output = base.CreateStream(nameof(this.Output), errorManagedResult.Where(i => !i.OnException).Select(i => i.Output));
+                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Where(i => i.OnException).Select(i => new ErrorRow<TIn1, TIn2>(i.Input, i.Input2, i.Exception)));
             }
             else
-                this.CreateOutputStream(inputStream.Observable.CombineLatest(inputStream2.Observable, resultSelector));
+                this.Output = base.CreateStream(nameof(this.Output), inputStream1.Observable.CombineLatest(inputStream2.Observable, resultSelector));
         }
+        public IStream<TOut> Output { get; }
+        public IStream<ErrorRow<TIn1, TIn2>> Error { get; }
     }
     public static partial class StreamEx
     {
-        public static IStream<O> CombineLatest<I, I2, O>(this IStream<I> stream, string name, IStream<I2> inputStream2, Func<I, I2, O> resultSelector)
+        public static IStream<TOut> CombineLatest<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> inputStream2, Func<TIn1, TIn2, TOut> resultSelector)
         {
-            return new CombineLatestStreamNode<I, I2, O>(stream, inputStream2, resultSelector, name, false).Output;
+            return new CombineLatestStreamNode<TIn1, TIn2, TOut>(stream, name, inputStream2, resultSelector, false).Output;
         }
-        public static NodeOutput<O, I> CombineLatestKeepErrors<I, I2, O>(this IStream<I> stream, string name, IStream<I2> inputStream2, Func<I, I2, O> resultSelector)
+        public static NodeOutputError<TOut, TIn1, TIn2> CombineLatestKeepErrors<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> inputStream2, Func<TIn1, TIn2, TOut> resultSelector)
         {
-            var ret = new CombineLatestStreamNode<I, I2, O>(stream, inputStream2, resultSelector, name, true);
-            return new NodeOutput<O, I>(ret.Output, ret.Error);
+            var ret = new CombineLatestStreamNode<TIn1, TIn2, TOut>(stream, name, inputStream2, resultSelector, true);
+            return new NodeOutputError<TOut, TIn1, TIn2>(ret.Output, ret.Error);
         }
     }
 }

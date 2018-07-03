@@ -6,31 +6,64 @@ using System.Reactive.Linq;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
-    public class WhereStreamNode<I> : OutputErrorStreamNodeBase<I, ErrorRow<I>>
+    public class WhereStreamNode<TIn> : StreamNodeBase, IStreamNodeOutput<TIn>, IStreamNodeError<ErrorRow<TIn>>
     {
-        public WhereStreamNode(IStream<I> inputStream, Func<I, bool> predicate, string name, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentsName = null) : base(inputStream, name, parentsName)
+        public WhereStreamNode(IStream<TIn> inputStream, string name, Func<TIn, bool> predicate, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentNodeNamePath = null)
         {
+            base.Initialize(inputStream.ExecutionContext, name, parentNodeNamePath);
             if (redirectErrorsInsteadOfFail)
             {
                 var errorManagedResult = inputStream.Observable.Select(base.ErrorManagementWrapFunction(predicate));
-                this.CreateOutputStream(errorManagedResult.Where(i => !i.OnException).Where(i => i.Output).Select(i => i.Input));
-                this.CreateErrorStream(errorManagedResult.Where(i => i.OnException).Select(i => new ErrorRow<I>(i.Input, i.Exception)));
+                this.Output = base.CreateStream(nameof(this.Output), errorManagedResult.Where(i => !i.OnException).Where(i => i.Output).Select(i => i.Input));
+                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Where(i => i.OnException).Select(i => new ErrorRow<TIn>(i.Input, i.Exception)));
             }
             else
-                this.CreateOutputStream(inputStream.Observable.Where(predicate));
+                this.Output = base.CreateStream(nameof(this.Output), inputStream.Observable.Where(predicate));
         }
+        public IStream<TIn> Output { get; }
+        public IStream<ErrorRow<TIn>> Error { get; }
     }
+
+    public class WhereSortedStreamNode<TIn> : StreamNodeBase, ISortedStreamNodeOutput<TIn>, IStreamNodeError<ErrorRow<TIn>>
+    {
+        public WhereSortedStreamNode(ISortedStream<TIn> inputStream, string name, Func<TIn, bool> predicate, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentNodeNamePath = null)
+        {
+            base.Initialize(inputStream.ExecutionContext, name, parentNodeNamePath);
+            if (redirectErrorsInsteadOfFail)
+            {
+                var errorManagedResult = inputStream.Observable.Select(base.ErrorManagementWrapFunction(predicate));
+                this.Output = base.CreateSortedStream(nameof(this.Output), errorManagedResult.Where(i => !i.OnException).Where(i => i.Output).Select(i => i.Input), inputStream.SortCriterias);
+                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Where(i => i.OnException).Select(i => new ErrorRow<TIn>(i.Input, i.Exception)));
+            }
+            else
+                this.Output = base.CreateSortedStream(nameof(this.Output), inputStream.Observable.Where(predicate), inputStream.SortCriterias);
+        }
+        public ISortedStream<TIn> Output { get; }
+        public IStream<ErrorRow<TIn>> Error { get; }
+    }
+
     public static partial class StreamEx
     {
-        public static IStream<I> Where<I>(this IStream<I> stream, string name, Func<I, bool> predicate)
+        public static ISortedStream<TIn> Where<TIn>(this ISortedStream<TIn> stream, string name, Func<TIn, bool> predicate)
         {
-            return new WhereStreamNode<I>(stream, predicate, name, false).Output;
+            return new WhereSortedStreamNode<TIn>(stream, name, predicate, false).Output;
         }
 
-        public static NodeOutput<I, I> WhereKeepErrors<I>(this IStream<I> stream, string name, Func<I, bool> predicate)
+        public static SortedNodeOutputError<TIn, TIn> WhereKeepErrors<TIn>(this ISortedStream<TIn> stream, string name, Func<TIn, bool> predicate)
         {
-            var ret = new WhereStreamNode<I>(stream, predicate, name, true);
-            return new NodeOutput<I, I>(ret.Output, ret.Error);
+            var ret = new WhereSortedStreamNode<TIn>(stream, name, predicate, true);
+            return new SortedNodeOutputError<TIn, TIn>(ret.Output, ret.Error);
+        }
+
+        public static IStream<TIn> Where<TIn>(this IStream<TIn> stream, string name, Func<TIn, bool> predicate)
+        {
+            return new WhereStreamNode<TIn>(stream, name, predicate, false).Output;
+        }
+
+        public static NodeOutputError<TIn, TIn> WhereKeepErrors<TIn>(this IStream<TIn> stream, string name, Func<TIn, bool> predicate)
+        {
+            var ret = new WhereStreamNode<TIn>(stream, name, predicate, true);
+            return new NodeOutputError<TIn, TIn>(ret.Output, ret.Error);
         }
     }
 }
