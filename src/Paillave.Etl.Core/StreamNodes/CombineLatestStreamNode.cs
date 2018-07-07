@@ -8,7 +8,7 @@ namespace Paillave.Etl.Core.StreamNodes
 {
     public class CombineLatestStreamNode<TIn1, TIn2, TOut> : StreamNodeBase, IStreamNodeError<ErrorRow<TIn1, TIn2>>, IStreamNodeOutput<TOut>
     {
-        public CombineLatestStreamNode(IStream<TIn1> inputStream1, string name, IStream<TIn2> inputStream2, Func<TIn1, TIn2, TOut> resultSelector, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentNodeNamePath = null)
+        public CombineLatestStreamNode(IStream<TIn1> inputStream1, string name, IEnumerable<string> parentNodeNamePath, IStream<TIn2> inputStream2, Func<TIn1, TIn2, TOut> resultSelector, bool redirectErrorsInsteadOfFail)
         {
             base.Initialize(inputStream1.ExecutionContext ?? inputStream2.ExecutionContext, name, parentNodeNamePath);
             if (redirectErrorsInsteadOfFail)
@@ -27,11 +27,11 @@ namespace Paillave.Etl.Core.StreamNodes
     {
         public static IStream<TOut> CombineLatest<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> inputStream2, Func<TIn1, TIn2, TOut> resultSelector)
         {
-            return new CombineLatestStreamNode<TIn1, TIn2, TOut>(stream, name, inputStream2, resultSelector, false).Output;
+            return new CombineLatestStreamNode<TIn1, TIn2, TOut>(stream, name, null, inputStream2, resultSelector, false).Output;
         }
         public static NodeOutputError<TOut, TIn1, TIn2> CombineLatestKeepErrors<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> inputStream2, Func<TIn1, TIn2, TOut> resultSelector)
         {
-            var ret = new CombineLatestStreamNode<TIn1, TIn2, TOut>(stream, name, inputStream2, resultSelector, true);
+            var ret = new CombineLatestStreamNode<TIn1, TIn2, TOut>(stream, name, null, inputStream2, resultSelector, true);
             return new NodeOutputError<TOut, TIn1, TIn2>(ret.Output, ret.Error);
         }
     }

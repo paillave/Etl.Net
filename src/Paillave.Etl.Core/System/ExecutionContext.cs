@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl.Core.System
 {
-    public class ExecutionContext<TConfig> : IDisposable, IConfigurable<TConfig>
+    public class ExecutionContext<TConfig> : IConfigurable<TConfig>//, IDisposable
     {
         private readonly ISubject<TraceEvent> _traceSubject;
         private readonly ISubject<TConfig> _configSubject;
-        public SortedStream<TraceEvent> ProcessTraceContextStream { get; }
-        public Stream<TConfig> ConfigStream { get; }
+        public SortedStream<TraceEvent> TraceStream { get; }
+        public Stream<TConfig> StartupStream { get; }
         private TConfig _config;
+        private IList<IObservable<bool>> _streamsToEnd = new List<IObservable<bool>>();
 
         public ExecutionContext(string jobName)
         {
@@ -21,9 +22,10 @@ namespace Paillave.Etl.Core.System
             this.ExecutionId = Guid.NewGuid();
             this._traceSubject = new Subject<TraceEvent>();
             this._configSubject = new Subject<TConfig>();
-            this.ProcessTraceContextStream = new SortedStream<TraceEvent>(null, new NullExecutionContext(), null, this._traceSubject, new[] { new SortCriteria<TraceEvent>(i => i.DateTime) });
+            this.TraceStream = new SortedStream<TraceEvent>(null, new NullExecutionContext(this), null, this._traceSubject, new[] { new SortCriteria<TraceEvent>(i => i.DateTime) });
             var executionContext = new CurrentExecutionContext(this);
-            this.ConfigStream = new Stream<TConfig>(new Tracer(executionContext, new CurrentExecutionNodeContext()), executionContext, null, this._configSubject);
+            this.StartupStream = new Stream<TConfig>(new Tracer(executionContext, new CurrentExecutionNodeContext(jobName)), executionContext, null, this._configSubject.SingleAsync().Publish().RefCount());
+            //this._streamToEnd = this.StartupStream.Observable.Select(i => true);
         }
 
         public void Configure(TConfig config)
@@ -33,32 +35,26 @@ namespace Paillave.Etl.Core.System
 
         public Guid ExecutionId { get; }
 
-        private TDataSource CreateDataSource<TDataSource, TRow, TDataSourceConf>(string name, Func<TConfig, TDataSourceConf> getDsConfig) where TDataSource : StreamNodeBase, IDataSourceConfigurable<TDataSourceConf, TRow>, new()
-        {
-            TDataSource ds = new TDataSource();
-            ds.Initialize(ConfigStream.ExecutionContext, name);
-            ds.Configure(_configSubject.SelectMany(cnfg=>), getDsConfig(this._config));
-            return ds;
-        }
+        //private TDataSource CreateDataSource<TDataSource, TRow, TDataSourceConf>(string name, Func<TConfig, TDataSourceConf> getDsConfig) where TDataSource : DataSourceNodeBase<TDataSourceConf, TRow>, new()
+        //{
+        //    TDataSource ds = new TDataSource();
+        //    ds.Initialize(StartupStream.ExecutionContext, name);
+        //    ds.SetupStream(this._configSubject.Select(getDsConfig));
+        //    return ds;
+        //}
 
-        public IStream<TRow> DataSource<TDataSource, TRow, TDataSourceConf>(string name, Func<TConfig, TDataSourceConf> getDsConfig) where TDataSource : StreamNodeBase, IConfigurable<TDataSourceConf>, IStreamNodeOutput<TRow>, new()
-        {
-            return this.CreateDataSource<TDataSource, TRow, TDataSourceConf>(name, getDsConfig).Output;
-        }
+        //public IStream<TRow> DataSource<TDataSource, TRow, TDataSourceConf>(string name, Func<TConfig, TDataSourceConf> getDsConfig) where TDataSource : DataSourceNodeBase<TDataSourceConf, TRow>, new()
+        //{
+        //    return this.CreateDataSource<TDataSource, TRow, TDataSourceConf>(name, getDsConfig).Output;
+        //}
 
-        public ISortedStream<TRow> SortedDataSource<TDataSource, TRow, TDataSourceConf>(string name, Func<TConfig, TDataSourceConf> getDsConfig) where TDataSource : StreamNodeBase, IConfigurable<TDataSourceConf>, ISortedStreamNodeOutput<TRow>, new()
+        public async Task ExecuteAsync()
         {
-            return this.CreateDataSource<TDataSource, TRow, TDataSourceConf>(name, getDsConfig).Output;
-        }
-
-        public IKeyedStream<TRow> KeyedDataSource<TDataSource, TRow, TDataSourceConf>(string name, Func<TConfig, TDataSourceConf> getDsConfig) where TDataSource : StreamNodeBase, IConfigurable<TDataSourceConf>, IKeyedStreamNodeOutput<TRow>, new()
-        {
-            return this.CreateDataSource<TDataSource, TRow, TDataSourceConf>(name, getDsConfig).Output;
-        }
-
-        public void Start()
-        {
-            this._configSubject.OnNext(_config);
+            //this._streamsToEnd.Subscribe(_ => { }, () => this._traceSubject.OnCompleted());
+            this._configSubject.OnNext(this._config);
+            this._configSubject.OnCompleted();
+            await Observable.Merge(this._streamsToEnd);
+            //await this._streamToEnd.LastOrDefaultAsync();
         }
 
         public string JobName { get; }
@@ -69,9 +65,15 @@ namespace Paillave.Etl.Core.System
         }
         private class CurrentExecutionNodeContext : INodeContext
         {
-            public IEnumerable<string> NodeNamePath => new[] { "Root" };
+            private readonly string _jobName;
 
-            public string TypeName => "Root";
+            public CurrentExecutionNodeContext(string jobName)
+            {
+                this._jobName = jobName;
+            }
+            public IEnumerable<string> NodeNamePath => new[] { _jobName };
+
+            public string TypeName => "ExecutionContext";
         }
         private class CurrentExecutionContext : IExecutionContext
         {
@@ -88,33 +90,48 @@ namespace Paillave.Etl.Core.System
             {
                 this._localExecutionContext.Trace(traceEvent);
             }
+
+            public void AddObservableToWait<TRow>(IObservable<TRow> observable)
+            {
+                _localExecutionContext._streamsToEnd.Add(observable.Select(i => true));
+            }
         }
         private class NullExecutionContext : IExecutionContext
         {
+            private ExecutionContext<TConfig> _localExecutionContext;
+            public NullExecutionContext(ExecutionContext<TConfig> localExecutionContext)
+            {
+                this._localExecutionContext = localExecutionContext;
+            }
             public Guid ExecutionId { get; }
             public string JobName { get; }
             public void Trace(TraceEvent traveEvent) { }
-        }
 
-        #region IDisposable Support
-        private bool disposedValue = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
+            public void AddObservableToWait<TRow>(IObservable<TRow> observable)
             {
-                if (disposing)
-                {
-                    this._traceSubject.OnCompleted();
-                }
-                disposedValue = true;
+                //_localExecutionContext._streamToEnd = _localExecutionContext._streamToEnd.Merge(observable.Select(i => true));
             }
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-        #endregion
+        //#region IDisposable Support
+        //private bool disposedValue = false;
+
+        //protected virtual void Dispose(bool disposing)
+        //{
+        //    if (!disposedValue)
+        //    {
+        //        if (disposing)
+        //        {
+        //            this._traceSubject.OnCompleted();
+        //        }
+        //        disposedValue = true;
+        //    }
+        //}
+
+        //public void Dispose()
+        //{
+        //    Dispose(true);
+        //}
+        //#endregion
     }
 }

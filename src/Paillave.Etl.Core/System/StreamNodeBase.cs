@@ -27,15 +27,21 @@ namespace Paillave.Etl.Core.System
 
         protected IStream<T> CreateStream<T>(string streamName, IObservable<T> observable)
         {
-            return new Stream<T>(this.Tracer, this._executionContext, streamName, observable);
+            var stream = new Stream<T>(this.Tracer, this._executionContext, streamName, observable);
+            this._executionContext.AddObservableToWait(stream.Observable);
+            return stream;
         }
         protected ISortedStream<T> CreateSortedStream<T>(string streamName, IObservable<T> observable, IEnumerable<SortCriteria<T>> sortCriterias)
         {
-            return new SortedStream<T>(this.Tracer, this._executionContext, streamName, observable, sortCriterias);
+            var stream = new SortedStream<T>(this.Tracer, this._executionContext, streamName, observable, sortCriterias);
+            this._executionContext.AddObservableToWait(stream.Observable);
+            return stream;
         }
         protected IKeyedStream<T> CreateKeyedStream<T>(string streamName, IObservable<T> observable, IEnumerable<SortCriteria<T>> sortCriterias)
         {
-            return new KeyedStream<T>(this.Tracer, this._executionContext, streamName, observable, sortCriterias);
+            var stream = new KeyedStream<T>(this.Tracer, this._executionContext, streamName, observable, sortCriterias);
+            this._executionContext.AddObservableToWait(stream.Observable);
+            return stream;
         }
         protected Func<TIn, ErrorManagementItem<TIn, TOut>> ErrorManagementWrapFunction<TIn, TOut>(Func<TIn, TOut> call)
         {

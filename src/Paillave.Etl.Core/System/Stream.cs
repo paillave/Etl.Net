@@ -14,6 +14,9 @@ namespace Paillave.Etl.Core.System
         public Stream(ITracer tracer, IExecutionContext executionContext, string sourceOutputName, IObservable<T> observable)
         {
             this.ExecutionContext = executionContext;
+
+
+            observable = observable.Publish().RefCount();
             if (tracer != null)
             {
                 ObservableType.Merge<ITraceContent>(
