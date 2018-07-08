@@ -28,8 +28,4 @@ namespace Paillave.Etl.Core.Helpers.MapperFactories
             public TypeConverter TypeConverter { get; }
             public CultureInfo CultureInfo { get; }
         }
-        //public static Func<IList<string>, T> StringsToObjectMappers<T>(ILineParserFactory<T> config) where T : new()
-        //{
-        //    return config.GetLineParser();
-        //}
 }

@@ -16,7 +16,13 @@ namespace Paillave.Etl.Core.System
         {
             this.ExecutionContext = executionContext;
 
-            observable = observable.TakeUntil(executionContext.TraceEvents.Where(i => i.Content.Level == TraceLevel.Error)).Publish().RefCount();
+            observable = observable.Catch<T, Exception>(e =>
+              {
+                  tracer.Trace(new UnhandledExceptionStreamTraceContent(sourceOutputName, e));
+                  return ObservableType.Empty<T>();
+              });
+            observable = observable.Publish().RefCount();
+            executionContext.AddObservableToWait(observable);
             if (tracer != null)
             {
                 ObservableType.Merge<ITraceContent>(

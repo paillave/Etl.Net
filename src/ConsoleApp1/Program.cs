@@ -23,6 +23,9 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             CultureInfo ci = CultureInfo.CreateSpecificCulture("en-GB");
+            //ci.DateTimeFormat.FullDateTimePattern = "yyyy-dd-MM HH:mm:ss";
+            //ci.DateTimeFormat.LongDatePattern = "yyyy-dd-MM";
+            //ci.DateTimeFormat.ShortDatePattern = "yyyy-dd-MM";
             ci.DateTimeFormat.FullDateTimePattern = "yyyy-MM-dd HH:mm:ss";
             ci.DateTimeFormat.LongDatePattern = "yyyy-MM-dd";
             ci.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
@@ -31,7 +34,7 @@ namespace ConsoleApp1
             ci.NumberFormat.PercentDecimalSeparator = ",";
 
             var ctx = new ExecutionContext<MyClass>("import file");
-            //ctx.TraceStream.Observable.Where(i => i.Content.Level <= System.Diagnostics.TraceLevel.Info).Subscribe(Console.WriteLine);
+            ctx.TraceStream.Observable.Where(i => i.Content.Level <= System.Diagnostics.TraceLevel.Info).Subscribe(Console.WriteLine);
 
             #region Main file
             var splittedLineS = ctx.StartupStream

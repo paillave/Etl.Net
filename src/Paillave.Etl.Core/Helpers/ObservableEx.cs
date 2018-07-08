@@ -13,6 +13,36 @@ namespace System.Reactive.Linq
         {
             return sourceS.Scan<TResult, Tuple<TResult, TResult>>(null, (a, v) => new Tuple<TResult, TResult>(a == null ? v : a.Item2, v));
         }
+
+        //private static Func<TIn, ErrorManagementItem<TIn, TOut>> ErrorManagementWrapFunction<TIn, TOut>(Func<TIn, TOut> call)
+        //{
+        //    return (TIn input) =>
+        //    {
+        //        try
+        //        {
+        //            return new ErrorManagementItem<TIn, TOut>(input, call(input));
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            return new ErrorManagementItem<TIn, TOut>(input, ex);
+        //        }
+        //    };
+        //}
+        //public static IObservable<TOut> SelectCatch<TIn, TOut>(this IObservable<TIn> source, Func<TIn, TOut> selector)
+        //{
+        //    return Observable.Create<TOut>(o =>
+        //    {
+        //        var disp = source.Select(ErrorManagementWrapFunction(selector)).Subscribe(i =>
+        //        {
+        //            if (i.OnException)
+        //                o.OnError(i.Exception);
+        //            else
+        //                o.OnNext(i.Output);
+        //        }, o.OnError);
+        //        return new Disposables.CompositeDisposable(disp);
+        //    });
+        //}
+
         private class Side<T>
         {
             public bool IsComplete { get; set; } = false;

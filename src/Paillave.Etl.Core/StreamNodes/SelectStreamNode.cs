@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
@@ -28,6 +29,8 @@ namespace Paillave.Etl.Core.StreamNodes
                 this.Output = arguments.Mapper == null ?
                     base.CreateStream(nameof(this.Output), input.Observable.Select(arguments.IndexMapper))
                     : base.CreateStream(nameof(this.Output), input.Observable.Select(arguments.Mapper));
+
+            //Observable.Create()
         }
 
         public IStream<TOut> Output { get; }

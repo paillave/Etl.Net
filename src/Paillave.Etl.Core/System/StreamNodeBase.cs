@@ -46,7 +46,7 @@ namespace Paillave.Etl.Core.System
         protected IStream<T> CreateStream<T>(string streamName, IObservable<T> observable)
         {
             var stream = new Stream<T>(this.Tracer, this._executionContext, streamName, observable);
-            this._executionContext.AddObservableToWait(stream.Observable);
+            //this._executionContext.AddObservableToWait(stream.Observable);
             return stream;
         }
 
@@ -60,25 +60,25 @@ namespace Paillave.Etl.Core.System
         protected ISortedStream<T> CreateSortedStream<T>(string streamName, IObservable<T> observable, IEnumerable<SortCriteria<T>> sortCriterias)
         {
             var stream = new SortedStream<T>(this.Tracer, this._executionContext, streamName, observable, sortCriterias);
-            this._executionContext.AddObservableToWait(stream.Observable);
+            //this._executionContext.AddObservableToWait(stream.Observable);
             return stream;
         }
         protected ISortedStream<T> CreateStream<T>(string streamName, IObservable<T> observable, ISortedStream<T> streamIn)
         {
             var stream = new SortedStream<T>(this.Tracer, this._executionContext, streamName, observable, streamIn.SortCriterias);
-            this._executionContext.AddObservableToWait(stream.Observable);
+            //this._executionContext.AddObservableToWait(stream.Observable);
             return stream;
         }
         protected IKeyedStream<T> CreateKeyedStream<T>(string streamName, IObservable<T> observable, IEnumerable<SortCriteria<T>> sortCriterias)
         {
             var stream = new KeyedStream<T>(this.Tracer, this._executionContext, streamName, observable, sortCriterias);
-            this._executionContext.AddObservableToWait(stream.Observable);
+            //this._executionContext.AddObservableToWait(stream.Observable);
             return stream;
         }
         protected IKeyedStream<T> CreateStream<T>(string streamName, IObservable<T> observable, IKeyedStream<T> streamIn)
         {
             var stream = new KeyedStream<T>(this.Tracer, this._executionContext, streamName, observable, streamIn.SortCriterias);
-            this._executionContext.AddObservableToWait(stream.Observable);
+            //this._executionContext.AddObservableToWait(stream.Observable);
             return stream;
         }
 

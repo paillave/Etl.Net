@@ -41,8 +41,4 @@ namespace Paillave.Etl.Core.Helpers.MapperFactories
             this._constructor).Parse;
         }
     }
-    //public static Func<IList<string>, T> StringsToObjectMappers<T>(ILineParserFactory<T> config) where T : new()
-    //{
-    //    return config.GetLineParser();
-    //}
 }

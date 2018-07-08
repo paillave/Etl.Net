@@ -42,8 +42,9 @@ namespace Paillave.Etl.Core.System
             //this._streamsToEnd.Subscribe(_ => { }, () => this._traceSubject.OnCompleted());
             this._startupSubject.OnNext(this._config);
             this._startupSubject.OnCompleted();
-            await Observable.Merge(this._streamsToEnd).TakeUntil(this._traceSubject.Where(i => i.Content.Level == TraceLevel.Error));
-            //await this._streamToEnd.LastOrDefaultAsync();
+            var output = Observable.Merge(this._streamsToEnd).TakeUntil(this._traceSubject.Where(i => i.Content.Level == TraceLevel.Error));
+            output.Subscribe(_ => { }, this._traceSubject.OnCompleted);
+            await output;
         }
 
         public string JobName { get; }
@@ -74,7 +75,7 @@ namespace Paillave.Etl.Core.System
             public string JobName => this._localExecutionContext.JobName;
             public IObservable<TraceEvent> TraceEvents => this._localExecutionContext._traceSubject;
             public void Trace(TraceEvent traceEvent) => this._localExecutionContext.Trace(traceEvent);
-            public void AddObservableToWait<TRow>(IObservable<TRow> observable) => _localExecutionContext._streamsToEnd.Add(observable.Select(i => true));
+            public void AddObservableToWait<TRow>(IObservable<TRow> observable) => _localExecutionContext._streamsToEnd.Add(observable.TakeUntil(_localExecutionContext._traceSubject.FirstOrDefaultAsync(i => i.Content.Level == TraceLevel.Error)).Select(i => true));
         }
         private class NullExecutionContext : IExecutionContext
         {
