@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using Humanizer;
 
 namespace Paillave.Etl.Core.System
 {
@@ -31,7 +32,7 @@ namespace Paillave.Etl.Core.System
         public ITraceContent Content { get; }
         public override string ToString()
         {
-            return $"{this.JobName}/{this.ExecutionId} - [{this.Content.Level}] ({NodeTypeName}).{string.Join("->", NodeNamesPath)} : {Content}";
+            return $"{this.JobName}/{this.ExecutionId} - [{this.Content.Level}] {NodeTypeName.Dehumanize()}.{string.Join("->", NodeNamesPath.Select(i=>i.Dehumanize()))} : {Content}";
         }
     }
 }

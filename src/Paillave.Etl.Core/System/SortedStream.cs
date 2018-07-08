@@ -20,7 +20,7 @@ namespace Paillave.Etl.Core.System
             {
                 this.SortCriterias = new ReadOnlyCollection<SortCriteria<T>>(sortCriterias.ToList());
                 this._comparer = new SortCriteriaComparer<T>(sortCriterias);
-                observable
+                this.Observable
                     .PairWithPrevious()
                     .Select((Pair, Index) => new { Pair, Index })
                     .Skip(1)

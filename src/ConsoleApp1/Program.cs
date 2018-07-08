@@ -23,28 +23,30 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             CultureInfo ci = CultureInfo.CreateSpecificCulture("en-GB");
-            //ci.DateTimeFormat.FullDateTimePattern = "yyyy-dd-MM HH:mm:ss";
-            //ci.DateTimeFormat.LongDatePattern = "yyyy-dd-MM";
-            //ci.DateTimeFormat.ShortDatePattern = "yyyy-dd-MM";
+            ci.DateTimeFormat.FullDateTimePattern = "yyyy-dd-MM HH:mm:ss";
+            ci.DateTimeFormat.LongDatePattern = "yyyy-dd-MM";
+            ci.DateTimeFormat.ShortDatePattern = "yyyy-dd-MM";
+
             ci.DateTimeFormat.FullDateTimePattern = "yyyy-MM-dd HH:mm:ss";
             ci.DateTimeFormat.LongDatePattern = "yyyy-MM-dd";
             ci.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
+
             ci.NumberFormat.NumberDecimalSeparator = ",";
             ci.NumberFormat.CurrencyDecimalSeparator = ",";
             ci.NumberFormat.PercentDecimalSeparator = ",";
 
             var ctx = new ExecutionContext<MyClass>("import file");
-            ctx.TraceStream.Observable.Where(i => i.Content.Level <= System.Diagnostics.TraceLevel.Info).Subscribe(Console.WriteLine);
+            //ctx.TraceStream.Observable.Where(i => i.Content.Level <= System.Diagnostics.TraceLevel.Info).Subscribe(Console.WriteLine);
 
             #region Main file
             var splittedLineS = ctx.StartupStream
-                .Map("Open file", i => (Stream)File.OpenRead(i.FilePath))
+                .Select("Open file", i => (Stream)File.OpenRead(i.FilePath))
                 .CrossApplyDataStream("Read file")
-                .Map("split lines", Mappers.CsvLineSplitter('\t'));
+                .Select("split lines", Mappers.CsvLineSplitter('\t'));
 
             var lineParserS = splittedLineS
                 .Top("take first header line only", 1)
-                .Map("create line processor", Mappers.ColumnNameStringParserMappers<Class1>()
+                .Select("create line processor", Mappers.ColumnNameStringParserMappers<Class1>()
                     .WithGlobalCultureInfo(ci)
                     .MapColumnToProperty("#", i => i.Id)
                     .MapColumnToProperty("DateTime", i => i.Col1)
@@ -60,13 +62,13 @@ namespace ConsoleApp1
 
             #region Type file
             var splittedTypeLineS = ctx.StartupStream
-                .Map("Open type file", i => (Stream)File.OpenRead(i.TypeFilePath))
+                .Select("Open type file", i => (Stream)File.OpenRead(i.TypeFilePath))
                 .CrossApplyDataStream("Read type file")
-                .Map("split type lines", Mappers.CsvLineSplitter('\t'));
+                .Select("split type lines", Mappers.CsvLineSplitter('\t'));
 
             var typeLineParserS = splittedTypeLineS
                 .Top("take first header type line only", 1)
-                .Map("create type line processor", Mappers.ColumnNameStringParserMappers<Class2>()
+                .Select("create type line processor", Mappers.ColumnNameStringParserMappers<Class2>()
                     .WithGlobalCultureInfo(ci)
                     .MapColumnToProperty("#", i => i.Id)
                     .MapColumnToProperty("Label", i => i.Name)
@@ -78,7 +80,8 @@ namespace ConsoleApp1
             #endregion
 
             parsedLineS.LeftJoin("join types to file", parsedTypeLineS, (l, r) => new { l.Id, r.Name })
-                .Map("output after join", i => $"{i.Id}->{i.Name}").Observable.Subscribe(Console.WriteLine);
+                //.Where("check any issue", i => i.Name == null)
+                .Select("output after join", i => $"{i.Id}->{i.Name}").Observable.Subscribe(Console.WriteLine);
 
             ctx.Configure(new MyClass
             {

@@ -21,8 +21,8 @@ namespace Paillave.Etl.Core.System
                   tracer.Trace(new UnhandledExceptionStreamTraceContent(sourceOutputName, e));
                   return ObservableType.Empty<T>();
               });
+            observable = executionContext.StopIfContextStops(observable);
             observable = observable.Publish().RefCount();
-            executionContext.AddObservableToWait(observable);
             if (tracer != null)
             {
                 ObservableType.Merge<ITraceContent>(

@@ -38,7 +38,7 @@ namespace Paillave.Etl.Core.StreamNodes
     }
     public static partial class StreamEx
     {
-        public static IStream<TOut> Map<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper)
+        public static IStream<TOut> Select<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper)
         {
             return new SelectStreamNode<TIn, TOut>(stream, name, null, new SelectArgs<TIn, TOut>
             {
@@ -46,7 +46,7 @@ namespace Paillave.Etl.Core.StreamNodes
                 RedirectErrorsInsteadOfFail = false
             }).Output;
         }
-        public static IStream<TOut> Map<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, int, TOut> mapper)
+        public static IStream<TOut> Select<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, int, TOut> mapper)
         {
             return new SelectStreamNode<TIn, TOut>(stream, name, null, new SelectArgs<TIn, TOut>
             {
@@ -54,7 +54,7 @@ namespace Paillave.Etl.Core.StreamNodes
                 RedirectErrorsInsteadOfFail = false
             }).Output;
         }
-        public static NodeOutputError<TOut, TIn> MapKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper)
+        public static NodeOutputError<TOut, TIn> SelectKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper)
         {
             var ret = new SelectStreamNode<TIn, TOut>(stream, name, null, new SelectArgs<TIn, TOut>
             {
@@ -63,7 +63,7 @@ namespace Paillave.Etl.Core.StreamNodes
             });
             return new NodeOutputError<TOut, TIn>(ret.Output, ret.Error);
         }
-        public static NodeOutputError<TOut, TIn> MapKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, int, TOut> mapper)
+        public static NodeOutputError<TOut, TIn> SelectKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, int, TOut> mapper)
         {
             var ret = new SelectStreamNode<TIn, TOut>(stream, name, null, new SelectArgs<TIn, TOut>
             {

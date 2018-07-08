@@ -11,6 +11,6 @@ namespace Paillave.Etl.Core.System
         void Trace(TraceEvent traceEvent);
         IObservable<TraceEvent> TraceEvents { get; }
 
-        void AddObservableToWait<TRow>(IObservable<TRow> observable);
+        IObservable<TRow> StopIfContextStops<TRow>(IObservable<TRow> observable);
     }
 }
