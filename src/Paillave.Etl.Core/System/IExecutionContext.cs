@@ -9,6 +9,8 @@ namespace Paillave.Etl.Core.System
         Guid ExecutionId { get; }
         string JobName { get; }
         void Trace(TraceEvent traceEvent);
+        IObservable<TraceEvent> TraceEvents { get; }
+
         void AddObservableToWait<TRow>(IObservable<TRow> observable);
     }
 }

@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using ObservableType = System.Reactive.Linq.Observable;
 
 namespace Paillave.Etl.Core.System
@@ -15,8 +16,7 @@ namespace Paillave.Etl.Core.System
         {
             this.ExecutionContext = executionContext;
 
-
-            observable = observable.Publish().RefCount();
+            observable = observable.TakeUntil(executionContext.TraceEvents.Where(i => i.Content.Level == TraceLevel.Error)).Publish().RefCount();
             if (tracer != null)
             {
                 ObservableType.Merge<ITraceContent>(

@@ -3,14 +3,16 @@ using System.Reactive.Linq;
 using System.Collections.Generic;
 using System.Reactive.Subjects;
 using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Reactive.Disposables;
 
 namespace Paillave.Etl.Core.System
 {
     public class ExecutionContext<TConfig> : IConfigurable<TConfig>//, IDisposable
     {
         private readonly ISubject<TraceEvent> _traceSubject;
-        private readonly ISubject<TConfig> _configSubject;
+        private readonly ISubject<TConfig> _startupSubject;
         public SortedStream<TraceEvent> TraceStream { get; }
         public Stream<TConfig> StartupStream { get; }
         private TConfig _config;
@@ -21,10 +23,10 @@ namespace Paillave.Etl.Core.System
             this.JobName = jobName;
             this.ExecutionId = Guid.NewGuid();
             this._traceSubject = new Subject<TraceEvent>();
-            this._configSubject = new Subject<TConfig>();
+            this._startupSubject = new Subject<TConfig>();
             this.TraceStream = new SortedStream<TraceEvent>(null, new NullExecutionContext(this), null, this._traceSubject, new[] { new SortCriteria<TraceEvent>(i => i.DateTime) });
             var executionContext = new CurrentExecutionContext(this);
-            this.StartupStream = new Stream<TConfig>(new Tracer(executionContext, new CurrentExecutionNodeContext(jobName)), executionContext, null, this._configSubject.SingleAsync().Publish().RefCount());
+            this.StartupStream = new Stream<TConfig>(new Tracer(executionContext, new CurrentExecutionNodeContext(jobName)), executionContext, null, this._startupSubject.SingleAsync().Publish().RefCount());
             //this._streamToEnd = this.StartupStream.Observable.Select(i => true);
         }
 
@@ -38,9 +40,9 @@ namespace Paillave.Etl.Core.System
         public async Task ExecuteAsync()
         {
             //this._streamsToEnd.Subscribe(_ => { }, () => this._traceSubject.OnCompleted());
-            this._configSubject.OnNext(this._config);
-            this._configSubject.OnCompleted();
-            await Observable.Merge(this._streamsToEnd);
+            this._startupSubject.OnNext(this._config);
+            this._startupSubject.OnCompleted();
+            await Observable.Merge(this._streamsToEnd).TakeUntil(this._traceSubject.Where(i => i.Content.Level == TraceLevel.Error));
             //await this._streamToEnd.LastOrDefaultAsync();
         }
 
@@ -59,7 +61,6 @@ namespace Paillave.Etl.Core.System
                 this._jobName = jobName;
             }
             public IEnumerable<string> NodeNamePath => new[] { _jobName };
-
             public string TypeName => "ExecutionContext";
         }
         private class CurrentExecutionContext : IExecutionContext
@@ -69,19 +70,11 @@ namespace Paillave.Etl.Core.System
                 this._localExecutionContext = localExecutionContext;
             }
             private ExecutionContext<TConfig> _localExecutionContext;
-            public Guid ExecutionId { get { return this._localExecutionContext.ExecutionId; } }
-
-            public string JobName { get { return this._localExecutionContext.JobName; } }
-
-            public void Trace(TraceEvent traceEvent)
-            {
-                this._localExecutionContext.Trace(traceEvent);
-            }
-
-            public void AddObservableToWait<TRow>(IObservable<TRow> observable)
-            {
-                _localExecutionContext._streamsToEnd.Add(observable.Select(i => true));
-            }
+            public Guid ExecutionId => this._localExecutionContext.ExecutionId;
+            public string JobName => this._localExecutionContext.JobName;
+            public IObservable<TraceEvent> TraceEvents => this._localExecutionContext._traceSubject;
+            public void Trace(TraceEvent traceEvent) => this._localExecutionContext.Trace(traceEvent);
+            public void AddObservableToWait<TRow>(IObservable<TRow> observable) => _localExecutionContext._streamsToEnd.Add(observable.Select(i => true));
         }
         private class NullExecutionContext : IExecutionContext
         {
@@ -92,33 +85,9 @@ namespace Paillave.Etl.Core.System
             }
             public Guid ExecutionId { get; }
             public string JobName { get; }
+            public IObservable<TraceEvent> TraceEvents => Observable.Empty<TraceEvent>();
             public void Trace(TraceEvent traveEvent) { }
-
-            public void AddObservableToWait<TRow>(IObservable<TRow> observable)
-            {
-                //_localExecutionContext._streamToEnd = _localExecutionContext._streamToEnd.Merge(observable.Select(i => true));
-            }
+            public void AddObservableToWait<TRow>(IObservable<TRow> observable) { }
         }
-
-        //#region IDisposable Support
-        //private bool disposedValue = false;
-
-        //protected virtual void Dispose(bool disposing)
-        //{
-        //    if (!disposedValue)
-        //    {
-        //        if (disposing)
-        //        {
-        //            this._traceSubject.OnCompleted();
-        //        }
-        //        disposedValue = true;
-        //    }
-        //}
-
-        //public void Dispose()
-        //{
-        //    Dispose(true);
-        //}
-        //#endregion
     }
 }
