@@ -11,6 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="StreamNodes\CrossApplyNode.cs" />
+    <Compile Remove="System\DataSourceNodeBase.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Reactive" Version="4.1.0-preview.84" />
   </ItemGroup>
 

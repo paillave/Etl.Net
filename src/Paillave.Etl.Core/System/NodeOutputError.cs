@@ -24,6 +24,16 @@ namespace Paillave.Etl.Core.System
         public ISortedStream<TOut> Output { get; }
         public IStream<ErrorRow<TIn>> Error { get; }
     }
+    public class KeyedNodeOutputError<TOut, TIn>
+    {
+        public KeyedNodeOutputError(IKeyedStream<TOut> output, IStream<ErrorRow<TIn>> error)
+        {
+            this.Output = output;
+            this.Error = error;
+        }
+        public IKeyedStream<TOut> Output { get; }
+        public IStream<ErrorRow<TIn>> Error { get; }
+    }
     public class NodeOutputError<TOut, TIn1, TIn2>
     {
         public NodeOutputError(IStream<TOut> output, IStream<ErrorRow<TIn1, TIn2>> error)

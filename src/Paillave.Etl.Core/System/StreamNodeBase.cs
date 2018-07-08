@@ -9,10 +9,28 @@ using System.Reactive.Subjects;
 
 namespace Paillave.Etl.Core.System
 {
+    public abstract class StreamNodeBase<TStream, TIn> : StreamNodeBase where TStream : IStream<TIn>
+    {
+        public TStream Input { get; private set; }
+        public StreamNodeBase(TStream input, string name, IEnumerable<string> parentNodeNamePath)
+            : base(input.ExecutionContext, name, parentNodeNamePath)
+        {
+            this.Input = input;
+        }
+    }
+    public abstract class StreamNodeBase<TStream, TIn, TArgs> : StreamNodeBase<TStream, TIn> where TStream : IStream<TIn>
+    {
+        public TArgs Arguments { get; private set; }
+        public StreamNodeBase(TStream input, string name, IEnumerable<string> parentNodeNamePath, TArgs arguments)
+            : base(input, name, parentNodeNamePath)
+        {
+            this.Arguments = arguments;
+        }
+    }
     public abstract class StreamNodeBase : INodeContext
     {
         private IExecutionContext _executionContext;
-        public void Initialize(IExecutionContext executionContext, string name, IEnumerable<string> parentNodeNamePath = null)
+        public StreamNodeBase(IExecutionContext executionContext, string name, IEnumerable<string> parentNodeNamePath)
         {
             this._executionContext = executionContext;
             this.TypeName = this.GetType().Name;
@@ -31,9 +49,23 @@ namespace Paillave.Etl.Core.System
             this._executionContext.AddObservableToWait(stream.Observable);
             return stream;
         }
+
+        protected virtual IObservable<TOut> CreateObservable<TIn, TOut>(TIn input, Action<TIn, IObserver<TOut>> populateObserver)
+        {
+            var subject = new Subject<TOut>();
+            Task.Run(() => populateObserver(input, subject));
+            return subject.Publish().RefCount();
+        }
+
         protected ISortedStream<T> CreateSortedStream<T>(string streamName, IObservable<T> observable, IEnumerable<SortCriteria<T>> sortCriterias)
         {
             var stream = new SortedStream<T>(this.Tracer, this._executionContext, streamName, observable, sortCriterias);
+            this._executionContext.AddObservableToWait(stream.Observable);
+            return stream;
+        }
+        protected ISortedStream<T> CreateStream<T>(string streamName, IObservable<T> observable, ISortedStream<T> streamIn)
+        {
+            var stream = new SortedStream<T>(this.Tracer, this._executionContext, streamName, observable, streamIn.SortCriterias);
             this._executionContext.AddObservableToWait(stream.Observable);
             return stream;
         }
@@ -43,6 +75,13 @@ namespace Paillave.Etl.Core.System
             this._executionContext.AddObservableToWait(stream.Observable);
             return stream;
         }
+        protected IKeyedStream<T> CreateStream<T>(string streamName, IObservable<T> observable, IKeyedStream<T> streamIn)
+        {
+            var stream = new KeyedStream<T>(this.Tracer, this._executionContext, streamName, observable, streamIn.SortCriterias);
+            this._executionContext.AddObservableToWait(stream.Observable);
+            return stream;
+        }
+
         protected Func<TIn, ErrorManagementItem<TIn, TOut>> ErrorManagementWrapFunction<TIn, TOut>(Func<TIn, TOut> call)
         {
             return (TIn input) =>

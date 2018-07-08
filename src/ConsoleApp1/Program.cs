@@ -36,11 +36,11 @@ namespace ConsoleApp1
             #region Main file
             var splittedLineS = ctx.StartupStream
                 .Map("Open file", i => (Stream)File.OpenRead(i.FilePath))
-                .CrossApply<Stream, string, DataStreamSourceNode>("Read file")
+                .CrossApplyDataStream("Read file")
                 .Map("split lines", Mappers.CsvLineSplitter('\t'));
 
             var lineParserS = splittedLineS
-                .Take("take first header line only", 1)
+                .Top("take first header line only", 1)
                 .Map("create line processor", Mappers.ColumnNameStringParserMappers<Class1>()
                     .WithGlobalCultureInfo(ci)
                     .MapColumnToProperty("#", i => i.Id)
@@ -58,11 +58,11 @@ namespace ConsoleApp1
             #region Type file
             var splittedTypeLineS = ctx.StartupStream
                 .Map("Open type file", i => (Stream)File.OpenRead(i.TypeFilePath))
-                .CrossApply<Stream, string, DataStreamSourceNode>("Read type file")
+                .CrossApplyDataStream("Read type file")
                 .Map("split type lines", Mappers.CsvLineSplitter('\t'));
 
             var typeLineParserS = splittedTypeLineS
-                .Take("take first header type line only", 1)
+                .Top("take first header type line only", 1)
                 .Map("create type line processor", Mappers.ColumnNameStringParserMappers<Class2>()
                     .WithGlobalCultureInfo(ci)
                     .MapColumnToProperty("#", i => i.Id)
@@ -83,7 +83,7 @@ namespace ConsoleApp1
                 TypeFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\ref - Copy.txt"
             });
 
-            ctx.ExecuteAsync();
+            ctx.ExecuteAsync().Wait();
 
             Console.WriteLine("Done");
             Console.ReadKey();

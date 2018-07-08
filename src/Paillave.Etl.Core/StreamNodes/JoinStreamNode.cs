@@ -7,20 +7,26 @@ using System.Reactive.Linq;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
-    public class JoinStreamNode<TInLeft, TInRight, TOut> : StreamNodeBase, IStreamNodeOutput<TOut>, IStreamNodeError<ErrorRow<TInLeft, TInRight>>
+    public class JoinArgs<TInLeft, TInRight, TOut>
     {
-        public JoinStreamNode(ISortedStream<TInLeft> leftInputStream, string name, IKeyedStream<TInRight> rightInputStream, Func<TInLeft, TInRight, TOut> resultSelector, bool redirectErrorsInsteadOfFail, IEnumerable<string> parentNodeNamePath = null)
+        public IKeyedStream<TInRight> RightInputStream { get; set; }
+        public Func<TInLeft, TInRight, TOut> ResultSelector { get; set; }
+        public bool RedirectErrorsInsteadOfFail { get; set; }
+    }
+    public class JoinStreamNode<TInLeft, TInRight, TOut> : StreamNodeBase<ISortedStream<TInLeft>, TInLeft, JoinArgs<TInLeft, TInRight, TOut>>, IStreamNodeOutput<TOut>, IStreamNodeError<ErrorRow<TInLeft, TInRight>>
+    {
+        public JoinStreamNode(ISortedStream<TInLeft> input, string name, IEnumerable<string> parentNodeNamePath, JoinArgs<TInLeft, TInRight, TOut> arguments) : base(input, name, parentNodeNamePath, arguments)
         {
-            this.Initialize(leftInputStream.ExecutionContext ?? rightInputStream.ExecutionContext, name, parentNodeNamePath);
-            if (redirectErrorsInsteadOfFail)
+            if (arguments.RedirectErrorsInsteadOfFail)
             {
-                var errorManagedResult = leftInputStream.Observable.LeftJoin(rightInputStream.Observable, new SortCriteriaComparer<TInLeft, TInRight>(leftInputStream.SortCriterias.ToList(), rightInputStream.SortCriterias.ToList()), base.ErrorManagementWrapFunction(resultSelector));
+                var errorManagedResult = input.Observable.LeftJoin(arguments.RightInputStream.Observable, new SortCriteriaComparer<TInLeft, TInRight>(input.SortCriterias.ToList(), arguments.RightInputStream.SortCriterias.ToList()), base.ErrorManagementWrapFunction(arguments.ResultSelector));
                 this.Output = base.CreateStream(nameof(this.Output), errorManagedResult.Where(i => !i.OnException).Select(i => i.Output));
                 this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Where(i => i.OnException).Select(i => new ErrorRow<TInLeft, TInRight>(i.Input, i.Input2, i.Exception)));
             }
             else
-                this.Output = base.CreateStream(nameof(this.Output), leftInputStream.Observable.LeftJoin(rightInputStream.Observable, new SortCriteriaComparer<TInLeft, TInRight>(leftInputStream.SortCriterias.ToList(), rightInputStream.SortCriterias.ToList()), resultSelector));
+                this.Output = base.CreateStream(nameof(this.Output), input.Observable.LeftJoin(arguments.RightInputStream.Observable, new SortCriteriaComparer<TInLeft, TInRight>(input.SortCriterias.ToList(), arguments.RightInputStream.SortCriterias.ToList()), arguments.ResultSelector));
         }
+
         public IStream<TOut> Output { get; }
         public IStream<ErrorRow<TInLeft, TInRight>> Error { get; }
     }
@@ -28,35 +34,22 @@ namespace Paillave.Etl.Core.StreamNodes
     {
         public static IStream<TOut> LeftJoin<TInLeft, TInRight, TOut>(this ISortedStream<TInLeft> leftStream, string name, IKeyedStream<TInRight> rightStream, Func<TInLeft, TInRight, TOut> resultSelector)
         {
-            return new JoinStreamNode<TInLeft, TInRight, TOut>(leftStream, name, rightStream, resultSelector, false).Output;
+            return new JoinStreamNode<TInLeft, TInRight, TOut>(leftStream, name, null, new JoinArgs<TInLeft, TInRight, TOut>
+            {
+                RightInputStream = rightStream,
+                ResultSelector = resultSelector,
+                RedirectErrorsInsteadOfFail = false
+            }).Output;
         }
         public static NodeOutputError<TOut, TInLeft, TInRight> LeftJoinKeepErrors<TInLeft, TInRight, TOut>(this ISortedStream<TInLeft> leftStream, string name, IKeyedStream<TInRight> rightStream, Func<TInLeft, TInRight, TOut> resultSelector)
         {
-            var ret = new JoinStreamNode<TInLeft, TInRight, TOut>(leftStream, name, rightStream, resultSelector, false);
+            var ret = new JoinStreamNode<TInLeft, TInRight, TOut>(leftStream, name, null, new JoinArgs<TInLeft, TInRight, TOut>
+            {
+                RightInputStream = rightStream,
+                ResultSelector = resultSelector,
+                RedirectErrorsInsteadOfFail = false
+            });
             return new NodeOutputError<TOut, TInLeft, TInRight>(ret.Output, ret.Error);
         }
     }
-    //public class ErrorRow<TInLeft, TInRight>
-    //{
-    //    public ErrorRow(TInLeft leftInput, TInRight rightInput, Exception exception)
-    //    {
-    //        this.LeftInput = leftInput;
-    //        this.RightInput = rightInput;
-    //        this.Exception = exception;
-    //    }
-
-    //    public TInLeft LeftInput { get; }
-    //    public TInRight RightInput { get; }
-    //    public Exception Exception { get; }
-    //}
-    //public class NodeOutput<S, I1, I2>
-    //{
-    //    public NodeOutput(IStream<S> output, IStream<ErrorRow<I1, I2>> error)
-    //    {
-    //        this.Output = output;
-    //        this.Error = error;
-    //    }
-    //    public IStream<S> Output { get; }
-    //    public IStream<ErrorRow<I1, I2>> Error { get; }
-    //}
 }

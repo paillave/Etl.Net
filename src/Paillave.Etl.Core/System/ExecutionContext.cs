@@ -35,19 +35,6 @@ namespace Paillave.Etl.Core.System
 
         public Guid ExecutionId { get; }
 
-        //private TDataSource CreateDataSource<TDataSource, TRow, TDataSourceConf>(string name, Func<TConfig, TDataSourceConf> getDsConfig) where TDataSource : DataSourceNodeBase<TDataSourceConf, TRow>, new()
-        //{
-        //    TDataSource ds = new TDataSource();
-        //    ds.Initialize(StartupStream.ExecutionContext, name);
-        //    ds.SetupStream(this._configSubject.Select(getDsConfig));
-        //    return ds;
-        //}
-
-        //public IStream<TRow> DataSource<TDataSource, TRow, TDataSourceConf>(string name, Func<TConfig, TDataSourceConf> getDsConfig) where TDataSource : DataSourceNodeBase<TDataSourceConf, TRow>, new()
-        //{
-        //    return this.CreateDataSource<TDataSource, TRow, TDataSourceConf>(name, getDsConfig).Output;
-        //}
-
         public async Task ExecuteAsync()
         {
             //this._streamsToEnd.Subscribe(_ => { }, () => this._traceSubject.OnCompleted());
