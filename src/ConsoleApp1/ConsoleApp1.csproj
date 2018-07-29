@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Reactive" Version="4.1.0-preview.84" />
+    <Compile Remove="Prog2.cs" />
   </ItemGroup>
 
   <ItemGroup>

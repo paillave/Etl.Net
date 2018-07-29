@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Reactive.Linq;
+using Paillave.RxPush.Operators;
+using Paillave.Etl.Core.System.Streams;
+using Paillave.Etl.Core.System.NodeOutputs;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
@@ -20,12 +23,12 @@ namespace Paillave.Etl.Core.StreamNodes
             //base.Initialize(inputStream1.ExecutionContext ?? inputStream2.ExecutionContext, name, parentNodeNamePath);
             if (args.RedirectErrorsInsteadOfFail)
             {
-                var errorManagedResult = inputStream1.Observable.CombineLatest(args.InputStream2.Observable, base.ErrorManagementWrapFunction(args.ResultSelector));
-                this.Output = base.CreateStream(nameof(this.Output), errorManagedResult.Where(i => !i.OnException).Select(i => i.Output));
-                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Where(i => i.OnException).Select(i => new ErrorRow<TIn1, TIn2>(i.Input, i.Input2, i.Exception)));
+                var errorManagedResult = inputStream1.Observable.CombineWithLatest(args.InputStream2.Observable, base.ErrorManagementWrapFunction(args.ResultSelector));
+                this.Output = base.CreateStream(nameof(this.Output), errorManagedResult.Filter(i => !i.OnException).Map(i => i.Output));
+                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Filter(i => i.OnException).Map(i => new ErrorRow<TIn1, TIn2>(i)));
             }
             else
-                this.Output = base.CreateStream(nameof(this.Output), inputStream1.Observable.CombineLatest(args.InputStream2.Observable, args.ResultSelector));
+                this.Output = base.CreateStream(nameof(this.Output), inputStream1.Observable.CombineWithLatest(args.InputStream2.Observable, args.ResultSelector));
         }
         public IStream<TOut> Output { get; }
         public IStream<ErrorRow<TIn1, TIn2>> Error { get; }
@@ -41,7 +44,7 @@ namespace Paillave.Etl.Core.StreamNodes
                 RedirectErrorsInsteadOfFail = false
             }).Output;
         }
-        public static NodeOutputError<TOut, TIn1, TIn2> CombineLatestKeepErrors<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> inputStream2, Func<TIn1, TIn2, TOut> resultSelector)
+        public static INodeOutputError<TOut, TIn1, TIn2> CombineLatestKeepErrors<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> inputStream2, Func<TIn1, TIn2, TOut> resultSelector)
         {
             var ret = new CombineLatestStreamNode<TIn1, TIn2, TOut>(stream, name, null, new CombineLatestArgs<TIn1, TIn2, TOut>
             {
@@ -49,7 +52,7 @@ namespace Paillave.Etl.Core.StreamNodes
                 ResultSelector = resultSelector,
                 RedirectErrorsInsteadOfFail = true
             });
-            return new NodeOutputError<TOut, TIn1, TIn2>(ret.Output, ret.Error);
+            return new NodeOutputError<CombineLatestStreamNode<TIn1, TIn2, TOut>, TOut, TIn1, TIn2>(ret);
         }
     }
 }

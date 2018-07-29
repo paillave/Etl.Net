@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Paillave.Etl.Core.System
 {
-    public class ErrorManagementItem<TIn1, TIn2, TOut> : ErrorManagementItem<TIn1, TOut>
+    public class ErrorManagementItem<TIn1, TIn2, TOut> : ErrorManagementItem<TIn1, TOut>, IErrorManagementItem<TIn1, TIn2>
     {
         public TIn2 Input2 { get; }
         public ErrorManagementItem(TIn1 input, TIn2 input2, Exception exception) : base(input, exception)
@@ -16,7 +16,7 @@ namespace Paillave.Etl.Core.System
             this.Input2 = Input2;
         }
     }
-    public class ErrorManagementItem<TIn, TOut>
+    public class ErrorManagementItem<TIn, TOut> : IErrorManagementItem<TIn>
     {
         public ErrorManagementItem(TIn input, Exception exception)
         {

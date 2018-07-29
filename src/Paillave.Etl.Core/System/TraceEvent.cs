@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using Humanizer;
+using Paillave.Etl.Core.System.TraceContents;
 
 namespace Paillave.Etl.Core.System
 {

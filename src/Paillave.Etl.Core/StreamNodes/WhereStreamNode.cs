@@ -1,8 +1,10 @@
 ﻿using Paillave.Etl.Core.System;
+using Paillave.Etl.Core.System.NodeOutputs;
+using Paillave.Etl.Core.System.Streams;
+using Paillave.RxPush.Operators;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Reactive.Linq;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
@@ -18,12 +20,12 @@ namespace Paillave.Etl.Core.StreamNodes
         {
             if (arguments.RedirectErrorsInsteadOfFail)
             {
-                var errorManagedResult = input.Observable.Select(base.ErrorManagementWrapFunction(arguments.Predicate));
-                this.Output = base.CreateStream(nameof(this.Output), errorManagedResult.Where(i => !i.OnException).Where(i => i.Output).Select(i => i.Input));
-                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Where(i => i.OnException).Select(i => new ErrorRow<TIn>(i.Input, i.Exception)));
+                var errorManagedResult = input.Observable.Map(base.ErrorManagementWrapFunction(arguments.Predicate));
+                this.Output = base.CreateStream(nameof(this.Output), errorManagedResult.Filter(i => !i.OnException).Filter(i => i.Output).Map(i => i.Input));
+                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Filter(i => i.OnException).Map(i => new ErrorRow<TIn>(i)));
             }
             else
-                this.Output = base.CreateStream(nameof(this.Output), input.Observable.Where(arguments.Predicate));
+                this.Output = base.CreateStream(nameof(this.Output), input.Observable.Filter(arguments.Predicate));
         }
 
         public IStream<TIn> Output { get; }
@@ -37,12 +39,12 @@ namespace Paillave.Etl.Core.StreamNodes
         {
             if (arguments.RedirectErrorsInsteadOfFail)
             {
-                var errorManagedResult = input.Observable.Select(base.ErrorManagementWrapFunction(arguments.Predicate));
-                this.Output = base.CreateSortedStream(nameof(this.Output), errorManagedResult.Where(i => !i.OnException).Where(i => i.Output).Select(i => i.Input), input.SortCriterias);
-                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Where(i => i.OnException).Select(i => new ErrorRow<TIn>(i.Input, i.Exception)));
+                var errorManagedResult = input.Observable.Map(base.ErrorManagementWrapFunction(arguments.Predicate));
+                this.Output = base.CreateSortedStream(nameof(this.Output), errorManagedResult.Filter(i => !i.OnException).Filter(i => i.Output).Map(i => i.Input), input.SortCriterias);
+                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Filter(i => i.OnException).Map(i => new ErrorRow<TIn>(i)));
             }
             else
-                this.Output = base.CreateSortedStream(nameof(this.Output), input.Observable.Where(arguments.Predicate), input.SortCriterias);
+                this.Output = base.CreateSortedStream(nameof(this.Output), input.Observable.Filter(arguments.Predicate), input.SortCriterias);
         }
 
         public ISortedStream<TIn> Output { get; }
@@ -56,12 +58,12 @@ namespace Paillave.Etl.Core.StreamNodes
         {
             if (arguments.RedirectErrorsInsteadOfFail)
             {
-                var errorManagedResult = input.Observable.Select(base.ErrorManagementWrapFunction(arguments.Predicate));
-                this.Output = base.CreateKeyedStream(nameof(this.Output), errorManagedResult.Where(i => !i.OnException).Where(i => i.Output).Select(i => i.Input), input.SortCriterias);
-                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Where(i => i.OnException).Select(i => new ErrorRow<TIn>(i.Input, i.Exception)));
+                var errorManagedResult = input.Observable.Map(base.ErrorManagementWrapFunction(arguments.Predicate));
+                this.Output = base.CreateKeyedStream(nameof(this.Output), errorManagedResult.Filter(i => !i.OnException).Filter(i => i.Output).Map(i => i.Input), input.SortCriterias);
+                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Filter(i => i.OnException).Map(i => new ErrorRow<TIn>(i)));
             }
             else
-                this.Output = base.CreateKeyedStream(nameof(this.Output), input.Observable.Where(arguments.Predicate), input.SortCriterias);
+                this.Output = base.CreateKeyedStream(nameof(this.Output), input.Observable.Filter(arguments.Predicate), input.SortCriterias);
         }
 
         public IKeyedStream<TIn> Output { get; }
@@ -79,14 +81,14 @@ namespace Paillave.Etl.Core.StreamNodes
             }).Output;
         }
 
-        public static KeyedNodeOutputError<TIn, TIn> WhereKeepErrors<TIn>(this IKeyedStream<TIn> stream, string name, Func<TIn, bool> predicate)
+        public static IKeyedNodeOutputError<TIn, TIn> WhereKeepErrors<TIn>(this IKeyedStream<TIn> stream, string name, Func<TIn, bool> predicate)
         {
             var ret = new WhereKeyedStreamNode<TIn>(stream, name, null, new WhereArgs<TIn>
             {
                 Predicate = predicate,
                 RedirectErrorsInsteadOfFail = true
             });
-            return new KeyedNodeOutputError<TIn, TIn>(ret.Output, ret.Error);
+            return new KeyedNodeOutputError<WhereKeyedStreamNode<TIn>, TIn, TIn>(ret);
         }
 
         public static ISortedStream<TIn> Where<TIn>(this ISortedStream<TIn> stream, string name, Func<TIn, bool> predicate)
@@ -98,14 +100,14 @@ namespace Paillave.Etl.Core.StreamNodes
             }).Output;
         }
 
-        public static SortedNodeOutputError<TIn, TIn> WhereKeepErrors<TIn>(this ISortedStream<TIn> stream, string name, Func<TIn, bool> predicate)
+        public static ISortedNodeOutputError<TIn, TIn> WhereKeepErrors<TIn>(this ISortedStream<TIn> stream, string name, Func<TIn, bool> predicate)
         {
             var ret = new WhereSortedStreamNode<TIn>(stream, name, null, new WhereArgs<TIn>
             {
                 Predicate = predicate,
                 RedirectErrorsInsteadOfFail = true
             });
-            return new SortedNodeOutputError<TIn, TIn>(ret.Output, ret.Error);
+            return new SortedNodeOutputError<WhereSortedStreamNode<TIn>, TIn, TIn>(ret);
         }
 
         public static IStream<TIn> Where<TIn>(this IStream<TIn> stream, string name, Func<TIn, bool> predicate)
@@ -117,14 +119,14 @@ namespace Paillave.Etl.Core.StreamNodes
             }).Output;
         }
 
-        public static NodeOutputError<TIn, TIn> WhereKeepErrors<TIn>(this IStream<TIn> stream, string name, Func<TIn, bool> predicate)
+        public static INodeOutputError<TIn, TIn> WhereKeepErrors<TIn>(this IStream<TIn> stream, string name, Func<TIn, bool> predicate)
         {
             var ret = new WhereStreamNode<TIn>(stream, name, null, new WhereArgs<TIn>
             {
                 Predicate = predicate,
                 RedirectErrorsInsteadOfFail = true
             });
-            return new NodeOutputError<TIn, TIn>(ret.Output, ret.Error);
+            return new NodeOutputError<WhereStreamNode<TIn>, TIn, TIn>(ret);
         }
     }
 }

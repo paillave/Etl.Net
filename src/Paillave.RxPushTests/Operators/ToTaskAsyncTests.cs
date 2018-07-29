@@ -1,0 +1,39 @@
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Paillave.RxPush.Core;
+using System.Collections.Generic;
+using System.Linq;
+using Paillave.RxPush.Operators;
+
+namespace Paillave.RxPushTests.Operators
+{
+    [TestClass]
+    public class ToTaskAsyncTests
+    {
+        [TestCategory(nameof(ToTaskAsyncTests))]
+        [TestMethod]
+        public void WaitEnd()
+        {
+            bool completed = false;
+            var tmp = new PushSubject<int>();
+            tmp.Subscribe((_) => { }, () => completed = true);
+            var returnedTask = tmp.ToTaskAsync();
+            Assert.IsFalse(returnedTask.IsCompleted, "The task shouldn't be completed");
+            tmp.Complete();
+            Assert.IsTrue(returnedTask.Wait(5000), "The task should complete");
+            Assert.IsTrue(completed, "complete should be triggered");
+        }
+        [TestCategory(nameof(ToTaskAsyncTests))]
+        [TestMethod]
+        public void WaitEndWitoutComplete()
+        {
+            bool completed = false;
+            var tmp = new PushSubject<int>();
+            tmp.Subscribe((_) => { }, () => completed = true);
+            var returnedTask = tmp.ToTaskAsync();
+            Assert.IsFalse(returnedTask.IsCompleted, "The task shouldn't be completed");
+            Assert.IsFalse(returnedTask.Wait(5000), "The task should not complete");
+            Assert.IsFalse(completed, "complete should not be triggered");
+        }
+    }
+}

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq.Expressions;
+using Paillave.Etl.Core.System.Streams;
 
 namespace Paillave.Etl.Core.StreamNodes
 {

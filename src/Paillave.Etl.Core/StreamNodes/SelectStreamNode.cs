@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
+using Paillave.RxPush.Operators;
+using Paillave.Etl.Core.System.Streams;
+using Paillave.Etl.Core.System.NodeOutputs;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
@@ -20,15 +22,15 @@ namespace Paillave.Etl.Core.StreamNodes
             if (arguments.RedirectErrorsInsteadOfFail)
             {
                 var errorManagedResult = arguments.Mapper == null ?
-                    input.Observable.Select(base.ErrorManagementWrapFunction(arguments.IndexMapper))
-                    : input.Observable.Select(base.ErrorManagementWrapFunction(arguments.Mapper));
-                this.Output = base.CreateStream(nameof(this.Output), errorManagedResult.Where(i => !i.OnException).Select(i => i.Output));
-                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Where(i => i.OnException).Select(i => new ErrorRow<TIn>(i.Input, i.Exception)));
+                    input.Observable.Map(base.ErrorManagementWrapFunction(arguments.IndexMapper))
+                    : input.Observable.Map(base.ErrorManagementWrapFunction(arguments.Mapper));
+                this.Output = base.CreateStream(nameof(this.Output), errorManagedResult.Filter(i => !i.OnException).Map(i => i.Output));
+                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Filter(i => i.OnException).Map(i => new ErrorRow<TIn>(i)));
             }
             else
                 this.Output = arguments.Mapper == null ?
-                    base.CreateStream(nameof(this.Output), input.Observable.Select(arguments.IndexMapper))
-                    : base.CreateStream(nameof(this.Output), input.Observable.Select(arguments.Mapper));
+                    base.CreateStream(nameof(this.Output), input.Observable.Map(arguments.IndexMapper))
+                    : base.CreateStream(nameof(this.Output), input.Observable.Map(arguments.Mapper));
 
             //Observable.Create()
         }
@@ -54,23 +56,23 @@ namespace Paillave.Etl.Core.StreamNodes
                 RedirectErrorsInsteadOfFail = false
             }).Output;
         }
-        public static NodeOutputError<TOut, TIn> SelectKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper)
+        public static INodeOutputError<TOut, TIn> SelectKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper)
         {
             var ret = new SelectStreamNode<TIn, TOut>(stream, name, null, new SelectArgs<TIn, TOut>
             {
                 Mapper = mapper,
                 RedirectErrorsInsteadOfFail = true
             });
-            return new NodeOutputError<TOut, TIn>(ret.Output, ret.Error);
+            return new NodeOutputError<SelectStreamNode<TIn, TOut>, TOut, TIn>(ret);
         }
-        public static NodeOutputError<TOut, TIn> SelectKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, int, TOut> mapper)
+        public static INodeOutputError<TOut, TIn> SelectKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, int, TOut> mapper)
         {
             var ret = new SelectStreamNode<TIn, TOut>(stream, name, null, new SelectArgs<TIn, TOut>
             {
                 IndexMapper = mapper,
                 RedirectErrorsInsteadOfFail = true
             });
-            return new NodeOutputError<TOut, TIn>(ret.Output, ret.Error);
+            return new NodeOutputError<SelectStreamNode<TIn, TOut>, TOut, TIn>(ret);
         }
     }
 }

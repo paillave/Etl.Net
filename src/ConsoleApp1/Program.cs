@@ -1,9 +1,8 @@
 ﻿using Paillave.Etl.Core.StreamNodes;
 using System;
-using System.Reactive.Linq;
+//using System.Reactive.Linq;
 using System.IO;
 using System.Globalization;
-using System.Reactive.Subjects;
 using System.Linq;
 using System.Linq.Expressions;
 using Paillave.Etl.Core.MapperFactories;
@@ -23,9 +22,9 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             CultureInfo ci = CultureInfo.CreateSpecificCulture("en-GB");
-            ci.DateTimeFormat.FullDateTimePattern = "yyyy-dd-MM HH:mm:ss";
-            ci.DateTimeFormat.LongDatePattern = "yyyy-dd-MM";
-            ci.DateTimeFormat.ShortDatePattern = "yyyy-dd-MM";
+            ci.DateTimeFormat.FullDateTimePattern = "yyyy-MM-dd HH:mm:ss";
+            ci.DateTimeFormat.LongDatePattern = "yyyy-MM-dd";
+            ci.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
 
             ci.DateTimeFormat.FullDateTimePattern = "yyyy-MM-dd HH:mm:ss";
             ci.DateTimeFormat.LongDatePattern = "yyyy-MM-dd";
@@ -36,7 +35,7 @@ namespace ConsoleApp1
             ci.NumberFormat.PercentDecimalSeparator = ",";
 
             var ctx = new ExecutionContext<MyClass>("import file");
-            //ctx.TraceStream.Observable.Where(i => i.Content.Level <= System.Diagnostics.TraceLevel.Info).Subscribe(Console.WriteLine);
+            ctx.TraceStream.Where("keep log info", i => i.Content.Level <= System.Diagnostics.TraceLevel.Info).ToAction("logs to console", Console.WriteLine);
 
             #region Main file
             var splittedLineS = ctx.StartupStream
@@ -81,7 +80,9 @@ namespace ConsoleApp1
 
             parsedLineS.LeftJoin("join types to file", parsedTypeLineS, (l, r) => new { l.Id, r.Name })
                 //.Where("check any issue", i => i.Name == null)
-                .Select("output after join", i => $"{i.Id}->{i.Name}").Observable.Subscribe(Console.WriteLine);
+                .Select("output after join", i => $"{i.Id}->{i.Name}")
+                //.ToAction("write to console", Console.WriteLine);
+                .ToAction("write to console", i => { });
 
             ctx.Configure(new MyClass
             {

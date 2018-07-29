@@ -1,0 +1,21 @@
+#	DateTime	Value	Rank	Comment	TypeId
+1	2014-01-12	1000	45	dsf gsdfgdsf	1
+2	2018-02-11	3121	3657	hmkjh	1
+3	2014-10-19	89,45	96	gfd rbgfc	1
+4	2014-11-01	1,9	4253	pbn gfbh jkl	1
+5	2014-01-12	1000	45	dsf gsdfgdsf	2
+6	2018-02-11	3121	3657	hmkjh	2
+7	2014-10-19	89,45	96	gfd rbgfc	2
+8	2014-11-01	1,9	4253	pbn gfbh jkl	2
+9	2014-01-12	1000	45	dsf gsdfgdsf	3
+10	2018-02-11	3121	3657	hmkjh	4
+11	2014-10-19	89,45	96	gfd rbgfc	5
+12	2014-11-01	1,9	4253	pbn gfbh jkl	5
+13	2014-01-12	1000	45	dsf gsdfgdsf	5
+14	2018-02-11	3121	3657	hmkjh	6
+15	2014-10-19	89,45	96	gfd rbgfc	6
+16	2014-11-01	1,9	4253	pbn gfbh jkl	7
+17	2014-01-12	1000	45	dsf gsdfgdsf	8
+18	2018-02-11	3121	3657	hmkjh	9
+19	2014-10-19	89,45	96	gfd rbgfc	9
+20	2014-11-01	1,9	4253	pbn gfbh jkl	9

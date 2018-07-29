@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl.Core.System
 {
-    public class SortCriteria<S>
+    public class SortCriteria<S> : ISortCriteria<S>
     {
         public SortCriteria(Expression<Func<S, IComparable>> field, SortOrder sortOrder = SortOrder.Ascending)
         {

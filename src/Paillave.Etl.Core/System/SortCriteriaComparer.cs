@@ -1,4 +1,5 @@
 ﻿
+using Paillave.RxPush.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +8,18 @@ using System.Text;
 
 namespace Paillave.Etl.Core.System
 {
-    public interface IComparer<T1, T2>
-    {
-        int Compare(T1 x, T2 y);
-    }
+    //public interface IComparer<T1, T2>
+    //{
+    //    int Compare(T1 x, T2 y);
+    //}
     public class SortCriteriaComparer<T> : IComparer<T>
     {
         private readonly Func<T, T, int>[] _compareFunctions;
 
-        public SortCriteriaComparer(IEnumerable<SortCriteria<T>> sortCriterias)
+        public SortCriteriaComparer(IEnumerable<ISortCriteria<T>> sortCriterias)
         {
             if (sortCriterias.Count() == 0) throw new ArgumentOutOfRangeException(nameof(sortCriterias), "sorting criteria list cannot be empty");
-            this._compareFunctions = sortCriterias.Select<SortCriteria<T>, Func<T, T, int>>(i =>
+            this._compareFunctions = sortCriterias.Select<ISortCriteria<T>, Func<T, T, int>>(i =>
             {
                 var getter = i.Field.Compile();
                 if (i.SortOrder == SortOrder.Ascending)
@@ -47,20 +48,20 @@ namespace Paillave.Etl.Core.System
     {
         private readonly Func<T1, T2, int>[] _compareFunctions;
 
-        public SortCriteriaComparer(IList<SortCriteria<T1>> sortCriterias1, IList<SortCriteria<T2>> sortCriterias2)
+        public SortCriteriaComparer(IList<ISortCriteria<T1>> sortCriterias1, IList<ISortCriteria<T2>> sortCriterias2)
         {
             if (sortCriterias1.Count == 0) throw new ArgumentOutOfRangeException(nameof(sortCriterias1), "sorting criteria list 1 cannot be empty");
             if (sortCriterias2.Count == 0) throw new ArgumentOutOfRangeException(nameof(sortCriterias2), "sorting criteria list 2 cannot be empty");
             var tmp = Enumerable
                 .Range(0, Math.Min(sortCriterias1.Count, sortCriterias2.Count))
-                .Select(i => new Tuple<SortCriteria<T1>, SortCriteria<T2>>(sortCriterias1[i], sortCriterias2[i]))
+                .Select(i => new Tuple<ISortCriteria<T1>, ISortCriteria<T2>>(sortCriterias1[i], sortCriterias2[i]))
                 .ToList();
             foreach (var item in tmp)
             {
                 if (item.Item1.Field.ReturnType != item.Item2.Field.ReturnType) throw new ArgumentException("both sort criterias must match");
                 if (item.Item1.SortOrder != item.Item2.SortOrder) throw new ArgumentException("both sort criterias must match");
             }
-            this._compareFunctions = tmp.Select<Tuple<SortCriteria<T1>, SortCriteria<T2>>, Func<T1, T2, int>>(i =>
+            this._compareFunctions = tmp.Select<Tuple<ISortCriteria<T1>, ISortCriteria<T2>>, Func<T1, T2, int>>(i =>
             {
                 var getter1 = i.Item1.Field.Compile();
                 var getter2 = i.Item2.Field.Compile();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Paillave.Etl.Core.System.TraceContents;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;

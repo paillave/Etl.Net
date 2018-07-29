@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Reactive.Linq;
+using Paillave.RxPush.Operators;
+using Paillave.Etl.Core.System.Streams;
 
 namespace Paillave.Etl.Core.StreamNodes
 {

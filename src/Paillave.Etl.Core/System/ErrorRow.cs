@@ -6,6 +6,9 @@ namespace Paillave.Etl.Core.System
 {
     public class ErrorRow<TIn>
     {
+        public ErrorRow(IErrorManagementItem<TIn> errorManagementItem)
+            : this(errorManagementItem.Input, errorManagementItem.Exception) { }
+
         public ErrorRow(TIn input, Exception exception)
         {
             this.Input = input;
@@ -18,7 +21,10 @@ namespace Paillave.Etl.Core.System
 
     public class ErrorRow<TIn1, TIn2> : ErrorRow<TIn1>
     {
-        public ErrorRow(TIn1 input1, TIn2 input2, Exception exception) : base(input1, exception)
+        public ErrorRow(IErrorManagementItem<TIn1, TIn2> errorManagementItem)
+            : this(errorManagementItem.Input, errorManagementItem.Input2, errorManagementItem.Exception) { }
+
+        private ErrorRow(TIn1 input1, TIn2 input2, Exception exception) : base(input1, exception)
         {
             this.Input2 = input2;
         }

@@ -7,7 +7,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System;
-using System.Reactive.Subjects;
+using Paillave.RxPush.Operators;
+using Paillave.Etl.Core.System.Streams;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
@@ -20,17 +21,16 @@ namespace Paillave.Etl.Core.StreamNodes
     {
         public CrossApplyDataStreamReadNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, CrossApplyDataStreamReadArgs<TIn, TOut> args) : base(input, name, parentNodeNamePath, args)
         {
-            this.Output = this.CreateStream(nameof(Output), input.Observable.SelectMany(s => this.CreateObservable<Stream, string>(args.GetStream(s), this.ReadStream).Select(str => args.Selector(s, str))));
+            this.Output = this.CreateStream(nameof(Output), input.Observable.FlatMap(s => this.CreateObservable<Stream, string>(args.GetStream(s), this.ReadStream).Map(str => args.Selector(s, str))));
         }
 
         public IStream<TOut> Output { get; }
 
-        private void ReadStream(Stream inStream, IObserver<string> subject)
+        private void ReadStream(Stream inStream, Action<string> pushValue)
         {
             using (var sr = new StreamReader(inStream))
                 while (!sr.EndOfStream)
-                    subject.OnNext(sr.ReadLine());
-            subject.OnCompleted();
+                    pushValue(sr.ReadLine());
         }
     }
 

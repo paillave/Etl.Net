@@ -4,6 +4,9 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Reactive.Linq;
+using Paillave.RxPush.Operators;
+using Paillave.Etl.Core.System.Streams;
+using Paillave.Etl.Core.System.NodeOutputs;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
@@ -20,8 +23,8 @@ namespace Paillave.Etl.Core.StreamNodes
             if (arguments.RedirectErrorsInsteadOfFail)
             {
                 var errorManagedResult = input.Observable.LeftJoin(arguments.RightInputStream.Observable, new SortCriteriaComparer<TInLeft, TInRight>(input.SortCriterias.ToList(), arguments.RightInputStream.SortCriterias.ToList()), base.ErrorManagementWrapFunction(arguments.ResultSelector));
-                this.Output = base.CreateStream(nameof(this.Output), errorManagedResult.Where(i => !i.OnException).Select(i => i.Output));
-                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Where(i => i.OnException).Select(i => new ErrorRow<TInLeft, TInRight>(i.Input, i.Input2, i.Exception)));
+                this.Output = base.CreateStream(nameof(this.Output), errorManagedResult.Filter(i => !i.OnException).Map(i => i.Output));
+                this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Filter(i => i.OnException).Map(i => new ErrorRow<TInLeft, TInRight>(i)));
             }
             else
                 this.Output = base.CreateStream(nameof(this.Output), input.Observable.LeftJoin(arguments.RightInputStream.Observable, new SortCriteriaComparer<TInLeft, TInRight>(input.SortCriterias.ToList(), arguments.RightInputStream.SortCriterias.ToList()), arguments.ResultSelector));
@@ -41,7 +44,7 @@ namespace Paillave.Etl.Core.StreamNodes
                 RedirectErrorsInsteadOfFail = false
             }).Output;
         }
-        public static NodeOutputError<TOut, TInLeft, TInRight> LeftJoinKeepErrors<TInLeft, TInRight, TOut>(this ISortedStream<TInLeft> leftStream, string name, IKeyedStream<TInRight> rightStream, Func<TInLeft, TInRight, TOut> resultSelector)
+        public static INodeOutputError<TOut, TInLeft, TInRight> LeftJoinKeepErrors<TInLeft, TInRight, TOut>(this ISortedStream<TInLeft> leftStream, string name, IKeyedStream<TInRight> rightStream, Func<TInLeft, TInRight, TOut> resultSelector)
         {
             var ret = new JoinStreamNode<TInLeft, TInRight, TOut>(leftStream, name, null, new JoinArgs<TInLeft, TInRight, TOut>
             {
@@ -49,7 +52,7 @@ namespace Paillave.Etl.Core.StreamNodes
                 ResultSelector = resultSelector,
                 RedirectErrorsInsteadOfFail = false
             });
-            return new NodeOutputError<TOut, TInLeft, TInRight>(ret.Output, ret.Error);
+            return new NodeOutputError<JoinStreamNode<TInLeft, TInRight, TOut>, TOut, TInLeft, TInRight>(ret);
         }
     }
 }
