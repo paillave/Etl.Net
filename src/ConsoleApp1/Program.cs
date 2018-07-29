@@ -79,9 +79,7 @@ namespace ConsoleApp1
             #endregion
 
             parsedLineS.LeftJoin("join types to file", parsedTypeLineS, (l, r) => new { l.Id, r.Name })
-                //.Where("check any issue", i => i.Name == null)
                 .Select("output after join", i => $"{i.Id}->{i.Name}")
-                //.ToAction("write to console", Console.WriteLine);
                 .ToAction("write to console", i => { });
 
             ctx.Configure(new MyClass
