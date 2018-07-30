@@ -37,54 +37,33 @@ namespace ConsoleApp1
             var ctx = new ExecutionContext<MyClass>("import file");
             ctx.TraceStream.Where("keep log info", i => i.Content.Level <= System.Diagnostics.TraceLevel.Info).ToAction("logs to console", Console.WriteLine);
 
-            #region Main file
-            var splittedLineS = ctx.StartupStream
-                .Select("Open file", i => (Stream)File.OpenRead(i.FilePath))
-                .CrossApplyDataStream("Read file")
-                .Select("split lines", Mappers.CsvLineSplitter('\t'));
-
-            var lineParserS = splittedLineS
-                .Top("take first header line only", 1)
-                .Select("create line processor", Mappers.ColumnNameStringParserMappers<Class1>()
+            var parsedLineS = ctx.StartupStream
+                .Select("get input file path", i => i.FilePath)
+                .CrossApplyParsedFile("parse input file", new CrossApplyParsedFileArgs<Class1>(Mappers.ColumnNameStringParserMappers<Class1>()
                     .WithGlobalCultureInfo(ci)
                     .MapColumnToProperty("#", i => i.Id)
                     .MapColumnToProperty("DateTime", i => i.Col1)
                     .MapColumnToProperty("Value", i => i.Col2)
                     .MapColumnToProperty("Rank", i => i.Col3)
                     .MapColumnToProperty("Comment", i => i.Col4)
-                    .MapColumnToProperty("TypeId", i => i.TypeId)
-                    .LineParser);
-            var dataLineS = splittedLineS.Skip("take everything after the first line", 1);
-            var parsedLineS = dataLineS.CombineLatest("parse every line", lineParserS, (dataLine, lineParser) => lineParser(dataLine))
+                    .MapColumnToProperty("TypeId", i => i.TypeId), '\t'))
                 .EnsureSorted("Ensure input file is sorted", i => SortCriteria.Create(i, e => e.TypeId));
-            #endregion
 
-            #region Type file
-            var splittedTypeLineS = ctx.StartupStream
-                .Select("Open type file", i => (Stream)File.OpenRead(i.TypeFilePath))
-                .CrossApplyDataStream("Read type file")
-                .Select("split type lines", Mappers.CsvLineSplitter('\t'));
-
-            var typeLineParserS = splittedTypeLineS
-                .Top("take first header type line only", 1)
-                .Select("create type line processor", Mappers.ColumnNameStringParserMappers<Class2>()
+            var parsedTypeLineS = ctx.StartupStream
+                .Select("get input file type path", i => i.TypeFilePath)
+                .CrossApplyParsedFile("parse type input file", new CrossApplyParsedFileArgs<Class2>(Mappers.ColumnNameStringParserMappers<Class2>()
                     .WithGlobalCultureInfo(ci)
                     .MapColumnToProperty("#", i => i.Id)
-                    .MapColumnToProperty("Label", i => i.Name)
-                    .LineParser);
-            var dataTypeLineS = splittedTypeLineS.Skip("take everything after the first type line", 1);
-
-            var parsedTypeLineS = dataTypeLineS.CombineLatest("parse every type line", typeLineParserS, (dataLine, lineParser) => lineParser(dataLine))
+                    .MapColumnToProperty("Label", i => i.Name), '\t'))
                 .EnsureKeyed("Ensure type file is keyed", i => SortCriteria.Create(i, e => e.Id));
-            #endregion
 
             parsedLineS.LeftJoin("join types to file", parsedTypeLineS, (l, r) => new { l.Id, r.Name })
                 .Select("output after join", i => $"{i.Id}->{i.Name}")
-                .ToAction("write to console", i => { });
+                .ToAction("write to console", Console.WriteLine);
 
             ctx.Configure(new MyClass
             {
-                FilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\test - Copy.txt",
+                FilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\test - Copy - Copy.txt",
                 TypeFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\ref - Copy.txt"
             });
 

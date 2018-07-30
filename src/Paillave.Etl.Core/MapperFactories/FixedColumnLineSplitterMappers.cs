@@ -7,7 +7,7 @@ namespace Paillave.Etl.Core.MapperFactories
 {
     public static partial class Mappers
     {
-        public static Func<string, IEnumerable<string>> FixedColumnLineSplitter(params int[] columnSize)
+        public static Func<string, IList<string>> FixedColumnLineSplitter(params int[] columnSize)
         {
             return new ColumnWidthSplit(columnSize).ParseFixedColumn;
         }
