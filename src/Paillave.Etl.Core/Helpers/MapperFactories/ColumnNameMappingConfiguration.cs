@@ -21,7 +21,7 @@ namespace Paillave.Etl.Core.Helpers.MapperFactories
             this._columnDictionary[columnName] = new PropertyDescription { MemberLamda = memberLamda, CultureInfo = cultureInfo };
             return this;
         }
-        public ColumnNameMappingConfiguration<TDest> WithGlobalCultureInfo(CultureInfo cultureInfo)
+        public ColumnNameMappingConfiguration<TDest> WithCultureInfo(CultureInfo cultureInfo)
         {
             this._cultureInfo = cultureInfo;
             return this;

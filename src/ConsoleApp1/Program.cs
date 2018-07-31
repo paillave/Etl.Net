@@ -21,40 +21,17 @@ namespace ConsoleApp1
         // https://www.nuget.org/packages/EPPlus
         static void Main(string[] args)
         {
-            CultureInfo ci = CultureInfo.CreateSpecificCulture("en-GB");
-            ci.DateTimeFormat.FullDateTimePattern = "yyyy-MM-dd HH:mm:ss";
-            ci.DateTimeFormat.LongDatePattern = "yyyy-MM-dd";
-            ci.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
-
-            ci.DateTimeFormat.FullDateTimePattern = "yyyy-MM-dd HH:mm:ss";
-            ci.DateTimeFormat.LongDatePattern = "yyyy-MM-dd";
-            ci.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
-
-            ci.NumberFormat.NumberDecimalSeparator = ",";
-            ci.NumberFormat.CurrencyDecimalSeparator = ",";
-            ci.NumberFormat.PercentDecimalSeparator = ",";
-
             var ctx = new ExecutionContext<MyClass>("import file");
             ctx.TraceStream.Where("keep log info", i => i.Content.Level <= System.Diagnostics.TraceLevel.Info).ToAction("logs to console", Console.WriteLine);
 
             var parsedLineS = ctx.StartupStream
                 .Select("get input file path", i => i.FilePath)
-                .CrossApplyParsedFile("parse input file", new CrossApplyParsedFileArgs<Class1>(Mappers.ColumnNameStringParserMappers<Class1>()
-                    .WithGlobalCultureInfo(ci)
-                    .MapColumnToProperty("#", i => i.Id)
-                    .MapColumnToProperty("DateTime", i => i.Col1)
-                    .MapColumnToProperty("Value", i => i.Col2)
-                    .MapColumnToProperty("Rank", i => i.Col3)
-                    .MapColumnToProperty("Comment", i => i.Col4)
-                    .MapColumnToProperty("TypeId", i => i.TypeId), '\t'))
+                .CrossApplyParsedFile("parse input file", new Class1Mapper())
                 .EnsureSorted("Ensure input file is sorted", i => SortCriteria.Create(i, e => e.TypeId));
 
             var parsedTypeLineS = ctx.StartupStream
                 .Select("get input file type path", i => i.TypeFilePath)
-                .CrossApplyParsedFile("parse type input file", new CrossApplyParsedFileArgs<Class2>(Mappers.ColumnNameStringParserMappers<Class2>()
-                    .WithGlobalCultureInfo(ci)
-                    .MapColumnToProperty("#", i => i.Id)
-                    .MapColumnToProperty("Label", i => i.Name), '\t'))
+                .CrossApplyParsedFile("parse type input file", new Class2Mapper())
                 .EnsureKeyed("Ensure type file is keyed", i => SortCriteria.Create(i, e => e.Id));
 
             parsedLineS.LeftJoin("join types to file", parsedTypeLineS, (l, r) => new { l.Id, r.Name })
