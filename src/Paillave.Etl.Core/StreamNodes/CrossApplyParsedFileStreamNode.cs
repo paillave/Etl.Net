@@ -100,7 +100,7 @@ namespace Paillave.Etl.Core.StreamNodes
                 .Skip(args.Mapping.LinesToIgnore)
                 .Take(1)
                 .Map(args.Mapping.ColumnNameMappingConfiguration.LineParser);
-            var dataLineS = splittedLineS.Skip(1 + args.Mapping.LinesToIgnore);
+            var dataLineS = splittedLineS.Skip(1 + args.Mapping.LinesToIgnore).Filter(i => i.Count > 0);
 
             return dataLineS.CombineWithLatest(lineParserS, (dataLine, lineParser) => args.ResultSelector(input, lineParser(dataLine)));
         }
@@ -135,7 +135,7 @@ namespace Paillave.Etl.Core.StreamNodes
                 _sem.Release();
             }, true).Map(args.Mapping.LineSplitter);
 
-            var dataLineS = splittedLineS.Skip(args.Mapping.LinesToIgnore);
+            var dataLineS = splittedLineS.Skip(args.Mapping.LinesToIgnore).Filter(i => i.Count > 0);
             var inputLineParser = args.Mapping.ColumnIndexMappingConfiguration.LineParser();
             return dataLineS.Map(dataLine => args.ResultSelector(input, inputLineParser(dataLine)));
         }
