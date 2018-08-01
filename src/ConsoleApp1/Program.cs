@@ -26,9 +26,9 @@ namespace ConsoleApp1
 
             var parsedLineS = ctx.StartupStream
                 .Select("get input file path", i => i.FolderPath)
-                .CrossApplyFolderFiles("get folder files", "testin.*.txt")
-                .CrossApplyParsedFile("parse input file", new Class1Mapper(), (i, p) => { p.FileName = i; return p; })
-                .EnsureSorted("Ensure input file is sorted", i => SortCriteria.Create(i, e => e.TypeId));
+                .CrossApplyFolderFiles("get folder files", "*.txt")
+                .CrossApplyParsedFile("parse input file", new Class1Mapper(), (i, p) => { p.FileName = i; return p; });
+                //.EnsureSorted("Ensure input file is sorted", i => SortCriteria.Create(i, e => e.TypeId));
 
             parsedLineS.ToAction("write to console", i => Console.WriteLine($"{i.FileName} - {i.Id}"));
 
@@ -43,7 +43,7 @@ namespace ConsoleApp1
 
             ctx.Configure(new MyClass
             {
-                FolderPath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles",
+                FolderPath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\tmp",
                 TypeFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\ref - Copy.txt"
             });
 
