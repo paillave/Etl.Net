@@ -13,7 +13,7 @@ namespace ConsoleApp1
 {
     public class MyClass
     {
-        public string FilePath { get; set; }
+        public string FolderPath { get; set; }
         public string TypeFilePath { get; set; }
     }
     class Program
@@ -25,22 +25,25 @@ namespace ConsoleApp1
             ctx.TraceStream.Where("keep log info", i => i.Content.Level <= System.Diagnostics.TraceLevel.Info).ToAction("logs to console", Console.WriteLine);
 
             var parsedLineS = ctx.StartupStream
-                .Select("get input file path", i => i.FilePath)
+                .Select("get input file path", i => i.FolderPath)
+                .CrossApplyFolderFiles("get folder files", "testin.*.txt")
                 .CrossApplyParsedFile("parse input file", new Class1Mapper())
                 .EnsureSorted("Ensure input file is sorted", i => SortCriteria.Create(i, e => e.TypeId));
 
-            var parsedTypeLineS = ctx.StartupStream
-                .Select("get input file type path", i => i.TypeFilePath)
-                .CrossApplyParsedFile("parse type input file", new Class2Mapper())
-                .EnsureKeyed("Ensure type file is keyed", i => SortCriteria.Create(i, e => e.Id));
+            parsedLineS.ToAction("write to console", i => Console.WriteLine($"{i.FileName} - {i.Id}"));
 
-            parsedLineS.LeftJoin("join types to file", parsedTypeLineS, (l, r) => new { l.Id, r.Name })
-                .Select("output after join", i => $"{i.Id}->{i.Name}")
-                .ToAction("write to console", Console.WriteLine);
+            //var parsedTypeLineS = ctx.StartupStream
+            //    .Select("get input file type path", i => i.TypeFilePath)
+            //    .CrossApplyParsedFile("parse type input file", new Class2Mapper())
+            //    .EnsureKeyed("Ensure type file is keyed", i => SortCriteria.Create(i, e => e.Id));
+
+            //parsedLineS.LeftJoin("join types to file", parsedTypeLineS, (l, r) => new { l.Id, r.Name, l.FileName })
+            //    .Select("output after join", i => $"{i.FileName}:{i.Id}->{i.Name}")
+            //    .ToAction("write to console", Console.WriteLine);
 
             ctx.Configure(new MyClass
             {
-                FilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\test - Copy - Copy.txt",
+                FolderPath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles",
                 TypeFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\ref - Copy.txt"
             });
 

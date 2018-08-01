@@ -14,6 +14,7 @@ namespace ConsoleApp1.StreamTypes
         public int Col3 { get; set; }
         public string Col4 { get; set; }
         public int TypeId { get; set; }
+        public string FileName { get; set; }
     }
 
     public class Class1Mapper : ColumnNameFlatFileDescriptor<Class1>
@@ -40,6 +41,7 @@ namespace ConsoleApp1.StreamTypes
             this.MapColumnToProperty("Rank", i => i.Col3);
             this.MapColumnToProperty("Comment", i => i.Col4);
             this.MapColumnToProperty("TypeId", i => i.TypeId);
+            this.MapFileNameToProperty(i => i.FileName);
             this.IsFieldDelimited('\t');
         }
     }

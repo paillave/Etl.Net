@@ -14,15 +14,17 @@ namespace Paillave.RxPush.Operators
 
         public CompletesOnExceptionSubject(IPushObservable<T> observable, Action<Exception> catchMethod)
         {
-
-            this._subscription = observable.Subscribe(this.PushValue, this.Complete, ex =>
+            lock (lockObject)
             {
-                lock (lockObject)
+                this._subscription = observable.Subscribe(this.PushValue, this.Complete, ex =>
                 {
-                    catchMethod(ex);
-                    this.Complete();
-                }
-            });
+                    lock (lockObject)
+                    {
+                        catchMethod(ex);
+                        this.Complete();
+                    }
+                });
+            }
         }
         public override void Dispose()
         {

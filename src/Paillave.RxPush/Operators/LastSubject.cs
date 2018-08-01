@@ -15,7 +15,10 @@ namespace Paillave.RxPush.Operators
         private T _lastValue;
         public LastSubject(IPushObservable<T> observable)
         {
-            _subscription = observable.Subscribe(HandlePushValue, HandleCompleteValue);
+            lock (_lockObject)
+            {
+                _subscription = observable.Subscribe(HandlePushValue, HandleCompleteValue);
+            }
         }
 
         private void HandleCompleteValue()

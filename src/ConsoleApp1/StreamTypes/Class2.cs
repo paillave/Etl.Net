@@ -10,6 +10,7 @@ namespace ConsoleApp1.StreamTypes
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string FileName { get; set; }
     }
 
     public class Class2Mapper : ColumnNameFlatFileDescriptor<Class2>
@@ -32,6 +33,7 @@ namespace ConsoleApp1.StreamTypes
             this.WithCultureInfo(ci);
             this.MapColumnToProperty("#", i => i.Id);
             this.MapColumnToProperty("Label", i => i.Name);
+            this.MapFileNameToProperty(i => i.FileName);
             this.IsFieldDelimited('\t');
         }
     }

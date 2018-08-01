@@ -15,11 +15,14 @@ namespace Paillave.RxPush.Operators
         private Func<TIn1, TIn2, TOut> _selector;
         public CombineWithLatestSubject(IPushObservable<TIn1> observable1, IPushObservable<TIn2> observable2, Func<TIn1, TIn2, TOut> selector)
         {
-            _selector = selector;
-            var disp1 = observable1.Subscribe(HandlePushValue1, HandleComplete1, this.PushException);
-            this._obsel1 = new ObservableElement<TIn1>(disp1);
-            var disp2 = observable2.Subscribe(HandlePushValue2, HandleComplete2, this.PushException);
-            this._obsel2 = new ObservableElement<TIn2>(disp2);
+            lock (_lockObject)
+            {
+                _selector = selector;
+                var disp1 = observable1.Subscribe(HandlePushValue1, HandleComplete1, this.PushException);
+                this._obsel1 = new ObservableElement<TIn1>(disp1);
+                var disp2 = observable2.Subscribe(HandlePushValue2, HandleComplete2, this.PushException);
+                this._obsel2 = new ObservableElement<TIn2>(disp2);
+            }
         }
         private void HandlePushValue1(TIn1 value)
         {

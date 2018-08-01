@@ -14,7 +14,10 @@ namespace Paillave.RxPush.Operators
         private object _syncValue = new object();
         public DistinctSubject(IPushObservable<T> observable, Func<T, T, bool> comparer) : base(observable)
         {
-            _comparer = new LambdaEqualityComparer<T>(comparer);
+            lock (_syncValue)
+            {
+                _comparer = new LambdaEqualityComparer<T>(comparer);
+            }
         }
 
         protected override bool AcceptsValue(T value)

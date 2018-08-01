@@ -18,6 +18,6 @@ namespace Paillave.Etl.Core.System.TraceContents
 
         public override TraceLevel Level => TraceLevel.Error;
 
-        protected override string GetMessage() => $"The stream is not keyed at line {LineNumber} whereas is should be";
+        protected override string GetMessage() => $"The stream is not keyed at line {LineNumber} whereas it should be";
     }
 }

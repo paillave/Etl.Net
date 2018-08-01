@@ -10,11 +10,11 @@ namespace Paillave.Etl.Core.Helpers.MapperFactories
         {
             public PropertyMapper(PropertyDescription columnNameMap)
             {
-                PropertyInfo = this.GetPropertyInfo(columnNameMap.MemberLamda);
+                PropertyInfo = GetPropertyInfo(columnNameMap.MemberLamda);
                 TypeConverter = TypeDescriptor.GetConverter(PropertyInfo.PropertyType);
                 CultureInfo = columnNameMap.CultureInfo;
             }
-            private PropertyInfo GetPropertyInfo(LambdaExpression memberLamda)
+            public static PropertyInfo GetPropertyInfo(LambdaExpression memberLamda)
             {
                 var memberSelectorExpression = memberLamda.Body as MemberExpression;
                 if (memberSelectorExpression != null)

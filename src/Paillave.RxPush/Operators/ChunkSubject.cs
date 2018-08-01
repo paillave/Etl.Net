@@ -18,8 +18,11 @@ namespace Paillave.RxPush.Operators
 
         public ChunkSubject(IPushObservable<TIn> sourceS, int chunkSize)
         {
-            this._chunkSize = chunkSize;
-            this._subscription = sourceS.Subscribe(this.HandleOnPush, this.HandleOnComplete, this.HandleOnException);
+            lock (syncLock)
+            {
+                this._chunkSize = chunkSize;
+                this._subscription = sourceS.Subscribe(this.HandleOnPush, this.HandleOnComplete, this.HandleOnException);
+            }
         }
 
         private void HandleOnException(Exception ex)

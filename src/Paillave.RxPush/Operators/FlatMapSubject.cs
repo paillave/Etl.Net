@@ -30,9 +30,12 @@ namespace Paillave.RxPush.Operators
 
         public FlatMapSubjectBase(IPushObservable<TIn> sourceS, Func<TIn, IPushObservable<TOut>> observableFactory)
         {
-            _outSubscriptions = CreateDisposableManagerInstance();
-            _observableFactory = observableFactory;
-            _sourceSubscription = sourceS.Subscribe(OnSourcePush, OnSourceComplete, OnSourceException);
+            lock (syncLock)
+            {
+                _outSubscriptions = CreateDisposableManagerInstance();
+                _observableFactory = observableFactory;
+                _sourceSubscription = sourceS.Subscribe(OnSourcePush, OnSourceComplete, OnSourceException);
+            }
         }
         private void OnSourcePush(TIn value)
         {
@@ -90,7 +93,7 @@ namespace Paillave.RxPush.Operators
 
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TOut> FlatMap<TIn, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, IPushObservable<TOut>> observableFactory)
+        public static IPushObservable<TOut> FlatMap<TIn, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, IPushObservable<TOut>> observableFactory) //PERMIT TO BE SYNCHRONE
         {
             return new FlatMapSubject<TIn, TOut>(sourceS, observableFactory);
         }
