@@ -18,9 +18,8 @@ namespace Paillave.Etl.Core.StreamNodes
 {
     public abstract class FlatFileDescriptorBase<T> where T : new()
     {
-        //internal CultureInfo CultureInfo { get; private set; } = null;
         internal int LinesToIgnore { get; private set; } = 0;
-        internal Expression<Func<T, string>> FileNameLambda { get; private set; } = null;
+
         internal Func<string, IList<string>> LineSplitter { get; private set; } = Mappers.CsvLineSplitter();
 
         public void IsFieldDelimited(char fieldDelimiter = ';', char textDelimiter = '"')
@@ -30,10 +29,6 @@ namespace Paillave.Etl.Core.StreamNodes
         public void IgnoreFirstLines(int linesToIgnore)
         {
             LinesToIgnore = linesToIgnore;
-        }
-        public void MapFileNameToProperty(Expression<Func<T, string>> fileNameLambda)
-        {
-            FileNameLambda = fileNameLambda;
         }
     }
 
@@ -73,77 +68,65 @@ namespace Paillave.Etl.Core.StreamNodes
         }
     }
 
-    public class CrossApplyNameMappingParsedFileStreamNode<TOut> : StreamNodeBase<IStream<string>, string, ColumnNameFlatFileDescriptor<TOut>>, IStreamNodeOutput<TOut> where TOut : new()
+    public class CrossApplyNameMappingParsedFileArgs<TIn, TParsed, TOut> where TParsed : new()
     {
-        public CrossApplyNameMappingParsedFileStreamNode(IStream<string> input, string name, IEnumerable<string> parentNodeNamePath, ColumnNameFlatFileDescriptor<TOut> args) : base(input, name, parentNodeNamePath, args)
+        public ColumnNameFlatFileDescriptor<TParsed> Mapping { get; set; }
+        public Func<TIn, TParsed, TOut> ResultSelector { get; set; }
+        public Func<TIn, string> FilePathSelector { get; set; }
+    }
+
+    public class CrossApplyNameMappingParsedFileStreamNode<TIn, TParsed, TOut> : StreamNodeBase<IStream<TIn>, TIn, CrossApplyNameMappingParsedFileArgs<TIn, TParsed, TOut>>, IStreamNodeOutput<TOut> where TParsed : new()
+    {
+        public CrossApplyNameMappingParsedFileStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, CrossApplyNameMappingParsedFileArgs<TIn, TParsed, TOut> args) : base(input, name, parentNodeNamePath, args)
         {
             this.Output = base.CreateStream(nameof(this.Output), input.Observable.FlatMap(i => CreateOutputObservable(i, args)));
         }
 
-        private IPushObservable<TOut> CreateOutputObservable(string filePath, ColumnNameFlatFileDescriptor<TOut> args)
+        private IPushObservable<TOut> CreateOutputObservable(TIn input, CrossApplyNameMappingParsedFileArgs<TIn, TParsed, TOut> args)
         {
             var splittedLineS = new DeferedPushObservable<string>(pushValue =>
               {
-                  using (var sr = new StreamReader(File.OpenRead(filePath)))
+                  using (var sr = new StreamReader(File.OpenRead(args.FilePathSelector(input))))
                       while (!sr.EndOfStream)
                           pushValue(sr.ReadLine());
-              }, true).Map(args.LineSplitter);
+              }, true).Map(args.Mapping.LineSplitter);
             var lineParserS = splittedLineS
-                .Skip(args.LinesToIgnore)
+                .Skip(args.Mapping.LinesToIgnore)
                 .Take(1)
-                .Map(args.ColumnNameMappingConfiguration.LineParser);
-            var dataLineS = splittedLineS.Skip(1 + args.LinesToIgnore);
+                .Map(args.Mapping.ColumnNameMappingConfiguration.LineParser);
+            var dataLineS = splittedLineS.Skip(1 + args.Mapping.LinesToIgnore);
 
-            Func<IList<string>, Func<IList<string>, TOut>, string, TOut> parseLine;
-            if (args.FileNameLambda != null)
-            {
-                PropertyInfo propertyInfo = PropertyMapper.GetPropertyInfo(args.FileNameLambda);
-                parseLine = (IList<string> dataLine, Func<IList<string>, TOut> lineParser, string fileName) =>
-                {
-                    var parsed = lineParser(dataLine);
-                    propertyInfo.SetValue(parsed, fileName);
-                    return parsed;
-                };
-            }
-            else
-                parseLine = (IList<string> dataLine, Func<IList<string>, TOut> lineParser, string fileName) => lineParser(dataLine);
-            return dataLineS.CombineWithLatest(lineParserS, (dataLine, lineParser) => parseLine(dataLine, lineParser, filePath));
+            return dataLineS.CombineWithLatest(lineParserS, (dataLine, lineParser) => args.ResultSelector(input, lineParser(dataLine)));
         }
 
         public IStream<TOut> Output { get; }
     }
 
-    public class CrossApplyIndexMappingParsedFileStreamNode<TOut> : StreamNodeBase<IStream<string>, string, ColumnIndexFlatFileDescriptor<TOut>>, IStreamNodeOutput<TOut> where TOut : new()
+    public class CrossApplyIndexMappingParsedFileArgs<TIn, TParsed, TOut> where TParsed : new()
     {
-        public CrossApplyIndexMappingParsedFileStreamNode(IStream<string> input, string name, IEnumerable<string> parentNodeNamePath, ColumnIndexFlatFileDescriptor<TOut> args) : base(input, name, parentNodeNamePath, args)
+        public ColumnIndexFlatFileDescriptor<TParsed> Mapping { get; set; }
+        public Func<TIn, TParsed, TOut> ResultSelector { get; set; }
+        public Func<TIn, string> FilePathSelector { get; set; }
+    }
+
+    public class CrossApplyIndexMappingParsedFileStreamNode<TIn, TParsed, TOut> : StreamNodeBase<IStream<TIn>, TIn, CrossApplyIndexMappingParsedFileArgs<TIn, TParsed, TOut>>, IStreamNodeOutput<TOut> where TParsed : new()
+    {
+        public CrossApplyIndexMappingParsedFileStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, CrossApplyIndexMappingParsedFileArgs<TIn, TParsed, TOut> args) : base(input, name, parentNodeNamePath, args)
         {
             this.Output = base.CreateStream(nameof(this.Output), input.Observable.FlatMap(i => CreateOutputObservable(i, args)));
         }
-        private IPushObservable<TOut> CreateOutputObservable(string filePath, ColumnIndexFlatFileDescriptor<TOut> args)
+        private IPushObservable<TOut> CreateOutputObservable(TIn input, CrossApplyIndexMappingParsedFileArgs<TIn, TParsed, TOut> args)
         {
             var splittedLineS = new DeferedPushObservable<string>(pushValue =>
             {
-                using (var sr = new StreamReader(File.OpenRead(filePath)))
+                using (var sr = new StreamReader(File.OpenRead(args.FilePathSelector(input))))
                     while (!sr.EndOfStream)
                         pushValue(sr.ReadLine());
-            }, true).Map(args.LineSplitter);
+            }, true).Map(args.Mapping.LineSplitter);
 
-            var dataLineS = splittedLineS.Skip(args.LinesToIgnore);
-            var inputLineParser = args.ColumnIndexMappingConfiguration.LineParser();
-            Func<IList<string>, string, TOut> parseLine;
-            if (args.FileNameLambda != null)
-            {
-                PropertyInfo propertyInfo = PropertyMapper.GetPropertyInfo(args.FileNameLambda);
-                parseLine = (IList<string> dataLine, string fileName) =>
-                {
-                    var parsed = inputLineParser(dataLine);
-                    propertyInfo.SetValue(parsed, fileName);
-                    return parsed;
-                };
-            }
-            else
-                parseLine = (IList<string> dataLine, string fileName) => inputLineParser(dataLine);
-            return dataLineS.Map(dataLine => parseLine(dataLine, filePath));
+            var dataLineS = splittedLineS.Skip(args.Mapping.LinesToIgnore);
+            var inputLineParser = args.Mapping.ColumnIndexMappingConfiguration.LineParser();
+            return dataLineS.Map(dataLine => args.ResultSelector(input, inputLineParser(dataLine)));
         }
         public IStream<TOut> Output { get; }
     }
@@ -153,24 +136,81 @@ namespace Paillave.Etl.Core.StreamNodes
         public static IStream<TOut> CrossApplyParsedFile<TOut>(this IStream<string> stream, string name, ColumnNameFlatFileDescriptor<TOut> args)
             where TOut : new()
         {
-            return new CrossApplyNameMappingParsedFileStreamNode<TOut>(stream, name, null, args).Output;
+            return new CrossApplyNameMappingParsedFileStreamNode<string, TOut, TOut>(stream, name, null, new CrossApplyNameMappingParsedFileArgs<string, TOut, TOut>
+            {
+                FilePathSelector = i => i,
+                ResultSelector = (i, j) => j,
+                Mapping = args
+            }).Output;
         }
-        public static IStream<TOut> CrossApplyColumnNameParsedFile<TOut, TFileDesc>(this IStream<string> stream, string name)
+        public static IStream<TOut> CrossApplyParsedFile<TIn, TOut>(this IStream<TIn> stream, string name, ColumnNameFlatFileDescriptor<TOut> args, Func<TIn, string> filePathSelector)
             where TOut : new()
-            where TFileDesc : ColumnNameFlatFileDescriptor<TOut>, new()
         {
-            return new CrossApplyNameMappingParsedFileStreamNode<TOut>(stream, name, null, new TFileDesc()).Output;
+            return new CrossApplyNameMappingParsedFileStreamNode<TIn, TOut, TOut>(stream, name, null, new CrossApplyNameMappingParsedFileArgs<TIn, TOut, TOut>
+            {
+                FilePathSelector = filePathSelector,
+                ResultSelector = (i, j) => j,
+                Mapping = args
+            }).Output;
         }
+        public static IStream<TOut> CrossApplyParsedFile<TIn, TParsed, TOut>(this IStream<TIn> stream, string name, ColumnNameFlatFileDescriptor<TParsed> args, Func<TIn, string> filePathSelector, Func<TIn, TParsed, TOut> resultSelector) where TParsed : new()
+        {
+            return new CrossApplyNameMappingParsedFileStreamNode<TIn, TParsed, TOut>(stream, name, null, new CrossApplyNameMappingParsedFileArgs<TIn, TParsed, TOut>
+            {
+                FilePathSelector = filePathSelector,
+                ResultSelector = resultSelector,
+                Mapping = args
+            }).Output;
+        }
+        public static IStream<TOut> CrossApplyParsedFile<TParsed, TOut>(this IStream<string> stream, string name, ColumnNameFlatFileDescriptor<TParsed> args, Func<string, TParsed, TOut> resultSelector) where TParsed : new()
+        {
+            return new CrossApplyNameMappingParsedFileStreamNode<string, TParsed, TOut>(stream, name, null, new CrossApplyNameMappingParsedFileArgs<string, TParsed, TOut>
+            {
+                FilePathSelector = i => i,
+                ResultSelector = resultSelector,
+                Mapping = args
+            }).Output;
+        }
+
+
+
         public static IStream<TOut> CrossApplyParsedFile<TOut>(this IStream<string> stream, string name, ColumnIndexFlatFileDescriptor<TOut> args)
             where TOut : new()
         {
-            return new CrossApplyIndexMappingParsedFileStreamNode<TOut>(stream, name, null, args).Output;
+            return new CrossApplyIndexMappingParsedFileStreamNode<string, TOut, TOut>(stream, name, null, new CrossApplyIndexMappingParsedFileArgs<string, TOut, TOut>
+            {
+                FilePathSelector = i => i,
+                ResultSelector = (i, j) => j,
+                Mapping = args
+            }).Output;
         }
-        public static IStream<TOut> CrossApplyColumnIndexParsedFile<TOut, TFileDesc>(this IStream<string> stream, string name)
+        public static IStream<TOut> CrossApplyParsedFile<TIn, TOut>(this IStream<TIn> stream, string name, ColumnIndexFlatFileDescriptor<TOut> args, Func<TIn, string> filePathSelector)
             where TOut : new()
-            where TFileDesc : ColumnIndexFlatFileDescriptor<TOut>, new()
         {
-            return new CrossApplyIndexMappingParsedFileStreamNode<TOut>(stream, name, null, new TFileDesc()).Output;
+            return new CrossApplyIndexMappingParsedFileStreamNode<TIn, TOut, TOut>(stream, name, null, new CrossApplyIndexMappingParsedFileArgs<TIn, TOut, TOut>
+            {
+                FilePathSelector = filePathSelector,
+                ResultSelector = (i, j) => j,
+                Mapping = args
+            }).Output;
+        }
+        public static IStream<TOut> CrossApplyParsedFile<TIn, TParsed, TOut>(this IStream<TIn> stream, string name, ColumnIndexFlatFileDescriptor<TParsed> args, Func<TIn, string> filePathSelector, Func<TIn, TParsed, TOut> resultSelector) where TParsed : new()
+        {
+            return new CrossApplyIndexMappingParsedFileStreamNode<TIn, TParsed, TOut>(stream, name, null, new CrossApplyIndexMappingParsedFileArgs<TIn, TParsed, TOut>
+            {
+                FilePathSelector = filePathSelector,
+                ResultSelector = resultSelector,
+                Mapping = args
+            }).Output;
+        }
+        public static IStream<TOut> CrossApplyParsedFile<TParsed, TOut>(this IStream<string> stream, string name, ColumnIndexFlatFileDescriptor<TParsed> args, Func<string, TParsed, TOut> resultSelector) where TParsed : new()
+        {
+            return new CrossApplyIndexMappingParsedFileStreamNode<string, TParsed, TOut>(stream, name, null, new CrossApplyIndexMappingParsedFileArgs<string, TParsed, TOut>
+            {
+                FilePathSelector = i => i,
+                ResultSelector = resultSelector,
+                Mapping = args
+            }).Output;
         }
     }
 }

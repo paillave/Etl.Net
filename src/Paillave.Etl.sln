@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.Core", "Paillave.Etl.Core\Paillave.Etl.Core.csproj", "{EFD00722-BE94-4001-838C-9F54F130B90D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.Tests", "Paillave.Etl.Tests\Paillave.Etl.Tests.csproj", "{4C0CD6D2-5C08-4AC6-B24F-B36BCC462DFE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{BCF6B7B4-D8FB-47A5-8AB8-E3C3C467A783}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.RxPush", "Paillave.RxPush\Paillave.RxPush.csproj", "{7833FE6A-34DB-44A4-9ABF-B7C609FFEF98}"
@@ -23,10 +21,6 @@ Global
 		{EFD00722-BE94-4001-838C-9F54F130B90D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFD00722-BE94-4001-838C-9F54F130B90D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFD00722-BE94-4001-838C-9F54F130B90D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C0CD6D2-5C08-4AC6-B24F-B36BCC462DFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C0CD6D2-5C08-4AC6-B24F-B36BCC462DFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C0CD6D2-5C08-4AC6-B24F-B36BCC462DFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C0CD6D2-5C08-4AC6-B24F-B36BCC462DFE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BCF6B7B4-D8FB-47A5-8AB8-E3C3C467A783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BCF6B7B4-D8FB-47A5-8AB8-E3C3C467A783}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCF6B7B4-D8FB-47A5-8AB8-E3C3C467A783}.Release|Any CPU.ActiveCfg = Release|Any CPU
