@@ -33,7 +33,7 @@ namespace ConsoleApp1.StreamTypes
             this.WithCultureInfo(ci);
             this.MapColumnToProperty("#", i => i.Id);
             this.MapColumnToProperty("Label", i => i.Name);
-            this.MapFileNameToProperty(i => i.FileName);
+            //this.MapFileNameToProperty(i => i.FileName);
             this.IsFieldDelimited('\t');
         }
     }

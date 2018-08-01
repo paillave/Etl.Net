@@ -27,7 +27,7 @@ namespace ConsoleApp1
             var parsedLineS = ctx.StartupStream
                 .Select("get input file path", i => i.FolderPath)
                 .CrossApplyFolderFiles("get folder files", "testin.*.txt")
-                .CrossApplyParsedFile("parse input file", new Class1Mapper())
+                .CrossApplyParsedFile("parse input file", new Class1Mapper(), (i, p) => { p.FileName = i; return p; })
                 .EnsureSorted("Ensure input file is sorted", i => SortCriteria.Create(i, e => e.TypeId));
 
             parsedLineS.ToAction("write to console", i => Console.WriteLine($"{i.FileName} - {i.Id}"));
