@@ -6,6 +6,7 @@ using System.Text;
 using System.Linq.Expressions;
 using Paillave.Etl.Core.System.Streams;
 using Paillave.RxPush.Core;
+using Paillave.Etl.Core.System.TraceContents;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
@@ -34,8 +35,7 @@ namespace Paillave.Etl.Core.StreamNodes
         {
             lock (_syncObject)
             {
-                var tmp = new System.SortCriteriaComparer<TIn>(base.Arguments);
-                _items.Sort(tmp);
+                _items.Sort(new System.SortCriteriaComparer<TIn>(base.Arguments));
                 _deferedPushObservable.Start();
             }
         }
@@ -44,6 +44,8 @@ namespace Paillave.Etl.Core.StreamNodes
         {
             lock (_syncObject)
             {
+                if (_items.Count == 10000)
+                    base.Tracer.Trace(new SortWarningStreamTraceContent(nameof(this.Output)));
                 _items.Add(value);
             }
         }

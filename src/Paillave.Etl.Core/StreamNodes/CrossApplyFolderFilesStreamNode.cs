@@ -16,19 +16,20 @@ using Paillave.RxPush.Core;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
-    public class CrossApplyFolderFilesArgs
+    public class CrossApplyFolderFilesArgs<T>
     {
         public string Pattern { get; set; }
         public SearchOption Option { get; set; }
+        public Func<T, string> GetFolderPath { get; set; }
     }
 
-    public class CrossApplyFolderFilesStreamNode : StreamNodeBase<IStream<string>, string, CrossApplyFolderFilesArgs>, IStreamNodeOutput<string>
+    public class CrossApplyFolderFilesStreamNode<TIn> : StreamNodeBase<IStream<TIn>, TIn, CrossApplyFolderFilesArgs<TIn>>, IStreamNodeOutput<string>
     {
-        public CrossApplyFolderFilesStreamNode(IStream<string> input, string name, IEnumerable<string> parentNodeNamePath, CrossApplyFolderFilesArgs args) : base(input, name, parentNodeNamePath, args)
+        public CrossApplyFolderFilesStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, CrossApplyFolderFilesArgs<TIn> args) : base(input, name, parentNodeNamePath, args)
         {
-            this.Output = base.CreateStream(nameof(Output), input.Observable.FlatMap(folder => new DeferedPushObservable<string>(i =>
+            this.Output = base.CreateStream(nameof(Output), input.Observable.FlatMap(elt => new DeferedPushObservable<string>(i =>
             {
-                foreach (var item in Directory.GetFiles(folder, args.Pattern, args.Option))
+                foreach (var item in Directory.GetFiles(this.Arguments.GetFolderPath(elt), args.Pattern, args.Option))
                     i(item);
             }, true)));
         }
@@ -38,9 +39,23 @@ namespace Paillave.Etl.Core.StreamNodes
 
     public static partial class StreamEx
     {
+        public static IStream<string> CrossApplyFolderFiles<TIn>(this IStream<TIn> stream, string name, Func<TIn, string> getFolderPath, string pattern = "*", SearchOption option = SearchOption.TopDirectoryOnly)
+        {
+            return new CrossApplyFolderFilesStreamNode<TIn>(stream, name, null, new CrossApplyFolderFilesArgs<TIn>
+            {
+                GetFolderPath = getFolderPath,
+                Option = option,
+                Pattern = pattern
+            }).Output;
+        }
         public static IStream<string> CrossApplyFolderFiles(this IStream<string> stream, string name, string pattern = "*", SearchOption option = SearchOption.TopDirectoryOnly)
         {
-            return new CrossApplyFolderFilesStreamNode(stream, name, null, new CrossApplyFolderFilesArgs { Option = option, Pattern = pattern }).Output;
+            return new CrossApplyFolderFilesStreamNode<string>(stream, name, null, new CrossApplyFolderFilesArgs<string>
+            {
+                GetFolderPath = i => i,
+                Option = option,
+                Pattern = pattern
+            }).Output;
         }
     }
 }

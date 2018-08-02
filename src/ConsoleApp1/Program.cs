@@ -11,22 +11,16 @@ using Paillave.Etl.Core.System;
 
 namespace ConsoleApp1
 {
-    public class MyClass
-    {
-        public string FolderPath { get; set; }
-        public string TypeFilePath { get; set; }
-    }
     class Program
     {
         // https://www.nuget.org/packages/EPPlus
         static void Main(string[] args)
         {
-            var ctx = new ExecutionContext<MyClass>("import file");
+            var ctx = new ExecutionContext<MyConfig>("import file");
             ctx.TraceStream.Where("keep log info", i => i.Content.Level <= System.Diagnostics.TraceLevel.Info).ToAction("logs to console", Console.WriteLine);
 
             var parsedLineS = ctx.StartupStream
-                .Select("get input file path", i => i.FolderPath)
-                .CrossApplyFolderFiles("get folder files", "*.txt")
+                .CrossApplyFolderFiles("get folder files", i => i.FolderPath, "*.txt")
                 .CrossApplyParsedFile("parse input file", new Class1Mapper(), (i, p) => { p.FileName = i; return p; })
                 .Sort("sort input file", i => SortCriteria.Create(i, e => e.TypeId));
             //.EnsureSorted("Ensure input file is sorted", i => SortCriteria.Create(i, e => e.TypeId));
@@ -42,7 +36,7 @@ namespace ConsoleApp1
                 .Select("output after join", i => $"{i.FileName}:{i.Id}->{i.Name}")
                 .ToAction("write to console", Console.WriteLine);
 
-            ctx.Configure(new MyClass
+            ctx.Configure(new MyConfig
             {
                 FolderPath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\tmp",
                 TypeFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\ref - Copy.txt"
