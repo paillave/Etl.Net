@@ -16,19 +16,20 @@ namespace Paillave.Etl.Core.System.Streams
         {
             this.ExecutionContext = executionContext;
 
-            observable = observable.CompletesOnException(e => tracer.Trace(new UnhandledExceptionStreamTraceContent(sourceOutputName, e)));
-            //observable = executionContext.StopIfContextStops(observable);
+            this.Observable = observable
+                .CompletesOnException(e => tracer.Trace(new UnhandledExceptionStreamTraceContent(sourceOutputName, e)))
+                .TakeUntil(executionContext.TraceEvents.Filter(i => i.Content.Level == TraceLevel.Error));
+
             if (tracer != null)
             {
                 PushObservable.Merge<ITraceContent>(
-                    observable.Count().Map(count => new CounterSummaryStreamTraceContent(sourceOutputName, count)),
-                    observable.Map((e, i) => new RowProcessStreamTraceContent(sourceOutputName, i + 1, e))
+                    this.Observable.Count().Map(count => new CounterSummaryStreamTraceContent(sourceOutputName, count)),
+                    this.Observable.Map((e, i) => new RowProcessStreamTraceContent(sourceOutputName, i + 1, e))
                 ).Subscribe(tracer.Trace);
             }
-            this.Observable = observable.TakeUntil(executionContext.TraceEvents.Filter(i => i.Content.Level == TraceLevel.Error));
         }
 
-        public IPushObservable<T> Observable { get; private set; }
+        public IPushObservable<T> Observable { get; protected set; }
 
         public IExecutionContext ExecutionContext { get; }
     }

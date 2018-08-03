@@ -13,10 +13,17 @@ namespace Paillave.RxPush.Operators
         private IDisposable _disp1;
         private IDisposable _disp2;
         private bool _isTriggered = false;
+        private Func<TIn, bool> _criteria = i => true;
+        private bool _includeTrigger = true;
         public SkipUntilSubject(IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable)
         {
             _disp1 = observable.Subscribe(HandleOnPush, HandleOnComplete, HandleOnError);
             _disp2 = fromObservable.Subscribe(HandleOnPushTrigger, HandleOnCompleteTrigger);
+        }
+
+        public SkipUntilSubject(IPushObservable<TIn> observable, Func<TIn, bool> criteria, bool includeTrigger)
+        {
+            _disp1 = observable.Subscribe(HandleOnPushCondition, HandleOnComplete, HandleOnError);
         }
 
         private void HandleOnCompleteTrigger()
@@ -58,6 +65,13 @@ namespace Paillave.RxPush.Operators
                 if (_isTriggered) PushValue(value);
             }
         }
+        private void HandleOnPushCondition(TIn value)
+        {
+            lock (_lockObject)
+            {
+                if (_isTriggered) PushValue(value);
+            }
+        }
         public override void Dispose()
         {
             _disp1.Dispose();
@@ -70,6 +84,10 @@ namespace Paillave.RxPush.Operators
         public static IPushObservable<TIn> SkipUntil<TIn, TFrom>(this IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable)
         {
             return new SkipUntilSubject<TIn, TFrom>(observable, fromObservable);
+        }
+        public static IPushObservable<TIn> SkipUntil<TIn, TFrom>(this IPushObservable<TIn> observable, Func<TIn, bool> criteria, bool includeTrigger = true)
+        {
+            return new SkipUntilSubject<TIn, TFrom>(observable, criteria, includeTrigger);
         }
     }
 }
