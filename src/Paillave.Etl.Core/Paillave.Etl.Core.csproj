@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Compile Remove="StreamNodes\CrossApplyNode.cs" />
+    <Compile Remove="StreamNodes\ToFlatFileStreamNode.cs" />
     <Compile Remove="System\DataSourceNodeBase.cs" />
   </ItemGroup>
 
