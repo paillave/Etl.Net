@@ -11,6 +11,15 @@ namespace Paillave.RxPush.Core
         private bool _isComplete = false;
         private object lockObject = new object();
 
+        protected bool IsComplete
+        {
+            get
+            {
+                lock (lockObject)
+                    return _isComplete;
+            }
+        }
+
         public void Complete()
         {
             lock (lockObject)

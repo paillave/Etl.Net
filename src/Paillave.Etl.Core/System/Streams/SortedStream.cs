@@ -14,7 +14,8 @@ namespace Paillave.Etl.Core.System.Streams
     {
         private IComparer<T> _comparer;
 
-        public SortedStream(ITracer tracer, IExecutionContext executionContext, string sourceOutputName, IPushObservable<T> observable, IEnumerable<ISortCriteria<T>> sortCriterias) : base(tracer, executionContext, sourceOutputName, observable)
+        public SortedStream(ITracer tracer, IExecutionContext executionContext, string sourceOutputName, IPushObservable<T> observable, IEnumerable<ISortCriteria<T>> sortCriterias) 
+            : base(tracer, executionContext, sourceOutputName, observable)
         {
             if (sortCriterias.Count() == 0) throw new ArgumentOutOfRangeException(nameof(sortCriterias), "sorting criteria list cannot be empty");
             this.SortCriterias = new ReadOnlyCollection<ISortCriteria<T>>(sortCriterias.ToList());

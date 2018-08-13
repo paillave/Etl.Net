@@ -7,32 +7,18 @@ using System.Threading.Tasks;
 
 namespace Paillave.RxPush.Operators
 {
-    public class SkipUntilSubject<TIn, TFrom> : PushSubject<TIn>
+    public class SkipUntilConditionSubject<TIn> : PushSubject<TIn>
     {
         private object _lockObject = new object();
         private IDisposable _disp1;
-        private IDisposable _disp2;
         private bool _isTriggered = false;
-        public SkipUntilSubject(IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable)
+        private Func<TIn, bool> _condition;
+        private bool _included;
+        public SkipUntilConditionSubject(IPushObservable<TIn> observable, Func<TIn, bool> condition, bool included = true)
         {
+            _condition = condition;
+            _included = included;
             _disp1 = observable.Subscribe(HandleOnPush, HandleOnComplete, HandleOnError);
-            _disp2 = fromObservable.Subscribe(HandleOnPushTrigger, HandleOnCompleteTrigger);
-        }
-
-        private void HandleOnCompleteTrigger()
-        {
-            lock (_lockObject)
-            {
-                if (!_isTriggered) Complete();
-            }
-        }
-
-        private void HandleOnPushTrigger(TFrom obj)
-        {
-            lock (_lockObject)
-            {
-                _isTriggered = true;
-            }
         }
 
         private void HandleOnError(Exception ex)
@@ -56,27 +42,36 @@ namespace Paillave.RxPush.Operators
             lock (_lockObject)
             {
                 if (_isTriggered) PushValue(value);
+                else
+                {
+                    try
+                    {
+                        bool conditionReached = _condition(value);
+                        if (conditionReached)
+                        {
+                            _isTriggered = true;
+                            if (_included) PushValue(value);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        PushException(ex);
+                    }
+                }
             }
         }
-        private void HandleOnPushCondition(TIn value)
-        {
-            lock (_lockObject)
-            {
-                if (_isTriggered) PushValue(value);
-            }
-        }
+
         public override void Dispose()
         {
             _disp1.Dispose();
-            _disp2.Dispose();
             base.Dispose();
         }
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TIn> SkipUntil<TIn, TFrom>(this IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable)
+        public static IPushObservable<TIn> SkipUntil<TIn>(this IPushObservable<TIn> observable, Func<TIn, bool> condition, bool included = true)
         {
-            return new SkipUntilSubject<TIn, TFrom>(observable, fromObservable);
+            return new SkipUntilConditionSubject<TIn>(observable, condition, included);
         }
     }
 }

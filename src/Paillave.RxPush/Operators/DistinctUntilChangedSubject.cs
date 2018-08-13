@@ -25,11 +25,18 @@ namespace Paillave.RxPush.Operators
         {
             lock (_syncValue)
             {
-                if (!_hasLastValue || !_comparer.Equals(_lastValue, value))
+                try
                 {
-                    _hasLastValue = true;
-                    _lastValue = value;
-                    return true;
+                    if (!_hasLastValue || !_comparer.Equals(_lastValue, value))
+                    {
+                        _hasLastValue = true;
+                        _lastValue = value;
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    PushException(ex);
                 }
                 return false;
             }
