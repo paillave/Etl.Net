@@ -37,6 +37,7 @@ namespace Paillave.Etl.Core.StreamNodes
         public IStream<TOut> Output { get; }
         public IStream<ErrorRow<TIn>> Error { get; }
     }
+
     public static partial class StreamEx
     {
         public static IStream<TOut> Select<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper)

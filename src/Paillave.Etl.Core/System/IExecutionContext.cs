@@ -14,6 +14,7 @@ namespace Paillave.Etl.Core.System
         void Trace(TraceEvent traceEvent);
         IPushObservable<TraceEvent> TraceEvents { get; }
         void WaitCompletion<T>(IPushObservable<T> stream);
+        void AddDisposable(IDisposable disposable);
         Task GetCompletionTask();
         //IPushObservable<TRow> StopIfContextStops<TRow>(IPushObservable<TRow> observable);
     }

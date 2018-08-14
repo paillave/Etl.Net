@@ -1,4 +1,5 @@
-﻿using Paillave.Etl.Core.StreamNodes;
+﻿using Paillave.Etl.Core.Helpers;
+using Paillave.Etl.Core.StreamNodes;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

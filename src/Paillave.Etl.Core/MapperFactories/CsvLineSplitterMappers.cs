@@ -11,5 +11,9 @@ namespace Paillave.Etl.Core.MapperFactories
         {
             return new CsvSplit(fieldDemimiter, textDemimiter).ParseCsvLine;
         }
+        public static Func<IList<string>, string> CsvLineJoiner(char fieldDemimiter = ';', char textDemimiter = '"')
+        {
+            return new CsvSplit(fieldDemimiter, textDemimiter).JoinCsvLine;
+        }
     }
 }

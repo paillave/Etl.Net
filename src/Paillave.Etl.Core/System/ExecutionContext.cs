@@ -7,6 +7,7 @@ using Paillave.RxPush.Core;
 using Paillave.RxPush.Operators;
 using System.Linq;
 using Paillave.Etl.Core.System.Streams;
+using Paillave.RxPush.Disposables;
 
 namespace Paillave.Etl.Core.System
 {
@@ -16,23 +17,18 @@ namespace Paillave.Etl.Core.System
         private readonly IPushSubject<TConfig> _startupSubject;
         private readonly IExecutionContext _executionContext;
         private readonly IExecutionContext _traceExecutionContext;
-        //private readonly IPushObservable<TraceEvent> _forcedEndOfProcess;
         public IStream<TraceEvent> TraceStream { get; }
-        //public SortedStream<TraceEvent> TraceStream { get; }
         public Stream<TConfig> StartupStream { get; }
         private TConfig _config;
-        //private IList<IPushObservable<bool>> _streamsToEnd = new List<IPushObservable<bool>>();
 
         public ExecutionContext(string jobName)
         {
             this.JobName = jobName;
             this.ExecutionId = Guid.NewGuid();
             this._traceSubject = new PushSubject<TraceEvent>();
-            //this._forcedEndOfProcess = this._traceSubject.Filter(i => i.Content.Level == TraceLevel.Error);
             this._startupSubject = new PushSubject<TConfig>();
             _traceExecutionContext = new NullExecutionContext(this);
             this.TraceStream = new Stream<TraceEvent>(null, _traceExecutionContext, null, this._traceSubject);
-            //this.TraceStream = new SortedStream<TraceEvent>(null, _traceExecutionContext, null, this._traceSubject, new[] { new SortCriteria<TraceEvent>(i => i.DateTime) });
             _executionContext = new CurrentExecutionContext(this);
             this.StartupStream = new Stream<TConfig>(new Tracer(_executionContext, new CurrentExecutionNodeContext(jobName)), _executionContext, "Startup", this._startupSubject.First());
         }
@@ -74,6 +70,7 @@ namespace Paillave.Etl.Core.System
         private class CurrentExecutionContext : IExecutionContext
         {
             private List<Task> _tasksToWait = new List<Task>();
+            private CollectionDisposableManager _disposables;
 
             public CurrentExecutionContext(ExecutionContext<TConfig> localExecutionContext)
             {
@@ -92,19 +89,19 @@ namespace Paillave.Etl.Core.System
 
             public Task GetCompletionTask()
             {
-                return Task.WhenAll(_tasksToWait.ToArray());
+                return Task.WhenAll(_tasksToWait.ToArray()).ContinueWith(_ => _disposables.Dispose());
             }
-            //public IPushObservable<TRow> StopIfContextStops<TRow>(IPushObservable<TRow> observable)
-            //{
-            //    var ret = observable.TakeUntil(_localExecutionContext._forcedEndOfProcess);
-            //    _localExecutionContext._streamsToEnd.Add(ret.Map(i => true));
-            //    return ret;
-            //}
+
+            public void AddDisposable(IDisposable disposable)
+            {
+                _disposables.Set(disposable);
+            }
         }
         private class NullExecutionContext : IExecutionContext
         {
             private List<Task> _tasksToWait = new List<Task>();
             private ExecutionContext<TConfig> _localExecutionContext;
+            private CollectionDisposableManager _disposables;
             public NullExecutionContext(ExecutionContext<TConfig> localExecutionContext)
             {
                 this._localExecutionContext = localExecutionContext;
@@ -122,9 +119,13 @@ namespace Paillave.Etl.Core.System
 
             public Task GetCompletionTask()
             {
-                return Task.WhenAll(_tasksToWait.ToArray());
+                return Task.WhenAll(_tasksToWait.ToArray()).ContinueWith(_ => _disposables.Dispose());
             }
-            //public IPushObservable<TRow> StopIfContextStops<TRow>(IPushObservable<TRow> observable) => observable;
+
+            public void AddDisposable(IDisposable disposable)
+            {
+                _disposables.Set(disposable);
+            }
         }
     }
 }
