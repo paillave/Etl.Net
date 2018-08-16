@@ -51,6 +51,12 @@ namespace Paillave.RxPushTests.Operators
 
             var task = observable.ToTaskAsync();
 
+            System.Threading.Thread.Sleep(99); //not more than 100!!!
+
+            //for (int i = 0; i < 5000; i++)
+            //{
+
+            //};
             observable.Subscribe(outputValues.Add);
 
             if (!startOnFirstSubscription) observable.Start();

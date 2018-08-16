@@ -12,7 +12,7 @@ namespace Paillave.RxPush.Core
         private Action<Action<T>> _valuesFactory;
         private bool _startOnFirstSubscription;
         private object lockObject = new object();
-        public DeferedPushObservable(Action<Action<T>> valuesFactory, bool startOnFirstSubscription = false)
+        public DeferedPushObservable(Action<Action<T>> valuesFactory, bool startOnFirstSubscription = false) //Get rid of the startOnFirstSubscription parameter by replacing it with an EventWaitHandle parameter
         {
             _valuesFactory = valuesFactory;
             _startOnFirstSubscription = startOnFirstSubscription;
@@ -54,6 +54,18 @@ namespace Paillave.RxPush.Core
         {
             Task.Run(() =>
             {
+                //HORRIBLE trick to increase chances that the following subscription chain is build before the process starts to issue the first value
+                System.Threading.Thread.Sleep(100);
+
+                //TODO: get rid of the horrible previous trick by using an EventWaitHandle in such a way. The ewt.Set() would be done outside, anywhere
+                ////EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
+                ////var tasks = Enumerable.Range(0, 4).Select(_ => Task.Run(() => {
+                ////    ewh.WaitOne();
+                ////    //do the work here
+                ////})).ToArray();
+                ////ewh.Set();
+                ////Task.WaitAll(tasks);
+
                 try
                 {
                     _valuesFactory(PushValue);

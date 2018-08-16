@@ -47,7 +47,7 @@ namespace Paillave.Etl.Core.StreamNodes
             return new Stream<T>(this.Tracer, this._executionContext, streamName, observable);
         }
 
-        protected IPushObservable<TOut> CreateObservable<TIn, TOut>(TIn input, Action<TIn, Action<TOut>> populateObserver)
+        protected IDeferedPushObservable<TOut> CreateObservable<TIn, TOut>(TIn input, Action<TIn, Action<TOut>> populateObserver)
         {
             return new DeferedPushObservable<TOut>(i => populateObserver(input, i), true);
         }

@@ -47,7 +47,9 @@ namespace Paillave.Etl.StreamNodes
                 .Skip(args.Mapping.LinesToIgnore)
                 .Take(1)
                 .Map(args.Mapping.ColumnNameMappingConfiguration.LineParser);
-            var dataLineS = splittedLineS.Skip(1 + args.Mapping.LinesToIgnore).Filter(i => i.Count > 0);
+            var dataLineS = splittedLineS
+                .Skip(1 + args.Mapping.LinesToIgnore)
+                .Filter(i => i.Count > 0);
 
             return dataLineS.CombineWithLatest(lineParserS, (dataLine, lineParser) => args.ResultSelector(input, lineParser(dataLine)));
         }

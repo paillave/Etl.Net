@@ -33,7 +33,6 @@ namespace Paillave.Etl.StreamNodes
         }
     }
 
-
     public static partial class StreamEx
     {
         public static IStream<TOut> CrossApplyDataStream<TOut>(this IStream<Stream> stream, string name, Func<string, TOut> resultSelector)
