@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 
-namespace Paillave.Etl.Core.Helpers.MapperFactories
+namespace Paillave.Etl.Helpers.MapperFactories
 {
     public class ColumnWidthSplit
     {

@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Paillave.Etl.Core.Helpers.MapperFactories
+namespace Paillave.Etl.Helpers.MapperFactories
 {
     public class ColumnIndexMappingConfiguration<TDest>
     {
@@ -27,7 +27,7 @@ namespace Paillave.Etl.Core.Helpers.MapperFactories
             return this;
         }
 
-        public Func<IList<string>, TDest> LineParser()
+        private LineParser<TDest> CreateParser()
         {
             return new LineParser<TDest>(_columnDictionary.ToDictionary(i => i.Key, r =>
             {
@@ -38,7 +38,16 @@ namespace Paillave.Etl.Core.Helpers.MapperFactories
                 };
                 return new PropertyMapper(propertyDescription);
             }),
-            this._constructor).Parse;
+            this._constructor);
+        }
+
+        public Func<IList<string>, TDest> LineParser()
+        {
+            return CreateParser().Parse;
+        }
+        public Func<TDest, IList<string>> LineSerializer()
+        {
+            return CreateParser().Serialize;
         }
     }
 }

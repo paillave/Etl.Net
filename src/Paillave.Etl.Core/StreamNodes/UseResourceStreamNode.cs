@@ -1,12 +1,13 @@
-﻿using Paillave.Etl.Core.System;
+﻿using Paillave.Etl.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Paillave.RxPush.Operators;
-using Paillave.Etl.Core.System.Streams;
-using Paillave.Etl.Core.System.NodeOutputs;
+using Paillave.Etl.Core.Streams;
+using Paillave.Etl.Core.NodeOutputs;
+using Paillave.Etl.Core.StreamNodes;
 
-namespace Paillave.Etl.Core.StreamNodes
+namespace Paillave.Etl.StreamNodes
 {
     public class CreateResourceArgs<TIn, TOut> where TOut : IDisposable
     {

@@ -74,7 +74,7 @@ namespace Paillave.RxPush.Operators
                             somethingChanged = true;
                         }
                 } while (somethingChanged);
-                if (leftSide.IsComplete) this.Complete();
+                if (leftSide.IsComplete && (leftSide.IsEmpty || rightSide.IsComplete)) this.Complete();
             };
 
             _leftSubscription = leftS.Subscribe(

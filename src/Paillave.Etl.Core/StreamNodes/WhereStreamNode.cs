@@ -1,12 +1,13 @@
-﻿using Paillave.Etl.Core.System;
-using Paillave.Etl.Core.System.NodeOutputs;
-using Paillave.Etl.Core.System.Streams;
+﻿using Paillave.Etl.Core;
+using Paillave.Etl.Core.NodeOutputs;
+using Paillave.Etl.Core.StreamNodes;
+using Paillave.Etl.Core.Streams;
 using Paillave.RxPush.Operators;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Paillave.Etl.Core.StreamNodes
+namespace Paillave.Etl.StreamNodes
 {
     public class WhereArgs<TIn>
     {

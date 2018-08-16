@@ -1,9 +1,9 @@
 ﻿using System;
-using Paillave.Etl.Core.Helpers.MapperFactories;
+using Paillave.Etl.Helpers.MapperFactories;
 using System.Globalization;
 using System.Linq.Expressions;
 
-namespace Paillave.Etl.Core.Helpers
+namespace Paillave.Etl.Helpers
 {
     public class ColumnIndexFlatFileDescriptor<T> : FlatFileDescriptorBase<T> where T : new()
     {

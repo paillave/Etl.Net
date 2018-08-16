@@ -1,12 +1,13 @@
-﻿using Paillave.Etl.Core.System;
+﻿using Paillave.Etl.Core;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq.Expressions;
-using Paillave.Etl.Core.System.Streams;
+using Paillave.Etl.Core.Streams;
+using Paillave.Etl.Core.StreamNodes;
 
-namespace Paillave.Etl.Core.StreamNodes
+namespace Paillave.Etl.StreamNodes
 {
     public class EnsureSortedStreamNode<TIn> : StreamNodeBase<IStream<TIn>, TIn, IEnumerable<SortCriteria<TIn>>>, ISortedStreamNodeOutput<TIn>
     {

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.Core", "Paillave.Etl.Core\Paillave.Etl.Core.csproj", "{EFD00722-BE94-4001-838C-9F54F130B90D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl", "Paillave.Etl.Core\Paillave.Etl.csproj", "{EFD00722-BE94-4001-838C-9F54F130B90D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{BCF6B7B4-D8FB-47A5-8AB8-E3C3C467A783}"
 EndProject

@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Paillave.Etl.Core\Paillave.Etl.Core.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.Core\Paillave.Etl.csproj" />
   </ItemGroup>
 
 </Project>

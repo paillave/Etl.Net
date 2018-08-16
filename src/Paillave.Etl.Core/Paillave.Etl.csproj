@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="SystemOld\**" />
+    <EmbeddedResource Remove="SystemOld\**" />
+    <None Remove="SystemOld\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="StreamNodes\CombineLatestStreamNode.cs" />
+    <Compile Remove="StreamNodes\CrossApplyNode.cs" />
+    <Compile Remove="Core\DataSourceNodeBase.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Humanizer.Core" Version="2.4.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paillave.RxPush\Paillave.RxPush.csproj" />
+  </ItemGroup>
+
+</Project>

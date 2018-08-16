@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
-using Paillave.Etl.Core.MapperFactories;
+using Paillave.Etl.MapperFactories;
 
-namespace Paillave.Etl.Core.Helpers
+namespace Paillave.Etl.Helpers
 {
     public abstract class FlatFileDescriptorBase<T> where T : new()
     {

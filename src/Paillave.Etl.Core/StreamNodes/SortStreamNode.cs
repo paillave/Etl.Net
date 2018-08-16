@@ -1,16 +1,17 @@
-﻿using Paillave.Etl.Core.System;
+﻿using Paillave.Etl.Core;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq.Expressions;
-using Paillave.Etl.Core.System.Streams;
+using Paillave.Etl.Core.Streams;
 using Paillave.RxPush.Core;
-using Paillave.Etl.Core.System.TraceContents;
+using Paillave.Etl.Core.TraceContents;
+using Paillave.Etl.Core.StreamNodes;
 
-namespace Paillave.Etl.Core.StreamNodes
+namespace Paillave.Etl.StreamNodes
 {
-    public class SortStreamNode<TIn> : StreamNodeBase<IStream<TIn>, TIn, IEnumerable<System.SortCriteria<TIn>>>, ISortedStreamNodeOutput<TIn>
+    public class SortStreamNode<TIn> : StreamNodeBase<IStream<TIn>, TIn, IEnumerable<Core.SortCriteria<TIn>>>, ISortedStreamNodeOutput<TIn>
     {
         private object _syncObject = new object();
         public ISortedStream<TIn> Output { get; }
@@ -23,7 +24,7 @@ namespace Paillave.Etl.Core.StreamNodes
                 pushValue(item);
         }
 
-        public SortStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, IEnumerable<System.SortCriteria<TIn>> arguments)
+        public SortStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, IEnumerable<Core.SortCriteria<TIn>> arguments)
             : base(input, name, parentNodeNamePath, arguments)
         {
             _deferedPushObservable = new DeferedPushObservable<TIn>(PushSortedList);
@@ -35,7 +36,7 @@ namespace Paillave.Etl.Core.StreamNodes
         {
             lock (_syncObject)
             {
-                _items.Sort(new System.SortCriteriaComparer<TIn>(base.Arguments));
+                _items.Sort(new Core.SortCriteriaComparer<TIn>(base.Arguments));
                 _deferedPushObservable.Start();
             }
         }
@@ -54,17 +55,17 @@ namespace Paillave.Etl.Core.StreamNodes
     {
         public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, params Expression<Func<TIn, IComparable>>[] sortFields)
         {
-            return new SortStreamNode<TIn>(stream, name, null, sortFields.Select(i => new System.SortCriteria<TIn>(i)).ToList()).Output;
+            return new SortStreamNode<TIn>(stream, name, null, sortFields.Select(i => new Core.SortCriteria<TIn>(i)).ToList()).Output;
         }
-        public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, params System.SortCriteria<TIn>[] sortCriterias)
+        public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, params Core.SortCriteria<TIn>[] sortCriterias)
         {
             return new SortStreamNode<TIn>(stream, name, null, sortCriterias).Output;
         }
-        public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, Func<TIn, IEnumerable<System.SortCriteria<TIn>>> sortCriteriasBuilder)
+        public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, Func<TIn, IEnumerable<Core.SortCriteria<TIn>>> sortCriteriasBuilder)
         {
             return new SortStreamNode<TIn>(stream, name, null, sortCriteriasBuilder(default(TIn)).ToList()).Output;
         }
-        public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, Func<TIn, System.SortCriteria<TIn>> sortCriteriasBuilder)
+        public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, Func<TIn, Core.SortCriteria<TIn>> sortCriteriasBuilder)
         {
             return new SortStreamNode<TIn>(stream, name, null, new[] { sortCriteriasBuilder(default(TIn)) }).Output;
         }

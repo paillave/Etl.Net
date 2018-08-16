@@ -1,4 +1,4 @@
-﻿using Paillave.Etl.Core.System;
+﻿using Paillave.Etl.Core;
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,21 +6,23 @@ using System.IO;
 using System.Text;
 using System;
 using Paillave.RxPush.Operators;
-using Paillave.Etl.Core.System.Streams;
-using Paillave.Etl.Core.MapperFactories;
-using Paillave.Etl.Core.Helpers.MapperFactories;
+using Paillave.Etl.Core.Streams;
+using Paillave.Etl.MapperFactories;
+using Paillave.Etl.Helpers.MapperFactories;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 using Paillave.RxPush.Core;
+using Paillave.Etl.Core.StreamNodes;
 
-namespace Paillave.Etl.Core.StreamNodes
+namespace Paillave.Etl.StreamNodes
 {
     public class CrossApplyFolderFilesArgs<T>
     {
-        public string Pattern { get; set; }
+        public string SearchPattern { get; set; }
         public SearchOption Option { get; set; }
         public Func<T, string> GetFolderPath { get; set; }
+        public Func<T, string> GetSearchPattern { get; set; }
     }
 
     public class CrossApplyFolderFilesStreamNode<TIn> : StreamNodeBase<IStream<TIn>, TIn, CrossApplyFolderFilesArgs<TIn>>, IStreamNodeOutput<string>
@@ -29,7 +31,8 @@ namespace Paillave.Etl.Core.StreamNodes
         {
             this.Output = base.CreateStream(nameof(Output), input.Observable.FlatMap(elt => new DeferedPushObservable<string>(i =>
             {
-                foreach (var item in Directory.GetFiles(this.Arguments.GetFolderPath(elt), args.Pattern, args.Option))
+                string searchPattern = args.GetSearchPattern != null ? args.GetSearchPattern(elt) : args.SearchPattern;
+                foreach (var item in Directory.GetFiles(this.Arguments.GetFolderPath(elt), searchPattern, args.Option))
                     i(item);
             }, true)));
         }
@@ -45,7 +48,7 @@ namespace Paillave.Etl.Core.StreamNodes
             {
                 GetFolderPath = getFolderPath,
                 Option = option,
-                Pattern = pattern
+                SearchPattern = pattern
             }).Output;
         }
         public static IStream<string> CrossApplyFolderFiles(this IStream<string> stream, string name, string pattern = "*", SearchOption option = SearchOption.TopDirectoryOnly)
@@ -54,7 +57,16 @@ namespace Paillave.Etl.Core.StreamNodes
             {
                 GetFolderPath = i => i,
                 Option = option,
-                Pattern = pattern
+                SearchPattern = pattern
+            }).Output;
+        }
+        public static IStream<string> CrossApplyFolderFiles<TIn>(this IStream<TIn> stream, string name, Func<TIn, string> getFolderPath, Func<TIn, string> getSearchPattern, SearchOption option = SearchOption.TopDirectoryOnly)
+        {
+            return new CrossApplyFolderFilesStreamNode<TIn>(stream, name, null, new CrossApplyFolderFilesArgs<TIn>
+            {
+                GetFolderPath = getFolderPath,
+                Option = option,
+                GetSearchPattern = getSearchPattern
             }).Output;
         }
     }

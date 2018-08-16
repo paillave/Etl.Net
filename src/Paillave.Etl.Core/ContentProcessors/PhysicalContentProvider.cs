@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Paillave.Etl.Core.ContentProcessors
+namespace Paillave.Etl.ContentProcessors
 {
     public class PhysicalContentProvider : IContentProvider
     {

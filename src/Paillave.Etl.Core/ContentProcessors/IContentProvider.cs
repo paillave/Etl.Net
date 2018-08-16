@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Paillave.Etl.Core.ContentProcessors
+namespace Paillave.Etl.ContentProcessors
 {
     public interface IContentProvider
     {

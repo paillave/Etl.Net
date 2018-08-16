@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Paillave.Etl.Core.ContentProcessors
+namespace Paillave.Etl.ContentProcessors
 {
     public class PhysicalContentItem : IContentItem
     {

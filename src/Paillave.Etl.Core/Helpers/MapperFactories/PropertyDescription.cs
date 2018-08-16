@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Linq.Expressions;
 
-namespace Paillave.Etl.Core.Helpers.MapperFactories
+namespace Paillave.Etl.Helpers.MapperFactories
 {
     public class PropertyDescription
     {

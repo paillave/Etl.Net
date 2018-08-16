@@ -5,6 +5,7 @@ using System.Text;
 using Paillave.RxPush.Operators;
 using Paillave.Etl.Core.System.Streams;
 using Paillave.Etl.Core.System.NodeOutputs;
+using Paillave.Etl.Core.System.StreamNodes;
 
 namespace Paillave.Etl.Core.StreamNodes
 {

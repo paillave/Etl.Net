@@ -1,4 +1,4 @@
-﻿using Paillave.Etl.Core.System;
+﻿using Paillave.Etl.Core;
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,9 +6,10 @@ using System.IO;
 using System.Text;
 using System;
 using Paillave.RxPush.Operators;
-using Paillave.Etl.Core.System.Streams;
+using Paillave.Etl.Core.Streams;
+using Paillave.Etl.Core.StreamNodes;
 
-namespace Paillave.Etl.Core.StreamNodes
+namespace Paillave.Etl.StreamNodes
 {
     public class CrossApplyDataStreamReadArgs<TIn, TOut>
     {
