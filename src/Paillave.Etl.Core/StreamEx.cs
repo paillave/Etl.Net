@@ -35,6 +35,26 @@ namespace Paillave.Etl
                 ValuesProvider = valuesProvider
             }).Output;
         }
+        public static IStream<TOut> CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, IValuesProvider<TValueIn, TRes, TValueOut> valuesProvider, Func<TIn, TValueIn> inputValueSelector, Func<TValueOut, TOut> outputValueSelector)
+        {
+            return new CrossApplyResourceStreamNode<TIn, TRes, TValueIn, TValueOut, TOut>(stream, name, null, new CrossApplyResourceArgs<TIn, TRes, TValueIn, TValueOut, TOut>
+            {
+                InputValueSelector = inputValueSelector,
+                OutputValueSelector = outputValueSelector,
+                ValuesProvider = valuesProvider,
+                ResourceStream = resourceStream
+            }).Output;
+        }
+        public static IStream<TOut> CrossApply<TIn, TRes, TOut>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, IValuesProvider<TIn, TRes, TOut> valuesProvider)
+        {
+            return new CrossApplyResourceStreamNode<TIn, TRes, TIn, TOut, TOut>(stream, name, null, new CrossApplyResourceArgs<TIn, TRes, TIn, TOut, TOut>
+            {
+                InputValueSelector = i => i,
+                OutputValueSelector = i => i,
+                ValuesProvider = valuesProvider,
+                ResourceStream = resourceStream
+            }).Output;
+        }
         #endregion
 
         #region CrossApplyFolderFiles
@@ -249,6 +269,25 @@ namespace Paillave.Etl
         }
         #endregion
 
+        #region CrossApplyAction
+        public static IStream<TOut> CrossApplyAction<TIn, TOut>(this IStream<TIn> stream, string name, Action<TIn, Action<TOut>> valuesProducer, bool noParallelisation = false)
+        {
+            return stream.CrossApply(name, new ActionValuesProvider<TIn, TOut>(new ActionValuesProviderArgs<TIn, TOut>()
+            {
+                NoParallelisation = noParallelisation,
+                ProduceValues = valuesProducer
+            }), i => i, i => i);
+        }
+        public static IStream<TOut> CrossApplyAction<TIn, TRes, TOut>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, Action<TIn, TRes, Action<TOut>> valuesProducer, bool noParallelisation = false)
+        {
+            return stream.CrossApply(name, resourceStream, new ActionResourceValuesProvider<TIn, TRes, TOut>(new ActionResourceValuesProviderArgs<TIn, TRes, TOut>()
+            {
+                NoParallelisation = noParallelisation,
+                ProduceValues = valuesProducer
+            }), i => i, i => i);
+        }
+        #endregion
+
         #region EnsureKeyed
         public static IKeyedStream<TIn> EnsureKeyed<TIn>(this IStream<TIn> stream, string name, params Expression<Func<TIn, IComparable>>[] sortFields)
         {
@@ -312,7 +351,7 @@ namespace Paillave.Etl
         #region Merge
         public static IStream<I> Merge<I>(this IStream<I> stream, string name, IStream<I> inputStream2)
         {
-            return new MergeStreamNode<I>(stream, name, null, inputStream2).Output;
+            return new MergeStreamNode<I>(stream, name, null, new MergeArgs<I> { SecondStream = inputStream2 }).Output;
         }
         #endregion
 
@@ -391,6 +430,26 @@ namespace Paillave.Etl
         public static IStream<TIn> ToAction<TIn>(this IStream<TIn> stream, string name, Action<TIn> action)
         {
             return new ToActionStreamNode<TIn>(stream, name, null, action).Output;
+        }
+        public static IStream<TOut> ToAction<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> action)
+        {
+            return new ToActionStreamNode<TIn, TOut>(stream, name, null, action).Output;
+        }
+        public static IStream<TIn> ToAction<TIn, TRes>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, Action<TIn, TRes> action)
+        {
+            return new ToActionResourceStreamNode<TIn, TRes>(stream, name, null, new ToActionArgs<TIn, TRes>
+            {
+                Action = action,
+                ResourceStream = resourceStream
+            }).Output;
+        }
+        public static IStream<TOut> ToAction<TIn, TRes, TOut>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, Func<TIn, TRes, TOut> action)
+        {
+            return new ToActionResourceStreamNode<TIn, TRes, TOut>(stream, name, null, new ToActionArgs<TIn, TRes, TOut>
+            {
+                Action = action,
+                ResourceStream = resourceStream
+            }).Output;
         }
         #endregion
 
@@ -499,6 +558,28 @@ namespace Paillave.Etl
                 RedirectErrorsInsteadOfFail = true
             });
             return new NodeOutputError<WhereStreamNode<TIn>, TIn, TIn>(ret);
+        }
+        #endregion
+
+        #region CombineLatest
+        public static IStream<TOut> CombineLatest<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> inputStream2, Func<TIn1, TIn2, TOut> resultSelector)
+        {
+            return new CombineLatestStreamNode<TIn1, TIn2, TOut>(stream, name, null, new CombineLatestArgs<TIn1, TIn2, TOut>
+            {
+                InputStream2 = inputStream2,
+                ResultSelector = resultSelector,
+                RedirectErrorsInsteadOfFail = false
+            }).Output;
+        }
+        public static INodeOutputError<TOut, TIn1, TIn2> CombineLatestKeepErrors<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> inputStream2, Func<TIn1, TIn2, TOut> resultSelector)
+        {
+            var ret = new CombineLatestStreamNode<TIn1, TIn2, TOut>(stream, name, null, new CombineLatestArgs<TIn1, TIn2, TOut>
+            {
+                InputStream2 = inputStream2,
+                ResultSelector = resultSelector,
+                RedirectErrorsInsteadOfFail = true
+            });
+            return new NodeOutputError<CombineLatestStreamNode<TIn1, TIn2, TOut>, TOut, TIn1, TIn2>(ret);
         }
         #endregion
     }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SystemIO = System.IO;
+using Paillave.RxPush.Core;
 
 namespace Paillave.Etl.StreamNodes
 {
@@ -19,6 +20,11 @@ namespace Paillave.Etl.StreamNodes
         public ToNameMappingFileStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, ToNameMappingFileArgs<TIn> arguments) : base(input, name, parentNodeNamePath, arguments)
         {
             _serialize = this.Arguments.Mapping.ColumnNameMappingConfiguration.LineSerializer();
+        }
+
+        protected override void PreProcess(SystemIO.StreamWriter outputResource)
+        {
+            outputResource.WriteLine(this.Arguments.Mapping.LineJoiner(this.Arguments.Mapping.ColumnNameMappingConfiguration.GetHeaders()));
         }
 
         protected override void ProcessValueToOutput(SystemIO.StreamWriter outputResource, TIn value)

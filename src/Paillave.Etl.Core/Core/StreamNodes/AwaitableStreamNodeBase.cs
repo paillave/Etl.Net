@@ -10,13 +10,16 @@ using System.Diagnostics;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
-    public abstract class AwaitableStreamNodeBase<TStream, TIn> : StreamNodeBase, IStreamNodeOutput<TIn> where TStream : IStream<TIn>
+    public abstract class AwaitableStreamNodeBase<TStream, TIn, TArgs> : StreamNodeBase, IStreamNodeOutput<TIn> where TStream : IStream<TIn>
     {
+        public TArgs Arguments { get; }
         public TStream Input { get; }
         public IStream<TIn> Output { get; }
-        public AwaitableStreamNodeBase(TStream input, string name, IEnumerable<string> parentNodeNamePath)
+
+        public AwaitableStreamNodeBase(TStream input, string name, IEnumerable<string> parentNodeNamePath, TArgs arguments)
             : base(input.ExecutionContext, name, parentNodeNamePath)
         {
+            this.Arguments = arguments;
             this.Input = input;
             var processedPushObservable = this.ProcessObservable(input.Observable);
             input.ExecutionContext.AddToWaitForCompletion(processedPushObservable);
@@ -28,13 +31,53 @@ namespace Paillave.Etl.Core.StreamNodes
             return observable.Do(ProcessValue);
         }
     }
-    public abstract class AwaitableStreamNodeBase<TStream, TIn, TArgs> : AwaitableStreamNodeBase<TStream, TIn> where TStream : IStream<TIn>
+    public abstract class AwaitableStreamNodeBase<TStream, TIn, TOut, TArgs> : StreamNodeBase, IStreamNodeOutput<TOut> where TStream : IStream<TIn>
     {
         public TArgs Arguments { get; }
+        public TStream Input { get; }
+        public IStream<TOut> Output { get; }
+
         public AwaitableStreamNodeBase(TStream input, string name, IEnumerable<string> parentNodeNamePath, TArgs arguments)
-            : base(input, name, parentNodeNamePath)
+            : base(input.ExecutionContext, name, parentNodeNamePath)
         {
             this.Arguments = arguments;
+            this.Input = input;
+            var processedPushObservable = this.ProcessObservable(input.Observable);
+            input.ExecutionContext.AddToWaitForCompletion(processedPushObservable);
+            this.Output = base.CreateStream<TOut>(name, processedPushObservable);
+        }
+        protected abstract TOut ProcessValue(TIn value);
+        protected virtual IPushObservable<TOut> ProcessObservable(IPushObservable<TIn> observable)
+        {
+            return observable.Map(ProcessValue);
         }
     }
+    //public abstract class AwaitableStreamNodeBase<TStream, TIn, TOut> : StreamNodeBase, IStreamNodeOutput<TOut> where TStream : IStream<TIn>
+    //{
+    //    public TStream Input { get; }
+    //    public IStream<TIn> Output { get; }
+
+    //    public AwaitableStreamNodeBase(TStream input, string name, IEnumerable<string> parentNodeNamePath)
+    //        : base(input.ExecutionContext, name, parentNodeNamePath)
+    //    {
+    //        this.Input = input;
+    //        var processedPushObservable = this.ProcessObservable(input.Observable);
+    //        input.ExecutionContext.AddToWaitForCompletion(processedPushObservable);
+    //        this.Output = base.CreateStream<TOut>(name, processedPushObservable);
+    //    }
+    //    protected virtual TOut ProcessValue(TIn value) { }
+    //    protected virtual IPushObservable<TOut> ProcessObservable(IPushObservable<TIn> observable)
+    //    {
+    //        return observable.Map(ProcessValue);
+    //    }
+    //}
+    //public abstract class AwaitableStreamNodeBase<TStream, TIn, TArgs> : AwaitableStreamNodeBase<TStream, TIn> where TStream : IStream<TIn>
+    //{
+    //    public TArgs Arguments { get; }
+    //    public AwaitableStreamNodeBase(TStream input, string name, IEnumerable<string> parentNodeNamePath, TArgs arguments)
+    //        : base(input, name, parentNodeNamePath)
+    //    {
+    //        this.Arguments = arguments;
+    //    }
+    //}
 }

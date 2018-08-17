@@ -11,4 +11,9 @@ namespace Paillave.Etl.Core
         //void SetWaitHandle(WaitHandle waitHandle);
         IDeferedPushObservable<TOut> PushValues(TIn args);
     }
+    public interface IValuesProvider<TIn, TRes, TOut>
+    {
+        //void SetWaitHandle(WaitHandle waitHandle);
+        IDeferedPushObservable<TOut> PushValues(TRes resource, TIn args);
+    }
 }

@@ -57,6 +57,10 @@ namespace Paillave.Etl.Helpers.MapperFactories
         {
             return CreateParser(columnNameIndex).Parse;
         }
+        public IList<string> GetHeaders()
+        {
+            return _columnDictionary.Keys.ToList();
+        }
         public Func<TDest, IList<string>> LineSerializer()
         {
             return CreateParser(this._columnDictionary.Keys.ToList()).Serialize;

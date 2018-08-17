@@ -33,10 +33,15 @@ namespace Paillave.Etl.Core.StreamNodes
             lock (_lockObject)
             {
                 _outputResource = outputResource;
+                PreProcess(_outputResource);
                 while (_onHoldQueue.Count > 0)
                     ProcessValueToOutput(_outputResource, _onHoldQueue.Dequeue());
             }
         }
+
+        protected virtual void PreProcess(TResource outputResource) { }
+
+        //protected virtual void PostProcess() { }
 
         protected override void ProcessValue(TIn value)
         {

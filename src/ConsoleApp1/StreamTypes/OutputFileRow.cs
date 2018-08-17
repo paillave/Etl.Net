@@ -34,7 +34,7 @@ namespace ConsoleApp1.StreamTypes
             this.MapColumnToProperty("Id", i => i.Id);
             this.MapColumnToProperty("Name", i => i.Name);
             this.MapColumnToProperty("FileName", i => i.FileName);
-            this.IsFieldDelimited('\t');
+            this.IsFieldDelimited(',');
         }
     }
 }

@@ -24,7 +24,7 @@ namespace ConsoleApp1
                 InputFolderPath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\",
                 InputFilesSearchPattern = "testin.*.txt",
                 TypeFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\ref - Copy.txt",
-                DestinationFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\outfile.txt"
+                DestinationFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\outfile.csv"
             }).Wait();
 
             Console.WriteLine("Done");
