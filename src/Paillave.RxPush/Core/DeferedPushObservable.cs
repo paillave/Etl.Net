@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Paillave.RxPush.Core
@@ -10,12 +11,13 @@ namespace Paillave.RxPush.Core
     {
         private bool _isComplete = false;
         private Action<Action<T>> _valuesFactory;
-        private bool _startOnFirstSubscription;
+        private WaitHandle _startSynchronizer = null;
         private object lockObject = new object();
-        public DeferedPushObservable(Action<Action<T>> valuesFactory, bool startOnFirstSubscription = false) //Get rid of the startOnFirstSubscription parameter by replacing it with an EventWaitHandle parameter
+        public DeferedPushObservable(Action<Action<T>> valuesFactory, WaitHandle startSynchronizer = null)
         {
             _valuesFactory = valuesFactory;
-            _startOnFirstSubscription = startOnFirstSubscription;
+            _startSynchronizer = startSynchronizer;
+            if (_startSynchronizer != null) this.Start();
         }
         private void Complete()
         {
@@ -54,17 +56,8 @@ namespace Paillave.RxPush.Core
         {
             Task.Run(() =>
             {
-                //HORRIBLE trick to increase chances that the following subscription chain is build before the process starts to issue the first value
-                System.Threading.Thread.Sleep(100);
-
-                //TODO: get rid of the horrible previous trick by using an EventWaitHandle in such a way. The ewt.Set() would be done outside, anywhere
-                ////EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset);
-                ////var tasks = Enumerable.Range(0, 4).Select(_ => Task.Run(() => {
-                ////    ewh.WaitOne();
-                ////    //do the work here
-                ////})).ToArray();
-                ////ewh.Set();
-                ////Task.WaitAll(tasks);
+                if (this._startSynchronizer != null)
+                    this._startSynchronizer.WaitOne();
 
                 try
                 {
@@ -87,11 +80,6 @@ namespace Paillave.RxPush.Core
             {
                 if (this._isComplete) subscription.OnComplete();
                 var subs = base.Subscribe(subscription);
-                if (_startOnFirstSubscription)
-                {
-                    _startOnFirstSubscription = false;
-                    this.Start();
-                }
                 return subs;
             }
         }

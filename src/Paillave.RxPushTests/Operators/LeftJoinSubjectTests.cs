@@ -107,13 +107,13 @@ namespace Paillave.RxPushTests.Operators
         {
             var valueStack = new Stack<Tuple<int, int>>();
             var errorStack = new Stack<Exception>();
-            bool isComplete = false;
+            //bool isComplete = false;
             var leftS = new PushSubject<int>();
             var rightS = new PushSubject<int>();
 
             var output = leftS.LeftJoin(rightS, i => i, i => i, (l, r) => new Tuple<int, int>(l, r));
 
-            output.Subscribe(valueStack.Push, () => isComplete = true, errorStack.Push);
+            output.Subscribe(valueStack.Push, () => { }, errorStack.Push);
 
             leftS.PushValue(1);
 

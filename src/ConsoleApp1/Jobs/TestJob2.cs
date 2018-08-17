@@ -1,6 +1,5 @@
 ﻿using ConsoleApp1.StreamTypes;
-using Paillave.Etl.Core;
-using Paillave.Etl.StreamNodes;
+using Paillave.Etl;
 using System;
 using System.Collections.Generic;
 using System.Text;

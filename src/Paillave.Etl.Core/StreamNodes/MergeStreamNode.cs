@@ -16,11 +16,4 @@ namespace Paillave.Etl.StreamNodes
             this.Output = base.CreateStream(nameof(Output), input.Observable.Merge(arguments.Observable));
         }
     }
-    public static partial class StreamEx
-    {
-        public static IStream<I> Merge<I>(this IStream<I> stream, string name, IStream<I> inputStream2)
-        {
-            return new MergeStreamNode<I>(stream, name, null, inputStream2).Output;
-        }
-    }
 }

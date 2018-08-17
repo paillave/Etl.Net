@@ -32,19 +32,4 @@ namespace Paillave.Etl.StreamNodes
             this.Output = base.CreateKeyedStream(nameof(Output), input.Observable.Take(arguments), input.SortCriterias);
         }
     }
-    public static partial class StreamEx
-    {
-        public static ISortedStream<TIn> Top<TIn>(this ISortedStream<TIn> stream, string name, int count)
-        {
-            return new TopSortedStreamNode<TIn>(stream, name, null, count).Output;
-        }
-        public static IKeyedStream<TIn> Top<TIn>(this IKeyedStream<TIn> stream, string name, int count)
-        {
-            return new TopKeyedStreamNode<TIn>(stream, name, null, count).Output;
-        }
-        public static IStream<TIn> Top<TIn>(this IStream<TIn> stream, string name, int count)
-        {
-            return new TopStreamNode<TIn>(stream, name, null, count).Output;
-        }
-    }
 }

@@ -51,23 +51,4 @@ namespace Paillave.Etl.StreamNodes
             }
         }
     }
-    public static partial class StreamEx
-    {
-        public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, params Expression<Func<TIn, IComparable>>[] sortFields)
-        {
-            return new SortStreamNode<TIn>(stream, name, null, sortFields.Select(i => new Core.SortCriteria<TIn>(i)).ToList()).Output;
-        }
-        public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, params Core.SortCriteria<TIn>[] sortCriterias)
-        {
-            return new SortStreamNode<TIn>(stream, name, null, sortCriterias).Output;
-        }
-        public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, Func<TIn, IEnumerable<Core.SortCriteria<TIn>>> sortCriteriasBuilder)
-        {
-            return new SortStreamNode<TIn>(stream, name, null, sortCriteriasBuilder(default(TIn)).ToList()).Output;
-        }
-        public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, Func<TIn, Core.SortCriteria<TIn>> sortCriteriasBuilder)
-        {
-            return new SortStreamNode<TIn>(stream, name, null, new[] { sortCriteriasBuilder(default(TIn)) }).Output;
-        }
-    }
 }

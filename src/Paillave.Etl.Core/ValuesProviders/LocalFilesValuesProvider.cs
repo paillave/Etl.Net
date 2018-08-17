@@ -1,4 +1,6 @@
 ﻿using Paillave.Etl.Core;
+using Paillave.Etl.Core.Streams;
+using Paillave.Etl.StreamNodes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,25 +27,26 @@ namespace Paillave.Etl.ValuesProviders
     {
         public string SearchPattern { get; set; } = "*";
         public bool Recursive { get; set; } = false;
+        public string RootFolder { get; set; }
     }
 
-    public class LocalFilesValuesProvider : IValuesProvider<LocalFilesValuesProviderArgs, LocalFilesValue>
+    public class LocalFilesValuesProvider : ValuesProviderBase<LocalFilesValuesProviderArgs, LocalFilesValue>
     {
-        private readonly string _rootFolder;
-
-        public LocalFilesValuesProvider(string rootFolder)
+        public LocalFilesValuesProvider() : base(false)
         {
-            this._rootFolder = rootFolder;
         }
 
         public void Dispose() { }
 
-        public void PushValues(LocalFilesValuesProviderArgs args, Action<LocalFilesValue> pushValue)
+        protected override void PushValues(LocalFilesValuesProviderArgs args, Action<LocalFilesValue> pushValue)
         {
             Directory
-                .GetFiles(this._rootFolder, args.SearchPattern, args.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
+                .GetFiles(args.RootFolder, args.SearchPattern, args.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
                 .ToList()
-                .ForEach(name => new LocalFilesValue(name));
+                .ForEach(name => pushValue(new LocalFilesValue(name)));
         }
+    }
+    public static partial class StreamEx
+    {
     }
 }

@@ -38,42 +38,4 @@ namespace Paillave.Etl.StreamNodes
         public IStream<TOut> Output { get; }
         public IStream<ErrorRow<TIn>> Error { get; }
     }
-
-    public static partial class StreamEx
-    {
-        public static IStream<TOut> Select<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper)
-        {
-            return new SelectStreamNode<TIn, TOut>(stream, name, null, new SelectArgs<TIn, TOut>
-            {
-                Mapper = mapper,
-                RedirectErrorsInsteadOfFail = false
-            }).Output;
-        }
-        public static IStream<TOut> Select<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, int, TOut> mapper)
-        {
-            return new SelectStreamNode<TIn, TOut>(stream, name, null, new SelectArgs<TIn, TOut>
-            {
-                IndexMapper = mapper,
-                RedirectErrorsInsteadOfFail = false
-            }).Output;
-        }
-        public static INodeOutputError<TOut, TIn> SelectKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper)
-        {
-            var ret = new SelectStreamNode<TIn, TOut>(stream, name, null, new SelectArgs<TIn, TOut>
-            {
-                Mapper = mapper,
-                RedirectErrorsInsteadOfFail = true
-            });
-            return new NodeOutputError<SelectStreamNode<TIn, TOut>, TOut, TIn>(ret);
-        }
-        public static INodeOutputError<TOut, TIn> SelectKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, int, TOut> mapper)
-        {
-            var ret = new SelectStreamNode<TIn, TOut>(stream, name, null, new SelectArgs<TIn, TOut>
-            {
-                IndexMapper = mapper,
-                RedirectErrorsInsteadOfFail = true
-            });
-            return new NodeOutputError<SelectStreamNode<TIn, TOut>, TOut, TIn>(ret);
-        }
-    }
 }

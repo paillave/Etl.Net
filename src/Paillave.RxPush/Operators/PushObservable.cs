@@ -3,19 +3,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Paillave.RxPush.Operators
 {
     public class PushObservable
     {
-        public static IDeferedPushObservable<int> Range(int from, int count, bool startOnFirstSubscription = false)
+        public static IDeferedPushObservable<int> Range(int from, int count, WaitHandle startSynchronizer = null)
         {
             return new DeferedPushObservable<int>((pushValue) =>
             {
                 for (int i = 0; i < count; i++)
                     pushValue(from + i);
-            }, startOnFirstSubscription);
+            }, startSynchronizer);
         }
         public static IPushObservable<T> Merge<T>(params IPushObservable<T>[] pushObservables)
         {
@@ -25,9 +26,9 @@ namespace Paillave.RxPush.Operators
         {
             return new CombineWithLatestSubject<TIn1, TIn2, TOut>(pushObservable1, pushObservable2, selector);
         }
-        public static IPushObservable<TOut> Empty<TOut>()
+        public static IDeferedPushObservable<TOut> Empty<TOut>(WaitHandle startSynchronizer = null)
         {
-            return new DeferedPushObservable<TOut>(i => { }, true);
+            return new DeferedPushObservable<TOut>(i => { }, startSynchronizer);
         }
     }
 }

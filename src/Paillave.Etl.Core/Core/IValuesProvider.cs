@@ -1,11 +1,14 @@
 using Paillave.Etl.Core.Streams;
+using Paillave.RxPush.Core;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Paillave.Etl.Core
 {
-    public interface IValuesProvider<TArgs, TOut>
+    public interface IValuesProvider<TIn, TOut>
     {
-        void PushValues(TArgs args, Action<TOut> pushValue);
+        //void SetWaitHandle(WaitHandle waitHandle);
+        IDeferedPushObservable<TOut> PushValues(TIn args);
     }
 }

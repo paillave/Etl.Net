@@ -33,26 +33,4 @@ namespace Paillave.Etl.StreamNodes
         public IStream<TOut> Output { get; }
         public IStream<ErrorRow<TInLeft, TInRight>> Error { get; }
     }
-    public static partial class StreamEx
-    {
-        public static IStream<TOut> LeftJoin<TInLeft, TInRight, TOut>(this ISortedStream<TInLeft> leftStream, string name, IKeyedStream<TInRight> rightStream, Func<TInLeft, TInRight, TOut> resultSelector)
-        {
-            return new JoinStreamNode<TInLeft, TInRight, TOut>(leftStream, name, null, new JoinArgs<TInLeft, TInRight, TOut>
-            {
-                RightInputStream = rightStream,
-                ResultSelector = resultSelector,
-                RedirectErrorsInsteadOfFail = false
-            }).Output;
-        }
-        public static INodeOutputError<TOut, TInLeft, TInRight> LeftJoinKeepErrors<TInLeft, TInRight, TOut>(this ISortedStream<TInLeft> leftStream, string name, IKeyedStream<TInRight> rightStream, Func<TInLeft, TInRight, TOut> resultSelector)
-        {
-            var ret = new JoinStreamNode<TInLeft, TInRight, TOut>(leftStream, name, null, new JoinArgs<TInLeft, TInRight, TOut>
-            {
-                RightInputStream = rightStream,
-                ResultSelector = resultSelector,
-                RedirectErrorsInsteadOfFail = true
-            });
-            return new NodeOutputError<JoinStreamNode<TInLeft, TInRight, TOut>, TOut, TInLeft, TInRight>(ret);
-        }
-    }
 }

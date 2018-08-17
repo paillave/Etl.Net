@@ -26,15 +26,4 @@ namespace Paillave.Etl.StreamNodes
             outputResource.WriteLine(this.Arguments.Mapping.LineJoiner(_serialize(value)));
         }
     }
-    public static partial class StreamEx
-    {
-        public static IStream<TIn> ToTextFile<TIn>(this IStream<TIn> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, ColumnNameFlatFileDescriptor<TIn> mapping) where TIn : new()
-        {
-            return new ToNameMappingFileStreamNode<TIn>(stream, name, null, new ToNameMappingFileArgs<TIn>
-            {
-                Mapping = mapping,
-                ResourceStream = resourceStream
-            }).Output;
-        }
-    }
 }

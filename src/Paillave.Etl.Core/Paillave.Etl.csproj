@@ -12,6 +12,10 @@
 
   <ItemGroup>
     <Compile Remove="StreamNodes\CombineLatestStreamNode.cs" />
+    <Compile Remove="StreamNodes\CrossApplyDataStreamReadStreamNode.cs" />
+    <Compile Remove="StreamNodes\CrossApplyFolderFilesStreamNode.cs" />
+    <Compile Remove="StreamNodes\CrossApplyIndexMappingFileStreamNode.cs" />
+    <Compile Remove="StreamNodes\CrossApplyNameMappingFileStreamNode.cs" />
     <Compile Remove="StreamNodes\CrossApplyNode.cs" />
     <Compile Remove="Core\DataSourceNodeBase.cs" />
   </ItemGroup>

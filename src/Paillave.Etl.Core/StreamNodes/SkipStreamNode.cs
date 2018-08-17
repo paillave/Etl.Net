@@ -34,20 +34,4 @@ namespace Paillave.Etl.StreamNodes
             this.Output = base.CreateKeyedStream(nameof(Output), input.Observable.Skip(arguments), input.SortCriterias);
         }
     }
-
-    public static partial class StreamEx
-    {
-        public static IStream<TIn> Skip<TIn>(this IStream<TIn> stream, string name, int count)
-        {
-            return new SkipStreamNode<TIn>(stream, name, null, count).Output;
-        }
-        public static ISortedStream<TIn> Skip<TIn>(this ISortedStream<TIn> stream, string name, int count)
-        {
-            return new SkipSortedStreamNode<TIn>(stream, name, null, count).Output;
-        }
-        public static IKeyedStream<TIn> Skip<TIn>(this IKeyedStream<TIn> stream, string name, int count)
-        {
-            return new SkipKeyedStreamNode<TIn>(stream, name, null, count).Output;
-        }
-    }
 }

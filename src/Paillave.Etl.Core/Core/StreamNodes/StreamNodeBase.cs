@@ -28,10 +28,10 @@ namespace Paillave.Etl.Core.StreamNodes
     }
     public abstract class StreamNodeBase : INodeContext
     {
-        private IExecutionContext _executionContext;
+        protected IExecutionContext ExecutionContext { get; private set; }
         public StreamNodeBase(IExecutionContext executionContext, string name, IEnumerable<string> parentNodeNamePath)
         {
-            this._executionContext = executionContext;
+            this.ExecutionContext = executionContext;
             this.TypeName = this.GetType().Name;
             this.NodeNamePath = (parentNodeNamePath ?? new string[] { }).Concat(new[] { name }).ToArray();
             this.Tracer = new Tracer(executionContext, this);
@@ -44,29 +44,24 @@ namespace Paillave.Etl.Core.StreamNodes
 
         protected IStream<T> CreateStream<T>(string streamName, IPushObservable<T> observable)
         {
-            return new Stream<T>(this.Tracer, this._executionContext, streamName, observable);
-        }
-
-        protected IDeferedPushObservable<TOut> CreateObservable<TIn, TOut>(TIn input, Action<TIn, Action<TOut>> populateObserver)
-        {
-            return new DeferedPushObservable<TOut>(i => populateObserver(input, i), true);
+            return new Stream<T>(this.Tracer, this.ExecutionContext, streamName, observable);
         }
 
         protected ISortedStream<T> CreateSortedStream<T>(string streamName, IPushObservable<T> observable, IEnumerable<ISortCriteria<T>> sortCriterias)
         {
-            return new SortedStream<T>(this.Tracer, this._executionContext, streamName, observable, sortCriterias);
+            return new SortedStream<T>(this.Tracer, this.ExecutionContext, streamName, observable, sortCriterias);
         }
         protected ISortedStream<T> CreateStream<T>(string streamName, IPushObservable<T> observable, ISortedStream<T> streamIn)
         {
-            return new SortedStream<T>(this.Tracer, this._executionContext, streamName, observable, streamIn.SortCriterias);
+            return new SortedStream<T>(this.Tracer, this.ExecutionContext, streamName, observable, streamIn.SortCriterias);
         }
         protected IKeyedStream<T> CreateKeyedStream<T>(string streamName, IPushObservable<T> observable, IEnumerable<ISortCriteria<T>> sortCriterias)
         {
-            return new KeyedStream<T>(this.Tracer, this._executionContext, streamName, observable, sortCriterias);
+            return new KeyedStream<T>(this.Tracer, this.ExecutionContext, streamName, observable, sortCriterias);
         }
         protected IKeyedStream<T> CreateStream<T>(string streamName, IPushObservable<T> observable, IKeyedStream<T> streamIn)
         {
-            return new KeyedStream<T>(this.Tracer, this._executionContext, streamName, observable, streamIn.SortCriterias);
+            return new KeyedStream<T>(this.Tracer, this.ExecutionContext, streamName, observable, streamIn.SortCriterias);
         }
 
         protected Func<TIn, ErrorManagementItem<TIn, TOut>> ErrorManagementWrapFunction<TIn, TOut>(Func<TIn, TOut> call)

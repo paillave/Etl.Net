@@ -28,20 +28,22 @@ namespace Paillave.Etl.StreamNodes
             _sem = args.NoParallelisation ? new Semaphore(1, 1) : new Semaphore(10, 10);
             this.Output = base.CreateStream(nameof(this.Output), input.Observable.FlatMap(i => CreateOutputObservable(i, args)));
         }
-        private IPushObservable<TOut> CreateOutputObservable(TIn input, CrossApplyIndexMappingTextFileArgs<TIn, TParsed, TOut> args)
+        private IDeferedPushObservable<TOut> CreateOutputObservable(TIn input, CrossApplyIndexMappingTextFileArgs<TIn, TParsed, TOut> args)
         {
-            var splittedLineS = new DeferedPushObservable<string>(pushValue =>
-            {
-                _sem.WaitOne();
-                using (var sr = new StreamReader(args.DataStreamSelector(input)))
-                    while (!sr.EndOfStream)
-                        pushValue(sr.ReadLine());
-                _sem.Release();
-            }, true).Map(args.Mapping.LineSplitter);
+            var src = new DeferedPushObservable<string>(pushValue =>
+             {
+                 _sem.WaitOne();
+                 using (var sr = new StreamReader(args.DataStreamSelector(input)))
+                     while (!sr.EndOfStream)
+                         pushValue(sr.ReadLine());
+                 _sem.Release();
+             }, this.ExecutionContext.StartSynchronizer);
+            var splittedLineS = src.Map(args.Mapping.LineSplitter);
 
             var dataLineS = splittedLineS.Skip(args.Mapping.LinesToIgnore).Filter(i => i.Count > 0);
             var inputLineParser = args.Mapping.ColumnIndexMappingConfiguration.LineParser();
-            return dataLineS.Map(dataLine => args.ResultSelector(input, inputLineParser(dataLine)));
+            var ret = dataLineS.Map(dataLine => args.ResultSelector(input, inputLineParser(dataLine)));
+            return new DeferedWrapperPushObservable<TOut>(ret, src.Start);
         }
         public IStream<TOut> Output { get; }
     }

@@ -3,6 +3,7 @@ using Paillave.RxPush.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Paillave.Etl.Core
@@ -10,6 +11,7 @@ namespace Paillave.Etl.Core
     public interface IExecutionContext
     {
         Guid ExecutionId { get; }
+        WaitHandle StartSynchronizer { get; }
         string JobName { get; }
         void Trace(TraceEvent traceEvent);
         IPushObservable<TraceEvent> TraceEvents { get; }

@@ -9,8 +9,9 @@ using System.Linq;
 using Paillave.Etl.Core.Streams;
 using Paillave.RxPush.Disposables;
 using System.Threading;
+using Paillave.Etl.Core;
 
-namespace Paillave.Etl.Core
+namespace Paillave.Etl
 {
     public class ExecutionContext<TConfig> : IConfigurable<TConfig>//, IDisposable
     {
@@ -18,6 +19,8 @@ namespace Paillave.Etl.Core
         private readonly IPushSubject<TConfig> _startupSubject;
         private readonly IExecutionContext _executionContext;
         private readonly IExecutionContext _traceExecutionContext;
+        private readonly EventWaitHandle _startSynchronizer = new EventWaitHandle(false, EventResetMode.ManualReset);
+
         public IStream<TraceEvent> TraceStream { get; }
         public Stream<TConfig> StartupStream { get; }
         private TConfig _config;
@@ -28,9 +31,9 @@ namespace Paillave.Etl.Core
             this.ExecutionId = Guid.NewGuid();
             this._traceSubject = new PushSubject<TraceEvent>();
             this._startupSubject = new PushSubject<TConfig>();
-            _traceExecutionContext = new TraceExecutionContext(this);
+            _traceExecutionContext = new TraceExecutionContext(this, _startSynchronizer);
             this.TraceStream = new Stream<TraceEvent>(null, _traceExecutionContext, null, this._traceSubject);
-            _executionContext = new CurrentExecutionContext(this);
+            _executionContext = new CurrentExecutionContext(this, _startSynchronizer);
             this.StartupStream = new Stream<TConfig>(new Tracer(_executionContext, new CurrentExecutionNodeContext(jobName)), _executionContext, "Startup", this._startupSubject.First());
         }
 
@@ -49,6 +52,7 @@ namespace Paillave.Etl.Core
 
         public Task ExecuteAsync()
         {
+            _startSynchronizer.Set();
             this._startupSubject.PushValue(this._config);
             this._startupSubject.Complete();
             //System.Threading.Thread.Sleep(5000);
@@ -83,14 +87,18 @@ namespace Paillave.Etl.Core
             private List<Task> _tasksToWait = new List<Task>();
             private CollectionDisposableManager _disposables = new CollectionDisposableManager();
 
-            public CurrentExecutionContext(ExecutionContext<TConfig> localExecutionContext)
+            public CurrentExecutionContext(ExecutionContext<TConfig> localExecutionContext, WaitHandle startSynchronizer)
             {
                 this._localExecutionContext = localExecutionContext;
+                this.StartSynchronizer = startSynchronizer;
             }
             private ExecutionContext<TConfig> _localExecutionContext;
             public Guid ExecutionId => this._localExecutionContext.ExecutionId;
             public string JobName => this._localExecutionContext.JobName;
             public IPushObservable<TraceEvent> TraceEvents => this._localExecutionContext._traceSubject;
+
+            public WaitHandle StartSynchronizer { get; }
+
             public void Trace(TraceEvent traceEvent) => this._localExecutionContext.Trace(traceEvent);
 
             public void AddToWaitForCompletion<T>(IPushObservable<T> stream)
@@ -113,13 +121,16 @@ namespace Paillave.Etl.Core
             private List<Task> _tasksToWait = new List<Task>();
             private ExecutionContext<TConfig> _localExecutionContext;
             private CollectionDisposableManager _disposables = new CollectionDisposableManager();
-            public TraceExecutionContext(ExecutionContext<TConfig> localExecutionContext)
+            public TraceExecutionContext(ExecutionContext<TConfig> localExecutionContext, WaitHandle startSynchronizer)
             {
                 this._localExecutionContext = localExecutionContext;
+                this.StartSynchronizer = startSynchronizer;
             }
             public Guid ExecutionId => this._localExecutionContext.ExecutionId;
             public string JobName => this._localExecutionContext.JobName;
             public IPushObservable<TraceEvent> TraceEvents => PushObservable.Empty<TraceEvent>();
+
+            public WaitHandle StartSynchronizer { get; }
 
             public void Trace(TraceEvent traveEvent) { }
 

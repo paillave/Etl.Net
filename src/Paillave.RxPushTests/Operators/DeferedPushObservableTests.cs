@@ -4,6 +4,7 @@ using Paillave.RxPush.Core;
 using System.Collections.Generic;
 using System.Linq;
 using Paillave.RxPush.Operators;
+using System.Threading;
 
 namespace Paillave.RxPushTests.Operators
 {
@@ -38,16 +39,19 @@ namespace Paillave.RxPushTests.Operators
             PushValues(0, true);
         }
 
-        public void PushValues(int nb, bool startOnFirstSubscription)
+        public void PushValues(int nb, bool automaticallyStartsOnHandle)
         {
             var inputValues = Enumerable.Range(0, nb).ToList();
             var outputValues = new List<int>();
             bool completed = false;
+            EventWaitHandle waitHandle = null;
+            if (automaticallyStartsOnHandle)
+                waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
             var observable = new DeferedPushObservable<int>((pushValue) =>
               {
                   foreach (var item in inputValues)
                       pushValue(item);
-              }, startOnFirstSubscription);
+              }, waitHandle);
 
             var task = observable.ToTaskAsync();
 
@@ -59,7 +63,10 @@ namespace Paillave.RxPushTests.Operators
             //};
             observable.Subscribe(outputValues.Add);
 
-            if (!startOnFirstSubscription) observable.Start();
+            if (!automaticallyStartsOnHandle)
+                observable.Start();
+            else
+                waitHandle.Set();
             Assert.IsTrue(task.Wait(5000), "the stream should complete");
             for (int i = 0; i < nb; i++)
                 Assert.AreEqual(i, outputValues[i], "all values should be the same");

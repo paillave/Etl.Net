@@ -1,10 +1,9 @@
 ﻿using ConsoleApp1.StreamTypes;
-using Paillave.Etl.Core;
-using Paillave.Etl.StreamNodes;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using Paillave.Etl;
 
 namespace ConsoleApp1.Jobs
 {
@@ -27,7 +26,8 @@ namespace ConsoleApp1.Jobs
                 .CrossApplyTextFile("parse type input file", new TypeFileRowMapper())
                 .EnsureKeyed("Ensure type file is keyed", e => e.Id);
 
-            parsedLineS.LeftJoin("join types to file", parsedTypeLineS, (l, r) => new { l.Id, r.Name, l.FileName })
+            parsedLineS
+                .LeftJoin("join types to file", parsedTypeLineS, (l, r) => new { l.Id, r.Name, l.FileName })
                 .Select("output after join", i => new OutputFileRow { FileName = i.FileName, Id = i.Id, Name = i.Name })
                 .ToTextFile("write to output file", outputFileResourceS, new OutputFileRowMapper())
                 .Select("create text to console", i => $"{i.FileName}:{i.Id}-{i.Name}")

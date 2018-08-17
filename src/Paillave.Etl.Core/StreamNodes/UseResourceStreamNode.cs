@@ -41,24 +41,4 @@ namespace Paillave.Etl.StreamNodes
         public IStream<TOut> Output { get; }
         public IStream<ErrorRow<TIn>> Error { get; }
     }
-    public static partial class StreamEx
-    {
-        public static IStream<TOut> UseResource<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper) where TOut:IDisposable
-        {
-            return new UseResourceStreamNode<TIn, TOut>(stream, name, null, new CreateResourceArgs<TIn, TOut>
-            {
-                Mapper = mapper,
-                RedirectErrorsInsteadOfFail = false
-            }).Output;
-        }
-        public static INodeOutputError<TOut, TIn> UseResourceKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper) where TOut : IDisposable
-        {
-            var ret = new UseResourceStreamNode<TIn, TOut>(stream, name, null, new CreateResourceArgs<TIn, TOut>
-            {
-                Mapper = mapper,
-                RedirectErrorsInsteadOfFail = true
-            });
-            return new NodeOutputError<UseResourceStreamNode<TIn, TOut>, TOut, TIn>(ret);
-        }
-    }
 }
