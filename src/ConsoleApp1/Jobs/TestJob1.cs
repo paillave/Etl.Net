@@ -11,7 +11,7 @@ namespace ConsoleApp1.Jobs
     {
         public TestJob1() : base("import file")
         {
-            var outputFileResourceS = StartupStream.UseResource("open output file", i => new StreamWriter(i.DestinationFilePath));
+            var outputFileResourceS = StartupStream.Select("open output file", i => new StreamWriter(i.DestinationFilePath));
 
             var parsedLineS = StartupStream
                 .CrossApplyFolderFiles("get folder files", i => i.InputFolderPath, i => i.InputFilesSearchPattern)
@@ -29,8 +29,7 @@ namespace ConsoleApp1.Jobs
             parsedLineS
                 .LeftJoin("join types to file", parsedTypeLineS, (l, r) => new OutputFileRow { Id = l.Id, Name = r.Name, FileName = l.FileName })
                 .ToTextFile("write to output file", outputFileResourceS, new OutputFileRowMapper())
-                .Select("create text to console", i => $"{i.FileName}:{i.Id}-{i.Name}")
-                .ToAction("write to console", Console.WriteLine);
+                .ToAction("write to console", i => Console.WriteLine($"{i.FileName}:{i.Id}-{i.Name}"));
         }
     }
 }

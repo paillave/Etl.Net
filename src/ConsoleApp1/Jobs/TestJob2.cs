@@ -11,7 +11,7 @@ namespace ConsoleApp1.Jobs
     {
         public TestJob2() : base("import file")
         {
-            var outputFileResourceS = StartupStream.UseResource("open output file", i => new StreamWriter(i.DestinationFilePath));
+            var outputFileResourceS = StartupStream.Select("open output file", i => new StreamWriter(i.DestinationFilePath));
 
             var parsedTypeLineS = StartupStream
                 .Select("get input file type path", i => i.TypeFilePath)

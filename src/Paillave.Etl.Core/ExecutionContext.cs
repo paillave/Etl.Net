@@ -118,7 +118,8 @@ namespace Paillave.Etl
 
             public void AddDisposable(IDisposable disposable)
             {
-                _disposables.Set(disposable);
+                if (disposable != null)
+                    _disposables.Set(disposable);
             }
 
             public void AddStreamToNodeLink(StreamToNodeLink link)
@@ -146,7 +147,6 @@ namespace Paillave.Etl
 
             public void AddToWaitForCompletion<T>(IPushObservable<T> stream)
             {
-                Debug.WriteLine($"added to wait for completion {stream}", "etl.net");
                 _tasksToWait.Add(stream.ToTaskAsync());
             }
 
@@ -154,15 +154,14 @@ namespace Paillave.Etl
             {
                 return Task.WhenAll(_tasksToWait.ToArray()).ContinueWith(_ =>
                 {
-                    Debug.WriteLine($"dispose from trace execution context", "etl.net");
                     _disposables.Dispose();
                 });
             }
 
             public void AddDisposable(IDisposable disposable)
             {
-                Debug.WriteLine($"adding to dispose {disposable}", "etl.net");
-                _disposables.Set(disposable);
+                if (disposable != null)
+                    _disposables.Set(disposable);
             }
 
             public void AddStreamToNodeLink(StreamToNodeLink link) { }

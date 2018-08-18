@@ -490,26 +490,6 @@ namespace Paillave.Etl
         }
         #endregion
 
-        #region UseResource
-        public static IStream<TOut> UseResource<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper) where TOut : IDisposable
-        {
-            return new UseResourceStreamNode<TIn, TOut>(stream, name, new CreateResourceArgs<TIn, TOut>
-            {
-                Mapper = mapper,
-                RedirectErrorsInsteadOfFail = false
-            }).Output;
-        }
-        public static INodeOutputError<TOut, TIn> UseResourceKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper) where TOut : IDisposable
-        {
-            var ret = new UseResourceStreamNode<TIn, TOut>(stream, name, new CreateResourceArgs<TIn, TOut>
-            {
-                Mapper = mapper,
-                RedirectErrorsInsteadOfFail = true
-            });
-            return new NodeOutputError<UseResourceStreamNode<TIn, TOut>, TOut, TIn>(ret);
-        }
-        #endregion
-
         #region Where
         public static IKeyedStream<TIn> Where<TIn>(this IKeyedStream<TIn> stream, string name, Func<TIn, bool> predicate)
         {

@@ -22,17 +22,37 @@ namespace Paillave.Etl.StreamNodes
             if (arguments.RedirectErrorsInsteadOfFail)
             {
                 var errorManagedResult = arguments.Mapper == null ?
-                    input.Observable.Map(base.ErrorManagementWrapFunction(arguments.IndexMapper))
-                    : input.Observable.Map(base.ErrorManagementWrapFunction(arguments.Mapper));
+                    input.Observable.Map(base.ErrorManagementWrapFunction(WrapSelect(arguments.IndexMapper)))
+                    : input.Observable.Map(base.ErrorManagementWrapFunction(WrapSelect(arguments.Mapper)));
                 this.Output = base.CreateStream(nameof(this.Output), errorManagedResult.Filter(i => !i.OnException).Map(i => i.Output));
                 this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Filter(i => i.OnException).Map(i => new ErrorRow<TIn>(i)));
             }
             else
                 this.Output = arguments.Mapper == null ?
-                    base.CreateStream(nameof(this.Output), input.Observable.Map(arguments.IndexMapper))
-                    : base.CreateStream(nameof(this.Output), input.Observable.Map(arguments.Mapper));
+                    base.CreateStream(nameof(this.Output), input.Observable.Map(WrapSelect(arguments.IndexMapper)))
+                    : base.CreateStream(nameof(this.Output), input.Observable.Map(WrapSelect(arguments.Mapper)));
 
             //Observable.Create()
+        }
+
+        private Func<TIn, TOut> WrapSelect(Func<TIn, TOut> creator)
+        {
+            return (TIn inp) =>
+            {
+                TOut disposable = creator(inp);
+                this.ExecutionContext.AddDisposable(disposable as IDisposable);
+                return disposable;
+            };
+        }
+
+        private Func<TIn, int, TOut> WrapSelect(Func<TIn, int, TOut> creator)
+        {
+            return (TIn inp, int index) =>
+            {
+                TOut disposable = creator(inp, index);
+                this.ExecutionContext.AddDisposable(disposable as IDisposable);
+                return disposable;
+            };
         }
 
         public IStream<TOut> Output { get; }
