@@ -24,13 +24,13 @@ namespace Paillave.RxPush.Operators
         private IDisposable _sourceSubscription;
         private IDisposableManager _outSubscriptions;
         private Func<TIn, IPushObservable<TOut>> _observableFactory;
-        private object syncLock = new object();
+        private object _syncLock = new object();
 
         protected abstract IDisposableManager CreateDisposableManagerInstance();
 
         public FlatMapSubjectBase(IPushObservable<TIn> sourceS, Func<TIn, IPushObservable<TOut>> observableFactory)
         {
-            lock (syncLock)
+            lock (_syncLock)
             {
                 _outSubscriptions = CreateDisposableManagerInstance();
                 _observableFactory = observableFactory;
@@ -39,7 +39,7 @@ namespace Paillave.RxPush.Operators
         }
         private void OnSourcePush(TIn value)
         {
-            lock (syncLock)
+            lock (_syncLock)
             {
                 IPushObservable<TOut> outS;
                 try
@@ -57,6 +57,8 @@ namespace Paillave.RxPush.Operators
                     _outSubscriptions.TryDispose(outSubscription);
                     TryComplete();
                 }, base.PushException);
+                var defered = outS as IDeferedPushObservable<TOut>;
+                if (defered != null) defered.Start();
                 _outSubscriptions.Set(outSubscription);
             }
         }
@@ -69,7 +71,7 @@ namespace Paillave.RxPush.Operators
 
         private void OnSourceComplete()
         {
-            lock (syncLock)
+            lock (_syncLock)
             {
                 this._sourceSubscription = null;
                 TryComplete();
@@ -82,7 +84,7 @@ namespace Paillave.RxPush.Operators
 
         public override void Dispose()
         {
-            lock (syncLock)
+            lock (_syncLock)
             {
                 base.Dispose();
                 _sourceSubscription?.Dispose();

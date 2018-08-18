@@ -4,6 +4,7 @@ using Paillave.RxPush.Core;
 using System.Collections.Generic;
 using System.Linq;
 using Paillave.RxPush.Operators;
+using System.Threading;
 
 namespace Paillave.RxPushTests.Operators
 {
@@ -38,17 +39,23 @@ namespace Paillave.RxPushTests.Operators
             RangeOfValues(0, 0, true);
         }
 
-        public void RangeOfValues(int start, int nb, bool startOnFirstSubscription)
+        public void RangeOfValues(int start, int nb, bool automaticallyStartsOnHandle)
         {
             var expectedValues = Enumerable.Range(start, nb).ToList();
             var outputValues = new List<int>();
-            var obs = PushObservable.Range(-5, nb, startOnFirstSubscription);
+            EventWaitHandle waitHandle = null;
+            if (automaticallyStartsOnHandle)
+                waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
+            var obs = PushObservable.Range(-5, nb, waitHandle);
 
             obs.Subscribe(outputValues.Add);
 
             var task = obs.ToTaskAsync();
 
-            if (!startOnFirstSubscription) obs.Start();
+            if (!automaticallyStartsOnHandle)
+                obs.Start();
+            else
+                waitHandle.Set();
 
             Assert.IsTrue(task.Wait(5000), "the stream should complete");
 

@@ -1,55 +1,53 @@
-﻿using Paillave.Etl.Core.StreamNodes;
+﻿using Paillave.Etl;
 using System;
 //using System.Reactive.Linq;
 using System.IO;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
-using Paillave.Etl.Core.MapperFactories;
+using Paillave.Etl.MapperFactories;
 using ConsoleApp1.StreamTypes;
-using Paillave.Etl.Core.System;
+using Paillave.Etl.Core;
+using ConsoleApp1.Jobs;
+using Paillave.Etl.Core.TraceContents;
+using System.Collections.Generic;
+using Paillave.RxPush.Core;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace ConsoleApp1
 {
-    public class MyClass
-    {
-        public string FolderPath { get; set; }
-        public string TypeFilePath { get; set; }
-    }
     class Program
     {
-        // https://www.nuget.org/packages/EPPlus
         static void Main(string[] args)
         {
-            var ctx = new ExecutionContext<MyClass>("import file");
+            var ctx = new TestJob1();
             ctx.TraceStream.Where("keep log info", i => i.Content.Level <= System.Diagnostics.TraceLevel.Info).ToAction("logs to console", Console.WriteLine);
-
-            var parsedLineS = ctx.StartupStream
-                .Select("get input file path", i => i.FolderPath)
-                .CrossApplyFolderFiles("get folder files", "testin.*.txt")
-                .CrossApplyParsedFile("parse input file", new Class1Mapper(), (i, p) => { p.FileName = i; return p; })
-                .EnsureSorted("Ensure input file is sorted", i => SortCriteria.Create(i, e => e.TypeId));
-
-            parsedLineS.ToAction("write to console", i => Console.WriteLine($"{i.FileName} - {i.Id}"));
-
-            //var parsedTypeLineS = ctx.StartupStream
-            //    .Select("get input file type path", i => i.TypeFilePath)
-            //    .CrossApplyParsedFile("parse type input file", new Class2Mapper())
-            //    .EnsureKeyed("Ensure type file is keyed", i => SortCriteria.Create(i, e => e.Id));
-
-            //parsedLineS.LeftJoin("join types to file", parsedTypeLineS, (l, r) => new { l.Id, r.Name, l.FileName })
-            //    .Select("output after join", i => $"{i.FileName}:{i.Id}->{i.Name}")
-            //    .ToAction("write to console", Console.WriteLine);
-
-            ctx.Configure(new MyClass
+            //Type counterSummaryStreamTraceContentType = typeof(CounterSummaryStreamTraceContent);
+            //var sankeyStatisticsTask = ctx.GetHtmlD3SankeyStatisticsAsync();
+            var sankeyStatisticsTask = ctx.GetHtmlVisNetworkStatisticsAsync();
+            ctx.ExecuteAsync(new MyConfig
             {
-                FolderPath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles",
-                TypeFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\ref - Copy.txt"
-            });
+                InputFolderPath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\",
+                InputFilesSearchPattern = "testin.*.txt",
+                TypeFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\ref - Copy.txt",
+                DestinationFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\outfile.csv"
+            }).Wait();
 
-            ctx.ExecuteAsync().Wait();
+            File.WriteAllText("sankeyStats.html", sankeyStatisticsTask.Result);
 
+
+            var p = new Process();
+            p.StartInfo = new ProcessStartInfo(@"sankeyStats.html")
+            {
+                UseShellExecute = true
+            };
+            p.Start();
+
+            //Process.Start("sankeyStats.html");
             Console.WriteLine("Done");
+            Console.WriteLine("Press a key...");
             Console.ReadKey();
         }
     }

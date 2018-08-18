@@ -45,18 +45,36 @@ namespace Paillave.RxPush.Operators
                     int comparison;
                     while (!leftSide.IsEmpty && !rightSide.IsEmpty && (comparison = comparer.Compare(leftSide.CurrentValue, rightSide.CurrentValue)) <= 0)
                     {
-                        this.PushValue(selector(leftSide.Dequeue(), comparison == 0 ? rightSide.CurrentValue : default(TInRight)));
+                        TOut ret;
+                        try
+                        {
+                            ret = selector(leftSide.Dequeue(), comparison == 0 ? rightSide.CurrentValue : default(TInRight));
+                            this.PushValue(ret);
+                        }
+                        catch (Exception ex)
+                        {
+                            PushException(ex);
+                        }
                         somethingChanged = true;
                     }
 
                     if (rightSide.IsEmpty && rightSide.IsComplete)
                         while (!leftSide.IsEmpty)
                         {
-                            this.PushValue(selector(leftSide.Dequeue(), default(TInRight)));
+                            TOut ret;
+                            try
+                            {
+                                ret = selector(leftSide.Dequeue(), default(TInRight));
+                                this.PushValue(ret);
+                            }
+                            catch (Exception ex)
+                            {
+                                PushException(ex);
+                            }
                             somethingChanged = true;
                         }
                 } while (somethingChanged);
-                if (leftSide.IsComplete) this.Complete();
+                if (leftSide.IsComplete && (leftSide.IsEmpty || rightSide.IsComplete)) this.Complete();
             };
 
             _leftSubscription = leftS.Subscribe(

@@ -10,27 +10,34 @@ namespace Paillave.RxPush.Operators
     public class DoSubject<T> : PushSubject<T>
     {
         private IDisposable _subscription;
+        private object _syncValue = new object();
 
         public DoSubject(IPushObservable<T> observable, Action<T> action)
         {
             this._subscription = observable.Subscribe(i =>
             {
-                try
+                lock (_syncValue)
                 {
-                    action(i);
+                    try
+                    {
+                        action(i);
+                    }
+                    catch (Exception ex)
+                    {
+                        this.PushException(ex);
+                    }
+                    this.PushValue(i);
                 }
-                catch (Exception ex)
-                {
-                    this.PushException(ex);
-                }
-                this.PushValue(i);
             }, this.Complete, this.PushException);
         }
 
         public override void Dispose()
         {
-            base.Dispose();
-            _subscription.Dispose();
+            lock (_syncValue)
+            {
+                base.Dispose();
+                _subscription.Dispose();
+            }
         }
     }
     public static partial class ObservableExtensions

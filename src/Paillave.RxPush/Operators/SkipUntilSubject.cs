@@ -58,6 +58,13 @@ namespace Paillave.RxPush.Operators
                 if (_isTriggered) PushValue(value);
             }
         }
+        private void HandleOnPushCondition(TIn value)
+        {
+            lock (_lockObject)
+            {
+                if (_isTriggered) PushValue(value);
+            }
+        }
         public override void Dispose()
         {
             _disp1.Dispose();

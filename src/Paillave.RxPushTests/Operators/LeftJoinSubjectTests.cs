@@ -76,7 +76,7 @@ namespace Paillave.RxPushTests.Operators
 
         [TestCategory(nameof(LeftJoinSubjectTests))]
         [TestMethod]
-        public void RightSubmitsNextBeforeLeftGetsMatch()
+        public void SimpleJoin2()
         {
             var valueStack = new Stack<Tuple<int, int>>();
             var errorStack = new Stack<Exception>();
@@ -87,6 +87,33 @@ namespace Paillave.RxPushTests.Operators
             var output = leftS.LeftJoin(rightS, i => i, i => i, (l, r) => new Tuple<int, int>(l, r));
 
             output.Subscribe(valueStack.Push, () => isComplete = true, errorStack.Push);
+
+            leftS.PushValue(1);
+            leftS.Complete();
+            Assert.AreEqual(0, valueStack.Count, "no value should be in the output stream yet");
+            Assert.IsFalse(isComplete, "as long as nothing is issued on the left whereas the right is not complete and the left has still no match, the stream should not complete");
+
+            rightS.PushValue(1);
+
+            var outElt = valueStack.Peek();
+            Assert.AreEqual(1, outElt.Item1, "a joined output should be issued");
+            Assert.IsTrue(outElt.Item1 == outElt.Item2, "joined values should match");
+            Assert.IsTrue(isComplete, "output stream should be completed");
+        }
+
+        [TestCategory(nameof(LeftJoinSubjectTests))]
+        [TestMethod]
+        public void RightSubmitsNextBeforeLeftGetsMatch()
+        {
+            var valueStack = new Stack<Tuple<int, int>>();
+            var errorStack = new Stack<Exception>();
+            //bool isComplete = false;
+            var leftS = new PushSubject<int>();
+            var rightS = new PushSubject<int>();
+
+            var output = leftS.LeftJoin(rightS, i => i, i => i, (l, r) => new Tuple<int, int>(l, r));
+
+            output.Subscribe(valueStack.Push, () => { }, errorStack.Push);
 
             leftS.PushValue(1);
 

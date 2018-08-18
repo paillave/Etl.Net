@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Paillave.Etl.Core.Helpers.MapperFactories
+namespace Paillave.Etl.Helpers.MapperFactories
 {
     public class PropertyMapper
         {

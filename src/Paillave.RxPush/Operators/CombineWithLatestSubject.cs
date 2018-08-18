@@ -43,8 +43,22 @@ namespace Paillave.RxPush.Operators
         }
         private void TryPushCombination()
         {
-            if (_obsel1.HasLastValue && _obsel2.HasLastValue)
-                PushValue(_selector(_obsel1.LastValue, _obsel2.LastValue));
+            lock (_lockObject)
+            {
+                if (_obsel1.HasLastValue && _obsel2.HasLastValue)
+                {
+                    TOut ret;
+                    try
+                    {
+                        ret = _selector(_obsel1.LastValue, _obsel2.LastValue);
+                        PushValue(ret);
+                    }
+                    catch (Exception ex)
+                    {
+                        PushException(ex);
+                    }
+                }
+            }
         }
         private void HandleComplete1()
         {

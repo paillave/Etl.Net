@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Paillave.RxPush.Core
@@ -10,12 +11,13 @@ namespace Paillave.RxPush.Core
     {
         private bool _isComplete = false;
         private Action<Action<T>> _valuesFactory;
-        private bool _startOnFirstSubscription;
+        private WaitHandle _startSynchronizer = null;
         private object lockObject = new object();
-        public DeferedPushObservable(Action<Action<T>> valuesFactory, bool startOnFirstSubscription = false)
+        public DeferedPushObservable(Action<Action<T>> valuesFactory, WaitHandle startSynchronizer = null)
         {
             _valuesFactory = valuesFactory;
-            _startOnFirstSubscription = startOnFirstSubscription;
+            _startSynchronizer = startSynchronizer;
+            if (_startSynchronizer != null) this.Start();
         }
         private void Complete()
         {
@@ -54,6 +56,9 @@ namespace Paillave.RxPush.Core
         {
             Task.Run(() =>
             {
+                if (this._startSynchronizer != null)
+                    this._startSynchronizer.WaitOne();
+
                 try
                 {
                     _valuesFactory(PushValue);
@@ -75,11 +80,6 @@ namespace Paillave.RxPush.Core
             {
                 if (this._isComplete) subscription.OnComplete();
                 var subs = base.Subscribe(subscription);
-                if (_startOnFirstSubscription)
-                {
-                    _startOnFirstSubscription = false;
-                    this.Start();
-                }
                 return subs;
             }
         }

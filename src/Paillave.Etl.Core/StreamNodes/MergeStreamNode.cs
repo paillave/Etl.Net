@@ -1,25 +1,23 @@
-﻿using Paillave.Etl.Core.System;
+﻿using Paillave.Etl.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Paillave.RxPush.Operators;
-using Paillave.Etl.Core.System.Streams;
+using Paillave.Etl.Core.Streams;
+using Paillave.Etl.Core.StreamNodes;
 
-namespace Paillave.Etl.Core.StreamNodes
+namespace Paillave.Etl.StreamNodes
 {
-    public class MergeStreamNode<TIn> : StreamNodeBase<IStream<TIn>, TIn, IStream<TIn>>, IStreamNodeOutput<TIn>
+    public class MergeArgs<TIn>
+    {
+        public IStream<TIn> SecondStream { get; set; }
+    }
+    public class MergeStreamNode<TIn> : StreamNodeBase<IStream<TIn>, TIn, MergeArgs<TIn>>, IStreamNodeOutput<TIn>
     {
         public IStream<TIn> Output { get; }
-        public MergeStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, IStream<TIn> arguments) : base(input, name, parentNodeNamePath, arguments)
+        public MergeStreamNode(IStream<TIn> input, string name, MergeArgs<TIn> arguments) : base(input, name, arguments)
         {
-            this.Output = base.CreateStream(nameof(Output), input.Observable.Merge(arguments.Observable));
-        }
-    }
-    public static partial class StreamEx
-    {
-        public static IStream<I> Merge<I>(this IStream<I> stream, string name, IStream<I> inputStream2)
-        {
-            return new MergeStreamNode<I>(stream, name, null, inputStream2).Output;
+            this.Output = base.CreateStream(nameof(Output), input.Observable.Merge(arguments.SecondStream.Observable));
         }
     }
 }

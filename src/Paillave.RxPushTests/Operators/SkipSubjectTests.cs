@@ -4,6 +4,7 @@ using Paillave.RxPush.Core;
 using System.Collections.Generic;
 using System.Linq;
 using Paillave.RxPush.Operators;
+using System.Threading;
 
 namespace Paillave.RxPushTests.Operators
 {
@@ -27,12 +28,14 @@ namespace Paillave.RxPushTests.Operators
         public void RangeOfValues(int start, int nb, int skip)
         {
             var outputValues = new List<int>();
-            var obs = PushObservable.Range(start, nb, true).Skip(skip);
+            EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
+
+            var obs = PushObservable.Range(start, nb, waitHandle).Skip(skip);
 
             obs.Subscribe(outputValues.Add);
 
             var task = obs.ToTaskAsync();
-
+            waitHandle.Set();
             task.Wait(5000);
 
             for (int i = 0; i < (nb - skip); i++)

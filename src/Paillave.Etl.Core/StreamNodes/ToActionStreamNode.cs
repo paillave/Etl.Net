@@ -1,16 +1,17 @@
-﻿using Paillave.Etl.Core.System;
+﻿using Paillave.Etl.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Paillave.RxPush.Operators;
-using Paillave.Etl.Core.System.Streams;
+using Paillave.Etl.Core.Streams;
 using Paillave.RxPush.Core;
+using Paillave.Etl.Core.StreamNodes;
 
-namespace Paillave.Etl.Core.StreamNodes
+namespace Paillave.Etl.StreamNodes
 {
     public class ToActionStreamNode<TIn> : AwaitableStreamNodeBase<IStream<TIn>, TIn, Action<TIn>>
     {
-        public ToActionStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, Action<TIn> arguments) : base(input, name, parentNodeNamePath, arguments)
+        public ToActionStreamNode(IStream<TIn> input, string name, Action<TIn> arguments) : base(input, name, arguments)
         {
         }
         protected override void ProcessValue(TIn value)
@@ -18,38 +19,63 @@ namespace Paillave.Etl.Core.StreamNodes
             this.Arguments(value);
         }
     }
-
-    //public class SkipSortedStreamNode<TIn> : StreamNodeBase<ISortedStream<TIn>, TIn, int>, ISortedStreamNodeOutput<TIn>
-    //{
-    //    public ISortedStream<TIn> Output { get; }
-    //    public SkipSortedStreamNode(ISortedStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, int arguments) : base(input, name, parentNodeNamePath, arguments)
-    //    {
-    //        this.Output = base.CreateSortedStream(nameof(Output), input.Observable.Skip(arguments), input.SortCriterias);
-    //    }
-    //}
-
-    //public class SkipKeyedStreamNode<TIn> : StreamNodeBase<IKeyedStream<TIn>, TIn, int>, IKeyedStreamNodeOutput<TIn>
-    //{
-    //    public IKeyedStream<TIn> Output { get; }
-    //    public SkipKeyedStreamNode(IKeyedStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, int arguments) : base(input, name, parentNodeNamePath, arguments)
-    //    {
-    //        this.Output = base.CreateKeyedStream(nameof(Output), input.Observable.Skip(arguments), input.SortCriterias);
-    //    }
-    //}
-
-    public static partial class StreamEx
+    public class ToActionStreamNode<TIn, TOut> : AwaitableStreamNodeBase<IStream<TIn>, TIn, TOut, Func<TIn, TOut>>
     {
-        public static IStream<TIn> ToAction<TIn>(this IStream<TIn> stream, string name, Action<TIn> action)
+        public ToActionStreamNode(IStream<TIn> input, string name, Func<TIn, TOut> arguments) : base(input, name, arguments)
         {
-            return new ToActionStreamNode<TIn>(stream, name, null, action).Output;
         }
-        //public static ISortedStream<TIn> Skip<TIn>(this ISortedStream<TIn> stream, string name, int count)
-        //{
-        //    return new SkipSortedStreamNode<TIn>(stream, name, null, count).Output;
-        //}
-        //public static IKeyedStream<TIn> Skip<TIn>(this IKeyedStream<TIn> stream, string name, int count)
-        //{
-        //    return new SkipKeyedStreamNode<TIn>(stream, name, null, count).Output;
-        //}
+        protected override TOut ProcessValue(TIn value)
+        {
+            return this.Arguments(value);
+        }
+    }
+
+
+
+    public class ToActionResourceStreamNode<TIn, TRes> : AwaitableStreamNodeBase<IStream<TIn>, TIn, ToActionArgs<TIn, TRes>>
+    {
+        public ToActionResourceStreamNode(IStream<TIn> input, string name, ToActionArgs<TIn, TRes> arguments) : base(input, name, arguments)
+        {
+        }
+        protected override IPushObservable<TIn> ProcessObservable(IPushObservable<TIn> observable)
+        {
+            return observable.CombineWithLatest(this.Arguments.ResourceStream.Observable, (i, r) =>
+            {
+                this.Arguments.Action(i, r);
+                return i;
+            });
+        }
+        protected override void ProcessValue(TIn value)
+        {
+            throw new NotSupportedException("This method should not be called");
+        }
+    }
+    public class ToActionResourceStreamNode<TIn, TRes, TOut> : AwaitableStreamNodeBase<IStream<TIn>, TIn, TOut, ToActionArgs<TIn, TRes, TOut>>
+    {
+        public ToActionResourceStreamNode(IStream<TIn> input, string name, ToActionArgs<TIn, TRes, TOut> arguments) : base(input, name, arguments)
+        {
+        }
+        protected override IPushObservable<TOut> ProcessObservable(IPushObservable<TIn> observable)
+        {
+            return observable.CombineWithLatest(this.Arguments.ResourceStream.Observable, this.Arguments.Action);
+        }
+        protected override TOut ProcessValue(TIn value)
+        {
+            throw new NotSupportedException("This method should not be called");
+        }
+    }
+
+
+
+
+    public class ToActionArgs<TIn, TRes>
+    {
+        public IStream<TRes> ResourceStream { get; set; }
+        public Action<TIn, TRes> Action { get; set; }
+    }
+    public class ToActionArgs<TIn, TRes, TOut>
+    {
+        public IStream<TRes> ResourceStream { get; set; }
+        public Func<TIn, TRes, TOut> Action { get; set; }
     }
 }

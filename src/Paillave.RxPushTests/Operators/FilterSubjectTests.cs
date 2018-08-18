@@ -102,35 +102,5 @@ namespace Paillave.RxPushTests.Operators
             obs.Complete();
             Assert.IsTrue(completed, "the stream should be completed");
         }
-
-        //[TestCategory(nameof(FilterSubjectTests))]
-        //[TestMethod]
-        //public void ErrorInMap()
-        //{
-        //    var outputValues = new Stack<int>();
-        //    var errors = new Stack<Exception>();
-        //    var completed = false;
-        //    var obs = new PushSubject<int>();
-
-        //    var mapped = obs.Map(i => 10 / i);
-        //    mapped.Subscribe(outputValues.Push, () => completed = true, errors.Push);
-
-        //    for (int value = -2; value < 0; value++)
-        //    {
-        //        obs.PushValue(value);
-        //        Assert.AreEqual(10 / value, outputValues.Peek(), "the output value should match the map");
-        //        Assert.AreEqual(0, errors.Count, "no error should be submitted");
-        //    }
-        //    obs.PushValue(0);
-        //    Assert.AreEqual(2, outputValues.Count, "no value should be added if error");
-        //    Assert.IsInstanceOfType(errors.Peek(), typeof(DivideByZeroException), "a division by zero should be received in the stream");
-
-        //    obs.PushValue(1);
-        //    Assert.AreEqual(10 / 1, outputValues.Peek(), "the output value should match the map");
-        //    Assert.AreEqual(1, errors.Count, "no nore error should be submitted");
-
-        //    obs.Complete();
-        //    Assert.IsTrue(completed, "the stream should be completed");
-        //}
     }
 }

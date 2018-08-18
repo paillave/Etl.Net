@@ -1,9 +1,9 @@
-﻿using Paillave.Etl.Core.Helpers.MapperFactories;
+﻿using Paillave.Etl.Helpers.MapperFactories;
 using System;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Paillave.Etl.Core.MapperFactories
+namespace Paillave.Etl.MapperFactories
 {
     public static partial class Mappers
     {

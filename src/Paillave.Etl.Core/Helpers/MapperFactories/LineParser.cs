@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
-namespace Paillave.Etl.Core.Helpers.MapperFactories
+namespace Paillave.Etl.Helpers.MapperFactories
 {
     public class LineParser<TDest>
     {
@@ -16,6 +17,10 @@ namespace Paillave.Etl.Core.Helpers.MapperFactories
         {
             return propDef.TypeConverter.ConvertFromString(null, propDef.CultureInfo, value);
         }
+        private string SerializeValue(PropertyMapper propDef, object value)
+        {
+            return propDef.TypeConverter.ConvertToString(null, propDef.CultureInfo, value);
+        }
 
         private void SetValue(PropertyMapper propDef, object destination, object value)
         {
@@ -27,6 +32,10 @@ namespace Paillave.Etl.Core.Helpers.MapperFactories
             if (_indexToPropertyDictionary.TryGetValue(index, out propDef))
                 SetValue(propDef, destination, ParseValue(propDef, value));
         }
+        private string GetValueAndSerialize(PropertyMapper propDef, object source)
+        {
+            return SerializeValue(propDef, propDef.PropertyInfo.GetValue(source));
+        }
 
         public virtual TDest Parse(IList<string> values)
         {
@@ -34,6 +43,10 @@ namespace Paillave.Etl.Core.Helpers.MapperFactories
             foreach (var item in this._indexToPropertyDictionary)
                 SetValue(item.Value, destination, ParseValue(item.Value, values[item.Key]));
             return destination;
+        }
+        public virtual IList<string> Serialize(TDest value)
+        {
+            return this._indexToPropertyDictionary.OrderBy(i => i.Key).Select(i => GetValueAndSerialize(i.Value, value)).ToList();
         }
     }
 }

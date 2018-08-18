@@ -1,13 +1,14 @@
-﻿using Paillave.Etl.Core.System;
+﻿using Paillave.Etl.Core;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using Paillave.RxPush.Operators;
-using Paillave.Etl.Core.System.Streams;
-using Paillave.Etl.Core.System.NodeOutputs;
+using Paillave.Etl.Core.Streams;
+using Paillave.Etl.Core.NodeOutputs;
+using Paillave.Etl.Core.StreamNodes;
 
-namespace Paillave.Etl.Core.StreamNodes
+namespace Paillave.Etl.StreamNodes
 {
     public class JoinArgs<TInLeft, TInRight, TOut>
     {
@@ -17,7 +18,7 @@ namespace Paillave.Etl.Core.StreamNodes
     }
     public class JoinStreamNode<TInLeft, TInRight, TOut> : StreamNodeBase<ISortedStream<TInLeft>, TInLeft, JoinArgs<TInLeft, TInRight, TOut>>, IStreamNodeOutput<TOut>, IStreamNodeError<ErrorRow<TInLeft, TInRight>>
     {
-        public JoinStreamNode(ISortedStream<TInLeft> input, string name, IEnumerable<string> parentNodeNamePath, JoinArgs<TInLeft, TInRight, TOut> arguments) : base(input, name, parentNodeNamePath, arguments)
+        public JoinStreamNode(ISortedStream<TInLeft> input, string name, JoinArgs<TInLeft, TInRight, TOut> arguments) : base(input, name, arguments)
         {
             if (arguments.RedirectErrorsInsteadOfFail)
             {
@@ -31,27 +32,5 @@ namespace Paillave.Etl.Core.StreamNodes
 
         public IStream<TOut> Output { get; }
         public IStream<ErrorRow<TInLeft, TInRight>> Error { get; }
-    }
-    public static partial class StreamEx
-    {
-        public static IStream<TOut> LeftJoin<TInLeft, TInRight, TOut>(this ISortedStream<TInLeft> leftStream, string name, IKeyedStream<TInRight> rightStream, Func<TInLeft, TInRight, TOut> resultSelector)
-        {
-            return new JoinStreamNode<TInLeft, TInRight, TOut>(leftStream, name, null, new JoinArgs<TInLeft, TInRight, TOut>
-            {
-                RightInputStream = rightStream,
-                ResultSelector = resultSelector,
-                RedirectErrorsInsteadOfFail = false
-            }).Output;
-        }
-        public static INodeOutputError<TOut, TInLeft, TInRight> LeftJoinKeepErrors<TInLeft, TInRight, TOut>(this ISortedStream<TInLeft> leftStream, string name, IKeyedStream<TInRight> rightStream, Func<TInLeft, TInRight, TOut> resultSelector)
-        {
-            var ret = new JoinStreamNode<TInLeft, TInRight, TOut>(leftStream, name, null, new JoinArgs<TInLeft, TInRight, TOut>
-            {
-                RightInputStream = rightStream,
-                ResultSelector = resultSelector,
-                RedirectErrorsInsteadOfFail = false
-            });
-            return new NodeOutputError<JoinStreamNode<TInLeft, TInRight, TOut>, TOut, TInLeft, TInRight>(ret);
-        }
     }
 }
