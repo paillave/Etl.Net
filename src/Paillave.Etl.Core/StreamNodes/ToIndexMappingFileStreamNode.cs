@@ -16,7 +16,7 @@ namespace Paillave.Etl.StreamNodes
     public class ToIndexMappingFileStreamNode<TIn> : ToResourceStreamNodeBase<TIn, SystemIO.StreamWriter, ToIndexMappingFileArgs<TIn>> where TIn : new()
     {
         private Func<TIn, IList<string>> _serialize;
-        public ToIndexMappingFileStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, ToIndexMappingFileArgs<TIn> arguments) : base(input, name, parentNodeNamePath, arguments)
+        public ToIndexMappingFileStreamNode(IStream<TIn> input, string name, ToIndexMappingFileArgs<TIn> arguments) : base(input, name, arguments)
         {
             _serialize = this.Arguments.Mapping.ColumnIndexMappingConfiguration.LineSerializer();
         }

@@ -15,7 +15,7 @@ namespace Paillave.Etl.StreamNodes
     public class MergeStreamNode<TIn> : StreamNodeBase<IStream<TIn>, TIn, MergeArgs<TIn>>, IStreamNodeOutput<TIn>
     {
         public IStream<TIn> Output { get; }
-        public MergeStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, MergeArgs<TIn> arguments) : base(input, name, parentNodeNamePath, arguments)
+        public MergeStreamNode(IStream<TIn> input, string name, MergeArgs<TIn> arguments) : base(input, name, arguments)
         {
             this.Output = base.CreateStream(nameof(Output), input.Observable.Merge(arguments.SecondStream.Observable));
         }

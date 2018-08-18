@@ -19,7 +19,7 @@ namespace Paillave.Etl.Core
 
         public void Trace(ITraceContent content)
         {
-            this._executionContext.Trace(new TraceEvent(_executionContext.JobName, _executionContext.ExecutionId, _nodeContext.TypeName, _nodeContext.NodeNamePath, content));
+            this._executionContext.Trace(new TraceEvent(_executionContext.JobName, _executionContext.ExecutionId, _nodeContext.TypeName, _nodeContext.NodeName, content));
         }
     }
 }

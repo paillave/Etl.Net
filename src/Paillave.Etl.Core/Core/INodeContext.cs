@@ -6,7 +6,7 @@ namespace Paillave.Etl.Core
 {
     public interface INodeContext
     {
-        IEnumerable<string> NodeNamePath { get; }
+        string NodeName{ get; }
         string TypeName { get; }
     }
 }

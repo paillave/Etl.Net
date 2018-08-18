@@ -11,8 +11,8 @@ namespace Paillave.Etl.Core.StreamNodes
     public abstract class StreamNodeBase<TStream, TIn> : StreamNodeBase where TStream : IStream<TIn>
     {
         public TStream Input { get; private set; }
-        public StreamNodeBase(TStream input, string name, IEnumerable<string> parentNodeNamePath)
-            : base(input.ExecutionContext, name, parentNodeNamePath)
+        public StreamNodeBase(TStream input, string name)
+            : base(input.ExecutionContext, name)
         {
             this.Input = input;
         }
@@ -20,8 +20,8 @@ namespace Paillave.Etl.Core.StreamNodes
     public abstract class StreamNodeBase<TStream, TIn, TArgs> : StreamNodeBase<TStream, TIn> where TStream : IStream<TIn>
     {
         public TArgs Arguments { get; private set; }
-        public StreamNodeBase(TStream input, string name, IEnumerable<string> parentNodeNamePath, TArgs arguments)
-            : base(input, name, parentNodeNamePath)
+        public StreamNodeBase(TStream input, string name, TArgs arguments)
+            : base(input, name)
         {
             this.Arguments = arguments;
         }
@@ -29,15 +29,15 @@ namespace Paillave.Etl.Core.StreamNodes
     public abstract class StreamNodeBase : INodeContext
     {
         protected IExecutionContext ExecutionContext { get; private set; }
-        public StreamNodeBase(IExecutionContext executionContext, string name, IEnumerable<string> parentNodeNamePath)
+        public StreamNodeBase(IExecutionContext executionContext, string name)
         {
             this.ExecutionContext = executionContext;
             this.TypeName = this.GetType().Name;
-            this.NodeNamePath = (parentNodeNamePath ?? new string[] { }).Concat(new[] { name }).ToArray();
+            this.NodeName = name;
             this.Tracer = new Tracer(executionContext, this);
         }
 
-        public IEnumerable<string> NodeNamePath { get; private set; }
+        public string NodeName { get; private set; }
         public virtual string TypeName { get; private set; }
 
         protected ITracer Tracer { get; private set; }

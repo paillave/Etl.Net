@@ -18,7 +18,7 @@ namespace Paillave.Etl.StreamNodes
     }
     public class JoinStreamNode<TInLeft, TInRight, TOut> : StreamNodeBase<ISortedStream<TInLeft>, TInLeft, JoinArgs<TInLeft, TInRight, TOut>>, IStreamNodeOutput<TOut>, IStreamNodeError<ErrorRow<TInLeft, TInRight>>
     {
-        public JoinStreamNode(ISortedStream<TInLeft> input, string name, IEnumerable<string> parentNodeNamePath, JoinArgs<TInLeft, TInRight, TOut> arguments) : base(input, name, parentNodeNamePath, arguments)
+        public JoinStreamNode(ISortedStream<TInLeft> input, string name, JoinArgs<TInLeft, TInRight, TOut> arguments) : base(input, name, arguments)
         {
             if (arguments.RedirectErrorsInsteadOfFail)
             {

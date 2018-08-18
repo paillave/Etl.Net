@@ -13,8 +13,8 @@ namespace Paillave.Etl.StreamNodes
     {
         public ISortedStream<TIn> Output { get; }
 
-        public EnsureSortedStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, IEnumerable<SortCriteria<TIn>> arguments) 
-            : base(input, name, parentNodeNamePath, arguments)
+        public EnsureSortedStreamNode(IStream<TIn> input, string name, IEnumerable<SortCriteria<TIn>> arguments) 
+            : base(input, name, arguments)
         {
             this.Output = base.CreateSortedStream(nameof(Output), input.Observable, arguments);
         }

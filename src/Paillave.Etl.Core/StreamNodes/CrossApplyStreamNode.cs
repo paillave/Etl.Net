@@ -24,7 +24,7 @@ namespace Paillave.Etl.StreamNodes
     }
     public class CrossApplyStreamNode<TIn, TValueIn, TValueOut, TOut> : StreamNodeBase<IStream<TIn>, TIn, CrossApplyArgs<TIn, TValueIn, TValueOut, TOut>>, IStreamNodeOutput<TOut>
     {
-        public CrossApplyStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, CrossApplyArgs<TIn, TValueIn, TValueOut, TOut> args) : base(input, name, parentNodeNamePath, args)
+        public CrossApplyStreamNode(IStream<TIn> input, string name, CrossApplyArgs<TIn, TValueIn, TValueOut, TOut> args) : base(input, name, args)
         {
             this.Output = base.CreateStream(nameof(this.Output), input.Observable.FlatMap(i => args.ValuesProvider.PushValues(args.InputValueSelector(i))).Map(args.OutputValueSelector));
         }
@@ -40,7 +40,7 @@ namespace Paillave.Etl.StreamNodes
     }
     public class CrossApplyResourceStreamNode<TIn, TRes, TValueIn, TValueOut, TOut> : StreamNodeBase<IStream<TIn>, TIn, CrossApplyResourceArgs<TIn, TRes, TValueIn, TValueOut, TOut>>, IStreamNodeOutput<TOut>
     {
-        public CrossApplyResourceStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, CrossApplyResourceArgs<TIn, TRes, TValueIn, TValueOut, TOut> args) : base(input, name, parentNodeNamePath, args)
+        public CrossApplyResourceStreamNode(IStream<TIn> input, string name, CrossApplyResourceArgs<TIn, TRes, TValueIn, TValueOut, TOut> args) : base(input, name, args)
         {
             var ob = input.Observable.CombineWithLatest(args.ResourceStream.Observable, (i, r) => new { Input = i, Resource = r });
             this.Output = base.CreateStream(nameof(this.Output), ob.FlatMap(i => args.ValuesProvider.PushValues(i.Resource, args.InputValueSelector(i.Input))).Map(args.OutputValueSelector));

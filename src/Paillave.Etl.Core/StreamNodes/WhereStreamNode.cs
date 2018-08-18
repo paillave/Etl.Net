@@ -16,8 +16,8 @@ namespace Paillave.Etl.StreamNodes
     }
     public class WhereStreamNode<TIn> : StreamNodeBase<IStream<TIn>, TIn, WhereArgs<TIn>>, IStreamNodeOutput<TIn>, IStreamNodeError<ErrorRow<TIn>>
     {
-        public WhereStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, WhereArgs<TIn> arguments)
-            : base(input, name, parentNodeNamePath, arguments)
+        public WhereStreamNode(IStream<TIn> input, string name, WhereArgs<TIn> arguments)
+            : base(input, name, arguments)
         {
             if (arguments.RedirectErrorsInsteadOfFail)
             {
@@ -35,8 +35,8 @@ namespace Paillave.Etl.StreamNodes
 
     public class WhereSortedStreamNode<TIn> : StreamNodeBase<ISortedStream<TIn>, TIn, WhereArgs<TIn>>, ISortedStreamNodeOutput<TIn>, IStreamNodeError<ErrorRow<TIn>>
     {
-        public WhereSortedStreamNode(ISortedStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, WhereArgs<TIn> arguments)
-            : base(input, name, parentNodeNamePath, arguments)
+        public WhereSortedStreamNode(ISortedStream<TIn> input, string name, WhereArgs<TIn> arguments)
+            : base(input, name, arguments)
         {
             if (arguments.RedirectErrorsInsteadOfFail)
             {
@@ -54,8 +54,8 @@ namespace Paillave.Etl.StreamNodes
 
     public class WhereKeyedStreamNode<TIn> : StreamNodeBase<IKeyedStream<TIn>, TIn, WhereArgs<TIn>>, IKeyedStreamNodeOutput<TIn>, IStreamNodeError<ErrorRow<TIn>>
     {
-        public WhereKeyedStreamNode(IKeyedStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, WhereArgs<TIn> arguments)
-            : base(input, name, parentNodeNamePath, arguments)
+        public WhereKeyedStreamNode(IKeyedStream<TIn> input, string name, WhereArgs<TIn> arguments)
+            : base(input, name, arguments)
         {
             if (arguments.RedirectErrorsInsteadOfFail)
             {

@@ -13,8 +13,8 @@ namespace Paillave.Etl.Core.StreamNodes
     {
         public TStream Input { get; }
         public ISortedStream<TIn> Output { get; }
-        public AwaitableSortedStreamNodeBase(TStream input, string name, IEnumerable<string> parentNodeNamePath)
-            : base(input.ExecutionContext, name, parentNodeNamePath)
+        public AwaitableSortedStreamNodeBase(TStream input, string name)
+            : base(input.ExecutionContext, name)
         {
             var processedPushObservable = this.ProcessObservable(input.Observable);
             input.ExecutionContext.AddToWaitForCompletion(processedPushObservable);
@@ -30,8 +30,8 @@ namespace Paillave.Etl.Core.StreamNodes
     public abstract class AwaitableSortedStreamNodeBase<TStream, TIn, TArgs> : AwaitableSortedStreamNodeBase<TStream, TIn> where TStream : ISortedStream<TIn>
     {
         public TArgs Arguments { get; }
-        public AwaitableSortedStreamNodeBase(TStream input, string name, IEnumerable<string> parentNodeNamePath, TArgs arguments)
-            : base(input, name, parentNodeNamePath)
+        public AwaitableSortedStreamNodeBase(TStream input, string name, TArgs arguments)
+            : base(input, name)
         {
             this.Arguments = arguments;
         }

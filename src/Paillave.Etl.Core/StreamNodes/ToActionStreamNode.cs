@@ -11,7 +11,7 @@ namespace Paillave.Etl.StreamNodes
 {
     public class ToActionStreamNode<TIn> : AwaitableStreamNodeBase<IStream<TIn>, TIn, Action<TIn>>
     {
-        public ToActionStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, Action<TIn> arguments) : base(input, name, parentNodeNamePath, arguments)
+        public ToActionStreamNode(IStream<TIn> input, string name, Action<TIn> arguments) : base(input, name, arguments)
         {
         }
         protected override void ProcessValue(TIn value)
@@ -21,7 +21,7 @@ namespace Paillave.Etl.StreamNodes
     }
     public class ToActionStreamNode<TIn, TOut> : AwaitableStreamNodeBase<IStream<TIn>, TIn, TOut, Func<TIn, TOut>>
     {
-        public ToActionStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, Func<TIn, TOut> arguments) : base(input, name, parentNodeNamePath, arguments)
+        public ToActionStreamNode(IStream<TIn> input, string name, Func<TIn, TOut> arguments) : base(input, name, arguments)
         {
         }
         protected override TOut ProcessValue(TIn value)
@@ -34,7 +34,7 @@ namespace Paillave.Etl.StreamNodes
 
     public class ToActionResourceStreamNode<TIn, TRes> : AwaitableStreamNodeBase<IStream<TIn>, TIn, ToActionArgs<TIn, TRes>>
     {
-        public ToActionResourceStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, ToActionArgs<TIn, TRes> arguments) : base(input, name, parentNodeNamePath, arguments)
+        public ToActionResourceStreamNode(IStream<TIn> input, string name, ToActionArgs<TIn, TRes> arguments) : base(input, name, arguments)
         {
         }
         protected override IPushObservable<TIn> ProcessObservable(IPushObservable<TIn> observable)
@@ -52,7 +52,7 @@ namespace Paillave.Etl.StreamNodes
     }
     public class ToActionResourceStreamNode<TIn, TRes, TOut> : AwaitableStreamNodeBase<IStream<TIn>, TIn, TOut, ToActionArgs<TIn, TRes, TOut>>
     {
-        public ToActionResourceStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, ToActionArgs<TIn, TRes, TOut> arguments) : base(input, name, parentNodeNamePath, arguments)
+        public ToActionResourceStreamNode(IStream<TIn> input, string name, ToActionArgs<TIn, TRes, TOut> arguments) : base(input, name, arguments)
         {
         }
         protected override IPushObservable<TOut> ProcessObservable(IPushObservable<TIn> observable)

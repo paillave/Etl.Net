@@ -13,8 +13,8 @@ namespace Paillave.Etl.StreamNodes
     {
         public IKeyedStream<TIn> Output { get; }
 
-        public EnsureKeyedStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, IEnumerable<SortCriteria<TIn>> arguments)
-            : base(input, name, parentNodeNamePath, arguments)
+        public EnsureKeyedStreamNode(IStream<TIn> input, string name, IEnumerable<SortCriteria<TIn>> arguments)
+            : base(input, name, arguments)
         {
             this.Output = base.CreateKeyedStream(nameof(Output), input.Observable, arguments);
         }

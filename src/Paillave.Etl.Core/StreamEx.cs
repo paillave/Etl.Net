@@ -19,7 +19,7 @@ namespace Paillave.Etl
         #region CrossApply
         public static IStream<TOut> CrossApply<TIn, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, IValuesProvider<TValueIn, TValueOut> valuesProvider, Func<TIn, TValueIn> inputValueSelector, Func<TValueOut, TOut> outputValueSelector)
         {
-            return new CrossApplyStreamNode<TIn, TValueIn, TValueOut, TOut>(stream, name, null, new CrossApplyArgs<TIn, TValueIn, TValueOut, TOut>
+            return new CrossApplyStreamNode<TIn, TValueIn, TValueOut, TOut>(stream, name, new CrossApplyArgs<TIn, TValueIn, TValueOut, TOut>
             {
                 InputValueSelector = inputValueSelector,
                 OutputValueSelector = outputValueSelector,
@@ -28,7 +28,7 @@ namespace Paillave.Etl
         }
         public static IStream<TOut> CrossApply<TIn, TOut>(this IStream<TIn> stream, string name, IValuesProvider<TIn, TOut> valuesProvider)
         {
-            return new CrossApplyStreamNode<TIn, TIn, TOut, TOut>(stream, name, null, new CrossApplyArgs<TIn, TIn, TOut, TOut>
+            return new CrossApplyStreamNode<TIn, TIn, TOut, TOut>(stream, name, new CrossApplyArgs<TIn, TIn, TOut, TOut>
             {
                 InputValueSelector = i => i,
                 OutputValueSelector = i => i,
@@ -37,7 +37,7 @@ namespace Paillave.Etl
         }
         public static IStream<TOut> CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, IValuesProvider<TValueIn, TRes, TValueOut> valuesProvider, Func<TIn, TValueIn> inputValueSelector, Func<TValueOut, TOut> outputValueSelector)
         {
-            return new CrossApplyResourceStreamNode<TIn, TRes, TValueIn, TValueOut, TOut>(stream, name, null, new CrossApplyResourceArgs<TIn, TRes, TValueIn, TValueOut, TOut>
+            return new CrossApplyResourceStreamNode<TIn, TRes, TValueIn, TValueOut, TOut>(stream, name, new CrossApplyResourceArgs<TIn, TRes, TValueIn, TValueOut, TOut>
             {
                 InputValueSelector = inputValueSelector,
                 OutputValueSelector = outputValueSelector,
@@ -47,7 +47,7 @@ namespace Paillave.Etl
         }
         public static IStream<TOut> CrossApply<TIn, TRes, TOut>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, IValuesProvider<TIn, TRes, TOut> valuesProvider)
         {
-            return new CrossApplyResourceStreamNode<TIn, TRes, TIn, TOut, TOut>(stream, name, null, new CrossApplyResourceArgs<TIn, TRes, TIn, TOut, TOut>
+            return new CrossApplyResourceStreamNode<TIn, TRes, TIn, TOut, TOut>(stream, name, new CrossApplyResourceArgs<TIn, TRes, TIn, TOut, TOut>
             {
                 InputValueSelector = i => i,
                 OutputValueSelector = i => i,
@@ -291,45 +291,45 @@ namespace Paillave.Etl
         #region EnsureKeyed
         public static IKeyedStream<TIn> EnsureKeyed<TIn>(this IStream<TIn> stream, string name, params Expression<Func<TIn, IComparable>>[] sortFields)
         {
-            return new EnsureKeyedStreamNode<TIn>(stream, name, null, sortFields.Select(i => new SortCriteria<TIn>(i)).ToList()).Output;
+            return new EnsureKeyedStreamNode<TIn>(stream, name, sortFields.Select(i => new SortCriteria<TIn>(i)).ToList()).Output;
         }
         public static IKeyedStream<TIn> EnsureKeyed<TIn>(this IStream<TIn> stream, string name, params SortCriteria<TIn>[] sortCriterias)
         {
-            return new EnsureKeyedStreamNode<TIn>(stream, name, null, sortCriterias).Output;
+            return new EnsureKeyedStreamNode<TIn>(stream, name, sortCriterias).Output;
         }
         public static IKeyedStream<TIn> EnsureKeyed<TIn>(this IStream<TIn> stream, string name, Func<TIn, IEnumerable<SortCriteria<TIn>>> sortCriteriasBuilder)
         {
-            return new EnsureKeyedStreamNode<TIn>(stream, name, null, sortCriteriasBuilder(default(TIn)).ToList()).Output;
+            return new EnsureKeyedStreamNode<TIn>(stream, name, sortCriteriasBuilder(default(TIn)).ToList()).Output;
         }
         public static IKeyedStream<TIn> EnsureKeyed<TIn>(this IStream<TIn> stream, string name, Func<TIn, SortCriteria<TIn>> sortCriteriasBuilder)
         {
-            return new EnsureKeyedStreamNode<TIn>(stream, name, null, new[] { sortCriteriasBuilder(default(TIn)) }).Output;
+            return new EnsureKeyedStreamNode<TIn>(stream, name, new[] { sortCriteriasBuilder(default(TIn)) }).Output;
         }
         #endregion
 
         #region EnsureSorted
         public static ISortedStream<TIn> EnsureSorted<TIn>(this IStream<TIn> stream, string name, params Expression<Func<TIn, IComparable>>[] sortFields)
         {
-            return new EnsureSortedStreamNode<TIn>(stream, name, null, sortFields.Select(i => new SortCriteria<TIn>(i)).ToList()).Output;
+            return new EnsureSortedStreamNode<TIn>(stream, name, sortFields.Select(i => new SortCriteria<TIn>(i)).ToList()).Output;
         }
         public static ISortedStream<TIn> EnsureSorted<TIn>(this IStream<TIn> stream, string name, params SortCriteria<TIn>[] sortCriterias)
         {
-            return new EnsureSortedStreamNode<TIn>(stream, name, null, sortCriterias).Output;
+            return new EnsureSortedStreamNode<TIn>(stream, name, sortCriterias).Output;
         }
         public static ISortedStream<TIn> EnsureSorted<TIn>(this IStream<TIn> stream, string name, Func<TIn, IEnumerable<SortCriteria<TIn>>> sortCriteriasBuilder)
         {
-            return new EnsureSortedStreamNode<TIn>(stream, name, null, sortCriteriasBuilder(default(TIn)).ToList()).Output;
+            return new EnsureSortedStreamNode<TIn>(stream, name, sortCriteriasBuilder(default(TIn)).ToList()).Output;
         }
         public static ISortedStream<TIn> EnsureSorted<TIn>(this IStream<TIn> stream, string name, Func<TIn, SortCriteria<TIn>> sortCriteriasBuilder)
         {
-            return new EnsureSortedStreamNode<TIn>(stream, name, null, new[] { sortCriteriasBuilder(default(TIn)) }).Output;
+            return new EnsureSortedStreamNode<TIn>(stream, name, new[] { sortCriteriasBuilder(default(TIn)) }).Output;
         }
         #endregion
 
         #region LeftJoin
         public static IStream<TOut> LeftJoin<TInLeft, TInRight, TOut>(this ISortedStream<TInLeft> leftStream, string name, IKeyedStream<TInRight> rightStream, Func<TInLeft, TInRight, TOut> resultSelector)
         {
-            return new JoinStreamNode<TInLeft, TInRight, TOut>(leftStream, name, null, new JoinArgs<TInLeft, TInRight, TOut>
+            return new JoinStreamNode<TInLeft, TInRight, TOut>(leftStream, name, new JoinArgs<TInLeft, TInRight, TOut>
             {
                 RightInputStream = rightStream,
                 ResultSelector = resultSelector,
@@ -338,7 +338,7 @@ namespace Paillave.Etl
         }
         public static INodeOutputError<TOut, TInLeft, TInRight> LeftJoinKeepErrors<TInLeft, TInRight, TOut>(this ISortedStream<TInLeft> leftStream, string name, IKeyedStream<TInRight> rightStream, Func<TInLeft, TInRight, TOut> resultSelector)
         {
-            var ret = new JoinStreamNode<TInLeft, TInRight, TOut>(leftStream, name, null, new JoinArgs<TInLeft, TInRight, TOut>
+            var ret = new JoinStreamNode<TInLeft, TInRight, TOut>(leftStream, name, new JoinArgs<TInLeft, TInRight, TOut>
             {
                 RightInputStream = rightStream,
                 ResultSelector = resultSelector,
@@ -351,14 +351,14 @@ namespace Paillave.Etl
         #region Merge
         public static IStream<I> Merge<I>(this IStream<I> stream, string name, IStream<I> inputStream2)
         {
-            return new MergeStreamNode<I>(stream, name, null, new MergeArgs<I> { SecondStream = inputStream2 }).Output;
+            return new MergeStreamNode<I>(stream, name, new MergeArgs<I> { SecondStream = inputStream2 }).Output;
         }
         #endregion
 
         #region Select
         public static IStream<TOut> Select<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper)
         {
-            return new SelectStreamNode<TIn, TOut>(stream, name, null, new SelectArgs<TIn, TOut>
+            return new SelectStreamNode<TIn, TOut>(stream, name, new SelectArgs<TIn, TOut>
             {
                 Mapper = mapper,
                 RedirectErrorsInsteadOfFail = false
@@ -366,7 +366,7 @@ namespace Paillave.Etl
         }
         public static IStream<TOut> Select<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, int, TOut> mapper)
         {
-            return new SelectStreamNode<TIn, TOut>(stream, name, null, new SelectArgs<TIn, TOut>
+            return new SelectStreamNode<TIn, TOut>(stream, name, new SelectArgs<TIn, TOut>
             {
                 IndexMapper = mapper,
                 RedirectErrorsInsteadOfFail = false
@@ -374,7 +374,7 @@ namespace Paillave.Etl
         }
         public static INodeOutputError<TOut, TIn> SelectKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper)
         {
-            var ret = new SelectStreamNode<TIn, TOut>(stream, name, null, new SelectArgs<TIn, TOut>
+            var ret = new SelectStreamNode<TIn, TOut>(stream, name, new SelectArgs<TIn, TOut>
             {
                 Mapper = mapper,
                 RedirectErrorsInsteadOfFail = true
@@ -383,7 +383,7 @@ namespace Paillave.Etl
         }
         public static INodeOutputError<TOut, TIn> SelectKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, int, TOut> mapper)
         {
-            var ret = new SelectStreamNode<TIn, TOut>(stream, name, null, new SelectArgs<TIn, TOut>
+            var ret = new SelectStreamNode<TIn, TOut>(stream, name, new SelectArgs<TIn, TOut>
             {
                 IndexMapper = mapper,
                 RedirectErrorsInsteadOfFail = true
@@ -395,49 +395,49 @@ namespace Paillave.Etl
         #region Skip
         public static IStream<TIn> Skip<TIn>(this IStream<TIn> stream, string name, int count)
         {
-            return new SkipStreamNode<TIn>(stream, name, null, count).Output;
+            return new SkipStreamNode<TIn>(stream, name, count).Output;
         }
         public static ISortedStream<TIn> Skip<TIn>(this ISortedStream<TIn> stream, string name, int count)
         {
-            return new SkipSortedStreamNode<TIn>(stream, name, null, count).Output;
+            return new SkipSortedStreamNode<TIn>(stream, name, count).Output;
         }
         public static IKeyedStream<TIn> Skip<TIn>(this IKeyedStream<TIn> stream, string name, int count)
         {
-            return new SkipKeyedStreamNode<TIn>(stream, name, null, count).Output;
+            return new SkipKeyedStreamNode<TIn>(stream, name, count).Output;
         }
         #endregion
 
         #region Sort
         public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, params Expression<Func<TIn, IComparable>>[] sortFields)
         {
-            return new SortStreamNode<TIn>(stream, name, null, sortFields.Select(i => new Core.SortCriteria<TIn>(i)).ToList()).Output;
+            return new SortStreamNode<TIn>(stream, name, sortFields.Select(i => new Core.SortCriteria<TIn>(i)).ToList()).Output;
         }
         public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, params Core.SortCriteria<TIn>[] sortCriterias)
         {
-            return new SortStreamNode<TIn>(stream, name, null, sortCriterias).Output;
+            return new SortStreamNode<TIn>(stream, name, sortCriterias).Output;
         }
         public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, Func<TIn, IEnumerable<Core.SortCriteria<TIn>>> sortCriteriasBuilder)
         {
-            return new SortStreamNode<TIn>(stream, name, null, sortCriteriasBuilder(default(TIn)).ToList()).Output;
+            return new SortStreamNode<TIn>(stream, name, sortCriteriasBuilder(default(TIn)).ToList()).Output;
         }
         public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, Func<TIn, Core.SortCriteria<TIn>> sortCriteriasBuilder)
         {
-            return new SortStreamNode<TIn>(stream, name, null, new[] { sortCriteriasBuilder(default(TIn)) }).Output;
+            return new SortStreamNode<TIn>(stream, name, new[] { sortCriteriasBuilder(default(TIn)) }).Output;
         }
         #endregion
 
         #region ToAction
         public static IStream<TIn> ToAction<TIn>(this IStream<TIn> stream, string name, Action<TIn> action)
         {
-            return new ToActionStreamNode<TIn>(stream, name, null, action).Output;
+            return new ToActionStreamNode<TIn>(stream, name, action).Output;
         }
         public static IStream<TOut> ToAction<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> action)
         {
-            return new ToActionStreamNode<TIn, TOut>(stream, name, null, action).Output;
+            return new ToActionStreamNode<TIn, TOut>(stream, name, action).Output;
         }
         public static IStream<TIn> ToAction<TIn, TRes>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, Action<TIn, TRes> action)
         {
-            return new ToActionResourceStreamNode<TIn, TRes>(stream, name, null, new ToActionArgs<TIn, TRes>
+            return new ToActionResourceStreamNode<TIn, TRes>(stream, name, new ToActionArgs<TIn, TRes>
             {
                 Action = action,
                 ResourceStream = resourceStream
@@ -445,7 +445,7 @@ namespace Paillave.Etl
         }
         public static IStream<TOut> ToAction<TIn, TRes, TOut>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, Func<TIn, TRes, TOut> action)
         {
-            return new ToActionResourceStreamNode<TIn, TRes, TOut>(stream, name, null, new ToActionArgs<TIn, TRes, TOut>
+            return new ToActionResourceStreamNode<TIn, TRes, TOut>(stream, name, new ToActionArgs<TIn, TRes, TOut>
             {
                 Action = action,
                 ResourceStream = resourceStream
@@ -456,7 +456,7 @@ namespace Paillave.Etl
         #region ToTextFile
         public static IStream<TIn> ToTextFile<TIn>(this IStream<TIn> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, ColumnIndexFlatFileDescriptor<TIn> mapping) where TIn : new()
         {
-            return new ToIndexMappingFileStreamNode<TIn>(stream, name, null, new ToIndexMappingFileArgs<TIn>
+            return new ToIndexMappingFileStreamNode<TIn>(stream, name, new ToIndexMappingFileArgs<TIn>
             {
                 Mapping = mapping,
                 ResourceStream = resourceStream
@@ -464,7 +464,7 @@ namespace Paillave.Etl
         }
         public static IStream<TIn> ToTextFile<TIn>(this IStream<TIn> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, ColumnNameFlatFileDescriptor<TIn> mapping) where TIn : new()
         {
-            return new ToNameMappingFileStreamNode<TIn>(stream, name, null, new ToNameMappingFileArgs<TIn>
+            return new ToNameMappingFileStreamNode<TIn>(stream, name, new ToNameMappingFileArgs<TIn>
             {
                 Mapping = mapping,
                 ResourceStream = resourceStream
@@ -475,22 +475,22 @@ namespace Paillave.Etl
         #region Top
         public static ISortedStream<TIn> Top<TIn>(this ISortedStream<TIn> stream, string name, int count)
         {
-            return new TopSortedStreamNode<TIn>(stream, name, null, count).Output;
+            return new TopSortedStreamNode<TIn>(stream, name, count).Output;
         }
         public static IKeyedStream<TIn> Top<TIn>(this IKeyedStream<TIn> stream, string name, int count)
         {
-            return new TopKeyedStreamNode<TIn>(stream, name, null, count).Output;
+            return new TopKeyedStreamNode<TIn>(stream, name, count).Output;
         }
         public static IStream<TIn> Top<TIn>(this IStream<TIn> stream, string name, int count)
         {
-            return new TopStreamNode<TIn>(stream, name, null, count).Output;
+            return new TopStreamNode<TIn>(stream, name, count).Output;
         }
         #endregion
 
         #region UseResource
         public static IStream<TOut> UseResource<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper) where TOut : IDisposable
         {
-            return new UseResourceStreamNode<TIn, TOut>(stream, name, null, new CreateResourceArgs<TIn, TOut>
+            return new UseResourceStreamNode<TIn, TOut>(stream, name, new CreateResourceArgs<TIn, TOut>
             {
                 Mapper = mapper,
                 RedirectErrorsInsteadOfFail = false
@@ -498,7 +498,7 @@ namespace Paillave.Etl
         }
         public static INodeOutputError<TOut, TIn> UseResourceKeepErrors<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper) where TOut : IDisposable
         {
-            var ret = new UseResourceStreamNode<TIn, TOut>(stream, name, null, new CreateResourceArgs<TIn, TOut>
+            var ret = new UseResourceStreamNode<TIn, TOut>(stream, name, new CreateResourceArgs<TIn, TOut>
             {
                 Mapper = mapper,
                 RedirectErrorsInsteadOfFail = true
@@ -510,7 +510,7 @@ namespace Paillave.Etl
         #region Where
         public static IKeyedStream<TIn> Where<TIn>(this IKeyedStream<TIn> stream, string name, Func<TIn, bool> predicate)
         {
-            return new WhereKeyedStreamNode<TIn>(stream, name, null, new WhereArgs<TIn>
+            return new WhereKeyedStreamNode<TIn>(stream, name, new WhereArgs<TIn>
             {
                 Predicate = predicate,
                 RedirectErrorsInsteadOfFail = false
@@ -518,7 +518,7 @@ namespace Paillave.Etl
         }
         public static IKeyedNodeOutputError<TIn, TIn> WhereKeepErrors<TIn>(this IKeyedStream<TIn> stream, string name, Func<TIn, bool> predicate)
         {
-            var ret = new WhereKeyedStreamNode<TIn>(stream, name, null, new WhereArgs<TIn>
+            var ret = new WhereKeyedStreamNode<TIn>(stream, name, new WhereArgs<TIn>
             {
                 Predicate = predicate,
                 RedirectErrorsInsteadOfFail = true
@@ -527,7 +527,7 @@ namespace Paillave.Etl
         }
         public static ISortedStream<TIn> Where<TIn>(this ISortedStream<TIn> stream, string name, Func<TIn, bool> predicate)
         {
-            return new WhereSortedStreamNode<TIn>(stream, name, null, new WhereArgs<TIn>
+            return new WhereSortedStreamNode<TIn>(stream, name, new WhereArgs<TIn>
             {
                 Predicate = predicate,
                 RedirectErrorsInsteadOfFail = false
@@ -535,7 +535,7 @@ namespace Paillave.Etl
         }
         public static ISortedNodeOutputError<TIn, TIn> WhereKeepErrors<TIn>(this ISortedStream<TIn> stream, string name, Func<TIn, bool> predicate)
         {
-            var ret = new WhereSortedStreamNode<TIn>(stream, name, null, new WhereArgs<TIn>
+            var ret = new WhereSortedStreamNode<TIn>(stream, name, new WhereArgs<TIn>
             {
                 Predicate = predicate,
                 RedirectErrorsInsteadOfFail = true
@@ -544,7 +544,7 @@ namespace Paillave.Etl
         }
         public static IStream<TIn> Where<TIn>(this IStream<TIn> stream, string name, Func<TIn, bool> predicate)
         {
-            return new WhereStreamNode<TIn>(stream, name, null, new WhereArgs<TIn>
+            return new WhereStreamNode<TIn>(stream, name, new WhereArgs<TIn>
             {
                 Predicate = predicate,
                 RedirectErrorsInsteadOfFail = false
@@ -552,7 +552,7 @@ namespace Paillave.Etl
         }
         public static INodeOutputError<TIn, TIn> WhereKeepErrors<TIn>(this IStream<TIn> stream, string name, Func<TIn, bool> predicate)
         {
-            var ret = new WhereStreamNode<TIn>(stream, name, null, new WhereArgs<TIn>
+            var ret = new WhereStreamNode<TIn>(stream, name, new WhereArgs<TIn>
             {
                 Predicate = predicate,
                 RedirectErrorsInsteadOfFail = true
@@ -564,7 +564,7 @@ namespace Paillave.Etl
         #region CombineLatest
         public static IStream<TOut> CombineLatest<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> inputStream2, Func<TIn1, TIn2, TOut> resultSelector)
         {
-            return new CombineLatestStreamNode<TIn1, TIn2, TOut>(stream, name, null, new CombineLatestArgs<TIn1, TIn2, TOut>
+            return new CombineLatestStreamNode<TIn1, TIn2, TOut>(stream, name, new CombineLatestArgs<TIn1, TIn2, TOut>
             {
                 InputStream2 = inputStream2,
                 ResultSelector = resultSelector,
@@ -573,7 +573,7 @@ namespace Paillave.Etl
         }
         public static INodeOutputError<TOut, TIn1, TIn2> CombineLatestKeepErrors<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> inputStream2, Func<TIn1, TIn2, TOut> resultSelector)
         {
-            var ret = new CombineLatestStreamNode<TIn1, TIn2, TOut>(stream, name, null, new CombineLatestArgs<TIn1, TIn2, TOut>
+            var ret = new CombineLatestStreamNode<TIn1, TIn2, TOut>(stream, name, new CombineLatestArgs<TIn1, TIn2, TOut>
             {
                 InputStream2 = inputStream2,
                 ResultSelector = resultSelector,

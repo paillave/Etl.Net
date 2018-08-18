@@ -16,7 +16,7 @@ namespace Paillave.Etl.StreamNodes
     }
     public class UseResourceStreamNode<TIn, TOut> : StreamNodeBase<IStream<TIn>, TIn, CreateResourceArgs<TIn, TOut>>, IStreamNodeOutput<TOut>, IStreamNodeError<ErrorRow<TIn>> where TOut : IDisposable
     {
-        public UseResourceStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, CreateResourceArgs<TIn, TOut> arguments) : base(input, name, parentNodeNamePath, arguments)
+        public UseResourceStreamNode(IStream<TIn> input, string name, CreateResourceArgs<TIn, TOut> arguments) : base(input, name, arguments)
         {
             if (arguments.RedirectErrorsInsteadOfFail)
             {

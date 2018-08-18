@@ -24,8 +24,8 @@ namespace Paillave.Etl.StreamNodes
                 pushValue(item);
         }
 
-        public SortStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, IEnumerable<Core.SortCriteria<TIn>> arguments)
-            : base(input, name, parentNodeNamePath, arguments)
+        public SortStreamNode(IStream<TIn> input, string name, IEnumerable<Core.SortCriteria<TIn>> arguments)
+            : base(input, name, arguments)
         {
             _deferedPushObservable = new DeferedPushObservable<TIn>(PushSortedList);
             input.Observable.Subscribe(HandlePush, HandleComplete);

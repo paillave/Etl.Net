@@ -23,7 +23,7 @@ namespace Paillave.Etl.Core.StreamNodes
         private TResource _outputResource = default(TResource);
         private Queue<TIn> _onHoldQueue = new Queue<TIn>();
 
-        public ToResourceStreamNodeBase(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, TArgs arguments) : base(input, name, parentNodeNamePath, arguments)
+        public ToResourceStreamNodeBase(IStream<TIn> input, string name, TArgs arguments) : base(input, name, arguments)
         {
             this.Arguments.ResourceStream.Observable.Subscribe(this.UnstackValues);
         }

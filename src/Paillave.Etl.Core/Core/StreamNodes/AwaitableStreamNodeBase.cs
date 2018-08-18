@@ -16,8 +16,8 @@ namespace Paillave.Etl.Core.StreamNodes
         public TStream Input { get; }
         public IStream<TIn> Output { get; }
 
-        public AwaitableStreamNodeBase(TStream input, string name, IEnumerable<string> parentNodeNamePath, TArgs arguments)
-            : base(input.ExecutionContext, name, parentNodeNamePath)
+        public AwaitableStreamNodeBase(TStream input, string name, TArgs arguments)
+            : base(input.ExecutionContext, name)
         {
             this.Arguments = arguments;
             this.Input = input;
@@ -37,8 +37,8 @@ namespace Paillave.Etl.Core.StreamNodes
         public TStream Input { get; }
         public IStream<TOut> Output { get; }
 
-        public AwaitableStreamNodeBase(TStream input, string name, IEnumerable<string> parentNodeNamePath, TArgs arguments)
-            : base(input.ExecutionContext, name, parentNodeNamePath)
+        public AwaitableStreamNodeBase(TStream input, string name, TArgs arguments)
+            : base(input.ExecutionContext, name)
         {
             this.Arguments = arguments;
             this.Input = input;
@@ -57,8 +57,8 @@ namespace Paillave.Etl.Core.StreamNodes
     //    public TStream Input { get; }
     //    public IStream<TIn> Output { get; }
 
-    //    public AwaitableStreamNodeBase(TStream input, string name, IEnumerable<string> parentNodeNamePath)
-    //        : base(input.ExecutionContext, name, parentNodeNamePath)
+    //    public AwaitableStreamNodeBase(TStream input, string name)
+    //        : base(input.ExecutionContext, name)
     //    {
     //        this.Input = input;
     //        var processedPushObservable = this.ProcessObservable(input.Observable);
@@ -74,8 +74,8 @@ namespace Paillave.Etl.Core.StreamNodes
     //public abstract class AwaitableStreamNodeBase<TStream, TIn, TArgs> : AwaitableStreamNodeBase<TStream, TIn> where TStream : IStream<TIn>
     //{
     //    public TArgs Arguments { get; }
-    //    public AwaitableStreamNodeBase(TStream input, string name, IEnumerable<string> parentNodeNamePath, TArgs arguments)
-    //        : base(input, name, parentNodeNamePath)
+    //    public AwaitableStreamNodeBase(TStream input, string name, TArgs arguments)
+    //        : base(input, name)
     //    {
     //        this.Arguments = arguments;
     //    }

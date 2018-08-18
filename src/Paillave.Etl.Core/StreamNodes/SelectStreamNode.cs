@@ -17,7 +17,7 @@ namespace Paillave.Etl.StreamNodes
     }
     public class SelectStreamNode<TIn, TOut> : StreamNodeBase<IStream<TIn>, TIn, SelectArgs<TIn, TOut>>, IStreamNodeOutput<TOut>, IStreamNodeError<ErrorRow<TIn>>
     {
-        public SelectStreamNode(IStream<TIn> input, string name, IEnumerable<string> parentNodeNamePath, SelectArgs<TIn, TOut> arguments) : base(input, name, parentNodeNamePath, arguments)
+        public SelectStreamNode(IStream<TIn> input, string name, SelectArgs<TIn, TOut> arguments) : base(input, name, arguments)
         {
             if (arguments.RedirectErrorsInsteadOfFail)
             {

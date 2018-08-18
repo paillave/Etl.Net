@@ -73,13 +73,12 @@ namespace Paillave.Etl
         }
         private class CurrentExecutionNodeContext : INodeContext
         {
-            private readonly string _jobName;
-
             public CurrentExecutionNodeContext(string jobName)
             {
-                this._jobName = jobName;
+                this.NodeName = jobName;
             }
-            public IEnumerable<string> NodeNamePath => new[] { _jobName };
+            public string NodeName { get; }
+
             public string TypeName => "ExecutionContext";
         }
         private class CurrentExecutionContext : IExecutionContext

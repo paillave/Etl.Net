@@ -15,10 +15,10 @@ namespace Paillave.Etl.StreamNodes
     }
     public class CombineLatestStreamNode<TIn1, TIn2, TOut> : StreamNodeBase<IStream<TIn1>, TIn1, CombineLatestArgs<TIn1, TIn2, TOut>>, IStreamNodeError<ErrorRow<TIn1, TIn2>>, IStreamNodeOutput<TOut>
     {
-        public CombineLatestStreamNode(IStream<TIn1> inputStream1, string name, IEnumerable<string> parentNodeNamePath, CombineLatestArgs<TIn1, TIn2, TOut> args)
-            : base(inputStream1, name, parentNodeNamePath, args)
+        public CombineLatestStreamNode(IStream<TIn1> inputStream1, string name, CombineLatestArgs<TIn1, TIn2, TOut> args)
+            : base(inputStream1, name, args)
         {
-            //base.Initialize(inputStream1.ExecutionContext ?? inputStream2.ExecutionContext, name, parentNodeNamePath);
+            //base.Initialize(inputStream1.ExecutionContext ?? inputStream2.ExecutionContext, name);
             if (args.RedirectErrorsInsteadOfFail)
             {
                 var errorManagedResult = inputStream1.Observable.CombineWithLatest(args.InputStream2.Observable, base.ErrorManagementWrapFunction(args.ResultSelector));
