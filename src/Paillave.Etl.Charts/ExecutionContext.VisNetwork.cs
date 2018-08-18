@@ -13,7 +13,7 @@ namespace Paillave.Etl
     //http://resources.jointjs.com/demos/layout
     public static partial class ExecutionContextEx
     {
-        public static async Task<VisNetworkStatistics> GetVisNetworkStatisticsAsync<T>(this ExecutionContext<T> executionContext)
+        public static async Task<VisNetworkStatistics> GetVisNetworkStatisticsAsync<T>(this ExecutionContextOld<T> executionContext)
         {
             List<StreamStatistic> streamStatistics = await executionContext.TraceStream.GetStreamStatisticsAsync();
             var streamToNodeLinks = executionContext.StreamToNodeLinks;
@@ -46,11 +46,11 @@ namespace Paillave.Etl
                 }).ToList()
             };
         }
-        public static async Task<string> GetJsonVisNetworkStatisticsAsync<T>(this ExecutionContext<T> executionContext)
+        public static async Task<string> GetJsonVisNetworkStatisticsAsync<T>(this ExecutionContextOld<T> executionContext)
         {
             return JsonConvert.SerializeObject(await executionContext.GetVisNetworkStatisticsAsync());
         }
-        public static async Task<string> GetHtmlVisNetworkStatisticsAsync<T>(this ExecutionContext<T> executionContext)
+        public static async Task<string> GetHtmlVisNetworkStatisticsAsync<T>(this ExecutionContextOld<T> executionContext)
         {
             var json = await executionContext.GetJsonVisNetworkStatisticsAsync();
             string file;

@@ -12,7 +12,7 @@ namespace Paillave.Etl
 {
     public static partial class ExecutionContextEx
     {
-        public static async Task<D3SankeyStatistics> GetD3SankeyStatisticsAsync<T>(this ExecutionContext<T> executionContext)
+        public static async Task<D3SankeyStatistics> GetD3SankeyStatisticsAsync<T>(this ExecutionContextOld<T> executionContext)
         {
             List<StreamStatistic> streamStatistics = await executionContext.TraceStream.GetStreamStatisticsAsync();
             var streamToNodeLinks = executionContext.StreamToNodeLinks;
@@ -46,11 +46,11 @@ namespace Paillave.Etl
                 }).ToList()
             };
         }
-        public static async Task<string> GetJsonD3SankeyStatisticsAsync<T>(this ExecutionContext<T> executionContext)
+        public static async Task<string> GetJsonD3SankeyStatisticsAsync<T>(this ExecutionContextOld<T> executionContext)
         {
             return JsonConvert.SerializeObject(await executionContext.GetD3SankeyStatisticsAsync());
         }
-        public static async Task<string> GetHtmlD3SankeyStatisticsAsync<T>(this ExecutionContext<T> executionContext)
+        public static async Task<string> GetHtmlD3SankeyStatisticsAsync<T>(this ExecutionContextOld<T> executionContext)
         {
             var json = await executionContext.GetJsonD3SankeyStatisticsAsync();
             string file;

@@ -7,7 +7,7 @@ using System.IO;
 
 namespace ConsoleApp1.Jobs
 {
-    public class TestJob2 : ExecutionContext<MyConfig>
+    public class TestJob2 : ExecutionContextOld<MyConfig>
     {
         public TestJob2() : base("import file")
         {

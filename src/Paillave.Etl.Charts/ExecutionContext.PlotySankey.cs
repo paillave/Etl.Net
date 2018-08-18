@@ -12,7 +12,7 @@ namespace Paillave.Etl
 {
     public static partial class ExecutionContextEx
     {
-        public static async Task<PlotlySankeyStatistics> GetPlotlySankeyStatisticsAsync<T>(this ExecutionContext<T> executionContext)
+        public static async Task<PlotlySankeyStatistics> GetPlotlySankeyStatisticsAsync<T>(this ExecutionContextOld<T> executionContext)
         {
             List<StreamStatistic> streamStatistics = await executionContext.TraceStream.GetStreamStatisticsAsync();
             var streamToNodeLinks = executionContext.StreamToNodeLinks;
@@ -49,7 +49,7 @@ namespace Paillave.Etl
         //{
         //    return JsonConvert.SerializeObject(await executionContext.GetPlotlySankeyStatisticsAsync());
         //}
-        public static async Task<string> GetHtmlPlotlySankeyStatisticsAsync<T>(this ExecutionContext<T> executionContext)
+        public static async Task<string> GetHtmlPlotlySankeyStatisticsAsync<T>(this ExecutionContextOld<T> executionContext)
         {
             var stats = await executionContext.GetPlotlySankeyStatisticsAsync();
             string file;

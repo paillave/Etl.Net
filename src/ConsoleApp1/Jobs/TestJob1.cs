@@ -7,7 +7,7 @@ using Paillave.Etl;
 
 namespace ConsoleApp1.Jobs
 {
-    public class TestJob1 : ExecutionContext<MyConfig>
+    public class TestJob1 : ExecutionContextOld<MyConfig>
     {
         public TestJob1() : base("import file")
         {

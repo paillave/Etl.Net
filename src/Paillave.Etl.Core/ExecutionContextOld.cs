@@ -14,7 +14,7 @@ using System.Collections.ObjectModel;
 
 namespace Paillave.Etl
 {
-    public class ExecutionContext<TConfig> : IConfigurable<TConfig>//, IDisposable
+    public class ExecutionContextOld<TConfig> : IConfigurable<TConfig>//, IDisposable
     {
         private readonly IPushSubject<TraceEvent> _traceSubject;
         private readonly IPushSubject<TConfig> _startupSubject;
@@ -28,7 +28,7 @@ namespace Paillave.Etl
         private TConfig _config;
         public IReadOnlyCollection<StreamToNodeLink> StreamToNodeLinks { get { return new ReadOnlyCollection<StreamToNodeLink>(_streamToNodeLinks); } }
 
-        public ExecutionContext(string jobName)
+        public ExecutionContextOld(string jobName)
         {
             this.JobName = jobName;
 
@@ -37,7 +37,7 @@ namespace Paillave.Etl
             this._startupSubject = new PushSubject<TConfig>();
             _traceExecutionContext = new TraceExecutionContext(this, _startSynchronizer);
             this.TraceStream = new Stream<TraceEvent>(null, _traceExecutionContext, null, null, this._traceSubject);
-            _executionContext = new CurrentExecutionContext(this, _startSynchronizer, _streamToNodeLinks);
+            _executionContext = new JobExecutionContext(this, _startSynchronizer, _streamToNodeLinks);
             this.StartupStream = new Stream<TConfig>(new Tracer(_executionContext, new CurrentExecutionNodeContext(jobName)), _executionContext, jobName, "Startup", this._startupSubject.First());
         }
 
@@ -85,19 +85,19 @@ namespace Paillave.Etl
 
             public string TypeName => "ExecutionContext";
         }
-        private class CurrentExecutionContext : IExecutionContext
+        private class JobExecutionContext : IExecutionContext
         {
             private List<StreamToNodeLink> _streamToNodeLinks;
             private List<Task> _tasksToWait = new List<Task>();
             private CollectionDisposableManager _disposables = new CollectionDisposableManager();
 
-            public CurrentExecutionContext(ExecutionContext<TConfig> localExecutionContext, WaitHandle startSynchronizer, List<StreamToNodeLink> streamToNodeLinks)
+            public JobExecutionContext(ExecutionContextOld<TConfig> localExecutionContext, WaitHandle startSynchronizer, List<StreamToNodeLink> streamToNodeLinks)
             {
                 this._localExecutionContext = localExecutionContext;
                 this.StartSynchronizer = startSynchronizer;
                 this._streamToNodeLinks = streamToNodeLinks;
             }
-            private ExecutionContext<TConfig> _localExecutionContext;
+            private ExecutionContextOld<TConfig> _localExecutionContext;
             public Guid ExecutionId => this._localExecutionContext.ExecutionId;
             public string JobName => this._localExecutionContext.JobName;
             public IPushObservable<TraceEvent> TraceEvents => this._localExecutionContext._traceSubject;
@@ -130,9 +130,9 @@ namespace Paillave.Etl
         private class TraceExecutionContext : IExecutionContext
         {
             private List<Task> _tasksToWait = new List<Task>();
-            private ExecutionContext<TConfig> _localExecutionContext;
+            private ExecutionContextOld<TConfig> _localExecutionContext;
             private CollectionDisposableManager _disposables = new CollectionDisposableManager();
-            public TraceExecutionContext(ExecutionContext<TConfig> localExecutionContext, WaitHandle startSynchronizer)
+            public TraceExecutionContext(ExecutionContextOld<TConfig> localExecutionContext, WaitHandle startSynchronizer)
             {
                 this._localExecutionContext = localExecutionContext;
                 this.StartSynchronizer = startSynchronizer;
