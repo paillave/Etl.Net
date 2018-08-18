@@ -26,7 +26,7 @@ namespace ConsoleApp1
             ctx.TraceStream.Where("keep log info", i => i.Content.Level <= System.Diagnostics.TraceLevel.Info).ToAction("logs to console", Console.WriteLine);
             //Type counterSummaryStreamTraceContentType = typeof(CounterSummaryStreamTraceContent);
             //var sankeyStatisticsTask = ctx.GetHtmlD3SankeyStatisticsAsync();
-            var sankeyStatisticsTask = ctx.GetHtmlPlotlySankeyStatisticsAsync();
+            var sankeyStatisticsTask = ctx.GetHtmlVisNetworkStatisticsAsync();
             ctx.ExecuteAsync(new MyConfig
             {
                 InputFolderPath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\",

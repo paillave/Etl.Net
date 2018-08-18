@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Paillave.Etl.Charts;
 using Paillave.Etl.Core;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,7 @@ namespace Paillave.Etl
 
             var assembly = typeof(ExecutionContextEx).Assembly;
 
-            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.SankeyStatistics.plotlytemplate.html"))
+            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.Charts.plotlytemplate.html"))
             using (var reader = new StreamReader(stream))
                 file = reader.ReadToEnd();
 

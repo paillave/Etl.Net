@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Etl.Core\Paillave.Etl.csproj" />
-    <ProjectReference Include="..\Paillave.Etl.SankeyStatistics\Paillave.Etl.SankeyStatistics.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.Charts\Paillave.Etl.Charts.csproj" />
   </ItemGroup>
 
 </Project>
