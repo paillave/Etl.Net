@@ -21,9 +21,14 @@ namespace Paillave.Etl.Core.StreamNodes
         {
             this.Arguments = arguments;
             this.Input = input;
+            input.ExecutionContext.AddStreamToNodeLink(new StreamToNodeLink(input.SourceNodeName, input.Name, name));
+            var nodeLinks = GetInputStreamArgumentsLinks(name, arguments);
+            foreach (var item in nodeLinks)
+                input.ExecutionContext.AddStreamToNodeLink(item);
+
             var processedPushObservable = this.ProcessObservable(input.Observable);
             input.ExecutionContext.AddToWaitForCompletion(processedPushObservable);
-            this.Output = base.CreateStream<TIn>(name, processedPushObservable);
+            this.Output = base.CreateStream<TIn>(nameof(Output), processedPushObservable);
         }
         protected virtual void ProcessValue(TIn value) { }
         protected virtual IPushObservable<TIn> ProcessObservable(IPushObservable<TIn> observable)

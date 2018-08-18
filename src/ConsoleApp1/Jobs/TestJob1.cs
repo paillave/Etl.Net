@@ -27,8 +27,7 @@ namespace ConsoleApp1.Jobs
                 .EnsureKeyed("Ensure type file is keyed", e => e.Id);
 
             parsedLineS
-                .LeftJoin("join types to file", parsedTypeLineS, (l, r) => new { l.Id, r.Name, l.FileName })
-                .Select("output after join", i => new OutputFileRow { FileName = i.FileName, Id = i.Id, Name = i.Name })
+                .LeftJoin("join types to file", parsedTypeLineS, (l, r) => new OutputFileRow { Id = l.Id, Name = r.Name, FileName = l.FileName })
                 .ToTextFile("write to output file", outputFileResourceS, new OutputFileRowMapper())
                 .Select("create text to console", i => $"{i.FileName}:{i.Id}-{i.Name}")
                 .ToAction("write to console", Console.WriteLine);

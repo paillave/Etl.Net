@@ -7,16 +7,16 @@ namespace Paillave.Etl.Core.TraceContents
 {
     public abstract class StreamTraceContentBase : ITraceContent
     {
-        public StreamTraceContentBase(string outputName)
+        public StreamTraceContentBase(string streamName)
         {
-            this.OutputName = outputName;
+            this.StreamName = streamName;
         }
         public abstract TraceLevel Level { get; }
 
-        public string OutputName { get; }
+        public string StreamName { get; }
 
         protected abstract string GetMessage();
 
-        public override string ToString() => $".{OutputName}: {this.GetMessage()}";
+        public override string ToString() => $".{StreamName}: {this.GetMessage()}";
     }
 }

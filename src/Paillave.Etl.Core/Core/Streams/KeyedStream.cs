@@ -14,7 +14,7 @@ namespace Paillave.Etl.Core.Streams
     {
         private IComparer<T> _comparer;
 
-        public KeyedStream(ITracer tracer, IExecutionContext executionContext, string sourceOutputName, IPushObservable<T> observable, IEnumerable<ISortCriteria<T>> sortCriterias) : base(tracer, executionContext, sourceOutputName, observable)
+        public KeyedStream(ITracer tracer, IExecutionContext executionContext, string sourceNodeName, string name, IPushObservable<T> observable, IEnumerable<ISortCriteria<T>> sortCriterias) : base(tracer, executionContext, sourceNodeName, name, observable)
         {
             if (sortCriterias.Count() == 0) throw new ArgumentOutOfRangeException(nameof(sortCriterias), "key criteria list cannot be empty");
             this.SortCriterias = new ReadOnlyCollection<ISortCriteria<T>>(sortCriterias.ToList());
@@ -27,7 +27,7 @@ namespace Paillave.Etl.Core.Streams
                     .Map((Pair, Index) => new { Pair, Index })
                     .Skip(1)
                     .Filter(i => this._comparer.Compare(i.Pair.Item1, i.Pair.Item2) >= 0)
-                    .Map(i => new NotKeyedStreamTraceContent(sourceOutputName, i.Index))
+                    .Map(i => new NotKeyedStreamTraceContent(name, i.Index))
                     .Subscribe(tracer.Trace);
             }
         }

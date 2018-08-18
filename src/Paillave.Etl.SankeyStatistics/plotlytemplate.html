@@ -1,0 +1,42 @@
+﻿<head>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+
+    <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+    <script>
+        var data = {
+            type: "sankey",
+            orientation: "h",
+            node: {
+                pad: 15,
+                thickness: 30,
+                line: {
+                    color: "black",
+                    width: 0.5
+                },
+                label: '<<NODE_NAMES>>',
+                color: '<<NODE_COLORS>>'
+            },
+
+            link: {
+                source: '<<LINK_SOURCES>>',
+                target: '<<LINK_TARGETS>>',
+                value: '<<LINK_VALUES>>'
+            }
+        }
+
+        var data = [data]
+
+        var layout = {
+            title: "Basic Sankey",
+            font: {
+                size: 10
+            }
+        }
+
+
+        Plotly.react('myDiv', data, layout)</script>
+</body>

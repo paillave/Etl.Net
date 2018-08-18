@@ -18,6 +18,7 @@ namespace Paillave.Etl.Core
         void AddToWaitForCompletion<T>(IPushObservable<T> stream);
         void AddDisposable(IDisposable disposable);
         Task GetCompletionTask();
+        void AddStreamToNodeLink(StreamToNodeLink link);
         //IPushObservable<TRow> StopIfContextStops<TRow>(IPushObservable<TRow> observable);
     }
 }

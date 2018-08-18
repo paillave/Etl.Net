@@ -33,7 +33,7 @@ namespace Paillave.Etl.StreamNodes
             return (TIn inp) =>
             {
                 TOut disposable = creator(inp);
-                this.Input.ExecutionContext.AddDisposable(disposable);
+                this.ExecutionContext.AddDisposable(disposable);
                 return disposable;
             };
         }

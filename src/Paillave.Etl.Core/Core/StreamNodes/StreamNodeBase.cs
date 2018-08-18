@@ -10,11 +10,10 @@ namespace Paillave.Etl.Core.StreamNodes
 {
     public abstract class StreamNodeBase<TStream, TIn> : StreamNodeBase where TStream : IStream<TIn>
     {
-        public TStream Input { get; private set; }
         public StreamNodeBase(TStream input, string name)
             : base(input.ExecutionContext, name)
         {
-            this.Input = input;
+            input.ExecutionContext.AddStreamToNodeLink(new StreamToNodeLink(input.SourceNodeName, input.Name, name));
         }
     }
     public abstract class StreamNodeBase<TStream, TIn, TArgs> : StreamNodeBase<TStream, TIn> where TStream : IStream<TIn>
@@ -23,11 +22,48 @@ namespace Paillave.Etl.Core.StreamNodes
         public StreamNodeBase(TStream input, string name, TArgs arguments)
             : base(input, name)
         {
+            var nodeLinks = GetInputStreamArgumentsLinks(name, arguments);
+            foreach (var item in nodeLinks)
+                input.ExecutionContext.AddStreamToNodeLink(item);
             this.Arguments = arguments;
         }
     }
     public abstract class StreamNodeBase : INodeContext
     {
+        public static List<StreamToNodeLink> GetInputStreamArgumentsLinks<TArgs>(string nodeName, TArgs args)
+        {
+            Type type = typeof(TArgs);
+            var properties = type.GetProperties();
+            List<StreamToNodeLink> outValues = new List<StreamToNodeLink>();
+            foreach (var property in properties)
+            {
+                var value = property.GetValue(args);
+                if (value != null)
+                {
+                    var ret = GetInputStreamArgumentsLink(nodeName, value);
+                    if (ret != null)
+                        outValues.Add(ret);
+                }
+            }
+            return outValues;
+        }
+        private static StreamToNodeLink GetInputStreamArgumentsLink(string nodeName, object value)
+        {
+            Type valueType = value.GetType();
+            var interfaces = valueType.GetInterfaces().ToList();
+            if (interfaces.Count() == 0) return null;
+            foreach (var interf in interfaces)
+            {
+                if (!interf.IsGenericType) return null;
+                if (interf.GetGenericTypeDefinition() != typeof(IStream<>)) return null;
+                var nameProperty = interf.GetProperty(nameof(IStream<int>.Name));
+                string name = (string)nameProperty.GetValue(value);
+                var sourceNodeNameProperty = interf.GetProperty(nameof(IStream<int>.SourceNodeName));
+                string sourceNodeName = (string)sourceNodeNameProperty.GetValue(value);
+                return new StreamToNodeLink(sourceNodeName, name, nodeName);
+            }
+            return null;
+        }
         protected IExecutionContext ExecutionContext { get; private set; }
         public StreamNodeBase(IExecutionContext executionContext, string name)
         {
@@ -44,24 +80,24 @@ namespace Paillave.Etl.Core.StreamNodes
 
         protected IStream<T> CreateStream<T>(string streamName, IPushObservable<T> observable)
         {
-            return new Stream<T>(this.Tracer, this.ExecutionContext, streamName, observable);
+            return new Stream<T>(this.Tracer, this.ExecutionContext, this.NodeName, streamName, observable);
         }
 
         protected ISortedStream<T> CreateSortedStream<T>(string streamName, IPushObservable<T> observable, IEnumerable<ISortCriteria<T>> sortCriterias)
         {
-            return new SortedStream<T>(this.Tracer, this.ExecutionContext, streamName, observable, sortCriterias);
+            return new SortedStream<T>(this.Tracer, this.ExecutionContext, this.NodeName, streamName, observable, sortCriterias);
         }
         protected ISortedStream<T> CreateStream<T>(string streamName, IPushObservable<T> observable, ISortedStream<T> streamIn)
         {
-            return new SortedStream<T>(this.Tracer, this.ExecutionContext, streamName, observable, streamIn.SortCriterias);
+            return new SortedStream<T>(this.Tracer, this.ExecutionContext, this.NodeName, streamName, observable, streamIn.SortCriterias);
         }
         protected IKeyedStream<T> CreateKeyedStream<T>(string streamName, IPushObservable<T> observable, IEnumerable<ISortCriteria<T>> sortCriterias)
         {
-            return new KeyedStream<T>(this.Tracer, this.ExecutionContext, streamName, observable, sortCriterias);
+            return new KeyedStream<T>(this.Tracer, this.ExecutionContext, this.NodeName, streamName, observable, sortCriterias);
         }
         protected IKeyedStream<T> CreateStream<T>(string streamName, IPushObservable<T> observable, IKeyedStream<T> streamIn)
         {
-            return new KeyedStream<T>(this.Tracer, this.ExecutionContext, streamName, observable, streamIn.SortCriterias);
+            return new KeyedStream<T>(this.Tracer, this.ExecutionContext, this.NodeName, streamName, observable, streamIn.SortCriterias);
         }
 
         protected Func<TIn, ErrorManagementItem<TIn, TOut>> ErrorManagementWrapFunction<TIn, TOut>(Func<TIn, TOut> call)

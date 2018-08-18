@@ -8,5 +8,7 @@ namespace Paillave.Etl.Core.Streams
     {
         IPushObservable<T> Observable { get; }
         IExecutionContext ExecutionContext { get; }
+        string Name { get; }
+        string SourceNodeName { get; }
     }
 }

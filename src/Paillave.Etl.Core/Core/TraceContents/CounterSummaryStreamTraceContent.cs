@@ -7,7 +7,7 @@ namespace Paillave.Etl.Core.TraceContents
 {
     public class CounterSummaryStreamTraceContent : StreamTraceContentBase
     {
-        public CounterSummaryStreamTraceContent(string outputName, int counter) : base(outputName)
+        public CounterSummaryStreamTraceContent(string streamName, int counter) : base(streamName)
         {
             this.Counter = counter;
         }

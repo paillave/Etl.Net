@@ -1,15 +1,18 @@
 ﻿using Paillave.Etl.Core;
 using Paillave.Etl.Core.NodeOutputs;
 using Paillave.Etl.Core.Streams;
+using Paillave.Etl.Core.TraceContents;
 using Paillave.Etl.Helpers;
 using Paillave.Etl.StreamNodes;
 using Paillave.Etl.ValuesProviders;
+using Paillave.RxPush.Operators;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 using SystemIO = System.IO;
 
 namespace Paillave.Etl
@@ -580,6 +583,24 @@ namespace Paillave.Etl
                 RedirectErrorsInsteadOfFail = true
             });
             return new NodeOutputError<CombineLatestStreamNode<TIn1, TIn2, TOut>, TOut, TIn1, TIn2>(ret);
+        }
+        #endregion
+
+        #region SelectStreamStatistics
+        public static Task<List<StreamStatistic>> GetStreamStatisticsAsync(this IStream<TraceEvent> input)
+        {
+            return input
+                .Where("keep stream results", i => i.Content is CounterSummaryStreamTraceContent)
+                .Select("select statistic", i =>
+             {
+                 var content = (CounterSummaryStreamTraceContent)i.Content;
+                 return new StreamStatistic
+                 {
+                     Counter = content.Counter,
+                     StreamName = content.StreamName,
+                     SourceNodeName = i.NodeName
+                 };
+             }).Observable.ToListAsync();
         }
         #endregion
     }

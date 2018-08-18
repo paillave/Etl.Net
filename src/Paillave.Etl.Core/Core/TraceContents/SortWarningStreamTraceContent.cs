@@ -7,7 +7,7 @@ namespace Paillave.Etl.Core.TraceContents
 {
     public class SortWarningStreamTraceContent : StreamTraceContentBase
     {
-        public SortWarningStreamTraceContent(string outputName) : base(outputName)
+        public SortWarningStreamTraceContent(string streamName) : base(streamName)
         {
         }
         public override TraceLevel Level => TraceLevel.Warning;
