@@ -17,6 +17,8 @@
 
     <script src="http://visjs.org/dist/vis.js"></script>
     <link href="http://visjs.org/dist/vis-network.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/ionicons@4.3.0/dist/css/ionicons.min.css">
 
     <script type="text/javascript">
         var nodes = null;
@@ -38,7 +40,7 @@
                     //}
                 },
                 physics: { enabled: false },
-                edges: {smooth:false}
+                edges: { smooth: false }
             };
             network = new vis.Network(container, data, options);
         }

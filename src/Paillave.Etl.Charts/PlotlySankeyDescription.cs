@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Paillave.Etl.Charts
 {
-    public class PlotlySankeyStatistics
+    public class PlotlySankeyDescription
     {
         public List<string> NodeNames { get; set; }
         public List<string> NodeColors { get; set; }

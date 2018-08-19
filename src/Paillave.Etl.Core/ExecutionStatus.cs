@@ -5,11 +5,12 @@ namespace Paillave.Etl
 {
     public class ExecutionStatus
     {
-        public List<StreamToNodeLink> StreamToNodeLinks { get; }
+        public JobDefinitionStructure JobDefinitionStructure { get; }
+        //public List<StreamToNodeLink> StreamToNodeLinks { get; }
         public List<StreamStatistic> StreamStatistics { get; }
-        public ExecutionStatus(List<StreamToNodeLink> streamToNodeLinks, List<StreamStatistic> streamStatistics)
+        public ExecutionStatus(JobDefinitionStructure jobDefinitionStructure, List<StreamStatistic> streamStatistics)
         {
-            this.StreamToNodeLinks = streamToNodeLinks;
+            this.JobDefinitionStructure = jobDefinitionStructure;
             this.StreamStatistics = streamStatistics;
         }
     }

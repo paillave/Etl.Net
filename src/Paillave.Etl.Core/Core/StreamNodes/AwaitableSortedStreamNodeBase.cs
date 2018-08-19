@@ -17,7 +17,7 @@ namespace Paillave.Etl.Core.StreamNodes
             : base(input.ExecutionContext, name)
         {
             var processedPushObservable = this.ProcessObservable(input.Observable);
-            input.ExecutionContext.AddToWaitForCompletion(processedPushObservable);
+            input.ExecutionContext.AddToWaitForCompletion(name, processedPushObservable);
             this.Output = base.CreateSortedStream<TIn>(name, processedPushObservable, input.SortCriterias);
             this.Input = input;
         }

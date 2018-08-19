@@ -27,7 +27,7 @@ namespace Paillave.Etl.Core.StreamNodes
                 input.ExecutionContext.AddStreamToNodeLink(item);
 
             var processedPushObservable = this.ProcessObservable(input.Observable);
-            input.ExecutionContext.AddToWaitForCompletion(processedPushObservable);
+            input.ExecutionContext.AddToWaitForCompletion(name, processedPushObservable);
             this.Output = base.CreateStream<TIn>(nameof(Output), processedPushObservable);
         }
         protected virtual void ProcessValue(TIn value) { }
@@ -48,7 +48,7 @@ namespace Paillave.Etl.Core.StreamNodes
             this.Arguments = arguments;
             this.Input = input;
             var processedPushObservable = this.ProcessObservable(input.Observable);
-            input.ExecutionContext.AddToWaitForCompletion(processedPushObservable);
+            input.ExecutionContext.AddToWaitForCompletion(name, processedPushObservable);
             this.Output = base.CreateStream<TOut>(name, processedPushObservable);
         }
         protected abstract TOut ProcessValue(TIn value);

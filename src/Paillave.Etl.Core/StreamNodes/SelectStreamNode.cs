@@ -19,40 +19,47 @@ namespace Paillave.Etl.StreamNodes
     {
         public SelectStreamNode(IStream<TIn> input, string name, SelectArgs<TIn, TOut> arguments) : base(input, name, arguments)
         {
+            bool isDisposable = typeof(IDisposable).IsAssignableFrom(typeof(TOut));
             if (arguments.RedirectErrorsInsteadOfFail)
             {
                 var errorManagedResult = arguments.Mapper == null ?
-                    input.Observable.Map(base.ErrorManagementWrapFunction(WrapSelect(arguments.IndexMapper)))
-                    : input.Observable.Map(base.ErrorManagementWrapFunction(WrapSelect(arguments.Mapper)));
+                    input.Observable.Map(base.ErrorManagementWrapFunction(WrapSelect(isDisposable, arguments.IndexMapper)))
+                    : input.Observable.Map(base.ErrorManagementWrapFunction(WrapSelect(isDisposable, arguments.Mapper)));
                 this.Output = base.CreateStream(nameof(this.Output), errorManagedResult.Filter(i => !i.OnException).Map(i => i.Output));
                 this.Error = base.CreateStream(nameof(this.Error), errorManagedResult.Filter(i => i.OnException).Map(i => new ErrorRow<TIn>(i)));
             }
             else
                 this.Output = arguments.Mapper == null ?
-                    base.CreateStream(nameof(this.Output), input.Observable.Map(WrapSelect(arguments.IndexMapper)))
-                    : base.CreateStream(nameof(this.Output), input.Observable.Map(WrapSelect(arguments.Mapper)));
+                    base.CreateStream(nameof(this.Output), input.Observable.Map(WrapSelect(isDisposable, arguments.IndexMapper)))
+                    : base.CreateStream(nameof(this.Output), input.Observable.Map(WrapSelect(isDisposable, arguments.Mapper)));
 
             //Observable.Create()
         }
 
-        private Func<TIn, TOut> WrapSelect(Func<TIn, TOut> creator)
+        private Func<TIn, TOut> WrapSelect(bool isDisposable, Func<TIn, TOut> creator)
         {
-            return (TIn inp) =>
-            {
-                TOut disposable = creator(inp);
-                this.ExecutionContext.AddDisposable(disposable as IDisposable);
-                return disposable;
-            };
+            if (isDisposable)
+                return (TIn inp) =>
+                {
+                    TOut disposable = creator(inp);
+                    this.ExecutionContext.AddDisposable(disposable as IDisposable);
+                    return disposable;
+                };
+            else
+                return creator;
         }
 
-        private Func<TIn, int, TOut> WrapSelect(Func<TIn, int, TOut> creator)
+        private Func<TIn, int, TOut> WrapSelect(bool isDisposable, Func<TIn, int, TOut> creator)
         {
-            return (TIn inp, int index) =>
-            {
-                TOut disposable = creator(inp, index);
-                this.ExecutionContext.AddDisposable(disposable as IDisposable);
-                return disposable;
-            };
+            if (isDisposable)
+                return (TIn inp, int index) =>
+                {
+                    TOut disposable = creator(inp, index);
+                    this.ExecutionContext.AddDisposable(disposable as IDisposable);
+                    return disposable;
+                };
+            else
+                return creator;
         }
 
         public IStream<TOut> Output { get; }

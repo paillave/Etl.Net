@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Paillave.Etl.Charts
 {
-    public class D3SankeyStatistics
+    public class D3SankeyDescription
     {
         public List<D3SankeyStatisticsNode> nodes { get; set; }
         public List<D3SankeyStatisticsLink> links { get; set; }

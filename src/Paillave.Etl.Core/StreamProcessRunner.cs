@@ -39,7 +39,16 @@ namespace Paillave.Etl
                     .GetCompletionTask()
                     .ContinueWith(_ => traceSubject.Complete()),
                 traceExecutionContext.GetCompletionTask())
-                .ContinueWith(t => new ExecutionStatus(jobExecutionContext.StreamToNodeLinks, streamStatisticsTask.Result));
+                .ContinueWith(t => new ExecutionStatus(jobExecutionContext.GetDefinitionStructure(), streamStatisticsTask.Result));
+        }
+        public JobDefinitionStructure GetDefinitionStructure()
+        {
+            TJob jobDefinition = new TJob();
+            GetDefinitionExecutionContext jobExecutionContext = new GetDefinitionExecutionContext(jobDefinition.Name);
+            //JobExecutionContext jobExecutionContext = new JobExecutionContext(jobDefinition.Name, Guid.Empty, null, null);
+            var startupStream = new Stream<TConfig>(new Tracer(jobExecutionContext, new CurrentExecutionNodeContext(jobDefinition.Name)), jobExecutionContext, jobDefinition.Name, "Startup", PushObservable.Empty<TConfig>());
+            jobDefinition.DefineProcess(startupStream);
+            return jobExecutionContext.GetDefinitionStructure();
         }
         private class CurrentExecutionNodeContext : INodeContext
         {
@@ -51,10 +60,37 @@ namespace Paillave.Etl
 
             public string TypeName => "ExecutionContext";
         }
+        private class GetDefinitionExecutionContext : IExecutionContext
+        {
+            private List<StreamToNodeLink> _streamToNodeLinks = new List<StreamToNodeLink>();
+            private List<string> _nodeNamesToWait = new List<string>();
+            public JobDefinitionStructure GetDefinitionStructure()
+            {
+                return new JobDefinitionStructure(_streamToNodeLinks, _nodeNamesToWait, this.JobName);
+            }
+            public GetDefinitionExecutionContext(string jobName)
+            {
+                this.JobName = jobName;
+            }
+            public void AddStreamToNodeLink(StreamToNodeLink link) => _streamToNodeLinks.Add(link);
+            public Guid ExecutionId => throw new NotImplementedException();
+            public WaitHandle StartSynchronizer => throw new NotImplementedException();
+            public string JobName { get; }
+            public IPushObservable<TraceEvent> TraceEvents => PushObservable.Empty<TraceEvent>();
+            public void AddDisposable(IDisposable disposable) => throw new NotImplementedException();
+            public void AddToWaitForCompletion<T>(string sourceNodeName, IPushObservable<T> stream) => _nodeNamesToWait.Add(sourceNodeName);
+            public Task GetCompletionTask() => throw new NotImplementedException();
+            public void Trace(TraceEvent traceEvent) => throw new NotImplementedException();
+        }
         private class JobExecutionContext : IExecutionContext
         {
             private readonly IPushSubject<TraceEvent> _traceSubject;
-            public List<StreamToNodeLink> StreamToNodeLinks { get; } = new List<StreamToNodeLink>();
+            private List<StreamToNodeLink> _streamToNodeLinks = new List<StreamToNodeLink>();
+            private List<string> _nodeNamesToWait = new List<string>();
+            public JobDefinitionStructure GetDefinitionStructure()
+            {
+                return new JobDefinitionStructure(_streamToNodeLinks, _nodeNamesToWait, this.JobName);
+            }
             private readonly List<Task> _tasksToWait = new List<Task>();
             private readonly CollectionDisposableManager _disposables = new CollectionDisposableManager();
 
@@ -70,10 +106,14 @@ namespace Paillave.Etl
             public IPushObservable<TraceEvent> TraceEvents => _traceSubject;
             public WaitHandle StartSynchronizer { get; }
             public void Trace(TraceEvent traceEvent) => _traceSubject.PushValue(traceEvent);
-            public void AddToWaitForCompletion<T>(IPushObservable<T> stream) => _tasksToWait.Add(stream.ToTaskAsync());
+            public void AddToWaitForCompletion<T>(string sourceNodeName, IPushObservable<T> stream)
+            {
+                _nodeNamesToWait.Add(sourceNodeName);
+                _tasksToWait.Add(stream.ToTaskAsync());
+            }
             public Task GetCompletionTask() => Task.WhenAll(_tasksToWait.ToArray()).ContinueWith(_ => _disposables.Dispose());
             public void AddDisposable(IDisposable disposable) => _disposables.Set(disposable);
-            public void AddStreamToNodeLink(StreamToNodeLink link) => StreamToNodeLinks.Add(link);
+            public void AddStreamToNodeLink(StreamToNodeLink link) => _streamToNodeLinks.Add(link);
         }
         private class TraceExecutionContext : IExecutionContext
         {
@@ -92,7 +132,7 @@ namespace Paillave.Etl
             public IPushObservable<TraceEvent> TraceEvents => _traceSubject;
             public WaitHandle StartSynchronizer { get; }
             public void Trace(TraceEvent traveEvent) { }
-            public void AddToWaitForCompletion<T>(IPushObservable<T> stream) => _tasksToWait.Add(stream.ToTaskAsync());
+            public void AddToWaitForCompletion<T>(string sourceNodeName, IPushObservable<T> stream) => _tasksToWait.Add(stream.ToTaskAsync());
             public Task GetCompletionTask() => Task.WhenAll(_tasksToWait.ToArray()).ContinueWith(_ => _disposables.Dispose());
             public void AddDisposable(IDisposable disposable) => _disposables.Set(disposable);
             public void AddStreamToNodeLink(StreamToNodeLink link) { }

@@ -10,9 +10,17 @@ namespace Paillave.RxPush.Operators
 {
     public class PushObservable
     {
+        public static IDeferedPushObservable<TOut> FromEnumerable<TOut>(IEnumerable<TOut> enumerable, WaitHandle startSynchronizer = null)
+        {
+            return new DeferedPushObservable<TOut>(pushValue =>
+            {
+                foreach (var item in enumerable)
+                    pushValue(item);
+            }, startSynchronizer);
+        }
         public static IDeferedPushObservable<int> Range(int from, int count, WaitHandle startSynchronizer = null)
         {
-            return new DeferedPushObservable<int>((pushValue) =>
+            return new DeferedPushObservable<int>(pushValue =>
             {
                 for (int i = 0; i < count; i++)
                     pushValue(from + i);

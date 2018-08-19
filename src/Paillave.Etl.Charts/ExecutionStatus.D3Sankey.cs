@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl
 {
-    public static partial class ExecutionContextEx
+    public static partial class ExecutionStatusEx
     {
-        public static D3SankeyStatistics GetD3SankeyStatistics(this ExecutionStatus executionStatus)
+        public static D3SankeyDescription GetD3SankeyStatistics(this ExecutionStatus executionStatus)
         {
-            var nameToIdDictionary = executionStatus.StreamToNodeLinks.Select(i => i.SourceNodeName).Union(executionStatus.StreamToNodeLinks.Select(i => i.TargetNodeName)).Distinct().Select((name, idx) => new { Name = name, Id = idx }).ToDictionary(i => i.Name, i => i.Id);
-            return new D3SankeyStatistics
+            var nameToIdDictionary = executionStatus.JobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.Name, Idx }).ToDictionary(i => i.Name, i => i.Idx);
+            return new D3SankeyDescription
             {
-                links = executionStatus.StreamToNodeLinks.GroupJoin(
+                links = executionStatus.JobDefinitionStructure.StreamToNodeLinks.GroupJoin(
                     executionStatus.StreamStatistics,
                     i => new
                     {
@@ -37,10 +37,10 @@ namespace Paillave.Etl
                         value = stat.DefaultIfEmpty(new StreamStatistic { Counter = 0 }).Sum(i => i.Counter)
                     }
                 ).ToList(),
-                nodes = nameToIdDictionary.Select(i => new D3SankeyStatisticsNode
+                nodes =  executionStatus.JobDefinitionStructure.Nodes.Select(i => new D3SankeyStatisticsNode
                 {
-                    id = i.Value,
-                    name = i.Key,
+                    id = nameToIdDictionary[i.Name],
+                    name = i.Name,
                     color = null
                 }).ToList()
             };
@@ -54,9 +54,9 @@ namespace Paillave.Etl
             var json = executionStatus.GetJsonD3SankeyStatistics();
             string file;
 
-            var assembly = typeof(ExecutionContextEx).Assembly;
+            var assembly = typeof(ExecutionStatusEx).Assembly;
 
-            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.Charts.d3template.html"))
+            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.Charts.ExecutionStatus.D3Sankey.html"))
             using (var reader = new StreamReader(stream))
                 file = reader.ReadToEnd();
 

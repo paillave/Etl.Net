@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl
 {
-    public static partial class ExecutionContextEx
+    public static partial class ExecutionStatusEx
     {
-        public static PlotlySankeyStatistics GetPlotlySankeyStatistics(this ExecutionStatus executionStatus)
+        public static PlotlySankeyDescription GetPlotlySankeyStatistics(this ExecutionStatus executionStatus)
         {
-            var nameToIdDictionary = executionStatus.StreamToNodeLinks.Select(i => i.SourceNodeName).Union(executionStatus.StreamToNodeLinks.Select(i => i.TargetNodeName)).Distinct().Select((name, idx) => new { Name = name, Id = idx }).ToDictionary(i => i.Name, i => i.Id);
-            var links = executionStatus.StreamToNodeLinks.GroupJoin(
+            var nameToIdDictionary = executionStatus.JobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.Name, Idx }).ToDictionary(i => i.Name, i => i.Idx);
+            var links = executionStatus.JobDefinitionStructure.StreamToNodeLinks.GroupJoin(
                     executionStatus.StreamStatistics,
                     i => new
                     {
@@ -35,10 +35,10 @@ namespace Paillave.Etl
                         value = stat.DefaultIfEmpty(new StreamStatistic { Counter = 0 }).Sum(i => i.Counter)
                     }
                 ).ToList();
-            return new PlotlySankeyStatistics
+            return new PlotlySankeyDescription
             {
-                NodeColors = nameToIdDictionary.OrderBy(i => i.Value).Select(i => "blue").ToList(),
-                NodeNames = nameToIdDictionary.OrderBy(i => i.Value).Select(i => i.Key).ToList(),
+                NodeColors = executionStatus.JobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.Name]).Select(i => "blue").ToList(),
+                NodeNames = executionStatus.JobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.Name]).Select(i => i.Name).ToList(),
                 LinkSources = links.Select(i => i.source).ToList(),
                 LinkTargets = links.Select(i => i.target).ToList(),
                 LinkValues = links.Select(i => i.value).ToList()
@@ -53,9 +53,9 @@ namespace Paillave.Etl
             var stats = executionStatus.GetPlotlySankeyStatistics();
             string file;
 
-            var assembly = typeof(ExecutionContextEx).Assembly;
+            var assembly = typeof(ExecutionStatusEx).Assembly;
 
-            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.Charts.plotlytemplate.html"))
+            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.Charts.ExecutionStatus.PlotySankey.html"))
             using (var reader = new StreamReader(stream))
                 file = reader.ReadToEnd();
 

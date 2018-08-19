@@ -5,15 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="d3template.html" />
-    <None Remove="plotlytemplate.html" />
-    <None Remove="visnetworktemplate.html" />
+    <None Remove="ExecutionStatus.D3Sankey.html" />
+    <None Remove="ExecutionStatus.PlotySankey.html" />
+    <None Remove="ExecutionStatus.VisNetwork.html" />
+    <None Remove="JobDefinitionStructure.D3Sankey.html" />
+    <None Remove="JobDefinitionStructure.PlotySankey.html" />
+    <None Remove="JobDefinitionStructure.VisNetwork.html" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="visnetworktemplate.html" />
-    <EmbeddedResource Include="plotlytemplate.html" />
-    <EmbeddedResource Include="d3template.html" />
+    <EmbeddedResource Include="JobDefinitionStructure.PlotySankey.html" />
+    <EmbeddedResource Include="JobDefinitionStructure.D3Sankey.html" />
+    <EmbeddedResource Include="JobDefinitionStructure.VisNetwork.html" />
+    <EmbeddedResource Include="ExecutionStatus.VisNetwork.html" />
+    <EmbeddedResource Include="ExecutionStatus.PlotySankey.html" />
+    <EmbeddedResource Include="ExecutionStatus.D3Sankey.html" />
   </ItemGroup>
 
   <ItemGroup>
