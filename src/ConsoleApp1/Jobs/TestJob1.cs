@@ -4,24 +4,24 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using Paillave.Etl;
+using Paillave.Etl.Core.Streams;
 
 namespace ConsoleApp1.Jobs
 {
-    public class TestJob1 : ExecutionContextOld<MyConfig>
+    public class TestJob1 : IStreamProcessDefinition<MyConfig>
     {
-        public TestJob1() : base("import file")
-        {
-            var outputFileResourceS = StartupStream.Select("open output file", i => new StreamWriter(i.DestinationFilePath));
+        public string Name => "import file";
 
-            var parsedLineS = StartupStream
+        public void DefineProcess(IStream<MyConfig> rootStream)
+        {
+            var outputFileResourceS = rootStream.Select("open output file", i => new StreamWriter(i.DestinationFilePath));
+
+            var parsedLineS = rootStream
                 .CrossApplyFolderFiles("get folder files", i => i.InputFolderPath, i => i.InputFilesSearchPattern)
                 .CrossApplyTextFile("parse input file", new InputFileRowMapper(), (i, p) => { p.FileName = i; return p; })
                 .Sort("sort input file", e => e.TypeId);
-            //.EnsureSorted("Ensure input file is sorted", i => SortCriteria.Create(i, e => e.TypeId));
 
-            //parsedLineS.ToAction("write to console", i => Console.WriteLine($"{i.FileName} - {i.Id}"));
-
-            var parsedTypeLineS = StartupStream
+            var parsedTypeLineS = rootStream
                 .Select("get input file type path", i => i.TypeFilePath)
                 .CrossApplyTextFile("parse type input file", new TypeFileRowMapper())
                 .EnsureKeyed("Ensure type file is keyed", e => e.Id);

@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl
 {
-    public class JobRunner<TJob, TConfig> where TJob : IJobDefinition<TConfig>, new()
+    public class StreamProcessRunner<TJob, TConfig> where TJob : IStreamProcessDefinition<TConfig>, new()
     {
-        public async Task<ExecutionStatus> ExecuteAsync(TConfig config)
+        public Task<ExecutionStatus> ExecuteAsync(TConfig config, IStreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = null)
         {
             EventWaitHandle startSynchronizer = new EventWaitHandle(false, EventResetMode.ManualReset);
             IPushSubject<TraceEvent> traceSubject = new PushSubject<TraceEvent>();
@@ -24,19 +24,21 @@ namespace Paillave.Etl
             JobExecutionContext jobExecutionContext = new JobExecutionContext(jobDefinition.Name, startSynchronizer, traceSubject);
             var startupStream = new Stream<TConfig>(new Tracer(jobExecutionContext, new CurrentExecutionNodeContext(jobDefinition.Name)), jobExecutionContext, jobDefinition.Name, "Startup", startupSubject.First());
 
-            List<StreamStatistic> streamStatistics = await traceStream.GetStreamStatisticsAsync();
+            traceStreamProcessDefinition?.DefineProcess(traceStream);
+            jobDefinition.DefineProcess(startupStream);
 
-            jobDefinition.DefineJob(startupStream);
+            Task<List<StreamStatistic>> streamStatisticsTask = traceStream.GetStreamStatisticsAsync();
+
             startSynchronizer.Set();
             startupSubject.PushValue(config);
             startupSubject.Complete();
 
-            return await Task.WhenAll(
+            return Task.WhenAll(
                 jobExecutionContext
                     .GetCompletionTask()
                     .ContinueWith(_ => traceSubject.Complete()),
                 traceExecutionContext.GetCompletionTask())
-                .ContinueWith(t => new ExecutionStatus(jobExecutionContext.StreamToNodeLinks, streamStatistics));
+                .ContinueWith(t => new ExecutionStatus(jobExecutionContext.StreamToNodeLinks, streamStatisticsTask.Result));
         }
         private class CurrentExecutionNodeContext : INodeContext
         {

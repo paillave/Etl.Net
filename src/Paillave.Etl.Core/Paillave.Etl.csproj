@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="ExecutionContextOld.cs" />
     <Compile Remove="StreamNodes\CrossApplyDataStreamReadStreamNode.cs" />
     <Compile Remove="StreamNodes\CrossApplyFolderFilesStreamNode.cs" />
     <Compile Remove="StreamNodes\CrossApplyIndexMappingFileStreamNode.cs" />

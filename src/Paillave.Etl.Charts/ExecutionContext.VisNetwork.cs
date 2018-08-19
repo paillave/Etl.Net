@@ -3,6 +3,7 @@ using Paillave.Etl.Charts;
 using Paillave.Etl.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,15 +14,13 @@ namespace Paillave.Etl
     //http://resources.jointjs.com/demos/layout
     public static partial class ExecutionContextEx
     {
-        public static async Task<VisNetworkStatistics> GetVisNetworkStatisticsAsync<T>(this ExecutionContextOld<T> executionContext)
+        public static VisNetworkStatistics GetVisNetworkStatistics(this ExecutionStatus executionStatus)
         {
-            List<StreamStatistic> streamStatistics = await executionContext.TraceStream.GetStreamStatisticsAsync();
-            var streamToNodeLinks = executionContext.StreamToNodeLinks;
-            var nameToIdDictionary = streamToNodeLinks.Select(i => i.SourceNodeName).Union(streamToNodeLinks.Select(i => i.TargetNodeName)).Distinct().Select((name, idx) => new { Name = name, Id = idx }).ToDictionary(i => i.Name, i => i.Id);
+            var nameToIdDictionary = executionStatus.StreamToNodeLinks.Select(i => i.SourceNodeName).Union(executionStatus.StreamToNodeLinks.Select(i => i.TargetNodeName)).Distinct().Select((name, idx) => new { Name = name, Id = idx }).ToDictionary(i => i.Name, i => i.Id);
             return new VisNetworkStatistics
             {
-                edges = streamToNodeLinks.GroupJoin(
-                    streamStatistics,
+                edges = executionStatus.StreamToNodeLinks.GroupJoin(
+                    executionStatus.StreamStatistics,
                     i => new
                     {
                         i.SourceNodeName,
@@ -46,13 +45,13 @@ namespace Paillave.Etl
                 }).ToList()
             };
         }
-        public static async Task<string> GetJsonVisNetworkStatisticsAsync<T>(this ExecutionContextOld<T> executionContext)
+        public static string GetJsonVisNetworkStatistics(this ExecutionStatus executionStatus)
         {
-            return JsonConvert.SerializeObject(await executionContext.GetVisNetworkStatisticsAsync());
+            return JsonConvert.SerializeObject(executionStatus.GetVisNetworkStatistics());
         }
-        public static async Task<string> GetHtmlVisNetworkStatisticsAsync<T>(this ExecutionContextOld<T> executionContext)
+        public static string GetHtmlVisNetworkStatistics(this ExecutionStatus executionStatus)
         {
-            var json = await executionContext.GetJsonVisNetworkStatisticsAsync();
+            var json = executionStatus.GetJsonVisNetworkStatistics();
             string file;
 
             var assembly = typeof(ExecutionContextEx).Assembly;
@@ -63,6 +62,14 @@ namespace Paillave.Etl
 
             string html = file.Replace("'<<STATISTICS>>'", json);
             return html;
+        }
+        public static void OpenVisNetworkStatistics(this ExecutionStatus executionStatus)
+        {
+            string tempFilePath = Path.GetTempFileName();
+            string htmlTempFilePath = Path.ChangeExtension(tempFilePath, "html");
+            File.Move(tempFilePath, htmlTempFilePath);
+            File.WriteAllText(htmlTempFilePath, executionStatus.GetHtmlVisNetworkStatistics());
+            new Process { StartInfo = new ProcessStartInfo(htmlTempFilePath) { UseShellExecute = true } }.Start();
         }
     }
 }

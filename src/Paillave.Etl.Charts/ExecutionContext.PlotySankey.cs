@@ -3,6 +3,7 @@ using Paillave.Etl.Charts;
 using Paillave.Etl.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,13 +13,11 @@ namespace Paillave.Etl
 {
     public static partial class ExecutionContextEx
     {
-        public static async Task<PlotlySankeyStatistics> GetPlotlySankeyStatisticsAsync<T>(this ExecutionContextOld<T> executionContext)
+        public static PlotlySankeyStatistics GetPlotlySankeyStatistics(this ExecutionStatus executionStatus)
         {
-            List<StreamStatistic> streamStatistics = await executionContext.TraceStream.GetStreamStatisticsAsync();
-            var streamToNodeLinks = executionContext.StreamToNodeLinks;
-            var nameToIdDictionary = streamToNodeLinks.Select(i => i.SourceNodeName).Union(streamToNodeLinks.Select(i => i.TargetNodeName)).Distinct().Select((name, idx) => new { Name = name, Id = idx }).ToDictionary(i => i.Name, i => i.Id);
-            var links = streamToNodeLinks.GroupJoin(
-                    streamStatistics,
+            var nameToIdDictionary = executionStatus.StreamToNodeLinks.Select(i => i.SourceNodeName).Union(executionStatus.StreamToNodeLinks.Select(i => i.TargetNodeName)).Distinct().Select((name, idx) => new { Name = name, Id = idx }).ToDictionary(i => i.Name, i => i.Id);
+            var links = executionStatus.StreamToNodeLinks.GroupJoin(
+                    executionStatus.StreamStatistics,
                     i => new
                     {
                         i.SourceNodeName,
@@ -45,13 +44,13 @@ namespace Paillave.Etl
                 LinkValues = links.Select(i => i.value).ToList()
             };
         }
-        //public static async Task<string> GetJsonPlotlySankeyStatisticsAsync<T>(this ExecutionContext<T> executionContext)
+        //public static async Task<string> GetJsonPlotlySankeyStatisticsAsync<T>(this ExecutionContext<T> executionStatus)
         //{
-        //    return JsonConvert.SerializeObject(await executionContext.GetPlotlySankeyStatisticsAsync());
+        //    return JsonConvert.SerializeObject(await executionStatus.GetPlotlySankeyStatisticsAsync());
         //}
-        public static async Task<string> GetHtmlPlotlySankeyStatisticsAsync<T>(this ExecutionContextOld<T> executionContext)
+        public static string GetHtmlPlotlySankeyStatistics(this ExecutionStatus executionStatus)
         {
-            var stats = await executionContext.GetPlotlySankeyStatisticsAsync();
+            var stats = executionStatus.GetPlotlySankeyStatistics();
             string file;
 
             var assembly = typeof(ExecutionContextEx).Assembly;
@@ -66,6 +65,14 @@ namespace Paillave.Etl
             html = html.Replace("'<<LINK_TARGETS>>'", JsonConvert.SerializeObject(stats.LinkTargets));
             html = html.Replace("'<<LINK_VALUES>>'", JsonConvert.SerializeObject(stats.LinkValues));
             return html;
+        }
+        public static void OpenPlotlySankeyStatistics(this ExecutionStatus executionStatus)
+        {
+            string tempFilePath = Path.GetTempFileName();
+            string htmlTempFilePath = Path.ChangeExtension(tempFilePath, "html");
+            File.Move(tempFilePath, htmlTempFilePath);
+            File.WriteAllText(htmlTempFilePath, executionStatus.GetHtmlPlotlySankeyStatistics());
+            new Process { StartInfo = new ProcessStartInfo(htmlTempFilePath) { UseShellExecute = true } }.Start();
         }
     }
 }

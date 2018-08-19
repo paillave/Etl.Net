@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Paillave.Etl
 {
-    public interface IJobDefinition<TConfig>
+    public interface IStreamProcessDefinition<TConfig>
     {
-        void DefineJob(IStream<TConfig> startupStream);
+        void DefineProcess(IStream<TConfig> rootStream);
         string Name { get; }
     }
 }
