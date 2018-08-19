@@ -68,11 +68,7 @@ namespace Paillave.Etl
         }
         public static void OpenPlotlySankeyStatistics(this ExecutionStatus executionStatus)
         {
-            string tempFilePath = Path.GetTempFileName();
-            string htmlTempFilePath = Path.ChangeExtension(tempFilePath, "html");
-            File.Move(tempFilePath, htmlTempFilePath);
-            File.WriteAllText(htmlTempFilePath, executionStatus.GetHtmlPlotlySankeyStatistics());
-            new Process { StartInfo = new ProcessStartInfo(htmlTempFilePath) { UseShellExecute = true } }.Start();
+            Tools.OpenFile(executionStatus.GetHtmlPlotlySankeyStatistics(), "html");
         }
     }
 }

@@ -65,11 +65,7 @@ namespace Paillave.Etl
         }
         public static void OpenD3SankeyStatistics(this ExecutionStatus executionStatus)
         {
-            string tempFilePath=Path.GetTempFileName();
-            string htmlTempFilePath = Path.ChangeExtension(tempFilePath, "html");
-            File.Move(tempFilePath, htmlTempFilePath);
-            File.WriteAllText(htmlTempFilePath, executionStatus.GetHtmlD3SankeyStatistics());
-            new Process { StartInfo = new ProcessStartInfo(htmlTempFilePath) { UseShellExecute = true } }.Start();
+            Tools.OpenFile(executionStatus.GetHtmlD3SankeyStatistics(), "html");
         }
     }
 }

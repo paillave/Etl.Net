@@ -15,13 +15,14 @@ namespace Paillave.Etl
     {
         public Task<ExecutionStatus> ExecuteAsync(TConfig config, IStreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = null)
         {
+            Guid executionId = Guid.NewGuid();
             EventWaitHandle startSynchronizer = new EventWaitHandle(false, EventResetMode.ManualReset);
             IPushSubject<TraceEvent> traceSubject = new PushSubject<TraceEvent>();
             IPushSubject<TConfig> startupSubject = new PushSubject<TConfig>();
-            IExecutionContext traceExecutionContext = new TraceExecutionContext(startSynchronizer);
+            IExecutionContext traceExecutionContext = new TraceExecutionContext(startSynchronizer, executionId);
             var traceStream = new Stream<TraceEvent>(null, traceExecutionContext, null, null, traceSubject);
             TJob jobDefinition = new TJob();
-            JobExecutionContext jobExecutionContext = new JobExecutionContext(jobDefinition.Name, startSynchronizer, traceSubject);
+            JobExecutionContext jobExecutionContext = new JobExecutionContext(jobDefinition.Name, executionId, startSynchronizer, traceSubject);
             var startupStream = new Stream<TConfig>(new Tracer(jobExecutionContext, new CurrentExecutionNodeContext(jobDefinition.Name)), jobExecutionContext, jobDefinition.Name, "Startup", startupSubject.First());
 
             traceStreamProcessDefinition?.DefineProcess(traceStream);
@@ -57,9 +58,9 @@ namespace Paillave.Etl
             private readonly List<Task> _tasksToWait = new List<Task>();
             private readonly CollectionDisposableManager _disposables = new CollectionDisposableManager();
 
-            public JobExecutionContext(string jobName, WaitHandle startSynchronizer, IPushSubject<TraceEvent> traceSubject)
+            public JobExecutionContext(string jobName, Guid executionId, WaitHandle startSynchronizer, IPushSubject<TraceEvent> traceSubject)
             {
-                this.ExecutionId = new Guid();
+                this.ExecutionId = executionId;
                 this.JobName = jobName;
                 this._traceSubject = traceSubject;
                 this.StartSynchronizer = startSynchronizer;
@@ -79,9 +80,9 @@ namespace Paillave.Etl
             private readonly IPushObservable<TraceEvent> _traceSubject;
             private readonly List<Task> _tasksToWait = new List<Task>();
             private readonly CollectionDisposableManager _disposables = new CollectionDisposableManager();
-            public TraceExecutionContext(WaitHandle startSynchronizer)
+            public TraceExecutionContext(WaitHandle startSynchronizer, Guid executionId)
             {
-                this.ExecutionId = Guid.NewGuid();
+                this.ExecutionId = executionId;
                 this.JobName = null;
                 this._traceSubject = PushObservable.Empty<TraceEvent>(this.StartSynchronizer);
                 this.StartSynchronizer = startSynchronizer;

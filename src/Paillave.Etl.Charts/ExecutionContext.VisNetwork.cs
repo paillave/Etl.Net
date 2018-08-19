@@ -65,11 +65,7 @@ namespace Paillave.Etl
         }
         public static void OpenVisNetworkStatistics(this ExecutionStatus executionStatus)
         {
-            string tempFilePath = Path.GetTempFileName();
-            string htmlTempFilePath = Path.ChangeExtension(tempFilePath, "html");
-            File.Move(tempFilePath, htmlTempFilePath);
-            File.WriteAllText(htmlTempFilePath, executionStatus.GetHtmlVisNetworkStatistics());
-            new Process { StartInfo = new ProcessStartInfo(htmlTempFilePath) { UseShellExecute = true } }.Start();
+            Tools.OpenFile(executionStatus.GetHtmlVisNetworkStatistics(), "html");
         }
     }
 }
