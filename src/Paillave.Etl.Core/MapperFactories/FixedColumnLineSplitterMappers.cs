@@ -11,5 +11,9 @@ namespace Paillave.Etl.MapperFactories
         {
             return new ColumnWidthSplit(columnSize).ParseFixedColumn;
         }
+        public static Func<IList<string>, string> FixedColumnLineJoiner(params int[] columnSize)
+        {
+            return new ColumnWidthSplit(columnSize).JoinFixedColumn;
+        }
     }
 }
