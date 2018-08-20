@@ -17,7 +17,7 @@ namespace Paillave.Etl
         {
             var nameToIdDictionary = executionStatus.JobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.Name, Idx }).ToDictionary(i => i.Name, i => i.Idx);
             var links = executionStatus.JobDefinitionStructure.StreamToNodeLinks.GroupJoin(
-                    executionStatus.StreamStatistics,
+                    executionStatus.StreamStatisticCounters,
                     i => new
                     {
                         i.SourceNodeName,
@@ -32,12 +32,16 @@ namespace Paillave.Etl
                     {
                         source = nameToIdDictionary[link.SourceNodeName],
                         target = nameToIdDictionary[link.TargetNodeName],
-                        value = stat.DefaultIfEmpty(new StreamStatistic { Counter = 0 }).Sum(i => i.Counter)
+                        value = stat.DefaultIfEmpty(new StreamStatisticCounter { Counter = 0 }).Sum(i => i.Counter)
                     }
                 ).ToList();
             return new PlotlySankeyDescription
             {
-                NodeColors = executionStatus.JobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.Name]).Select(i => "blue").ToList(),
+                NodeColors = executionStatus.JobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.Name]).Select(i =>
+                {
+                    if (executionStatus.StreamStatisticErrors.Any(e => e.NodeName == i.Name)) return "red";
+                    return "blue";
+                }).ToList(),
                 NodeNames = executionStatus.JobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.Name]).Select(i => i.Name).ToList(),
                 LinkSources = links.Select(i => i.source).ToList(),
                 LinkTargets = links.Select(i => i.target).ToList(),

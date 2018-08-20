@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Paillave.Etl.Core
 {
-    public class StreamStatistic
+    public class StreamStatisticCounter
     {
         public int Counter { get; set; }
         public string StreamName { get; set; }

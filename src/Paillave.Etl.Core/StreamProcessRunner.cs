@@ -28,7 +28,7 @@ namespace Paillave.Etl
             traceStreamProcessDefinition?.DefineProcess(traceStream);
             jobDefinition.DefineProcess(startupStream);
 
-            Task<List<StreamStatistic>> streamStatisticsTask = traceStream.GetStreamStatisticsAsync();
+            Task<StreamStatistics> jobExecutionStatus = traceStream.GetStreamStatisticsAsync();
 
             startSynchronizer.Set();
             startupSubject.PushValue(config);
@@ -39,7 +39,7 @@ namespace Paillave.Etl
                     .GetCompletionTask()
                     .ContinueWith(_ => traceSubject.Complete()),
                 traceExecutionContext.GetCompletionTask())
-                .ContinueWith(t => new ExecutionStatus(jobExecutionContext.GetDefinitionStructure(), streamStatisticsTask.Result));
+                .ContinueWith(t => new ExecutionStatus(jobExecutionContext.GetDefinitionStructure(), jobExecutionStatus.Result));
         }
         public JobDefinitionStructure GetDefinitionStructure()
         {

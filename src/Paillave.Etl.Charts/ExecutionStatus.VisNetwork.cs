@@ -20,7 +20,7 @@ namespace Paillave.Etl
             return new VisNetworkDescription
             {
                 edges = executionStatus.JobDefinitionStructure.StreamToNodeLinks.GroupJoin(
-                    executionStatus.StreamStatistics,
+                    executionStatus.StreamStatisticCounters,
                     i => new
                     {
                         i.SourceNodeName,
@@ -35,33 +35,40 @@ namespace Paillave.Etl
                     {
                         from = nameToIdDictionary[link.SourceNodeName],
                         to = nameToIdDictionary[link.TargetNodeName],
-                        value = stat.DefaultIfEmpty(new StreamStatistic { Counter = 0 }).Sum(i => i.Counter),
+                        value = stat.DefaultIfEmpty(new StreamStatisticCounter { Counter = 0 }).Sum(i => i.Counter),
                         color = new VisNetworkStatisticColorEdge { color = "#ccd5e2", inherit = false }
                     }
                 ).ToList(),
-                nodes = executionStatus.JobDefinitionStructure.Nodes.Select(i =>
-                {
-                    var icon = GetNodeIcon(i);
-                    return new VisNetworkStatisticNode
+                nodes = executionStatus.JobDefinitionStructure.Nodes.GroupJoin(
+                    executionStatus.StreamStatisticErrors,
+                    i => i.Name,
+                    i => i.NodeName,
+                    (node, errors) =>
                     {
-                        borderWidth = GetNodeBorderWidth(i),
-                        id = nameToIdDictionary[i.Name],
-                        label = i.Name,
-                        shape = icon != null ? "icon" : null,
-                        icon = icon,
-                        color = GetNodeColor(i)
-                    };
-                }).ToList()
+                        var icon = GetNodeIcon(node);
+                        bool onError = errors.Any();
+                        return new VisNetworkStatisticNode
+                        {
+                            borderWidth = GetNodeBorderWidth(node, onError),
+                            id = nameToIdDictionary[node.Name],
+                            label = node.Name,
+                            shape = icon != null ? "icon" : null,
+                            icon = icon,
+                            color = GetNodeColor(node, onError)
+                        };
+                    }).ToList()
             };
         }
-        private static int GetNodeBorderWidth(NodeDescription node)
+        private static int GetNodeBorderWidth(NodeDescription node, bool onError)
         {
+            if (onError) return 8;
             if (node.IsSource) return 8;
             if (node.IsTarget) return 8;
             return 2;
         }
-        private static VisNetworkStatisticColorNode GetNodeColor(NodeDescription node)
+        private static VisNetworkStatisticColorNode GetNodeColor(NodeDescription node, bool onError)
         {
+            if (onError) return new VisNetworkStatisticColorNode { background = "salmon", border = "red" };
             if (node.IsSource) return new VisNetworkStatisticColorNode { background = "lightgrey", border = "#2B7CE9" };
             if (node.IsTarget) return new VisNetworkStatisticColorNode { background = "blue", border = "#2B7CE9" };
             return new VisNetworkStatisticColorNode { background = "#D2E5FF", border = "#2B7CE9" };

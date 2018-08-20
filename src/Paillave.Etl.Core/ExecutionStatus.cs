@@ -7,11 +7,13 @@ namespace Paillave.Etl
     {
         public JobDefinitionStructure JobDefinitionStructure { get; }
         //public List<StreamToNodeLink> StreamToNodeLinks { get; }
-        public List<StreamStatistic> StreamStatistics { get; }
-        public ExecutionStatus(JobDefinitionStructure jobDefinitionStructure, List<StreamStatistic> streamStatistics)
+        public List<StreamStatisticCounter> StreamStatisticCounters { get; set; }
+        public List<StreamStatisticError> StreamStatisticErrors { get; set; }
+        public ExecutionStatus(JobDefinitionStructure jobDefinitionStructure, StreamStatistics streamStatistics)
         {
             this.JobDefinitionStructure = jobDefinitionStructure;
-            this.StreamStatistics = streamStatistics;
+            this.StreamStatisticCounters = streamStatistics.StreamStatisticCounters;
+            this.StreamStatisticErrors = streamStatistics.StreamStatisticErrors;
         }
     }
 }

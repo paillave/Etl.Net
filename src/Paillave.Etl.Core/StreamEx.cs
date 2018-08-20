@@ -377,10 +377,10 @@ namespace Paillave.Etl
         }
         #endregion
 
-        #region Merge
-        public static IStream<I> Merge<I>(this IStream<I> stream, string name, IStream<I> inputStream2)
+        #region Union
+        public static IStream<I> Union<I>(this IStream<I> stream, string name, IStream<I> inputStream2)
         {
-            return new MergeStreamNode<I>(stream, name, new MergeArgs<I> { SecondStream = inputStream2 }).Output;
+            return new UnionStreamNode<I>(stream, name, new UnionArgs<I> { SecondStream = inputStream2 }).Output;
         }
         #endregion
 
@@ -593,20 +593,27 @@ namespace Paillave.Etl
         #endregion
 
         #region SelectStreamStatistics
-        public static Task<List<StreamStatistic>> GetStreamStatisticsAsync(this IStream<TraceEvent> input)
+        public static Task<StreamStatistics> GetStreamStatisticsAsync(this IStream<TraceEvent> input)
         {
-            return input
+            var errorsStatistics = input
+                .Where("keep errors", i => i.Content.Level == System.Diagnostics.TraceLevel.Error)
+                .Select("select errors caracteristics", i => new StreamStatisticError { NodeName = i.NodeName, Text = i.ToString() })
+                .Observable.ToList();
+            var streamStatistics = input
                 .Where("keep stream results", i => i.Content is CounterSummaryStreamTraceContent)
                 .Select("select statistic", i =>
              {
                  var content = (CounterSummaryStreamTraceContent)i.Content;
-                 return new StreamStatistic
+                 return new StreamStatisticCounter
                  {
                      Counter = content.Counter,
                      StreamName = content.StreamName,
                      SourceNodeName = i.NodeName
                  };
-             }).Observable.ToListAsync();
+             }).Observable.ToList();
+            return streamStatistics
+                .CombineWithLatest(errorsStatistics, (s, e) => new StreamStatistics { StreamStatisticErrors = e, StreamStatisticCounters = s })
+                .ToTaskAsync();
         }
         #endregion
     }

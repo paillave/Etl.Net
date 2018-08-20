@@ -8,14 +8,14 @@ using Paillave.Etl.Core.StreamNodes;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class MergeArgs<TIn>
+    public class UnionArgs<TIn>
     {
         public IStream<TIn> SecondStream { get; set; }
     }
-    public class MergeStreamNode<TIn> : StreamNodeBase<IStream<TIn>, TIn, MergeArgs<TIn>>, IStreamNodeOutput<TIn>
+    public class UnionStreamNode<TIn> : StreamNodeBase<IStream<TIn>, TIn, UnionArgs<TIn>>, IStreamNodeOutput<TIn>
     {
         public IStream<TIn> Output { get; }
-        public MergeStreamNode(IStream<TIn> input, string name, MergeArgs<TIn> arguments) : base(input, name, arguments)
+        public UnionStreamNode(IStream<TIn> input, string name, UnionArgs<TIn> arguments) : base(input, name, arguments)
         {
             this.Output = base.CreateStream(nameof(Output), input.Observable.Merge(arguments.SecondStream.Observable));
         }

@@ -19,7 +19,7 @@ namespace Paillave.Etl
             return new D3SankeyDescription
             {
                 links = executionStatus.JobDefinitionStructure.StreamToNodeLinks.GroupJoin(
-                    executionStatus.StreamStatistics,
+                    executionStatus.StreamStatisticCounters,
                     i => new
                     {
                         i.SourceNodeName,
@@ -34,15 +34,20 @@ namespace Paillave.Etl
                     {
                         source = nameToIdDictionary[link.SourceNodeName],
                         target = nameToIdDictionary[link.TargetNodeName],
-                        value = stat.DefaultIfEmpty(new StreamStatistic { Counter = 0 }).Sum(i => i.Counter)
+                        value = stat.DefaultIfEmpty(new StreamStatisticCounter { Counter = 0 }).Sum(i => i.Counter)
                     }
                 ).ToList(),
-                nodes =  executionStatus.JobDefinitionStructure.Nodes.Select(i => new D3SankeyStatisticsNode
-                {
-                    id = nameToIdDictionary[i.Name],
-                    name = i.Name,
-                    color = null
-                }).ToList()
+                nodes = executionStatus.JobDefinitionStructure.Nodes.Select(i =>
+               {
+                   string color = "blue";
+                   if (executionStatus.StreamStatisticErrors.Any(e => e.NodeName == i.Name)) color = "red";
+                   return new D3SankeyStatisticsNode
+                   {
+                       id = nameToIdDictionary[i.Name],
+                       name = i.Name,
+                       color = color
+                   };
+               }).ToList()
             };
         }
         public static string GetJsonD3SankeyStatistics(this ExecutionStatus executionStatus)
