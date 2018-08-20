@@ -351,6 +351,32 @@ namespace Paillave.Etl
         }
         #endregion
 
+        #region Lookup
+        public static IStream<TOut> Lookup<TInLeft, TInRight, TOut, TKey>(this IStream<TInLeft> leftStream, string name, IStream<TInRight> rightStream, Func<TInLeft, TKey> leftKey, Func<TInRight, TKey> rightKey, Func<TInLeft, TInRight, TOut> resultSelector)
+        {
+            return new LookupStreamNode<TInLeft, TInRight, TOut, TKey>(leftStream, name, new LookupArgs<TInLeft, TInRight, TOut, TKey>
+            {
+                RightInputStream = rightStream,
+                ResultSelector = resultSelector,
+                RedirectErrorsInsteadOfFail = false,
+                GetLeftStreamKey = leftKey,
+                GetRightStreamKey = rightKey
+            }).Output;
+        }
+        public static INodeOutputError<TOut, TInLeft, TInRight> LookupKeepErrors<TInLeft, TInRight, TOut, TKey>(this IStream<TInLeft> leftStream, string name, IStream<TInRight> rightStream, Func<TInLeft, TKey> leftKey, Func<TInRight, TKey> rightKey, Func<TInLeft, TInRight, TOut> resultSelector)
+        {
+            var ret = new LookupStreamNode<TInLeft, TInRight, TOut, TKey>(leftStream, name, new LookupArgs<TInLeft, TInRight, TOut, TKey>
+            {
+                RightInputStream = rightStream,
+                ResultSelector = resultSelector,
+                RedirectErrorsInsteadOfFail = false,
+                GetLeftStreamKey = leftKey,
+                GetRightStreamKey = rightKey
+            });
+            return new NodeOutputError<LookupStreamNode<TInLeft, TInRight, TOut, TKey>, TOut, TInLeft, TInRight>(ret);
+        }
+        #endregion
+
         #region Merge
         public static IStream<I> Merge<I>(this IStream<I> stream, string name, IStream<I> inputStream2)
         {

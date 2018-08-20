@@ -332,3 +332,4 @@ ASALocalRun/
 # big files
 *.big.*
 /src/TestFiles/tmp
+/src/TestFiles/*.csv

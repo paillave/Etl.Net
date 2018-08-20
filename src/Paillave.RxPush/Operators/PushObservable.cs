@@ -20,11 +20,7 @@ namespace Paillave.RxPush.Operators
         }
         public static IDeferedPushObservable<int> Range(int from, int count, WaitHandle startSynchronizer = null)
         {
-            return new DeferedPushObservable<int>(pushValue =>
-            {
-                for (int i = 0; i < count; i++)
-                    pushValue(from + i);
-            }, startSynchronizer);
+            return FromEnumerable(Enumerable.Range(from, count), startSynchronizer);
         }
         public static IPushObservable<T> Merge<T>(params IPushObservable<T>[] pushObservables)
         {
