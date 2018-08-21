@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Humanizer.Core" Version="2.4.2" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Paillave.RxPush\Paillave.RxPush.csproj" />
   </ItemGroup>
 
