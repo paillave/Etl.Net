@@ -35,14 +35,17 @@ namespace Paillave.Etl.Core.StreamNodes
             Type type = typeof(TArgs);
             var properties = type.GetProperties();
             List<StreamToNodeLink> outValues = new List<StreamToNodeLink>();
-            foreach (var property in properties)
+            if (args != null)
             {
-                var value = property.GetValue(args);
-                if (value != null)
+                foreach (var property in properties)
                 {
-                    var ret = GetInputStreamArgumentsLink(nodeName, value);
-                    if (ret != null)
-                        outValues.Add(ret);
+                    var value = property.GetValue(args);
+                    if (value != null)
+                    {
+                        var ret = GetInputStreamArgumentsLink(nodeName, value);
+                        if (ret != null)
+                            outValues.Add(ret);
+                    }
                 }
             }
             return outValues;

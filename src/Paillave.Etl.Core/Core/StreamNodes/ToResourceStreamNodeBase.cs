@@ -11,12 +11,11 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
-    public abstract class ToResourceStreamArgsBase<TResource> where TResource : IDisposable
+    public class ToResourceStreamArgsBase<TResource>
     {
         public IStream<TResource> ResourceStream { get; set; }
     }
-    public abstract class ToResourceStreamNodeBase<TIn, TResource, TArgs> : AwaitableStreamNodeBase<IStream<TIn>, TIn, TArgs> where TResource : IDisposable
-        where TIn : new()
+    public abstract class ToResourceStreamNodeBase<TIn, TResource, TArgs> : AwaitableStreamNodeBase<IStream<TIn>, TIn, TArgs> 
         where TArgs : ToResourceStreamArgsBase<TResource>
     {
         private object _lockObject = new object();
