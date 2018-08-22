@@ -9,7 +9,7 @@ namespace Paillave.Etl
 {
     public static class StreamExEfc
     {
-        public static IStream<TOut> CrossApplyEntityFrameworkQuery<TIn, TRes, TOut>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, Func<TIn, TRes, IQueryable<TOut>> getQuery, bool noParallelisation = false) where TRes : DbContext
+        public static IStream<TOut> CrossApplyEntityFrameworkCoreQuery<TIn, TRes, TOut>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, Func<TIn, TRes, IQueryable<TOut>> getQuery, bool noParallelisation = false) where TRes : DbContext
         {
             return stream.CrossApply(name, resourceStream, new EntityFrameworkCoreValueProvider<TIn, TRes, TOut>(new EntityFrameworkCoreValueProviderArgs<TIn, TRes, TOut>()
             {
@@ -17,12 +17,13 @@ namespace Paillave.Etl
                 NoParallelisation = noParallelisation
             }));
         }
-        public static IStream<TIn> ToEntityFrameworkCore<TIn, TRes>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream)
+        public static IStream<TIn> ToEntityFrameworkCore<TIn, TRes>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, int chunkSize = 1000)
             where TRes : DbContext
             where TIn : class
         {
-            return new ToEntityFrameworkStreamNode<TIn, TRes>(stream, name, new Core.StreamNodes.ToResourceStreamArgsBase<TRes>
+            return new ToEntityFrameworkCoreStreamNode<TIn, TRes>(stream, name, new Core.StreamNodes.ToStreamArgsBase<TRes>
             {
+                ChunkSize = chunkSize,
                 ResourceStream = resourceStream
             }).Output;
         }

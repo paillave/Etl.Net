@@ -8,12 +8,12 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class ToIndexMappingFileArgs<TIn> : ToResourceStreamArgsBase<SystemIO.StreamWriter> where TIn : new()
+    public class ToIndexMappingFileArgs<TIn> : ToStreamArgsBase<SystemIO.StreamWriter> where TIn : new()
     {
         public ColumnIndexFlatFileDescriptor<TIn> Mapping { get; set; }
     }
 
-    public class ToIndexMappingFileStreamNode<TIn> : ToResourceStreamNodeBase<TIn, SystemIO.StreamWriter, ToIndexMappingFileArgs<TIn>> where TIn : new()
+    public class ToIndexMappingFileStreamNode<TIn> : ToStreamNodeBase<TIn, SystemIO.StreamWriter, ToIndexMappingFileArgs<TIn>> where TIn : new()
     {
         private Func<TIn, IList<string>> _serialize;
         public ToIndexMappingFileStreamNode(IStream<TIn> input, string name, ToIndexMappingFileArgs<TIn> arguments) : base(input, name, arguments)

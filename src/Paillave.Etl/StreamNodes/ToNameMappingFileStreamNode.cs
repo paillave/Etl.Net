@@ -9,12 +9,12 @@ using Paillave.RxPush.Core;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class ToNameMappingFileArgs<TIn> : ToResourceStreamArgsBase<SystemIO.StreamWriter> where TIn : new()
+    public class ToNameMappingFileArgs<TIn> : ToStreamArgsBase<SystemIO.StreamWriter> where TIn : new()
     {
         public ColumnNameFlatFileDescriptor<TIn> Mapping { get; set; }
     }
 
-    public class ToNameMappingFileStreamNode<TIn> : ToResourceStreamNodeBase<TIn, SystemIO.StreamWriter, ToNameMappingFileArgs<TIn>> where TIn : new()
+    public class ToNameMappingFileStreamNode<TIn> : ToStreamNodeBase<TIn, SystemIO.StreamWriter, ToNameMappingFileArgs<TIn>> where TIn : new()
     {
         private Func<TIn, IList<string>> _serialize;
         public ToNameMappingFileStreamNode(IStream<TIn> input, string name, ToNameMappingFileArgs<TIn> arguments) : base(input, name, arguments)
@@ -38,28 +38,28 @@ namespace Paillave.Etl.StreamNodes
 
 
 
-    public class ToNameMappingFileArgs<TResource, TIn, TResKey> : ToResourceStreamArgsBase<TResource, TIn, TResKey> where TIn : new()
-    {
-        public ColumnNameFlatFileDescriptor<TIn> Mapping { get; set; }
-        public Func<TResource, SystemIO.StreamWriter> GetStreamWriter { get; set; }
-    }
+    //public class ToNameMappingFileArgs<TResource, TIn, TResKey> : ToStreamArgsBase<TResource, TIn, TResKey> where TIn : new()
+    //{
+    //    public ColumnNameFlatFileDescriptor<TIn> Mapping { get; set; }
+    //    public Func<TResource, SystemIO.StreamWriter> GetStreamWriter { get; set; }
+    //}
 
-    public class ToNameMappingFileStreamNode<TIn, TResource, TResKey> : ToResourceStreamNodeBase<TIn, TResource, ToNameMappingFileArgs<TResource, TIn, TResKey>, TResKey> where TIn : new()
-    {
-        private Func<TIn, IList<string>> _serialize;
-        public ToNameMappingFileStreamNode(IStream<TIn> input, string name, ToNameMappingFileArgs<TResource, TIn, TResKey> arguments) : base(input, name, arguments)
-        {
-            _serialize = this.Arguments.Mapping.ColumnNameMappingConfiguration.LineSerializer();
-        }
+    //public class ToNameMappingFileStreamNode<TIn, TResource, TResKey> : ToStreamNodeBase<TIn, TResource, ToNameMappingFileArgs<TResource, TIn, TResKey>, TResKey> where TIn : new()
+    //{
+    //    private Func<TIn, IList<string>> _serialize;
+    //    public ToNameMappingFileStreamNode(IStream<TIn> input, string name, ToNameMappingFileArgs<TResource, TIn, TResKey> arguments) : base(input, name, arguments)
+    //    {
+    //        _serialize = this.Arguments.Mapping.ColumnNameMappingConfiguration.LineSerializer();
+    //    }
 
-        protected override void PreProcess(TResource outputResource)
-        {
-            this.Arguments.GetStreamWriter(outputResource).WriteLine(this.Arguments.Mapping.LineJoiner(this.Arguments.Mapping.ColumnNameMappingConfiguration.GetHeaders()));
-        }
+    //    protected override void PreProcess(TResource outputResource)
+    //    {
+    //        this.Arguments.GetStreamWriter(outputResource).WriteLine(this.Arguments.Mapping.LineJoiner(this.Arguments.Mapping.ColumnNameMappingConfiguration.GetHeaders()));
+    //    }
 
-        protected override void ProcessValueToOutput(TResource outputResource, TIn value)
-        {
-            this.Arguments.GetStreamWriter(outputResource).WriteLine(this.Arguments.Mapping.LineJoiner(_serialize(value)));
-        }
-    }
+    //    protected override void ProcessValueToOutput(TResource outputResource, TIn value)
+    //    {
+    //        this.Arguments.GetStreamWriter(outputResource).WriteLine(this.Arguments.Mapping.LineJoiner(_serialize(value)));
+    //    }
+    //}
 }

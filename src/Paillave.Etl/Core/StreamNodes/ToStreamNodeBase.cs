@@ -1,0 +1,141 @@
+﻿using Paillave.Etl.Core;
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+using Paillave.RxPush.Operators;
+using Paillave.Etl.Core.Streams;
+using Paillave.RxPush.Core;
+using Paillave.Etl.Helpers;
+using SystemIO = System.IO;
+using System.Threading.Tasks;
+
+namespace Paillave.Etl.Core.StreamNodes
+{
+    public class ToStreamArgsBase<TIn, TContext, TResource, TResourceKey>
+    {
+        public int ChunkSize { get; set; } = 1;
+        public IStream<TContext> ContextStream { get; } = null;
+        public Func<TContext, TResourceKey> GetResourceKeyFromContext { get; } = null;
+        public Func<TContext, TResource> GetResourceFromContext { get; } = null;
+        public Func<TContext, TIn, TResource> GetResourceFromInput { get; } = null;
+        public Func<TIn, TResourceKey> GetResourceKeyFromInput { get; } = null;
+
+        /// <summary>
+        /// FROM ONE CONTEXT VALUE
+        /// get resource from first ContextStream
+        /// </summary>
+        /// <param name="contextStream"></param>
+        public ToStreamArgsBase(IStream<TContext> contextStream)
+        {
+            ContextStream = contextStream;
+        }
+
+        /// <summary>
+        /// FROM ONE RESOURCE CONTEXT VALUE
+        /// get resource from first ContextStream using GetResourceFromContext
+        /// </summary>
+        /// <param name="contextStream"></param>
+        /// <param name="getResourceFromContext"></param>
+        public ToStreamArgsBase(IStream<TContext> contextStream, Func<TContext, TResource> getResourceFromContext)
+        {
+            ContextStream = contextStream;
+            GetResourceFromContext = getResourceFromContext;
+        }
+
+        /// <summary>
+        /// FROM SEVERAL CONTEXT VALUES
+        /// create a key/resource dictionary from ContextStream using GetResourceKeyFromContext and GetResourceFromContext
+        /// get a resource for an input using GetResourceKeyFromInput and the dictionary
+        /// </summary>
+        /// <param name="contextStream"></param>
+        /// <param name="getResourceKeyFromContext"></param>
+        /// <param name="getResourceFromContext"></param>
+        /// <param name="getResourceKeyFromInput"></param>
+        public ToStreamArgsBase(IStream<TContext> contextStream, Func<TContext, TResourceKey> getResourceKeyFromContext, Func<TContext, TResource> getResourceFromContext, Func<TIn, TResourceKey> getResourceKeyFromInput)
+        {
+            ContextStream = contextStream;
+            GetResourceKeyFromContext = getResourceKeyFromContext;
+            GetResourceFromContext = getResourceFromContext;
+            GetResourceKeyFromInput = getResourceKeyFromInput;
+        }
+
+        /// <summary>
+        /// FROM INPUT VALUE
+        /// get key resource for an input using GetResourceKeyFromInput
+        /// try get resource from key/resource dictionary 
+        /// if nothing found, add entry in dictionary using GetResourceFromInput and the first value of ContextStream
+        /// </summary>
+        /// <param name="contextStream"></param>
+        /// <param name="getResourceFromInput"></param>
+        /// <param name="getResourceKeyFromInput"></param>
+        public ToStreamArgsBase(IStream<TContext> contextStream, Func<TContext, TIn, TResource> getResourceFromInput, Func<TIn, TResourceKey> getResourceKeyFromInput)
+        {
+            ContextStream = contextStream;
+            GetResourceFromInput = getResourceFromInput;
+            GetResourceKeyFromInput = getResourceKeyFromInput;
+        }
+    }
+    //public abstract class ToStreamNodeBase<TIn, TResource, TArgs, TResKey> : AwaitableStreamNodeBase<IStream<TIn>, TIn, TArgs>
+    //    where TArgs : ToStreamArgsBase<TResource, TIn, TResKey>
+    //{
+    //    public ToStreamNodeBase(IStream<TIn> input, string name, TArgs arguments) : base(input, name, arguments)
+    //    {
+    //    }
+
+    //    protected override IPushObservable<TIn> ProcessObservable(IPushObservable<TIn> observable)
+    //    {
+    //        var dicoResourceS = this.Arguments.ResourceStream.Observable.Do(PreProcess).ToList().Map(rs => rs.ToDictionary(this.Arguments.GetResourceKey));
+    //        return observable.CombineWithLatest(dicoResourceS, (i, r) => { ProcessValueToOutput(r[this.Arguments.GetInputResourceKey(i)], i); return i; }, true);
+    //    }
+
+    //    protected virtual void PreProcess(TResource outputResource) { }
+
+    //    protected abstract void ProcessValueToOutput(TResource outputResource, TIn value);
+    //}
+
+
+
+
+
+    public class ToStreamArgsBase<TResource>
+    {
+        public int ChunkSize { get; set; } = 1000;
+        public IStream<TResource> ResourceStream { get; set; }
+    }
+    public abstract class ToStreamNodeBase<TIn, TResource, TArgs> : AwaitableStreamNodeBase<IStream<TIn>, TIn, TArgs>
+        where TArgs : ToStreamArgsBase<TResource>
+    {
+        public ToStreamNodeBase(IStream<TIn> input, string name, TArgs arguments) : base(input, name, arguments)
+        {
+        }
+
+        protected override IPushObservable<TIn> ProcessObservable(IPushObservable<TIn> observable)
+        {
+            var firstResourceS = this.Arguments.ResourceStream.Observable.First().Do(PreProcess).DelayTillEndOfStream();
+            if (this.Arguments.ChunkSize == 1)
+                return observable
+                    .CombineWithLatest(firstResourceS, (i, r) => { ProcessValueToOutput(r, i); return i; }, true);
+            else
+                return observable
+                    .Chunk(this.Arguments.ChunkSize)
+                    .CombineWithLatest(firstResourceS, (i, r) => { ProcessChunkToOutput(r, i); return i; }, true)
+                    .FlatMap(i => PushObservable.FromEnumerable(i));
+        }
+
+        protected virtual void PreProcess(TResource outputResource) { }
+
+        protected virtual void PreProcessChunk(TResource outputResource, IEnumerable<TIn> values) { }
+
+        protected virtual void PostProcessChunk(TResource outputResource, IEnumerable<TIn> values) { }
+
+        protected virtual void ProcessChunkToOutput(TResource outputResource, IEnumerable<TIn> values)
+        {
+            PreProcessChunk(outputResource, values);
+            foreach (var value in values)
+                ProcessValueToOutput(outputResource, value);
+            PostProcessChunk(outputResource, values);
+        }
+        protected virtual void ProcessValueToOutput(TResource outputResource, TIn value) { }
+    }
+}

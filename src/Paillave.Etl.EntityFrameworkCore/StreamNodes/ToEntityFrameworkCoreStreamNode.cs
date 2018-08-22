@@ -9,23 +9,19 @@ using Paillave.RxPush.Operators;
 
 namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
 {
-    public class ToEntityFrameworkStreamNode<TIn, TRes> : ToResourceStreamNodeBase<TIn, TRes, ToResourceStreamArgsBase<TRes>>
+    public class ToEntityFrameworkCoreStreamNode<TIn, TRes> : ToStreamNodeBase<TIn, TRes, ToStreamArgsBase<TRes>>
         where TRes : DbContext
         where TIn : class
     {
-        public ToEntityFrameworkStreamNode(IStream<TIn> input, string name, ToResourceStreamArgsBase<TRes> args) : base(input, name, args) { }
+        public ToEntityFrameworkCoreStreamNode(IStream<TIn> input, string name, ToStreamArgsBase<TRes> args) : base(input, name, args) { }
 
         protected override void ProcessValueToOutput(TRes outputResource, TIn value)
         {
             outputResource.Add(value);
+        }
+        protected override void PostProcessChunk(TRes outputResource, IEnumerable<TIn> values)
+        {
             outputResource.SaveChanges();
         }
-
-        //private void SaveElements(TRes outputResource, IEnumerable<TIn> elements)
-        //{
-        //    foreach (var value in elements)
-        //        outputResource.Add(value);
-        //    outputResource.SaveChanges();
-        //}
     }
 }

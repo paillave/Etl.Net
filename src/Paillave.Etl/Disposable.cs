@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Paillave.Etl.Core
+namespace Paillave.Etl
 {
     public class Disposable<T> : IDisposable
     {
