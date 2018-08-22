@@ -12,24 +12,23 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl.Core.StreamNodes
 {
-    public class ToStreamArgsBase<TIn, TContext, TResource, TResourceKey>
+    public class ToStreamFromOneContextValueArgsBase<TContext> : ToStreamFromOneResourceContextValueArgsBase<TContext, TContext>
     {
-        public int ChunkSize { get; set; } = 1;
-        public IStream<TContext> ContextStream { get; } = null;
-        public Func<TContext, TResourceKey> GetResourceKeyFromContext { get; } = null;
-        public Func<TContext, TResource> GetResourceFromContext { get; } = null;
-        public Func<TContext, TIn, TResource> GetResourceFromInput { get; } = null;
-        public Func<TIn, TResourceKey> GetResourceKeyFromInput { get; } = null;
-
         /// <summary>
         /// FROM ONE CONTEXT VALUE
         /// get resource from first ContextStream
         /// </summary>
         /// <param name="contextStream"></param>
-        public ToStreamArgsBase(IStream<TContext> contextStream)
+        public ToStreamFromOneContextValueArgsBase(IStream<TContext> contextStream) : base(contextStream, i => i)
         {
-            ContextStream = contextStream;
         }
+    }
+
+    public class ToStreamFromOneResourceContextValueArgsBase<TContext, TResource>
+    {
+        public int ChunkSize { get; set; } = 1;
+        public IStream<TContext> ContextStream { get; } = null;
+        public Func<TContext, TResource> GetResourceFromContext { get; } = null;
 
         /// <summary>
         /// FROM ONE RESOURCE CONTEXT VALUE
@@ -37,11 +36,20 @@ namespace Paillave.Etl.Core.StreamNodes
         /// </summary>
         /// <param name="contextStream"></param>
         /// <param name="getResourceFromContext"></param>
-        public ToStreamArgsBase(IStream<TContext> contextStream, Func<TContext, TResource> getResourceFromContext)
+        public ToStreamFromOneResourceContextValueArgsBase(IStream<TContext> contextStream, Func<TContext, TResource> getResourceFromContext)
         {
             ContextStream = contextStream;
             GetResourceFromContext = getResourceFromContext;
         }
+    }
+
+    public class ToStreamFromSeveralContextValuesArgsBase<TIn, TContext, TResource, TResourceKey>
+    {
+        public int ChunkSize { get; set; } = 1;
+        public IStream<TContext> ContextStream { get; } = null;
+        public Func<TContext, TResourceKey> GetResourceKeyFromContext { get; } = null;
+        public Func<TContext, TResource> GetResourceFromContext { get; } = null;
+        public Func<TIn, TResourceKey> GetResourceKeyFromInput { get; } = null;
 
         /// <summary>
         /// FROM SEVERAL CONTEXT VALUES
@@ -52,13 +60,21 @@ namespace Paillave.Etl.Core.StreamNodes
         /// <param name="getResourceKeyFromContext"></param>
         /// <param name="getResourceFromContext"></param>
         /// <param name="getResourceKeyFromInput"></param>
-        public ToStreamArgsBase(IStream<TContext> contextStream, Func<TContext, TResourceKey> getResourceKeyFromContext, Func<TContext, TResource> getResourceFromContext, Func<TIn, TResourceKey> getResourceKeyFromInput)
+        public ToStreamFromSeveralContextValuesArgsBase(IStream<TContext> contextStream, Func<TContext, TResourceKey> getResourceKeyFromContext, Func<TContext, TResource> getResourceFromContext, Func<TIn, TResourceKey> getResourceKeyFromInput)
         {
             ContextStream = contextStream;
             GetResourceKeyFromContext = getResourceKeyFromContext;
             GetResourceFromContext = getResourceFromContext;
             GetResourceKeyFromInput = getResourceKeyFromInput;
         }
+    }
+
+    public class ToStreamFromInputValueArgsBase<TIn, TContext, TResource, TResourceKey>
+    {
+        public int ChunkSize { get; set; } = 1;
+        public IStream<TContext> ContextStream { get; } = null;
+        public Func<TContext, TIn, TResource> GetResourceFromInput { get; } = null;
+        public Func<TIn, TResourceKey> GetResourceKeyFromInput { get; } = null;
 
         /// <summary>
         /// FROM INPUT VALUE
@@ -69,30 +85,14 @@ namespace Paillave.Etl.Core.StreamNodes
         /// <param name="contextStream"></param>
         /// <param name="getResourceFromInput"></param>
         /// <param name="getResourceKeyFromInput"></param>
-        public ToStreamArgsBase(IStream<TContext> contextStream, Func<TContext, TIn, TResource> getResourceFromInput, Func<TIn, TResourceKey> getResourceKeyFromInput)
+        public ToStreamFromInputValueArgsBase(IStream<TContext> contextStream, Func<TContext, TIn, TResource> getResourceFromInput, Func<TIn, TResourceKey> getResourceKeyFromInput)
         {
             ContextStream = contextStream;
             GetResourceFromInput = getResourceFromInput;
             GetResourceKeyFromInput = getResourceKeyFromInput;
         }
     }
-    //public abstract class ToStreamNodeBase<TIn, TResource, TArgs, TResKey> : AwaitableStreamNodeBase<IStream<TIn>, TIn, TArgs>
-    //    where TArgs : ToStreamArgsBase<TResource, TIn, TResKey>
-    //{
-    //    public ToStreamNodeBase(IStream<TIn> input, string name, TArgs arguments) : base(input, name, arguments)
-    //    {
-    //    }
 
-    //    protected override IPushObservable<TIn> ProcessObservable(IPushObservable<TIn> observable)
-    //    {
-    //        var dicoResourceS = this.Arguments.ResourceStream.Observable.Do(PreProcess).ToList().Map(rs => rs.ToDictionary(this.Arguments.GetResourceKey));
-    //        return observable.CombineWithLatest(dicoResourceS, (i, r) => { ProcessValueToOutput(r[this.Arguments.GetInputResourceKey(i)], i); return i; }, true);
-    //    }
-
-    //    protected virtual void PreProcess(TResource outputResource) { }
-
-    //    protected abstract void ProcessValueToOutput(TResource outputResource, TIn value);
-    //}
 
 
 
