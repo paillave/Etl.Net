@@ -7,7 +7,7 @@ using Paillave.RxPush.Core;
 using Paillave.Etl.Core.Streams;
 using Paillave.RxPush.Operators;
 
-namespace Paillave.Etl.Core.StreamNodes
+namespace Paillave.Etl.Core.StreamNodesOld
 {
     public abstract class AwaitableSortedStreamNodeBase<TStream, TIn> : StreamNodeBase, ISortedStreamNodeOutput<TIn> where TStream : ISortedStream<TIn>
     {

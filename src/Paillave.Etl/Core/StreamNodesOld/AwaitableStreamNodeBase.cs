@@ -8,7 +8,7 @@ using Paillave.Etl.Core.Streams;
 using Paillave.RxPush.Operators;
 using System.Diagnostics;
 
-namespace Paillave.Etl.Core.StreamNodes
+namespace Paillave.Etl.Core.StreamNodesOld
 {
     public abstract class AwaitableStreamNodeBase<TStream, TIn, TArgs> : StreamNodeBase, IStreamNodeOutput<TIn> where TStream : IStream<TIn>
     {

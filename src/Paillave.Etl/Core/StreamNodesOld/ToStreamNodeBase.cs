@@ -10,7 +10,7 @@ using Paillave.Etl.Helpers;
 using SystemIO = System.IO;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Core.StreamNodes
+namespace Paillave.Etl.Core.StreamNodesOld
 {
     public class ToStreamFromOneContextValueArgsBase<TContext> : ToStreamFromOneResourceContextValueArgsBase<TContext, TContext>
     {

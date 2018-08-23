@@ -1,6 +1,6 @@
 ﻿using Paillave.Etl.Core;
-using Paillave.Etl.Core.NodeOutputs;
-using Paillave.Etl.Core.StreamNodes;
+using Paillave.Etl.Core.NodeOutputsOld;
+using Paillave.Etl.Core.StreamNodesOld;
 using Paillave.Etl.Core.Streams;
 using Paillave.RxPush.Operators;
 using System;

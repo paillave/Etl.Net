@@ -1,10 +1,10 @@
-﻿using Paillave.Etl.Core.StreamNodes;
+﻿using Paillave.Etl.Core.StreamNodesOld;
 using Paillave.Etl.Core.Streams;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Paillave.Etl.Core.NodeOutputs
+namespace Paillave.Etl.Core.NodeOutputsOld
 {
     public class KeyedNodeOutputError<TNode, TOut, TIn> : IKeyedNodeOutputError<TOut, TIn> where TNode : IKeyedStreamNodeOutput<TOut>, IStreamNodeError<ErrorRow<TIn>>
     {

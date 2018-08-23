@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Paillave.Etl.Core;
-using Paillave.Etl.Core.StreamNodes;
+using Paillave.Etl.Core.StreamNodesOld;
 using Paillave.Etl.Core.Streams;
 using Paillave.RxPush.Operators;
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Paillave.RxPush.Core;
 using Paillave.Etl.Core.Streams;
 
-namespace Paillave.Etl.Core.StreamNodes
+namespace Paillave.Etl.Core.StreamNodesOld
 {
     public abstract class StreamNodeBase<TStream, TIn> : StreamNodeBase where TStream : IStream<TIn>
     {
@@ -32,40 +32,12 @@ namespace Paillave.Etl.Core.StreamNodes
     {
         public static List<StreamToNodeLink> GetInputStreamArgumentsLinks<TArgs>(string nodeName, TArgs args)
         {
-            Type type = typeof(TArgs);
-            var properties = type.GetProperties();
-            List<StreamToNodeLink> outValues = new List<StreamToNodeLink>();
-            if (args != null)
-            {
-                foreach (var property in properties)
-                {
-                    var value = property.GetValue(args);
-                    if (value != null)
-                    {
-                        var ret = GetInputStreamArgumentsLink(nodeName, value);
-                        if (ret != null)
-                            outValues.Add(ret);
-                    }
-                }
-            }
-            return outValues;
-        }
-        private static StreamToNodeLink GetInputStreamArgumentsLink(string nodeName, object value)
-        {
-            Type valueType = value.GetType();
-            var interfaces = valueType.GetInterfaces().ToList();
-            if (interfaces.Count() == 0) return null;
-            foreach (var interf in interfaces)
-            {
-                if (!interf.IsGenericType) return null;
-                if (interf.GetGenericTypeDefinition() != typeof(IStream<>)) return null;
-                var nameProperty = interf.GetProperty(nameof(IStream<int>.Name));
-                string name = (string)nameProperty.GetValue(value);
-                var sourceNodeNameProperty = interf.GetProperty(nameof(IStream<int>.SourceNodeName));
-                string sourceNodeName = (string)sourceNodeNameProperty.GetValue(value);
-                return new StreamToNodeLink(sourceNodeName, name, nodeName);
-            }
-            return null;
+            return typeof(TArgs)
+                .GetProperties()
+                .Select(propertyInfo => propertyInfo.GetValue(args))
+                .OfType<IStream>()
+                .Select(stream => new StreamToNodeLink(stream.SourceNodeName, stream.Name, nodeName))
+                .ToList();
         }
         protected IExecutionContext ExecutionContext { get; private set; }
         public StreamNodeBase(IExecutionContext executionContext, string name)

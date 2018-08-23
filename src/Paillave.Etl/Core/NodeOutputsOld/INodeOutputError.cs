@@ -1,6 +1,6 @@
 ﻿using Paillave.Etl.Core.Streams;
 
-namespace Paillave.Etl.Core.NodeOutputs
+namespace Paillave.Etl.Core.NodeOutputsOld
 {
     public interface INodeOutputError<TOut, TIn>
     {

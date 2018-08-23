@@ -1,5 +1,5 @@
 ﻿using Paillave.Etl.Helpers;
-using Paillave.Etl.Core.StreamNodes;
+using Paillave.Etl.Core.StreamNodesOld;
 using Paillave.Etl.Core.Streams;
 using System;
 using System.Collections.Generic;
@@ -9,12 +9,17 @@ using Paillave.RxPush.Core;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class ToNameMappingFileArgs<TIn> : ToStreamArgsBase<SystemIO.StreamWriter> where TIn : new()
+    public class ToNameMappingFileArgs<TIn> : ToStreamFromOneContextValueArgsBase<SystemIO.StreamWriter> where TIn : new()
     {
-        public ColumnNameFlatFileDescriptor<TIn> Mapping { get; set; }
+        public ToNameMappingFileArgs(IStream<SystemIO.StreamWriter> contextStream, ColumnNameFlatFileDescriptor<TIn> mapping) : base(contextStream)
+        {
+            this.Mapping = mapping;
+        }
+
+        public ColumnNameFlatFileDescriptor<TIn> Mapping { get; }
     }
 
-    public class ToNameMappingFileStreamNode<TIn> : ToStreamFromOneResourceContextValueNodeBase<TIn, SystemIO.StreamWriter, ToNameMappingFileArgs<TIn>> where TIn : new()
+    public class ToNameMappingFileStreamNode<TIn> : ToStreamFromOneResourceContextValueNodeBase<TIn, SystemIO.StreamWriter, SystemIO.StreamWriter, ToNameMappingFileArgs<TIn>> where TIn : new()
     {
         private Func<TIn, IList<string>> _serialize;
         public ToNameMappingFileStreamNode(IStream<TIn> input, string name, ToNameMappingFileArgs<TIn> arguments) : base(input, name, arguments)

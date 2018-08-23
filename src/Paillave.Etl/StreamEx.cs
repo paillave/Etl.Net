@@ -1,5 +1,5 @@
 ﻿using Paillave.Etl.Core;
-using Paillave.Etl.Core.NodeOutputs;
+using Paillave.Etl.Core.NodeOutputsOld;
 using Paillave.Etl.Core.Streams;
 using Paillave.Etl.Core.TraceContents;
 using Paillave.Etl.Helpers;
@@ -485,19 +485,11 @@ namespace Paillave.Etl
         #region ToTextFile
         public static IStream<TIn> ToTextFile<TIn>(this IStream<TIn> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, ColumnIndexFlatFileDescriptor<TIn> mapping) where TIn : new()
         {
-            return new ToIndexMappingFileStreamNode<TIn>(stream, name, new ToIndexMappingFileArgs<TIn>
-            {
-                Mapping = mapping,
-                ResourceStream = resourceStream
-            }).Output;
+            return new ToIndexMappingFileStreamNode<TIn>(stream, name, new ToIndexMappingFileArgs<TIn>(resourceStream, mapping)).Output;
         }
         public static IStream<TIn> ToTextFile<TIn>(this IStream<TIn> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, ColumnNameFlatFileDescriptor<TIn> mapping) where TIn : new()
         {
-            return new ToNameMappingFileStreamNode<TIn>(stream, name, new ToNameMappingFileArgs<TIn>
-            {
-                Mapping = mapping,
-                ResourceStream = resourceStream
-            }).Output;
+            return new ToNameMappingFileStreamNode<TIn>(stream, name, new ToNameMappingFileArgs<TIn>(resourceStream,mapping)).Output;
         }
         #endregion
 

@@ -21,11 +21,7 @@ namespace Paillave.Etl
             where TRes : DbContext
             where TIn : class
         {
-            return new ToEntityFrameworkCoreStreamNode<TIn, TRes>(stream, name, new Core.StreamNodes.ToStreamArgsBase<TRes>
-            {
-                ChunkSize = chunkSize,
-                ResourceStream = resourceStream
-            }).Output;
+            return new ToEntityFrameworkCoreStreamNode<TIn, TRes>(stream, name, new Core.StreamNodesOld.ToStreamFromOneContextValueArgsBase<TRes>(resourceStream) { ChunkSize = chunkSize }).Output;
         }
     }
 }
