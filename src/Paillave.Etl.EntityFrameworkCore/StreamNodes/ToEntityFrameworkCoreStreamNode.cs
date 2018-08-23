@@ -9,11 +9,11 @@ using Paillave.RxPush.Operators;
 
 namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
 {
-    public class ToEntityFrameworkCoreStreamNode<TIn, TRes> : ToStreamNodeBase<TIn, TRes, ToStreamArgsBase<TRes>>
+    public class ToEntityFrameworkCoreStreamNode<TIn, TRes> : ToStreamFromOneResourceContextValueNodeBase<TIn, TRes,TRes, ToStreamFromOneContextValueArgsBase<TRes>>
         where TRes : DbContext
         where TIn : class
     {
-        public ToEntityFrameworkCoreStreamNode(IStream<TIn> input, string name, ToStreamArgsBase<TRes> args) : base(input, name, args) { }
+        public ToEntityFrameworkCoreStreamNode(IStream<TIn> input, string name, ToStreamFromOneContextValueArgsBase<TRes> args) : base(input, name, args) { }
 
         protected override void ProcessValueToOutput(TRes outputResource, TIn value)
         {

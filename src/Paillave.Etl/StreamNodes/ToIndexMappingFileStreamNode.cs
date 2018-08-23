@@ -13,7 +13,7 @@ namespace Paillave.Etl.StreamNodes
         public ColumnIndexFlatFileDescriptor<TIn> Mapping { get; set; }
     }
 
-    public class ToIndexMappingFileStreamNode<TIn> : ToStreamNodeBase<TIn, SystemIO.StreamWriter, ToIndexMappingFileArgs<TIn>> where TIn : new()
+    public class ToIndexMappingFileStreamNode<TIn> : ToStreamFromOneResourceContextValueNodeBase<TIn, SystemIO.StreamWriter, ToIndexMappingFileArgs<TIn>> where TIn : new()
     {
         private Func<TIn, IList<string>> _serialize;
         public ToIndexMappingFileStreamNode(IStream<TIn> input, string name, ToIndexMappingFileArgs<TIn> arguments) : base(input, name, arguments)

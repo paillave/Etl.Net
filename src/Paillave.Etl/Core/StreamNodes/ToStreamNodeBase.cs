@@ -43,6 +43,16 @@ namespace Paillave.Etl.Core.StreamNodes
         }
     }
 
+
+
+
+
+
+
+
+
+
+
     public class ToStreamFromSeveralContextValuesArgsBase<TIn, TContext, TResource, TResourceKey>
     {
         public int ChunkSize { get; set; } = 1;
@@ -98,28 +108,28 @@ namespace Paillave.Etl.Core.StreamNodes
 
 
 
-    public class ToStreamArgsBase<TResource>
+    //public class ToStreamArgsBase<TResource>
+    //{
+    //    public int ChunkSize { get; set; } = 1000;
+    //    public IStream<TResource> ResourceStream { get; set; }
+    //}
+    public abstract class ToStreamFromOneResourceContextValueNodeBase<TIn, TContext, TResource, TArgs> : AwaitableStreamNodeBase<IStream<TIn>, TIn, TArgs>
+        where TArgs : ToStreamFromOneResourceContextValueArgsBase<TContext, TResource>
     {
-        public int ChunkSize { get; set; } = 1000;
-        public IStream<TResource> ResourceStream { get; set; }
-    }
-    public abstract class ToStreamNodeBase<TIn, TResource, TArgs> : AwaitableStreamNodeBase<IStream<TIn>, TIn, TArgs>
-        where TArgs : ToStreamArgsBase<TResource>
-    {
-        public ToStreamNodeBase(IStream<TIn> input, string name, TArgs arguments) : base(input, name, arguments)
+        public ToStreamFromOneResourceContextValueNodeBase(IStream<TIn> input, string name, TArgs arguments) : base(input, name, arguments)
         {
         }
 
         protected override IPushObservable<TIn> ProcessObservable(IPushObservable<TIn> observable)
         {
-            var firstResourceS = this.Arguments.ResourceStream.Observable.First().Do(PreProcess).DelayTillEndOfStream();
+            var firstResourceS = this.Arguments.ContextStream.Observable.First().Do(i => PreProcess(this.Arguments.GetResourceFromContext(i))).DelayTillEndOfStream();
             if (this.Arguments.ChunkSize == 1)
                 return observable
-                    .CombineWithLatest(firstResourceS, (i, r) => { ProcessValueToOutput(r, i); return i; }, true);
+                    .CombineWithLatest(firstResourceS, (i, r) => { ProcessValueToOutput(this.Arguments.GetResourceFromContext( r), i); return i; }, true);
             else
                 return observable
                     .Chunk(this.Arguments.ChunkSize)
-                    .CombineWithLatest(firstResourceS, (i, r) => { ProcessChunkToOutput(r, i); return i; }, true)
+                    .CombineWithLatest(firstResourceS, (i, r) => { ProcessChunkToOutput(this.Arguments.GetResourceFromContext(r), i); return i; }, true)
                     .FlatMap(i => PushObservable.FromEnumerable(i));
         }
 

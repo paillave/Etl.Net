@@ -14,7 +14,7 @@ namespace Paillave.Etl.StreamNodes
         public ColumnNameFlatFileDescriptor<TIn> Mapping { get; set; }
     }
 
-    public class ToNameMappingFileStreamNode<TIn> : ToStreamNodeBase<TIn, SystemIO.StreamWriter, ToNameMappingFileArgs<TIn>> where TIn : new()
+    public class ToNameMappingFileStreamNode<TIn> : ToStreamFromOneResourceContextValueNodeBase<TIn, SystemIO.StreamWriter, ToNameMappingFileArgs<TIn>> where TIn : new()
     {
         private Func<TIn, IList<string>> _serialize;
         public ToNameMappingFileStreamNode(IStream<TIn> input, string name, ToNameMappingFileArgs<TIn> arguments) : base(input, name, arguments)
