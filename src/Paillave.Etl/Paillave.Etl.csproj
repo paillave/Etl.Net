@@ -5,22 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="SystemOld\**" />
-    <EmbeddedResource Remove="SystemOld\**" />
-    <None Remove="SystemOld\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="ExecutionContextOld.cs" />
-    <Compile Remove="StreamNodes\CrossApplyDataStreamReadStreamNode.cs" />
-    <Compile Remove="StreamNodes\CrossApplyFolderFilesStreamNode.cs" />
-    <Compile Remove="StreamNodes\CrossApplyIndexMappingFileStreamNode.cs" />
-    <Compile Remove="StreamNodes\CrossApplyNameMappingFileStreamNode.cs" />
-    <Compile Remove="StreamNodes\CrossApplyNode.cs" />
-    <Compile Remove="Core\DataSourceNodeBase.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Paillave.RxPush\Paillave.RxPush.csproj" />
   </ItemGroup>
 
