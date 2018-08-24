@@ -24,8 +24,4 @@
     <ProjectReference Include="..\Paillave.RxPush\Paillave.RxPush.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Core\StreamNodes\" />
-  </ItemGroup>
-
 </Project>

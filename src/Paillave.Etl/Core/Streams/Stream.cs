@@ -31,7 +31,7 @@ namespace Paillave.Etl.Core.Streams
             }
         }
 
-        public IPushObservable<T> Observable { get; protected set; }
+        public IPushObservable<T> Observable { get; }
 
         public IExecutionContext ExecutionContext { get; }
 

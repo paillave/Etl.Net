@@ -19,5 +19,6 @@ namespace Paillave.Etl.Core
         void AddDisposable(IDisposable disposable);
         Task GetCompletionTask();
         void AddStreamToNodeLink(StreamToNodeLink link);
+        bool IsTracingContext { get; }
     }
 }

@@ -60,6 +60,7 @@ namespace Paillave.Etl
 
             public string TypeName => "ExecutionContext";
         }
+
         private class GetDefinitionExecutionContext : IExecutionContext
         {
             private List<StreamToNodeLink> _streamToNodeLinks = new List<StreamToNodeLink>();
@@ -77,6 +78,7 @@ namespace Paillave.Etl
             public WaitHandle StartSynchronizer => throw new NotImplementedException();
             public string JobName { get; }
             public IPushObservable<TraceEvent> TraceEvents => PushObservable.Empty<TraceEvent>();
+            public bool IsTracingContext => false;
             public void AddDisposable(IDisposable disposable) => throw new NotImplementedException();
             public void AddToWaitForCompletion<T>(string sourceNodeName, IPushObservable<T> stream) => _nodeNamesToWait.Add(sourceNodeName);
             public Task GetCompletionTask() => throw new NotImplementedException();
@@ -104,6 +106,7 @@ namespace Paillave.Etl
             public Guid ExecutionId { get; }
             public string JobName { get; }
             public IPushObservable<TraceEvent> TraceEvents => _traceSubject;
+            public bool IsTracingContext => false;
             public WaitHandle StartSynchronizer { get; }
             public void Trace(TraceEvent traceEvent) => _traceSubject.PushValue(traceEvent);
             public void AddToWaitForCompletion<T>(string sourceNodeName, IPushObservable<T> stream)
@@ -130,6 +133,7 @@ namespace Paillave.Etl
             public Guid ExecutionId { get; }
             public string JobName { get; }
             public IPushObservable<TraceEvent> TraceEvents => _traceSubject;
+            public bool IsTracingContext => true;
             public WaitHandle StartSynchronizer { get; }
             public void Trace(TraceEvent traveEvent) { }
             public void AddToWaitForCompletion<T>(string sourceNodeName, IPushObservable<T> stream) => _tasksToWait.Add(stream.ToTaskAsync());
