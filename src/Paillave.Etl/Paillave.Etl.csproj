@@ -4,6 +4,26 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Core\StreamNodesOld\**" />
+    <EmbeddedResource Remove="Core\StreamNodesOld\**" />
+    <None Remove="Core\StreamNodesOld\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Core\ISortCriteria.cs" />
+    <Compile Remove="Core\SortCriteria.cs" />
+    <Compile Remove="Core\SortCriteriaComparer.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Paillave.RxPush\Paillave.RxPush.csproj" />
   </ItemGroup>

@@ -14,6 +14,32 @@ namespace Paillave.RxPushTests.Operators
     {
         [TestCategory(nameof(FlatMapSubjectTests))]
         [TestMethod]
+        public void FlatMapWithDeferable()
+        {
+            var valueStack = new Stack<int>();
+            var errorStack = new Stack<Exception>();
+            bool isComplete = false;
+            var obs = new PushSubject<int>();
+            var sobs = new[] { PushObservable.FromEnumerable(new[] { 1, 2 }), PushObservable.FromEnumerable(new[] { 3, 4 }) };
+
+            var output = obs.FlatMap(i => sobs[i]);
+
+            output.Subscribe(valueStack.Push, () => isComplete = true, errorStack.Push);
+
+            obs.PushValue(0);
+            System.Threading.Thread.Sleep(50); //the time for the 2 values to be issued
+            CollectionAssert.AreEquivalent(new[] { 1, 2 }, valueStack, "output values should be automatically issued");
+
+            obs.PushValue(1);
+            System.Threading.Thread.Sleep(50); //the time for the 2 values to be issued
+            CollectionAssert.AreEquivalent(new[] { 1, 2, 3, 4 }, valueStack, "output values should be automatically issued");
+
+            obs.Complete();
+            Assert.IsTrue(isComplete, "the output stream should be completed");
+        }
+
+        [TestCategory(nameof(FlatMapSubjectTests))]
+        [TestMethod]
         public void SimpleFlatMap()
         {
             var valueStack = new Stack<int>();

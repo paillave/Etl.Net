@@ -9,7 +9,7 @@ namespace Paillave.Etl.Core.TraceContents
 {
     public class NotSortedStreamTraceContent : StreamTraceContentBase
     {
-        public NotSortedStreamTraceContent(string streamName, int lineNumber) : base(streamName)
+        public NotSortedStreamTraceContent(int lineNumber)
         {
             this.LineNumber = lineNumber;
         }

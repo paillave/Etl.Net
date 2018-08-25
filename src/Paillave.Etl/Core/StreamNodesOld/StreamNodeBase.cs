@@ -62,46 +62,9 @@ namespace Paillave.Etl.Core.StreamNodesOld
         {
             return new SortedStream<T>(this.Tracer, this.ExecutionContext, this.NodeName, streamName, observable, sortCriterias);
         }
-        protected ISortedStream<T> CreateStream<T>(string streamName, IPushObservable<T> observable, ISortedStream<T> streamIn)
-        {
-            return new SortedStream<T>(this.Tracer, this.ExecutionContext, this.NodeName, streamName, observable, streamIn.SortCriterias);
-        }
         protected IKeyedStream<T> CreateKeyedStream<T>(string streamName, IPushObservable<T> observable, IEnumerable<ISortCriteria<T>> sortCriterias)
         {
             return new KeyedStream<T>(this.Tracer, this.ExecutionContext, this.NodeName, streamName, observable, sortCriterias);
-        }
-        protected IKeyedStream<T> CreateStream<T>(string streamName, IPushObservable<T> observable, IKeyedStream<T> streamIn)
-        {
-            return new KeyedStream<T>(this.Tracer, this.ExecutionContext, this.NodeName, streamName, observable, streamIn.SortCriterias);
-        }
-
-        protected Func<TIn, ErrorManagementItem<TIn, TOut>> ErrorManagementWrapFunction<TIn, TOut>(Func<TIn, TOut> call)
-        {
-            return (TIn input) =>
-            {
-                try
-                {
-                    return new ErrorManagementItem<TIn, TOut>(input, call(input));
-                }
-                catch (Exception ex)
-                {
-                    return new ErrorManagementItem<TIn, TOut>(input, ex);
-                }
-            };
-        }
-        protected Func<TIn1, TIn2, ErrorManagementItem<TIn1, TIn2, TOut>> ErrorManagementWrapFunction<TIn1, TIn2, TOut>(Func<TIn1, TIn2, TOut> call)
-        {
-            return (TIn1 input1, TIn2 input2) =>
-            {
-                try
-                {
-                    return new ErrorManagementItem<TIn1, TIn2, TOut>(input1, input2, call(input1, input2));
-                }
-                catch (Exception ex)
-                {
-                    return new ErrorManagementItem<TIn1, TIn2, TOut>(input1, input2, ex);
-                }
-            };
         }
     }
 }

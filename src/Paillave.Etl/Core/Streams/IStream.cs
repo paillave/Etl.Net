@@ -12,7 +12,6 @@ namespace Paillave.Etl.Core.Streams
     public interface IStream
     {
         IExecutionContext ExecutionContext { get; }
-        string Name { get; }
         string SourceNodeName { get; }
     }
 }

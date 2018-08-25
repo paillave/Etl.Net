@@ -6,13 +6,13 @@ namespace Paillave.Etl.Core
 {
     public class StreamToNodeLink
     {
-        public StreamToNodeLink(string sourceNodeName, string streamName, string targetNodeName)
+        public StreamToNodeLink(string sourceNodeName, string inputName, string targetNodeName)
         {
-            this.StreamName = streamName;
+            this.InputName = inputName;
             this.TargetNodeName = targetNodeName;
             this.SourceNodeName = sourceNodeName;
         }
-        public string StreamName { get; }
+        public string InputName { get; set; }
         public string TargetNodeName { get; }
         public string SourceNodeName { get; }
     }

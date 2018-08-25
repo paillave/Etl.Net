@@ -14,23 +14,24 @@ namespace Paillave.Etl.Core.Streams
     {
         private IComparer<T> _comparer;
 
-        public KeyedStream(ITracer tracer, IExecutionContext executionContext, string sourceNodeName, string name, IPushObservable<T> observable, IEnumerable<ISortCriteria<T>> sortCriterias) : base(tracer, executionContext, sourceNodeName, name, observable)
+        public KeyedStream(ITracer tracer, IExecutionContext executionContext, string sourceNodeName, IPushObservable<T> observable, IEnumerable<SortCriteria<T>> sortCriterias) : base(tracer, executionContext, sourceNodeName, name, observable)
         {
             if (sortCriterias.Count() == 0) throw new ArgumentOutOfRangeException(nameof(sortCriterias), "key criteria list cannot be empty");
-            this.SortCriterias = new ReadOnlyCollection<ISortCriteria<T>>(sortCriterias.ToList());
+            this.SortCriterias = new ReadOnlyCollection<SortCriteria<T>>(sortCriterias.ToList());
+            //TODO: move the check into the node that creates this stream
             if (tracer != null)
             {
-                this.SortCriterias = new ReadOnlyCollection<ISortCriteria<T>>(sortCriterias.ToList());
-                this._comparer = new SortCriteriaComparer<T>(sortCriterias);
+                this.SortCriterias = new ReadOnlyCollection<SortCriteria<T>>(sortCriterias.ToList());
+                this._comparer = new SortCriteriaComparer<T>(sortCriterias.ToArray());
                 this.Observable
                     .PairWithPrevious()
                     .Map((Pair, Index) => new { Pair, Index })
                     .Skip(1)
                     .Filter(i => this._comparer.Compare(i.Pair.Item1, i.Pair.Item2) >= 0)
-                    .Map(i => new NotKeyedStreamTraceContent(name, i.Index))
+                    .Map(i => new NotKeyedStreamTraceContent(i.Index))
                     .Subscribe(tracer.Trace);
             }
         }
-        public IReadOnlyCollection<ISortCriteria<T>> SortCriterias { get; }
+        public IReadOnlyCollection<SortCriteria<T>> SortCriterias { get; }
     }
 }
