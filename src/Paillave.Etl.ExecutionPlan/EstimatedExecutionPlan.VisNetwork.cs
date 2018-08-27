@@ -10,7 +10,7 @@ namespace Paillave.Etl
 {
     public static partial class JobDefinitionStructureEx
     {
-        public static VisNetworkDescription GetVisNetworkStucture(this JobDefinitionStructure jobDefinitionStructure)
+        public static VisNetworkDescription GetEstimatedExecutionPlanVisNetwork(this JobDefinitionStructure jobDefinitionStructure)
         {
             var nameToIdDictionary = jobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.Name, Idx }).ToDictionary(i => i.Name, i => i.Idx);
             return new VisNetworkDescription
@@ -58,27 +58,27 @@ namespace Paillave.Etl
             //if (node.IsTarget) return new VisNetworkStatisticIconNode { face = "Ionicons", size = 50, code = @"\uf1b2" };
             return null;
         }
-        public static string GetJsonVisNetworkStructure(this JobDefinitionStructure jobDefinitionStructure)
+        public static string GetEstimatedExecutionPlanJsonVisNetwork(this JobDefinitionStructure jobDefinitionStructure)
         {
-            return JsonConvert.SerializeObject(jobDefinitionStructure.GetVisNetworkStucture()).Replace(@"""\\u", @"""\u");
+            return JsonConvert.SerializeObject(jobDefinitionStructure.GetEstimatedExecutionPlanVisNetwork()).Replace(@"""\\u", @"""\u");
         }
-        public static string GetHtmlVisNetworkStructure(this JobDefinitionStructure jobDefinitionStructure)
+        public static string GetEstimatedExecutionPlanHtmlVisNetwork(this JobDefinitionStructure jobDefinitionStructure)
         {
-            var json = jobDefinitionStructure.GetJsonVisNetworkStructure();
+            var json = jobDefinitionStructure.GetEstimatedExecutionPlanJsonVisNetwork();
             string file;
 
             var assembly = typeof(ExecutionStatusEx).Assembly;
 
-            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.Charts.JobDefinitionStructure.VisNetwork.html"))
+            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.ExecutionPlan.EstimatedExecutionPlan.VisNetwork.html"))
             using (var reader = new StreamReader(stream))
                 file = reader.ReadToEnd();
 
             string html = file.Replace("'<<STATISTICS>>'", json);
             return html;
         }
-        public static void OpenVisNetworkStructure(this JobDefinitionStructure jobDefinitionStructure)
+        public static void OpenEstimatedExecutionPlanVisNetwork(this JobDefinitionStructure jobDefinitionStructure)
         {
-            Tools.OpenFile(jobDefinitionStructure.GetHtmlVisNetworkStructure(), "html");
+            Tools.OpenFile(jobDefinitionStructure.GetEstimatedExecutionPlanHtmlVisNetwork(), "html");
         }
     }
 }

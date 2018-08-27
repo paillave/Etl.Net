@@ -13,21 +13,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ExecutionStatus.D3Sankey.html" />
-    <None Remove="ExecutionStatus.PlotySankey.html" />
-    <None Remove="ExecutionStatus.VisNetwork.html" />
-    <None Remove="JobDefinitionStructure.D3Sankey.html" />
-    <None Remove="JobDefinitionStructure.PlotySankey.html" />
-    <None Remove="JobDefinitionStructure.VisNetwork.html" />
+    <None Remove="ActualExecutionPlan.D3Sankey.html" />
+    <None Remove="ActualExecutionPlan.PlotySankey.html" />
+    <None Remove="ActualExecutionPlan.VisNetwork.html" />
+    <None Remove="EstimatedExecutionPlan.D3Sankey.html" />
+    <None Remove="EstimatedExecutionPlan.PlotySankey.html" />
+    <None Remove="EstimatedExecutionPlan.VisNetwork.html" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="JobDefinitionStructure.PlotySankey.html" />
-    <EmbeddedResource Include="JobDefinitionStructure.D3Sankey.html" />
-    <EmbeddedResource Include="JobDefinitionStructure.VisNetwork.html" />
-    <EmbeddedResource Include="ExecutionStatus.VisNetwork.html" />
-    <EmbeddedResource Include="ExecutionStatus.PlotySankey.html" />
-    <EmbeddedResource Include="ExecutionStatus.D3Sankey.html" />
+    <EmbeddedResource Include="EstimatedExecutionPlan.PlotySankey.html" />
+    <EmbeddedResource Include="EstimatedExecutionPlan.D3Sankey.html" />
+    <EmbeddedResource Include="EstimatedExecutionPlan.VisNetwork.html" />
+    <EmbeddedResource Include="ActualExecutionPlan.VisNetwork.html" />
+    <EmbeddedResource Include="ActualExecutionPlan.PlotySankey.html" />
+    <EmbeddedResource Include="ActualExecutionPlan.D3Sankey.html" />
   </ItemGroup>
 
   <ItemGroup>

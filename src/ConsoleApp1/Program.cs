@@ -31,7 +31,7 @@ namespace ConsoleApp1
             }, traceStreamProcessDefinition);
             task.Wait();
 
-            task.Result.OpenVisNetworkStatistics();
+            task.Result.OpenActualExecutionPlanVisNetwork();
 
             Console.WriteLine("Done");
             Console.WriteLine("Press a key...");
@@ -54,7 +54,7 @@ namespace ConsoleApp1
             }, traceStreamProcessDefinition);
             task.Wait();
 
-            task.Result.OpenD3SankeyStatistics();
+            task.Result.OpenActualExecutionPlanD3Sankey();
 
             Console.WriteLine("Done");
             Console.WriteLine("Press a key...");

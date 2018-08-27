@@ -13,7 +13,7 @@ namespace Paillave.Etl
 {
     public static partial class JobDefinitionStructureEx
     {
-        public static PlotlySankeyDescription GetPlotlySankeyStucture(this JobDefinitionStructure jobDefinitionStructure)
+        public static PlotlySankeyDescription GetEstimatedExecutionPlanPlotlySankey(this JobDefinitionStructure jobDefinitionStructure)
         {
             var nameToIdDictionary = jobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.Name, Idx }).ToDictionary(i => i.Name, i => i.Idx);
             var links = jobDefinitionStructure.StreamToNodeLinks.Select(link => new
@@ -36,14 +36,14 @@ namespace Paillave.Etl
         //{
         //    return JsonConvert.SerializeObject(await executionStatus.GetPlotlySankeyStatisticsAsync());
         //}
-        public static string GetHtmlPlotlySankeyStructure(this JobDefinitionStructure jobDefinitionStructure)
+        public static string GetEstimatedExecutionPlanHtmlPlotlySankey(this JobDefinitionStructure jobDefinitionStructure)
         {
-            var stats = jobDefinitionStructure.GetPlotlySankeyStucture();
+            var stats = jobDefinitionStructure.GetEstimatedExecutionPlanPlotlySankey();
             string file;
 
             var assembly = typeof(JobDefinitionStructureEx).Assembly;
 
-            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.Charts.JobDefinitionStructure.PlotySankey.html"))
+            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.ExecutionPlan.EstimatedExecutionPlan.PlotySankey.html"))
             using (var reader = new StreamReader(stream))
                 file = reader.ReadToEnd();
 
@@ -54,9 +54,9 @@ namespace Paillave.Etl
             html = html.Replace("'<<LINK_VALUES>>'", JsonConvert.SerializeObject(stats.LinkValues));
             return html;
         }
-        public static void OpenPlotlySankeyStructure(this JobDefinitionStructure jobDefinitionStructure)
+        public static void OpenEstimatedExecutionPlanPlotlySankey(this JobDefinitionStructure jobDefinitionStructure)
         {
-            Tools.OpenFile(jobDefinitionStructure.GetHtmlPlotlySankeyStructure(), "html");
+            Tools.OpenFile(jobDefinitionStructure.GetEstimatedExecutionPlanHtmlPlotlySankey(), "html");
         }
     }
 }
