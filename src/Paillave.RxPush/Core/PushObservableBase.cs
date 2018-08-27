@@ -13,7 +13,7 @@ namespace Paillave.RxPush.Core
         public virtual IDisposable Subscribe(ISubscription<T> subscription)
         {
             this.Subscriptions.Add(subscription);
-            return new Unsbuscriber(this, subscription);
+            return new Unsubscriber(this, subscription);
         }
 
         public IDisposable Subscribe(Action<T> onPush)
@@ -30,12 +30,12 @@ namespace Paillave.RxPush.Core
         {
             return Subscribe(new Subscription<T>(onPush, onComplete, onException));
         }
-        private class Unsbuscriber : IDisposable
+        private class Unsubscriber : IDisposable
         {
             private PushObservableBase<T> _observableBase;
             private ISubscription<T> _subscription;
 
-            public Unsbuscriber(PushObservableBase<T> observableBase, ISubscription<T> subscription)
+            public Unsubscriber(PushObservableBase<T> observableBase, ISubscription<T> subscription)
             {
                 this._observableBase = observableBase;
                 this._subscription = subscription;

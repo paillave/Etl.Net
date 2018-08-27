@@ -13,10 +13,12 @@ namespace Paillave.RxPush.Operators
         private ObservableElement<TIn1> _obsel1;
         private ObservableElement<TIn2> _obsel2;
         private Func<TIn1, TIn2, TOut> _selector;
-        public CombineWithLatestSubject(IPushObservable<TIn1> observable1, IPushObservable<TIn2> observable2, Func<TIn1, TIn2, TOut> selector)
+        private bool _bufferTillFirstMatch;
+        public CombineWithLatestSubject(IPushObservable<TIn1> observable1, IPushObservable<TIn2> observable2, Func<TIn1, TIn2, TOut> selector, bool bufferTillFirstMatch = false)
         {
             lock (_lockObject)
             {
+                _bufferTillFirstMatch = bufferTillFirstMatch;
                 _selector = selector;
                 var disp1 = observable1.Subscribe(HandlePushValue1, HandleComplete1, this.PushException);
                 this._obsel1 = new ObservableElement<TIn1>(disp1);
@@ -29,7 +31,7 @@ namespace Paillave.RxPush.Operators
             lock (_lockObject)
             {
                 _obsel1.LastValue = value;
-                TryPushCombination();
+                TryPushCombination(1);
             }
         }
 
@@ -38,26 +40,56 @@ namespace Paillave.RxPush.Operators
             lock (_lockObject)
             {
                 _obsel2.LastValue = value;
-                TryPushCombination();
+                TryPushCombination(2);
             }
         }
-        private void TryPushCombination()
+        private void TryPushCombination(int inputNumber)
         {
             lock (_lockObject)
             {
                 if (_obsel1.HasLastValue && _obsel2.HasLastValue)
                 {
-                    TOut ret;
-                    try
+                    if (_bufferTillFirstMatch)
                     {
-                        ret = _selector(_obsel1.LastValue, _obsel2.LastValue);
-                        PushValue(ret);
+                        if (inputNumber == 1 && _obsel2.Buffer.Any())
+                        {
+                            while (_obsel2.Buffer.Any())
+                                PushValues(_obsel1.LastValue, _obsel2.Buffer.Dequeue());
+                            _obsel1.Buffer.Clear();
+                        }
+                        else if (inputNumber == 2 && _obsel1.Buffer.Any())
+                        {
+                            while (_obsel1.Buffer.Any())
+                                PushValues(_obsel1.Buffer.Dequeue(), _obsel2.LastValue);
+                            _obsel2.Buffer.Clear();
+                        }
+                        else
+                            PushValues(_obsel1.LastValue, _obsel2.LastValue);
                     }
-                    catch (Exception ex)
+                    else
+                        PushValues(_obsel1.LastValue, _obsel2.LastValue);
+                }
+                else
+                {
+                    if (_bufferTillFirstMatch)
                     {
-                        PushException(ex);
+                        if (!_obsel1.HasLastValue && _obsel2.HasLastValue) _obsel2.Buffer.Enqueue(_obsel2.LastValue);
+                        else if (!_obsel2.HasLastValue && _obsel1.HasLastValue) _obsel1.Buffer.Enqueue(_obsel1.LastValue);
                     }
                 }
+            }
+        }
+        private void PushValues(TIn1 in1, TIn2 in2)
+        {
+            TOut ret;
+            try
+            {
+                ret = _selector(in1, in2);
+                PushValue(ret);
+            }
+            catch (Exception ex)
+            {
+                PushException(ex);
             }
         }
         private void HandleComplete1()
@@ -91,6 +123,7 @@ namespace Paillave.RxPush.Operators
         {
             private IDisposable _disposable;
             private T _lastValue = default(T);
+            public Queue<T> Buffer = new Queue<T>();
             public T LastValue
             {
                 get { return _lastValue; }
@@ -115,9 +148,9 @@ namespace Paillave.RxPush.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TOut> CombineWithLatest<TIn1, TIn2, TOut>(this IPushObservable<TIn1> observable1, IPushObservable<TIn2> observable2, Func<TIn1, TIn2, TOut> selector)
+        public static IPushObservable<TOut> CombineWithLatest<TIn1, TIn2, TOut>(this IPushObservable<TIn1> observable1, IPushObservable<TIn2> observable2, Func<TIn1, TIn2, TOut> selector, bool bufferTillFirstMatch = false)
         {
-            return new CombineWithLatestSubject<TIn1, TIn2, TOut>(observable1, observable2, selector);
+            return new CombineWithLatestSubject<TIn1, TIn2, TOut>(observable1, observable2, selector, bufferTillFirstMatch);
         }
     }
 }

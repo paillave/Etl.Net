@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<div id="chart" />
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://rawgit.com/FabricioRHS/skd3/master/build/sk.d3.min.js"></script>
+<link href="https://rawgit.com/FabricioRHS/skd3/master/build/sk.d3.min.css" rel="stylesheet" type="text/css" />
+<style>
+    #chart {
+        position: absolute;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+    }
+</style>
+<script>
+			var configSankey = {
+				margin: { top: 10, left: 10, right: 10, bottom: 10 },
+				nodes: {
+					dynamicSizeFontNode: false,
+					draggableX: true,
+					draggableY: true
+				},
+				links: {
+					formatValue: function(val) {
+						return d3.format("0")(val) + ' row(s)';
+					}
+				},
+				tooltip: {
+					infoDiv: true,
+					labelSource: 'Input:',
+					labelTarget: 'Output:'
+				}
+			}
+    var values = '<<SANKEY_STATISTICS>>';
+    var objSankey = sk.createSankey('#chart', configSankey, values);
+
+</script>

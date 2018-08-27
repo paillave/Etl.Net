@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Etl.Net</PackageId>
+    <Version>1.0.0-alpha</Version>
+    <Authors>Stephane Royer</Authors>
+    <Company>paillave</Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Core\NodeOutputsOld\**" />
+    <EmbeddedResource Remove="Core\NodeOutputsOld\**" />
+    <None Remove="Core\NodeOutputsOld\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Core\ISortCriteria.cs" />
+    <Compile Remove="Core\SortCriteria.cs" />
+    <Compile Remove="Core\SortCriteriaComparer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paillave.RxPush\Paillave.RxPush.csproj" />
+  </ItemGroup>
+
+</Project>

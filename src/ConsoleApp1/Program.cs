@@ -5,13 +5,10 @@ using System.IO;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
-using Paillave.Etl.MapperFactories;
 using ConsoleApp1.StreamTypes;
 using Paillave.Etl.Core;
 using ConsoleApp1.Jobs;
-using Paillave.Etl.Core.TraceContents;
 using System.Collections.Generic;
-using Paillave.RxPush.Core;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
@@ -22,30 +19,43 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var ctx = new TestJob1();
-            ctx.TraceStream.Where("keep log info", i => i.Content.Level <= System.Diagnostics.TraceLevel.Info).ToAction("logs to console", Console.WriteLine);
-            //Type counterSummaryStreamTraceContentType = typeof(CounterSummaryStreamTraceContent);
-            //var sankeyStatisticsTask = ctx.GetHtmlD3SankeyStatisticsAsync();
-            var sankeyStatisticsTask = ctx.GetHtmlVisNetworkStatisticsAsync();
-            ctx.ExecuteAsync(new MyConfig
+            //new StreamProcessRunner<TestJob3, MyConfig>().GetDefinitionStructure().OpenVisNetworkStructure();
+            var runner = new StreamProcessRunner<TestJob3, MyConfig>();
+            StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = null;// new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.Where("keep log info", i => i.Content.Level <= TraceLevel.Info).ToAction("logs to console", Console.WriteLine));
+            var task = runner.ExecuteAsync(new MyConfig
             {
-                InputFolderPath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\",
+                InputFolderPath = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles\",
                 InputFilesSearchPattern = "testin.*.txt",
-                TypeFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\ref - Copy.txt",
-                DestinationFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\outfile.csv"
-            }).Wait();
+                TypeFilePath = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles\ref - Copy.txt",
+                DestinationFilePath = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles\outfile.csv"
+            }, traceStreamProcessDefinition);
+            task.Wait();
 
-            File.WriteAllText("sankeyStats.html", sankeyStatisticsTask.Result);
+            task.Result.OpenActualExecutionPlanD3Sankey();
 
-
-            var p = new Process();
-            p.StartInfo = new ProcessStartInfo(@"sankeyStats.html")
+            Console.WriteLine("Done");
+            Console.WriteLine("Press a key...");
+        }
+        static void MainOld(string[] args)
+        {
+            //new StreamProcessRunner<TestJob3, MyConfig>().GetDefinitionStructure().OpenVisNetworkStructure();
+            var runner = new StreamProcessRunner<TestJob5, MyConfig2>();
+            StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = null;// new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.Where("keep log info", i => i.Content.Level <= TraceLevel.Info).ToAction("logs to console", Console.WriteLine));
+            var task = runner.ExecuteAsync(new MyConfig2
             {
-                UseShellExecute = true
-            };
-            p.Start();
+                ConnectionString = new System.Data.SqlClient.SqlConnectionStringBuilder
+                {
+                    DataSource = "localhost",
+                    InitialCatalog = "TestDB",
+                    IntegratedSecurity = true,
+                    MultipleActiveResultSets = true
+                }.ToString(),
+                Filter = "a"
+            }, traceStreamProcessDefinition);
+            task.Wait();
 
-            //Process.Start("sankeyStats.html");
+            task.Result.OpenActualExecutionPlanD3Sankey();
+
             Console.WriteLine("Done");
             Console.WriteLine("Press a key...");
             Console.ReadKey();

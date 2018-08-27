@@ -25,21 +25,17 @@ namespace Paillave.RxPush.Operators
                 return latestValue;
             });
         }
+        public static IPushObservable<T> DelayTillEndOfStream<T>(this IPushObservable<T> observable)
+        {
+            return observable.ToList().FlatMap(i => PushObservable.FromEnumerable(i));
+        }
         public static Task<List<T>> ToListAsync<T>(this IPushObservable<T> observable)
         {
-            return Task.Run(() =>
-            {
-                List<T> values = new List<T>();
-                var mtx = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
-                var disp = observable.Subscribe((v) => values.Add(v), () => mtx.Set());
-                mtx.WaitOne();
-                disp.Dispose();
-                return values;
-            });
+            return observable.ToList().ToTaskAsync();
         }
         public static IPushObservable<int> Count<T>(this IPushObservable<T> observable)
         {
-            return observable.Scan<T, int>((acc, red) => acc + 1, 0).Last();
+            return observable.Scan((acc, red) => acc + 1, 0).Last();
         }
         public static IPushObservable<int> Count<T>(this IPushObservable<T> observable, Func<T, bool> criteria)
         {

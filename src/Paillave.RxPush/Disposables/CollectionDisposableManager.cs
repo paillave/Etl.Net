@@ -24,6 +24,7 @@ namespace Paillave.RxPush.Disposables
         {
             lock (syncLock)
             {
+                if (disposable == null) return;
                 _disposables.Add(disposable);
             }
         }
@@ -31,6 +32,7 @@ namespace Paillave.RxPush.Disposables
         {
             lock (syncLock)
             {
+                if (disposable == null) return;
                 if (_disposables.Contains(disposable))
                 {
                     _disposables.Remove(disposable);
