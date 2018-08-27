@@ -18,9 +18,8 @@ build_script:
   - cmd: dotnet build ./src -c Release
 after_build:
   # For once the build has completed
-clone_depth: 1
 test_script:
-  - cmd: dotnet test src/Paillave.RxPushTests -c Release
+  - cmd: dotnet test ./src/Paillave.RxPushTests -c Release
 on_finish :
   # any cleanup in here
 deploy:
