@@ -7,7 +7,7 @@ namespace Paillave.Etl.Core.TraceContents
 {
     public class UnhandledExceptionStreamTraceContent : StreamTraceContentBase
     {
-        public UnhandledExceptionStreamTraceContent(string streamName, Exception ex) : base(streamName)
+        public UnhandledExceptionStreamTraceContent(Exception ex)
         {
             this.Exception = ex;
         }

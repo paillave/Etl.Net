@@ -6,14 +6,12 @@ using System.Threading;
 
 namespace Paillave.Etl.Core
 {
-    public interface IValuesProvider<TIn, TOut>
+    public interface IValuesProvider<TValueIn, TValueOut>
     {
-        //void SetWaitHandle(WaitHandle waitHandle);
-        IDeferedPushObservable<TOut> PushValues(TIn args);
+        IDeferedPushObservable<TValueOut> PushValues(TValueIn args);
     }
-    public interface IValuesProvider<TIn, TRes, TOut>
+    public interface IValuesProvider<TValueIn, TInToApply, TValueOut>
     {
-        //void SetWaitHandle(WaitHandle waitHandle);
-        IDeferedPushObservable<TOut> PushValues(TRes resource, TIn args);
+        IDeferedPushObservable<TValueOut> PushValues(TInToApply resource, TValueIn args);
     }
 }

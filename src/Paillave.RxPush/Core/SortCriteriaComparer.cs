@@ -10,7 +10,7 @@ namespace Paillave.RxPush.Core
     {
         private readonly Func<T, T, int>[] _compareFunctions;
 
-        public SortCriteriaComparer(IEnumerable<SortCriteria<T>> sortCriterias)
+        public SortCriteriaComparer(params SortCriteria<T>[] sortCriterias)
         {
             if (sortCriterias.Count() == 0) throw new ArgumentOutOfRangeException(nameof(sortCriterias), "sorting criteria list cannot be empty");
             this._compareFunctions = sortCriterias.Select<SortCriteria<T>, Func<T, T, int>>(i =>

@@ -7,7 +7,6 @@ namespace Paillave.Etl.Core
     public class StreamStatisticCounter
     {
         public int Counter { get; set; }
-        public string StreamName { get; set; }
         public string SourceNodeName { get; set; }
     }
 }

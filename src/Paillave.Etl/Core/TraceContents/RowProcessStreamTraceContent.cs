@@ -7,7 +7,7 @@ namespace Paillave.Etl.Core.TraceContents
 {
     public class RowProcessStreamTraceContent : StreamTraceContentBase
     {
-        public RowProcessStreamTraceContent(string streamName, int position, object row) : base(streamName)
+        public RowProcessStreamTraceContent(int position, object row)
         {
             this.Position = position;
             this.Row = row;

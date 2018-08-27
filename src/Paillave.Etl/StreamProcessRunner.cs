@@ -20,10 +20,10 @@ namespace Paillave.Etl
             IPushSubject<TraceEvent> traceSubject = new PushSubject<TraceEvent>();
             IPushSubject<TConfig> startupSubject = new PushSubject<TConfig>();
             IExecutionContext traceExecutionContext = new TraceExecutionContext(startSynchronizer, executionId);
-            var traceStream = new Stream<TraceEvent>(null, traceExecutionContext, null, null, traceSubject);
+            var traceStream = new Stream<TraceEvent>(null, traceExecutionContext, null, traceSubject);
             TJob jobDefinition = new TJob();
             JobExecutionContext jobExecutionContext = new JobExecutionContext(jobDefinition.Name, executionId, startSynchronizer, traceSubject);
-            var startupStream = new Stream<TConfig>(new Tracer(jobExecutionContext, new CurrentExecutionNodeContext(jobDefinition.Name)), jobExecutionContext, jobDefinition.Name, "Startup", startupSubject.First());
+            var startupStream = new Stream<TConfig>(new Tracer(jobExecutionContext, new CurrentExecutionNodeContext(jobDefinition.Name)), jobExecutionContext, jobDefinition.Name, startupSubject.First());
 
             traceStreamProcessDefinition?.DefineProcess(traceStream);
             jobDefinition.DefineProcess(startupStream);
@@ -46,7 +46,7 @@ namespace Paillave.Etl
             TJob jobDefinition = new TJob();
             GetDefinitionExecutionContext jobExecutionContext = new GetDefinitionExecutionContext(jobDefinition.Name);
             //JobExecutionContext jobExecutionContext = new JobExecutionContext(jobDefinition.Name, Guid.Empty, null, null);
-            var startupStream = new Stream<TConfig>(new Tracer(jobExecutionContext, new CurrentExecutionNodeContext(jobDefinition.Name)), jobExecutionContext, jobDefinition.Name, "Startup", PushObservable.Empty<TConfig>());
+            var startupStream = new Stream<TConfig>(new Tracer(jobExecutionContext, new CurrentExecutionNodeContext(jobDefinition.Name)), jobExecutionContext, jobDefinition.Name, PushObservable.Empty<TConfig>());
             jobDefinition.DefineProcess(startupStream);
             return jobExecutionContext.GetDefinitionStructure();
         }
@@ -60,6 +60,7 @@ namespace Paillave.Etl
 
             public string TypeName => "ExecutionContext";
         }
+
         private class GetDefinitionExecutionContext : IExecutionContext
         {
             private List<StreamToNodeLink> _streamToNodeLinks = new List<StreamToNodeLink>();
@@ -77,6 +78,7 @@ namespace Paillave.Etl
             public WaitHandle StartSynchronizer => throw new NotImplementedException();
             public string JobName { get; }
             public IPushObservable<TraceEvent> TraceEvents => PushObservable.Empty<TraceEvent>();
+            public bool IsTracingContext => false;
             public void AddDisposable(IDisposable disposable) => throw new NotImplementedException();
             public void AddToWaitForCompletion<T>(string sourceNodeName, IPushObservable<T> stream) => _nodeNamesToWait.Add(sourceNodeName);
             public Task GetCompletionTask() => throw new NotImplementedException();
@@ -104,6 +106,7 @@ namespace Paillave.Etl
             public Guid ExecutionId { get; }
             public string JobName { get; }
             public IPushObservable<TraceEvent> TraceEvents => _traceSubject;
+            public bool IsTracingContext => false;
             public WaitHandle StartSynchronizer { get; }
             public void Trace(TraceEvent traceEvent) => _traceSubject.PushValue(traceEvent);
             public void AddToWaitForCompletion<T>(string sourceNodeName, IPushObservable<T> stream)
@@ -130,6 +133,7 @@ namespace Paillave.Etl
             public Guid ExecutionId { get; }
             public string JobName { get; }
             public IPushObservable<TraceEvent> TraceEvents => _traceSubject;
+            public bool IsTracingContext => true;
             public WaitHandle StartSynchronizer { get; }
             public void Trace(TraceEvent traveEvent) { }
             public void AddToWaitForCompletion<T>(string sourceNodeName, IPushObservable<T> stream) => _tasksToWait.Add(stream.ToTaskAsync());

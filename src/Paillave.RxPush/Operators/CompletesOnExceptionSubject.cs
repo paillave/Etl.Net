@@ -7,7 +7,7 @@ using Paillave.RxPush.Core;
 
 namespace Paillave.RxPush.Operators
 {
-    public class CompletesOnExceptionSubject<T> : PushSubject<T>
+    public class CompletesOnExceptionSubject<T, E> : PushSubject<T> where E : Exception
     {
         private IDisposable _subscription;
         private object lockObject = new object();
@@ -20,8 +20,11 @@ namespace Paillave.RxPush.Operators
                 {
                     lock (lockObject)
                     {
-                        catchMethod(ex);
-                        this.Complete();
+                        if (ex is E)
+                        {
+                            catchMethod(ex);
+                            this.Complete();
+                        }
                     }
                 });
             }
@@ -36,11 +39,19 @@ namespace Paillave.RxPush.Operators
     {
         public static IPushObservable<T> CompletesOnException<T>(this IPushObservable<T> observable, Action<Exception> catchMethod)
         {
-            return new CompletesOnExceptionSubject<T>(observable, catchMethod);
+            return new CompletesOnExceptionSubject<T, Exception>(observable, catchMethod);
         }
         public static IPushObservable<T> CompletesOnException<T>(this IPushObservable<T> observable)
         {
-            return new CompletesOnExceptionSubject<T>(observable, _ => { });
+            return new CompletesOnExceptionSubject<T, Exception>(observable, _ => { });
+        }
+        public static IPushObservable<T> CompletesOnException<T, E>(this IPushObservable<T> observable, Action<Exception> catchMethod) where E : Exception
+        {
+            return new CompletesOnExceptionSubject<T, E>(observable, catchMethod);
+        }
+        public static IPushObservable<T> CompletesOnException<T, E>(this IPushObservable<T> observable) where E : Exception
+        {
+            return new CompletesOnExceptionSubject<T, E>(observable, _ => { });
         }
     }
 }

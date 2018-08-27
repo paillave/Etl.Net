@@ -1,54 +1,32 @@
 ﻿using Paillave.Etl.Core;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq.Expressions;
 using Paillave.Etl.Core.Streams;
 using Paillave.RxPush.Core;
-using Paillave.Etl.Core.TraceContents;
-using Paillave.Etl.Core.StreamNodes;
+using Paillave.RxPush.Operators;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class SortStreamNode<TIn> : StreamNodeBase<IStream<TIn>, TIn, IEnumerable<Core.SortCriteria<TIn>>>, ISortedStreamNodeOutput<TIn>
+    public class SortArgs<T>
     {
-        private object _syncObject = new object();
-        public ISortedStream<TIn> Output { get; }
-        private DeferedPushObservable<TIn> _deferedPushObservable;
-        private List<TIn> _items = new List<TIn>();
-
-        private void PushSortedList(Action<TIn> pushValue)
+        public IStream<T> Input { get; set; }
+        public IEnumerable<SortCriteria<T>> Criterias { get; set; }
+    }
+    public class SortStreamNode<TOut> : StreamNodeBase<TOut, ISortedStream<TOut>, SortArgs<TOut>>
+    {
+        public SortStreamNode(string name, SortArgs<TOut> args) : base(name, args)
         {
-            foreach (var item in _items)
-                pushValue(item);
         }
 
-        public SortStreamNode(IStream<TIn> input, string name, IEnumerable<Core.SortCriteria<TIn>> arguments)
-            : base(input, name, arguments)
+        protected override ISortedStream<TOut> CreateOutputStream(SortArgs<TOut> args)
         {
-            _deferedPushObservable = new DeferedPushObservable<TIn>(PushSortedList);
-            input.Observable.Subscribe(HandlePush, HandleComplete);
-            this.Output = base.CreateSortedStream(nameof(Output), _deferedPushObservable, arguments);
-        }
-
-        private void HandleComplete()
-        {
-            lock (_syncObject)
+            return base.CreateSortedStream(args.Input.Observable.ToList().FlatMap(i =>
             {
-                _items.Sort(new Core.SortCriteriaComparer<TIn>(base.Arguments));
-                _deferedPushObservable.Start();
-            }
-        }
-
-        private void HandlePush(TIn value)
-        {
-            lock (_syncObject)
-            {
-                if (_items.Count == 10000)
-                    base.Tracer.Trace(new SortWarningStreamTraceContent(nameof(this.Output)));
-                _items.Add(value);
-            }
+                i.Sort(new SortCriteriaComparer<TOut>(args.Criterias.ToArray()));
+                return PushObservable.FromEnumerable(i);
+            }), args.Criterias);
         }
     }
 }

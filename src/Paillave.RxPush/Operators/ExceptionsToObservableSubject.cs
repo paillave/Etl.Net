@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Paillave.RxPush.Operators
 {
-    public class ErrorsToObservableSubject<T> : PushSubject<Exception>
+    public class ExceptionsToObservableSubject<T> : PushSubject<Exception>
     {
         private readonly IDisposable _subscription;
 
-        public ErrorsToObservableSubject(IPushObservable<T> observable)
+        public ExceptionsToObservableSubject(IPushObservable<T> observable)
         {
             _subscription = observable.Subscribe(_ => { }, HandleComplete, HandlePushError);
         }
@@ -34,9 +34,9 @@ namespace Paillave.RxPush.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<Exception> ErrorsToObservable<T>(this IPushObservable<T> observable)
+        public static IPushObservable<Exception> ExceptionsToObservable<T>(this IPushObservable<T> observable)
         {
-            return new ErrorsToObservableSubject<T>(observable);
+            return new ExceptionsToObservableSubject<T>(observable);
         }
     }
 }

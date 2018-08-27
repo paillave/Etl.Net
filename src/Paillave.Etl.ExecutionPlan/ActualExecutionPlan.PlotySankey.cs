@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Paillave.Etl.Charts;
+using Paillave.Etl.ExecutionPlan;
 using Paillave.Etl.Core;
 using System;
 using System.Collections.Generic;
@@ -13,21 +13,13 @@ namespace Paillave.Etl
 {
     public static partial class ExecutionStatusEx
     {
-        public static PlotlySankeyDescription GetPlotlySankeyStatistics(this ExecutionStatus executionStatus)
+        public static PlotlySankeyDescription GetActualExecutionPlanPlotlySankey(this ExecutionStatus executionStatus)
         {
             var nameToIdDictionary = executionStatus.JobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.Name, Idx }).ToDictionary(i => i.Name, i => i.Idx);
             var links = executionStatus.JobDefinitionStructure.StreamToNodeLinks.GroupJoin(
                     executionStatus.StreamStatisticCounters,
-                    i => new
-                    {
-                        i.SourceNodeName,
-                        i.StreamName
-                    },
-                    i => new
-                    {
-                        i.SourceNodeName,
-                        i.StreamName
-                    },
+                    i => i.SourceNodeName,
+                    i => i.SourceNodeName,
                     (link, stat) => new
                     {
                         source = nameToIdDictionary[link.SourceNodeName],
@@ -48,18 +40,18 @@ namespace Paillave.Etl
                 LinkValues = links.Select(i => i.value).ToList()
             };
         }
-        //public static async Task<string> GetJsonPlotlySankeyStatisticsAsync<T>(this ExecutionContext<T> executionStatus)
+        //public static async Task<string> GetJsonActualExecutionPlanPlotlySankeyAsync<T>(this ExecutionContext<T> executionStatus)
         //{
-        //    return JsonConvert.SerializeObject(await executionStatus.GetPlotlySankeyStatisticsAsync());
+        //    return JsonConvert.SerializeObject(await executionStatus.GetActualExecutionPlanPlotlySankeyAsync());
         //}
-        public static string GetHtmlPlotlySankeyStatistics(this ExecutionStatus executionStatus)
+        public static string GetActualExecutionPlanHtmlPlotlySankey(this ExecutionStatus executionStatus)
         {
-            var stats = executionStatus.GetPlotlySankeyStatistics();
+            var stats = executionStatus.GetActualExecutionPlanPlotlySankey();
             string file;
 
             var assembly = typeof(ExecutionStatusEx).Assembly;
 
-            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.Charts.ExecutionStatus.PlotySankey.html"))
+            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.ExecutionPlan.ActualExecutionPlan.PlotySankey.html"))
             using (var reader = new StreamReader(stream))
                 file = reader.ReadToEnd();
 
@@ -70,9 +62,9 @@ namespace Paillave.Etl
             html = html.Replace("'<<LINK_VALUES>>'", JsonConvert.SerializeObject(stats.LinkValues));
             return html;
         }
-        public static void OpenPlotlySankeyStatistics(this ExecutionStatus executionStatus)
+        public static void OpenActualExecutionPlanPlotlySankey(this ExecutionStatus executionStatus)
         {
-            Tools.OpenFile(executionStatus.GetHtmlPlotlySankeyStatistics(), "html");
+            Tools.OpenFile(executionStatus.GetActualExecutionPlanHtmlPlotlySankey(), "html");
         }
     }
 }

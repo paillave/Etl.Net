@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Paillave.Etl.Charts
+namespace Paillave.Etl.ExecutionPlan
 {
     public class D3SankeyDescription
     {

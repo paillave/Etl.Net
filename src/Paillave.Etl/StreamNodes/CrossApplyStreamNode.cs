@@ -1,51 +1,57 @@
 ﻿using Paillave.Etl.Core;
-using System.Linq;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using System;
-using Paillave.RxPush.Operators;
 using Paillave.Etl.Core.Streams;
-using System.Reflection;
 using Paillave.RxPush.Core;
-using System.Threading;
-using Paillave.Etl.Helpers;
-using Paillave.Etl.Core.StreamNodes;
-using Paillave.Etl.ValuesProviders;
+using Paillave.RxPush.Operators;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Paillave.Etl.StreamNodes
 {
+    public class CrossApplyArgs<TInMain, TInToApply, TValueIn, TValueOut, TOut>
+    {
+        public IStream<TInMain> MainStream { get; set; }
+        public IStream<TInToApply> StreamToApply { get; set; }
+        public Func<TInMain, TInToApply, TValueIn> GetValueIn { get; set; }
+        public Func<TValueOut, TInMain, TInToApply, TOut> GetValueOut { get; set; }
+        public IValuesProvider<TValueIn, TInToApply, TValueOut> ValuesProvider { get; set; }
+    }
     public class CrossApplyArgs<TIn, TValueIn, TValueOut, TOut>
     {
-        public Func<TIn, TValueIn> InputValueSelector { get; set; }
+        public IStream<TIn> Stream { get; set; }
+        public Func<TIn, TValueIn> GetValueIn { get; set; }
+        public Func<TValueOut, TIn, TOut> GetValueOut { get; set; }
         public IValuesProvider<TValueIn, TValueOut> ValuesProvider { get; set; }
-        public Func<TValueOut, TOut> OutputValueSelector { get; set; }
     }
-    public class CrossApplyStreamNode<TIn, TValueIn, TValueOut, TOut> : StreamNodeBase<IStream<TIn>, TIn, CrossApplyArgs<TIn, TValueIn, TValueOut, TOut>>, IStreamNodeOutput<TOut>
+    public class CrossApplyStreamNode<TInMain, TInToApply, TValueIn, TValueOut, TOut> : StreamNodeBase<TOut, IStream<TOut>, CrossApplyArgs<TInMain, TInToApply, TValueIn, TValueOut, TOut>>
     {
-        public CrossApplyStreamNode(IStream<TIn> input, string name, CrossApplyArgs<TIn, TValueIn, TValueOut, TOut> args) : base(input, name, args)
+        public CrossApplyStreamNode(string name, CrossApplyArgs<TInMain, TInToApply, TValueIn, TValueOut, TOut> args) : base(name, args)
         {
-            this.Output = base.CreateStream(nameof(this.Output), input.Observable.FlatMap(i => args.ValuesProvider.PushValues(args.InputValueSelector(i))).Map(args.OutputValueSelector));
         }
 
-        public IStream<TOut> Output { get; }
-    }
-    public class CrossApplyResourceArgs<TIn, TRes, TValueIn, TValueOut, TOut>
-    {
-        public IStream<TRes> ResourceStream { get; set; }
-        public Func<TIn, TValueIn> InputValueSelector { get; set; }
-        public IValuesProvider<TValueIn, TRes, TValueOut> ValuesProvider { get; set; }
-        public Func<TValueOut, TOut> OutputValueSelector { get; set; }
-    }
-    public class CrossApplyResourceStreamNode<TIn, TRes, TValueIn, TValueOut, TOut> : StreamNodeBase<IStream<TIn>, TIn, CrossApplyResourceArgs<TIn, TRes, TValueIn, TValueOut, TOut>>, IStreamNodeOutput<TOut>
-    {
-        public CrossApplyResourceStreamNode(IStream<TIn> input, string name, CrossApplyResourceArgs<TIn, TRes, TValueIn, TValueOut, TOut> args) : base(input, name, args)
+        protected override IStream<TOut> CreateOutputStream(CrossApplyArgs<TInMain, TInToApply, TValueIn, TValueOut, TOut> args)
         {
-            var ob = input.Observable.CombineWithLatest(args.ResourceStream.Observable, (i, r) => new { Input = i, Resource = r });
-            this.Output = base.CreateStream(nameof(this.Output), ob.FlatMap(i => args.ValuesProvider.PushValues(i.Resource, args.InputValueSelector(i.Input))).Map(args.OutputValueSelector));
+            var ob = args.MainStream.Observable.CombineWithLatest(args.StreamToApply.Observable, (m, a) => new { Main = m, Apply = a });
+            return base.CreateStream(ob.FlatMap(i =>
+            {
+                var def = args.ValuesProvider.PushValues(i.Apply, args.GetValueIn(i.Main, i.Apply));
+                return new DeferedWrapperPushObservable<TOut>(def.Map(o => args.GetValueOut(o, i.Main, i.Apply)), def.Start);
+            }));
+        }
+    }
+    public class CrossApplyStreamNode<TInMain, TValueIn, TValueOut, TOut> : StreamNodeBase<TOut, IStream<TOut>, CrossApplyArgs<TInMain, TValueIn, TValueOut, TOut>>
+    {
+        public CrossApplyStreamNode(string name, CrossApplyArgs<TInMain, TValueIn, TValueOut, TOut> args) : base(name, args)
+        {
         }
 
-        public IStream<TOut> Output { get; }
+        protected override IStream<TOut> CreateOutputStream(CrossApplyArgs<TInMain, TValueIn, TValueOut, TOut> args)
+        {
+            return base.CreateStream(args.Stream.Observable.FlatMap(i =>
+            {
+                var def = args.ValuesProvider.PushValues(args.GetValueIn(i));
+                return new DeferedWrapperPushObservable<TOut>(def.Map(o => args.GetValueOut(o, i)), def.Start);
+            }));
+        }
     }
 }

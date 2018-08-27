@@ -33,8 +33,11 @@ namespace Paillave.RxPush.Operators
         }
         public override void Dispose()
         {
-            base.Dispose();
-            _subscription.Dispose();
+            lock (_lockSync)
+            {
+                base.Dispose();
+                _subscription.Dispose();
+            }
         }
     }
     public static partial class ObservableExtensions

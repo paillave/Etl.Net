@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace Paillave.Etl.Charts
+namespace Paillave.Etl.ExecutionPlan
 {
     internal class Tools
     {

@@ -7,9 +7,9 @@ using Paillave.RxPush.Operators;
 namespace Paillave.RxPushTests.Operators
 {
     [TestClass]
-    public class ErrorsToObservableSubjectTests
+    public class ExceptionsToObservableSubjectTests
     {
-        [TestCategory(nameof(ErrorsToObservableSubjectTests))]
+        [TestCategory(nameof(ExceptionsToObservableSubjectTests))]
         [TestMethod]
         public void SimpleErrors()
         {
@@ -18,7 +18,7 @@ namespace Paillave.RxPushTests.Operators
             bool isComplete = false;
             var obs1 = new PushSubject<int>();
 
-            var output = obs1.ErrorsToObservable();
+            var output = obs1.ExceptionsToObservable();
 
             output.Subscribe(valueStack.Push, () => isComplete = true, errorStack.Push);
 

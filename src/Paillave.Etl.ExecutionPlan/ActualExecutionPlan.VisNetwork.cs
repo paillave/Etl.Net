@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Paillave.Etl.Charts;
+using Paillave.Etl.ExecutionPlan;
 using Paillave.Etl.Core;
 using System;
 using System.Collections.Generic;
@@ -14,23 +14,15 @@ namespace Paillave.Etl
     //http://resources.jointjs.com/demos/layout
     public static partial class ExecutionStatusEx
     {
-        public static VisNetworkDescription GetVisNetworkStatistics(this ExecutionStatus executionStatus)
+        public static VisNetworkDescription GetActualExecutionPlan(this ExecutionStatus executionStatus)
         {
             var nameToIdDictionary = executionStatus.JobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.Name, Idx }).ToDictionary(i => i.Name, i => i.Idx);
             return new VisNetworkDescription
             {
                 edges = executionStatus.JobDefinitionStructure.StreamToNodeLinks.GroupJoin(
                     executionStatus.StreamStatisticCounters,
-                    i => new
-                    {
-                        i.SourceNodeName,
-                        i.StreamName
-                    },
-                    i => new
-                    {
-                        i.SourceNodeName,
-                        i.StreamName
-                    },
+                    i => i.SourceNodeName,
+                    i => i.SourceNodeName,
                     (link, stat) => new VisNetworkStatisticEdge
                     {
                         from = nameToIdDictionary[link.SourceNodeName],
@@ -81,27 +73,27 @@ namespace Paillave.Etl
             //if (node.IsTarget) return new VisNetworkStatisticIconNode { face = "Ionicons", size = 50, code = @"\uf1b2" };
             return null;
         }
-        public static string GetJsonVisNetworkStatistics(this ExecutionStatus executionStatus)
+        public static string GetActualExecutionPlanJsonVisNetwork(this ExecutionStatus executionStatus)
         {
-            return JsonConvert.SerializeObject(executionStatus.GetVisNetworkStatistics()).Replace(@"""\\u", @"""\u");
+            return JsonConvert.SerializeObject(executionStatus.GetActualExecutionPlan()).Replace(@"""\\u", @"""\u");
         }
-        public static string GetHtmlVisNetworkStatistics(this ExecutionStatus executionStatus)
+        public static string GetActualExecutionPlanHtmlVisNetwork(this ExecutionStatus executionStatus)
         {
-            var json = executionStatus.GetJsonVisNetworkStatistics();
+            var json = executionStatus.GetActualExecutionPlanJsonVisNetwork();
             string file;
 
             var assembly = typeof(ExecutionStatusEx).Assembly;
 
-            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.Charts.ExecutionStatus.VisNetwork.html"))
+            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.ExecutionPlan.ActualExecutionPlan.VisNetwork.html"))
             using (var reader = new StreamReader(stream))
                 file = reader.ReadToEnd();
 
             string html = file.Replace("'<<STATISTICS>>'", json);
             return html;
         }
-        public static void OpenVisNetworkStatistics(this ExecutionStatus executionStatus)
+        public static void OpenActualExecutionPlanVisNetwork(this ExecutionStatus executionStatus)
         {
-            Tools.OpenFile(executionStatus.GetHtmlVisNetworkStatistics(), "html");
+            Tools.OpenFile(executionStatus.GetActualExecutionPlanHtmlVisNetwork(), "html");
         }
     }
 }

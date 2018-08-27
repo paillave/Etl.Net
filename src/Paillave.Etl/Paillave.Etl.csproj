@@ -4,20 +4,24 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Compile Remove="SystemOld\**" />
-    <EmbeddedResource Remove="SystemOld\**" />
-    <None Remove="SystemOld\**" />
+    <Compile Remove="Core\NodeOutputsOld\**" />
+    <EmbeddedResource Remove="Core\NodeOutputsOld\**" />
+    <None Remove="Core\NodeOutputsOld\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="ExecutionContextOld.cs" />
-    <Compile Remove="StreamNodes\CrossApplyDataStreamReadStreamNode.cs" />
-    <Compile Remove="StreamNodes\CrossApplyFolderFilesStreamNode.cs" />
-    <Compile Remove="StreamNodes\CrossApplyIndexMappingFileStreamNode.cs" />
-    <Compile Remove="StreamNodes\CrossApplyNameMappingFileStreamNode.cs" />
-    <Compile Remove="StreamNodes\CrossApplyNode.cs" />
-    <Compile Remove="Core\DataSourceNodeBase.cs" />
+    <Compile Remove="Core\ISortCriteria.cs" />
+    <Compile Remove="Core\SortCriteria.cs" />
+    <Compile Remove="Core\SortCriteriaComparer.cs" />
   </ItemGroup>
 
   <ItemGroup>

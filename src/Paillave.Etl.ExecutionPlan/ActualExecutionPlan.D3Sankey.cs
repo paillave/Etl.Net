@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Paillave.Etl.Charts;
+using Paillave.Etl.ExecutionPlan;
 using Paillave.Etl.Core;
 using System;
 using System.Collections.Generic;
@@ -13,23 +13,15 @@ namespace Paillave.Etl
 {
     public static partial class ExecutionStatusEx
     {
-        public static D3SankeyDescription GetD3SankeyStatistics(this ExecutionStatus executionStatus)
+        public static D3SankeyDescription GetActualExecutionPlanD3Sankey(this ExecutionStatus executionStatus)
         {
             var nameToIdDictionary = executionStatus.JobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.Name, Idx }).ToDictionary(i => i.Name, i => i.Idx);
             return new D3SankeyDescription
             {
                 links = executionStatus.JobDefinitionStructure.StreamToNodeLinks.GroupJoin(
                     executionStatus.StreamStatisticCounters,
-                    i => new
-                    {
-                        i.SourceNodeName,
-                        i.StreamName
-                    },
-                    i => new
-                    {
-                        i.SourceNodeName,
-                        i.StreamName
-                    },
+                    i => i.SourceNodeName,
+                    i => i.SourceNodeName,
                     (link, stat) => new D3SankeyStatisticsLink
                     {
                         source = nameToIdDictionary[link.SourceNodeName],
@@ -50,27 +42,27 @@ namespace Paillave.Etl
                }).ToList()
             };
         }
-        public static string GetJsonD3SankeyStatistics(this ExecutionStatus executionStatus)
+        public static string GetActualExecutionPlanJsonD3Sankey(this ExecutionStatus executionStatus)
         {
-            return JsonConvert.SerializeObject(executionStatus.GetD3SankeyStatistics());
+            return JsonConvert.SerializeObject(executionStatus.GetActualExecutionPlanD3Sankey());
         }
-        public static string GetHtmlD3SankeyStatistics(this ExecutionStatus executionStatus)
+        public static string GetActualExecutionPlanHtmlD3Sankey(this ExecutionStatus executionStatus)
         {
-            var json = executionStatus.GetJsonD3SankeyStatistics();
+            var json = executionStatus.GetActualExecutionPlanJsonD3Sankey();
             string file;
 
             var assembly = typeof(ExecutionStatusEx).Assembly;
 
-            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.Charts.ExecutionStatus.D3Sankey.html"))
+            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.ExecutionPlan.ActualExecutionPlan.D3Sankey.html"))
             using (var reader = new StreamReader(stream))
                 file = reader.ReadToEnd();
 
             string html = file.Replace("'<<SANKEY_STATISTICS>>'", json);
             return html;
         }
-        public static void OpenD3SankeyStatistics(this ExecutionStatus executionStatus)
+        public static void OpenActualExecutionPlanD3Sankey(this ExecutionStatus executionStatus)
         {
-            Tools.OpenFile(executionStatus.GetHtmlD3SankeyStatistics(), "html");
+            Tools.OpenFile(executionStatus.GetActualExecutionPlanHtmlD3Sankey(), "html");
         }
     }
 }
