@@ -32,8 +32,24 @@ namespace Paillave.RxPushTests.Operators
             tmp.Subscribe((_) => { }, () => completed = true);
             var returnedTask = tmp.ToTaskAsync();
             Assert.IsFalse(returnedTask.IsCompleted, "The task shouldn't be completed");
-            Assert.IsFalse(returnedTask.Wait(5000), "The task should not complete");
+            Assert.IsFalse(returnedTask.Wait(1000), "The task should not complete");
             Assert.IsFalse(completed, "complete should not be triggered");
+        }
+        [TestCategory(nameof(ToTaskAsyncTests))]
+        [TestMethod]
+        public void WaitEndOfList()
+        {
+            var inputValues = Enumerable.Range(0, 1000000).ToList();
+            var outputValues = new List<int>();
+            var tmp = PushObservable.FromEnumerable(inputValues);
+            var obs = tmp.Filter(i => i >= 0); ;
+
+            var output = obs.ToListAsync();
+
+            tmp.Start();
+            output.Wait();
+
+            CollectionAssert.AreEquivalent(inputValues, output.Result, "the output should contains only sorted values");
         }
     }
 }

@@ -4,6 +4,7 @@ using Paillave.RxPush.Core;
 using System.Collections.Generic;
 using System.Linq;
 using Paillave.RxPush.Operators;
+using System.Diagnostics;
 
 namespace Paillave.RxPushTests.Operators
 {
@@ -60,8 +61,15 @@ namespace Paillave.RxPushTests.Operators
             obs.Start();
             output.Wait();
             errorList.Wait();
-            CollectionAssert.AreEquivalent(inputValues, output.Result, "the output should be the same than the input");
+
+            // Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            // Trace.WriteLine(string.Join(',', output.Result.Select(i => i.ToString())));
+            // Trace.WriteLine(errorList.Result.Count);
+
+
             Assert.AreEqual(0, errorList.Result.Count, "no exception should be issued in a sorted stream");
+            Assert.AreEqual(inputValues.Length, output.Result.Count, "the output should be the same size than the input");
+            CollectionAssert.AreEquivalent(inputValues, output.Result, "the output should be the same than the input");
         }
 
         [TestCategory(nameof(ExceptionOnUnsortedSubjectTests))]
@@ -78,8 +86,8 @@ namespace Paillave.RxPushTests.Operators
             obs.Start();
             output.Wait();
             errorList.Wait();
-            CollectionAssert.AreEquivalent(inputValues.Where(i => i != -1).ToList(), output.Result, "the output should contains only sorted values");
             Assert.AreEqual(1, errorList.Result.Count, "one exception should be issued");
+            CollectionAssert.AreEquivalent(inputValues.Where(i => i != -1).ToList(), output.Result, "the output should contains only sorted values");
         }
 
         [TestCategory(nameof(ExceptionOnUnsortedSubjectTests))]

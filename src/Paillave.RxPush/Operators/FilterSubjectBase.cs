@@ -8,21 +8,27 @@ namespace Paillave.RxPush.Operators
         private IDisposable _subscription;
 
         protected abstract bool AcceptsValue(T value);
+        private object _syncValue = new object();
 
         public FilterSubjectBase(IPushObservable<T> observable)
         {
-            this._subscription = observable.Subscribe(i =>
+            this._subscription = observable.Subscribe(HandlePushValue, this.Complete, this.PushException);
+        }
+
+        private void HandlePushValue(T value)
+        {
+            lock (_syncValue)
             {
                 try
                 {
-                    if (AcceptsValue(i))
-                        this.PushValue(i);
+                    if (AcceptsValue(value))
+                        this.PushValue(value);
                 }
                 catch (Exception ex)
                 {
                     this.PushException(ex);
                 }
-            }, this.Complete, this.PushException);
+            }
         }
 
         public override void Dispose()

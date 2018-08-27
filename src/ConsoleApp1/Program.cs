@@ -31,7 +31,7 @@ namespace ConsoleApp1
             }, traceStreamProcessDefinition);
             task.Wait();
 
-            task.Result.OpenActualExecutionPlanVisNetwork();
+            task.Result.OpenActualExecutionPlanD3Sankey();
 
             Console.WriteLine("Done");
             Console.WriteLine("Press a key...");
