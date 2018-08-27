@@ -1,5 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  <PropertyGroup>
+    <PackageId>Etl.Net</PackageId>
+    <Version>1.0.0-alpha</Version>
+    <Authors>Stephane Royer</Authors>
+    <Company>paillave</Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
