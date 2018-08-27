@@ -32,10 +32,10 @@ namespace Paillave.Etl.StreamNodes
     }
     public class ToActionStreamNode<TIn, TStream, TResource> : StreamNodeBase<TIn, TStream, ToActionArgs<TIn, TStream, TResource>> where TStream : IStream<TIn>
     {
+        public override bool IsAwaitable => true;
         public ToActionStreamNode(string name, ToActionArgs<TIn, TStream, TResource> args) : base(name, args)
         {
         }
-
         protected override TStream CreateOutputStream(ToActionArgs<TIn, TStream, TResource> args)
         {
             var firstStreamWriter = args.ResourceStream.Observable.First();

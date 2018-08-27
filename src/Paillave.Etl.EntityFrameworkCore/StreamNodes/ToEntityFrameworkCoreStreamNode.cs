@@ -24,6 +24,7 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         where TStream : IStream<TIn>
         where TCtx : DbContext
     {
+        public override bool IsAwaitable => true;
         public ToEntityFrameworkCoreStreamNode(string name, ToEntityFrameworkCoreArgs<TIn, TCtx, TStream> args) : base(name, args)
         {
         }

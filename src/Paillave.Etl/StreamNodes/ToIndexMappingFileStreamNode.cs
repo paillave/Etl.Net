@@ -22,6 +22,7 @@ namespace Paillave.Etl.StreamNodes
         where TStream : IStream<TIn>
     {
         private Func<TIn, IList<string>> _serialize;
+        public override bool IsAwaitable => true;
 
         public ToIndexMappingFileStreamNode(string name, ToIndexMappingFileArgs<TIn, TStream> args) : base(name, args)
         {

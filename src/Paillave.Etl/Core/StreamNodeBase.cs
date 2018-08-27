@@ -38,8 +38,8 @@ namespace Paillave.Etl.Core
         {
             return args.GetType()
                 .GetProperties()
-                .Select(propertyInfo => new { propertyInfo.Name, Value = propertyInfo.GetValue(this) as IStream })
-                .Where(i => i != null)
+                .Select(propertyInfo => new { propertyInfo.Name, Value = propertyInfo.GetValue(args) as IStream })
+                .Where(i => i.Value != null)
                 .Select(i => new InputStream { SourceNodeName = i.Value.SourceNodeName, InputName = i.Name })
                 .ToList();
         }
@@ -48,10 +48,11 @@ namespace Paillave.Etl.Core
         {
             return args.GetType()
                 .GetProperties()
-                .Select(propertyInfo => propertyInfo.GetValue(this))
+                .Select(propertyInfo => propertyInfo.GetValue(args))
                 .OfType<IStream>()
                 .Select(i => i.ExecutionContext)
-                .FirstOrDefault(i => !i.IsTracingContext);
+                .OrderBy(i => !i.IsTracingContext)
+                .FirstOrDefault();
         }
 
         protected abstract TOutStream CreateOutputStream(TArgs args);
