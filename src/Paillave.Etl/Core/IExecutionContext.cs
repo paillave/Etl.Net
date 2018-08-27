@@ -18,7 +18,7 @@ namespace Paillave.Etl.Core
         void AddToWaitForCompletion<T>(string sourceNodeName, IPushObservable<T> stream);
         void AddDisposable(IDisposable disposable);
         Task GetCompletionTask();
-        void AddStreamToNodeLink(string sourceNodeName, string inputName, string targetNodeName);
+        void AddStreamToNodeLink(StreamToNodeLink link);
         bool IsTracingContext { get; }
     }
 }

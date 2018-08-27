@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Paillave.Etl.Core.StreamNodes
+namespace Paillave.Etl.Core
 {
     public abstract class StreamNodeBase<TOut, TOutStream, TArgs> : INodeContext
         where TOutStream : IStream<TOut>
@@ -27,7 +27,7 @@ namespace Paillave.Etl.Core.StreamNodes
             if (this.IsAwaitable)
                 this.ExecutionContext.AddToWaitForCompletion(name, this.Output.Observable);
             foreach (var item in this.GetInputStreams(args))
-                this.ExecutionContext.AddStreamToNodeLink(item.SourceNodeName, item.InputName, this.NodeName);
+                this.ExecutionContext.AddStreamToNodeLink(new StreamToNodeLink(item.SourceNodeName, item.InputName, this.NodeName));
         }
         private class InputStream
         {
@@ -111,7 +111,7 @@ namespace Paillave.Etl.Core.StreamNodes
         }
         protected Func<T1, T2, T3> WrapSelectForDisposal<T1, T2, T3>(Func<T1, T2, T3> creator)
         {
-            bool isDisposable = typeof(IDisposable).IsAssignableFrom(typeof(T2));
+            bool isDisposable = typeof(IDisposable).IsAssignableFrom(typeof(T3));
             if (isDisposable)
                 return (T1 inp, T2 inp2) =>
                 {
@@ -122,9 +122,32 @@ namespace Paillave.Etl.Core.StreamNodes
             else
                 return creator;
         }
+        protected class IndexedObject<T>
+        {
+            public T Item { get; }
+            public int Index { get; }
+            public IndexedObject(int index, T item)
+            {
+                this.Index = index;
+                this.Item = item;
+            }
+        }
+        protected Func<IndexedObject<T1>, T2, T3> WrapSelectIndexObjectForDisposal<T1, T2, T3>(Func<T1, T2, int, T3> creator)
+        {
+            bool isDisposable = typeof(IDisposable).IsAssignableFrom(typeof(T3));
+            if (isDisposable)
+                return (IndexedObject<T1> inp, T2 inp2) =>
+                {
+                    T3 disposable = creator(inp.Item, inp2, inp.Index);
+                    this.ExecutionContext.AddDisposable(disposable as IDisposable);
+                    return disposable;
+                };
+            else
+                return (IndexedObject<T1> inp, T2 inp2) => creator(inp.Item, inp2, inp.Index);
+        }
         protected Func<T1, T2, int, T3> WrapSelectIndexForDisposal<T1, T2, T3>(Func<T1, T2, int, T3> creator)
         {
-            bool isDisposable = typeof(IDisposable).IsAssignableFrom(typeof(T2));
+            bool isDisposable = typeof(IDisposable).IsAssignableFrom(typeof(T3));
             if (isDisposable)
                 return (T1 inp, T2 inp2, int index) =>
                 {

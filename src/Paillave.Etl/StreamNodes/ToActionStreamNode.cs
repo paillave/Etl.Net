@@ -1,81 +1,49 @@
-﻿using Paillave.Etl.Core;
+﻿using Paillave.Etl.Core.Streams;
 using System;
+using Paillave.RxPush.Operators;
 using System.Collections.Generic;
 using System.Text;
-using Paillave.RxPush.Operators;
-using Paillave.Etl.Core.Streams;
-using Paillave.RxPush.Core;
-using Paillave.Etl.Core.StreamNodesOld;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class ToActionStreamNode<TIn> : AwaitableStreamNodeBase<IStream<TIn>, TIn, Action<TIn>>
+    public class ToActionArgs<TIn, TStream> where TStream : IStream<TIn>
     {
-        public ToActionStreamNode(IStream<TIn> input, string name, Action<TIn> arguments) : base(input, name, arguments)
+        public TStream Stream { get; set; }
+        public Action<TIn> ProcessRow { get; set; }
+    }
+    public class ToActionStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ToActionArgs<TIn, TStream>> where TStream : IStream<TIn>
+    {
+        public ToActionStreamNode(string name, ToActionArgs<TIn, TStream> args) : base(name, args)
         {
         }
-        protected override void ProcessValue(TIn value)
+
+        protected override TStream CreateOutputStream(ToActionArgs<TIn, TStream> args)
         {
-            this.Arguments(value);
+            return base.CreateMatchingStream(args.Stream.Observable.Do(args.ProcessRow), args.Stream);
         }
     }
-    public class ToActionStreamNode<TIn, TOut> : AwaitableStreamNodeBase<IStream<TIn>, TIn, TOut, Func<TIn, TOut>>
+    public class ToActionArgs<TIn, TStream, TResource> where TStream : IStream<TIn>
     {
-        public ToActionStreamNode(IStream<TIn> input, string name, Func<TIn, TOut> arguments) : base(input, name, arguments)
-        {
-        }
-        protected override TOut ProcessValue(TIn value)
-        {
-            return this.Arguments(value);
-        }
+        public TStream Stream { get; set; }
+        public IStream<TResource> ResourceStream { get; set; }
+        public Action<TIn, TResource> ProcessRow { get; set; }
+        public Action<TResource> PreProcess { get; set; }
     }
-
-
-
-    public class ToActionResourceStreamNode<TIn, TRes> : AwaitableStreamNodeBase<IStream<TIn>, TIn, ToActionArgs<TIn, TRes>>
+    public class ToActionStreamNode<TIn, TStream, TResource> : StreamNodeBase<TIn, TStream, ToActionArgs<TIn, TStream, TResource>> where TStream : IStream<TIn>
     {
-        public ToActionResourceStreamNode(IStream<TIn> input, string name, ToActionArgs<TIn, TRes> arguments) : base(input, name, arguments)
+        public ToActionStreamNode(string name, ToActionArgs<TIn, TStream, TResource> args) : base(name, args)
         {
         }
-        protected override IPushObservable<TIn> ProcessObservable(IPushObservable<TIn> observable)
-        {
-            return observable.CombineWithLatest(this.Arguments.ResourceStream.Observable, (i, r) =>
-            {
-                this.Arguments.Action(i, r);
-                return i;
-            });
-        }
-        protected override void ProcessValue(TIn value)
-        {
-            throw new NotSupportedException("This method should not be called");
-        }
-    }
-    public class ToActionResourceStreamNode<TIn, TRes, TOut> : AwaitableStreamNodeBase<IStream<TIn>, TIn, TOut, ToActionArgs<TIn, TRes, TOut>>
-    {
-        public ToActionResourceStreamNode(IStream<TIn> input, string name, ToActionArgs<TIn, TRes, TOut> arguments) : base(input, name, arguments)
-        {
-        }
-        protected override IPushObservable<TOut> ProcessObservable(IPushObservable<TIn> observable)
-        {
-            return observable.CombineWithLatest(this.Arguments.ResourceStream.Observable, this.Arguments.Action);
-        }
-        protected override TOut ProcessValue(TIn value)
-        {
-            throw new NotSupportedException("This method should not be called");
-        }
-    }
 
-
-
-
-    public class ToActionArgs<TIn, TRes>
-    {
-        public IStream<TRes> ResourceStream { get; set; }
-        public Action<TIn, TRes> Action { get; set; }
-    }
-    public class ToActionArgs<TIn, TRes, TOut>
-    {
-        public IStream<TRes> ResourceStream { get; set; }
-        public Func<TIn, TRes, TOut> Action { get; set; }
+        protected override TStream CreateOutputStream(ToActionArgs<TIn, TStream, TResource> args)
+        {
+            var firstStreamWriter = args.ResourceStream.Observable.First();
+            if (args.PreProcess != null) firstStreamWriter = firstStreamWriter.Do(i => args.PreProcess(i));
+            firstStreamWriter = firstStreamWriter.DelayTillEndOfStream();
+            var obs = args.Stream.Observable
+                .CombineWithLatest(firstStreamWriter, (i, r) => { args.ProcessRow(i, r); return i; }, true);
+            return CreateMatchingStream(obs, args.Stream);
+        }
     }
 }

@@ -1,70 +1,47 @@
-﻿using Paillave.Etl.Helpers;
-using Paillave.Etl.Core.StreamNodesOld;
+﻿using Paillave.Etl.Core;
 using Paillave.Etl.Core.Streams;
+using Paillave.Etl.Helpers;
+using Paillave.RxPush.Operators;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using SystemIO = System.IO;
-using Paillave.RxPush.Core;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class ToNameMappingFileArgs<TIn> : ToStreamFromOneContextValueArgsBase<SystemIO.StreamWriter> where TIn : new()
+    public class ToNameMappingFileArgs<TIn, TStream>
+        where TIn : new()
+        where TStream : IStream<TIn>
     {
-        public ToNameMappingFileArgs(IStream<SystemIO.StreamWriter> contextStream, ColumnNameFlatFileDescriptor<TIn> mapping) : base(contextStream)
-        {
-            this.Mapping = mapping;
-        }
-
-        public ColumnNameFlatFileDescriptor<TIn> Mapping { get; }
+        public TStream MainStream { get; set; }
+        public IStream<SystemIO.StreamWriter> TargetStream { get; set; }
+        public ColumnNameFlatFileDescriptor<TIn> Mapping { get; set; }
     }
-
-    public class ToNameMappingFileStreamNode<TIn> : ToStreamFromOneResourceContextValueNodeBase<TIn, SystemIO.StreamWriter, SystemIO.StreamWriter, ToNameMappingFileArgs<TIn>> where TIn : new()
+    public class ToNameMappingFileStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ToNameMappingFileArgs<TIn, TStream>>
+        where TIn : new()
+        where TStream : IStream<TIn>
     {
         private Func<TIn, IList<string>> _serialize;
-        public ToNameMappingFileStreamNode(IStream<TIn> input, string name, ToNameMappingFileArgs<TIn> arguments) : base(input, name, arguments)
+
+        public ToNameMappingFileStreamNode(string name, ToNameMappingFileArgs<TIn, TStream> args) : base(name, args)
         {
-            _serialize = this.Arguments.Mapping.ColumnNameMappingConfiguration.LineSerializer();
+            _serialize = args.Mapping.ColumnNameMappingConfiguration.LineSerializer();
         }
 
-        protected override void PreProcess(SystemIO.StreamWriter outputResource)
+        protected override TStream CreateOutputStream(ToNameMappingFileArgs<TIn, TStream> args)
         {
-            outputResource.WriteLine(this.Arguments.Mapping.LineJoiner(this.Arguments.Mapping.ColumnNameMappingConfiguration.GetHeaders()));
+            var firstStreamWriter = args.TargetStream.Observable.First().Do(i => PreProcess(i, args.Mapping)).DelayTillEndOfStream();
+            var obs = args.MainStream.Observable
+                .CombineWithLatest(firstStreamWriter, (i, r) => { ProcessValueToOutput(r, args.Mapping, i); return i; }, true);
+            return CreateMatchingStream(obs, args.MainStream);
         }
-
-        protected override void ProcessValueToOutput(SystemIO.StreamWriter outputResource, TIn value)
+        private void PreProcess(SystemIO.StreamWriter streamWriter, ColumnNameFlatFileDescriptor<TIn> mapping)
         {
-            outputResource.WriteLine(this.Arguments.Mapping.LineJoiner(_serialize(value)));
+            streamWriter.WriteLine(mapping.LineJoiner(mapping.ColumnNameMappingConfiguration.GetHeaders()));
+        }
+        protected void ProcessValueToOutput(SystemIO.StreamWriter streamWriter, ColumnNameFlatFileDescriptor<TIn> mapping, TIn value)
+        {
+            streamWriter.WriteLine(mapping.LineJoiner(_serialize(value)));
         }
     }
-
-
-
-
-
-
-    //public class ToNameMappingFileArgs<TResource, TIn, TResKey> : ToStreamArgsBase<TResource, TIn, TResKey> where TIn : new()
-    //{
-    //    public ColumnNameFlatFileDescriptor<TIn> Mapping { get; set; }
-    //    public Func<TResource, SystemIO.StreamWriter> GetStreamWriter { get; set; }
-    //}
-
-    //public class ToNameMappingFileStreamNode<TIn, TResource, TResKey> : ToStreamNodeBase<TIn, TResource, ToNameMappingFileArgs<TResource, TIn, TResKey>, TResKey> where TIn : new()
-    //{
-    //    private Func<TIn, IList<string>> _serialize;
-    //    public ToNameMappingFileStreamNode(IStream<TIn> input, string name, ToNameMappingFileArgs<TResource, TIn, TResKey> arguments) : base(input, name, arguments)
-    //    {
-    //        _serialize = this.Arguments.Mapping.ColumnNameMappingConfiguration.LineSerializer();
-    //    }
-
-    //    protected override void PreProcess(TResource outputResource)
-    //    {
-    //        this.Arguments.GetStreamWriter(outputResource).WriteLine(this.Arguments.Mapping.LineJoiner(this.Arguments.Mapping.ColumnNameMappingConfiguration.GetHeaders()));
-    //    }
-
-    //    protected override void ProcessValueToOutput(TResource outputResource, TIn value)
-    //    {
-    //        this.Arguments.GetStreamWriter(outputResource).WriteLine(this.Arguments.Mapping.LineJoiner(_serialize(value)));
-    //    }
-    //}
 }

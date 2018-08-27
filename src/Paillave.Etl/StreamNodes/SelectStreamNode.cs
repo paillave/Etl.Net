@@ -1,16 +1,19 @@
-﻿using Paillave.Etl.Core.Streams;
+﻿using Paillave.Etl.Core;
+using Paillave.Etl.Core.Streams;
+using Paillave.RxPush.Core;
 using Paillave.RxPush.Operators;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Paillave.Etl.Core.StreamNodes
+namespace Paillave.Etl.StreamNodes
 {
     public class SelectArgs<TIn, TOut>
     {
         public IStream<TIn> Stream { get; set; }
         public Func<TIn, TOut> Selector { get; set; }
         public Func<TIn, int, TOut> IndexSelector { get; set; }
+        public bool ExcludeNull { get; set; }
     }
 
     public class SelectStreamNode<TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, SelectArgs<TIn, TOut>>
@@ -21,10 +24,14 @@ namespace Paillave.Etl.Core.StreamNodes
 
         protected override IStream<TOut> CreateOutputStream(SelectArgs<TIn, TOut> args)
         {
+            IPushObservable<TOut> obs;
             if (args.IndexSelector == null)
-                return base.CreateStream(args.Stream.Observable.Map(WrapSelectForDisposal(args.Selector)));
+                obs = args.Stream.Observable.Map(WrapSelectForDisposal(args.Selector));
             else
-                return base.CreateStream(args.Stream.Observable.Map(WrapSelectIndexForDisposal(args.IndexSelector)));
+                obs = args.Stream.Observable.Map(WrapSelectIndexForDisposal(args.IndexSelector));
+            if (args.ExcludeNull)
+                obs = obs.Filter(i => i != null);
+            return base.CreateStream(obs);
         }
     }
 }

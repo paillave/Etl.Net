@@ -1,30 +1,32 @@
 ﻿using Paillave.Etl.Core;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq.Expressions;
 using Paillave.Etl.Core.Streams;
 using Paillave.RxPush.Core;
-using Paillave.Etl.Core.TraceContents;
-using Paillave.Etl.Core.StreamNodesOld;
 using Paillave.RxPush.Operators;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class SortStreamNode<TIn> : StreamNodeBase<IStream<TIn>, TIn, IEnumerable<Core.SortCriteria<TIn>>>, ISortedStreamNodeOutput<TIn>
+    public class SortArgs<T>
     {
-        public ISortedStream<TIn> Output { get; }
-
-        public SortStreamNode(IStream<TIn> input, string name, IEnumerable<Core.SortCriteria<TIn>> arguments)
-            : base(input, name, arguments)
+        public IStream<T> Input { get; set; }
+        public IEnumerable<SortCriteria<T>> Criterias { get; set; }
+    }
+    public class SortStreamNode<TOut> : StreamNodeBase<TOut, ISortedStream<TOut>, SortArgs<TOut>>
+    {
+        public SortStreamNode(string name, SortArgs<TOut> args) : base(name, args)
         {
-            var res = input.Observable.ToList().FlatMap(i =>
+        }
+
+        protected override ISortedStream<TOut> CreateOutputStream(SortArgs<TOut> args)
+        {
+            return base.CreateSortedStream(args.Input.Observable.ToList().FlatMap(i =>
             {
-                i.Sort(new Core.SortCriteriaComparer<TIn>(base.Arguments));
+                i.Sort(new SortCriteriaComparer<TOut>(args.Criterias.ToArray()));
                 return PushObservable.FromEnumerable(i);
-            });
-            this.Output = base.CreateSortedStream(nameof(Output), res, arguments);
+            }), args.Criterias);
         }
     }
 }

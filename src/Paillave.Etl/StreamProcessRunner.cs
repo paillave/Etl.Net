@@ -20,10 +20,10 @@ namespace Paillave.Etl
             IPushSubject<TraceEvent> traceSubject = new PushSubject<TraceEvent>();
             IPushSubject<TConfig> startupSubject = new PushSubject<TConfig>();
             IExecutionContext traceExecutionContext = new TraceExecutionContext(startSynchronizer, executionId);
-            var traceStream = new Stream<TraceEvent>(null, traceExecutionContext, null, null, traceSubject);
+            var traceStream = new Stream<TraceEvent>(null, traceExecutionContext, null, traceSubject);
             TJob jobDefinition = new TJob();
             JobExecutionContext jobExecutionContext = new JobExecutionContext(jobDefinition.Name, executionId, startSynchronizer, traceSubject);
-            var startupStream = new Stream<TConfig>(new Tracer(jobExecutionContext, new CurrentExecutionNodeContext(jobDefinition.Name)), jobExecutionContext, jobDefinition.Name, "Startup", startupSubject.First());
+            var startupStream = new Stream<TConfig>(new Tracer(jobExecutionContext, new CurrentExecutionNodeContext(jobDefinition.Name)), jobExecutionContext, jobDefinition.Name, startupSubject.First());
 
             traceStreamProcessDefinition?.DefineProcess(traceStream);
             jobDefinition.DefineProcess(startupStream);
@@ -46,7 +46,7 @@ namespace Paillave.Etl
             TJob jobDefinition = new TJob();
             GetDefinitionExecutionContext jobExecutionContext = new GetDefinitionExecutionContext(jobDefinition.Name);
             //JobExecutionContext jobExecutionContext = new JobExecutionContext(jobDefinition.Name, Guid.Empty, null, null);
-            var startupStream = new Stream<TConfig>(new Tracer(jobExecutionContext, new CurrentExecutionNodeContext(jobDefinition.Name)), jobExecutionContext, jobDefinition.Name, "Startup", PushObservable.Empty<TConfig>());
+            var startupStream = new Stream<TConfig>(new Tracer(jobExecutionContext, new CurrentExecutionNodeContext(jobDefinition.Name)), jobExecutionContext, jobDefinition.Name, PushObservable.Empty<TConfig>());
             jobDefinition.DefineProcess(startupStream);
             return jobExecutionContext.GetDefinitionStructure();
         }

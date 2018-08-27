@@ -1,10 +1,11 @@
-﻿using Paillave.Etl.Core.Streams;
+﻿using Paillave.Etl.Core;
+using Paillave.Etl.Core.Streams;
 using Paillave.RxPush.Operators;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Paillave.Etl.Core.StreamNodes
+namespace Paillave.Etl.StreamNodes
 {
     public class WhereArgs<TOut, TOutStream> where TOutStream : IStream<TOut>
     {

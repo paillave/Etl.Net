@@ -13,9 +13,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Core\StreamNodesOld\**" />
-    <EmbeddedResource Remove="Core\StreamNodesOld\**" />
-    <None Remove="Core\StreamNodesOld\**" />
+    <Compile Remove="Core\NodeOutputsOld\**" />
+    <EmbeddedResource Remove="Core\NodeOutputsOld\**" />
+    <None Remove="Core\NodeOutputsOld\**" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,35 +1,26 @@
 ﻿using Paillave.Etl.Core;
+using Paillave.Etl.Core.Streams;
+using Paillave.RxPush.Operators;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Paillave.RxPush.Operators;
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.Core.StreamNodesOld;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class TopStreamNode<TIn> : StreamNodeBase<IStream<TIn>, TIn, int>, IStreamNodeOutput<TIn>
+    public class TopArgs<TOut, TOutStream> where TOutStream : IStream<TOut>
     {
-        public IStream<TIn> Output { get; }
-        public TopStreamNode(IStream<TIn> input, string name, int arguments) : base(input, name, arguments)
-        {
-            this.Output = base.CreateStream(nameof(Output), input.Observable.Take(arguments));
-        }
+        public TOutStream Input { get; set; }
+        public int Count { get; set; }
     }
-    public class TopSortedStreamNode<TIn> : StreamNodeBase<ISortedStream<TIn>, TIn, int>, ISortedStreamNodeOutput<TIn>
+    public class TopStreamNode<TOut, TOutStream> : StreamNodeBase<TOut, TOutStream, TopArgs<TOut, TOutStream>> where TOutStream : IStream<TOut>
     {
-        public ISortedStream<TIn> Output { get; }
-        public TopSortedStreamNode(ISortedStream<TIn> input, string name, int arguments) : base(input, name, arguments)
+        public TopStreamNode(string name, TopArgs<TOut, TOutStream> args) : base(name, args)
         {
-            this.Output = base.CreateSortedStream(nameof(Output), input.Observable.Take(arguments), input.SortCriterias);
         }
-    }
-    public class TopKeyedStreamNode<TIn> : StreamNodeBase<IKeyedStream<TIn>, TIn, int>, IKeyedStreamNodeOutput<TIn>
-    {
-        public IKeyedStream<TIn> Output { get; }
-        public TopKeyedStreamNode(IKeyedStream<TIn> input, string name, int arguments) : base(input, name, arguments)
+
+        protected override TOutStream CreateOutputStream(TopArgs<TOut, TOutStream> args)
         {
-            this.Output = base.CreateKeyedStream(nameof(Output), input.Observable.Take(arguments), input.SortCriterias);
+            return base.CreateMatchingStream(args.Input.Observable.Take(args.Count), args.Input);
         }
     }
 }
