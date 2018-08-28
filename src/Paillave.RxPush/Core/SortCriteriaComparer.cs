@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Paillave.RxPush.Core
 {
-    public class SortCriteriaComparer<T> : IComparer<T>
+    public class SortCriteriaComparer<T> : IComparer<T>, IEqualityComparer<T>
     {
         private readonly Func<T, T, int>[] _compareFunctions;
 
@@ -36,6 +36,13 @@ namespace Paillave.RxPush.Core
                 if (cmp != 0) return cmp;
             }
             return 0;
+        }
+
+        public bool Equals(T x, T y) => Compare(x, y) == 0;
+
+        public int GetHashCode(T obj)
+        {
+            return obj.GetHashCode();
         }
     }
     public class SortCriteriaComparer<T1, T2> : IComparer<T1, T2>

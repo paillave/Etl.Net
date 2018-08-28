@@ -19,6 +19,29 @@ namespace Paillave.Etl
 {
     public static class StreamEx
     {
+        #region Aggregate
+        public static IStream<KeyValuePair<TKey, TAggr>> Aggregate<TIn, TAggr, TKey>(this IStream<TIn> stream, string name, Func<TAggr> emptyAggregation, Func<TIn, TKey> getKey, Func<TAggr, TIn, TAggr> aggregate)
+        {
+            return new AggregateStreamNode<TIn, TAggr, TKey>(name, new AggregateArgs<TIn, TAggr, TKey>
+            {
+                InputStream = stream,
+                Aggregate = aggregate,
+                GetKey = getKey,
+                CreateEmptyAggregation = emptyAggregation
+            }).Output;
+        }
+        public static IStream<KeyValuePair<TKey, TAggr>> Aggregate<TIn, TAggr, TKey>(this ISortedStream<TIn> stream, string name, Func<TAggr> emptyAggregation, Func<TIn, TKey> getKey, Func<TAggr, TIn, TAggr> aggregate)
+        {
+            return new AggregateSortedStreamNode<TIn, TAggr, TKey>(name, new AggregateGroupedArgs<TIn, TAggr, TKey>
+            {
+                InputStream = stream,
+                Aggregate = aggregate,
+                GetKey = getKey,
+                CreateEmptyAggregation = emptyAggregation
+            }).Output;
+        }
+        #endregion
+
         #region CrossApply
         public static IStream<TOut> CrossApply<TIn, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, IValuesProvider<TValueIn, TValueOut> valuesProvider, Func<TIn, TValueIn> inputValueSelector, Func<TValueOut, TIn, TOut> outputValueSelector)
         {

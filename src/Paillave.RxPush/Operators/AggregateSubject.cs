@@ -14,7 +14,7 @@ namespace Paillave.RxPush.Operators
         private bool _isAggrDisposable = false;
         private Dictionary<TKey, TAggr> _dictionary = new Dictionary<TKey, TAggr>();
         private object _lockSync = new object();
-        public AggregateSubject(IPushObservable<TIn> observable, Action<TAggr, TIn> reducer, Func<TIn, TKey> getKey, Func<TAggr> createInitialValue)
+        public AggregateSubject(IPushObservable<TIn> observable, Func<TAggr, TIn, TAggr> reducer, Func<TIn, TKey> getKey, Func<TAggr> createInitialValue)
         {
             _isAggrDisposable = typeof(IDisposable).IsAssignableFrom(typeof(TAggr));
             _subscription = observable.Subscribe(i =>
@@ -22,13 +22,14 @@ namespace Paillave.RxPush.Operators
                 lock (_lockSync)
                 {
                     TKey key = getKey(i);
-                    if (_dictionary.TryGetValue(key, out TAggr aggr))
+                    if (!_dictionary.TryGetValue(key, out TAggr aggr))
                     {
                         aggr = createInitialValue();
                         _dictionary[key] = aggr;
                         if (_isAggrDisposable) _disposable.Set(aggr as IDisposable);
                     }
-                    reducer(aggr, i);
+                    aggr = reducer(aggr, i);
+                    _dictionary[key] = aggr;
                 }
             }, this.HandleComplete, this.PushException);
         }
@@ -47,12 +48,13 @@ namespace Paillave.RxPush.Operators
         public override void Dispose()
         {
             base.Dispose();
+            _disposable.Dispose();
             _subscription.Dispose();
         }
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<KeyValuePair<TKey, TAggr>> Aggregate<TIn, TAggr, TKey>(this IPushObservable<TIn> observable, Action<TAggr, TIn> reducer, Func<TIn, TKey> getKey, Func<TAggr> createInitialValue)
+        public static IPushObservable<KeyValuePair<TKey, TAggr>> Aggregate<TIn, TAggr, TKey>(this IPushObservable<TIn> observable, Func<TAggr> createInitialValue, Func<TIn, TKey> getKey, Func<TAggr, TIn, TAggr> reducer)
         {
             return new AggregateSubject<TIn, TAggr, TKey>(observable, reducer, getKey, createInitialValue);
         }
