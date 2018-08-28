@@ -30,8 +30,7 @@ namespace Paillave.Etl.StreamNodes
         }
         private TInRight HandleMatching(TInLeft l, Dictionary<TKey, TInRight> rl, Func<TInLeft, TKey> getLeftStreamKey)
         {
-            TInRight r = default(TInRight);
-            rl.TryGetValue(getLeftStreamKey(l), out r);
+            rl.TryGetValue(getLeftStreamKey(l), out TInRight r);
             return r;
         }
     }
