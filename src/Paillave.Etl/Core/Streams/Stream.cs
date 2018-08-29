@@ -12,8 +12,10 @@ namespace Paillave.Etl.Core.Streams
 {
     public class Stream<T> : IStream<T>
     {
-        public Stream(ITracer tracer, IExecutionContext executionContext,string sourceNodeName, IPushObservable<T> observable)
+        protected ITracer Tracer { get; }
+        public Stream(ITracer tracer, IExecutionContext executionContext, string sourceNodeName, IPushObservable<T> observable)
         {
+            this.Tracer = tracer;
             this.SourceNodeName = sourceNodeName;
             this.ExecutionContext = executionContext;
 

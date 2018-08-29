@@ -62,14 +62,14 @@ namespace Paillave.Etl.Core
             return new Stream<TOut>(this.Tracer, this.ExecutionContext, this.NodeName, observable);
         }
 
-        protected ISortedStream<TOut> CreateSortedStream(IPushObservable<TOut> observable, IEnumerable<SortCriteria<TOut>> sortCriterias)
+        protected ISortedStream<TOut, TKey> CreateSortedStream<TKey>(IPushObservable<TOut> observable, SortDefinition<TOut, TKey> sortDefinition)
         {
-            return new SortedStream<TOut>(this.Tracer, this.ExecutionContext, this.NodeName, observable, sortCriterias);
+            return new SortedStream<TOut, TKey>(this.Tracer, this.ExecutionContext, this.NodeName, observable, sortDefinition);
         }
 
-        protected IKeyedStream<TOut> CreateKeyedStream(IPushObservable<TOut> observable, IEnumerable<SortCriteria<TOut>> sortCriterias)
+        protected IKeyedStream<TOut, TKey> CreateKeyedStream<TKey>(IPushObservable<TOut> observable, SortDefinition<TOut, TKey> sortDefinition)
         {
-            return new KeyedStream<TOut>(this.Tracer, this.ExecutionContext, this.NodeName, observable, sortCriterias);
+            return new KeyedStream<TOut,TKey>(this.Tracer, this.ExecutionContext, this.NodeName, observable, sortDefinition);
         }
 
         protected TOutStream CreateMatchingStream(IPushObservable<TOut> observable, TOutStream matchingSourceStream)

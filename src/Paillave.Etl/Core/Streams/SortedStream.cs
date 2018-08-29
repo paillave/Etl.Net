@@ -10,14 +10,14 @@ using Paillave.Etl.Core.TraceContents;
 
 namespace Paillave.Etl.Core.Streams
 {
-    public class SortedStream<T> : Stream<T>, ISortedStream<T>
+    public class SortedStream<T,TKey> : Stream<T>, ISortedStream<T,TKey>
     {
-        public SortedStream(ITracer tracer, IExecutionContext executionContext, string sourceNodeName, IPushObservable<T> observable, IEnumerable<SortCriteria<T>> sortCriterias)
+        public SortedStream(ITracer tracer, IExecutionContext executionContext, string sourceNodeName, IPushObservable<T> observable, SortDefinition<T, TKey> sortDefinition)
             : base(tracer, executionContext, sourceNodeName, observable)
         {
-            if (sortCriterias.Count() == 0) throw new ArgumentOutOfRangeException(nameof(sortCriterias), "sorting criteria list cannot be empty");
-            this.SortCriterias = new ReadOnlyCollection<SortCriteria<T>>(sortCriterias.ToList());
+            if (sortDefinition==null) throw new ArgumentOutOfRangeException(nameof(sortDefinition), "sorting criteria list cannot be empty");
+            this.SortDefinition = sortDefinition;
         }
-        public IReadOnlyCollection<SortCriteria<T>> SortCriterias { get; }
+        public SortDefinition<T, TKey> SortDefinition { get; }
     }
 }

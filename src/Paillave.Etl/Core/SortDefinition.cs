@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Paillave.Etl.Core
 {
-    public class SortDefinition<T, TKey> : IComparer<T>, IEqualityComparer<T>
+    public class SortDefinition<T, TKey> : IComparer<T>, IEqualityComparer<T>, System.Collections.IComparer, System.Collections.IEqualityComparer
     {
         private List<SortCriteria> _sortCriterias;
 
@@ -72,6 +72,21 @@ namespace Paillave.Etl.Core
                     })
                 .OrderBy(i => i.Position)
                 .ToList();
+        }
+
+        int System.Collections.IComparer.Compare(object x, object y)
+        {
+            return Compare((T)x, (T)y);
+        }
+
+        bool System.Collections.IEqualityComparer.Equals(object x, object y)
+        {
+            return Equals((T)x, (T)y);
+        }
+
+        int System.Collections.IEqualityComparer.GetHashCode(object obj)
+        {
+            return GetHashCode((T)obj);
         }
     }
 }
