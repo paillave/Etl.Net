@@ -21,8 +21,8 @@ namespace ConsoleApp1
         {
             //new StreamProcessRunner<TestJob3, MyConfig>().GetDefinitionStructure().OpenVisNetworkStructure();
             var runner = new StreamProcessRunner<TestJob3, MyConfig>();
-            // StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = null;// new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.Where("keep log info", i => i.Content.Level <= TraceLevel.Info).ToAction("logs to console", Console.WriteLine));
-            StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.ToAction("logs to console", Console.WriteLine));
+            StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = null;// new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.Where("keep log info", i => i.Content.Level <= TraceLevel.Info).ToAction("logs to console", Console.WriteLine));
+            // StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.ToAction("logs to console", Console.WriteLine));
             var testFilesDirectory = Path.Combine(Environment.CurrentDirectory, @"..\..\..\..\TestFiles\");
             var task = runner.ExecuteAsync(new MyConfig
             {
@@ -34,10 +34,11 @@ namespace ConsoleApp1
             }, traceStreamProcessDefinition);
             task.Wait();
 
-            task.Result.OpenActualExecutionPlanD3Sankey();
+            //task.Result.OpenActualExecutionPlanD3Sankey();
 
             Console.WriteLine("Done");
             Console.WriteLine("Press a key...");
+            Console.ReadKey();
         }
         static void MainOld(string[] args)
         {
@@ -57,7 +58,7 @@ namespace ConsoleApp1
             }, traceStreamProcessDefinition);
             task.Wait();
 
-            task.Result.OpenActualExecutionPlanD3Sankey();
+            //task.Result.OpenActualExecutionPlanD3Sankey();
 
             Console.WriteLine("Done");
             Console.WriteLine("Press a key...");

@@ -26,11 +26,10 @@ namespace ConsoleApp1.Jobs
                 .CrossApplyTextFile("parse type input file", new TypeFileRowMapper());
 
             var joinedLineS = parsedLineS
-                .Lookup("join types to file", parsedTypeLineS, i => i.TypeId, i => i.Id, (l, r) => new { Id = l.Id, Name = r.Name, FileName = l.FileName, Category = r.Category });
+                .Lookup("join types to file", parsedTypeLineS, i => i.TypeId, i => i.Id, (l, r) => new { l.Id, r.Name, l.FileName, r.Category });
 
-            // var categoryStatistics = joinedLineS.Aggregate("create statistic for categories", () => 0, i => i.Category, (a, v) => a + 1)
-            //     .Select("create statistic output data", i => new OutputCategoryRow { Category = i.Key, AmountOfEntries = i.Value })
-            //     .ToTextFile("write category statistics to file", outputCategoryResourceS, new OutputCategoryRowMapper());
+            var categoryStatistics = joinedLineS.Aggregate("create statistic for categories", (i) => 0, i => i.Category, (a, v) => a + 1, (i, k, a) => new OutputCategoryRow { Category = k, AmountOfEntries = a })
+                .ToTextFile("write category statistics to file", outputCategoryResourceS, new OutputCategoryRowMapper());
 
             joinedLineS.Select("create output data", i => new OutputFileRow { Id = i.Id, Name = i.Name, FileName = i.FileName })
                 .ToTextFile("write to output file", outputFileResourceS, new OutputFileRowMapper());
