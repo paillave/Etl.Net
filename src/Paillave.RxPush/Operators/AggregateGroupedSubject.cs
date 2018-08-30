@@ -7,31 +7,37 @@ using System.Text;
 
 namespace Paillave.RxPush.Operators
 {
-    public class AggregateGroupedSubject<TIn, TAggr, TKey> : PushSubject<KeyValuePair<TKey, TAggr>>
+    public class AggregateGroupedSubject<TIn, TAggr, TKey, TOut> : PushSubject<TOut>
     {
         private SingleDisposableManager _disposable = new SingleDisposableManager();
         private IDisposable _subscription;
         private bool _hasValue = false;
-        private KeyValuePair<TKey, TAggr> _currentAggregation = new KeyValuePair<TKey, TAggr>();
+        private KeyValuePair<TKey, DicoAggregateElement<TIn, TAggr>> _currentAggregation = new KeyValuePair<TKey, DicoAggregateElement<TIn, TAggr>>();
         private object _lockSync = new object();
-        public AggregateGroupedSubject(IPushObservable<TIn> observable, Func<TAggr, TIn, TAggr> reducer, Func<TIn, TKey> getKey, Func<TAggr> createInitialValue)
+        private Func<TIn, TKey, TAggr, TOut> _resultSelector;
+
+        public AggregateGroupedSubject(IPushObservable<TIn> observable, Func<TAggr, TIn, TAggr> reducer, Func<TIn, TKey> getKey, Func<TIn, TAggr> createInitialValue, Func<TIn, TKey, TAggr, TOut> resultSelector)
         {
+            _resultSelector = resultSelector;
             var _isAggrDisposable = typeof(IDisposable).IsAssignableFrom(typeof(TAggr));
             _subscription = observable.Subscribe(i =>
             {
                 lock (_lockSync)
                 {
                     TKey key = getKey(i);
-                    if (_hasValue && !key.Equals(_currentAggregation.Key))
-                        PushValue(_currentAggregation);
-                    if (!_hasValue || !key.Equals(_currentAggregation.Key))
+                    if (key != null)
                     {
-                        var aggr = createInitialValue();
-                        if (_isAggrDisposable) _disposable.Set(aggr as IDisposable);
-                        _currentAggregation = new KeyValuePair<TKey, TAggr>(key, aggr);
-                        _hasValue = true;
+                        if (_hasValue && !key.Equals(_currentAggregation.Key))
+                            PushValue(_resultSelector(_currentAggregation.Value.InValue, _currentAggregation.Key, _currentAggregation.Value.CurrentAggregation));
+                        if (!_hasValue || !key.Equals(_currentAggregation.Key))
+                        {
+                            var aggr = createInitialValue(i);
+                            if (_isAggrDisposable) _disposable.Set(aggr as IDisposable);
+                            _currentAggregation = new KeyValuePair<TKey, DicoAggregateElement<TIn, TAggr>>(key, new DicoAggregateElement<TIn, TAggr> { CurrentAggregation = aggr, InValue = i });
+                            _hasValue = true;
+                        }
+                        _currentAggregation.Value.CurrentAggregation = reducer(_currentAggregation.Value.CurrentAggregation, i);
                     }
-                    _currentAggregation = new KeyValuePair<TKey, TAggr>(key, reducer(_currentAggregation.Value, i));
                 }
             }, this.HandleComplete, this.PushException);
         }
@@ -40,7 +46,7 @@ namespace Paillave.RxPush.Operators
             lock (_lockSync)
             {
                 if (_hasValue)
-                    PushValue(_currentAggregation);
+                    PushValue(_resultSelector(_currentAggregation.Value.InValue, _currentAggregation.Key, _currentAggregation.Value.CurrentAggregation));
                 _disposable.Dispose();
                 base.Complete();
             }
@@ -55,9 +61,9 @@ namespace Paillave.RxPush.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<KeyValuePair<TKey, TAggr>> AggregateGrouped<TIn, TAggr, TKey>(this IPushObservable<TIn> observable, Func<TAggr> createInitialValue, Func<TIn, TKey> getKey, Func<TAggr, TIn, TAggr> reducer)
+        public static IPushObservable<TOut> AggregateGrouped<TIn, TAggr, TKey, TOut>(this IPushObservable<TIn> observable, Func<TIn, TAggr> createInitialValue, Func<TIn, TKey> getKey, Func<TAggr, TIn, TAggr> reducer, Func<TIn, TKey, TAggr, TOut> resultSelector)
         {
-            return new AggregateGroupedSubject<TIn, TAggr, TKey>(observable, reducer, getKey, createInitialValue);
+            return new AggregateGroupedSubject<TIn, TAggr, TKey, TOut>(observable, reducer, getKey, createInitialValue, resultSelector);
         }
     }
 }

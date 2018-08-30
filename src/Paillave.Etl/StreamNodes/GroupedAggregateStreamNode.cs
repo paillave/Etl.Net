@@ -8,22 +8,22 @@ using System.Linq;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class AggregateGroupedArgs<TIn, TAggr, TKey>
+    public class AggregateGroupedArgs<TIn, TAggr, TKey, TOut>
     {
-        public ISortedStream<TIn,TKey> InputStream { get; set; }
+        public ISortedStream<TIn, TKey> InputStream { get; set; }
         public Func<TAggr, TIn, TAggr> Aggregate { get; set; }
-        public Func<TAggr> CreateEmptyAggregation { get; set; }
+        public Func<TIn, TAggr> CreateEmptyAggregation { get; set; }
+        public Func<TIn, TKey, TAggr, TOut> ResultSelector { get; set; }
     }
-    public class AggregateSortedStreamNode<TIn, TAggr, TKey> : StreamNodeBase<KeyValuePair<TKey, TAggr>, IStream<KeyValuePair<TKey, TAggr>>, AggregateGroupedArgs<TIn, TAggr, TKey>>
+    public class AggregateSortedStreamNode<TIn, TAggr, TKey, TOut> : StreamNodeBase<TOut, IStream<TOut>, AggregateGroupedArgs<TIn, TAggr, TKey, TOut>>
     {
-        public AggregateSortedStreamNode(string name, AggregateGroupedArgs<TIn, TAggr, TKey> args) : base(name, args)
+        public AggregateSortedStreamNode(string name, AggregateGroupedArgs<TIn, TAggr, TKey, TOut> args) : base(name, args)
         {
         }
 
-        protected override IStream<KeyValuePair<TKey, TAggr>> CreateOutputStream(AggregateGroupedArgs<TIn, TAggr, TKey> args)
+        protected override IStream<TOut> CreateOutputStream(AggregateGroupedArgs<TIn, TAggr, TKey, TOut> args)
         {
-            throw new NotImplementedException();
-            // return CreateStream(args.InputStream.Observable.AggregateGrouped(args.CreateEmptyAggregation,  args.Aggregate).Map(i => new KeyValuePair<TKey, TAggr>(args.GetKey(i.Key), i.Value)));
+            return CreateUnsortedStream(args.InputStream.Observable.AggregateGrouped(args.CreateEmptyAggregation, args.InputStream.SortDefinition, args.Aggregate, (i, a) => args.ResultSelector(i, args.InputStream.SortDefinition.GetKey(i), a)));
         }
     }
 }

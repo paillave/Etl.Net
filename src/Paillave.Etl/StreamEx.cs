@@ -20,23 +20,25 @@ namespace Paillave.Etl
     public static class StreamEx
     {
         #region Aggregate
-        public static IStream<KeyValuePair<TKey, TAggr>> Aggregate<TIn, TAggr, TKey>(this IStream<TIn> stream, string name, Func<TAggr> emptyAggregation, Func<TIn, TKey> getKey, Func<TAggr, TIn, TAggr> aggregate)
+        public static IStream<TOut> Aggregate<TIn, TAggr, TKey, TOut>(this IStream<TIn> stream, string name, Func<TIn, TAggr> emptyAggregation, Func<TIn, TKey> getKey, Func<TAggr, TIn, TAggr> aggregate, Func<TIn, TKey, TAggr, TOut> resultSelector)
         {
-            return new AggregateStreamNode<TIn, TAggr, TKey>(name, new AggregateArgs<TIn, TAggr, TKey>
+            return new AggregateStreamNode<TIn, TAggr, TKey, TOut>(name, new AggregateArgs<TIn, TAggr, TKey, TOut>
             {
                 InputStream = stream,
                 Aggregate = aggregate,
                 GetKey = getKey,
-                CreateEmptyAggregation = emptyAggregation
+                CreateEmptyAggregation = emptyAggregation,
+                ResultSelector = resultSelector
             }).Output;
         }
-        public static IStream<KeyValuePair<TKey, TAggr>> Aggregate<TIn, TAggr, TKey>(this ISortedStream<TIn, TKey> stream, string name, Func<TAggr> emptyAggregation, Func<TAggr, TIn, TAggr> aggregate)
+        public static IStream<TOut> Aggregate<TIn, TAggr, TKey, TOut>(this ISortedStream<TIn, TKey> stream, string name, Func<TIn, TAggr> emptyAggregation, Func<TAggr, TIn, TAggr> aggregate, Func<TIn, TKey, TAggr, TOut> resultSelector)
         {
-            return new AggregateSortedStreamNode<TIn, TAggr, TKey>(name, new AggregateGroupedArgs<TIn, TAggr, TKey>
+            return new AggregateSortedStreamNode<TIn, TAggr, TKey,TOut>(name, new AggregateGroupedArgs<TIn, TAggr, TKey,TOut>
             {
                 InputStream = stream,
                 Aggregate = aggregate,
-                CreateEmptyAggregation = emptyAggregation
+                CreateEmptyAggregation = emptyAggregation,
+                ResultSelector = resultSelector
             }).Output;
         }
         #endregion

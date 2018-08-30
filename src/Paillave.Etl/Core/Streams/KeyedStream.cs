@@ -14,8 +14,7 @@ namespace Paillave.Etl.Core.Streams
     {
         public KeyedStream(ITracer tracer, IExecutionContext executionContext, string sourceNodeName, IPushObservable<T> observable, SortDefinition<T, TKey> sortDefinition) : base(tracer, executionContext, sourceNodeName, observable)
         {
-            if (sortDefinition == null) throw new ArgumentOutOfRangeException(nameof(sortDefinition), "key criteria list cannot be empty");
-            this.SortDefinition = sortDefinition;
+            this.SortDefinition = sortDefinition ?? throw new ArgumentOutOfRangeException(nameof(sortDefinition), "key criteria list cannot be empty");
         }
         public SortDefinition<T, TKey> SortDefinition { get; }
         public override object GetMatchingStream(ITracer tracer, IExecutionContext executionContext, string name, object observable)

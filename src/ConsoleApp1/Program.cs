@@ -23,13 +23,14 @@ namespace ConsoleApp1
             var runner = new StreamProcessRunner<TestJob3, MyConfig>();
             // StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = null;// new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.Where("keep log info", i => i.Content.Level <= TraceLevel.Info).ToAction("logs to console", Console.WriteLine));
             StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.ToAction("logs to console", Console.WriteLine));
+            var testFilesDirectory = Path.Combine(Environment.CurrentDirectory, @"..\..\..\..\TestFiles\");
             var task = runner.ExecuteAsync(new MyConfig
             {
-                InputFolderPath = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles\",
+                InputFolderPath = Path.Combine(testFilesDirectory, @"."),
                 InputFilesSearchPattern = "testin.*.csv",
-                TypeFilePath = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles\ref - Copy.csv",
-                DestinationFilePath = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles\outfile.csv",
-                CategoryDestinationFilePath = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles\categoryStats.csv"
+                TypeFilePath = Path.Combine(testFilesDirectory, @"ref - Copy.csv"),
+                DestinationFilePath = Path.Combine(testFilesDirectory, @"outfile.csv"),
+                CategoryDestinationFilePath = Path.Combine(testFilesDirectory, @"categoryStats.csv")
             }, traceStreamProcessDefinition);
             task.Wait();
 
