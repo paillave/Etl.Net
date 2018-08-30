@@ -9,23 +9,22 @@ using System.Text;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class JoinArgs<TInLeft, TInRight, TOut>
+    public class JoinArgs<TInLeft, TInRight, TOut, TKey>
     {
-        public ISortedStream<TInLeft> LeftInputStream { get; set; }
-        public IKeyedStream<TInRight> RightInputStream { get; set; }
+        public ISortedStream<TInLeft, TKey> LeftInputStream { get; set; }
+        public IKeyedStream<TInRight, TKey> RightInputStream { get; set; }
         public Func<TInLeft, TInRight, TOut> ResultSelector { get; set; }
         public bool RedirectErrorsInsteadOfFail { get; set; }
     }
-    public class JoinStreamNode<TInLeft, TInRight, TOut> : StreamNodeBase<TOut, IStream<TOut>, JoinArgs<TInLeft, TInRight, TOut>>
+    public class JoinStreamNode<TInLeft, TInRight, TOut, TKey> : StreamNodeBase<TOut, IStream<TOut>, JoinArgs<TInLeft, TInRight, TOut, TKey>>
     {
-        public JoinStreamNode(string name, JoinArgs<TInLeft, TInRight, TOut> args) : base(name, args)
+        public JoinStreamNode(string name, JoinArgs<TInLeft, TInRight, TOut, TKey> args) : base(name, args)
         {
         }
 
-        protected override IStream<TOut> CreateOutputStream(JoinArgs<TInLeft, TInRight, TOut> args)
+        protected override IStream<TOut> CreateOutputStream(JoinArgs<TInLeft, TInRight, TOut, TKey> args)
         {
-            args.LeftInputStream.Observable.LeftJoin(args.RightInputStream.Observable, new SortCriteriaComparer<TInLeft, TInRight>(args.LeftInputStream.SortCriterias.ToList(), args.RightInputStream.SortCriterias.ToList()), args.ResultSelector);
-            throw new NotImplementedException();
+            return base.CreateUnsortedStream(args.LeftInputStream.Observable.LeftJoin(args.RightInputStream.Observable, new SortDefinitionComparer<TInLeft, TInRight, TKey>(args.LeftInputStream.SortDefinition, args.RightInputStream.SortDefinition), args.ResultSelector));
         }
     }
 }

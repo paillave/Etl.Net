@@ -129,14 +129,14 @@ namespace Paillave.RxPush.Operators
         {
             return new LeftJoinSubject<TInLeft, TInRight, TOut>(observable, rightS, comparer, selector);
         }
-        public static IPushObservable<TOut> LeftJoin<TInLeft, TInRight, TOut>(this IPushObservable<TInLeft> observable, IPushObservable<TInRight> rightS, Expression<Func<TInLeft, IComparable>> leftKey, Expression<Func<TInRight, IComparable>> rightKey, Func<TInLeft, TInRight, TOut> selector)
+        public static IPushObservable<TOut> LeftJoin<TInLeft, TInRight, TOut, TKey>(this IPushObservable<TInLeft> observable, IPushObservable<TInRight> rightS, Func<TInLeft, TKey> leftKey, Func<TInRight, TKey> rightKey, object keyPositions, Func<TInLeft, TInRight, TOut> selector)
         {
             return new LeftJoinSubject<TInLeft, TInRight, TOut>(
                 observable,
                 rightS,
-                new SortCriteriaComparer<TInLeft, TInRight>(
-                    new[] { new SortCriteria<TInLeft>(leftKey) }.ToList(),
-                    new[] { new SortCriteria<TInRight>(rightKey) }.ToList()
+                new SortDefinitionComparer<TInLeft, TInRight,TKey>(
+                    new SortDefinition<TInLeft, TKey>(leftKey, keyPositions),
+                    new SortDefinition<TInRight, TKey>(rightKey, keyPositions)
                 ),
                 selector);
         }

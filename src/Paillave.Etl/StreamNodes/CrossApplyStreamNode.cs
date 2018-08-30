@@ -32,7 +32,7 @@ namespace Paillave.Etl.StreamNodes
         protected override IStream<TOut> CreateOutputStream(CrossApplyArgs<TInMain, TInToApply, TValueIn, TValueOut, TOut> args)
         {
             var ob = args.MainStream.Observable.CombineWithLatest(args.StreamToApply.Observable, (m, a) => new { Main = m, Apply = a });
-            return base.CreateStream(ob.FlatMap(i =>
+            return base.CreateUnsortedStream(ob.FlatMap(i =>
             {
                 var def = args.ValuesProvider.PushValues(i.Apply, args.GetValueIn(i.Main, i.Apply));
                 return new DeferedWrapperPushObservable<TOut>(def.Map(o => args.GetValueOut(o, i.Main, i.Apply)), def.Start);
@@ -47,7 +47,7 @@ namespace Paillave.Etl.StreamNodes
 
         protected override IStream<TOut> CreateOutputStream(CrossApplyArgs<TInMain, TValueIn, TValueOut, TOut> args)
         {
-            return base.CreateStream(args.Stream.Observable.FlatMap(i =>
+            return base.CreateUnsortedStream(args.Stream.Observable.FlatMap(i =>
             {
                 var def = args.ValuesProvider.PushValues(args.GetValueIn(i));
                 return new DeferedWrapperPushObservable<TOut>(def.Map(o => args.GetValueOut(o, i)), def.Start);

@@ -18,5 +18,9 @@ namespace Paillave.Etl.Core.Streams
             this.SortDefinition = sortDefinition;
         }
         public SortDefinition<T, TKey> SortDefinition { get; }
+        public override object GetMatchingStream(ITracer tracer, IExecutionContext executionContext, string name, object observable)
+        {
+            return new KeyedStream<T, TKey>(tracer, executionContext, name, (IPushObservable<T>)observable, this.SortDefinition);
+        }
     }
 }

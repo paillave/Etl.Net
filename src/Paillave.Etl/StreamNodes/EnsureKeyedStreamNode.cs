@@ -9,20 +9,20 @@ using System.Text;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class EnsureKeyedArgs<T>
+    public class EnsureKeyedArgs<T, TKey>
     {
         public IStream<T> Input { get; set; }
-        public IEnumerable<SortCriteria<T>> Criterias { get; set; }
+        public SortDefinition<T, TKey> SortDefinition { get; set; }
     }
-    public class EnsureKeyedStreamNode<TOut> : StreamNodeBase<TOut, IKeyedStream<TOut>, EnsureKeyedArgs<TOut>>
+    public class EnsureKeyedStreamNode<TOut, TKey> : StreamNodeBase<TOut, IKeyedStream<TOut, TKey>, EnsureKeyedArgs<TOut, TKey>>
     {
-        public EnsureKeyedStreamNode(string name, EnsureKeyedArgs<TOut> args) : base(name, args)
+        public EnsureKeyedStreamNode(string name, EnsureKeyedArgs<TOut, TKey> args) : base(name, args)
         {
         }
 
-        protected override IKeyedStream<TOut> CreateOutputStream(EnsureKeyedArgs<TOut> args)
+        protected override IKeyedStream<TOut, TKey> CreateOutputStream(EnsureKeyedArgs<TOut, TKey> args)
         {
-            return base.CreateKeyedStream(args.Input.Observable.ExceptionOnUnsorted(new SortCriteriaComparer<TOut>(args.Criterias.ToArray()), true), args.Criterias);
+            return base.CreateKeyedStream(args.Input.Observable.ExceptionOnUnsorted(args.SortDefinition, true), args.SortDefinition);
         }
     }
 }

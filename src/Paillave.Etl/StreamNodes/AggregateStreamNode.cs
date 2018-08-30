@@ -21,7 +21,7 @@ namespace Paillave.Etl.StreamNodes
 
         protected override IStream<KeyValuePair<TKey, TAggr>> CreateOutputStream(AggregateArgs<TIn, TAggr, TKey> args)
         {
-            return CreateStream(args.InputStream.Observable.Aggregate(args.CreateEmptyAggregation, args.GetKey, args.Aggregate));
+            return CreateUnsortedStream(args.InputStream.Observable.Aggregate(args.CreateEmptyAggregation, args.GetKey, args.Aggregate));
         }
     }
 }

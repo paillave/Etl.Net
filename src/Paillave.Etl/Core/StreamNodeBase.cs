@@ -57,7 +57,7 @@ namespace Paillave.Etl.Core
 
         protected abstract TOutStream CreateOutputStream(TArgs args);
 
-        protected IStream<TOut> CreateStream(IPushObservable<TOut> observable)
+        protected IStream<TOut> CreateUnsortedStream(IPushObservable<TOut> observable)
         {
             return new Stream<TOut>(this.Tracer, this.ExecutionContext, this.NodeName, observable);
         }
@@ -69,20 +69,12 @@ namespace Paillave.Etl.Core
 
         protected IKeyedStream<TOut, TKey> CreateKeyedStream<TKey>(IPushObservable<TOut> observable, SortDefinition<TOut, TKey> sortDefinition)
         {
-            return new KeyedStream<TOut,TKey>(this.Tracer, this.ExecutionContext, this.NodeName, observable, sortDefinition);
+            return new KeyedStream<TOut, TKey>(this.Tracer, this.ExecutionContext, this.NodeName, observable, sortDefinition);
         }
 
         protected TOutStream CreateMatchingStream(IPushObservable<TOut> observable, TOutStream matchingSourceStream)
         {
-            //IS THERE ANY WAY TO GET RID OF THESE HORRIFYING DOUBLE CASTS?
-            switch (matchingSourceStream)
-            {
-                case IKeyedStream<TOut> ks:
-                    return (TOutStream)(object)new KeyedStream<TOut>(Tracer, ExecutionContext, NodeName, observable, ks.SortCriterias);
-                case ISortedStream<TOut> ss:
-                    return (TOutStream)(object)new SortedStream<TOut>(Tracer, ExecutionContext, NodeName, observable, ss.SortCriterias);
-            }
-            return (TOutStream)(object)new Stream<TOut>(Tracer, ExecutionContext, NodeName, observable);
+            return (TOutStream)matchingSourceStream.GetMatchingStream(Tracer, ExecutionContext, NodeName, observable);
         }
         protected Func<T1, T2> WrapSelectForDisposal<T1, T2>(Func<T1, T2> creator)
         {
