@@ -37,7 +37,7 @@ namespace Paillave.RxPush.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TOut> Scan<TIn, TOut>(this IPushObservable<TIn> observable, Func<TOut, TIn, TOut> reducer, TOut initialValue = default(TOut))
+        public static IPushObservable<TOut> Scan<TIn, TOut>(this IPushObservable<TIn> observable, Func<TOut, TIn, TOut> reducer, TOut initialValue = default)
         {
             return new ScanSubject<TIn, TOut>(observable, reducer, initialValue);
         }

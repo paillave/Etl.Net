@@ -12,8 +12,10 @@ namespace Paillave.Etl.Core.Streams
 {
     public class Stream<T> : IStream<T>
     {
-        public Stream(ITracer tracer, IExecutionContext executionContext,string sourceNodeName, IPushObservable<T> observable)
+        protected ITracer Tracer { get; }
+        public Stream(ITracer tracer, IExecutionContext executionContext, string sourceNodeName, IPushObservable<T> observable)
         {
+            this.Tracer = tracer;
             this.SourceNodeName = sourceNodeName;
             this.ExecutionContext = executionContext;
 
@@ -35,5 +37,15 @@ namespace Paillave.Etl.Core.Streams
         public IExecutionContext ExecutionContext { get; }
 
         public string SourceNodeName { get; }
+
+        public virtual object GetMatchingStream(IPushObservable<T> observable)
+        {
+            return new Stream<T>(this.Tracer, this.ExecutionContext, this.SourceNodeName, observable);
+        }
+
+        public virtual object GetMatchingStream(ITracer tracer, IExecutionContext executionContext, string name, object observable)
+        {
+            return new Stream<T>(tracer, executionContext, name, (IPushObservable<T>)observable);
+        }
     }
 }

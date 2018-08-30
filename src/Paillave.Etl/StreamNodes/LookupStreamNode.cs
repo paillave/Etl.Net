@@ -26,12 +26,11 @@ namespace Paillave.Etl.StreamNodes
         {
             var rightDicoS = args.RightInputStream.Observable.ToList().Map(l => l.ToDictionary(args.GetRightStreamKey));
             var matchingS = args.LeftInputStream.Observable.CombineWithLatest(rightDicoS, (l, rl) => new { Left = l, Right = this.HandleMatching(l, rl, args.GetLeftStreamKey) }, true);
-            return base.CreateStream(matchingS.Map(i => args.ResultSelector(i.Left, i.Right)));
+            return base.CreateUnsortedStream(matchingS.Map(i => args.ResultSelector(i.Left, i.Right)));
         }
         private TInRight HandleMatching(TInLeft l, Dictionary<TKey, TInRight> rl, Func<TInLeft, TKey> getLeftStreamKey)
         {
-            TInRight r = default(TInRight);
-            rl.TryGetValue(getLeftStreamKey(l), out r);
+            rl.TryGetValue(getLeftStreamKey(l), out TInRight r);
             return r;
         }
     }

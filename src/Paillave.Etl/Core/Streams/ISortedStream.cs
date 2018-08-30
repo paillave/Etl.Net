@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace Paillave.Etl.Core.Streams
 {
-    public interface ISortedStream<T> : IStream<T>, ISortedStream
+    public interface ISortedStream<T, TKey> : IStream<T>, ISortedStream
     {
-        IReadOnlyCollection<SortCriteria<T>> SortCriterias { get; }
+        SortDefinition<T, TKey> SortDefinition { get; }
     }
     public interface ISortedStream : IStream
     {

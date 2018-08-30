@@ -31,7 +31,7 @@ namespace Paillave.Etl.StreamNodes
                 obs = args.MainStream.Observable.Map((e, i) => new IndexedObject<TInMain>(i, e)).CombineWithLatest(args.StreamToApply.Observable.First(), WrapSelectIndexObjectForDisposal(args.IndexSelector), true);
             if (args.ExcludeNull)
                 obs = obs.Filter(i => i != null);
-            return base.CreateStream(obs);
+            return base.CreateUnsortedStream(obs);
         }
     }
 }

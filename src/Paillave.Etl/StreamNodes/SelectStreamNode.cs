@@ -31,7 +31,7 @@ namespace Paillave.Etl.StreamNodes
                 obs = args.Stream.Observable.Map(WrapSelectIndexForDisposal(args.IndexSelector));
             if (args.ExcludeNull)
                 obs = obs.Filter(i => i != null);
-            return base.CreateStream(obs);
+            return base.CreateUnsortedStream(obs);
         }
     }
 }

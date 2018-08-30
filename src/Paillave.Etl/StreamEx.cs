@@ -19,6 +19,28 @@ namespace Paillave.Etl
 {
     public static class StreamEx
     {
+        #region Aggregate
+        public static IStream<KeyValuePair<TKey, TAggr>> Aggregate<TIn, TAggr, TKey>(this IStream<TIn> stream, string name, Func<TAggr> emptyAggregation, Func<TIn, TKey> getKey, Func<TAggr, TIn, TAggr> aggregate)
+        {
+            return new AggregateStreamNode<TIn, TAggr, TKey>(name, new AggregateArgs<TIn, TAggr, TKey>
+            {
+                InputStream = stream,
+                Aggregate = aggregate,
+                GetKey = getKey,
+                CreateEmptyAggregation = emptyAggregation
+            }).Output;
+        }
+        public static IStream<KeyValuePair<TKey, TAggr>> Aggregate<TIn, TAggr, TKey>(this ISortedStream<TIn, TKey> stream, string name, Func<TAggr> emptyAggregation, Func<TAggr, TIn, TAggr> aggregate)
+        {
+            return new AggregateSortedStreamNode<TIn, TAggr, TKey>(name, new AggregateGroupedArgs<TIn, TAggr, TKey>
+            {
+                InputStream = stream,
+                Aggregate = aggregate,
+                CreateEmptyAggregation = emptyAggregation
+            }).Output;
+        }
+        #endregion
+
         #region CrossApply
         public static IStream<TOut> CrossApply<TIn, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, IValuesProvider<TValueIn, TValueOut> valuesProvider, Func<TIn, TValueIn> inputValueSelector, Func<TValueOut, TIn, TOut> outputValueSelector)
         {
@@ -296,47 +318,47 @@ namespace Paillave.Etl
         #endregion
 
         #region EnsureKeyed
-        public static IKeyedStream<TIn> EnsureKeyed<TIn>(this IStream<TIn> stream, string name, params Expression<Func<TIn, IComparable>>[] sortFields)
+        public static IKeyedStream<TIn, TKey> EnsureKeyed<TIn, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, object sortPositions = null)
         {
-            return new EnsureKeyedStreamNode<TIn>(name, new EnsureKeyedArgs<TIn>
+            return new EnsureKeyedStreamNode<TIn, TKey>(name, new EnsureKeyedArgs<TIn, TKey>
             {
                 Input = stream,
-                Criterias = sortFields.Select(i => new SortCriteria<TIn>(i)).ToList()
+                SortDefinition = SortDefinition.Create(getKey, sortPositions)
             }).Output;
         }
-        public static IKeyedStream<TIn> EnsureKeyed<TIn>(this IStream<TIn> stream, string name, params SortCriteria<TIn>[] sortCriterias)
+        public static IKeyedStream<TIn, TKey> EnsureKeyed<TIn, TKey>(this IStream<TIn> stream, string name, SortDefinition<TIn, TKey> sortDefinition)
         {
-            return new EnsureKeyedStreamNode<TIn>(name, new EnsureKeyedArgs<TIn>
+            return new EnsureKeyedStreamNode<TIn, TKey>(name, new EnsureKeyedArgs<TIn, TKey>
             {
                 Input = stream,
-                Criterias = sortCriterias
+                SortDefinition = sortDefinition
             }).Output;
         }
         #endregion
 
         #region EnsureSorted
-        public static ISortedStream<TIn> EnsureSorted<TIn>(this IStream<TIn> stream, string name, params Expression<Func<TIn, IComparable>>[] sortFields)
+        public static ISortedStream<TIn, TKey> EnsureSorted<TIn, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, object sortPositions = null)
         {
-            return new EnsureSortedStreamNode<TIn>(name, new EnsureSortedArgs<TIn>
+            return new EnsureSortedStreamNode<TIn, TKey>(name, new EnsureSortedArgs<TIn, TKey>
             {
                 Input = stream,
-                Criterias = sortFields.Select(i => new SortCriteria<TIn>(i)).ToList()
+                SortDefinition = SortDefinition.Create(getKey, sortPositions)
             }).Output;
         }
-        public static ISortedStream<TIn> EnsureSorted<TIn>(this IStream<TIn> stream, string name, params SortCriteria<TIn>[] sortCriterias)
+        public static ISortedStream<TIn, TKey> EnsureSorted<TIn, TKey>(this IStream<TIn> stream, string name, SortDefinition<TIn, TKey> sortDefinition)
         {
-            return new EnsureSortedStreamNode<TIn>(name, new EnsureSortedArgs<TIn>
+            return new EnsureSortedStreamNode<TIn, TKey>(name, new EnsureSortedArgs<TIn, TKey>
             {
                 Input = stream,
-                Criterias = sortCriterias
+                SortDefinition = sortDefinition
             }).Output;
         }
         #endregion
 
         #region LeftJoin
-        public static IStream<TOut> LeftJoin<TInLeft, TInRight, TOut>(this ISortedStream<TInLeft> leftStream, string name, IKeyedStream<TInRight> rightStream, Func<TInLeft, TInRight, TOut> resultSelector)
+        public static IStream<TOut> LeftJoin<TInLeft, TInRight, TOut, TKey>(this ISortedStream<TInLeft, TKey> leftStream, string name, IKeyedStream<TInRight, TKey> rightStream, Func<TInLeft, TInRight, TOut> resultSelector)
         {
-            return new JoinStreamNode<TInLeft, TInRight, TOut>(name, new JoinArgs<TInLeft, TInRight, TOut>
+            return new JoinStreamNode<TInLeft, TInRight, TOut, TKey>(name, new JoinArgs<TInLeft, TInRight, TOut, TKey>
             {
                 LeftInputStream = leftStream,
                 RightInputStream = rightStream,
@@ -393,17 +415,17 @@ namespace Paillave.Etl
         #endregion
 
         #region Skip
-        public static ISortedStream<TIn> Skip<TIn>(this ISortedStream<TIn> stream, string name, int count)
+        public static ISortedStream<TIn, TKey> Skip<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, int count)
         {
-            return new SkipStreamNode<TIn, ISortedStream<TIn>>(name, new SkipArgs<TIn, ISortedStream<TIn>>
+            return new SkipStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new SkipArgs<TIn, ISortedStream<TIn, TKey>>
             {
                 Input = stream,
                 Count = count
             }).Output;
         }
-        public static IKeyedStream<TIn> Skip<TIn>(this IKeyedStream<TIn> stream, string name, int count)
+        public static IKeyedStream<TIn, TKey> Skip<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, int count)
         {
-            return new SkipStreamNode<TIn, IKeyedStream<TIn>>(name, new SkipArgs<TIn, IKeyedStream<TIn>>
+            return new SkipStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new SkipArgs<TIn, IKeyedStream<TIn, TKey>>
             {
                 Input = stream,
                 Count = count
@@ -420,20 +442,20 @@ namespace Paillave.Etl
         #endregion
 
         #region Sort
-        public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, params Expression<Func<TIn, IComparable>>[] sortFields)
+        public static ISortedStream<TIn, TKey> Sort<TIn, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, object keyPositions = null)
         {
-            return new SortStreamNode<TIn>(name, new SortArgs<TIn>
+            return new SortStreamNode<TIn, TKey>(name, new SortArgs<TIn, TKey>
             {
                 Input = stream,
-                Criterias = sortFields.Select(i => new SortCriteria<TIn>(i)).ToList()
+                SortDefinition = SortDefinition.Create(getKey, keyPositions)
             }).Output;
         }
-        public static ISortedStream<TIn> Sort<TIn>(this IStream<TIn> stream, string name, params SortCriteria<TIn>[] sortCriterias)
+        public static ISortedStream<TIn, TKey> Sort<TIn, TKey>(this IStream<TIn> stream, string name, SortDefinition<TIn, TKey> sortDefinition)
         {
-            return new SortStreamNode<TIn>(name, new SortArgs<TIn>
+            return new SortStreamNode<TIn, TKey>(name, new SortArgs<TIn, TKey>
             {
                 Input = stream,
-                Criterias = sortCriterias
+                SortDefinition = sortDefinition
             }).Output;
         }
         #endregion
@@ -447,17 +469,17 @@ namespace Paillave.Etl
                 Stream = stream
             }).Output;
         }
-        public static ISortedStream<TIn> ToAction<TIn>(this ISortedStream<TIn> stream, string name, Action<TIn> processRow)
+        public static ISortedStream<TIn, TKey> ToAction<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, Action<TIn> processRow)
         {
-            return new ToActionStreamNode<TIn, ISortedStream<TIn>>(name, new ToActionArgs<TIn, ISortedStream<TIn>>
+            return new ToActionStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new ToActionArgs<TIn, ISortedStream<TIn, TKey>>
             {
                 ProcessRow = processRow,
                 Stream = stream
             }).Output;
         }
-        public static IKeyedStream<TIn> ToAction<TIn>(this IKeyedStream<TIn> stream, string name, Action<TIn> processRow)
+        public static IKeyedStream<TIn, TKey> ToAction<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, Action<TIn> processRow)
         {
-            return new ToActionStreamNode<TIn, IKeyedStream<TIn>>(name, new ToActionArgs<TIn, IKeyedStream<TIn>>
+            return new ToActionStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new ToActionArgs<TIn, IKeyedStream<TIn, TKey>>
             {
                 ProcessRow = processRow,
                 Stream = stream
@@ -473,9 +495,9 @@ namespace Paillave.Etl
                 PreProcess = preProcess
             }).Output;
         }
-        public static ISortedStream<TIn> ToAction<TIn, TResource>(this ISortedStream<TIn> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
+        public static ISortedStream<TIn, TKey> ToAction<TIn, TResource, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
         {
-            return new ToActionStreamNode<TIn, ISortedStream<TIn>, TResource>(name, new ToActionArgs<TIn, ISortedStream<TIn>, TResource>
+            return new ToActionStreamNode<TIn, ISortedStream<TIn, TKey>, TResource>(name, new ToActionArgs<TIn, ISortedStream<TIn, TKey>, TResource>
             {
                 ProcessRow = processRow,
                 Stream = stream,
@@ -483,9 +505,9 @@ namespace Paillave.Etl
                 PreProcess = preProcess
             }).Output;
         }
-        public static IKeyedStream<TIn> ToAction<TIn, TResource>(this IKeyedStream<TIn> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
+        public static IKeyedStream<TIn, TKey> ToAction<TIn, TResource, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
         {
-            return new ToActionStreamNode<TIn, IKeyedStream<TIn>, TResource>(name, new ToActionArgs<TIn, IKeyedStream<TIn>, TResource>
+            return new ToActionStreamNode<TIn, IKeyedStream<TIn, TKey>, TResource>(name, new ToActionArgs<TIn, IKeyedStream<TIn, TKey>, TResource>
             {
                 ProcessRow = processRow,
                 Stream = stream,
@@ -505,18 +527,18 @@ namespace Paillave.Etl
                 TargetStream = resourceStream
             }).Output;
         }
-        public static ISortedStream<TIn> ToTextFile<TIn>(this ISortedStream<TIn> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, ColumnIndexFlatFileDescriptor<TIn> mapping) where TIn : new()
+        public static ISortedStream<TIn, TKey> ToTextFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, ColumnIndexFlatFileDescriptor<TIn> mapping) where TIn : new()
         {
-            return new ToIndexMappingFileStreamNode<TIn, ISortedStream<TIn>>(name, new ToIndexMappingFileArgs<TIn, ISortedStream<TIn>>
+            return new ToIndexMappingFileStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new ToIndexMappingFileArgs<TIn, ISortedStream<TIn, TKey>>
             {
                 MainStream = stream,
                 Mapping = mapping,
                 TargetStream = resourceStream
             }).Output;
         }
-        public static IKeyedStream<TIn> ToTextFile<TIn>(this IKeyedStream<TIn> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, ColumnIndexFlatFileDescriptor<TIn> mapping) where TIn : new()
+        public static IKeyedStream<TIn, TKey> ToTextFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, ColumnIndexFlatFileDescriptor<TIn> mapping) where TIn : new()
         {
-            return new ToIndexMappingFileStreamNode<TIn, IKeyedStream<TIn>>(name, new ToIndexMappingFileArgs<TIn, IKeyedStream<TIn>>
+            return new ToIndexMappingFileStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new ToIndexMappingFileArgs<TIn, IKeyedStream<TIn, TKey>>
             {
                 MainStream = stream,
                 Mapping = mapping,
@@ -532,18 +554,18 @@ namespace Paillave.Etl
                 TargetStream = resourceStream
             }).Output;
         }
-        public static ISortedStream<TIn> ToTextFile<TIn>(this ISortedStream<TIn> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, ColumnNameFlatFileDescriptor<TIn> mapping) where TIn : new()
+        public static ISortedStream<TIn, TKey> ToTextFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, ColumnNameFlatFileDescriptor<TIn> mapping) where TIn : new()
         {
-            return new ToNameMappingFileStreamNode<TIn, ISortedStream<TIn>>(name, new ToNameMappingFileArgs<TIn, ISortedStream<TIn>>
+            return new ToNameMappingFileStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new ToNameMappingFileArgs<TIn, ISortedStream<TIn, TKey>>
             {
                 MainStream = stream,
                 Mapping = mapping,
                 TargetStream = resourceStream
             }).Output;
         }
-        public static IKeyedStream<TIn> ToTextFile<TIn>(this IKeyedStream<TIn> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, ColumnNameFlatFileDescriptor<TIn> mapping) where TIn : new()
+        public static IKeyedStream<TIn, TKey> ToTextFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, ColumnNameFlatFileDescriptor<TIn> mapping) where TIn : new()
         {
-            return new ToNameMappingFileStreamNode<TIn, IKeyedStream<TIn>>(name, new ToNameMappingFileArgs<TIn, IKeyedStream<TIn>>
+            return new ToNameMappingFileStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new ToNameMappingFileArgs<TIn, IKeyedStream<TIn, TKey>>
             {
                 MainStream = stream,
                 Mapping = mapping,
@@ -553,17 +575,17 @@ namespace Paillave.Etl
         #endregion
 
         #region Top
-        public static ISortedStream<TIn> Top<TIn>(this ISortedStream<TIn> stream, string name, int count)
+        public static ISortedStream<TIn, TKey> Top<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, int count)
         {
-            return new TopStreamNode<TIn, ISortedStream<TIn>>(name, new TopArgs<TIn, ISortedStream<TIn>>
+            return new TopStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new TopArgs<TIn, ISortedStream<TIn, TKey>>
             {
                 Input = stream,
                 Count = count
             }).Output;
         }
-        public static IKeyedStream<TIn> Top<TIn>(this IKeyedStream<TIn> stream, string name, int count)
+        public static IKeyedStream<TIn, TKey> Top<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, int count)
         {
-            return new TopStreamNode<TIn, IKeyedStream<TIn>>(name, new TopArgs<TIn, IKeyedStream<TIn>>
+            return new TopStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new TopArgs<TIn, IKeyedStream<TIn, TKey>>
             {
                 Input = stream,
                 Count = count
@@ -580,17 +602,17 @@ namespace Paillave.Etl
         #endregion
 
         #region Where
-        public static IKeyedStream<TIn> Where<TIn>(this IKeyedStream<TIn> stream, string name, Func<TIn, bool> predicate)
+        public static IKeyedStream<TIn, TKey> Where<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, Func<TIn, bool> predicate)
         {
-            return new WhereStreamNode<TIn, IKeyedStream<TIn>>(name, new WhereArgs<TIn, IKeyedStream<TIn>>
+            return new WhereStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new WhereArgs<TIn, IKeyedStream<TIn, TKey>>
             {
                 Input = stream,
                 Predicate = predicate
             }).Output;
         }
-        public static ISortedStream<TIn> Where<TIn>(this ISortedStream<TIn> stream, string name, Func<TIn, bool> predicate)
+        public static ISortedStream<TIn, TKey> Where<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, Func<TIn, bool> predicate)
         {
-            return new WhereStreamNode<TIn, ISortedStream<TIn>>(name, new WhereArgs<TIn, ISortedStream<TIn>>
+            return new WhereStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new WhereArgs<TIn, ISortedStream<TIn, TKey>>
             {
                 Input = stream,
                 Predicate = predicate

@@ -28,22 +28,22 @@ namespace Paillave.Etl
                 BatchSize = chunkSize
             }).Output;
         }
-        public static ISortedStream<TIn> ToEntityFrameworkCore<TIn, TRes>(this ISortedStream<TIn> stream, string name, IStream<TRes> resourceStream, int chunkSize = 1000)
+        public static ISortedStream<TIn, TKey> ToEntityFrameworkCore<TIn, TRes, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<TRes> resourceStream, int chunkSize = 1000)
             where TRes : DbContext
             where TIn : class
         {
-            return new ToEntityFrameworkCoreStreamNode<TIn, TRes, ISortedStream<TIn>>(name, new ToEntityFrameworkCoreArgs<TIn, TRes, ISortedStream<TIn>>
+            return new ToEntityFrameworkCoreStreamNode<TIn, TRes, ISortedStream<TIn, TKey>>(name, new ToEntityFrameworkCoreArgs<TIn, TRes, ISortedStream<TIn, TKey>>
             {
                 SourceStream = stream,
                 DbContextStream = resourceStream,
                 BatchSize = chunkSize
             }).Output;
         }
-        public static IKeyedStream<TIn> ToEntityFrameworkCore<TIn, TRes>(this IKeyedStream<TIn> stream, string name, IStream<TRes> resourceStream, int chunkSize = 1000)
+        public static IKeyedStream<TIn, TKey> ToEntityFrameworkCore<TIn, TRes, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<TRes> resourceStream, int chunkSize = 1000)
             where TRes : DbContext
             where TIn : class
         {
-            return new ToEntityFrameworkCoreStreamNode<TIn, TRes, IKeyedStream<TIn>>(name, new ToEntityFrameworkCoreArgs<TIn, TRes, IKeyedStream<TIn>>
+            return new ToEntityFrameworkCoreStreamNode<TIn, TRes, IKeyedStream<TIn, TKey>>(name, new ToEntityFrameworkCoreArgs<TIn, TRes, IKeyedStream<TIn, TKey>>
             {
                 SourceStream = stream,
                 DbContextStream = resourceStream,

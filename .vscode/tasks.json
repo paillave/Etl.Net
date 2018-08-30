@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Paillave.Etl.sln"
+                "${workspaceFolder}/src/Paillave.Etl.sln"
             ],
             "problemMatcher": "$msCompile"
         }

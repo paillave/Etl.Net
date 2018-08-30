@@ -56,9 +56,9 @@ namespace Paillave.RxPush.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<T> ExceptionOnUnsorted<T>(this IPushObservable<T> observable, Expression<Func<T, IComparable>> field, SortOrder sortOrder = SortOrder.Ascending, bool distinctItems = false)
+        public static IPushObservable<T> ExceptionOnUnsorted<T>(this IPushObservable<T> observable, Func<T, IComparable> key, object keyPosition = null, bool distinctItems = false)
         {
-            return new ExceptionOnUnsortedSubject<T>(observable, new SortCriteriaComparer<T>(new SortCriteria<T>(field, sortOrder)), distinctItems);
+            return new ExceptionOnUnsortedSubject<T>(observable, SortDefinition.Create(key, keyPosition), distinctItems);
         }
         public static IPushObservable<T> ExceptionOnUnsorted<T>(this IPushObservable<T> observable, IComparer<T> comparer, bool distinctItems = false)
         {

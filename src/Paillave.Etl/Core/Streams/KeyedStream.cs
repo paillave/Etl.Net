@@ -10,13 +10,17 @@ using Paillave.Etl.Core.TraceContents;
 
 namespace Paillave.Etl.Core.Streams
 {
-    public class KeyedStream<T> : Stream<T>, IKeyedStream<T>
+    public class KeyedStream<T, TKey> : Stream<T>, IKeyedStream<T, TKey>
     {
-        public KeyedStream(ITracer tracer, IExecutionContext executionContext, string sourceNodeName, IPushObservable<T> observable, IEnumerable<SortCriteria<T>> sortCriterias) : base(tracer, executionContext, sourceNodeName, observable)
+        public KeyedStream(ITracer tracer, IExecutionContext executionContext, string sourceNodeName, IPushObservable<T> observable, SortDefinition<T, TKey> sortDefinition) : base(tracer, executionContext, sourceNodeName, observable)
         {
-            if (sortCriterias.Count() == 0) throw new ArgumentOutOfRangeException(nameof(sortCriterias), "key criteria list cannot be empty");
-            this.SortCriterias = new ReadOnlyCollection<SortCriteria<T>>(sortCriterias.ToList());
+            if (sortDefinition == null) throw new ArgumentOutOfRangeException(nameof(sortDefinition), "key criteria list cannot be empty");
+            this.SortDefinition = sortDefinition;
         }
-        public IReadOnlyCollection<SortCriteria<T>> SortCriterias { get; }
+        public SortDefinition<T, TKey> SortDefinition { get; }
+        public override object GetMatchingStream(ITracer tracer, IExecutionContext executionContext, string name, object observable)
+        {
+            return new KeyedStream<T, TKey>(tracer, executionContext, name, (IPushObservable<T>)observable, this.SortDefinition);
+        }
     }
 }

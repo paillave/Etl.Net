@@ -9,24 +9,24 @@ using System.Text;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class SortArgs<T>
+    public class SortArgs<T, TKey>
     {
         public IStream<T> Input { get; set; }
-        public IEnumerable<SortCriteria<T>> Criterias { get; set; }
+        public SortDefinition<T, TKey> SortDefinition { get; set; }
     }
-    public class SortStreamNode<TOut> : StreamNodeBase<TOut, ISortedStream<TOut>, SortArgs<TOut>>
+    public class SortStreamNode<TOut, TKey> : StreamNodeBase<TOut, ISortedStream<TOut, TKey>, SortArgs<TOut, TKey>>
     {
-        public SortStreamNode(string name, SortArgs<TOut> args) : base(name, args)
+        public SortStreamNode(string name, SortArgs<TOut, TKey> args) : base(name, args)
         {
         }
 
-        protected override ISortedStream<TOut> CreateOutputStream(SortArgs<TOut> args)
+        protected override ISortedStream<TOut, TKey> CreateOutputStream(SortArgs<TOut, TKey> args)
         {
             return base.CreateSortedStream(args.Input.Observable.ToList().FlatMap(i =>
             {
-                i.Sort(new SortCriteriaComparer<TOut>(args.Criterias.ToArray()));
+                i.Sort(args.SortDefinition);
                 return PushObservable.FromEnumerable(i);
-            }), args.Criterias);
+            }), args.SortDefinition);
         }
     }
 }

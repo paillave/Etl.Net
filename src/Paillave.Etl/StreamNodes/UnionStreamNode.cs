@@ -20,7 +20,7 @@ namespace Paillave.Etl.StreamNodes
 
         protected override IStream<TIn> CreateOutputStream(UnionArgs<TIn> args)
         {
-            return base.CreateStream(args.Stream1.Observable.Merge(args.Stream2.Observable));
+            return base.CreateUnsortedStream(args.Stream1.Observable.Merge(args.Stream2.Observable));
         }
     }
 }

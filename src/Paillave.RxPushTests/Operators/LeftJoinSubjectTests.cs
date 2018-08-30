@@ -22,7 +22,7 @@ namespace Paillave.RxPushTests.Operators
             var leftS = new PushSubject<int>();
             var rightS = new PushSubject<int>();
 
-            var output = leftS.LeftJoin(rightS, i => i, i => i, (l, r) => new Tuple<int, int>(l, r));
+            var output = leftS.LeftJoin(rightS, i => i, i => i, null, (l, r) => new Tuple<int, int>(l, r));
 
             output.Subscribe(valueStack.Push, () => isComplete = true, errorStack.Push);
 
@@ -84,7 +84,7 @@ namespace Paillave.RxPushTests.Operators
             var leftS = new PushSubject<int>();
             var rightS = new PushSubject<int>();
 
-            var output = leftS.LeftJoin(rightS, i => i, i => i, (l, r) => new Tuple<int, int>(l, r));
+            var output = leftS.LeftJoin(rightS, i => i, i => i, null, (l, r) => new Tuple<int, int>(l, r));
 
             output.Subscribe(valueStack.Push, () => isComplete = true, errorStack.Push);
 
@@ -111,7 +111,7 @@ namespace Paillave.RxPushTests.Operators
             var leftS = new PushSubject<int>();
             var rightS = new PushSubject<int>();
 
-            var output = leftS.LeftJoin(rightS, i => i, i => i, (l, r) => new Tuple<int, int>(l, r));
+            var output = leftS.LeftJoin(rightS, i => i, i => i, null, (l, r) => new Tuple<int, int>(l, r));
 
             output.Subscribe(valueStack.Push, () => { }, errorStack.Push);
 
@@ -137,7 +137,7 @@ namespace Paillave.RxPushTests.Operators
             var leftS = new PushSubject<int>();
             var rightS = new PushSubject<int>();
 
-            var output = leftS.LeftJoin(rightS, i => i, i => i, (l, r) => new Tuple<int, int>(l, r));
+            var output = leftS.LeftJoin(rightS, i => i, i => i, null, (l, r) => new Tuple<int, int>(l, r));
 
             output.Subscribe(valueStack.Push, () => isComplete = true, errorStack.Push);
 
@@ -164,7 +164,7 @@ namespace Paillave.RxPushTests.Operators
             var leftS = new PushSubject<int>();
             var rightS = new PushSubject<int>();
 
-            var output = leftS.LeftJoin(rightS, i => i, i => i, (l, r) => new Tuple<int, int>(l, r));
+            var output = leftS.LeftJoin(rightS, i => i, i => i, null, (l, r) => new Tuple<int, int>(l, r));
 
             output.Subscribe(valueStack.Push, () => isComplete = true, errorStack.Push);
 
