@@ -15,6 +15,7 @@ namespace ConsoleApp1.Jobs
         public void DefineProcess(IStream<MyConfig> rootStream)
         {
             var outputFileResourceS = rootStream.Select("open output file", i => new StreamWriter(i.DestinationFilePath));
+            var outputCategoryResourceS = rootStream.Select("open output category file", i => new StreamWriter(i.CategoryDestinationFilePath));
 
             var parsedLineS = rootStream
                 .CrossApplyFolderFiles("get folder files", i => i.InputFolderPath, i => i.InputFilesSearchPattern)
@@ -24,10 +25,16 @@ namespace ConsoleApp1.Jobs
                 .Select("get input file type path", i => i.TypeFilePath)
                 .CrossApplyTextFile("parse type input file", new TypeFileRowMapper());
 
-            parsedLineS
-                .Lookup("join types to file", parsedTypeLineS, i => i.TypeId, i => i.Id, (l, r) => new OutputFileRow { Id = l.Id, Name = r.Name, FileName = l.FileName })
+            var joinedLineS = parsedLineS
+                .Lookup("join types to file", parsedTypeLineS, i => i.TypeId, i => i.Id, (l, r) => new { Id = l.Id, Name = r.Name, FileName = l.FileName, Category = r.Category });
+
+            // var categoryStatistics = joinedLineS.Aggregate("create statistic for categories", () => 0, i => i.Category, (a, v) => a + 1)
+            //     .Select("create statistic output data", i => new OutputCategoryRow { Category = i.Key, AmountOfEntries = i.Value })
+            //     .ToTextFile("write category statistics to file", outputCategoryResourceS, new OutputCategoryRowMapper());
+
+            joinedLineS.Select("create output data", i => new OutputFileRow { Id = i.Id, Name = i.Name, FileName = i.FileName })
                 .ToTextFile("write to output file", outputFileResourceS, new OutputFileRowMapper());
-                //.ToAction("write to console", i => Console.WriteLine($"{i.FileName}:{i.Id}-{i.Name}"));
+            //.ToAction("write to console", i => Console.WriteLine($"{i.FileName}:{i.Id}-{i.Name}"));
         }
     }
 }

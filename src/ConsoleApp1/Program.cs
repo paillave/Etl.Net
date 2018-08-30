@@ -21,13 +21,15 @@ namespace ConsoleApp1
         {
             //new StreamProcessRunner<TestJob3, MyConfig>().GetDefinitionStructure().OpenVisNetworkStructure();
             var runner = new StreamProcessRunner<TestJob3, MyConfig>();
-            StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = null;// new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.Where("keep log info", i => i.Content.Level <= TraceLevel.Info).ToAction("logs to console", Console.WriteLine));
+            // StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = null;// new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.Where("keep log info", i => i.Content.Level <= TraceLevel.Info).ToAction("logs to console", Console.WriteLine));
+            StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.ToAction("logs to console", Console.WriteLine));
             var task = runner.ExecuteAsync(new MyConfig
             {
                 InputFolderPath = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles\",
-                InputFilesSearchPattern = "testin.*.txt",
-                TypeFilePath = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles\ref - Copy.txt",
-                DestinationFilePath = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles\outfile.csv"
+                InputFilesSearchPattern = "testin.*.csv",
+                TypeFilePath = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles\ref - Copy.csv",
+                DestinationFilePath = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles\outfile.csv",
+                CategoryDestinationFilePath = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles\categoryStats.csv"
             }, traceStreamProcessDefinition);
             task.Wait();
 

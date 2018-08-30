@@ -10,6 +10,7 @@ namespace ConsoleApp1.StreamTypes
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Category { get; set; }
         public string FileName { get; set; }
     }
 
@@ -33,6 +34,7 @@ namespace ConsoleApp1.StreamTypes
             this.WithCultureInfo(ci);
             this.MapColumnToProperty("#", i => i.Id);
             this.MapColumnToProperty("Label", i => i.Name);
+            this.MapColumnToProperty("Category", i => i.Category);
             //this.MapFileNameToProperty(i => i.FileName);
             this.IsFieldDelimited('\t');
         }
