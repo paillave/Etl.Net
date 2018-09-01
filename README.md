@@ -87,7 +87,7 @@ The first alpha release is expected once it starts to be a decent candidate to r
 
 *New requests are very welcome in the issue section*
 
-## :suspect: Simple Quickstart
+## Simple Quickstart :suspect:
 
 ```csharp
 using Paillave.Etl;
@@ -171,7 +171,7 @@ namespace ConsoleApp1
 }
 ```
 
-## :feelsgood: Complex Quickstart
+## Complex Quickstart :feelsgood:
 
 ### Create configuration type
 
