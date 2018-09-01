@@ -5,7 +5,7 @@
 [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net)
 
 
-Implementation of an ETL for .net working with a similar principle than SSIS, but only from .net code
+Implementation of an ETL for .net standard 2.0 working with a similar principle than SSIS, but only from .net code
 
 ## Developement status
 

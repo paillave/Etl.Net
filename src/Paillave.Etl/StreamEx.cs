@@ -19,6 +19,24 @@ namespace Paillave.Etl
 {
     public static class StreamEx
     {
+        #region Distinct
+        public static IStream<TIn> Distinct<TIn, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey)
+        {
+            return new DistinctStreamNode<TIn, TKey>(name, new DistinctArgs<TIn, TKey>
+            {
+                GetKey = getKey,
+                InputStream = stream
+            }).Output;
+        }
+        public static IKeyedStream<TIn, TKey> Distinct<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name)
+        {
+            return new DistinctSortedStreamNode<TIn, TKey>(name, new DistinctSortedArgs<TIn, TKey>
+            {
+                InputStream = stream
+            }).Output;
+        }
+        #endregion
+
         #region Pivot
         public static IStream<AggregationResult<TIn, TKey, TAggr>> Pivot<TIn, TAggr, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, Expression<Func<TIn, TAggr>> aggregationDescriptor)
         {
