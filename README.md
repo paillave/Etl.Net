@@ -13,7 +13,7 @@ Implementation of an ETL for .net working with a similar principle than SSIS, bu
 
 The first alpha release is expected once it starts to be a decent candidate to replace SSIS for common use cases.
 
-## Implemented and to be done ETL operations
+## ETL features
 
 | Name | Type | Done |
 | ----- | ----- | ----- |
@@ -58,12 +58,14 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Write file from SFTP | Data destination | :construction: |
 | Read data from REST service | Data source | :construction: |
 | Write data to REST service | Data destination | :construction: |
+| Keep section | Transformation | :construction: |
+| Ignore section | Transformation | :construction: |
 
 *Follow the status in the issue section*
 
 *New requests are very welcome in the issue section*
 
-## Implemented and to be done runtime features
+## Runtime features
 
 | Name | Done |
 | ----- | ----- |
