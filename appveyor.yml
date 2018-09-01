@@ -1,0 +1,36 @@
+version: 1.0.{build}-alpha
+branches:
+  only:
+  - master
+image: Visual Studio 2017
+configuration: Release
+platform: Any CPU
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+before_build:
+- cmd: dotnet restore src
+build:
+  project: src/Paillave.Etl.sln
+  verbosity: minimal
+test:
+  assemblies:
+    only:
+    - src\Paillave.RxPushTests\bin\Release\netcoreapp2.1\Paillave.RxPushTests.dll
+artifacts:
+- path: src\Paillave.Etl\bin\$(configuration)\*.nupkg
+  name: Paillave.Etl
+- path: src\Paillave.Etl.EntityFrameworkCore\bin\$(configuration)\*.nupkg
+  name: Paillave.Etl.EntityFrameworkCore
+- path: src\Paillave.Etl.ExecutionPlan\bin\$(configuration)\*.nupkg
+  name: Paillave.Etl.ExecutionPlan
+deploy:
+- provider: NuGet
+  api_key:
+    secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
+  artifact: Paillave.Etl
