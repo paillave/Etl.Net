@@ -5,11 +5,11 @@
 [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net)
 
 
-Implementation of an Etl for .net working with a similar principle than SSIS, but only from .net code
+Implementation of an ETL for .net working with a similar principle than SSIS, but only from .net code
 
 ## Developement status
 
-**:construction: This library is still under development.**
+**:construction: This library is still under development, don't use it on production environment yet as its api structure is subject for changes.**
 
 The first alpha release is expected once it starts to be a decent candidate to replace SSIS for common use cases.
 
@@ -68,7 +68,7 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Name | Done |
 | ----- | ----- |
 | Trace issued data of each node | :heavy_check_mark: |
-| Trace any errors | :heavy_check_mark: |
+| Trace any error | :heavy_check_mark: |
 | Stop the entire process whenever an error is raised | :heavy_check_mark: |
 | Trace statistic result of each node at the end of the process | :heavy_check_mark: |
 | Trace time that is spent in each node at the end of the process | :construction: |
@@ -84,6 +84,8 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Power shell command tool to execute a job | :construction: |
 | Visual studio code addon to view the process as a directed graph whenever the job definition class file is saved | :construction: |
 | Visual studio code addon to view the process as a sankey graph whenever the job definition class file is saved | :construction: |
+| Raise a warning on the risky node when a performance issue or a bad practice is detected given statistics | :construction: |
+| Interprets a T-SQL-like language script to build a job definition on the fly and run it | :construction: |
 
 *New requests are very welcome in the issue section*
 
