@@ -1,8 +1,4 @@
 ﻿using Paillave.Etl.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 
 namespace ConsoleApp1.StreamTypes
 {

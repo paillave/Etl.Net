@@ -1,8 +1,6 @@
 ﻿using Paillave.Etl.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace ConsoleApp1.StreamTypes
 {
@@ -41,7 +39,6 @@ namespace ConsoleApp1.StreamTypes
             this.MapColumnToProperty("Rank", i => i.Col3);
             this.MapColumnToProperty("Comment", i => i.Col4);
             this.MapColumnToProperty("TypeId", i => i.TypeId);
-            //this.MapFileNameToProperty(i => i.FileName);
             this.IsFieldDelimited('\t');
         }
     }
