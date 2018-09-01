@@ -84,6 +84,7 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Power shell command tool to execute a job | :construction: |
 | Visual studio code addon to view the process as a directed graph whenever the job definition class file is saved | :construction: |
 | Visual studio code addon to view the process as a sankey graph whenever the job definition class file is saved | :construction: |
+| Raise a warning on the risky node when a performance issue or a bad practice is detected given statistics | :construction: |
 
 *New requests are very welcome in the issue section*
 
