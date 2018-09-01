@@ -9,7 +9,7 @@ Implementation of an Etl for .net working with a similar principle than SSIS, bu
 
 ## Developement status
 
-:construction: **This library is still under development.**
+**:construction: This library is still under development.**
 
 The first alpha release is expected once it starts to be a decent candidate to replace SSIS for common use cases.
 
@@ -17,47 +17,47 @@ The first alpha release is expected once it starts to be a decent candidate to r
 
 | Name | Type | Done |
 | ----- | ----- | ----- |
-| Select | Tranformation | [x] |
-| Where | Tranformation | [x] |
-| Sort | Tranformation | [x] |
-| Left Join | Tranformation | [x] |
-| Lookup | Tranformation | [x] |
-| Union | Tranformation | [x] |
-| Skip | Tranformation | [x] |
-| Top | Tranformation | [x] |
-| Distinct | Tranformation | [x] |
-| Pivot | Tranformation | [x] |
-| Unpivot | Tranformation | [x] |
-| Aggregate | Tranformation | [x] |
-| Cross Apply | Tranformation | [x] |
-| Ensure Sorted | Tranformation | [x] |
-| Ensure Keyed | Tranformation | [x] |
-| Script | Tranformation | [x] |
-| Select keeping sorted | Transformation | [x] |
-| Left join keeping sorted | Transformation | [x] |
-| Lookup keeping sorted | Transformation | [x] |
-| List folder files | Data source | [x] |
-| Read csv file | Data source | [x] |
-| :construction: Read excel file | Data source | [ ] |
-| Write csv file | Data destination | [x] |
-| :construction: Write excel file | Data destinaton | [ ] |
-| Read from Entity framework core | Data source | [x] |
-| Write to Entity framework core | Data destination | [x] |
-| :construction: Read from Entity framework | Data source | [ ] |
-| :construction: Write to Entity framework | Data destination | [ ] |
-| :construction: Entity framework core upsert | Data destination | [ ] |
-| :construction: Entity framework upsert | Data destination | [ ] |
-| :construction: SQL Server bulk load | Data destination | [ ] |
-| :construction: Read from sql server command | Data source | [ ] |
-| :construction: Write to sql server command | Data destination | [ ] |
-| :construction: List files from FTP | Data source | [ ] |
-| :construction: List file from SFTP | Data source | [ ] |
-| :construction: Read files from FTP | Data source | [ ] |
-| :construction: Read file from SFTP | Data source | [ ] |
-| :construction: Write files from FTP | Data destination | [ ] |
-| :construction: Write file from SFTP | Data destination | [ ] |
-| :construction: Read data from REST service | Data source | [ ] |
-| :construction: Write data to REST service | Data destination | [ ] |
+| Select | Tranformation | :heavy_check_mark: |
+| Where | Tranformation | :heavy_check_mark: |
+| Sort | Tranformation | :heavy_check_mark: |
+| Left Join | Tranformation | :heavy_check_mark: |
+| Lookup | Tranformation | :heavy_check_mark: |
+| Union | Tranformation | :heavy_check_mark: |
+| Skip | Tranformation | :heavy_check_mark: |
+| Top | Tranformation | :heavy_check_mark: |
+| Distinct | Tranformation | :heavy_check_mark: |
+| Pivot | Tranformation | :heavy_check_mark: |
+| Unpivot | Tranformation | :heavy_check_mark: |
+| Aggregate | Tranformation | :heavy_check_mark: |
+| Cross Apply | Tranformation | :heavy_check_mark: |
+| Ensure Sorted | Tranformation | :heavy_check_mark: |
+| Ensure Keyed | Tranformation | :heavy_check_mark: |
+| Script | Tranformation | :heavy_check_mark: |
+| Select keeping sorted | Transformation | :heavy_check_mark: |
+| Left join keeping sorted | Transformation | :heavy_check_mark: |
+| Lookup keeping sorted | Transformation | :heavy_check_mark: |
+| List folder files | Data source | :heavy_check_mark: |
+| Read csv file | Data source | :heavy_check_mark: |
+| Read excel file | Data source | :construction: |
+| Write csv file | Data destination | :heavy_check_mark: |
+| Write excel file | Data destinaton | :construction: |
+| Read from Entity framework core | Data source | :heavy_check_mark: |
+| Write to Entity framework core | Data destination | :heavy_check_mark: |
+| Read from Entity framework | Data source | :construction: |
+| Write to Entity framework | Data destination | :construction: |
+| Entity framework core upsert | Data destination | :construction: |
+| Entity framework upsert | Data destination | :construction: |
+| SQL Server bulk load | Data destination | :construction: |
+| Read from sql server command | Data source | :construction: |
+| Write to sql server command | Data destination | :construction: |
+| List files from FTP | Data source | :construction: |
+| List file from SFTP | Data source | :construction: |
+| Read files from FTP | Data source | :construction: |
+| Read file from SFTP | Data source | :construction: |
+| Write files from FTP | Data destination | :construction: |
+| Write file from SFTP | Data destination | :construction: |
+| Read data from REST service | Data source | :construction: |
+| Write data to REST service | Data destination | :construction: |
 
 *Follow the status in the issue section*
 
@@ -67,23 +67,23 @@ The first alpha release is expected once it starts to be a decent candidate to r
 
 | Name | Done |
 | ----- | ----- |
-| Trace issued data of each node | [x] |
-| Trace any errors | [x] |
-| Stop the entire process whenever an error is raised | [x] |
-| Trace statistic result of each node at the end of the process | [x] |
-| :construction: Trace time that is spent in each node at the end of the process | [ ] |
-| :construction: Publish a Job as a REST web service in web api core | [ ] |
-| Run any ETL operation on traces to permit to filter and save | [x] |
-| Show graphic to represent the process as a directed graph | [x] |
-| Show graphic to represent the process as a sankey graph | [x] |
-| Show graphic to represent process execution statistics as a directed graph | [x] |
-| Show graphic to represent process execution statistics as a sankey graph | [x] |
-| :construction: Show realtime process execution statistics as a directed graph | [ ] |
-| :construction: Show realtime process execution statistics as a sankey graph | [ ] |
-| :construction: Web portal to host job definitions manage their executions | [ ] |
-| :construction: Power shell command tool to execute a job | [ ] |
-| :construction: Visual studio code addon to view the process as a directed graph whenever the job definition class file is saved | [ ] |
-| :construction: Visual studio code addon to view the process as a sankey graph whenever the job definition class file is saved | [ ] |
+| Trace issued data of each node | :heavy_check_mark: |
+| Trace any errors | :heavy_check_mark: |
+| Stop the entire process whenever an error is raised | :heavy_check_mark: |
+| Trace statistic result of each node at the end of the process | :heavy_check_mark: |
+| Trace time that is spent in each node at the end of the process | :construction: |
+| Publish a Job as a REST web service in web api core | :construction: |
+| Run any ETL operation on traces to permit to filter and save | :heavy_check_mark: |
+| Show graphic to represent the process as a directed graph | :heavy_check_mark: |
+| Show graphic to represent the process as a sankey graph | :heavy_check_mark: |
+| Show graphic to represent process execution statistics as a directed graph | :heavy_check_mark: |
+| Show graphic to represent process execution statistics as a sankey graph | :heavy_check_mark: |
+| Show realtime process execution statistics as a directed graph | :construction: |
+| Show realtime process execution statistics as a sankey graph | :construction: |
+| Web portal to host job definitions manage their executions | :construction: |
+| Power shell command tool to execute a job | :construction: |
+| Visual studio code addon to view the process as a directed graph whenever the job definition class file is saved | :construction: |
+| Visual studio code addon to view the process as a sankey graph whenever the job definition class file is saved | :construction: |
 
 *New requests are very welcome in the issue section*
 
@@ -326,4 +326,4 @@ namespace ConsoleApp1
 
 ## Documentation
 
-:construction: **Documentation will be done once all essential features and bugs are solved.**
+**:construction: Documentation will be done once all essential features and bugs are solved.**
