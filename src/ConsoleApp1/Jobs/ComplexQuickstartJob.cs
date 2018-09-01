@@ -6,7 +6,7 @@ using System;
 
 namespace ConsoleApp1.Jobs
 {
-    public class QuickStartJob : IStreamProcessDefinition<MyConfig>
+    public class ComplexQuickstartJob : IStreamProcessDefinition<MyConfig>
     {
         public string Name => "import file";
 
