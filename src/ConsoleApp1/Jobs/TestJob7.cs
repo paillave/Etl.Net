@@ -8,7 +8,7 @@ using Paillave.Etl.Core.Streams;
 
 namespace ConsoleApp1.Jobs
 {
-    public class TestJob3 : IStreamProcessDefinition<MyConfig>
+    public class TestJob7 : IStreamProcessDefinition<MyConfig>
     {
         public string Name => "import file";
 
@@ -28,8 +28,8 @@ namespace ConsoleApp1.Jobs
             var joinedLineS = parsedLineS
                 .Lookup("join types to file", parsedTypeLineS, i => i.TypeId, i => i.Id, (l, r) => new { l.Id, r.Name, l.FileName, r.Category });
 
-            var categoryStatistics = joinedLineS.Aggregate("create statistic for categories", (i) => 0, i => i.Category, (a, v) => a + 1)
-                .Select("create output category data", i => new OutputCategoryRow { Category = i.Key, AmountOfEntries = i.Aggregation })
+            var categoryStatistics = joinedLineS.Pivot("create statistic for categories", i => i.Category, i => new { Count = AggregationOperators.Count(), Total = AggregationOperators.Sum(i.Id) })
+                .Select("create output category data", i => new OutputCategoryRow { Category = i.Key, AmountOfEntries = i.Aggregation.Count, TotalAmount = i.Aggregation.Total })
                 .ToTextFile("write category statistics to file", outputCategoryResourceS, new OutputCategoryRowMapper());
 
             joinedLineS.Select("create output data", i => new OutputFileRow { Id = i.Id, Name = i.Name, FileName = i.FileName })

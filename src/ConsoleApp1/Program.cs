@@ -20,14 +20,18 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             //new StreamProcessRunner<TestJob3, MyConfig>().GetDefinitionStructure().OpenVisNetworkStructure();
-            var runner = new StreamProcessRunner<TestJob3, MyConfig>();
+            var runner = new StreamProcessRunner<TestJob7, MyConfig>();
+            runner.GetDefinitionStructure().OpenEstimatedExecutionPlanVisNetwork();
             StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = null;// new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.Where("keep log info", i => i.Content.Level <= TraceLevel.Info).ToAction("logs to console", Console.WriteLine));
+            // StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.ToAction("logs to console", Console.WriteLine));
+            var testFilesDirectory = Path.Combine(Environment.CurrentDirectory, @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles");
             var task = runner.ExecuteAsync(new MyConfig
             {
-                InputFolderPath = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles\",
-                InputFilesSearchPattern = "testin.*.txt",
-                TypeFilePath = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles\ref - Copy.txt",
-                DestinationFilePath = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles\outfile.csv"
+                InputFolderPath = Path.Combine(testFilesDirectory, @"."),
+                InputFilesSearchPattern = "testin.*.csv",
+                TypeFilePath = Path.Combine(testFilesDirectory, @"ref - Copy.csv"),
+                DestinationFilePath = Path.Combine(testFilesDirectory, @"outfile.csv"),
+                CategoryDestinationFilePath = Path.Combine(testFilesDirectory, @"categoryStats.csv")
             }, traceStreamProcessDefinition);
             task.Wait();
 
@@ -35,6 +39,7 @@ namespace ConsoleApp1
 
             Console.WriteLine("Done");
             Console.WriteLine("Press a key...");
+            Console.ReadKey();
         }
         static void MainOld(string[] args)
         {
@@ -54,7 +59,7 @@ namespace ConsoleApp1
             }, traceStreamProcessDefinition);
             task.Wait();
 
-            task.Result.OpenActualExecutionPlanD3Sankey();
+            //task.Result.OpenActualExecutionPlanD3Sankey();
 
             Console.WriteLine("Done");
             Console.WriteLine("Press a key...");

@@ -9,11 +9,11 @@ namespace Paillave.RxPush.Operators
 {
     public class CombineWithLatestSubject<TIn1, TIn2, TOut> : PushSubject<TOut>
     {
-        private object _lockObject = new object();
+        private readonly object _lockObject = new object();
         private ObservableElement<TIn1> _obsel1;
         private ObservableElement<TIn2> _obsel2;
-        private Func<TIn1, TIn2, TOut> _selector;
-        private bool _bufferTillFirstMatch;
+        private readonly Func<TIn1, TIn2, TOut> _selector;
+        private readonly bool _bufferTillFirstMatch;
         public CombineWithLatestSubject(IPushObservable<TIn1> observable1, IPushObservable<TIn2> observable2, Func<TIn1, TIn2, TOut> selector, bool bufferTillFirstMatch = false)
         {
             lock (_lockObject)
@@ -122,7 +122,7 @@ namespace Paillave.RxPush.Operators
         private class ObservableElement<T> : IDisposable
         {
             private IDisposable _disposable;
-            private T _lastValue = default(T);
+            private T _lastValue = default;
             public Queue<T> Buffer = new Queue<T>();
             public T LastValue
             {

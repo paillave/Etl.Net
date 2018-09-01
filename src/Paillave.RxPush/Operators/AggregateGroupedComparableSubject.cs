@@ -7,30 +7,32 @@ using System.Text;
 
 namespace Paillave.RxPush.Operators
 {
-    public class AggregateGroupedComparableSubject<TIn, TAggr> : PushSubject<KeyValuePair<TIn, TAggr>>
+    public class AggregateGroupedComparableSubject<TIn, TAggr, TOut> : PushSubject<TOut>
     {
         private SingleDisposableManager _disposable = new SingleDisposableManager();
         private IDisposable _subscription;
         private bool _hasValue = false;
-        private KeyValuePair<TIn, TAggr> _currentAggregation = new KeyValuePair<TIn, TAggr>();
+        private DicoAggregateElement<TIn, TAggr> _currentAggregation = new DicoAggregateElement<TIn, TAggr>();
         private object _lockSync = new object();
-        public AggregateGroupedComparableSubject(IPushObservable<TIn> observable, Func<TAggr, TIn, TAggr> reducer, IEqualityComparer<TIn> equalityComparer, Func<TAggr> createInitialValue)
+        private Func<TIn, TAggr, TOut> _resultSelector;
+        public AggregateGroupedComparableSubject(IPushObservable<TIn> observable, Func<TAggr, TIn, TAggr> reducer, IEqualityComparer<TIn> equalityComparer, Func<TIn, TAggr> createInitialValue, Func<TIn, TAggr, TOut> resultSelector)
         {
+            _resultSelector = resultSelector;
             var _isAggrDisposable = typeof(IDisposable).IsAssignableFrom(typeof(TAggr));
             _subscription = observable.Subscribe(i =>
             {
                 lock (_lockSync)
                 {
-                    if (_hasValue && !equalityComparer.Equals(_currentAggregation.Key, i))
-                        PushValue(_currentAggregation);
-                    if (!_hasValue || !equalityComparer.Equals(_currentAggregation.Key, i))
+                    if (_hasValue && !equalityComparer.Equals(_currentAggregation.InValue, i))
+                        PushValue(_resultSelector(_currentAggregation.InValue, _currentAggregation.CurrentAggregation));
+                    if (!_hasValue || !equalityComparer.Equals(_currentAggregation.InValue, i))
                     {
-                        var aggr = createInitialValue();
+                        var aggr = createInitialValue(i);
                         if (_isAggrDisposable) _disposable.Set(aggr as IDisposable);
-                        _currentAggregation = new KeyValuePair<TIn, TAggr>(i, aggr);
+                        _currentAggregation = new DicoAggregateElement<TIn, TAggr> { InValue = i, CurrentAggregation = aggr };
                         _hasValue = true;
                     }
-                    _currentAggregation = new KeyValuePair<TIn, TAggr>(_currentAggregation.Key, reducer(_currentAggregation.Value, i));
+                    _currentAggregation.CurrentAggregation = reducer(_currentAggregation.CurrentAggregation, i);
                 }
             }, this.HandleComplete, this.PushException);
         }
@@ -39,7 +41,7 @@ namespace Paillave.RxPush.Operators
             lock (_lockSync)
             {
                 if (_hasValue)
-                    PushValue(_currentAggregation);
+                    PushValue(_resultSelector(_currentAggregation.InValue, _currentAggregation.CurrentAggregation));
                 _disposable.Dispose();
                 base.Complete();
             }
@@ -54,9 +56,9 @@ namespace Paillave.RxPush.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<KeyValuePair<TIn, TAggr>> AggregateGrouped<TIn, TAggr>(this IPushObservable<TIn> observable, Func<TAggr> createInitialValue, IEqualityComparer<TIn> equalityComparer, Func<TAggr, TIn, TAggr> reducer)
+        public static IPushObservable<TOut> AggregateGrouped<TIn, TAggr, TOut>(this IPushObservable<TIn> observable, Func<TIn, TAggr> createInitialValue, IEqualityComparer<TIn> equalityComparer, Func<TAggr, TIn, TAggr> reducer, Func<TIn, TAggr, TOut> resultSelector)
         {
-            return new AggregateGroupedComparableSubject<TIn, TAggr>(observable, reducer, equalityComparer, createInitialValue);
+            return new AggregateGroupedComparableSubject<TIn, TAggr, TOut>(observable, reducer, equalityComparer, createInitialValue, resultSelector);
         }
     }
 }
