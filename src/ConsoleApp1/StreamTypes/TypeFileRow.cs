@@ -1,8 +1,5 @@
 ﻿using Paillave.Etl.Helpers;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace ConsoleApp1.StreamTypes
 {
@@ -35,7 +32,6 @@ namespace ConsoleApp1.StreamTypes
             this.MapColumnToProperty("#", i => i.Id);
             this.MapColumnToProperty("Label", i => i.Name);
             this.MapColumnToProperty("Category", i => i.Category);
-            //this.MapFileNameToProperty(i => i.FileName);
             this.IsFieldDelimited('\t');
         }
     }
