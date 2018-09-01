@@ -9,11 +9,11 @@
     <PackageProjectUrl>https://github.com/paillave/Etl.Net</PackageProjectUrl>
     <PackageTags>ETL .net SSIS</PackageTags>
     <Product>ETL.net</Product>
-    <Description>Create advanced Excel spreadsheets using .NET</Description>
+    <Description>Implementation of an ETL engine for .NET standard 2.0</Description>
      <PackageReleaseNotes>
     ETL.net
 
-    Implementation of an ETL engine for .net standard 2.0 working with a similar principle than SSIS, but only from .net code.
+    Implementation of an ETL engine for .NET standard 2.0 working with a similar principle than SSIS, but only from .net code.
 
     ETL Operators:
     * Select	Tranformation
