@@ -9,14 +9,21 @@ namespace Paillave.RxPush.Operators
 {
     public class DistinctSubject<T> : FilterSubjectBase<T>
     {
-        private LambdaEqualityComparer<T> _comparer;
+        private IEqualityComparer<T> _comparer;
         private IList<T> _passedItems = new List<T>();
         private object _syncValue = new object();
-        public DistinctSubject(IPushObservable<T> observable, Func<T, T, bool> comparer) : base(observable)
+        //public DistinctSubject(IPushObservable<T> observable, Func<T, T, bool> comparer) : base(observable)
+        //{
+        //    lock (_syncValue)
+        //    {
+        //        _comparer = new LambdaEqualityComparer<T>(comparer);
+        //    }
+        //}
+        public DistinctSubject(IPushObservable<T> observable, IEqualityComparer<T> comparer) : base(observable)
         {
             lock (_syncValue)
             {
-                _comparer = new LambdaEqualityComparer<T>(comparer);
+                _comparer = comparer;
             }
         }
 
@@ -37,11 +44,11 @@ namespace Paillave.RxPush.Operators
     {
         public static IPushObservable<T> Distinct<T>(this IPushObservable<T> observable, Func<T, T, bool> comparer)
         {
-            return new DistinctSubject<T>(observable, comparer);
+            return new DistinctSubject<T>(observable, new LambdaEqualityComparer<T>(comparer));
         }
         public static IPushObservable<T> Distinct<T>(this IPushObservable<T> observable) where T : IEquatable<T>
         {
-            return new DistinctSubject<T>(observable, (l, r) => l.Equals(r));
+            return new DistinctSubject<T>(observable, new LambdaEqualityComparer<T>((l, r) => l.Equals(r)));
         }
     }
 }

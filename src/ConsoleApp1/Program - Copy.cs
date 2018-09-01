@@ -62,9 +62,9 @@ namespace ConsoleApp1
         }
     }
 
-    class Program
+    class ProgramOld
     {
-        static void Main(string[] args)
+        static void MainOld(string[] args)
         {
             new StreamProcessRunner<SimpleQuickstartJob, SimpleConfig>().ExecuteAsync(new SimpleConfig
             {

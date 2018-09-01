@@ -7,9 +7,9 @@ using ConsoleApp1.Jobs;
 
 namespace ConsoleApp1
 {
-    class ProgramOld
+    class Program
     {
-        static void MainOld(string[] args)
+        static void Main(string[] args)
         {
             var runner = new StreamProcessRunner<ComplexQuickstartJob, MyConfig>();
             runner.GetDefinitionStructure().OpenEstimatedExecutionPlanVisNetwork();
