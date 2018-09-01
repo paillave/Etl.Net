@@ -9,15 +9,15 @@ namespace Paillave.RxPush.Operators
 {
     public class DistinctUntilChangedSubject<T> : FilterSubjectBase<T>
     {
-        private LambdaEqualityComparer<T> _comparer;
+        private IEqualityComparer<T> _comparer;
         private T _lastValue = default(T);
         private bool _hasLastValue = false;
         private object _syncValue = new object();
-        public DistinctUntilChangedSubject(IPushObservable<T> observable, Func<T, T, bool> comparer) : base(observable)
+        public DistinctUntilChangedSubject(IPushObservable<T> observable, IEqualityComparer<T> comparer) : base(observable)
         {
             lock (_syncValue)
             {
-                _comparer = new LambdaEqualityComparer<T>(comparer);
+                _comparer = comparer;
             }
         }
 
@@ -44,13 +44,17 @@ namespace Paillave.RxPush.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<T> DistinctUntilChanged<T>(this IPushObservable<T> observable, Func<T, T, bool> comparer)
+        public static IPushObservable<T> DistinctUntilChanged<T>(this IPushObservable<T> observable, IEqualityComparer<T> comparer)
         {
             return new DistinctUntilChangedSubject<T>(observable, comparer);
         }
+        public static IPushObservable<T> DistinctUntilChanged<T>(this IPushObservable<T> observable, Func<T, T, bool> comparer)
+        {
+            return new DistinctUntilChangedSubject<T>(observable, new LambdaEqualityComparer<T>(comparer));
+        }
         public static IPushObservable<T> DistinctUntilChanged<T>(this IPushObservable<T> observable) where T : IEquatable<T>
         {
-            return new DistinctUntilChangedSubject<T>(observable, (l, r) => l.Equals(r));
+            return new DistinctUntilChangedSubject<T>(observable, new LambdaEqualityComparer<T>((l, r) => l.Equals(r)));
         }
     }
 }

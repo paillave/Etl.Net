@@ -9,13 +9,13 @@ namespace Paillave.RxPush.Core
 {
     public static class SortDefinition
     {
-        public static SortDefinition<T, TKey> Create<T, TKey>(Func<T, TKey> getKey, object keyPosition=null) => new SortDefinition<T, TKey>(getKey, keyPosition);
+        public static SortDefinition<T, TKey> Create<T, TKey>(Func<T, TKey> getKey, object keyPosition = null) => new SortDefinition<T, TKey>(getKey, keyPosition);
     }
     public class SortDefinition<T, TKey> : IComparer<T>, IEqualityComparer<T>, System.Collections.IComparer, System.Collections.IEqualityComparer
     {
         internal List<SortStep> SortSteps { get; }
 
-        public SortDefinition(Func<T, TKey> getKey, object keyPosition)
+        public SortDefinition(Func<T, TKey> getKey, object keyPosition = null)
         {
             this.GetKey = getKey;
             this.KeyPosition = keyPosition;
