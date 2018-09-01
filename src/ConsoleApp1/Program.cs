@@ -21,6 +21,7 @@ namespace ConsoleApp1
         {
             //new StreamProcessRunner<TestJob3, MyConfig>().GetDefinitionStructure().OpenVisNetworkStructure();
             var runner = new StreamProcessRunner<TestJob7, MyConfig>();
+            runner.GetDefinitionStructure().OpenEstimatedExecutionPlanVisNetwork();
             StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = null;// new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.Where("keep log info", i => i.Content.Level <= TraceLevel.Info).ToAction("logs to console", Console.WriteLine));
             // StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.ToAction("logs to console", Console.WriteLine));
             var testFilesDirectory = Path.Combine(Environment.CurrentDirectory, @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles");

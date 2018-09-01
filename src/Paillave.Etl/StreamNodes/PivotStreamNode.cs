@@ -8,19 +8,19 @@ using Paillave.Etl.Core.Aggregation;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class AggregateSimpleArgs<TIn, TAggrRes, TKey>
+    public class PivotArgs<TIn, TAggrRes, TKey>
     {
         public IStream<TIn> InputStream { get; set; }
         public Func<TIn, TKey> GetKey { get; set; }
         public Expression<Func<TIn, TAggrRes>> AggregationDescriptor;
     }
-    public class AggregateSimpleStreamNode<TIn, TAggrRes, TKey> : StreamNodeBase<AggregationResult<TIn, TKey, TAggrRes>, IStream<AggregationResult<TIn, TKey, TAggrRes>>, AggregateSimpleArgs<TIn, TAggrRes, TKey>>
+    public class PivotStreamNode<TIn, TAggrRes, TKey> : StreamNodeBase<AggregationResult<TIn, TKey, TAggrRes>, IStream<AggregationResult<TIn, TKey, TAggrRes>>, PivotArgs<TIn, TAggrRes, TKey>>
     {
-        public AggregateSimpleStreamNode(string name, AggregateSimpleArgs<TIn, TAggrRes, TKey> args) : base(name, args)
+        public PivotStreamNode(string name, PivotArgs<TIn, TAggrRes, TKey> args) : base(name, args)
         {
         }
 
-        protected override IStream<AggregationResult<TIn, TKey, TAggrRes>> CreateOutputStream(AggregateSimpleArgs<TIn, TAggrRes, TKey> args)
+        protected override IStream<AggregationResult<TIn, TKey, TAggrRes>> CreateOutputStream(PivotArgs<TIn, TAggrRes, TKey> args)
         {
             var aggregationProcessor = new AggregationProcessor<TIn, TAggrRes>(args.AggregationDescriptor);
             return CreateUnsortedStream(

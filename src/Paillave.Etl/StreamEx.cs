@@ -19,6 +19,38 @@ namespace Paillave.Etl
 {
     public static class StreamEx
     {
+        #region Pivot
+        public static IStream<AggregationResult<TIn, TKey, TAggr>> Pivot<TIn, TAggr, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, Expression<Func<TIn, TAggr>> aggregationDescriptor)
+        {
+            return new PivotStreamNode<TIn, TAggr, TKey>(name, new PivotArgs<TIn, TAggr, TKey>
+            {
+                InputStream = stream,
+                AggregationDescriptor = aggregationDescriptor,
+                GetKey = getKey,
+            }).Output;
+        }
+        public static ISortedStream<AggregationResult<TIn, TKey, TAggr>, TKey> Pivot<TIn, TAggr, TKey>(this ISortedStream<TIn, TKey> stream, string name, Expression<Func<TIn, TAggr>> aggregationDescriptor)
+        {
+            return new PivotSortedStreamNode<TIn, TAggr, TKey>(name, new PivotSortedArgs<TIn, TAggr, TKey>
+            {
+                InputStream = stream,
+                AggregationDescriptor = aggregationDescriptor
+            }).Output;
+        }
+        #endregion
+
+        #region Unpivot
+        public static IStream<TOut> Unpivot<TIn, TUnpivoted, TOut>(this IStream<TIn> stream, string name, IEnumerable<Func<TIn, TUnpivoted>> fieldsToUnpivot, Func<TIn, TUnpivoted, TOut> resultSelector)
+        {
+            return new UnpivotStreamNode<TIn, TUnpivoted, TOut>(name, new UnpivotArgs<TIn, TUnpivoted, TOut>
+            {
+                InputStream = stream,
+                FieldsToUnpivot = fieldsToUnpivot,
+                ResultSelector = resultSelector
+            }).Output;
+        }
+        #endregion
+
         #region Aggregate
         public static IStream<AggregationResult<TIn, TKey, TAggr>> Aggregate<TIn, TAggr, TKey>(this IStream<TIn> stream, string name, Func<TIn, TAggr> emptyAggregation, Func<TIn, TKey> getKey, Func<TAggr, TIn, TAggr> aggregate)
         {
@@ -30,15 +62,6 @@ namespace Paillave.Etl
                 CreateEmptyAggregation = emptyAggregation,
             }).Output;
         }
-        public static IStream<AggregationResult<TIn, TKey, TAggr>> Pivot<TIn, TAggr, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, Expression<Func<TIn, TAggr>> aggregationDescriptor)
-        {
-            return new AggregateSimpleStreamNode<TIn, TAggr, TKey>(name, new AggregateSimpleArgs<TIn, TAggr, TKey>
-            {
-                InputStream = stream,
-                AggregationDescriptor = aggregationDescriptor,
-                GetKey = getKey,
-            }).Output;
-        }
         public static ISortedStream<AggregationResult<TIn, TKey, TAggr>, TKey> Aggregate<TIn, TAggr, TKey>(this ISortedStream<TIn, TKey> stream, string name, Func<TIn, TAggr> emptyAggregation, Func<TAggr, TIn, TAggr> aggregate)
         {
             return new AggregateSortedStreamNode<TIn, TAggr, TKey>(name, new AggregateSortedArgs<TIn, TAggr, TKey>
@@ -46,14 +69,6 @@ namespace Paillave.Etl
                 InputStream = stream,
                 Aggregate = aggregate,
                 CreateEmptyAggregation = emptyAggregation
-            }).Output;
-        }
-        public static ISortedStream<AggregationResult<TIn, TKey, TAggr>, TKey> Pivot<TIn, TAggr, TKey>(this ISortedStream<TIn, TKey> stream, string name, Expression<Func<TIn, TAggr>> aggregationDescriptor)
-        {
-            return new AggregateSimpleSortedStreamNode<TIn, TAggr, TKey>(name, new AggregateSimpleSortedArgs<TIn, TAggr, TKey>
-            {
-                InputStream = stream,
-                AggregationDescriptor = aggregationDescriptor
             }).Output;
         }
         #endregion
