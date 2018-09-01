@@ -66,8 +66,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var runner = new StreamProcessRunner<SimpleQuickstartJob, SimpleConfig>();
-            runner.ExecuteAsync(new SimpleConfig
+            new StreamProcessRunner<SimpleQuickstartJob, SimpleConfig>().ExecuteAsync(new SimpleConfig
             {
                 InputFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\simpleinputfile.csv",
                 OutputFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\simpleoutputfile.csv"
