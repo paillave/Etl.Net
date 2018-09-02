@@ -5,7 +5,7 @@
 [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net)
 
 
-Implementation of a multiplatform reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but only from .net code.
+Implementation of a multi platform reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but that is used in the same way than Linq. 
 The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
 
 ## Developement status
@@ -39,6 +39,7 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Lookup keeping sorted | Transformation | :construction: |
 | List folder files | Data source | :heavy_check_mark: |
 | Read csv file | Data source | :heavy_check_mark: |
+| Read very large xml file | Data source | :construction: |
 | Read excel file | Data source | :construction: |
 | Write csv file | Data destination | :heavy_check_mark: |
 | Write excel file | Data destinaton | :construction: |

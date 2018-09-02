@@ -2,9 +2,17 @@
   <PropertyGroup>
     <PackageId>Etl.Net.EntityFrameworkCore</PackageId>
     <Version>1.0.0-alpha</Version>
-    <Authors>Stephane Royer</Authors>
-    <Company>paillave</Company>
+    <Authors>Stéphane Royer</Authors>
+    <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseUrl>https://github.com/paillave/Etl.Net/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/paillave/Etl.Net</PackageProjectUrl>
+    <PackageTags>ETL .net core SSIS reactive Entity Framework core</PackageTags>
+    <Product>ETL.net EntityFrameworkCore extensions</Product>
+    <Description>EntityFrameworkCore extension for Etl.Net</Description>
+    <PackageReleaseNotes>
+EntityFrameworkCore extensions for Etl.Net
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

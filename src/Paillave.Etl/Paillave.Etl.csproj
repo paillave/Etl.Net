@@ -7,13 +7,13 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseUrl>https://github.com/paillave/Etl.Net/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/paillave/Etl.Net</PackageProjectUrl>
-    <PackageTags>ETL .net SSIS reactive</PackageTags>
-    <Product>ETL.net</Product>
-    <Description>Implementation of a multiplatform reactive ETL engine for .NET standard 2.0</Description>
-     <PackageReleaseNotes>
+    <PackageTags>ETL .net core SSIS reactive</PackageTags>
+    <Product>ETL.net Core</Product>
+    <Description>Implementation of an ETL engine for .NET standard 2.0 that works like SSIS and that is developed like with Linq</Description>
+    <PackageReleaseNotes>
 ETL.net
 
-Implementation of a multi platform reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but only from .net code.
+Implementation of a multi platform reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but that is used in the same way than Linq. 
 The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
 
 ETL Operators:
