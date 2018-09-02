@@ -413,10 +413,10 @@ namespace ConsoleApp1
 ```
 This program first shows the estimated execution plan:
 
-![alt text](docs/EstimatedExecutionPlan.png "Estimated execution plan")
+![Estimated execution plan](./docs/EstimatedExecutionPlan.png "Estimated execution plan")
 
 Then it show the actual execution with statistics when hovering streams, and input and outputs when hovering nodes:
-![alt text](docs/ActualExecutionPlan.png "Actual execution plan")
+![Actual execution plan](./docs/ActualExecutionPlan.png "Actual execution plan")
 
 ## Documentation
 
