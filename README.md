@@ -5,7 +5,8 @@
 [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net)
 
 
-Implementation of an ETL for .net standard 2.0 working with a similar principle than SSIS, but only from .net code
+Implementation of a reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but only from .net code.
+The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
 
 ## Developement status
 
@@ -374,7 +375,7 @@ namespace ConsoleApp1.Jobs
     }
 }
 ```
-### Execute an ETL job definition
+### Execute the ETL job
 ```csharp
 using Paillave.Etl;
 using System;
@@ -410,6 +411,12 @@ namespace ConsoleApp1
     }
 }
 ```
+This program first shows the estimated execution plan:
+
+![Estimated execution plan](./docs/EstimatedExecutionPlan.PNG "Estimated execution plan")
+
+Then it shows the actual execution with statistics when hovering streams, and input and outputs when hovering nodes:
+![Actual execution plan](./docs/ActualExecutionPlan.PNG "Actual execution plan")
 
 ## Documentation
 
