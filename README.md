@@ -54,9 +54,9 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Read from MongoDb | Data source | :construction: |
 | Write to MongoDb | Data destination | :construction: |
 | MongoDb upsert | Data destination | :construction: |
-| Entity framework core upsert | Data destination | :construction: |
+| Entity framework core upsert | Data destination | :heavy_check_mark: |
 | Entity framework upsert | Data destination | :construction: |
-| SQL Server bulk load | Data destination | :construction: |
+| SQL Server bulk load | Data destination | :heavy_check_mark: |
 | Read from sql server command | Data source | :construction: |
 | Write to sql server command | Data destination | :construction: |
 | List files from FTP | Data source | :construction: |
