@@ -14,7 +14,7 @@
 ETL.net
 
 Implementation of a reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but only from .net code.
-The reactive approach for the implementation of this engine ensures high performances and low memory foot print even with million rows to process.
+The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
 
 ETL Operators:
 * Select	Tranformation

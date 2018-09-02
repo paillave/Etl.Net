@@ -14,6 +14,7 @@ namespace Paillave.Etl.StreamNodes
     }
     public class ToActionStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ToActionArgs<TIn, TStream>> where TStream : IStream<TIn>
     {
+        public override bool IsAwaitable => true;
         public ToActionStreamNode(string name, ToActionArgs<TIn, TStream> args) : base(name, args)
         {
         }

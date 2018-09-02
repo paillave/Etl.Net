@@ -6,7 +6,7 @@
 
 
 Implementation of a reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but only from .net code.
-The reactive approach for the implementation of this engine ensures high performances and low memory foot print even with million rows to process.
+The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
 
 ## Developement status
 
@@ -375,7 +375,7 @@ namespace ConsoleApp1.Jobs
     }
 }
 ```
-### Execute an ETL job definition
+### Execute the ETL job
 ```csharp
 using Paillave.Etl;
 using System;
@@ -411,6 +411,12 @@ namespace ConsoleApp1
     }
 }
 ```
+This program first shows the estimated execution plan:
+
+![alt text](docs/EstimatedExecutionPlan.png "Estimated execution plan")
+
+Then it show the actual execution with statistics when hovering streams, and input and outputs when hovering nodes:
+![alt text](docs/ActualExecutionPlan.png "Actual execution plan")
 
 ## Documentation
 
