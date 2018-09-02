@@ -34,3 +34,11 @@ deploy:
   api_key:
     secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
   artifact: Paillave.Etl
+- provider: NuGet
+  api_key:
+    secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
+  artifact: Paillave.Etl.EntityFrameworkCore
+- provider: NuGet
+  api_key:
+    secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
+  artifact: Paillave.Etl.ExecutionPlan
