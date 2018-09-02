@@ -9,11 +9,11 @@
     <PackageProjectUrl>https://github.com/paillave/Etl.Net</PackageProjectUrl>
     <PackageTags>ETL .net SSIS reactive</PackageTags>
     <Product>ETL.net</Product>
-    <Description>Implementation of a reactive ETL engine for .NET standard 2.0</Description>
+    <Description>Implementation of a multiplatform reactive ETL engine for .NET standard 2.0</Description>
      <PackageReleaseNotes>
 ETL.net
 
-Implementation of a reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but only from .net code.
+Implementation of a multi platform reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but only from .net code.
 The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
 
 ETL Operators:
@@ -94,18 +94,6 @@ Runtime features:
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Core\NodeOutputsOld\**" />
-    <EmbeddedResource Remove="Core\NodeOutputsOld\**" />
-    <None Remove="Core\NodeOutputsOld\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Core\ISortCriteria.cs" />
-    <Compile Remove="Core\SortCriteria.cs" />
-    <Compile Remove="Core\SortCriteriaComparer.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Paillave.RxPush\Paillave.RxPush.csproj" />

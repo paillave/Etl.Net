@@ -5,12 +5,12 @@
 [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net)
 
 
-Implementation of a reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but only from .net code.
+Implementation of a multiplatform reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but only from .net code.
 The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
 
 ## Developement status
 
-**:construction: This library is still under development, don't use it on production environment yet as its api structure is subject for changes.**
+**:construction: This library is still under development, don't use it on production environment yet as its api structure is subject for changes.:construction:**
 
 The first alpha release is expected once it starts to be a decent candidate to replace SSIS for common use cases.
 
@@ -34,9 +34,9 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Ensure Sorted | Tranformation | :heavy_check_mark: |
 | Ensure Keyed | Tranformation | :heavy_check_mark: |
 | Script | Tranformation | :heavy_check_mark: |
-| Select keeping sorted | Transformation | :heavy_check_mark: |
-| Left join keeping sorted | Transformation | :heavy_check_mark: |
-| Lookup keeping sorted | Transformation | :heavy_check_mark: |
+| Select keeping sorted | Transformation | :construction: |
+| Left join keeping sorted | Transformation | :construction: |
+| Lookup keeping sorted | Transformation | :construction: |
 | List folder files | Data source | :heavy_check_mark: |
 | Read csv file | Data source | :heavy_check_mark: |
 | Read excel file | Data source | :construction: |
@@ -46,6 +46,9 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Write to Entity framework core | Data destination | :heavy_check_mark: |
 | Read from Entity framework | Data source | :construction: |
 | Write to Entity framework | Data destination | :construction: |
+| Read from MongoDb | Data source | :construction: |
+| Write to MongoDb | Data destination | :construction: |
+| MongoDb upsert | Data destination | :construction: |
 | Entity framework core upsert | Data destination | :construction: |
 | Entity framework upsert | Data destination | :construction: |
 | SQL Server bulk load | Data destination | :construction: |
@@ -55,8 +58,8 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | List file from SFTP | Data source | :construction: |
 | Read files from FTP | Data source | :construction: |
 | Read file from SFTP | Data source | :construction: |
-| Write files from FTP | Data destination | :construction: |
-| Write file from SFTP | Data destination | :construction: |
+| Write files to FTP | Data destination | :construction: |
+| Write file to SFTP | Data destination | :construction: |
 | Read data from REST service | Data source | :construction: |
 | Write data to REST service | Data destination | :construction: |
 | Keep section | Transformation | :construction: |
@@ -70,20 +73,21 @@ The first alpha release is expected once it starts to be a decent candidate to r
 
 | Name | Done |
 | ----- | ----- |
-| Trace issued data of each node | :heavy_check_mark: |
+| Trace issued data by each node | :heavy_check_mark: |
 | Trace any error | :heavy_check_mark: |
 | Stop the entire process whenever an error is raised | :heavy_check_mark: |
 | Trace statistic result of each node at the end of the process | :heavy_check_mark: |
 | Trace time that is spent in each node at the end of the process | :construction: |
 | Publish a Job as a REST web service in web api core | :construction: |
-| Run any ETL operation on traces to permit to filter and save | :heavy_check_mark: |
+| Execute a job using reference to native .net core configuration | :construction: |
+| Execute any ETL process on traces to filter and save them | :heavy_check_mark: |
 | Show graphic to represent the process as a directed graph | :heavy_check_mark: |
 | Show graphic to represent the process as a sankey graph | :heavy_check_mark: |
 | Show graphic to represent process execution statistics as a directed graph | :heavy_check_mark: |
 | Show graphic to represent process execution statistics as a sankey graph | :heavy_check_mark: |
 | Show realtime process execution statistics as a directed graph | :construction: |
 | Show realtime process execution statistics as a sankey graph | :construction: |
-| Web portal to host job definitions manage their executions | :construction: |
+| Web portal to host job definitions and manage their executions | :construction: |
 | Power shell command tool to execute a job | :construction: |
 | Visual studio code addon to view the process as a directed graph whenever the job definition class file is saved | :construction: |
 | Visual studio code addon to view the process as a sankey graph whenever the job definition class file is saved | :construction: |
