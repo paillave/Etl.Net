@@ -95,8 +95,4 @@ Runtime features:
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Paillave.RxPush\Paillave.RxPush.csproj" />
-  </ItemGroup>
-
 </Project>

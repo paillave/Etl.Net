@@ -7,9 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl", "Paillave.Et
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{BCF6B7B4-D8FB-47A5-8AB8-E3C3C467A783}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.RxPush", "Paillave.RxPush\Paillave.RxPush.csproj", "{7833FE6A-34DB-44A4-9ABF-B7C609FFEF98}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.RxPushTests", "Paillave.RxPushTests\Paillave.RxPushTests.csproj", "{22475DD2-F449-4C7D-BD5A-647D0A8B7806}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.EtlTests", "Paillave.EtlTests\Paillave.EtlTests.csproj", "{22475DD2-F449-4C7D-BD5A-647D0A8B7806}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.EntityFrameworkCore", "Paillave.Etl.EntityFrameworkCore\Paillave.Etl.EntityFrameworkCore.csproj", "{517FD6DF-7BC1-4B3D-B1DD-88DEF0EEE509}"
 EndProject

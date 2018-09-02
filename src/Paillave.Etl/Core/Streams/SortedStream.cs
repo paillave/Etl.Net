@@ -4,8 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Paillave.RxPush.Core;
-using Paillave.RxPush.Operators;
+using Paillave.Etl.Reactive.Core;
+using Paillave.Etl.Reactive.Operators;
 using Paillave.Etl.Core.TraceContents;
 
 namespace Paillave.Etl.Core.Streams

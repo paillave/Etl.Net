@@ -2,8 +2,8 @@ using System;
 using Paillave.Etl.Core;
 using Paillave.Etl.Core.Streams;
 using System.Collections.Generic;
-using Paillave.RxPush.Operators;
-using Paillave.RxPush.Core;
+using Paillave.Etl.Reactive.Operators;
+using Paillave.Etl.Reactive.Core;
 using System.Linq;
 
 namespace Paillave.Etl.StreamNodes

@@ -2,7 +2,7 @@ using System;
 using Paillave.Etl.Core;
 using Paillave.Etl.Core.Streams;
 using System.Collections.Generic;
-using Paillave.RxPush.Operators;
+using Paillave.Etl.Reactive.Operators;
 using System.Linq.Expressions;
 using Paillave.Etl.Core.Aggregation;
 
