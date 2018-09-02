@@ -1,6 +1,6 @@
 ﻿using Paillave.Etl.Core;
 using Paillave.Etl.Core.Streams;
-using Paillave.RxPush.Operators;
+using Paillave.Etl.Reactive.Operators;
 
 namespace Paillave.Etl.StreamNodes
 {

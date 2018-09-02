@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Paillave.Etl.Core;
 using Paillave.Etl.Core.Streams;
-using Paillave.RxPush.Core;
+using Paillave.Etl.Reactive.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Paillave.RxPush.Operators;
+using Paillave.Etl.Reactive.Operators;
 using System.Linq;
 
 namespace Paillave.Etl.EntityFrameworkCore.StreamNodes

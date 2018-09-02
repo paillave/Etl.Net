@@ -21,7 +21,7 @@ build:
 test:
   assemblies:
     only:
-    - src\Paillave.RxPushTests\bin\Release\netcoreapp2.1\Paillave.RxPushTests.dll
+    - src\Paillave.EtlTests\bin\Release\netcoreapp2.1\Paillave.EtlTests.dll
 artifacts:
 - path: src\Paillave.Etl\bin\$(configuration)\*.nupkg
   name: Paillave.Etl

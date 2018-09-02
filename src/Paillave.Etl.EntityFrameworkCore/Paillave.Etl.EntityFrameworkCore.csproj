@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
-    <ProjectReference Include="..\Paillave.RxPush\Paillave.RxPush.csproj" />
   </ItemGroup>
 
 </Project>
