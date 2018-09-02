@@ -9,7 +9,7 @@
     <PackageProjectUrl>https://github.com/paillave/Etl.Net</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive</PackageTags>
     <Product>ETL.net Core</Product>
-    <Description>Implementation of an ETL engine for .NET standard 2.0 that works like SSIS and that is developed like with Linq</Description>
+    <Description>SSIS like ETL engine for .NET standard 2.0 that is used like Linq</Description>
     <PackageReleaseNotes>
 ETL.net
 
