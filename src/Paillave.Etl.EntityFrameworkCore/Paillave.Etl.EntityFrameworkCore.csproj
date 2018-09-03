@@ -29,8 +29,8 @@ EntityFrameworkCore extensions for Etl.Net
 
   <ItemGroup>
     <PackageReference Include="EFCore.BulkExtensions" Version="2.1.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
