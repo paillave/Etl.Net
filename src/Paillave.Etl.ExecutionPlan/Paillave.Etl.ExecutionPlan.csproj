@@ -9,7 +9,7 @@
     <PackageProjectUrl>https://github.com/paillave/Etl.Net</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive Entity Framework core</PackageTags>
     <Product>ETL.net Execution plan extensions</Product>
-    <Description>ExecutionPlan extension for Etl.Net</Description>
+    <Description>ExecutionPlan extensions for Etl.Net</Description>
     <PackageReleaseNotes>
 Execution plan extensions for Etl.Net
     </PackageReleaseNotes>

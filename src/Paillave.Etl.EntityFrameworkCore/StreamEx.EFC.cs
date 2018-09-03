@@ -17,7 +17,7 @@ namespace Paillave.Etl
                 NoParallelisation = noParallelisation
             }));
         }
-        public static IStream<TIn> ToEntityFrameworkCore<TIn, TRes>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, int chunkSize = 1000)
+        public static IStream<TIn> ToEntityFrameworkCore<TIn, TRes>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, BulkLoadMode bulkLoadMode = BulkLoadMode.InsertOnly, int chunkSize = 1000)
             where TRes : DbContext
             where TIn : class
         {
@@ -25,10 +25,11 @@ namespace Paillave.Etl
             {
                 SourceStream = stream,
                 DbContextStream = resourceStream,
-                BatchSize = chunkSize
+                BatchSize = chunkSize,
+                BulkLoadMode = bulkLoadMode
             }).Output;
         }
-        public static ISortedStream<TIn, TKey> ToEntityFrameworkCore<TIn, TRes, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<TRes> resourceStream, int chunkSize = 1000)
+        public static ISortedStream<TIn, TKey> ToEntityFrameworkCore<TIn, TRes, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<TRes> resourceStream, BulkLoadMode bulkLoadMode = BulkLoadMode.InsertOnly, int chunkSize = 1000)
             where TRes : DbContext
             where TIn : class
         {
@@ -36,10 +37,11 @@ namespace Paillave.Etl
             {
                 SourceStream = stream,
                 DbContextStream = resourceStream,
-                BatchSize = chunkSize
+                BatchSize = chunkSize,
+                BulkLoadMode = bulkLoadMode
             }).Output;
         }
-        public static IKeyedStream<TIn, TKey> ToEntityFrameworkCore<TIn, TRes, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<TRes> resourceStream, int chunkSize = 1000)
+        public static IKeyedStream<TIn, TKey> ToEntityFrameworkCore<TIn, TRes, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<TRes> resourceStream, BulkLoadMode bulkLoadMode = BulkLoadMode.InsertOnly, int chunkSize = 1000)
             where TRes : DbContext
             where TIn : class
         {
@@ -47,7 +49,8 @@ namespace Paillave.Etl
             {
                 SourceStream = stream,
                 DbContextStream = resourceStream,
-                BatchSize = chunkSize
+                BatchSize = chunkSize,
+                BulkLoadMode = bulkLoadMode
             }).Output;
         }
     }

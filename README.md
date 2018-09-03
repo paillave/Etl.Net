@@ -1,8 +1,12 @@
 # Etl.Net
 
-[![Build status](https://ci.appveyor.com/api/projects/status/sqjh6f6cwadxfoou/branch/master?svg=true)](https://ci.appveyor.com/project/paillave/etl-net)
-[![NuGet](https://img.shields.io/nuget/v/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net)
-[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net)
+|  | [![Build status](https://ci.appveyor.com/api/projects/status/sqjh6f6cwadxfoou/branch/master?svg=true)](https://ci.appveyor.com/project/paillave/etl-net) |
+|-|-|
+| Etl.Net | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) |
+| Etl.Net.EntityFrameworkCore | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) |
+| Etl.Net.ExecutionPlan | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) |
+| | |
+
 
 
 Implementation of a multi platform reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but that is used in the same way than Linq. 
@@ -50,9 +54,9 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Read from MongoDb | Data source | :construction: |
 | Write to MongoDb | Data destination | :construction: |
 | MongoDb upsert | Data destination | :construction: |
-| Entity framework core upsert | Data destination | :construction: |
+| Entity framework core upsert | Data destination | :heavy_check_mark: |
 | Entity framework upsert | Data destination | :construction: |
-| SQL Server bulk load | Data destination | :construction: |
+| SQL Server bulk load | Data destination | :heavy_check_mark: |
 | Read from sql server command | Data source | :construction: |
 | Write to sql server command | Data destination | :construction: |
 | List files from FTP | Data source | :construction: |
