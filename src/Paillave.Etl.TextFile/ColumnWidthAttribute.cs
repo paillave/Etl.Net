@@ -1,6 +1,6 @@
 using System;
 
-namespace Paillave.Etl.Helpers
+namespace Paillave.Etl.TextFile
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class ColumnWidthAttribute : Attribute

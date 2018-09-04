@@ -7,25 +7,25 @@ using System.Reflection;
 namespace Paillave.Etl.Helpers.MapperFactories
 {
     public class PropertyMapper
+    {
+        public PropertyMapper(PropertyDescription columnNameMap)
         {
-            public PropertyMapper(PropertyDescription columnNameMap)
-            {
-                PropertyInfo = GetPropertyInfo(columnNameMap.MemberLamda);
-                TypeConverter = TypeDescriptor.GetConverter(PropertyInfo.PropertyType);
-                CultureInfo = columnNameMap.CultureInfo;
-            }
-            public static PropertyInfo GetPropertyInfo(LambdaExpression memberLamda)
-            {
-                var memberSelectorExpression = memberLamda.Body as MemberExpression;
-                if (memberSelectorExpression != null)
-                {
-                    var property = memberSelectorExpression.Member as PropertyInfo;
-                    if (property != null) return property;
-                }
-                throw new ArgumentException("Not a navigation expression", nameof(memberLamda));
-            }
-            public PropertyInfo PropertyInfo { get; }
-            public TypeConverter TypeConverter { get; }
-            public CultureInfo CultureInfo { get; }
+            PropertyInfo = GetPropertyInfo(columnNameMap.MemberLamda);
+            TypeConverter = TypeDescriptor.GetConverter(PropertyInfo.PropertyType);
+            CultureInfo = columnNameMap.CultureInfo;
         }
+        public static PropertyInfo GetPropertyInfo(LambdaExpression memberLamda)
+        {
+            var memberSelectorExpression = memberLamda.Body as MemberExpression;
+            if (memberSelectorExpression != null)
+            {
+                var property = memberSelectorExpression.Member as PropertyInfo;
+                if (property != null) return property;
+            }
+            throw new ArgumentException("Not a navigation expression", nameof(memberLamda));
+        }
+        public PropertyInfo PropertyInfo { get; }
+        public TypeConverter TypeConverter { get; }
+        public CultureInfo CultureInfo { get; }
+    }
 }

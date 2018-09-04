@@ -1,6 +1,6 @@
 using System;
 
-namespace Paillave.Etl.Helpers
+namespace Paillave.Etl.TextFile
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class ColumnDelimitedAttribute : Attribute
