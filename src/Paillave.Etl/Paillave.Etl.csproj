@@ -17,22 +17,22 @@ Implementation of a multi platform reactive ETL for .net standard 2.0 working wi
 The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
 
 ETL Operators:
-* Select	Tranformation
-* Where	Tranformation
-* Sort	Tranformation
-* Left Join	Tranformation
-* Lookup	Tranformation
-* Union	Tranformation
-* Skip	Tranformation
-* Top	Tranformation
-* Distinct	Tranformation
-* Pivot	Tranformation
-* Unpivot	Tranformation
-* Aggregate	Tranformation
-* Cross Apply	Tranformation
-* Ensure Sorted	Tranformation
-* Ensure Keyed	Tranformation
-* Script	Tranformation
+* Select	Transformation
+* Where	Transformation
+* Sort	Transformation
+* Left Join	Transformation
+* Lookup	Transformation
+* Union	Transformation
+* Skip	Transformation
+* Top	Transformation
+* Distinct	Transformation
+* Pivot	Transformation
+* Unpivot	Transformation
+* Aggregate	Transformation
+* Cross Apply	Transformation
+* Ensure Sorted	Transformation
+* Ensure Keyed	Transformation
+* Script	Transformation
 * Select keeping sorted	Transformation
 * Left join keeping sorted	Transformation
 * Lookup keeping sorted	Transformation

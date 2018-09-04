@@ -21,22 +21,22 @@ The first alpha release is expected once it starts to be a decent candidate to r
 
 | Name | Type | Done |
 | ----- | ----- | ----- |
-| Select | Tranformation | :heavy_check_mark: |
-| Where | Tranformation | :heavy_check_mark: |
-| Sort | Tranformation | :heavy_check_mark: |
-| Left Join | Tranformation | :heavy_check_mark: |
-| Lookup | Tranformation | :heavy_check_mark: |
-| Union | Tranformation | :heavy_check_mark: |
-| Skip | Tranformation | :heavy_check_mark: |
-| Top | Tranformation | :heavy_check_mark: |
-| Distinct | Tranformation | :heavy_check_mark: |
-| Pivot | Tranformation | :heavy_check_mark: |
-| Unpivot | Tranformation | :heavy_check_mark: |
-| Aggregate | Tranformation | :heavy_check_mark: |
-| Cross Apply | Tranformation | :heavy_check_mark: |
-| Ensure Sorted | Tranformation | :heavy_check_mark: |
-| Ensure Keyed | Tranformation | :heavy_check_mark: |
-| Script | Tranformation | :heavy_check_mark: |
+| Select | Transformation | :heavy_check_mark: |
+| Where | Transformation | :heavy_check_mark: |
+| Sort | Transformation | :heavy_check_mark: |
+| Left Join | Transformation | :heavy_check_mark: |
+| Lookup | Transformation | :heavy_check_mark: |
+| Union | Transformation | :heavy_check_mark: |
+| Skip | Transformation | :heavy_check_mark: |
+| Top | Transformation | :heavy_check_mark: |
+| Distinct | Transformation | :heavy_check_mark: |
+| Pivot | Transformation | :heavy_check_mark: |
+| Unpivot | Transformation | :heavy_check_mark: |
+| Aggregate | Transformation | :heavy_check_mark: |
+| Cross Apply | Transformation | :heavy_check_mark: |
+| Ensure Sorted | Transformation | :heavy_check_mark: |
+| Ensure Keyed | Transformation | :heavy_check_mark: |
+| Script | Transformation | :heavy_check_mark: |
 | Select keeping sorted | Transformation | :construction: |
 | Left join keeping sorted | Transformation | :construction: |
 | Lookup keeping sorted | Transformation | :construction: |
