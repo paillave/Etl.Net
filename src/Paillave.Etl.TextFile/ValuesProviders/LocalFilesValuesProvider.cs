@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Paillave.Etl.ValuesProviders
+namespace Paillave.Etl.TextFile.ValuesProviders
 {
     public class LocalFilesValue
     {

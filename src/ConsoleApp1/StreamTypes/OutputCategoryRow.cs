@@ -1,4 +1,5 @@
-using Paillave.Etl.Helpers;
+
+using Paillave.Etl.TextFile.Core;
 
 namespace ConsoleApp1.StreamTypes
 {
@@ -8,14 +9,14 @@ namespace ConsoleApp1.StreamTypes
         public int TotalAmount { get; set; }
         public int AmountOfEntries { get; set; }
     }
-    public class OutputCategoryRowMapper : ColumnNameFlatFileDescriptor<OutputCategoryRow>
+    public class OutputCategoryRowMapper : FileDefinition<OutputCategoryRow>
     {
         public OutputCategoryRowMapper()
         {
             this.MapColumnToProperty("Category", i => i.Category);
             this.MapColumnToProperty("Nb", i => i.AmountOfEntries);
             this.MapColumnToProperty("Tot", i => i.TotalAmount);
-            this.IsFieldDelimited(',');
+            this.IsColumnSeparated(',');
         }
     }
 }

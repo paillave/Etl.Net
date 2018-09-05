@@ -1,4 +1,5 @@
-﻿using Paillave.Etl.Helpers;
+﻿
+using Paillave.Etl.TextFile.Core;
 
 namespace ConsoleApp1.StreamTypes
 {
@@ -9,14 +10,14 @@ namespace ConsoleApp1.StreamTypes
         public string Name { get; set; }
     }
 
-    public class OutputFileRowMapper : ColumnNameFlatFileDescriptor<OutputFileRow>
+    public class OutputFileRowMapper : FileDefinition<OutputFileRow>
     {
         public OutputFileRowMapper()
         {
             this.MapColumnToProperty("Id", i => i.Id);
             this.MapColumnToProperty("Name", i => i.Name);
             this.MapColumnToProperty("FileName", i => i.FileName);
-            this.IsFieldDelimited(',');
+            this.IsColumnSeparated(',');
         }
     }
 }

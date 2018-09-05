@@ -10,17 +10,17 @@ using Paillave.Etl.TextFile.Core;
 
 namespace Paillave.Etl.TextFile.ValuesProviders
 {
-    public class NameMappingFileValuesProviderArgs<TIn, TParsed, TOut> where TParsed : new()
+    public class FlatFileValuesProviderArgs<TIn, TParsed, TOut> where TParsed : new()
     {
         public FileDefinition<TParsed> Mapping { get; set; }
         public Func<TIn, TParsed, TOut> ResultSelector { get; set; }
         public Func<TIn, Stream> DataStreamSelector { get; set; }
         public bool NoParallelisation { get; set; } = false;
     }
-    public class NameMappingFileValuesProvider<TIn, TParsed, TOut> : ValuesProviderBase<TIn, TOut> where TParsed : new()
+    public class FlatFileValuesProvider<TIn, TParsed, TOut> : ValuesProviderBase<TIn, TOut> where TParsed : new()
     {
-        private NameMappingFileValuesProviderArgs<TIn, TParsed, TOut> _args;
-        public NameMappingFileValuesProvider(NameMappingFileValuesProviderArgs<TIn, TParsed, TOut> args) : base(args.NoParallelisation)
+        private FlatFileValuesProviderArgs<TIn, TParsed, TOut> _args;
+        public FlatFileValuesProvider(FlatFileValuesProviderArgs<TIn, TParsed, TOut> args) : base(args.NoParallelisation)
         {
             _args = args;
         }
@@ -39,8 +39,7 @@ namespace Paillave.Etl.TextFile.ValuesProviders
                 var lineParserS = src
                     .Skip(_args.Mapping.FirstLinesToIgnore)
                     .Take(1)
-                    .Map(_args.Mapping.WithHeaderLine)
-                    .Map(i => i.GetSerializer());
+                    .Map(_args.Mapping.GetSerializer);
                 var ret = src
                     .Skip(1 + _args.Mapping.FirstLinesToIgnore)
                     .Filter(i => !string.IsNullOrWhiteSpace(i))

@@ -68,6 +68,7 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Write data to REST service | Data destination | :construction: |
 | Keep section | Transformation | :construction: |
 | Ignore section | Transformation | :construction: |
+| Run subprocess | Transformation | :construction: |
 
 *Follow the status in the issue section*
 

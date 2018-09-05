@@ -13,7 +13,7 @@ namespace Paillave.Etl.TextFile.Core
         public PropertySerializer(PropertyInfo propertyInfo, CultureInfo cultureInfo)
         {
             this._propertyInfo = propertyInfo;
-            this._typeConverter = TypeDescriptor.GetConverter(this._propertyInfo);
+            this._typeConverter = TypeDescriptor.GetConverter(this._propertyInfo.PropertyType);
             this._cultureInfo = cultureInfo;
         }
 

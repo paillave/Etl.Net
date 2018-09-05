@@ -1,5 +1,5 @@
-﻿using Paillave.Etl.Helpers;
-using System.Globalization;
+﻿using System.Globalization;
+using Paillave.Etl.TextFile.Core;
 
 namespace ConsoleApp1.StreamTypes
 {
@@ -11,7 +11,7 @@ namespace ConsoleApp1.StreamTypes
         public string FileName { get; set; }
     }
 
-    public class TypeFileRowMapper : ColumnNameFlatFileDescriptor<TypeFileRow>
+    public class TypeFileRowMapper : FileDefinition<TypeFileRow>
     {
         public TypeFileRowMapper()
         {
@@ -32,7 +32,7 @@ namespace ConsoleApp1.StreamTypes
             this.MapColumnToProperty("#", i => i.Id);
             this.MapColumnToProperty("Label", i => i.Name);
             this.MapColumnToProperty("Category", i => i.Category);
-            this.IsFieldDelimited('\t');
+            this.IsColumnSeparated('\t');
         }
     }
 }

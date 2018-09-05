@@ -1,5 +1,4 @@
 ﻿using Paillave.Etl.Core;
-using Paillave.Etl.Helpers;
 using Paillave.Etl.StreamNodes;
 using Paillave.Etl.Reactive.Core;
 using Paillave.Etl.Reactive.Operators;

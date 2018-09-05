@@ -1,6 +1,6 @@
-﻿using Paillave.Etl.Helpers;
-using System;
+﻿using System;
 using System.Globalization;
+using Paillave.Etl.TextFile.Core;
 
 namespace ConsoleApp1.StreamTypes
 {
@@ -15,7 +15,7 @@ namespace ConsoleApp1.StreamTypes
         public string FileName { get; set; }
     }
 
-    public class InputFileRowMapper : ColumnNameFlatFileDescriptor<InputFileRow>
+    public class InputFileRowMapper : FileDefinition<InputFileRow>
     {
         public InputFileRowMapper()
         {
@@ -39,7 +39,7 @@ namespace ConsoleApp1.StreamTypes
             this.MapColumnToProperty("Rank", i => i.Col3);
             this.MapColumnToProperty("Comment", i => i.Col4);
             this.MapColumnToProperty("TypeId", i => i.TypeId);
-            this.IsFieldDelimited('\t');
+            this.IsColumnSeparated('\t');
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using Paillave.Etl;
 using System.IO;
-using Paillave.Etl.Helpers;
 using Paillave.Etl.Core.Streams;
 using System;
+using Paillave.Etl.TextFile.Core;
 
 namespace ConsoleApp1
 {
@@ -19,14 +19,14 @@ namespace ConsoleApp1
         public string CategoryCode { get; set; }
     }
 
-    public class SimpleInputFileRowMapper : ColumnNameFlatFileDescriptor<SimpleInputFileRow>
+    public class SimpleInputFileRowMapper : FileDefinition<SimpleInputFileRow>
     {
         public SimpleInputFileRowMapper()
         {
             this.MapColumnToProperty("#", i => i.Id);
             this.MapColumnToProperty("Label", i => i.Name);
             this.MapColumnToProperty("Category", i => i.CategoryCode);
-            this.IsFieldDelimited('\t');
+            this.IsColumnSeparated('\t');
         }
     }
 
@@ -36,7 +36,7 @@ namespace ConsoleApp1
         public int Count { get; set; }
     }
 
-    public class CategoryStatisticFileRowMapper : ColumnNameFlatFileDescriptor<CategoryStatisticFileRow>
+    public class CategoryStatisticFileRowMapper : FileDefinition<CategoryStatisticFileRow>
     {
         public CategoryStatisticFileRowMapper()
         {
@@ -62,9 +62,9 @@ namespace ConsoleApp1
         }
     }
 
-    class ProgramOld
+    class Program
     {
-        static void MainOld(string[] args)
+        static void Main(string[] args)
         {
             new StreamProcessRunner<SimpleQuickstartJob, SimpleConfig>().ExecuteAsync(new SimpleConfig
             {
