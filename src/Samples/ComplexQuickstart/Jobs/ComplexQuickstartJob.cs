@@ -1,10 +1,10 @@
-﻿using ConsoleApp1.StreamTypes;
+﻿using ComplexQuickstart.StreamTypes;
 using System.IO;
 using Paillave.Etl;
 using Paillave.Etl.Core.Streams;
 using System;
 
-namespace ConsoleApp1.Jobs
+namespace ComplexQuickstart.Jobs
 {
     public class ComplexQuickstartJob : IStreamProcessDefinition<MyConfig>
     {

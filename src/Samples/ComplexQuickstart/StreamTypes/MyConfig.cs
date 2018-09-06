@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace ConsoleApp1.StreamTypes
+namespace ComplexQuickstart.StreamTypes
 {
     public class MyConfig
     {

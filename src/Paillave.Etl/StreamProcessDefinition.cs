@@ -17,4 +17,9 @@ namespace Paillave.Etl
         public string Name { get; }
         public void DefineProcess(IStream<TConfig> rootStream) => _defineJob(rootStream);
     }
+    public static class StreamProcessDefinition
+    {
+        public static StreamProcessDefinition<TConfig> Create<TConfig>(string name, Action<IStream<TConfig>> defineJob) => new StreamProcessDefinition<TConfig>(name, defineJob);
+        public static StreamProcessDefinition<TConfig> Create<TConfig>(Action<IStream<TConfig>> defineJob) => new StreamProcessDefinition<TConfig>(defineJob);
+    }
 }

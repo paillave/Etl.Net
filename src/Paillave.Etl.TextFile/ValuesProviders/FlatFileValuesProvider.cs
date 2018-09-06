@@ -34,7 +34,7 @@ namespace Paillave.Etl.TextFile.ValuesProviders
                         pushValue(sr.ReadLine());
                 Release();
             });
-            if (_args.Mapping.ReliesOnHeader)
+            if (_args.Mapping.HasColumnHeader)
             {
                 var lineParserS = src
                     .Skip(_args.Mapping.FirstLinesToIgnore)

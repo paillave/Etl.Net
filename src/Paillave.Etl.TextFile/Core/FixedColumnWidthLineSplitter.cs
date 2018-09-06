@@ -20,7 +20,7 @@ namespace Paillave.Etl.TextFile.Core
             foreach (var item in _columnSize)
             {
                 yield return line.Substring(0, Math.Abs(item));
-                line = line.Substring(item);
+                line = line.Substring(Math.Abs(item));
             }
         }
 

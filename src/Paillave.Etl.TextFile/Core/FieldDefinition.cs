@@ -8,6 +8,6 @@ namespace Paillave.Etl.TextFile.Core
         public PropertyInfo PropertyInfo { get; set; }
         public int? Position { get; set; } = null;
         public CultureInfo CultureInfo { get; set; }
-        public string Name { get; set; } = null;
+        public string ColumnName { get; set; } = null;
     }
 }

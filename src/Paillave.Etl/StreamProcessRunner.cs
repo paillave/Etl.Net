@@ -11,6 +11,13 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl
 {
+    public static class StreamProcessRunner
+    {
+        public static StreamProcessRunner<TJob, TConfig> Create<TJob, TConfig>() where TJob : IStreamProcessDefinition<TConfig>, new()
+        {
+            return new StreamProcessRunner<TJob, TConfig>();
+        }
+    }
     public class StreamProcessRunner<TJob, TConfig> where TJob : IStreamProcessDefinition<TConfig>, new()
     {
         public Task<ExecutionStatus> ExecuteAsync(TConfig config, IStreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = null)

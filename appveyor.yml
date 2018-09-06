@@ -22,6 +22,7 @@ test:
   assemblies:
     only:
     - src\Paillave.EtlTests\bin\Release\netcoreapp2.1\Paillave.EtlTests.dll
+    - src\Paillave.Etl.TextFileTests\bin\Release\netcoreapp2.1\Paillave.Etl.TextFileTests.dll
 artifacts:
 - path: src\Paillave.Etl\bin\$(configuration)\*.nupkg
   name: Paillave.Etl
@@ -29,6 +30,8 @@ artifacts:
   name: Paillave.Etl.EntityFrameworkCore
 - path: src\Paillave.Etl.ExecutionPlan\bin\$(configuration)\*.nupkg
   name: Paillave.Etl.ExecutionPlan
+- path: src\Paillave.Etl.TextFile\bin\$(configuration)\*.nupkg
+  name: Paillave.Etl.TextFile
 deploy:
 - provider: NuGet
   api_key:
@@ -42,3 +45,7 @@ deploy:
   api_key:
     secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
   artifact: Paillave.Etl.ExecutionPlan
+- provider: NuGet
+  api_key:
+    secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
+  artifact: Paillave.Etl.TextFile

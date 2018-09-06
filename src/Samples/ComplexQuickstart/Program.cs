@@ -1,20 +1,23 @@
 ﻿using Paillave.Etl;
-using System;
 using System.IO;
-using ConsoleApp1.StreamTypes;
+using Paillave.Etl.Core.Streams;
+using System;
+using Paillave.Etl.TextFile.Core;
+using ComplexQuickstart.Jobs;
+using ComplexQuickstart.StreamTypes;
 using Paillave.Etl.Core;
-using ConsoleApp1.Jobs;
 
-namespace ConsoleApp1
+namespace ComplexQuickstart
 {
-    class ProgramOld
+    class Program
     {
-        static void MainOld(string[] args)
+        static void Main(string[] args)
         {
             var runner = new StreamProcessRunner<ComplexQuickstartJob, MyConfig>();
             runner.GetDefinitionStructure().OpenEstimatedExecutionPlanVisNetwork();
             StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.ToAction("logs to console", Console.WriteLine));
-            var testFilesDirectory = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles";
+            var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles";
+            // var testFilesDirectory = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles";
             var task = runner.ExecuteAsync(new MyConfig
             {
                 InputFolderPath = Path.Combine(testFilesDirectory, @"."),

@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl", "Paillave.Etl\Paillave.Etl.csproj", "{EFD00722-BE94-4001-838C-9F54F130B90D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{BCF6B7B4-D8FB-47A5-8AB8-E3C3C467A783}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComplexQuickstart", "Samples\ComplexQuickstart\ComplexQuickstart.csproj", "{BCF6B7B4-D8FB-47A5-8AB8-E3C3C467A783}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleQuickstart", "Samples\SimpleQuickstart\SimpleQuickstart.csproj", "{612e79c0-30c9-42bb-9826-7aeba0339ca4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.EtlTests", "Paillave.EtlTests\Paillave.EtlTests.csproj", "{22475DD2-F449-4C7D-BD5A-647D0A8B7806}"
 EndProject
@@ -31,6 +33,10 @@ Global
 		{BCF6B7B4-D8FB-47A5-8AB8-E3C3C467A783}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCF6B7B4-D8FB-47A5-8AB8-E3C3C467A783}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCF6B7B4-D8FB-47A5-8AB8-E3C3C467A783}.Release|Any CPU.Build.0 = Release|Any CPU
+		{612e79c0-30c9-42bb-9826-7aeba0339ca4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{612e79c0-30c9-42bb-9826-7aeba0339ca4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{612e79c0-30c9-42bb-9826-7aeba0339ca4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{612e79c0-30c9-42bb-9826-7aeba0339ca4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{22475DD2-F449-4C7D-BD5A-647D0A8B7806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{22475DD2-F449-4C7D-BD5A-647D0A8B7806}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22475DD2-F449-4C7D-BD5A-647D0A8B7806}.Release|Any CPU.ActiveCfg = Release|Any CPU

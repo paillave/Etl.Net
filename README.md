@@ -4,6 +4,7 @@
 |-|-|
 | Etl.Net | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) |
 | Etl.Net.EntityFrameworkCore | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) |
+| Etl.Net.TextFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.TextFile.svg)](https://www.nuget.org/packages/Etl.Net.TextFile) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.TextFile.svg)](https://www.nuget.org/packages/Etl.Net.TextFile) |
 | Etl.Net.ExecutionPlan | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) |
 
 
@@ -105,12 +106,13 @@ The first alpha release is expected once it starts to be a decent candidate to r
 
 ```csharp
 using Paillave.Etl;
-using System.IO;
-using Paillave.Etl.Helpers;
-using Paillave.Etl.Core.Streams;
 using System;
+using System.IO;
+using Paillave.Etl.Core;
+using Paillave.Etl.TextFile.Core;
+using Paillave.Etl.Core.Streams;
 
-namespace ConsoleApp1
+namespace SimpleQuickstart
 {
     public class SimpleConfig
     {
@@ -125,30 +127,10 @@ namespace ConsoleApp1
         public string CategoryCode { get; set; }
     }
 
-    public class SimpleInputFileRowMapper : ColumnNameFlatFileDescriptor<SimpleInputFileRow>
-    {
-        public SimpleInputFileRowMapper()
-        {
-            this.MapColumnToProperty("#", i => i.Id);
-            this.MapColumnToProperty("Label", i => i.Name);
-            this.MapColumnToProperty("Category", i => i.CategoryCode);
-            this.IsFieldDelimited('\t');
-        }
-    }
-
     public class CategoryStatisticFileRow
     {
         public string CategoryCode { get; set; }
         public int Count { get; set; }
-    }
-
-    public class CategoryStatisticFileRowMapper : ColumnNameFlatFileDescriptor<CategoryStatisticFileRow>
-    {
-        public CategoryStatisticFileRowMapper()
-        {
-            this.MapColumnToProperty("Category", i => i.CategoryCode);
-            this.MapColumnToProperty("Nb", i => i.Count);
-        }
     }
 
     public class SimpleQuickstartJob : IStreamProcessDefinition<SimpleConfig>
@@ -159,23 +141,28 @@ namespace ConsoleApp1
         {
             var outputFileS = rootStream.Select("open output file", i => new StreamWriter(i.OutputFilePath));
             rootStream
-                .CrossApplyTextFile("read input file", new SimpleInputFileRowMapper(), i => i.InputFilePath)
+                .CrossApplyTextFile("read input file", new FileDefinition<SimpleInputFileRow>()
+                    .MapColumnToProperty("#", i => i.Id)
+                    .MapColumnToProperty("Label", i => i.Name)
+                    .MapColumnToProperty("Category", i => i.CategoryCode)
+                    .IsColumnSeparated('\t'), i => i.InputFilePath)
                 .ToAction("Write input file to console", i => Console.WriteLine($"{i.Id}-{i.Name}-{i.CategoryCode}"))
                 .Pivot("group and count", i => i.CategoryCode, i => new { Count = AggregationOperators.Count() })
                 .Select("create output row", i => new CategoryStatisticFileRow { CategoryCode = i.Key, Count = i.Aggregation.Count })
                 .Sort("sort output values", i => new { i.CategoryCode })
-                .ToTextFile("write to text file", outputFileS, new CategoryStatisticFileRowMapper());
+                .ToTextFile("write to text file", outputFileS, new FileDefinition<CategoryStatisticFileRow>());
         }
     }
-
     class Program
     {
         static void Main(string[] args)
         {
+            var testFilesDirectory = @"XXXXXXXXXXXX\Etl.Net\src\TestFiles";
+
             new StreamProcessRunner<SimpleQuickstartJob, SimpleConfig>().ExecuteAsync(new SimpleConfig
             {
-                InputFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\simpleinputfile.csv",
-                OutputFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\simpleoutputfile.csv"
+                InputFilePath = Path.Combine(testFilesDirectory, "simpleinputfile.csv"),
+                OutputFilePath = Path.Combine(testFilesDirectory, "simpleoutputfile.csv")
             }, null).Wait();
             Console.WriteLine("Press a key...");
             Console.ReadKey();
@@ -194,7 +181,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace ConsoleApp1.StreamTypes
+namespace ComplexQuickstart.StreamTypes
 {
     public class MyConfig
     {
@@ -209,11 +196,11 @@ namespace ConsoleApp1.StreamTypes
 
 ### Create input and output stream structures
 ```csharp
-using Paillave.Etl.Helpers;
 using System;
 using System.Globalization;
+using Paillave.Etl.TextFile.Core;
 
-namespace ConsoleApp1.StreamTypes
+namespace ComplexQuickstart.StreamTypes
 {
     public class InputFileRow
     {
@@ -226,7 +213,7 @@ namespace ConsoleApp1.StreamTypes
         public string FileName { get; set; }
     }
 
-    public class InputFileRowMapper : ColumnNameFlatFileDescriptor<InputFileRow>
+    public class InputFileRowMapper : FileDefinition<InputFileRow>
     {
         public InputFileRowMapper()
         {
@@ -250,16 +237,16 @@ namespace ConsoleApp1.StreamTypes
             this.MapColumnToProperty("Rank", i => i.Col3);
             this.MapColumnToProperty("Comment", i => i.Col4);
             this.MapColumnToProperty("TypeId", i => i.TypeId);
-            this.IsFieldDelimited('\t');
+            this.IsColumnSeparated('\t');
         }
     }
 }
 ```
 ```csharp
-using Paillave.Etl.Helpers;
 using System.Globalization;
+using Paillave.Etl.TextFile.Core;
 
-namespace ConsoleApp1.StreamTypes
+namespace ComplexQuickstart.StreamTypes
 {
     public class TypeFileRow
     {
@@ -269,7 +256,7 @@ namespace ConsoleApp1.StreamTypes
         public string FileName { get; set; }
     }
 
-    public class TypeFileRowMapper : ColumnNameFlatFileDescriptor<TypeFileRow>
+    public class TypeFileRowMapper : FileDefinition<TypeFileRow>
     {
         public TypeFileRowMapper()
         {
@@ -290,15 +277,16 @@ namespace ConsoleApp1.StreamTypes
             this.MapColumnToProperty("#", i => i.Id);
             this.MapColumnToProperty("Label", i => i.Name);
             this.MapColumnToProperty("Category", i => i.Category);
-            this.IsFieldDelimited('\t');
+            this.IsColumnSeparated('\t');
         }
     }
 }
 ```
 ```csharp
-using Paillave.Etl.Helpers;
 
-namespace ConsoleApp1.StreamTypes
+using Paillave.Etl.TextFile.Core;
+
+namespace ComplexQuickstart.StreamTypes
 {
     public class OutputFileRow
     {
@@ -307,22 +295,23 @@ namespace ConsoleApp1.StreamTypes
         public string Name { get; set; }
     }
 
-    public class OutputFileRowMapper : ColumnNameFlatFileDescriptor<OutputFileRow>
+    public class OutputFileRowMapper : FileDefinition<OutputFileRow>
     {
         public OutputFileRowMapper()
         {
             this.MapColumnToProperty("Id", i => i.Id);
             this.MapColumnToProperty("Name", i => i.Name);
             this.MapColumnToProperty("FileName", i => i.FileName);
-            this.IsFieldDelimited(',');
+            this.IsColumnSeparated(',');
         }
     }
 }
 ```
 ```csharp
-using Paillave.Etl.Helpers;
 
-namespace ConsoleApp1.StreamTypes
+using Paillave.Etl.TextFile.Core;
+
+namespace ComplexQuickstart.StreamTypes
 {
     public class OutputCategoryRow
     {
@@ -330,29 +319,29 @@ namespace ConsoleApp1.StreamTypes
         public int TotalAmount { get; set; }
         public int AmountOfEntries { get; set; }
     }
-    public class OutputCategoryRowMapper : ColumnNameFlatFileDescriptor<OutputCategoryRow>
+    public class OutputCategoryRowMapper : FileDefinition<OutputCategoryRow>
     {
         public OutputCategoryRowMapper()
         {
             this.MapColumnToProperty("Category", i => i.Category);
             this.MapColumnToProperty("Nb", i => i.AmountOfEntries);
             this.MapColumnToProperty("Tot", i => i.TotalAmount);
-            this.IsFieldDelimited(',');
+            this.IsColumnSeparated(',');
         }
     }
 }
 ```
 ### Define the ETL job
 ```csharp
-using ConsoleApp1.StreamTypes;
+using ComplexQuickstart.StreamTypes;
 using System.IO;
 using Paillave.Etl;
 using Paillave.Etl.Core.Streams;
 using System;
 
-namespace ConsoleApp1.Jobs
+namespace ComplexQuickstart.Jobs
 {
-    public class QuickStartJob : IStreamProcessDefinition<MyConfig>
+    public class ComplexQuickstartJob : IStreamProcessDefinition<MyConfig>
     {
         public string Name => "import file";
 
@@ -387,22 +376,24 @@ namespace ConsoleApp1.Jobs
 ### Execute the ETL job
 ```csharp
 using Paillave.Etl;
-using System;
 using System.IO;
-using ConsoleApp1.StreamTypes;
+using Paillave.Etl.Core.Streams;
+using System;
+using Paillave.Etl.TextFile.Core;
+using ComplexQuickstart.Jobs;
+using ComplexQuickstart.StreamTypes;
 using Paillave.Etl.Core;
-using ConsoleApp1.Jobs;
 
-namespace ConsoleApp1
+namespace ComplexQuickstart
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var runner = new StreamProcessRunner<QuickStartJob, MyConfig>();
+            var runner = new StreamProcessRunner<ComplexQuickstartJob, MyConfig>();
             runner.GetDefinitionStructure().OpenEstimatedExecutionPlanVisNetwork();
             StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.ToAction("logs to console", Console.WriteLine));
-            var testFilesDirectory = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles";
+            var testFilesDirectory = @"XXXXXXXXXXXXXXXX\Etl.Net\src\TestFiles";
             var task = runner.ExecuteAsync(new MyConfig
             {
                 InputFolderPath = Path.Combine(testFilesDirectory, @"."),

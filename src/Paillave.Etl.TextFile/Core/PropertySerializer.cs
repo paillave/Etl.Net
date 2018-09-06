@@ -23,7 +23,7 @@ namespace Paillave.Etl.TextFile.Core
         }
         private object Deserialize(string text)
         {
-            return _typeConverter.ConvertFromString(null, _cultureInfo, text);
+            return _typeConverter.ConvertFromString(null, _cultureInfo, text.Trim());
         }
 
         public void SetValue(object target, string text)

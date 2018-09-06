@@ -1,10 +1,11 @@
 ﻿using Paillave.Etl;
-using System.IO;
-using Paillave.Etl.Core.Streams;
 using System;
+using System.IO;
+using Paillave.Etl.Core;
 using Paillave.Etl.TextFile.Core;
+using Paillave.Etl.Core.Streams;
 
-namespace ConsoleApp1
+namespace SimpleQuickstart
 {
     public class SimpleConfig
     {
@@ -19,30 +20,10 @@ namespace ConsoleApp1
         public string CategoryCode { get; set; }
     }
 
-    public class SimpleInputFileRowMapper : FileDefinition<SimpleInputFileRow>
-    {
-        public SimpleInputFileRowMapper()
-        {
-            this.MapColumnToProperty("#", i => i.Id);
-            this.MapColumnToProperty("Label", i => i.Name);
-            this.MapColumnToProperty("Category", i => i.CategoryCode);
-            this.IsColumnSeparated('\t');
-        }
-    }
-
     public class CategoryStatisticFileRow
     {
         public string CategoryCode { get; set; }
         public int Count { get; set; }
-    }
-
-    public class CategoryStatisticFileRowMapper : FileDefinition<CategoryStatisticFileRow>
-    {
-        public CategoryStatisticFileRowMapper()
-        {
-            this.MapColumnToProperty("Category", i => i.CategoryCode);
-            this.MapColumnToProperty("Nb", i => i.Count);
-        }
     }
 
     public class SimpleQuickstartJob : IStreamProcessDefinition<SimpleConfig>
@@ -53,23 +34,29 @@ namespace ConsoleApp1
         {
             var outputFileS = rootStream.Select("open output file", i => new StreamWriter(i.OutputFilePath));
             rootStream
-                .CrossApplyTextFile("read input file", new SimpleInputFileRowMapper(), i => i.InputFilePath)
+                .CrossApplyTextFile("read input file", new FileDefinition<SimpleInputFileRow>()
+                    .MapColumnToProperty("#", i => i.Id)
+                    .MapColumnToProperty("Label", i => i.Name)
+                    .MapColumnToProperty("Category", i => i.CategoryCode)
+                    .IsColumnSeparated('\t'), i => i.InputFilePath)
                 .ToAction("Write input file to console", i => Console.WriteLine($"{i.Id}-{i.Name}-{i.CategoryCode}"))
                 .Pivot("group and count", i => i.CategoryCode, i => new { Count = AggregationOperators.Count() })
                 .Select("create output row", i => new CategoryStatisticFileRow { CategoryCode = i.Key, Count = i.Aggregation.Count })
                 .Sort("sort output values", i => new { i.CategoryCode })
-                .ToTextFile("write to text file", outputFileS, new CategoryStatisticFileRowMapper());
+                .ToTextFile("write to text file", outputFileS, new FileDefinition<CategoryStatisticFileRow>());
         }
     }
-
     class Program
     {
         static void Main(string[] args)
         {
+            var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles";
+            // var testFilesDirectory = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles";
+
             new StreamProcessRunner<SimpleQuickstartJob, SimpleConfig>().ExecuteAsync(new SimpleConfig
             {
-                InputFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\simpleinputfile.csv",
-                OutputFilePath = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles\simpleoutputfile.csv"
+                InputFilePath = Path.Combine(testFilesDirectory, "simpleinputfile.csv"),
+                OutputFilePath = Path.Combine(testFilesDirectory, "simpleoutputfile.csv")
             }, null).Wait();
             Console.WriteLine("Press a key...");
             Console.ReadKey();

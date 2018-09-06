@@ -8,7 +8,7 @@ namespace Paillave.Etl.TextFile.Core
 {
     public class FileDefinition<T> where T : new()
     {
-        public bool ReliesOnHeader => _fieldDefinitions.Any(i => !string.IsNullOrWhiteSpace(i.Name));
+        public bool HasColumnHeader => _fieldDefinitions.Any(i => !string.IsNullOrWhiteSpace(i.ColumnName));
         private IList<FieldDefinition> _fieldDefinitions = new List<FieldDefinition>();
         private ILineSplitter _lineSplitter = new ColumnSeparatorLineSplitter();
         private CultureInfo _cultureInfo = CultureInfo.CurrentCulture;
@@ -18,44 +18,73 @@ namespace Paillave.Etl.TextFile.Core
             FirstLinesToIgnore = firstLinesToIgnore;
             return this;
         }
-        public LineSerializer<T> GetSerializer(string headerLine = null)
-        {
-            var indexToPropertySerializerDictionary = _fieldDefinitions.GroupJoin(
-                _lineSplitter
-                    .Split(headerLine ?? GenerateDefaultHeaderLine())
-                    .Select((Name, Position) => new { Name, Position }),
-                i => i.PropertyInfo.Name,
-                i => i.Name,
-                (fd, po) => new
-                {
-                    Index = fd.Position ?? po.FirstOrDefault()?.Position,
-                    Name = fd.Name,
-                    PropertySerializer = new PropertySerializer(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo)
-                })
-                .Join(
-                    typeof(T).GetProperties().Select((i, idx) => new { i.Name, Position = idx }),
-                    i => i.Name,
-                    i => i.Name,
-                    (l, r) => new
-                    {
-                        Position = l.Index,
-                        PropertyPosition = r.Position,
-                        PropertySerializer = l.PropertySerializer
-                    }
-                )
-                .OrderBy(i => i.Position)
-                .ThenBy(i => i.PropertyPosition)
-                .Select((i, idx) => new { Index = idx, i.PropertySerializer })
-                .ToDictionary(i => i.Index, i => i.PropertySerializer);
 
-            return new LineSerializer<T>(_lineSplitter, indexToPropertySerializerDictionary);
+        public FileDefinition<T> SetDefaultMapping(bool withColumnHeader = true, CultureInfo cultureInfo = null)
+        {
+            foreach (var item in typeof(T).GetProperties().Select((propertyInfo, index) => new { propertyInfo = propertyInfo, Position = index }))
+            {
+                SetFieldDefinition(new FieldDefinition
+                {
+                    CultureInfo = cultureInfo,
+                    ColumnName = withColumnHeader ? item.propertyInfo.Name : null,
+                    Position = item.Position,
+                    PropertyInfo = item.propertyInfo
+                });
+            }
+            return this;
+        }
+        public LineSerializer<T> GetSerializer(string headerLine)
+        {
+            return GetSerializer(_lineSplitter.Split(headerLine));
+        }
+        public LineSerializer<T> GetSerializer(IEnumerable<string> columnNames = null)
+        {
+            if ((_fieldDefinitions?.Count ?? 0) == 0) SetDefaultMapping();
+            if (columnNames == null) columnNames = GetDefaultColumnNames().ToList();
+            if (this.HasColumnHeader)
+            {
+                var indexToPropertySerializerDictionary = _fieldDefinitions.Join(
+                    columnNames.Select((ColumnName, Position) => new { ColumnName, Position }),
+                    i => i.ColumnName.Trim(),
+                    i => i.ColumnName.Trim(),
+                    (fd, po) => new
+                    {
+                        Position = po.Position,
+                        PropertySerializer = new PropertySerializer(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo)
+                    })
+                    .OrderBy(i => i.Position)
+                    .Select((i, idx) => new
+                    {
+                        Position = idx,
+                        PropertySerializer = i.PropertySerializer
+                    })
+                    .ToDictionary(i => i.Position, i => i.PropertySerializer);
+
+                return new LineSerializer<T>(_lineSplitter, indexToPropertySerializerDictionary);
+            }
+            else
+            {
+                var indexToPropertySerializerDictionary = _fieldDefinitions
+                    .OrderBy(i => i.Position)
+                    .Select((fd, idx) => new
+                    {
+                        Position = idx,
+                        PropertySerializer = new PropertySerializer(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo)
+                    })
+                    .ToDictionary(i => i.Position, i => i.PropertySerializer);
+                return new LineSerializer<T>(_lineSplitter, indexToPropertySerializerDictionary);
+            }
+        }
+        private IEnumerable<string> GetDefaultColumnNames()
+        {
+            return _fieldDefinitions.Select((i, idx) => new { Name = i.ColumnName ?? i.PropertyInfo.Name, DefinedPosition = i.Position, FallbackPosition = idx })
+                .OrderBy(i => i.DefinedPosition)
+                .ThenBy(i => i.FallbackPosition)
+                .Select(i => i.Name);
         }
         public string GenerateDefaultHeaderLine()
         {
-            return _lineSplitter.Join(_fieldDefinitions.Select((i, idx) => new { Name = i.Name ?? i.PropertyInfo.Name, DefinedPosition = i.Position, FallbackPosition = idx })
-                .OrderBy(i => i.DefinedPosition ?? int.MaxValue)
-                .ThenBy(i => i.FallbackPosition)
-                .Select(i => i.Name));
+            return _lineSplitter.Join(GetDefaultColumnNames());
         }
         public FileDefinition<T> IsColumnSeparated(char separator = ';', char textDelimiter = '"')
         {
@@ -102,30 +131,54 @@ namespace Paillave.Etl.TextFile.Core
             var existingFieldDefinition = _fieldDefinitions.FirstOrDefault(i => i.PropertyInfo.Name == fieldDefinition.PropertyInfo.Name);
             if (existingFieldDefinition == null)
             {
+                if (fieldDefinition.Position == null)
+                    fieldDefinition.Position = (_fieldDefinitions.Max(i => i.Position) ?? 0) + 1;
                 _fieldDefinitions.Add(fieldDefinition);
             }
             else
             {
-                if (fieldDefinition.Name != null) existingFieldDefinition.Name = fieldDefinition.Name;
+                if (fieldDefinition.ColumnName != null) existingFieldDefinition.ColumnName = fieldDefinition.ColumnName;
                 if (fieldDefinition.Position != null) existingFieldDefinition.Position = fieldDefinition.Position;
             }
         }
-        public FileDefinition<T> MapColumnToProperty<TField>(string name, Expression<Func<T, TField>> memberLamda, CultureInfo cultureInfo = null)
+        public FileDefinition<T> MapColumnToProperty<TField>(string columnName, Expression<Func<T, TField>> memberLamda, CultureInfo cultureInfo = null)
         {
             SetFieldDefinition(new FieldDefinition
             {
                 CultureInfo = cultureInfo,
-                Name = name,
+                ColumnName = columnName,
                 PropertyInfo = memberLamda.GetPropertyInfo()
             });
             return this;
         }
-        public FileDefinition<T> MapColumnToProperty<TField>(string name, Expression<Func<T, TField>> memberLamda, string cultureInfo)
+        public FileDefinition<T> MapColumnToProperty<TField>(string columnName, Expression<Func<T, TField>> memberLamda, string cultureInfo)
         {
             SetFieldDefinition(new FieldDefinition
             {
                 CultureInfo = CultureInfo.GetCultureInfo(cultureInfo),
-                Name = name,
+                ColumnName = columnName,
+                PropertyInfo = memberLamda.GetPropertyInfo()
+            });
+            return this;
+        }
+        public FileDefinition<T> MapColumnToProperty<TField>(string columnName, int position, Expression<Func<T, TField>> memberLamda, CultureInfo cultureInfo = null)
+        {
+            SetFieldDefinition(new FieldDefinition
+            {
+                CultureInfo = cultureInfo,
+                ColumnName = columnName,
+                Position = position,
+                PropertyInfo = memberLamda.GetPropertyInfo()
+            });
+            return this;
+        }
+        public FileDefinition<T> MapColumnToProperty<TField>(string columnName, int position, Expression<Func<T, TField>> memberLamda, string cultureInfo)
+        {
+            SetFieldDefinition(new FieldDefinition
+            {
+                CultureInfo = CultureInfo.GetCultureInfo(cultureInfo),
+                ColumnName = columnName,
+                Position = position,
                 PropertyInfo = memberLamda.GetPropertyInfo()
             });
             return this;
