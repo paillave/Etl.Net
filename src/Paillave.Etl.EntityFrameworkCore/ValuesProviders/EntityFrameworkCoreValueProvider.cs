@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Paillave.Etl.EntityFrameworkCore.ValuesProviders
 {
-    public class EntityFrameworkCoreValueProviderArgs<TIn, TContext, TOut>
+    public class EntityFrameworkCoreValueProviderArgs<TIn, TContext, TOut> where TContext : DbContext
     {
         public Func<TIn, TContext, IQueryable<TOut>> GetQuery { get; set; }
         public bool NoParallelisation { get; set; } = false;
