@@ -16,8 +16,8 @@ namespace ComplexQuickstart
             var runner = new StreamProcessRunner<ComplexQuickstartJob, MyConfig>();
             runner.GetDefinitionStructure().OpenEstimatedExecutionPlanVisNetwork();
             StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.ToAction("logs to console", Console.WriteLine));
-            var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles";
-            // var testFilesDirectory = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles";
+            var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\Samples\TestFiles";
+            // var testFilesDirectory = @"C:\Users\paill\source\repos\Etl.Net\src\Samples\TestFiles";
             var task = runner.ExecuteAsync(new MyConfig
             {
                 InputFolderPath = Path.Combine(testFilesDirectory, @"."),

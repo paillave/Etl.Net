@@ -50,8 +50,8 @@ namespace SimpleQuickstart
     {
         static void Main(string[] args)
         {
-            var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\TestFiles";
-            // var testFilesDirectory = @"C:\Users\paill\source\repos\Etl.Net\src\TestFiles";
+            //var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\Samples\TestFiles";
+            var testFilesDirectory = @"C:\Users\paill\source\repos\Etl.Net\src\Samples\TestFiles";
 
             new StreamProcessRunner<SimpleQuickstartJob, SimpleConfig>().ExecuteAsync(new SimpleConfig
             {

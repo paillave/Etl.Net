@@ -26,11 +26,10 @@ namespace Paillave.Etl.TextFile.ValuesProviders
         {
             var src = new DeferedPushObservable<string>(pushValue =>
             {
-                WaitOne();
+                using (base.OpenProcess())
                 using (var sr = new StreamReader(_args.DataStreamSelector(input)))
                     while (!sr.EndOfStream)
                         pushValue(sr.ReadLine());
-                Release();
             });
             var ret = src.Map(dataLine => _args.ResultSelector(input, dataLine));
             return new DeferedWrapperPushObservable<TOut>(ret, src.Start);

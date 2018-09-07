@@ -25,9 +25,8 @@ namespace Paillave.Etl.ValuesProviders
         {
             return new DeferedPushObservable<TOut>(pushValue =>
             {
-                WaitOne();
-                _args.ProduceValues(input, pushValue);
-                Release();
+                using (base.OpenProcess())
+                    _args.ProduceValues(input, pushValue);
             });
         }
     }
@@ -47,9 +46,8 @@ namespace Paillave.Etl.ValuesProviders
         {
             return new DeferedPushObservable<TOut>(pushValue =>
             {
-                WaitOne();
-                _args.ProduceValues(input, resource, pushValue);
-                Release();
+                using (base.OpenProcess())
+                    _args.ProduceValues(input, resource, pushValue);
             });
         }
     }
