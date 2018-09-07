@@ -17,6 +17,7 @@ namespace SimpleQuickstart
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string ValueType { get; set; }
         public string CategoryCode { get; set; }
     }
 
@@ -24,6 +25,8 @@ namespace SimpleQuickstart
     {
         public string CategoryCode { get; set; }
         public int Count { get; set; }
+        public int CountA { get; set; }
+        public int CountB { get; set; }
     }
 
     public class SimpleQuickstartJob : IStreamProcessDefinition<SimpleConfig>
@@ -34,14 +37,28 @@ namespace SimpleQuickstart
         {
             var outputFileS = rootStream.Select("open output file", i => new StreamWriter(i.OutputFilePath));
             rootStream
-                .CrossApplyTextFile("read input file", new FileDefinition<SimpleInputFileRow>()
-                    .MapColumnToProperty("#", i => i.Id)
-                    .MapColumnToProperty("Label", i => i.Name)
-                    .MapColumnToProperty("Category", i => i.CategoryCode)
-                    .IsColumnSeparated('\t'), i => i.InputFilePath)
-                .ToAction("Write input file to console", i => Console.WriteLine($"{i.Id}-{i.Name}-{i.CategoryCode}"))
-                .Pivot("group and count", i => i.CategoryCode, i => new { Count = AggregationOperators.Count() })
-                .Select("create output row", i => new CategoryStatisticFileRow { CategoryCode = i.Key, Count = i.Aggregation.Count })
+                .CrossApplyTextFile("read input file",
+                    new FileDefinition<SimpleInputFileRow>()
+                        .MapColumnToProperty("#", i => i.Id)
+                        .MapColumnToProperty("Label", i => i.Name)
+                        .MapColumnToProperty("Value", i => i.ValueType)
+                        .MapColumnToProperty("Category", i => i.CategoryCode)
+                        .IsColumnSeparated('\t'),
+                    i => i.InputFilePath)
+                .ToAction("Write input file to console", i => Console.WriteLine($"{i.Id}->{i.Name}->{i.CategoryCode}->{i.ValueType}"))
+                .Pivot("group and count", i => i.CategoryCode, i => new
+                {
+                    Count = AggregationOperators.Count(),
+                    CountA = AggregationOperators.Count().For(i.ValueType == "a"),
+                    CountB = AggregationOperators.Count().For(i.ValueType == "b"),
+                })
+                .Select("create output row", i => new CategoryStatisticFileRow
+                {
+                    CategoryCode = i.Key,
+                    CountA = i.Aggregation.CountA,
+                    CountB = i.Aggregation.CountB,
+                    Count = i.Aggregation.Count
+                })
                 .Sort("sort output values", i => new { i.CategoryCode })
                 .ToTextFile("write to text file", outputFileS, new FileDefinition<CategoryStatisticFileRow>());
         }
@@ -50,8 +67,8 @@ namespace SimpleQuickstart
     {
         static void Main(string[] args)
         {
-            //var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\Samples\TestFiles";
-            var testFilesDirectory = @"C:\Users\paill\source\repos\Etl.Net\src\Samples\TestFiles";
+            var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\Samples\TestFiles";
+            // var testFilesDirectory = @"C:\Users\paill\source\repos\Etl.Net\src\Samples\TestFiles";
 
             new StreamProcessRunner<SimpleQuickstartJob, SimpleConfig>().ExecuteAsync(new SimpleConfig
             {

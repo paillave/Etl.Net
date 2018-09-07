@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Paillave.Etl.Core.Aggregation.Visitors
 {
-    public class ValueAggregatorInspector<TIn> : ExpressionVisitor
+    public class GetValueAggregatorVisitor<TIn> : ExpressionVisitor
     {
         public Type AggregationInstanceType { get; private set; }
         public PropertyInfo SourcePropertyInfo { get; private set; }
@@ -16,7 +16,7 @@ namespace Paillave.Etl.Core.Aggregation.Visitors
             this.AggregationInstanceType = aggregationInstanceAttribute.AggregationInstanceType;
             if (node.Arguments.Count > 0)
             {
-                ValueToAggregateInspector<TIn> vis = new ValueToAggregateInspector<TIn>();
+                ValueToAggregateVisitor<TIn> vis = new ValueToAggregateVisitor<TIn>();
                 try
                 {
                     vis.Visit(node.Arguments[0]);

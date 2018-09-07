@@ -17,7 +17,6 @@ namespace Paillave.Etl.Core.Aggregation
         private Type _outType = typeof(TOut);
         private readonly bool _isOutputAnonymous;
 
-
         public AggregationProcessor(Expression<Func<TIn, TOut>> aggregationDescriptor)
         {
             _isOutputAnonymous = Attribute.IsDefined(_outType, typeof(CompilerGeneratedAttribute), false);

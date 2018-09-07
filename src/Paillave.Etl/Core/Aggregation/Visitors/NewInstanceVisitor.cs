@@ -12,10 +12,13 @@ namespace Paillave.Etl.Core.Aggregation.Visitors
             for (int i = 0; i < node.Members.Count; i++)
             {
                 var argument = node.Arguments[i];
-                ValueAggregatorInspector<TIn> vis = new ValueAggregatorInspector<TIn>();
+                ValueAggregatorVisitor<TIn> vis = new ValueAggregatorVisitor<TIn>();
                 vis.Visit(argument);
                 var member = node.Members[i] as PropertyInfo;
-                this.Aggregators.Add(new Aggregator<TIn>(vis.AggregationInstanceType, vis.SourcePropertyInfo, member));
+                var agg = new Aggregator<TIn>(vis.AggregationInstanceType, vis.SourcePropertyInfo, member);
+                if (vis.FilteredPropertyInfo != null)
+                    agg.SetFilter(vis.FilteredPropertyInfo, vis.Filter);
+                this.Aggregators.Add(agg);
             }
             return null;
         }

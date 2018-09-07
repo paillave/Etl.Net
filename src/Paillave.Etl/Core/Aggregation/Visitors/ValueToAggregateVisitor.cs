@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Paillave.Etl.Core.Aggregation.Visitors
 {
-    public class ValueToAggregateInspector<TIn> : ExpressionVisitor
+    public class ValueToAggregateVisitor<TIn> : ExpressionVisitor
     {
         public PropertyInfo SourcePropertyInfo { get; private set; }
         public override Expression Visit(Expression node)

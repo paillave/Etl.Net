@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Samples/src/ComplexQuickstart/bin/Debug/netcoreapp2.1/ComplexQuickstart.dll",
+            "program": "${workspaceFolder}/src/Samples/SimpleQuickstart/bin/Debug/netcoreapp2.1/SimpleQuickstart.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/Samples/src/ComplexQuickstart",
+            "cwd": "${workspaceFolder}/src/Samples/SimpleQuickstart",
             // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
             "console": "integratedTerminal",
             "stopAtEntry": false,
