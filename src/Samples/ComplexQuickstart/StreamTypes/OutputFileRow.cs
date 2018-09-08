@@ -10,7 +10,7 @@ namespace ComplexQuickstart.StreamTypes
         public string Name { get; set; }
     }
 
-    public class OutputFileRowMapper : FileDefinition<OutputFileRow>
+    public class OutputFileRowMapper : FlatFileDefinition<OutputFileRow>
     {
         public OutputFileRowMapper()
         {

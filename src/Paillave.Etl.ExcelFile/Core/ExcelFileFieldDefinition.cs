@@ -1,9 +1,9 @@
 using System.Globalization;
 using System.Reflection;
 
-namespace Paillave.Etl.TextFile.Core
+namespace Paillave.Etl.ExcelFile.Core
 {
-    public class FieldDefinition
+    public class ExcelFileFieldDefinition
     {
         public PropertyInfo PropertyInfo { get; set; }
         public int? Position { get; set; } = null;

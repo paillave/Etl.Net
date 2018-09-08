@@ -17,7 +17,7 @@ namespace Paillave.EtlTests.TextFileTests.Core
         [TestCategory(nameof(LineSerializerDeserializeTests))]
         public void DeserialiseColumnSeparatedWithDefaultSettings()
         {
-            var lineSerializer = new FileDefinition<MyClass>().GetSerializer();
+            var lineSerializer = new FlatFileDefinition<MyClass>().GetSerializer();
             var res = lineSerializer.Deserialize("1;2");
             Assert.AreEqual(1, res.MyProperty1);
             Assert.AreEqual("2", res.MyProperty2);
@@ -27,7 +27,7 @@ namespace Paillave.EtlTests.TextFileTests.Core
         [TestCategory(nameof(LineSerializerDeserializeTests))]
         public void DeserialiseFixedColumnWithDefaultSettings()
         {
-            var lineSerializer = new FileDefinition<MyClass>().HasFixedColumnWidth(3, 5).GetSerializer();
+            var lineSerializer = new FlatFileDefinition<MyClass>().HasFixedColumnWidth(3, 5).GetSerializer();
             var res = lineSerializer.Deserialize("1  2    ");
             Assert.AreEqual(1, res.MyProperty1);
             Assert.AreEqual("2", res.MyProperty2);
@@ -37,7 +37,7 @@ namespace Paillave.EtlTests.TextFileTests.Core
         [TestCategory(nameof(LineSerializerDeserializeTests))]
         public void ByNameDeserialiseColumnSeparatedWithGivenSettings()
         {
-            var lineSerializer = new FileDefinition<MyClass>()
+            var lineSerializer = new FlatFileDefinition<MyClass>()
                 .IsColumnSeparated(',')
                 .MapColumnToProperty("P1", i => i.MyProperty1)
                 .MapColumnToProperty("P2", i => i.MyProperty2)
@@ -51,7 +51,7 @@ namespace Paillave.EtlTests.TextFileTests.Core
         [TestCategory(nameof(LineSerializerDeserializeTests))]
         public void ByNameDeserialiseFixedWidthWithGivenSettings()
         {
-            var lineSerializer = new FileDefinition<MyClass>()
+            var lineSerializer = new FlatFileDefinition<MyClass>()
                 .HasFixedColumnWidth(3, 5)
                 .MapColumnToProperty("P1", i => i.MyProperty1)
                 .MapColumnToProperty("P2", i => i.MyProperty2)
@@ -65,7 +65,7 @@ namespace Paillave.EtlTests.TextFileTests.Core
         [TestCategory(nameof(LineSerializerDeserializeTests))]
         public void ByPositionDeserialiseColumnSeparatedWithGivenSettings()
         {
-            var lineSerializer = new FileDefinition<MyClass>()
+            var lineSerializer = new FlatFileDefinition<MyClass>()
                 .IsColumnSeparated(',')
                 .MapColumnToProperty(2, i => i.MyProperty1)
                 .MapColumnToProperty(1, i => i.MyProperty2)
@@ -79,7 +79,7 @@ namespace Paillave.EtlTests.TextFileTests.Core
         [TestCategory(nameof(LineSerializerDeserializeTests))]
         public void ByPositionDeserialiseFixedWidthWithGivenSettings()
         {
-            var lineSerializer = new FileDefinition<MyClass>()
+            var lineSerializer = new FlatFileDefinition<MyClass>()
                 .HasFixedColumnWidth(3, 5)
                 .MapColumnToProperty(2, i => i.MyProperty1)
                 .MapColumnToProperty(1, i => i.MyProperty2)

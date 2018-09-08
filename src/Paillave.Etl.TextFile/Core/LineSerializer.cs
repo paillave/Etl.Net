@@ -9,9 +9,9 @@ namespace Paillave.Etl.TextFile.Core
     {
         public ILineSplitter Splitter { get; }
 
-        private readonly IDictionary<int, PropertySerializer> _indexToPropertySerializerDictionary;
+        private readonly IDictionary<int, FlatFilePropertySerializer> _indexToPropertySerializerDictionary;
 
-        public LineSerializer(ILineSplitter splitter, IDictionary<int, PropertySerializer> indexToPropertySerializerDictionary)
+        public LineSerializer(ILineSplitter splitter, IDictionary<int, FlatFilePropertySerializer> indexToPropertySerializerDictionary)
         {
             this.Splitter = splitter;
             this._indexToPropertySerializerDictionary = indexToPropertySerializerDictionary;

@@ -15,7 +15,7 @@ namespace Paillave.Etl.TextFile.StreamNodes
     {
         public TStream MainStream { get; set; }
         public IStream<SystemIO.StreamWriter> TargetStream { get; set; }
-        public FileDefinition<TIn> Mapping { get; set; }
+        public FlatFileDefinition<TIn> Mapping { get; set; }
     }
     public class ToFlatFileStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ToFlatFileArgs<TIn, TStream>>
         where TIn : new()
@@ -36,11 +36,11 @@ namespace Paillave.Etl.TextFile.StreamNodes
                 .CombineWithLatest(firstStreamWriter, (i, r) => { ProcessValueToOutput(r, args.Mapping, i); return i; }, true);
             return CreateMatchingStream(obs, args.MainStream);
         }
-        private void PreProcess(SystemIO.StreamWriter streamWriter, FileDefinition<TIn> mapping)
+        private void PreProcess(SystemIO.StreamWriter streamWriter, FlatFileDefinition<TIn> mapping)
         {
             streamWriter.WriteLine(mapping.GenerateDefaultHeaderLine());
         }
-        protected void ProcessValueToOutput(SystemIO.StreamWriter streamWriter, FileDefinition<TIn> mapping, TIn value)
+        protected void ProcessValueToOutput(SystemIO.StreamWriter streamWriter, FlatFileDefinition<TIn> mapping, TIn value)
         {
             streamWriter.WriteLine(_serialize.Serialize(value));
         }

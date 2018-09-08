@@ -15,7 +15,7 @@ namespace Paillave.EtlTests.TextFileTests.Core
         [TestCategory(nameof(FileDefinitionHeaderTests))]
         public void GenerateDefaultHeaderWithIndex1()
         {
-            var fd = new FileDefinition<MyClass>();
+            var fd = new FlatFileDefinition<MyClass>();
             fd.IsColumnSeparated(';');
             fd.MapColumnToProperty(1, i => i.MyProperty2);
             fd.MapColumnToProperty(0, i => i.MyProperty1);
@@ -25,7 +25,7 @@ namespace Paillave.EtlTests.TextFileTests.Core
         [TestCategory(nameof(FileDefinitionHeaderTests))]
         public void GenerateDefaultHeaderWithIndex2()
         {
-            var fd = new FileDefinition<MyClass>();
+            var fd = new FlatFileDefinition<MyClass>();
             fd.IsColumnSeparated(';');
             fd.MapColumnToProperty(0, i => i.MyProperty2);
             fd.MapColumnToProperty(1, i => i.MyProperty1);
@@ -35,7 +35,7 @@ namespace Paillave.EtlTests.TextFileTests.Core
         [TestCategory(nameof(FileDefinitionHeaderTests))]
         public void GenerateDefaultHeaderWithName1()
         {
-            var fd = new FileDefinition<MyClass>();
+            var fd = new FlatFileDefinition<MyClass>();
             fd.IsColumnSeparated(';');
             fd.MapColumnToProperty("prop1", i => i.MyProperty1);
             fd.MapColumnToProperty("prop2", i => i.MyProperty2);
@@ -45,7 +45,7 @@ namespace Paillave.EtlTests.TextFileTests.Core
         [TestCategory(nameof(FileDefinitionHeaderTests))]
         public void GenerateDefaultHeaderWithName2()
         {
-            var fd = new FileDefinition<MyClass>();
+            var fd = new FlatFileDefinition<MyClass>();
             fd.IsColumnSeparated(';');
             fd.MapColumnToProperty("prop2", i => i.MyProperty2);
             fd.MapColumnToProperty("prop1", i => i.MyProperty1);
@@ -56,7 +56,7 @@ namespace Paillave.EtlTests.TextFileTests.Core
         [TestCategory(nameof(FileDefinitionHeaderTests))]
         public void GenerateDefaultHeaderWithNameAndIndex1()
         {
-            var fd = new FileDefinition<MyClass>();
+            var fd = new FlatFileDefinition<MyClass>();
             fd.IsColumnSeparated(';');
             fd.MapColumnToProperty(1, i => i.MyProperty1);
             fd.MapColumnToProperty("prop1", i => i.MyProperty1);
@@ -68,7 +68,7 @@ namespace Paillave.EtlTests.TextFileTests.Core
         [TestCategory(nameof(FileDefinitionHeaderTests))]
         public void GenerateDefaultHeaderWithNameAndIndex2()
         {
-            var fd = new FileDefinition<MyClass>();
+            var fd = new FlatFileDefinition<MyClass>();
             fd.IsColumnSeparated(';');
             fd.MapColumnToProperty(0, i => i.MyProperty1);
             fd.MapColumnToProperty("prop1", i => i.MyProperty1);
@@ -80,7 +80,7 @@ namespace Paillave.EtlTests.TextFileTests.Core
         [TestCategory(nameof(FileDefinitionHeaderTests))]
         public void GenerateDefaultHeaderWithNameAndPartialIndex()
         {
-            var fd = new FileDefinition<MyClass>();
+            var fd = new FlatFileDefinition<MyClass>();
             fd.IsColumnSeparated(';');
             fd.MapColumnToProperty(1, i => i.MyProperty2);
             fd.MapColumnToProperty("prop2", i => i.MyProperty2);
@@ -91,7 +91,7 @@ namespace Paillave.EtlTests.TextFileTests.Core
         [TestCategory(nameof(FileDefinitionHeaderTests))]
         public void GenerateDefaultHeaderWithNameAndIndex3()
         {
-            var fd = new FileDefinition<MyClass>();
+            var fd = new FlatFileDefinition<MyClass>();
             fd.IsColumnSeparated(';');
             fd.MapColumnToProperty("prop1", 1, i => i.MyProperty1);
             fd.MapColumnToProperty("prop2", 0, i => i.MyProperty2);
@@ -101,7 +101,7 @@ namespace Paillave.EtlTests.TextFileTests.Core
         [TestCategory(nameof(FileDefinitionHeaderTests))]
         public void GenerateDefaultHeaderWithNameAndIndex4()
         {
-            var fd = new FileDefinition<MyClass>();
+            var fd = new FlatFileDefinition<MyClass>();
             fd.IsColumnSeparated(';');
             fd.MapColumnToProperty("prop1", 0, i => i.MyProperty1);
             fd.MapColumnToProperty("prop2", 1, i => i.MyProperty2);
@@ -111,7 +111,7 @@ namespace Paillave.EtlTests.TextFileTests.Core
         [TestCategory(nameof(FileDefinitionHeaderTests))]
         public void GenerateDefaultHeaderWithNameAndPartialIndex2()
         {
-            var fd = new FileDefinition<MyClass>();
+            var fd = new FlatFileDefinition<MyClass>();
             fd.IsColumnSeparated(';');
             fd.MapColumnToProperty("prop2", 0, i => i.MyProperty2);
             fd.MapColumnToProperty("prop1", i => i.MyProperty1);

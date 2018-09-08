@@ -38,7 +38,7 @@ namespace SimpleQuickstart
             var outputFileS = rootStream.Select("open output file", i => new StreamWriter(i.OutputFilePath));
             rootStream
                 .CrossApplyTextFile("read input file",
-                    new FileDefinition<SimpleInputFileRow>()
+                    new FlatFileDefinition<SimpleInputFileRow>()
                         .MapColumnToProperty("#", i => i.Id)
                         .MapColumnToProperty("Label", i => i.Name)
                         .MapColumnToProperty("Value", i => i.ValueType)
@@ -60,7 +60,7 @@ namespace SimpleQuickstart
                     Count = i.Aggregation.Count
                 })
                 .Sort("sort output values", i => new { i.CategoryCode })
-                .ToTextFile("write to text file", outputFileS, new FileDefinition<CategoryStatisticFileRow>());
+                .ToTextFile("write to text file", outputFileS, new FlatFileDefinition<CategoryStatisticFileRow>());
         }
     }
     class Program
