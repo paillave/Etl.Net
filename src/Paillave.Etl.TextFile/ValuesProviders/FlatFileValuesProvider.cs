@@ -12,7 +12,7 @@ namespace Paillave.Etl.TextFile.ValuesProviders
 {
     public class FlatFileValuesProviderArgs<TIn, TParsed, TOut> where TParsed : new()
     {
-        public FileDefinition<TParsed> Mapping { get; set; }
+        public FlatFileDefinition<TParsed> Mapping { get; set; }
         public Func<TIn, TParsed, TOut> ResultSelector { get; set; }
         public Func<TIn, Stream> DataStreamSelector { get; set; }
         public bool NoParallelisation { get; set; } = false;
@@ -28,11 +28,10 @@ namespace Paillave.Etl.TextFile.ValuesProviders
         {
             var src = new DeferedPushObservable<string>(pushValue =>
             {
-                WaitOne();
+                using (base.OpenProcess())
                 using (var sr = new StreamReader(_args.DataStreamSelector(input)))
                     while (!sr.EndOfStream)
                         pushValue(sr.ReadLine());
-                Release();
             });
             if (_args.Mapping.HasColumnHeader)
             {

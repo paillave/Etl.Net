@@ -5,6 +5,7 @@
 | Etl.Net | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) |
 | Etl.Net.EntityFrameworkCore | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) |
 | Etl.Net.TextFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.TextFile.svg)](https://www.nuget.org/packages/Etl.Net.TextFile) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.TextFile.svg)](https://www.nuget.org/packages/Etl.Net.TextFile) |
+| Etl.Net.ExcelFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) |
 | Etl.Net.ExecutionPlan | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) |
 
 
@@ -44,9 +45,9 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | List folder files | Data source | :heavy_check_mark: |
 | Read csv file | Data source | :heavy_check_mark: |
 | Read very large xml file | Data source | :construction: |
-| Read excel file | Data source | :construction: |
+| Read excel file | Data source | :heavy_check_mark: |
 | Write csv file | Data destination | :heavy_check_mark: |
-| Write excel file | Data destinaton | :construction: |
+| Write excel file | Data destinaton | :heavy_check_mark: |
 | Read from Entity framework core | Data source | :heavy_check_mark: |
 | Write to Entity framework core | Data destination | :heavy_check_mark: |
 | Read from Entity framework | Data source | :construction: |

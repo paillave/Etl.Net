@@ -15,7 +15,7 @@ namespace ComplexQuickstart.StreamTypes
         public string FileName { get; set; }
     }
 
-    public class InputFileRowMapper : FileDefinition<InputFileRow>
+    public class InputFileRowMapper : FlatFileDefinition<InputFileRow>
     {
         public InputFileRowMapper()
         {

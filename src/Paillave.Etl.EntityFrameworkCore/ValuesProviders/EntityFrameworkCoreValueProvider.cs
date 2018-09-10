@@ -20,15 +20,11 @@ namespace Paillave.Etl.EntityFrameworkCore.ValuesProviders
         {
             _args = args;
         }
-        public override IDeferedPushObservable<TOut> PushValues(TContext context, TIn input)
+        protected override void PushValues(TContext resource, TIn input, Action<TOut> pushValue)
         {
-            return new DeferedPushObservable<TOut>(pushValue =>
-            {
-                WaitOne();
-                foreach (var item in _args.GetQuery(input, context).ToList())
+            using (base.OpenProcess())
+                foreach (var item in _args.GetQuery(input, resource).ToList())
                     pushValue(item);
-                Release();
-            });
         }
     }
 }

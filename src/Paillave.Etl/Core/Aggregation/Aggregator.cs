@@ -6,8 +6,15 @@ namespace Paillave.Etl.Core.Aggregation
 {
     public class Aggregator<TIn>
     {
+        public void SetFilter(PropertyInfo filteredPropertyInfo, object value)
+        {
+            this._filteredPropertyInfo = filteredPropertyInfo;
+            this._filterValue = value;
+        }
         private readonly PropertyInfo _sourcePropertyInfo;
-        private IAggregationInstance _aggregationInstance;
+        private IAggregationInstance _aggregationInstance = null;
+        private PropertyInfo _filteredPropertyInfo;
+        private object _filterValue;
         private readonly Type _aggregatorInstanceType;
         public PropertyInfo TargetPropertyInfo { get; }
         public string Name { get; }
@@ -16,17 +23,31 @@ namespace Paillave.Etl.Core.Aggregation
             _aggregatorInstanceType = aggregatorInstanceType;
             _sourcePropertyInfo = sourcePropertyInfo;
             TargetPropertyInfo = targetPropertyInfo;
-            _aggregationInstance = (IAggregationInstance)Activator.CreateInstance(aggregatorInstanceType);
+            if (aggregatorInstanceType != null)
+                _aggregationInstance = (IAggregationInstance)Activator.CreateInstance(aggregatorInstanceType);
             Name = targetPropertyInfo.Name;
         }
         public Aggregator<TIn> CopyEmpty()
         {
-            return new Aggregator<TIn>(_aggregatorInstanceType, _sourcePropertyInfo, TargetPropertyInfo);
+            var agg = new Aggregator<TIn>(_aggregatorInstanceType, _sourcePropertyInfo, TargetPropertyInfo);
+            if (_filteredPropertyInfo != null)
+                agg.SetFilter(_filteredPropertyInfo, _filterValue);
+            return agg;
         }
         public void Aggregate(TIn input)
         {
-            _aggregationInstance.Aggregate(_sourcePropertyInfo?.GetValue(input));
+            if (CanAggregate(input))
+                _aggregationInstance?.Aggregate(_sourcePropertyInfo?.GetValue(input));
         }
-        public object GetResult() => _aggregationInstance.GetResult();
+        private bool CanAggregate(TIn input)
+        {
+            if (_filteredPropertyInfo == null) return true;
+            var value = _filteredPropertyInfo.GetValue(input);
+            if (value == null && _filterValue == null) return true;
+            if (value == null && _filterValue != null) return false;
+            if (value != null && _filterValue == null) return false;
+            return value.Equals(_filterValue);
+        }
+        public object GetResult() => _aggregationInstance?.GetResult();
     }
 }

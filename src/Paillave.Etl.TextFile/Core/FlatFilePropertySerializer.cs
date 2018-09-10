@@ -4,13 +4,13 @@ using System.Reflection;
 
 namespace Paillave.Etl.TextFile.Core
 {
-    public class PropertySerializer
+    public class FlatFilePropertySerializer
     {
         private readonly CultureInfo _cultureInfo;
         private readonly TypeConverter _typeConverter;
         private readonly PropertyInfo _propertyInfo;
 
-        public PropertySerializer(PropertyInfo propertyInfo, CultureInfo cultureInfo)
+        public FlatFilePropertySerializer(PropertyInfo propertyInfo, CultureInfo cultureInfo)
         {
             this._propertyInfo = propertyInfo;
             this._typeConverter = TypeDescriptor.GetConverter(this._propertyInfo.PropertyType);

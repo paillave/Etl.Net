@@ -9,7 +9,7 @@ namespace ComplexQuickstart.StreamTypes
         public int TotalAmount { get; set; }
         public int AmountOfEntries { get; set; }
     }
-    public class OutputCategoryRowMapper : FileDefinition<OutputCategoryRow>
+    public class OutputCategoryRowMapper : FlatFileDefinition<OutputCategoryRow>
     {
         public OutputCategoryRowMapper()
         {
