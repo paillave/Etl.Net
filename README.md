@@ -8,7 +8,7 @@
 | Etl.Net.ExcelFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) |
 | Etl.Net.ExecutionPlan | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) |
 
-Implementation of a multi platform reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but that is used in the same way than Linq. 
+Implementation of a multi platform reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but that is used in the same way than Linq.
 The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
 
 ## Developement status
@@ -194,6 +194,7 @@ namespace ComplexQuickstart.StreamTypes
 ```
 
 ### Create input and output stream structures
+
 ```csharp
 using System;
 using System.Globalization;
@@ -241,6 +242,7 @@ namespace ComplexQuickstart.StreamTypes
     }
 }
 ```
+
 ```csharp
 using System.Globalization;
 using Paillave.Etl.TextFile.Core;
@@ -281,6 +283,7 @@ namespace ComplexQuickstart.StreamTypes
     }
 }
 ```
+
 ```csharp
 
 using Paillave.Etl.TextFile.Core;
@@ -306,6 +309,7 @@ namespace ComplexQuickstart.StreamTypes
     }
 }
 ```
+
 ```csharp
 
 using Paillave.Etl.TextFile.Core;
@@ -330,7 +334,9 @@ namespace ComplexQuickstart.StreamTypes
     }
 }
 ```
+
 ### Define the ETL job
+
 ```csharp
 using ComplexQuickstart.StreamTypes;
 using System.IO;
@@ -372,7 +378,9 @@ namespace ComplexQuickstart.Jobs
     }
 }
 ```
+
 ### Execute the ETL job
+
 ```csharp
 using Paillave.Etl;
 using System.IO;
@@ -410,6 +418,7 @@ namespace ComplexQuickstart
     }
 }
 ```
+
 This program first shows the estimated execution plan:
 
 ![Estimated execution plan](./docs/EstimatedExecutionPlan.PNG "Estimated execution plan")
