@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -7,16 +8,42 @@ using System.Text;
 
 namespace Paillave.Etl.ExcelFile.Core
 {
+    public enum DataOrientation
+    {
+        Horizontal,
+        Vertical
+    }
     public class ExcelFileDefinition<T> where T : new()
     {
-        public bool HasColumnHeader => _fieldDefinitions.Any(i => !string.IsNullOrWhiteSpace(i.ColumnName));
+        //public bool HasColumnHeader => _fieldDefinitions.Any(i => !string.IsNullOrWhiteSpace(i.ColumnName));
         private IList<ExcelFileFieldDefinition> _fieldDefinitions = new List<ExcelFileFieldDefinition>();
         private CultureInfo _cultureInfo = CultureInfo.CurrentCulture;
-        public ExcelFileDefinition<T> IgnoreFirstLines(int firstLinesToIgnore)
+        private ExcelAddressBase _columnHeaderRange = null;
+        private ExcelAddressBase _dataRange = null;
+        private DataOrientation _datasetOrientation = DataOrientation.Vertical;
+
+        public ExcelFileDefinition<T> WithHorizontalDataset()
         {
+            _datasetOrientation = DataOrientation.Horizontal;
             return this;
         }
 
+        public ExcelFileDefinition<T> WithVerticalDataset()
+        {
+            _datasetOrientation = DataOrientation.Vertical;
+            return this;
+        }
+
+        public ExcelFileDefinition<T> HasColumnHeader(string stringAddress)
+        {
+            _columnHeaderRange = new ExcelAddressBase(stringAddress);
+            return this;
+        }
+        public ExcelFileDefinition<T> WithDataset(string stringAddress)
+        {
+            _dataRange = new ExcelAddressBase(stringAddress);
+            return this;
+        }
         public ExcelFileDefinition<T> SetDefaultMapping(bool withColumnHeader = true, CultureInfo cultureInfo = null)
         {
             foreach (var item in typeof(T).GetProperties().Select((propertyInfo, index) => new { propertyInfo = propertyInfo, Position = index }))
@@ -31,48 +58,64 @@ namespace Paillave.Etl.ExcelFile.Core
             }
             return this;
         }
-        // public LineSerializer<T> GetSerializer(string headerLine)
-        // {
-        //     return GetSerializer(_lineSplitter.Split(headerLine));
-        // }
-        // public LineSerializer<T> GetSerializer(IEnumerable<string> columnNames = null)
-        // {
-        //     if ((_fieldDefinitions?.Count ?? 0) == 0) SetDefaultMapping();
-        //     if (columnNames == null) columnNames = GetDefaultColumnNames().ToList();
-        //     if (this.HasColumnHeader)
-        //     {
-        //         var indexToPropertySerializerDictionary = _fieldDefinitions.Join(
-        //             columnNames.Select((ColumnName, Position) => new { ColumnName, Position }),
-        //             i => i.ColumnName.Trim(),
-        //             i => i.ColumnName.Trim(),
-        //             (fd, po) => new
-        //             {
-        //                 Position = po.Position,
-        //                 PropertySerializer = new PropertySerializer(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo)
-        //             })
-        //             .OrderBy(i => i.Position)
-        //             .Select((i, idx) => new
-        //             {
-        //                 Position = idx,
-        //                 PropertySerializer = i.PropertySerializer
-        //             })
-        //             .ToDictionary(i => i.Position, i => i.PropertySerializer);
-
-        //         return new LineSerializer<T>(_lineSplitter, indexToPropertySerializerDictionary);
-        //     }
-        //     else
-        //     {
-        //         var indexToPropertySerializerDictionary = _fieldDefinitions
-        //             .OrderBy(i => i.Position)
-        //             .Select((fd, idx) => new
-        //             {
-        //                 Position = idx,
-        //                 PropertySerializer = new PropertySerializer(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo)
-        //             })
-        //             .ToDictionary(i => i.Position, i => i.PropertySerializer);
-        //         return new LineSerializer<T>(_lineSplitter, indexToPropertySerializerDictionary);
-        //     }
-        // }
+        public ExcelFileReader GetExcelReader(ExcelWorksheet excelWorksheet = null)
+        {
+            if ((_fieldDefinitions?.Count ?? 0) == 0) SetDefaultMapping();
+            IEnumerable<string> columnNames;
+            if (excelWorksheet == null) columnNames = GetDefaultColumnNames().ToList();
+            else columnNames = GetColumnNames(excelWorksheet);
+            if (this._columnHeaderRange != null)
+            {
+                var dico = _fieldDefinitions.Join(
+                    columnNames.Select((ColumnName, Position) => new { ColumnName, Position }),
+                    i => i.ColumnName.Trim(),
+                    i => i.ColumnName.Trim(),
+                    (fd, po) => new
+                    {
+                        Position = po.Position,
+                        PropertySerializer = new ExcelFilePropertySetter(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo)
+                    })
+                    .OrderBy(i => i.Position)
+                    .Select((i, idx) => new
+                    {
+                        Position = idx,
+                        PropertySerializer = i.PropertySerializer
+                    })
+                    .ToDictionary(i => i.Position, i => i.PropertySerializer);
+                return new ExcelFileReader(dico, _columnHeaderRange, _dataRange, _datasetOrientation);
+            }
+            else
+            {
+                var dico = _fieldDefinitions
+                    .OrderBy(i => i.Position)
+                    .Select((fd, idx) => new
+                    {
+                        Position = idx,
+                        PropertySerializer = new ExcelFilePropertySetter(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo)
+                    })
+                    .ToDictionary(i => i.Position, i => i.PropertySerializer);
+                return new ExcelFileReader(dico, _columnHeaderRange, _dataRange, _datasetOrientation);
+            }
+        }
+        private IEnumerable<string> GetColumnNames(ExcelWorksheet excelWorksheet)
+        {
+            if (_columnHeaderRange == null) return new string[] { };
+            if (_columnHeaderRange.Columns == 1)
+            {
+                if (_datasetOrientation != DataOrientation.Horizontal) return new string[] { };
+                else return Enumerable
+                        .Range(_columnHeaderRange.Start.Row, _columnHeaderRange.End.Row - _columnHeaderRange.Start.Row + 1)
+                        .Select(i => excelWorksheet.GetValue<string>(i, _columnHeaderRange.Start.Column));
+            }
+            if (_columnHeaderRange.Rows == 1)
+            {
+                if (_datasetOrientation != DataOrientation.Vertical) return new string[] { };
+                else return Enumerable
+                        .Range(_columnHeaderRange.Start.Column, _columnHeaderRange.End.Column - _columnHeaderRange.Start.Column + 1)
+                        .Select(i => excelWorksheet.GetValue<string>(_columnHeaderRange.Start.Row, i));
+            }
+            return new string[] { };
+        }
         private IEnumerable<string> GetDefaultColumnNames()
         {
             return _fieldDefinitions.Select((i, idx) => new { Name = i.ColumnName ?? i.PropertyInfo.Name, DefinedPosition = i.Position, FallbackPosition = idx })
@@ -80,20 +123,6 @@ namespace Paillave.Etl.ExcelFile.Core
                 .ThenBy(i => i.FallbackPosition)
                 .Select(i => i.Name);
         }
-        // public string GenerateDefaultHeaderLine()
-        // {
-        //     return _lineSplitter.Join(GetDefaultColumnNames());
-        // }
-        // public ExcelFileDefinition<T> IsColumnSeparated(char separator = ';', char textDelimiter = '"')
-        // {
-        //     this._lineSplitter = new ColumnSeparatorLineSplitter(separator, textDelimiter);
-        //     return this;
-        // }
-        // public ExcelFileDefinition<T> HasFixedColumnWidth(params int[] columnSizes)
-        // {
-        //     this._lineSplitter = new FixedColumnWidthLineSplitter(columnSizes);
-        //     return this;
-        // }
         public ExcelFileDefinition<T> WithCultureInfo(CultureInfo cultureInfo)
         {
             this._cultureInfo = cultureInfo;

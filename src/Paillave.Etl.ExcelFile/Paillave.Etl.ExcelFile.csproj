@@ -1,4 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Etl.Net.ExcelFile</PackageId>
+    <Version>1.0.0-alpha</Version>
+    <Authors>Stéphane Royer</Authors>
+    <Company></Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseUrl>https://github.com/paillave/Etl.Net/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/paillave/Etl.Net</PackageProjectUrl>
+    <PackageTags>ETL .net core SSIS reactive Excel file</PackageTags>
+    <Product>ETL.net Excel files extensions</Product>
+    <Description>Excel files extensions for Etl.Net</Description>
+    <PackageReleaseNotes>
+extensions for Etl.Net to deal with excel files
+    </PackageReleaseNotes>
+  </PropertyGroup>
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>

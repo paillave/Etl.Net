@@ -11,7 +11,7 @@
     <Product>ETL.net text files extensions</Product>
     <Description>Text files extensions for Etl.Net</Description>
     <PackageReleaseNotes>
-EntityFrameworkCore extensions for Etl.Net to read csv and fixed column width files
+extensions for Etl.Net to read and write csv and fixed column width files
     </PackageReleaseNotes>
   </PropertyGroup>
 
