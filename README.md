@@ -1,6 +1,6 @@
 # Etl.Net
 
-|  | [![Build status](https://ci.appveyor.com/api/projects/status/sqjh6f6cwadxfoou/branch/master?svg=true)](https://ci.appveyor.com/project/paillave/etl-net) |
+|  | ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/master.svg) [![Build status](https://ci.appveyor.com/api/projects/status/sqjh6f6cwadxfoou/branch/master?svg=true)](https://ci.appveyor.com/project/paillave/etl-net) [![Join the chat at https://gitter.im/ChoETL/Lobby](https://badges.gitter.im/ChoETL/Lobby.svg)](https://gitter.im/Etl-Net/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) |
 |-|-|
 | Etl.Net | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) |
 | Etl.Net.EntityFrameworkCore | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) |
@@ -8,9 +8,7 @@
 | Etl.Net.ExcelFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) |
 | Etl.Net.ExecutionPlan | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) |
 
-
-
-Implementation of a multi platform reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but that is used in the same way than Linq. 
+Implementation of a multi platform reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but that is used in the same way than Linq.
 The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
 
 ## Developement status
@@ -196,6 +194,7 @@ namespace ComplexQuickstart.StreamTypes
 ```
 
 ### Create input and output stream structures
+
 ```csharp
 using System;
 using System.Globalization;
@@ -243,6 +242,7 @@ namespace ComplexQuickstart.StreamTypes
     }
 }
 ```
+
 ```csharp
 using System.Globalization;
 using Paillave.Etl.TextFile.Core;
@@ -283,6 +283,7 @@ namespace ComplexQuickstart.StreamTypes
     }
 }
 ```
+
 ```csharp
 
 using Paillave.Etl.TextFile.Core;
@@ -308,6 +309,7 @@ namespace ComplexQuickstart.StreamTypes
     }
 }
 ```
+
 ```csharp
 
 using Paillave.Etl.TextFile.Core;
@@ -332,7 +334,9 @@ namespace ComplexQuickstart.StreamTypes
     }
 }
 ```
+
 ### Define the ETL job
+
 ```csharp
 using ComplexQuickstart.StreamTypes;
 using System.IO;
@@ -374,7 +378,9 @@ namespace ComplexQuickstart.Jobs
     }
 }
 ```
+
 ### Execute the ETL job
+
 ```csharp
 using Paillave.Etl;
 using System.IO;
@@ -412,6 +418,7 @@ namespace ComplexQuickstart
     }
 }
 ```
+
 This program first shows the estimated execution plan:
 
 ![Estimated execution plan](./docs/EstimatedExecutionPlan.PNG "Estimated execution plan")
@@ -422,3 +429,4 @@ Then it shows the actual execution with statistics when hovering streams, and in
 ## Documentation
 
 **:construction: Documentation will be done once all essential features and bugs are solved.**
+[gitbook documentation](https://paillave.gitbook.io/etl-net/)

@@ -55,3 +55,10 @@ deploy:
   api_key:
     secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
   artifact: Paillave.Etl.ExcelFile
+notifications:
+- provider: Webhook
+  url: https://webhooks.gitter.im/e/24499395a6cd92120c65
+  method: POST
+  on_build_success: true
+  on_build_failure: true
+  on_build_status_changed: true
