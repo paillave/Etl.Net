@@ -13,7 +13,7 @@ namespace Paillave.Etl.ExcelFile.Core
         Horizontal,
         Vertical
     }
-    public class ExcelFileDefinition<T> where T : new()
+    public class ExcelFileDefinition<T>
     {
         //public bool HasColumnHeader => _fieldDefinitions.Any(i => !string.IsNullOrWhiteSpace(i.ColumnName));
         private IList<ExcelFileFieldDefinition> _fieldDefinitions = new List<ExcelFileFieldDefinition>();
@@ -73,7 +73,7 @@ namespace Paillave.Etl.ExcelFile.Core
                     (fd, po) => new
                     {
                         Position = po.Position,
-                        PropertySerializer = new ExcelFilePropertySetter(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo)
+                        PropertySerializer = new ExcelFilePropertySetter(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo, fd.ColumnName)
                     })
                     .OrderBy(i => i.Position)
                     .Select((i, idx) => new
@@ -91,7 +91,7 @@ namespace Paillave.Etl.ExcelFile.Core
                     .Select((fd, idx) => new
                     {
                         Position = idx,
-                        PropertySerializer = new ExcelFilePropertySetter(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo)
+                        PropertySerializer = new ExcelFilePropertySetter(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo, fd.ColumnName)
                     })
                     .ToDictionary(i => i.Position, i => i.PropertySerializer);
                 return new ExcelFileReader(dico, _columnHeaderRange, _dataRange, _datasetOrientation);

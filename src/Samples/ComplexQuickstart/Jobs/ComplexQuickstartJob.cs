@@ -12,8 +12,8 @@ namespace ComplexQuickstart.Jobs
 
         public void DefineProcess(IStream<MyConfig> rootStream)
         {
-            var outputFileResourceS = rootStream.Select("open output file", i => new StreamWriter(i.DestinationFilePath));
-            var outputCategoryResourceS = rootStream.Select("open output category file", i => new StreamWriter(i.CategoryDestinationFilePath));
+            var outputFileResourceS = rootStream.Select("open output file", i => File.OpenWrite(i.DestinationFilePath));
+            var outputCategoryResourceS = rootStream.Select("open output category file", i => File.OpenWrite(i.CategoryDestinationFilePath));
 
             var parsedLineS = rootStream
                 .CrossApplyFolderFiles("get folder files", i => i.InputFolderPath, i => i.InputFilesSearchPattern)

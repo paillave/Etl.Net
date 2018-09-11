@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComplexQuickstart", "Sample
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelQuickstart", "Samples\ExcelQuickstart\ExcelQuickstart.csproj", "{74B8601D-A396-4159-A616-84928C9855FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XPathReader", "XPathReader\XPathReader.csproj", "{0EEEB07C-9E4C-4C24-883B-890B940B1D69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.XmlFile", "Paillave.Etl.XmlFile\Paillave.Etl.XmlFile.csproj", "{AE2FF738-48FE-423B-96A2-135CE583C67A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,14 @@ Global
 		{74B8601D-A396-4159-A616-84928C9855FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74B8601D-A396-4159-A616-84928C9855FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74B8601D-A396-4159-A616-84928C9855FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EEEB07C-9E4C-4C24-883B-890B940B1D69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EEEB07C-9E4C-4C24-883B-890B940B1D69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EEEB07C-9E4C-4C24-883B-890B940B1D69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EEEB07C-9E4C-4C24-883B-890B940B1D69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE2FF738-48FE-423B-96A2-135CE583C67A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE2FF738-48FE-423B-96A2-135CE583C67A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE2FF738-48FE-423B-96A2-135CE583C67A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE2FF738-48FE-423B-96A2-135CE583C67A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

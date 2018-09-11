@@ -16,18 +16,24 @@ namespace Paillave.Etl.Core
         public virtual string TypeName { get; private set; }
         public virtual bool IsAwaitable { get; } = false;
         public TOutStream Output { get; }
-
+        protected TArgs Args { get; }
         public StreamNodeBase(string name, TArgs args)
         {
             this.TypeName = this.GetType().Name;
+            this.Args = args;
             this.NodeName = name;
             this.ExecutionContext = this.GetExecutionContext(args);
             this.Tracer = new Tracer(this.ExecutionContext, this);
             this.Output = CreateOutputStream(args);
+            this.Output.Observable.Subscribe(i => { }, PostProcess);
             if (this.IsAwaitable)
                 this.ExecutionContext.AddToWaitForCompletion(name, this.Output.Observable);
             foreach (var item in this.GetInputStreams(args))
                 this.ExecutionContext.AddStreamToNodeLink(new StreamToNodeLink(item.SourceNodeName, item.InputName, this.NodeName));
+        }
+        protected virtual void PostProcess()
+        {
+
         }
         private class InputStream
         {

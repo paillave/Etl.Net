@@ -9,19 +9,19 @@ using SystemIO = System.IO;
 using OfficeOpenXml;
 using OfficeOpenXml.Table;
 using System.IO;
+using System.Reflection;
+using System.Linq;
 
 namespace Paillave.Etl.ExcelFile.StreamNodes
 {
     public class ToExcelFileArgs<TIn, TStream>
-        //where TIn : new()
         where TStream : IStream<TIn>
     {
         public TStream MainStream { get; set; }
         public IStream<Stream> TargetStream { get; set; }
-        //public ExcelFileDefinition<TIn> Mapping { get; set; }
+        public ExcelFileDefinition<TIn> Mapping { get; set; }
     }
     public class ToExcelFileStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ToExcelFileArgs<TIn, TStream>>
-        //where TIn : new()
         where TStream : IStream<TIn>
     {
         public override bool IsAwaitable => true;
@@ -43,8 +43,15 @@ namespace Paillave.Etl.ExcelFile.StreamNodes
         protected void ProcessValueToOutput(Stream streamWriter, IList<TIn> value)
         {
             var pck = new ExcelPackage();
+            var excelColumns = base.Args.Mapping.GetExcelReader().PropertySetters.OrderBy(i => i.Key).Select(i => i.Value).ToArray();
             var wsList = pck.Workbook.Worksheets.Add("Sheet1");
-            var r1 = wsList.Cells["A1"].LoadFromCollection(value, true, TableStyles.Medium11);
+            var r1 = wsList.Cells["A1"].LoadFromCollection(value, true, TableStyles.Medium11, BindingFlags.Instance | BindingFlags.Public, excelColumns.Select(i => i.PropertyInfo).ToArray());
+
+            var table = wsList.Tables.GetFromRange(r1);
+
+            foreach (var item in excelColumns.Select((i, idx) => new { ColumnIndex = idx, Label = i.ColumnName ?? i.PropertyInfo.Name }))
+                table.Columns[item.ColumnIndex].Name = item.Label;
+
             r1.AutoFitColumns();
             BinaryWriter bw = new BinaryWriter(streamWriter);
             bw.Write(pck.GetAsByteArray());
