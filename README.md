@@ -19,8 +19,8 @@ The first alpha release is expected once it starts to be a decent candidate to r
 
 ## ETL features
 
-| Name | Type | Done |
-| ----- | ----- | ----- |
+| Name | Type | Done | Issue |
+| ----- | ----- | ----- | ----- |
 | Select | Transformation | :heavy_check_mark: |
 | Where | Transformation | :heavy_check_mark: |
 | Sort | Transformation | :heavy_check_mark: |
@@ -76,28 +76,28 @@ The first alpha release is expected once it starts to be a decent candidate to r
 
 ## Runtime features
 
-| Name | Done |
-| ----- | ----- |
-| Trace issued data by each node | :heavy_check_mark: |
-| Trace any error | :heavy_check_mark: |
-| Stop the entire process whenever an error is raised | :heavy_check_mark: |
-| Trace statistic result of each node at the end of the process | :heavy_check_mark: |
-| Trace time that is spent in each node at the end of the process | :construction: |
-| Publish a Job as a REST web service in web api core | :construction: |
-| Execute a job using reference to native .net core configuration | :construction: |
-| Execute any ETL process on traces to filter and save them | :heavy_check_mark: |
-| Show graphic to represent the process as a directed graph | :heavy_check_mark: |
-| Show graphic to represent the process as a sankey graph | :heavy_check_mark: |
-| Show graphic to represent process execution statistics as a directed graph | :heavy_check_mark: |
-| Show graphic to represent process execution statistics as a sankey graph | :heavy_check_mark: |
-| Show realtime process execution statistics as a directed graph | :construction: |
-| Show realtime process execution statistics as a sankey graph | :construction: |
-| Web portal to host job definitions and manage their executions | :construction: |
-| Power shell command tool to execute a job | :construction: |
-| Visual studio code addon to view the process as a directed graph whenever the job definition class file is saved | :construction: |
-| Visual studio code addon to view the process as a sankey graph whenever the job definition class file is saved | :construction: |
-| Raise a warning on the risky node when a performance issue or a bad practice is detected given statistics | :construction: |
-| Interprets a T-SQL-like language script to build a job definition on the fly and run it | :construction: |
+| Name | Done | Issue |
+| ----- | ----- | ----- |
+| Trace issued data by each node | :heavy_check_mark: |  |
+| Trace any error | :heavy_check_mark: |  |
+| Stop the entire process whenever an error is raised | :heavy_check_mark: |  |
+| Trace statistic result of each node at the end of the process | :heavy_check_mark: |  |
+| Trace time that is spent in each node at the end of the process | :construction: |  |
+| Publish a Job as a REST web service in web api core | :construction: |  |
+| Execute a job using reference to native .net core configuration | :construction: |  |
+| Execute any ETL process on traces to filter and save them | :heavy_check_mark: |  |
+| Show graphic to represent the process as a directed graph | :heavy_check_mark: |  |
+| Show graphic to represent the process as a sankey graph | :heavy_check_mark: |  |
+| Show graphic to represent process execution statistics as a directed graph | :heavy_check_mark: |  |
+| Show graphic to represent process execution statistics as a sankey graph | :heavy_check_mark: |  |
+| Show realtime process execution statistics as a directed graph | :construction: |  |
+| Show realtime process execution statistics as a sankey graph | :construction: |  |
+| Web portal to host job definitions and manage their executions | :construction: |  |
+| Power shell command tool to execute a job | :construction: |  |
+| Visual studio code addon to view the process as a directed graph whenever the job definition class file is saved | :construction: |  |
+| Visual studio code addon to view the process as a sankey graph whenever the job definition class file is saved | :construction: |  |
+| Raise a warning on the risky node when a performance issue or a bad practice is detected given statistics | :construction: |  |
+| Interprets a T-SQL-like language script to build a job definition on the fly and run it | :construction: | #80 |
 
 *New requests are very welcome in the issue section*
 
