@@ -19,56 +19,57 @@ The first alpha release is expected once it starts to be a decent candidate to r
 
 ## ETL features
 
-| Name | Type | Done |
-| ----- | ----- | ----- |
-| Select | Transformation | :heavy_check_mark: |
-| Where | Transformation | :heavy_check_mark: |
-| Sort | Transformation | :heavy_check_mark: |
-| Left Join | Transformation | :heavy_check_mark: |
-| Lookup | Transformation | :heavy_check_mark: |
-| Union | Transformation | :heavy_check_mark: |
-| Skip | Transformation | :heavy_check_mark: |
-| Top | Transformation | :heavy_check_mark: |
-| Distinct | Transformation | :heavy_check_mark: |
-| Pivot | Transformation | :heavy_check_mark: |
-| Unpivot | Transformation | :heavy_check_mark: |
-| Aggregate | Transformation | :heavy_check_mark: |
-| Cross Apply | Transformation | :heavy_check_mark: |
-| Ensure Sorted | Transformation | :heavy_check_mark: |
-| Ensure Keyed | Transformation | :heavy_check_mark: |
-| Script | Transformation | :heavy_check_mark: |
-| Select keeping sorted | Transformation | :construction: |
-| Left join keeping sorted | Transformation | :construction: |
-| Lookup keeping sorted | Transformation | :construction: |
-| List folder files | Data source | :heavy_check_mark: |
-| Read csv file | Data source | :heavy_check_mark: |
-| Read very large xml file | Data source | :construction: |
-| Read excel file | Data source | :heavy_check_mark: |
-| Write csv file | Data destination | :heavy_check_mark: |
-| Write excel file | Data destinaton | :heavy_check_mark: |
-| Read from Entity framework core | Data source | :heavy_check_mark: |
-| Write to Entity framework core | Data destination | :heavy_check_mark: |
-| Read from Entity framework | Data source | :construction: |
-| Write to Entity framework | Data destination | :construction: |
-| Read from MongoDb | Data source | :construction: |
-| Write to MongoDb | Data destination | :construction: |
-| MongoDb upsert | Data destination | :construction: |
-| Entity framework core upsert | Data destination | :heavy_check_mark: |
-| Entity framework upsert | Data destination | :construction: |
-| SQL Server bulk load | Data destination | :heavy_check_mark: |
-| Read from sql server command | Data source | :construction: |
-| Write to sql server command | Data destination | :construction: |
-| List files from FTP | Data source | :construction: |
-| List file from SFTP | Data source | :construction: |
-| Read files from FTP | Data source | :construction: |
-| Read file from SFTP | Data source | :construction: |
-| Write files to FTP | Data destination | :construction: |
-| Write file to SFTP | Data destination | :construction: |
-| Read data from REST service | Data source | :construction: |
-| Write data to REST service | Data destination | :construction: |
-| Keep section | Transformation | :construction: |
-| Ignore section | Transformation | :construction: |
-| Run subprocess | Transformation | :construction: |
+| Name | Type | Done | Issue |
+| ----- | ----- | ----- | ----- |
+| Select | Transformation | :heavy_check_mark: | #26 |
+| Where | Transformation | :heavy_check_mark: |  |
+| Sort | Transformation | :heavy_check_mark: | #30 |
+| Left Join | Transformation | :heavy_check_mark: |  |
+| Lookup | Transformation | :heavy_check_mark: | #23 |
+| Union | Transformation | :heavy_check_mark: | #34 |
+| Skip | Transformation | :heavy_check_mark: |  |
+| Top | Transformation | :heavy_check_mark: |  |
+| Distinct | Transformation | :heavy_check_mark: | #15 |
+| Pivot | Transformation | :heavy_check_mark: | #41 |
+| Unpivot | Transformation | :heavy_check_mark: | #42 |
+| Aggregate | Transformation | :heavy_check_mark: | #19 |
+| Cross Apply | Transformation | :heavy_check_mark: | #25 |
+| Ensure Sorted | Transformation | :heavy_check_mark: |  |
+| Ensure Keyed | Transformation | :heavy_check_mark: |  |
+| Script | Transformation | :heavy_check_mark: |  |
+| Select keeping sorted | Transformation | :construction: | #46 |
+| Left join keeping sorted | Transformation | :construction: | #47 |
+| Lookup keeping sorted | Transformation | :construction: | #48 |
+| List folder files | Data source | :heavy_check_mark: |  |
+| Read csv file | Data source | :heavy_check_mark: | #31 |
+| Read very large xml file | Data source | :construction: |  |
+| Read very large json file | Data source | :construction: | #79 |
+| Read excel file | Data source | :heavy_check_mark: | #18 |
+| Write csv file | Data destination | :heavy_check_mark: | #28 |
+| Write excel file | Data destinaton | :heavy_check_mark: | #17 |
+| Read from Entity framework core | Data source | :heavy_check_mark: | #13 |
+| Write to Entity framework core | Data destination | :heavy_check_mark: | #14 |
+| Read from Entity framework | Data source | :construction: | #50 |
+| Write to Entity framework | Data destination | :construction: | #51 |
+| Read from MongoDb | Data source | :construction: |  |
+| Write to MongoDb | Data destination | :construction: |  |
+| MongoDb upsert | Data destination | :construction: |  |
+| Entity framework core upsert | Data destination | :heavy_check_mark: | #49 |
+| Entity framework upsert | Data destination | :construction: | #53 |
+| SQL Server bulk load | Data destination | :heavy_check_mark: | #20 |
+| Read from sql server command | Data source | :construction: | #55 |
+| Write to sql server command | Data destination | :construction: | #54 |
+| List files from FTP | Data source | :construction: | #11 |
+| List file from SFTP | Data source | :construction: | #10 |
+| Read file from FTP | Data source | :construction: | #11 |
+| Read file from SFTP | Data source | :construction: | #10 |
+| Write file to FTP | Data destination | :construction: | #6 |
+| Write file to SFTP | Data destination | :construction: | #5 |
+| Read data from REST service | Data source | :construction: | #9 |
+| Write data to REST service | Data destination | :construction: | #8 |
+| Keep section | Transformation | :construction: | #58 |
+| Ignore section | Transformation | :construction: | #59 |
+| Run subprocess | Transformation | :construction: | #70 |
 
 *Follow the status in the issue section*
 
@@ -76,28 +77,24 @@ The first alpha release is expected once it starts to be a decent candidate to r
 
 ## Runtime features
 
-| Name | Done |
-| ----- | ----- |
-| Trace issued data by each node | :heavy_check_mark: |
-| Trace any error | :heavy_check_mark: |
-| Stop the entire process whenever an error is raised | :heavy_check_mark: |
-| Trace statistic result of each node at the end of the process | :heavy_check_mark: |
-| Trace time that is spent in each node at the end of the process | :construction: |
-| Publish a Job as a REST web service in web api core | :construction: |
-| Execute a job using reference to native .net core configuration | :construction: |
-| Execute any ETL process on traces to filter and save them | :heavy_check_mark: |
-| Show graphic to represent the process as a directed graph | :heavy_check_mark: |
-| Show graphic to represent the process as a sankey graph | :heavy_check_mark: |
-| Show graphic to represent process execution statistics as a directed graph | :heavy_check_mark: |
-| Show graphic to represent process execution statistics as a sankey graph | :heavy_check_mark: |
-| Show realtime process execution statistics as a directed graph | :construction: |
-| Show realtime process execution statistics as a sankey graph | :construction: |
-| Web portal to host job definitions and manage their executions | :construction: |
-| Power shell command tool to execute a job | :construction: |
-| Visual studio code addon to view the process as a directed graph whenever the job definition class file is saved | :construction: |
-| Visual studio code addon to view the process as a sankey graph whenever the job definition class file is saved | :construction: |
-| Raise a warning on the risky node when a performance issue or a bad practice is detected given statistics | :construction: |
-| Interprets a T-SQL-like language script to build a job definition on the fly and run it | :construction: |
+| Name | Done | Issue |
+| ----- | ----- | ----- |
+| Trace issued data by each node | :heavy_check_mark: |  |
+| Trace any error | :heavy_check_mark: |  |
+| Stop the entire process whenever an error is raised | :heavy_check_mark: |  |
+| Trace statistic result of each node at the end of the process | :heavy_check_mark: |  |
+| Trace time that is spent in each node at the end of the process | :construction: |  |
+| Publish a Job as a REST web service in web api core | :construction: |  |
+| Execute a job using reference to native .net core configuration | :construction: |  |
+| Execute any ETL process on traces to filter and save them | :heavy_check_mark: |  |
+| Show graphic to represent the process | :heavy_check_mark: |  |
+| Show graphic to represent process execution statistics | :heavy_check_mark: | #27 |
+| Show realtime process execution statistics | :construction: | #36 |
+| Web portal to host job definitions and manage their executions | :construction: | #80 |
+| Power shell command tool to execute a job | :construction: | #83 |
+| Visual studio code addon to view the process whenever the job definition class file is saved | :construction: | #82 |
+| Raise a warning on the risky node when a performance issue or a bad practice is detected given statistics | :construction: | #81 |
+| Interprets a T-SQL-like language script to build a job definition on the fly and run it | :construction: | #44 |
 
 *New requests are very welcome in the issue section*
 
