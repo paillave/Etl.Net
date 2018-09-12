@@ -9,12 +9,13 @@ namespace Paillave.Etl.ExcelFile.Core
     {
         private readonly CultureInfo _cultureInfo;
         private readonly TypeConverter _typeConverter;
-        private readonly PropertyInfo _propertyInfo;
-
-        public ExcelFilePropertySetter(PropertyInfo propertyInfo, CultureInfo cultureInfo)
+        public PropertyInfo PropertyInfo { get; }
+        public string ColumnName { get; }
+        public ExcelFilePropertySetter(PropertyInfo propertyInfo, CultureInfo cultureInfo, string columnName)
         {
-            this._propertyInfo = propertyInfo;
-            this._typeConverter = TypeDescriptor.GetConverter(this._propertyInfo.PropertyType);
+            this.ColumnName = columnName;
+            this.PropertyInfo = propertyInfo;
+            this._typeConverter = TypeDescriptor.GetConverter(this.PropertyInfo.PropertyType);
             this._cultureInfo = cultureInfo;
         }
 
@@ -35,14 +36,14 @@ namespace Paillave.Etl.ExcelFile.Core
         {
             if (value != null)
             {
-                if (_propertyInfo.PropertyType != value.GetType())
+                if (PropertyInfo.PropertyType != value.GetType())
                 {
                     var tmpVal = value.ToString();
                     if (string.IsNullOrEmpty(tmpVal)) return false;
                     SetValue(target, tmpVal);
                 }
                 else
-                    _propertyInfo.SetValue(target, value);
+                    PropertyInfo.SetValue(target, value);
             }
             else
                 return false;
@@ -51,7 +52,7 @@ namespace Paillave.Etl.ExcelFile.Core
 
         private void SetValue(object target, string text)
         {
-            _propertyInfo.SetValue(target, Deserialize(text));
+            PropertyInfo.SetValue(target, Deserialize(text));
         }
 
         //public string GetValue(object target)

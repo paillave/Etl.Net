@@ -133,7 +133,7 @@ namespace Paillave.Etl
         #endregion
 
         #region ToTextFile
-        public static IStream<TIn> ToTextFile<TIn>(this IStream<TIn> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, FlatFileDefinition<TIn> mapping) where TIn : new()
+        public static IStream<TIn> ToTextFile<TIn>(this IStream<TIn> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping) where TIn : new()
         {
             return new ToFlatFileStreamNode<TIn, IStream<TIn>>(name, new ToFlatFileArgs<TIn, IStream<TIn>>
             {
@@ -142,7 +142,7 @@ namespace Paillave.Etl
                 TargetStream = resourceStream
             }).Output;
         }
-        public static ISortedStream<TIn, TKey> ToTextFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, FlatFileDefinition<TIn> mapping) where TIn : new()
+        public static ISortedStream<TIn, TKey> ToTextFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping) where TIn : new()
         {
             return new ToFlatFileStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new ToFlatFileArgs<TIn, ISortedStream<TIn, TKey>>
             {
@@ -151,7 +151,7 @@ namespace Paillave.Etl
                 TargetStream = resourceStream
             }).Output;
         }
-        public static IKeyedStream<TIn, TKey> ToTextFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, FlatFileDefinition<TIn> mapping) where TIn : new()
+        public static IKeyedStream<TIn, TKey> ToTextFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping) where TIn : new()
         {
             return new ToFlatFileStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new ToFlatFileArgs<TIn, IKeyedStream<TIn, TKey>>
             {
