@@ -13,34 +13,14 @@ namespace Paillave.Etl.Core.Aggregation
     public class AggregationProcessor<TIn, TOut>
     {
         private readonly List<Aggregator<TIn>> _emptyAggregations;
-        private readonly ParameterInfo[] _anonymousConstructorParameters;
-        private Type _outType = typeof(TOut);
-        private readonly bool _isOutputAnonymous;
 
         public AggregationProcessor(Expression<Func<TIn, TOut>> aggregationDescriptor)
         {
-            _isOutputAnonymous = Attribute.IsDefined(_outType, typeof(CompilerGeneratedAttribute), false);
-            if (_isOutputAnonymous)
-                this._anonymousConstructorParameters = _outType.GetConstructors()[0].GetParameters();
             AggregationDescriptorVisitor<TIn> vis = new AggregationDescriptorVisitor<TIn>();
             vis.Visit(aggregationDescriptor);
             this._emptyAggregations = vis.AggregationsToProcess;
         }
-        public TOut CreateInstance(Dictionary<string, Aggregator<TIn>> aggregators)
-        {
-            TOut ret;
-            if (_isOutputAnonymous)
-            {
-                ret = (TOut)Activator.CreateInstance(_outType, _anonymousConstructorParameters.Select(i => aggregators[i.Name].GetResult()).ToArray());
-            }
-            else
-            {
-                ret = Activator.CreateInstance<TOut>();
-                foreach (var aggregator in aggregators)
-                    aggregator.Value.TargetPropertyInfo.SetValue(ret, aggregator.Value.GetResult());
-            }
-            return ret;
-        }
+        public TOut CreateInstance(Dictionary<string, Aggregator<TIn>> aggregators) => ObjectBuilder<TOut>.CreateInstance(aggregators.ToDictionary(i => i.Key, i => i.Value.GetResult()));
         public Dictionary<string, Aggregator<TIn>> CreateAggregators(TIn firstGroupValue)
         {
             return _emptyAggregations.ToDictionary(i => i.Name, i => i.CopyEmpty());
