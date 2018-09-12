@@ -1,17 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageId>Etl.Net.TextFile</PackageId>
+    <PackageId>Etl.Net.SqlServer</PackageId>
     <Version>1.0.0-alpha</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseUrl>https://github.com/paillave/Etl.Net/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/paillave/Etl.Net</PackageProjectUrl>
-    <PackageTags>ETL .net core SSIS reactive text file xml</PackageTags>
-    <Product>ETL.net XML files extensions</Product>
-    <Description>XML files extensions for Etl.Net</Description>
+    <PackageTags>ETL .net core SSIS reactive SQL server</PackageTags>
+    <Product>ETL.net sql server extensions</Product>
+    <Description>Sql Server extensions for Etl.Net</Description>
     <PackageReleaseNotes>
-extensions for Etl.Net to read large XML files using 
+extensions for Etl.Net to query against Sql Server
     </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -19,13 +19,9 @@ extensions for Etl.Net to read large XML files using
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <LangVersion>7.1</LangVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <LangVersion>7.1</LangVersion>
-  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.5.1" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />

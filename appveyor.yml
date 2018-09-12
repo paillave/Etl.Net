@@ -34,6 +34,8 @@ artifacts:
   name: Paillave.Etl.TextFile
 - path: src\Paillave.Etl.ExcelFile\bin\$(configuration)\*.nupkg
   name: Paillave.Etl.ExcelFile
+- path: src\Paillave.Etl.SqlServer\bin\$(configuration)\*.nupkg
+  name: Paillave.Etl.SqlServer
 deploy:
 - provider: NuGet
   api_key:
@@ -55,6 +57,10 @@ deploy:
   api_key:
     secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
   artifact: Paillave.Etl.ExcelFile
+- provider: NuGet
+  api_key:
+    secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
+  artifact: Paillave.Etl.SqlServer
 notifications:
 - provider: Webhook
   url: https://webhooks.gitter.im/e/24499395a6cd92120c65
