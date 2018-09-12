@@ -1633,101 +1633,101 @@ public class TestXPathReader
 
     
 
-	public static void Main()
-	{
-		TestXPathReader testxpath = new TestXPathReader();
-		testxpath.LoanBook();
-		testxpath.LoanBook2();
-		testxpath.BizTalk1();
+	// public static void Main()
+	// {
+	// 	TestXPathReader testxpath = new TestXPathReader();
+	// 	testxpath.LoanBook();
+	// 	testxpath.LoanBook2();
+	// 	testxpath.BizTalk1();
 
-		testxpath.BizTalk2();
+	// 	testxpath.BizTalk2();
 
-		//
-		// BaseQueries
-		//
-		// child
-		testxpath.ChildAxisEmptyElement();
-		testxpath.ChildAxis();
-		testxpath.ChildAxisWithPrefixWithoutNamespaceMgr();
-		testxpath.ChildAxisWithPrefixWithNamespaceMgr();
+	// 	//
+	// 	// BaseQueries
+	// 	//
+	// 	// child
+	// 	testxpath.ChildAxisEmptyElement();
+	// 	testxpath.ChildAxis();
+	// 	testxpath.ChildAxisWithPrefixWithoutNamespaceMgr();
+	// 	testxpath.ChildAxisWithPrefixWithNamespaceMgr();
 
-		// attributes
-		testxpath.AttributeAxisOnMoveToAttribute();
-		testxpath.AttributeAxisOnMoveToAttributeFilterElement();
-		testxpath.AttributeAxisOnRead(); //no support this
-		testxpath.TestMultipleAttributeAxisOnRead(); //not support this
-		testxpath.TestMultipleAttributeAxisOnMoveToAttribute();
+	// 	// attributes
+	// 	testxpath.AttributeAxisOnMoveToAttribute();
+	// 	testxpath.AttributeAxisOnMoveToAttributeFilterElement();
+	// 	testxpath.AttributeAxisOnRead(); //no support this
+	// 	testxpath.TestMultipleAttributeAxisOnRead(); //not support this
+	// 	testxpath.TestMultipleAttributeAxisOnMoveToAttribute();
 
-		//self
-		testxpath.SelfAxis();
-		//descendent
-		//testxpath.TestDescendentAxis();
-		testxpath.DescendentAxisReadUtil();
+	// 	//self
+	// 	testxpath.SelfAxis();
+	// 	//descendent
+	// 	//testxpath.TestDescendentAxis();
+	// 	testxpath.DescendentAxisReadUtil();
 
-		//Reverse Axis
-		//Parent
-		testxpath.Parent();
-		testxpath.ParentShortSyntax();
+	// 	//Reverse Axis
+	// 	//Parent
+	// 	testxpath.Parent();
+	// 	testxpath.ParentShortSyntax();
 
-		//
-		// ValidatingReader
-		//
-		// testxpath.ValidatingReader();
-		testxpath.RecursiveQuery();
+	// 	//
+	// 	// ValidatingReader
+	// 	//
+	// 	// testxpath.ValidatingReader();
+	// 	testxpath.RecursiveQuery();
         
-		//
-		// Predicates
-		//
+	// 	//
+	// 	// Predicates
+	// 	//
 		
-		//MethodOperand
-		testxpath.TestMethodOperandCount();
-		testxpath.TestMethodOperandPosition();
-		testxpath.TestMethodOperandNamespaceUri();
-		//testxpath.TestMethodOperandName();
-		//testxpath.TestMethodOperandLocalName();
-		// numberic expression
-		testxpath.NumericExpressionAddMinutes();
-		testxpath.TestNumericExpressionMutliDiv();
-		// Logical Expression
-		testxpath.TestLogicalExpression();
-		// String
-		testxpath.TestStringExpression();
-		// NodeSet
-		testxpath.TestNodeSetExpression();
+	// 	//MethodOperand
+	// 	testxpath.TestMethodOperandCount();
+	// 	testxpath.TestMethodOperandPosition();
+	// 	testxpath.TestMethodOperandNamespaceUri();
+	// 	//testxpath.TestMethodOperandName();
+	// 	//testxpath.TestMethodOperandLocalName();
+	// 	// numberic expression
+	// 	testxpath.NumericExpressionAddMinutes();
+	// 	testxpath.TestNumericExpressionMutliDiv();
+	// 	// Logical Expression
+	// 	testxpath.TestLogicalExpression();
+	// 	// String
+	// 	testxpath.TestStringExpression();
+	// 	// NodeSet
+	// 	testxpath.TestNodeSetExpression();
 		
-		//
-		// Functions
-		//
-		//string functions
-		testxpath.TestStringFunctions();
-		//number functions
-		testxpath.TestNumberFunctions();
-		//boolean functions
-		testxpath.TestBooleanFunctions();
-		//node functions
-		testxpath.TestNodeSetFunctions();
+	// 	//
+	// 	// Functions
+	// 	//
+	// 	//string functions
+	// 	testxpath.TestStringFunctions();
+	// 	//number functions
+	// 	testxpath.TestNumberFunctions();
+	// 	//boolean functions
+	// 	testxpath.TestBooleanFunctions();
+	// 	//node functions
+	// 	testxpath.TestNodeSetFunctions();
 		
         
         
         
-		// readUntil Method.
-		testxpath.TestReadUntil();
-		// MatchAny
-		testxpath.TestMatchAny();
-		testxpath.TestMultipleLevelDoc();
-		// Mix read and readUntil
-		//testxpath.TestMixRead();
-		//
-		testxpath.LogicalExprAttributeRead();
-		testxpath.LogicalExprAttributeReadUntil();
+	// 	// readUntil Method.
+	// 	testxpath.TestReadUntil();
+	// 	// MatchAny
+	// 	testxpath.TestMatchAny();
+	// 	testxpath.TestMultipleLevelDoc();
+	// 	// Mix read and readUntil
+	// 	//testxpath.TestMixRead();
+	// 	//
+	// 	testxpath.LogicalExprAttributeRead();
+	// 	testxpath.LogicalExprAttributeReadUntil();
 
 
 
 
-		//testxpath.TestMultipleDocument();
-		testxpath.TestRemoveXPathByIndex();
-		testxpath.TestRemoveXPathByExpression();
+	// 	//testxpath.TestMultipleDocument();
+	// 	testxpath.TestRemoveXPathByIndex();
+	// 	testxpath.TestRemoveXPathByExpression();
 
-		testxpath.RecursiveQuery();
-	}
+	// 	testxpath.RecursiveQuery();
+	// }
 }
