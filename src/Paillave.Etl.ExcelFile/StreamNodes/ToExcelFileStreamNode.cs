@@ -43,16 +43,21 @@ namespace Paillave.Etl.ExcelFile.StreamNodes
         protected void ProcessValueToOutput(Stream streamWriter, IList<TIn> value)
         {
             var pck = new ExcelPackage();
-            var excelColumns = base.Args.Mapping.GetExcelReader().PropertySetters.OrderBy(i => i.Key).Select(i => i.Value).ToArray();
             var wsList = pck.Workbook.Worksheets.Add("Sheet1");
-            var r1 = wsList.Cells["A1"].LoadFromCollection(value, true, TableStyles.Medium11, BindingFlags.Instance | BindingFlags.Public, excelColumns.Select(i => i.PropertyInfo).ToArray());
-
-            var table = wsList.Tables.GetFromRange(r1);
-
-            foreach (var item in excelColumns.Select((i, idx) => new { ColumnIndex = idx, Label = i.ColumnName ?? i.PropertyInfo.Name }))
-                table.Columns[item.ColumnIndex].Name = item.Label;
-
-            r1.AutoFitColumns();
+            if (base.Args.Mapping != null)
+            {
+                var excelColumns = base.Args.Mapping.GetExcelReader().PropertySetters.OrderBy(i => i.Key).Select(i => i.Value).ToArray();
+                var r1 = wsList.Cells["A1"].LoadFromCollection(value, true, TableStyles.Medium11, BindingFlags.Instance | BindingFlags.Public, excelColumns.Select(i => i.PropertyInfo).ToArray());
+                var table = wsList.Tables.GetFromRange(r1);
+                foreach (var item in excelColumns.Select((i, idx) => new { ColumnIndex = idx, Label = i.ColumnName ?? i.PropertyInfo.Name }))
+                    table.Columns[item.ColumnIndex].Name = item.Label;
+                r1.AutoFitColumns();
+            }
+            else
+            {
+                var r1 = wsList.Cells["A1"].LoadFromCollection(value, true, TableStyles.Medium11);
+                r1.AutoFitColumns();
+            }
             BinaryWriter bw = new BinaryWriter(streamWriter);
             bw.Write(pck.GetAsByteArray());
         }

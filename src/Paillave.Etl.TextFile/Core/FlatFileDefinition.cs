@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Paillave.Etl.TextFile.Core
 {
-    public class FlatFileDefinition<T> where T : new()
+    public class FlatFileDefinition<T>
     {
         public bool HasColumnHeader => _fieldDefinitions.Any(i => !string.IsNullOrWhiteSpace(i.ColumnName));
         private IList<FlatFileFieldDefinition> _fieldDefinitions = new List<FlatFileFieldDefinition>();

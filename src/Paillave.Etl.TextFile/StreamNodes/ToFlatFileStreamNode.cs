@@ -11,7 +11,6 @@ using SystemIO = System.IO;
 namespace Paillave.Etl.TextFile.StreamNodes
 {
     public class ToFlatFileArgs<TIn, TStream>
-        where TIn : new()
         where TStream : IStream<TIn>
     {
         public TStream MainStream { get; set; }
@@ -19,7 +18,6 @@ namespace Paillave.Etl.TextFile.StreamNodes
         public FlatFileDefinition<TIn> Mapping { get; set; }
     }
     public class ToFlatFileStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ToFlatFileArgs<TIn, TStream>>
-        where TIn : new()
         where TStream : IStream<TIn>
     {
         private readonly LineSerializer<TIn> _serialize;

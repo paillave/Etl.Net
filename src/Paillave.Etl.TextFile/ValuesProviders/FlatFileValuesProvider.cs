@@ -10,14 +10,14 @@ using Paillave.Etl.TextFile.Core;
 
 namespace Paillave.Etl.TextFile.ValuesProviders
 {
-    public class FlatFileValuesProviderArgs<TIn, TParsed, TOut> where TParsed : new()
+    public class FlatFileValuesProviderArgs<TIn, TParsed, TOut>
     {
         public FlatFileDefinition<TParsed> Mapping { get; set; }
         public Func<TIn, TParsed, TOut> ResultSelector { get; set; }
         public Func<TIn, Stream> DataStreamSelector { get; set; }
         public bool NoParallelisation { get; set; } = false;
     }
-    public class FlatFileValuesProvider<TIn, TParsed, TOut> : ValuesProviderBase<TIn, TOut> where TParsed : new()
+    public class FlatFileValuesProvider<TIn, TParsed, TOut> : ValuesProviderBase<TIn, TOut>
     {
         private FlatFileValuesProviderArgs<TIn, TParsed, TOut> _args;
         public FlatFileValuesProvider(FlatFileValuesProviderArgs<TIn, TParsed, TOut> args) : base(args.NoParallelisation)

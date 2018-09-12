@@ -28,11 +28,13 @@ namespace Paillave.Etl.ExcelFile.Core
             return _typeConverter.ConvertFromString(null, _cultureInfo, text.Trim());
         }
 
-        public bool SetValue(ExcelWorksheet excelWorksheet, object target, int row, int column)
+        public object ParsedValue { get; private set; } = null;
+
+        public bool SetValue(ExcelWorksheet excelWorksheet, int row, int column)
         {
-            return SetValue(target, excelWorksheet.GetValue(row, column));
+            return SetValue(excelWorksheet.GetValue(row, column));
         }
-        private bool SetValue(object target, object value)
+        private bool SetValue(object value)
         {
             if (value != null)
             {
@@ -40,24 +42,21 @@ namespace Paillave.Etl.ExcelFile.Core
                 {
                     var tmpVal = value.ToString();
                     if (string.IsNullOrEmpty(tmpVal)) return false;
-                    SetValue(target, tmpVal);
+                    SetValue(tmpVal);
                 }
                 else
-                    PropertyInfo.SetValue(target, value);
+                {
+                    this.ParsedValue = value;
+                }
             }
             else
                 return false;
             return true;
         }
 
-        private void SetValue(object target, string text)
+        private void SetValue(string text)
         {
-            PropertyInfo.SetValue(target, Deserialize(text));
+            this.ParsedValue = Deserialize(text);
         }
-
-        //public string GetValue(object target)
-        //{
-        //    return Serialize(_propertyInfo.GetValue(target));
-        //}
     }
 }

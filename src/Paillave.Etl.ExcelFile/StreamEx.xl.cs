@@ -54,7 +54,7 @@ namespace Paillave.Etl
         #endregion
 
         #region CrossApplyExcelRows
-        public static IStream<TOut> CrossApplyExcelRows<TParsed, TOut>(this IStream<ExcelSheetSelection> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TParsed, ExcelSheetSelection, TOut> selector) where TParsed : new()
+        public static IStream<TOut> CrossApplyExcelRows<TParsed, TOut>(this IStream<ExcelSheetSelection> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TParsed, ExcelSheetSelection, TOut> selector)
         {
             return stream.CrossApply(name, new ExcelRowsValuesProvider<TParsed>(new ExcelRowsValuesProviderArgs<TParsed>
             {
@@ -62,7 +62,7 @@ namespace Paillave.Etl
                 NoParallelisation = false
             }), i => i, selector);
         }
-        public static IStream<TOut> CrossApplyExcelRows<TIn, TParsed, TOut>(this IStream<TIn> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TIn, ExcelSheetSelection> sheetSelection, Func<TParsed, TIn, TOut> selector) where TParsed : new()
+        public static IStream<TOut> CrossApplyExcelRows<TIn, TParsed, TOut>(this IStream<TIn> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TIn, ExcelSheetSelection> sheetSelection, Func<TParsed, TIn, TOut> selector)
         {
             return stream.CrossApply(name, new ExcelRowsValuesProvider<TParsed>(new ExcelRowsValuesProviderArgs<TParsed>
             {
@@ -70,7 +70,7 @@ namespace Paillave.Etl
                 NoParallelisation = false
             }), sheetSelection, selector);
         }
-        public static IStream<TParsed> CrossApplyExcelRows<TIn, TParsed>(this IStream<TIn> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TIn, ExcelSheetSelection> sheetSelection) where TParsed : new()
+        public static IStream<TParsed> CrossApplyExcelRows<TIn, TParsed>(this IStream<TIn> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TIn, ExcelSheetSelection> sheetSelection)
         {
             return stream.CrossApply(name, new ExcelRowsValuesProvider<TParsed>(new ExcelRowsValuesProviderArgs<TParsed>
             {
@@ -78,7 +78,7 @@ namespace Paillave.Etl
                 NoParallelisation = false
             }), sheetSelection, (i, o) => i);
         }
-        public static IStream<TParsed> CrossApplyExcelRows<TParsed>(this IStream<ExcelSheetSelection> stream, string name, ExcelFileDefinition<TParsed> mapping) where TParsed : new()
+        public static IStream<TParsed> CrossApplyExcelRows<TParsed>(this IStream<ExcelSheetSelection> stream, string name, ExcelFileDefinition<TParsed> mapping)
         {
             return stream.CrossApply(name, new ExcelRowsValuesProvider<TParsed>(new ExcelRowsValuesProviderArgs<TParsed>
             {

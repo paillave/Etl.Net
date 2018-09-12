@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.TextFile.Core
 {
-    public class LineSerializer<T> where T : new()
+    public class LineSerializer<T>
     {
         public ILineSplitter Splitter { get; }
 
@@ -18,11 +19,8 @@ namespace Paillave.Etl.TextFile.Core
         }
         public T Deserialize(string line)
         {
-            T value = new T();
             var stringValues = this.Splitter.Split(line);
-            foreach (var item in this._indexToPropertySerializerDictionary)
-                item.Value.SetValue(value, stringValues[item.Key]);
-            return value;
+            return ObjectBuilder<T>.CreateInstance(this._indexToPropertySerializerDictionary.ToDictionary(i => i.Value.PropertyName, i => i.Value.Deserialize(stringValues[i.Key])));
         }
         public string Serialize(T value)
         {

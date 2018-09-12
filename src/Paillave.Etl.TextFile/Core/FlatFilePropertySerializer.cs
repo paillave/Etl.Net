@@ -9,7 +9,7 @@ namespace Paillave.Etl.TextFile.Core
         private readonly CultureInfo _cultureInfo;
         private readonly TypeConverter _typeConverter;
         private readonly PropertyInfo _propertyInfo;
-
+        public string PropertyName => _propertyInfo.Name;
         public FlatFilePropertySerializer(PropertyInfo propertyInfo, CultureInfo cultureInfo)
         {
             this._propertyInfo = propertyInfo;
@@ -21,15 +21,15 @@ namespace Paillave.Etl.TextFile.Core
         {
             return _typeConverter.ConvertToString(null, _cultureInfo, value);
         }
-        private object Deserialize(string text)
+        public object Deserialize(string text)
         {
             return _typeConverter.ConvertFromString(null, _cultureInfo, text.Trim());
         }
 
-        public void SetValue(object target, string text)
-        {
-            _propertyInfo.SetValue(target, Deserialize(text));
-        }
+        // public void SetValue(object target, string text)
+        // {
+        //     _propertyInfo.SetValue(target, Deserialize(text));
+        // }
 
         public string GetValue(object target)
         {
