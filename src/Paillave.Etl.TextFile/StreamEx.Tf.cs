@@ -13,7 +13,6 @@ namespace Paillave.Etl
     {
         #region CrossApplyTextFile
         public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<string> stream, string name, FlatFileDefinition<TOut> args, bool noParallelisation = false)
-            where TOut : new()
         {
             return stream.CrossApply(name, new FlatFileValuesProvider<string, TOut, TOut>(new FlatFileValuesProviderArgs<string, TOut, TOut>()
             {
@@ -24,7 +23,6 @@ namespace Paillave.Etl
             }), i => i, (i, _) => i);
         }
         public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<Stream> stream, string name, FlatFileDefinition<TOut> args, bool noParallelisation = false)
-            where TOut : new()
         {
             return stream.CrossApply(name, new FlatFileValuesProvider<Stream, TOut, TOut>(new FlatFileValuesProviderArgs<Stream, TOut, TOut>()
             {
@@ -35,7 +33,6 @@ namespace Paillave.Etl
             }), i => i, (i, _) => i);
         }
         public static IStream<TOut> CrossApplyTextFile<TIn, TOut>(this IStream<TIn> stream, string name, FlatFileDefinition<TOut> args, Func<TIn, string> filePathSelector, bool noParallelisation = false)
-            where TOut : new()
         {
             return stream.CrossApply(name, new FlatFileValuesProvider<TIn, TOut, TOut>(new FlatFileValuesProviderArgs<TIn, TOut, TOut>()
             {
@@ -45,7 +42,7 @@ namespace Paillave.Etl
                 ResultSelector = (i, o) => o
             }), i => i, (i, _) => i);
         }
-        public static IStream<TOut> CrossApplyTextFile<TIn, TParsed, TOut>(this IStream<TIn> stream, string name, FlatFileDefinition<TParsed> args, Func<TIn, string> filePathSelector, Func<TIn, TParsed, TOut> resultSelector, bool noParallelisation = false) where TParsed : new()
+        public static IStream<TOut> CrossApplyTextFile<TIn, TParsed, TOut>(this IStream<TIn> stream, string name, FlatFileDefinition<TParsed> args, Func<TIn, string> filePathSelector, Func<TIn, TParsed, TOut> resultSelector, bool noParallelisation = false)
         {
             return stream.CrossApply(name, new FlatFileValuesProvider<TIn, TParsed, TOut>(new FlatFileValuesProviderArgs<TIn, TParsed, TOut>()
             {
@@ -55,7 +52,7 @@ namespace Paillave.Etl
                 ResultSelector = resultSelector
             }), i => i, (i, _) => i);
         }
-        public static IStream<TOut> CrossApplyTextFile<TParsed, TOut>(this IStream<string> stream, string name, FlatFileDefinition<TParsed> args, Func<string, TParsed, TOut> resultSelector, bool noParallelisation = false) where TParsed : new()
+        public static IStream<TOut> CrossApplyTextFile<TParsed, TOut>(this IStream<string> stream, string name, FlatFileDefinition<TParsed> args, Func<string, TParsed, TOut> resultSelector, bool noParallelisation = false)
         {
             return stream.CrossApply(name, new FlatFileValuesProvider<string, TParsed, TOut>(new FlatFileValuesProviderArgs<string, TParsed, TOut>()
             {
@@ -65,7 +62,7 @@ namespace Paillave.Etl
                 ResultSelector = resultSelector
             }), i => i, (i, _) => i);
         }
-        public static IStream<TOut> CrossApplyTextFile<TParsed, TOut>(this IStream<Stream> stream, string name, FlatFileDefinition<TParsed> args, Func<TParsed, TOut> resultSelector, bool noParallelisation = false) where TParsed : new()
+        public static IStream<TOut> CrossApplyTextFile<TParsed, TOut>(this IStream<Stream> stream, string name, FlatFileDefinition<TParsed> args, Func<TParsed, TOut> resultSelector, bool noParallelisation = false)
         {
             return stream.CrossApply(name, new FlatFileValuesProvider<Stream, TParsed, TOut>(new FlatFileValuesProviderArgs<Stream, TParsed, TOut>()
             {
@@ -133,7 +130,7 @@ namespace Paillave.Etl
         #endregion
 
         #region ToTextFile
-        public static IStream<TIn> ToTextFile<TIn>(this IStream<TIn> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping) where TIn : new()
+        public static IStream<TIn> ToTextFile<TIn>(this IStream<TIn> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
         {
             return new ToFlatFileStreamNode<TIn, IStream<TIn>>(name, new ToFlatFileArgs<TIn, IStream<TIn>>
             {
@@ -142,7 +139,7 @@ namespace Paillave.Etl
                 TargetStream = resourceStream
             }).Output;
         }
-        public static ISortedStream<TIn, TKey> ToTextFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping) where TIn : new()
+        public static ISortedStream<TIn, TKey> ToTextFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
         {
             return new ToFlatFileStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new ToFlatFileArgs<TIn, ISortedStream<TIn, TKey>>
             {
@@ -151,7 +148,7 @@ namespace Paillave.Etl
                 TargetStream = resourceStream
             }).Output;
         }
-        public static IKeyedStream<TIn, TKey> ToTextFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping) where TIn : new()
+        public static IKeyedStream<TIn, TKey> ToTextFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
         {
             return new ToFlatFileStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new ToFlatFileArgs<TIn, IKeyedStream<TIn, TKey>>
             {

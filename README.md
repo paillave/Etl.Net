@@ -43,7 +43,7 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Lookup keeping sorted | Transformation | :construction: | #48 |
 | List folder files | Data source | :heavy_check_mark: |  |
 | Read csv file | Data source | :heavy_check_mark: | #31 |
-| Read very large xml file | Data source | :construction: |  |
+| Read very large xml file | Data source | :construction: | #65 |
 | Read very large json file | Data source | :construction: | #79 |
 | Read excel file | Data source | :heavy_check_mark: | #18 |
 | Write csv file | Data destination | :heavy_check_mark: | #28 |

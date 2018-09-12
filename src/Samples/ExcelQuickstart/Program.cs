@@ -49,13 +49,13 @@ namespace ExcelQuickstart
     {
         static void Main(string[] args)
         {
-            //var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\Samples\TestFiles";
-            var testFilesDirectory = @"C:\Users\paill\Documents\GitHub\Etl.Net\src\Samples\TestFiles";
+            var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\Samples\TestFiles";
+            // var testFilesDirectory = @"C:\Users\paill\Documents\GitHub\Etl.Net\src\Samples\TestFiles";
 
             new StreamProcessRunner<ExcelQuickstartJob, SimpleConfig>().ExecuteAsync(new SimpleConfig
             {
                 InputDirectory = testFilesDirectory,
-                OutputFile = @"C:\Users\paill\Documents\GitHub\Etl.Net\src\Samples\testoutput.xlsx"
+                OutputFile = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\Samples\testoutput.xlsx"
             }, null).Wait();
             Console.WriteLine("Press a key...");
             Console.ReadKey();

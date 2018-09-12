@@ -1,19 +1,20 @@
 using OfficeOpenXml;
-using Paillave.Etl.Core;
 using Paillave.Etl.ExcelFile.Core;
 using Paillave.Etl.Reactive.Core;
 using System;
 using System.IO;
 using System.Linq;
+using Paillave.Etl.Core;
+using System.Collections.Generic;
 
 namespace Paillave.Etl.ExcelFile.ValuesProviders
 {
-    public class ExcelRowsValuesProviderArgs<TParsed> where TParsed : new()
+    public class ExcelRowsValuesProviderArgs<TParsed>
     {
         public bool NoParallelisation { get; set; } = false;
         public ExcelFileDefinition<TParsed> Mapping { get; set; }
     }
-    public class ExcelRowsValuesProvider<TParsed> : ValuesProviderBase<ExcelSheetSelection, TParsed> where TParsed : new() //<TOut> : ValuesProviderBase<ExcelSheetSelection, TOut>
+    public class ExcelRowsValuesProvider<TParsed> : ValuesProviderBase<ExcelSheetSelection, TParsed>
     {
         private ExcelRowsValuesProviderArgs<TParsed> _args;
         public ExcelRowsValuesProvider(ExcelRowsValuesProviderArgs<TParsed> args) : base(args.NoParallelisation)
@@ -29,13 +30,13 @@ namespace Paillave.Etl.ExcelFile.ValuesProviders
                 bool foundRow = false;
                 do
                 {
-                    TParsed row = new TParsed();
+                    IDictionary<string, object> row = new Dictionary<string, object>();
                     foundRow = ReadRow(input.ExcelWorksheet, reader, i++, row);
-                    if (foundRow) pushValue(row);
+                    if (foundRow) pushValue(ObjectBuilder<TParsed>.CreateInstance(row));
                 } while (foundRow);
             }
         }
-        private bool ReadRow(ExcelWorksheet excelWorksheet, ExcelFileReader reader, int lineIndex, TParsed row)
+        private bool ReadRow(ExcelWorksheet excelWorksheet, ExcelFileReader reader, int lineIndex, IDictionary<string, object> row)
         {
             bool isEmptyRow = true;
             switch (reader.DatasetOrientation)
@@ -43,14 +44,24 @@ namespace Paillave.Etl.ExcelFile.ValuesProviders
                 case DataOrientation.Horizontal:
                     for (int i = 0; i < reader.DataRange.Rows; i++)
                     {
-                        if (reader.PropertySetters[i].SetValue(excelWorksheet, row, i + reader.DataRange.Start.Row, lineIndex + reader.DataRange.Start.Column))
+                        var propertySetter = reader.PropertySetters[i];
+                        if (propertySetter.SetValue(excelWorksheet, i + reader.DataRange.Start.Row, lineIndex + reader.DataRange.Start.Column))
+                        {
                             isEmptyRow = false;
+                            row[propertySetter.ColumnName] = propertySetter.ParsedValue;
+                        }
                     }
                     break;
                 case DataOrientation.Vertical:
                     for (int i = 0; i < reader.DataRange.Columns; i++)
-                        if (reader.PropertySetters[i].SetValue(excelWorksheet, row, lineIndex + reader.DataRange.Start.Row, i + reader.DataRange.Start.Column))
+                    {
+                        var propertySetter = reader.PropertySetters[i];
+                        if (propertySetter.SetValue(excelWorksheet, lineIndex + reader.DataRange.Start.Row, i + reader.DataRange.Start.Column))
+                        {
                             isEmptyRow = false;
+                            row[propertySetter.ColumnName] = propertySetter.ParsedValue;
+                        }
+                    }
                     break;
                 default:
                     break;
