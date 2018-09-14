@@ -1,4 +1,6 @@
 ﻿using OfficeOpenXml;
+using Paillave.Etl.Core.Mapping;
+using Paillave.Etl.Core.Mapping.Visitors;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,6 +14,10 @@ namespace Paillave.Etl.ExcelFile.Core
     {
         Horizontal,
         Vertical
+    }
+    public static class ExcelFileDefinition
+    {
+        public static ExcelFileDefinition<T> Create<T>(Expression<Func<IFieldMapper, T>> expression) => new ExcelFileDefinition<T>().WithMap(expression);
     }
     public class ExcelFileDefinition<T>
     {
@@ -42,6 +48,22 @@ namespace Paillave.Etl.ExcelFile.Core
         public ExcelFileDefinition<T> WithDataset(string stringAddress)
         {
             _dataRange = new ExcelAddressBase(stringAddress);
+            return this;
+        }
+        public ExcelFileDefinition<T> WithMap(Expression<Func<IFieldMapper, T>> expression)
+        {
+            MapperVisitor vis = new MapperVisitor();
+            vis.Visit(expression);
+            foreach (var item in vis.MappingSetters)
+            {
+                this.SetFieldDefinition(new ExcelFileFieldDefinition
+                {
+                    ColumnName = item.ColumnName,
+                    Position = item.ColumnIndex,
+                    PropertyInfo = item.TargetPropertyInfo,
+                    CultureInfo = item.CreateCultureInfo()
+                });
+            }
             return this;
         }
         public ExcelFileDefinition<T> SetDefaultMapping(bool withColumnHeader = true, CultureInfo cultureInfo = null)
