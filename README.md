@@ -117,19 +117,6 @@ namespace SimpleQuickstart
         public string OutputFilePath { get; set; }
     }
 
-    public class SimpleInputFileRow
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string CategoryCode { get; set; }
-    }
-
-    public class CategoryStatisticFileRow
-    {
-        public string CategoryCode { get; set; }
-        public int Count { get; set; }
-    }
-
     public class SimpleQuickstartJob : IStreamProcessDefinition<SimpleConfig>
     {
         public string Name => "Simple quickstart";
@@ -138,16 +125,22 @@ namespace SimpleQuickstart
         {
             var outputFileS = rootStream.Select("open output file", i => new StreamWriter(i.OutputFilePath));
             rootStream
-                .CrossApplyTextFile("read input file", new FileDefinition<SimpleInputFileRow>()
-                    .MapColumnToProperty("#", i => i.Id)
-                    .MapColumnToProperty("Label", i => i.Name)
-                    .MapColumnToProperty("Category", i => i.CategoryCode)
-                    .IsColumnSeparated('\t'), i => i.InputFilePath)
+                .CrossApplyTextFile("read input file", FileDefinition.Create(i =>
+                {
+                    Id = i.ToColumn<int>("#"),
+                    Name = i.ToColumn<string>("Label"),
+                    CategoryCode = i.ToColumn<string>("Category")
+                })
+                .IsColumnSeparated('\t'), i => i.InputFilePath)
                 .ToAction("Write input file to console", i => Console.WriteLine($"{i.Id}-{i.Name}-{i.CategoryCode}"))
                 .Pivot("group and count", i => i.CategoryCode, i => new { Count = AggregationOperators.Count() })
                 .Select("create output row", i => new CategoryStatisticFileRow { CategoryCode = i.Key, Count = i.Aggregation.Count })
                 .Sort("sort output values", i => new { i.CategoryCode })
-                .ToTextFile("write to text file", outputFileS, new FileDefinition<CategoryStatisticFileRow>());
+                .ToTextFile("write to text file", outputFileS, FileDefinition.Create(i =>
+                {
+                    CategoryCode = i.ToColumn<string>("Category"),
+                    Count = i.ToColumn<int>("Total")
+                }));
         }
     }
     class Program

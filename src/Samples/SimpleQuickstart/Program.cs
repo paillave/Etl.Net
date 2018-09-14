@@ -13,22 +13,6 @@ namespace SimpleQuickstart
         public string OutputFilePath { get; set; }
     }
 
-    public class SimpleInputFileRow
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string ValueType { get; set; }
-        public string CategoryCode { get; set; }
-    }
-
-    public class CategoryStatisticFileRow
-    {
-        public string CategoryCode { get; set; }
-        public int Count { get; set; }
-        public int CountA { get; set; }
-        public int CountB { get; set; }
-    }
-
     public class SimpleQuickstartJob : IStreamProcessDefinition<SimpleConfig>
     {
         public string Name => "Simple quickstart";
@@ -38,12 +22,13 @@ namespace SimpleQuickstart
             var outputFileS = rootStream.Select("open output file", i => File.OpenWrite(i.OutputFilePath));
             rootStream
                 .CrossApplyTextFile("read input file",
-                    new FlatFileDefinition<SimpleInputFileRow>()
-                        .MapColumnToProperty("#", i => i.Id)
-                        .MapColumnToProperty("Label", i => i.Name)
-                        .MapColumnToProperty("Value", i => i.ValueType)
-                        .MapColumnToProperty("Category", i => i.CategoryCode)
-                        .IsColumnSeparated('\t'),
+                    FlatFileDefinition.Create(i => new
+                    {
+                        Id = i.ToColumn<int>("#"),
+                        Name = i.ToColumn<string>("Label"),
+                        ValueType = i.ToColumn<string>("Value"),
+                        CategoryCode = i.ToColumn<string>("Category")
+                    }).IsColumnSeparated('\t'),
                     i => i.InputFilePath)
                 .ToAction("Write input file to console", i => Console.WriteLine($"{i.Id}->{i.Name}->{i.CategoryCode}->{i.ValueType}"))
                 .Pivot("group and count", i => i.CategoryCode, i => new
@@ -52,23 +37,29 @@ namespace SimpleQuickstart
                     CountA = AggregationOperators.Count().For(i.ValueType == "a"),
                     CountB = AggregationOperators.Count().For(i.ValueType == "b"),
                 })
-                .Select("create output row", i => new CategoryStatisticFileRow
+                .Select("create output row", i => new
                 {
                     CategoryCode = i.Key,
-                    CountA = i.Aggregation.CountA,
-                    CountB = i.Aggregation.CountB,
-                    Count = i.Aggregation.Count
+                    i.Aggregation.Count,
+                    i.Aggregation.CountA,
+                    i.Aggregation.CountB
                 })
                 .Sort("sort output values", i => new { i.CategoryCode })
-                .ToTextFile("write to text file", outputFileS, new FlatFileDefinition<CategoryStatisticFileRow>());
+                .ToTextFile("write to text file", outputFileS, FlatFileDefinition.Create(i => new
+                {
+                    CategoryCode = i.ToColumn<string>("MyCategoryCode"),
+                    Count = i.ToColumn<int>("Count"),
+                    CountA = i.ToColumn<int>("CountA"),
+                    CountB = i.ToColumn<int>("CountB")
+                }));
         }
     }
     class Program
     {
         static void Main(string[] args)
         {
-            var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\Samples\TestFiles";
-            // var testFilesDirectory = @"C:\Users\paill\source\repos\Etl.Net\src\Samples\TestFiles";
+            //var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\Samples\TestFiles";
+            var testFilesDirectory = @"C:\Users\paill\source\repos\Etl.Net\src\Samples\TestFiles";
 
             new StreamProcessRunner<SimpleQuickstartJob, SimpleConfig>().ExecuteAsync(new SimpleConfig
             {
