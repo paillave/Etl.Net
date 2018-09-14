@@ -12,7 +12,7 @@ namespace Paillave.Etl.Core.Aggregation.Visitors
             for (int i = 0; i < node.Members.Count; i++)
             {
                 var argument = node.Arguments[i];
-                ValueAggregatorVisitor<TIn> vis = new ValueAggregatorVisitor<TIn>();
+                MappingSetterVisitor<TIn> vis = new MappingSetterVisitor<TIn>();
                 vis.Visit(argument);
                 var member = node.Members[i] as PropertyInfo;
                 var agg = new Aggregator<TIn>(vis.AggregationInstanceType, vis.SourcePropertyInfo, member);

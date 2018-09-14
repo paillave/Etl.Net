@@ -1,3 +1,5 @@
+using Paillave.Etl.Core.Mapping;
+using Paillave.Etl.Core.Mapping.Visitors;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -6,6 +8,10 @@ using System.Linq.Expressions;
 
 namespace Paillave.Etl.TextFile.Core
 {
+    public static class FlatFileDefinition
+    {
+        public static FlatFileDefinition<T> Create<T>(Expression<Func<IFieldMapper, T>> expression) => new FlatFileDefinition<T>().WithMap(expression);
+    }
     public class FlatFileDefinition<T>
     {
         public bool HasColumnHeader => _fieldDefinitions.Any(i => !string.IsNullOrWhiteSpace(i.ColumnName));
@@ -18,7 +24,27 @@ namespace Paillave.Etl.TextFile.Core
             FirstLinesToIgnore = firstLinesToIgnore;
             return this;
         }
-
+        public FlatFileDefinition<T> WithMap(Expression<Func<IFieldMapper, T>> expression)
+        {
+            MapperVisitor vis = new MapperVisitor();
+            vis.Visit(expression);
+            foreach (var item in vis.MappingSetters)
+            {
+                this.SetFieldDefinition(new FlatFileFieldDefinition
+                {
+                    ColumnName = item.ColumnName,
+                    Position = item.ColumnIndex,
+                    PropertyInfo = item.TargetPropertyInfo,
+                    CultureInfo = item.CreateCultureInfo()
+                });
+            }
+            if (vis.MappingSetters.Any(i => i.Size.HasValue))
+            {
+                if (!vis.MappingSetters.All(i => i.Size.HasValue)) throw new InvalidOperationException("if a size is given, all sizes must be given");
+                this.HasFixedColumnWidth(vis.MappingSetters.OrderBy(i => i.ColumnIndex).Select(i => i.Size.Value).ToArray());
+            }
+            return this;
+        }
         public FlatFileDefinition<T> SetDefaultMapping(bool withColumnHeader = true, CultureInfo cultureInfo = null)
         {
             foreach (var item in typeof(T).GetProperties().Select((propertyInfo, index) => new { propertyInfo = propertyInfo, Position = index }))

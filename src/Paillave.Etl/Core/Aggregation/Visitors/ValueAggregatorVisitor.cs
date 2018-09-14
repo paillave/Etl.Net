@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Paillave.Etl.Core.Aggregation.Visitors
 {
-    public class ValueAggregatorVisitor<TIn> : ExpressionVisitor
+    public class MappingSetterVisitor<TIn> : ExpressionVisitor
     {
         public Type AggregationInstanceType { get; private set; }
         public PropertyInfo SourcePropertyInfo { get; private set; }
