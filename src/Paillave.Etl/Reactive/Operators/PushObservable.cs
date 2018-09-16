@@ -18,6 +18,10 @@ namespace Paillave.Etl.Reactive.Operators
                     pushValue(item);
             }, startSynchronizer);
         }
+        public static IDeferedPushObservable<TOut> FromSingle<TOut>(TOut item, WaitHandle startSynchronizer = null)
+        {
+            return new DeferedPushObservable<TOut>(pushValue => pushValue(item), startSynchronizer);
+        }
         public static IDeferedPushObservable<int> Range(int from, int count, WaitHandle startSynchronizer = null)
         {
             return FromEnumerable(Enumerable.Range(from, count), startSynchronizer);
