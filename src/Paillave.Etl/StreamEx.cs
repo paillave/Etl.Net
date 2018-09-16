@@ -458,5 +458,17 @@ namespace Paillave.Etl
                 .ToTaskAsync();
         }
         #endregion
+
+        #region SubProcess
+        public static IStream<TOut> SubExecute<TIn, TOut>(this IStream<TIn> stream, string name, Func<IStream<TIn>, IStream<TOut>> subProcess, bool noParallelisation = false)
+        {
+            return new SubProcessStreamNode<TIn, TOut>(name, new SubProcessArgs<TIn, TOut>
+            {
+                NoParallelisation = noParallelisation,
+                SimpleSubProcess = subProcess,
+                Stream = stream
+            }).Output;
+        }
+        #endregion
     }
 }

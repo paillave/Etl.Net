@@ -42,7 +42,7 @@ namespace Paillave.Etl.SqlServer.ValuesProviders
                 foreach (var match in allMatches)
                 {
                     string parameterName = match.ToString();
-                    command.Parameters.Add(new SqlParameter($"@{parameterName}", _inPropertyInfos[parameterName].GetValue(input)));
+                    command.Parameters.Add(new SqlParameter($"{parameterName}", _inPropertyInfos[parameterName].GetValue(input)));
                 }
 
                 using (var reader = command.ExecuteReader())
