@@ -460,12 +460,12 @@ namespace Paillave.Etl
         #endregion
 
         #region SubProcess
-        public static IStream<TOut> SubExecute<TIn, TOut>(this IStream<TIn> stream, string name, Func<IStream<TIn>, IStream<TOut>> subProcess, bool noParallelisation = false)
+        public static IStream<TOut> ToSubProcesses<TIn, TOut>(this IStream<TIn> stream, string name, Func<IStream<TIn>, IStream<TOut>> subProcess, bool noParallelisation = false)
         {
-            return new SubProcessStreamNode<TIn, TOut>(name, new SubProcessArgs<TIn, TOut>
+            return new ToSubProcessStreamNode<TIn, TOut>(name, new ToSubProcessArgs<TIn, TOut>
             {
                 NoParallelisation = noParallelisation,
-                SimpleSubProcess = subProcess,
+                SubProcess = subProcess,
                 Stream = stream
             }).Output;
         }

@@ -27,7 +27,7 @@ namespace SubProcessQuickStart.Jobs
             var joinedLineS = parsedLineS
                 .Lookup("join types to file", parsedTypeLineS, i => i.TypeId, i => i.Id, (l, r) => new { l.Id, r.Name, l.FileName, r.Category });
 
-            categoryS.SubExecute("export data per category", singleCategoryS =>
+            categoryS.ToSubProcesses("export data per category", singleCategoryS =>
             {
                 var subProcessLines = joinedLineS
                     .Select("link to subprocess", singleCategoryS, (l, r) => new { Category = r.Category, Line = l })
