@@ -9,27 +9,27 @@ using System.Threading;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class SubProcessArgs<TIn, TOut>
+    public class ToSubProcessArgs<TIn, TOut>
     {
         public IStream<TIn> Stream { get; set; }
-        public Func<IStream<TIn>, IStream<TOut>> SimpleSubProcess { get; set; }
+        public Func<IStream<TIn>, IStream<TOut>> SubProcess { get; set; }
         public bool NoParallelisation { get; set; }
     }
-    public class SubProcessStreamNode<TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, SubProcessArgs<TIn, TOut>>
+    public class ToSubProcessStreamNode<TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, ToSubProcessArgs<TIn, TOut>>
     {
         public override bool IsAwaitable => true;
-        public SubProcessStreamNode(string name, SubProcessArgs<TIn, TOut> args) : base(name, args)
+        public ToSubProcessStreamNode(string name, ToSubProcessArgs<TIn, TOut> args) : base(name, args)
         {
         }
 
-        protected override IStream<TOut> CreateOutputStream(SubProcessArgs<TIn, TOut> args)
+        protected override IStream<TOut> CreateOutputStream(ToSubProcessArgs<TIn, TOut> args)
         {
             Semaphore semaphore = args.NoParallelisation ? new Semaphore(1, 1) : new Semaphore(10, 10);
             var outputObservable = args.Stream.Observable.FlatMap(i =>
                 {
                     EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
                     var inputStream = new Stream<TIn>(this.Tracer, this.ExecutionContext, this.NodeName, PushObservable.FromSingle(i, waitHandle));
-                    var outputStream = args.SimpleSubProcess(inputStream);
+                    var outputStream = args.SubProcess(inputStream);
                     var intermediateOutputObservable = outputStream.Observable;
                     this.ExecutionContext.AddToWaitForCompletion(this.NodeName, intermediateOutputObservable);
                     outputStream.Observable.Subscribe(j => { }, () => semaphore.Release());

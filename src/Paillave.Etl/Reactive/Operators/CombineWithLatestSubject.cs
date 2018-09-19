@@ -104,13 +104,14 @@ namespace Paillave.Etl.Reactive.Operators
         {
             lock (_lockObject)
             {
-                _obsel2.IsComplete = true;
+                if (_obsel2 != null)
+                    _obsel2.IsComplete = true;
                 TryComplete();
             }
         }
         private void TryComplete()
         {
-            if (_obsel1.IsComplete && _obsel2.IsComplete)
+            if (((_obsel1?.IsComplete) ?? false) && ((_obsel2?.IsComplete) ?? false))
                 Complete();
         }
         public override void Dispose()

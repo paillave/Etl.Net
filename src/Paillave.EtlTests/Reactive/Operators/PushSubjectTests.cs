@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Paillave.EtlTests.Reactive.Operators
 {
-    [TestClass()]
+    [TestClass]
     public class PushSubjectTests
     {
         [TestCategory(nameof(RangeSubjectTests))]

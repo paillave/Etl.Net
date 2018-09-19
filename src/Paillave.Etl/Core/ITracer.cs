@@ -9,5 +9,6 @@ namespace Paillave.Etl.Core
     public interface ITracer
     {
         void Trace(ITraceContent content);
+        ITracer GetSubTracer(INodeContext nodeContext);
     }
 }
