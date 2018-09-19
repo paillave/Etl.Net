@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Paillave.Etl.Reactive.Core;
 using Paillave.Etl.Reactive.Disposables;
 
@@ -73,7 +74,7 @@ namespace Paillave.Etl.Reactive.Operators
         }
         private void TryComplete()
         {
-            if (_observableDictionary.Count == 0)
+            if (_sourceSubscription == null && _outSubscriptions.IsDisposed)
                 base.Complete();
         }
         private void OnOutputCompleted(KeyGroup grp)
@@ -81,7 +82,6 @@ namespace Paillave.Etl.Reactive.Operators
             lock (_syncLock)
             {
                 _outSubscriptions.TryDispose(grp.OutputSubscription);
-                _observableDictionary.Remove(grp.Key);
                 TryComplete();
             }
         }
@@ -89,8 +89,11 @@ namespace Paillave.Etl.Reactive.Operators
         {
             lock (_syncLock)
             {
-                foreach (var item in _observableDictionary)
+                foreach (var item in _observableDictionary.ToList())
                     item.Value.PushSubject.Complete();
+                _sourceSubscription.Dispose();
+                _sourceSubscription = null;
+                TryComplete();
             }
         }
         private void OnSourceException(Exception ex)
