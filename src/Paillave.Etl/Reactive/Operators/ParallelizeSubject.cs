@@ -73,7 +73,7 @@ namespace Paillave.Etl.Reactive.Operators
         }
         private void TryComplete()
         {
-            if (_sourceSubscription == null && _observableDictionary.Count == 0)
+            if (_observableDictionary.Count == 0)
                 base.Complete();
         }
         private void OnOutputCompleted(KeyGroup grp)
@@ -89,8 +89,8 @@ namespace Paillave.Etl.Reactive.Operators
         {
             lock (_syncLock)
             {
-                this._sourceSubscription = null;
-                TryComplete();
+                foreach (var item in _observableDictionary)
+                    item.Value.PushSubject.Complete();
             }
         }
         private void OnSourceException(Exception ex)
