@@ -20,8 +20,6 @@ namespace Paillave.Etl.StreamNodes
         public override bool IsAwaitable => true;
         public ToGroupsStreamNode(string name, ToGroupsArgs<TIn, TKey, TOut> args) : base(name, args)
         {
-
-            // matchingStream = new Stream<TOut>(this.Tracer, this.ExecutionContext, this.NodeName, observable);
         }
         protected override IStream<TOut> CreateOutputStream(ToGroupsArgs<TIn, TKey, TOut> args)
         {
