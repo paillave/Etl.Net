@@ -25,25 +25,21 @@ namespace SubProcessQuickStart.Jobs
             var categoryS = parsedTypeLineS.Distinct("get list of categories", i => i.Category);
 
             var joinedLineS = parsedLineS
-                .Lookup("join types to file", parsedTypeLineS, i => i.TypeId, i => i.Id, (l, r) => new { l.Id, r.Name, l.FileName, r.Category });
+                .Lookup("join types to file", parsedTypeLineS, i => i.TypeId, i => i.Id, (l, r) => new { l.Id, r.Name, l.FileName, r.Category })
+                .Select("join config and data", rootStream, (l, r) => new { Data = l, Cfg = r })
+                .ToGroups("export data per category", i => i.Data.Category, groupedLines =>
+                {
+                    var groupOutputFileS = groupedLines
+                        .Top("Take first row", 1)
+                        .Select("Open output file", i => File.OpenWrite(Path.Combine(i.Cfg.CategoryDestinationFolder, $"Category-{i.Data.Category}.csv")));
+                    groupedLines
+                        .Select("create output data", i => new OutputFileRow { Id = i.Data.Id, Name = i.Data.Name, FileName = i.Data.FileName })
+                        .ToTextFile("Write lines to matching category text file", groupOutputFileS, new OutputFileRowMapper());
+                    return groupedLines;
+                });
 
-            categoryS.ToSubProcesses("export data per category", singleCategoryS =>
-            {
-                var subProcessLines = joinedLineS
-                    .Select("link to subprocess", singleCategoryS, (l, r) => new { Category = r.Category, Line = l })
-                    .Where("keep only line for current sub process", i => i.Category == i.Line.Category)
-                    .Select("keep line only", i => i.Line);
-
-                var outputCategoryResourceS = singleCategoryS.Select("open output category file", rootStream, (i, j) => File.OpenWrite(Path.Combine(j.CategoryDestinationFolder, "Category-" + i.Category) + ".csv"));
-
-                return subProcessLines
-                    .Pivot("create statistic for categories", i => i.Category, i => new { Count = AggregationOperators.Count(), Total = AggregationOperators.Sum(i.Id) })
-                    .Select("create output category data", i => new OutputCategoryRow { Category = i.Key, AmountOfEntries = i.Aggregation.Count, TotalAmount = i.Aggregation.Total })
-                    .ToTextFile("write category statistics to file", outputCategoryResourceS, new OutputCategoryRowMapper());
-            });
-
-            joinedLineS.Select("create output data", i => new OutputFileRow { Id = i.Id, Name = i.Name, FileName = i.FileName })
-                .ToTextFile("write to output file", outputFileResourceS, new OutputFileRowMapper())
+            joinedLineS.Select("create output data", i => new OutputFileRow { Id = i.Data.Id, Name = i.Data.Name, FileName = i.Data.FileName })
+                .ToTextFile("write to output one single file", outputFileResourceS, new OutputFileRowMapper())
                 .ToAction("write to console", i => Console.WriteLine($"{i.FileName}:{i.Id}-{i.Name}"));
         }
     }
