@@ -6,9 +6,9 @@ using Paillave.Etl.Reactive.Operators;
 namespace Paillave.EtlTests.Reactive.Operators
 {
     [TestClass]
-    public class ParallelizeSubjectTests
+    public class GroupSubjectTests
     {
-        [TestCategory(nameof(ParallelizeSubjectTests))]
+        [TestCategory(nameof(GroupSubjectTests))]
         [TestMethod]
         public void SplitObservables()
         {
@@ -16,7 +16,7 @@ namespace Paillave.EtlTests.Reactive.Operators
             bool isCompleted = false;
             // var lastValues=new List<KeyValuePair<int, int>>();
             IPushSubject<KeyValuePair<int, int>> src = new PushSubject<KeyValuePair<int, int>>();
-            var resS = src.Parallelize(i => i.Key, iS => iS.Last().Map(i => i.Value));
+            var resS = src.Group(i => i.Key, iS => iS.Last().Map(i => i.Value));
             resS.Subscribe(i => lastValues.Add(i), () => isCompleted = true);
 
             src.PushValue(new KeyValuePair<int, int>(1, 1));
@@ -29,7 +29,7 @@ namespace Paillave.EtlTests.Reactive.Operators
             CollectionAssert.AreEquivalent(new[] { 6, 4 }, lastValues);
             Assert.IsTrue(isCompleted);
         }
-        [TestCategory(nameof(ParallelizeSubjectTests))]
+        [TestCategory(nameof(GroupSubjectTests))]
         [TestMethod]
         public void SplitObservablesEndingBeforeInput()
         {
@@ -37,7 +37,7 @@ namespace Paillave.EtlTests.Reactive.Operators
             bool isCompleted = false;
             // var lastValues=new List<KeyValuePair<int, int>>();
             IPushSubject<KeyValuePair<int, int>> src = new PushSubject<KeyValuePair<int, int>>();
-            var resS = src.Parallelize(i => i.Key, iS => iS.First().Map(i => i.Value));
+            var resS = src.Group(i => i.Key, iS => iS.First().Map(i => i.Value));
             resS.Subscribe(i => lastValues.Add(i), () => isCompleted = true);
 
             src.PushValue(new KeyValuePair<int, int>(1, 1));
@@ -51,7 +51,7 @@ namespace Paillave.EtlTests.Reactive.Operators
             src.Complete();
             Assert.IsTrue(isCompleted);
         }
-        [TestCategory(nameof(ParallelizeSubjectTests))]
+        [TestCategory(nameof(GroupSubjectTests))]
         [TestMethod]
         public void SplitObservables2()
         {
@@ -59,7 +59,7 @@ namespace Paillave.EtlTests.Reactive.Operators
             bool isCompleted = false;
             // var lastValues=new List<KeyValuePair<int, int>>();
             IPushSubject<KeyValuePair<int, int>> src = new PushSubject<KeyValuePair<int, int>>();
-            var resS = src.Parallelize(i => i.Key, iS => iS.Scan((acc, val) => acc + val.Value, 0));
+            var resS = src.Group(i => i.Key, iS => iS.Scan((acc, val) => acc + val.Value, 0));
             resS.Subscribe(i => lastValues.Add(i), () => isCompleted = true);
 
             src.PushValue(new KeyValuePair<int, int>(1, 1));
@@ -67,7 +67,7 @@ namespace Paillave.EtlTests.Reactive.Operators
             CollectionAssert.AreEquivalent(new[] { 1 }, lastValues);
             Assert.IsTrue(isCompleted);
         }
-        [TestCategory(nameof(ParallelizeSubjectTests))]
+        [TestCategory(nameof(GroupSubjectTests))]
         [TestMethod]
         public void SplitObservables3()
         {
@@ -75,7 +75,7 @@ namespace Paillave.EtlTests.Reactive.Operators
             bool isCompleted = false;
             // var lastValues=new List<KeyValuePair<int, int>>();
             IPushSubject<KeyValuePair<int, int>> src = new PushSubject<KeyValuePair<int, int>>();
-            var resS = src.Parallelize(i => i.Key, iS => iS.Scan((acc, val) => acc + val.Value, 0).Last());
+            var resS = src.Group(i => i.Key, iS => iS.Scan((acc, val) => acc + val.Value, 0).Last());
             resS.Subscribe(i => lastValues.Add(i), () => isCompleted = true);
 
             src.PushValue(new KeyValuePair<int, int>(1, 1));
@@ -88,7 +88,7 @@ namespace Paillave.EtlTests.Reactive.Operators
             CollectionAssert.AreEquivalent(new[] { 14, 7 }, lastValues);
             Assert.IsTrue(isCompleted);
         }
-        [TestCategory(nameof(ParallelizeSubjectTests))]
+        [TestCategory(nameof(GroupSubjectTests))]
         [TestMethod]
         public void SplitEmptyObservables1()
         {
@@ -96,7 +96,7 @@ namespace Paillave.EtlTests.Reactive.Operators
             bool isCompleted = false;
             // var lastValues=new List<KeyValuePair<int, int>>();
             IPushSubject<KeyValuePair<int, int>> src = new PushSubject<KeyValuePair<int, int>>();
-            var resS = src.Parallelize(i => i.Key, iS => iS.Map(i => i.Value).Last());
+            var resS = src.Group(i => i.Key, iS => iS.Map(i => i.Value).Last());
             resS.Subscribe(i => lastValues.Add(i), () => isCompleted = true);
 
             src.Complete();

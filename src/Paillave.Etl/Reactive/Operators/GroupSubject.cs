@@ -6,7 +6,7 @@ using Paillave.Etl.Reactive.Disposables;
 
 namespace Paillave.Etl.Reactive.Operators
 {
-    public class ParallelizeSubject<TIn, TKey, TOut> : PushSubject<TOut>
+    public class GroupSubject<TIn, TKey, TOut> : PushSubject<TOut>
     {
         private class KeyGroup
         {
@@ -20,7 +20,7 @@ namespace Paillave.Etl.Reactive.Operators
         private IDisposableManager _outSubscriptions = new CollectionDisposableManager();
         private Dictionary<TKey, KeyGroup> _observableDictionary = new Dictionary<TKey, KeyGroup>();
         private object _syncLock = new object();
-        public ParallelizeSubject(
+        public GroupSubject(
             IPushObservable<TIn> sourceS,
             Func<TIn, TKey> getKey,
             Func<IPushObservable<TIn>, IPushObservable<TOut>> groupedObservableTransformation)
@@ -112,9 +112,9 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TOut> Parallelize<TIn, TKey, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, TKey> getKey, Func<IPushObservable<TIn>, IPushObservable<TOut>> parallelProcess)
+        public static IPushObservable<TOut> Group<TIn, TKey, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, TKey> getKey, Func<IPushObservable<TIn>, IPushObservable<TOut>> parallelProcess)
         {
-            return new ParallelizeSubject<TIn, TKey, TOut>(sourceS, getKey, parallelProcess);
+            return new GroupSubject<TIn, TKey, TOut>(sourceS, getKey, parallelProcess);
         }
     }
 }

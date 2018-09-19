@@ -125,13 +125,15 @@ namespace SimpleQuickstart
         {
             var outputFileS = rootStream.Select("open output file", i => new StreamWriter(i.OutputFilePath));
             rootStream
-                .CrossApplyTextFile("read input file", FileDefinition.Create(i =>
-                {
-                    Id = i.ToColumn<int>("#"),
-                    Name = i.ToColumn<string>("Label"),
-                    CategoryCode = i.ToColumn<string>("Category")
-                })
-                .IsColumnSeparated('\t'), i => i.InputFilePath)
+                .CrossApplyTextFile("read input file",
+                    FileDefinition.Create(
+                        i =>
+                        {
+                            Id = i.ToColumn<int>("#"),
+                            Name = i.ToColumn<string>("Label"),
+                            CategoryCode = i.ToColumn<string>("Category")
+                        }).IsColumnSeparated('\t'),
+                    i => i.InputFilePath)
                 .ToAction("Write input file to console", i => Console.WriteLine($"{i.Id}-{i.Name}-{i.CategoryCode}"))
                 .Pivot("group and count", i => i.CategoryCode, i => new { Count = AggregationOperators.Count() })
                 .Select("create output row", i => new CategoryStatisticFileRow { CategoryCode = i.Key, Count = i.Aggregation.Count })
