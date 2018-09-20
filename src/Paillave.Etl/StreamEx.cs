@@ -302,7 +302,7 @@ namespace Paillave.Etl
         {
             return new ToActionStreamNode<TIn, IStream<TIn>>(name, new ToActionArgs<TIn, IStream<TIn>>
             {
-                ProcessRow = processRow,
+                Processor = new SimpleToActionProcessor<TIn>(processRow),
                 Stream = stream
             }).Output;
         }
@@ -310,7 +310,7 @@ namespace Paillave.Etl
         {
             return new ToActionStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new ToActionArgs<TIn, ISortedStream<TIn, TKey>>
             {
-                ProcessRow = processRow,
+                Processor = new SimpleToActionProcessor<TIn>(processRow),
                 Stream = stream
             }).Output;
         }
@@ -318,38 +318,90 @@ namespace Paillave.Etl
         {
             return new ToActionStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new ToActionArgs<TIn, IKeyedStream<TIn, TKey>>
             {
-                ProcessRow = processRow,
+                Processor = new SimpleToActionProcessor<TIn>(processRow),
                 Stream = stream
             }).Output;
         }
+
+        public static IStream<TIn> ToAction<TIn>(this IStream<TIn> stream, string name, IToActionProcessor<TIn> processor)
+        {
+            return new ToActionStreamNode<TIn, IStream<TIn>>(name, new ToActionArgs<TIn, IStream<TIn>>
+            {
+                Processor = processor,
+                Stream = stream
+            }).Output;
+        }
+        public static ISortedStream<TIn, TKey> ToAction<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IToActionProcessor<TIn> processor)
+        {
+            return new ToActionStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new ToActionArgs<TIn, ISortedStream<TIn, TKey>>
+            {
+                Processor = processor,
+                Stream = stream
+            }).Output;
+        }
+        public static IKeyedStream<TIn, TKey> ToAction<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IToActionProcessor<TIn> processor)
+        {
+            return new ToActionStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new ToActionArgs<TIn, IKeyedStream<TIn, TKey>>
+            {
+                Processor = processor,
+                Stream = stream
+            }).Output;
+        }
+
+
         public static IStream<TIn> ToAction<TIn, TResource>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
         {
             return new ToActionStreamNode<TIn, IStream<TIn>, TResource>(name, new ToActionArgs<TIn, IStream<TIn>, TResource>
             {
-                ProcessRow = processRow,
                 Stream = stream,
                 ResourceStream = resourceStream,
-                PreProcess = preProcess
+                Processor = new SimpleToActionProcessor<TIn, TResource>(processRow, preProcess)
             }).Output;
         }
         public static ISortedStream<TIn, TKey> ToAction<TIn, TResource, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
         {
             return new ToActionStreamNode<TIn, ISortedStream<TIn, TKey>, TResource>(name, new ToActionArgs<TIn, ISortedStream<TIn, TKey>, TResource>
             {
-                ProcessRow = processRow,
                 Stream = stream,
                 ResourceStream = resourceStream,
-                PreProcess = preProcess
+                Processor = new SimpleToActionProcessor<TIn, TResource>(processRow, preProcess)
             }).Output;
         }
         public static IKeyedStream<TIn, TKey> ToAction<TIn, TResource, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
         {
             return new ToActionStreamNode<TIn, IKeyedStream<TIn, TKey>, TResource>(name, new ToActionArgs<TIn, IKeyedStream<TIn, TKey>, TResource>
             {
-                ProcessRow = processRow,
                 Stream = stream,
                 ResourceStream = resourceStream,
-                PreProcess = preProcess
+                Processor = new SimpleToActionProcessor<TIn, TResource>(processRow, preProcess)
+            }).Output;
+        }
+
+        public static IStream<TIn> ToAction<TIn, TResource>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, IToActionProcessor<TIn, TResource> processor)
+        {
+            return new ToActionStreamNode<TIn, IStream<TIn>, TResource>(name, new ToActionArgs<TIn, IStream<TIn>, TResource>
+            {
+                Stream = stream,
+                ResourceStream = resourceStream,
+                Processor = processor
+            }).Output;
+        }
+        public static ISortedStream<TIn, TKey> ToAction<TIn, TResource, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, IToActionProcessor<TIn, TResource> processor)
+        {
+            return new ToActionStreamNode<TIn, ISortedStream<TIn, TKey>, TResource>(name, new ToActionArgs<TIn, ISortedStream<TIn, TKey>, TResource>
+            {
+                Stream = stream,
+                ResourceStream = resourceStream,
+                Processor = processor
+            }).Output;
+        }
+        public static IKeyedStream<TIn, TKey> ToAction<TIn, TResource, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, IToActionProcessor<TIn, TResource> processor)
+        {
+            return new ToActionStreamNode<TIn, IKeyedStream<TIn, TKey>, TResource>(name, new ToActionArgs<TIn, IKeyedStream<TIn, TKey>, TResource>
+            {
+                Stream = stream,
+                ResourceStream = resourceStream,
+                Processor = processor
             }).Output;
         }
         #endregion
