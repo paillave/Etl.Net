@@ -38,12 +38,11 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Ensure Sorted | Transformation | :heavy_check_mark: |  |
 | Ensure Keyed | Transformation | :heavy_check_mark: |  |
 | Script | Transformation | :heavy_check_mark: |  |
-| Select keeping sorted | Transformation | :construction: | #46 |
-| Left join keeping sorted | Transformation | :construction: | #47 |
-| Lookup keeping sorted | Transformation | :construction: | #48 |
 | Run subprocess | Transformation | :heavy_check_mark: | #70 |
 | List folder files | Data source | :heavy_check_mark: |  |
 | Read csv file | Data source | :heavy_check_mark: | #31 |
+| Keep section | Transformation | :heavy_check_mark: | #58 |
+| Ignore section | Transformation | :heavy_check_mark: | #59 |
 | Read very large xml file | Data source | :construction: | #65 |
 | Read very large json file | Data source | :construction: | #79 |
 | Read excel file | Data source | :heavy_check_mark: | #18 |
@@ -69,8 +68,6 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Write file to SFTP | Data destination | :construction: | #5 |
 | Read data from REST service | Data source | :construction: | #9 |
 | Write data to REST service | Data destination | :construction: | #8 |
-| Keep section | Transformation | :construction: | #58 |
-| Ignore section | Transformation | :construction: | #59 |
 
 *Follow the status in the issue section*
 

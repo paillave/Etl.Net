@@ -1,4 +1,4 @@
-﻿using Paillave.Etl.Core;
+using Paillave.Etl.Core;
 using Paillave.Etl.StreamNodes;
 using Paillave.Etl.Core.Streams;
 using Paillave.Etl.Core.TraceContents;
@@ -18,5 +18,13 @@ namespace Paillave.Etl
 {
     public static partial class StreamEx
     {
+        public static IStream<I> Union<I>(this IStream<I> stream, string name, IStream<I> inputStream2)
+        {
+            return new UnionStreamNode<I>(name, new UnionArgs<I>
+            {
+                Stream1 = stream,
+                Stream2 = inputStream2
+            }).Output;
+        }
     }
 }
