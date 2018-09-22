@@ -11,7 +11,7 @@ using EFCore.BulkExtensions;
 
 namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
 {
-    public class ToEntityFrameworkCoreArgs<TIn, TCtx, TStream>
+    public class ThroughEntityFrameworkCoreArgs<TIn, TCtx, TStream>
         where TIn : class
         where TStream : IStream<TIn>
         where TCtx : DbContext
@@ -27,17 +27,17 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         InsertOnly,
         Upsert
     }
-    public class ToEntityFrameworkCoreStreamNode<TIn, TCtx, TStream> : StreamNodeBase<TIn, TStream, ToEntityFrameworkCoreArgs<TIn, TCtx, TStream>>
+    public class ThroughEntityFrameworkCoreStreamNode<TIn, TCtx, TStream> : StreamNodeBase<TIn, TStream, ThroughEntityFrameworkCoreArgs<TIn, TCtx, TStream>>
         where TIn : class
         where TStream : IStream<TIn>
         where TCtx : DbContext
     {
         public override bool IsAwaitable => true;
-        public ToEntityFrameworkCoreStreamNode(string name, ToEntityFrameworkCoreArgs<TIn, TCtx, TStream> args) : base(name, args)
+        public ThroughEntityFrameworkCoreStreamNode(string name, ThroughEntityFrameworkCoreArgs<TIn, TCtx, TStream> args) : base(name, args)
         {
         }
 
-        protected override TStream CreateOutputStream(ToEntityFrameworkCoreArgs<TIn, TCtx, TStream> args)
+        protected override TStream CreateOutputStream(ThroughEntityFrameworkCoreArgs<TIn, TCtx, TStream> args)
         {
             var dbContextStream = args.DbContextStream.Observable.First();
             var ret = args.SourceStream.Observable

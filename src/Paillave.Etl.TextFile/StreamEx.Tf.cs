@@ -129,32 +129,43 @@ namespace Paillave.Etl
         }
         #endregion
 
+        #region ThroughTextFile
+        public static IStream<TIn> ThroughTextFile<TIn>(this IStream<TIn> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
+        {
+            return new ThroughFlatFileStreamNode<TIn, IStream<TIn>>(name, new ThroughFlatFileArgs<TIn, IStream<TIn>>
+            {
+                MainStream = stream,
+                Mapping = mapping,
+                TargetStream = resourceStream
+            }).Output;
+        }
+        public static ISortedStream<TIn, TKey> ThroughTextFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
+        {
+            return new ThroughFlatFileStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new ThroughFlatFileArgs<TIn, ISortedStream<TIn, TKey>>
+            {
+                MainStream = stream,
+                Mapping = mapping,
+                TargetStream = resourceStream
+            }).Output;
+        }
+        public static IKeyedStream<TIn, TKey> ThroughTextFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
+        {
+            return new ThroughFlatFileStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new ThroughFlatFileArgs<TIn, IKeyedStream<TIn, TKey>>
+            {
+                MainStream = stream,
+                Mapping = mapping,
+                TargetStream = resourceStream
+            }).Output;
+        }
+        #endregion
+
         #region ToTextFile
-        public static IStream<TIn> ToTextFile<TIn>(this IStream<TIn> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
+        public static IStream<Stream> ToTextFile<TIn>(this IStream<TIn> stream, string name, FlatFileDefinition<TIn> mapping)
         {
-            return new ToFlatFileStreamNode<TIn, IStream<TIn>>(name, new ToFlatFileArgs<TIn, IStream<TIn>>
+            return new ToFlatFileStreamNode<TIn>(name, new ToFlatFileArgs<TIn>
             {
                 MainStream = stream,
                 Mapping = mapping,
-                TargetStream = resourceStream
-            }).Output;
-        }
-        public static ISortedStream<TIn, TKey> ToTextFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
-        {
-            return new ToFlatFileStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new ToFlatFileArgs<TIn, ISortedStream<TIn, TKey>>
-            {
-                MainStream = stream,
-                Mapping = mapping,
-                TargetStream = resourceStream
-            }).Output;
-        }
-        public static IKeyedStream<TIn, TKey> ToTextFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
-        {
-            return new ToFlatFileStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new ToFlatFileArgs<TIn, IKeyedStream<TIn, TKey>>
-            {
-                MainStream = stream,
-                Mapping = mapping,
-                TargetStream = resourceStream
             }).Output;
         }
         #endregion

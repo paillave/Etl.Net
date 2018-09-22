@@ -65,7 +65,7 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | List file from SFTP | Data source | :construction: | #10 |
 | Read file from FTP | Data source | :heavy_check_mark: | #11 |
 | Read file from SFTP | Data source | :construction: | #10 |
-| Write file to FTP | Data destination | :construction: | #6 |
+| Write file to FTP | Data destination | :heavy_check_mark: | #6 |
 | Write file to SFTP | Data destination | :construction: | #5 |
 | Read data from REST service | Data source | :construction: | #9 |
 | Write data to REST service | Data destination | :construction: | #8 |

@@ -17,11 +17,11 @@ namespace Paillave.Etl
                 NoParallelisation = noParallelisation
             }));
         }
-        public static IStream<TIn> ToEntityFrameworkCore<TIn, TRes>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, BulkLoadMode bulkLoadMode = BulkLoadMode.InsertOnly, int chunkSize = 1000)
+        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TRes>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, BulkLoadMode bulkLoadMode = BulkLoadMode.InsertOnly, int chunkSize = 1000)
             where TRes : DbContext
             where TIn : class
         {
-            return new ToEntityFrameworkCoreStreamNode<TIn, TRes, IStream<TIn>>(name, new ToEntityFrameworkCoreArgs<TIn, TRes, IStream<TIn>>
+            return new ThroughEntityFrameworkCoreStreamNode<TIn, TRes, IStream<TIn>>(name, new ThroughEntityFrameworkCoreArgs<TIn, TRes, IStream<TIn>>
             {
                 SourceStream = stream,
                 DbContextStream = resourceStream,
@@ -29,11 +29,11 @@ namespace Paillave.Etl
                 BulkLoadMode = bulkLoadMode
             }).Output;
         }
-        public static ISortedStream<TIn, TKey> ToEntityFrameworkCore<TIn, TRes, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<TRes> resourceStream, BulkLoadMode bulkLoadMode = BulkLoadMode.InsertOnly, int chunkSize = 1000)
+        public static ISortedStream<TIn, TKey> ThroughEntityFrameworkCore<TIn, TRes, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<TRes> resourceStream, BulkLoadMode bulkLoadMode = BulkLoadMode.InsertOnly, int chunkSize = 1000)
             where TRes : DbContext
             where TIn : class
         {
-            return new ToEntityFrameworkCoreStreamNode<TIn, TRes, ISortedStream<TIn, TKey>>(name, new ToEntityFrameworkCoreArgs<TIn, TRes, ISortedStream<TIn, TKey>>
+            return new ThroughEntityFrameworkCoreStreamNode<TIn, TRes, ISortedStream<TIn, TKey>>(name, new ThroughEntityFrameworkCoreArgs<TIn, TRes, ISortedStream<TIn, TKey>>
             {
                 SourceStream = stream,
                 DbContextStream = resourceStream,
@@ -41,11 +41,11 @@ namespace Paillave.Etl
                 BulkLoadMode = bulkLoadMode
             }).Output;
         }
-        public static IKeyedStream<TIn, TKey> ToEntityFrameworkCore<TIn, TRes, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<TRes> resourceStream, BulkLoadMode bulkLoadMode = BulkLoadMode.InsertOnly, int chunkSize = 1000)
+        public static IKeyedStream<TIn, TKey> ThroughEntityFrameworkCore<TIn, TRes, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<TRes> resourceStream, BulkLoadMode bulkLoadMode = BulkLoadMode.InsertOnly, int chunkSize = 1000)
             where TRes : DbContext
             where TIn : class
         {
-            return new ToEntityFrameworkCoreStreamNode<TIn, TRes, IKeyedStream<TIn, TKey>>(name, new ToEntityFrameworkCoreArgs<TIn, TRes, IKeyedStream<TIn, TKey>>
+            return new ThroughEntityFrameworkCoreStreamNode<TIn, TRes, IKeyedStream<TIn, TKey>>(name, new ThroughEntityFrameworkCoreArgs<TIn, TRes, IKeyedStream<TIn, TKey>>
             {
                 SourceStream = stream,
                 DbContextStream = resourceStream,

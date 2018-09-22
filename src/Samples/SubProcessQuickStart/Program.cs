@@ -15,7 +15,7 @@ namespace SubProcessQuickStart
         {
             var runner = new StreamProcessRunner<SubProcessQuickstartJob, MyConfig>();
             runner.GetDefinitionStructure().OpenEstimatedExecutionPlanVisNetwork();
-            StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.ToAction("logs to console", Console.WriteLine));
+            StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.ThroughAction("logs to console", Console.WriteLine));
             var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\Samples\TestFiles";
             // var testFilesDirectory = @"C:\Users\paill\source\repos\Etl.Net\src\Samples\TestFiles";
             var task = runner.ExecuteAsync(new MyConfig

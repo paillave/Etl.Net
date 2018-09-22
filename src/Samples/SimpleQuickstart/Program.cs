@@ -30,7 +30,7 @@ namespace SimpleQuickstart
                         CategoryCode = i.ToColumn<string>("Category")
                     }).IsColumnSeparated('\t'),
                     i => i.InputFilePath)
-                .ToAction("Write input file to console", i => Console.WriteLine($"{i.Id}->{i.Name}->{i.CategoryCode}->{i.ValueType}"))
+                .ThroughAction("Write input file to console", i => Console.WriteLine($"{i.Id}->{i.Name}->{i.CategoryCode}->{i.ValueType}"))
                 .Pivot("group and count", i => i.CategoryCode, i => new
                 {
                     Count = AggregationOperators.Count(),
@@ -45,7 +45,7 @@ namespace SimpleQuickstart
                     i.Aggregation.CountB
                 })
                 .Sort("sort output values", i => new { i.CategoryCode })
-                .ToTextFile("write to text file", outputFileS, FlatFileDefinition.Create(i => new
+                .ThroughTextFile("write to text file", outputFileS, FlatFileDefinition.Create(i => new
                 {
                     CategoryCode = i.ToColumn<string>("MyCategoryCode"),
                     Count = i.ToColumn<int>("Count"),

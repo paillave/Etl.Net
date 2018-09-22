@@ -34,13 +34,13 @@ namespace SubProcessQuickStart.Jobs
                         .Select("Open output file", i => File.OpenWrite(Path.Combine(i.Cfg.CategoryDestinationFolder, $"Category-{i.Data.Category}.csv")));
                     groupedLines
                         .Select("create output data", i => new OutputFileRow { Id = i.Data.Id, Name = i.Data.Name, FileName = i.Data.FileName })
-                        .ToTextFile("Write lines to matching category text file", groupOutputFileS, new OutputFileRowMapper());
+                        .ThroughTextFile("Write lines to matching category text file", groupOutputFileS, new OutputFileRowMapper());
                     return groupedLines;
                 });
 
             joinedLineS.Select("create output data", i => new OutputFileRow { Id = i.Data.Id, Name = i.Data.Name, FileName = i.Data.FileName })
-                .ToTextFile("write to output one single file", outputFileResourceS, new OutputFileRowMapper())
-                .ToAction("write to console", i => Console.WriteLine($"{i.FileName}:{i.Id}-{i.Name}"));
+                .ThroughTextFile("write to output one single file", outputFileResourceS, new OutputFileRowMapper())
+                .ThroughAction("write to console", i => Console.WriteLine($"{i.FileName}:{i.Id}-{i.Name}"));
         }
     }
 }
