@@ -26,7 +26,7 @@ namespace ExcelQuickstart
         {
             var outputFile = rootStream.Select("open output file", i => File.OpenWrite(i.OutputFile));
             rootStream
-                .CrossApplyFolderFiles("get excel files", i => i.InputDirectory, "*.xlsx")
+                .CrossApplyFolderFiles("get excel files", i => i.InputDirectory, (f, r) => f.Name, "*.xlsx")
                 .Select("link to root stream", rootStream, (i, s) => new { FileName = i, OutputFileName = s.OutputFile })
                 .Where("exclude output file", i => !string.Equals(i.FileName, i.OutputFileName, StringComparison.InvariantCultureIgnoreCase))
                 .CrossApplyExcelSheets("get excel sheets", i => i.FileName)
