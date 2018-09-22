@@ -60,9 +60,9 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | SQL Server bulk load | Data destination | :heavy_check_mark: | #20 |
 | Read from sql server command | Data source | :heavy_check_mark: | #55 |
 | Write to sql server command | Data destination | :heavy_check_mark: | #54 |
-| List files from FTP | Data source | :construction: | #11 |
+| List files from FTP | Data source | :heavy_check_mark: | #11 |
 | List file from SFTP | Data source | :construction: | #10 |
-| Read file from FTP | Data source | :construction: | #11 |
+| Read file from FTP | Data source | :heavy_check_mark: | #11 |
 | Read file from SFTP | Data source | :construction: | #10 |
 | Write file to FTP | Data destination | :construction: | #6 |
 | Write file to SFTP | Data destination | :construction: | #5 |
