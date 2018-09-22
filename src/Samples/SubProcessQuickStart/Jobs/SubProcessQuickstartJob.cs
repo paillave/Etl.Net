@@ -15,7 +15,7 @@ namespace SubProcessQuickStart.Jobs
             var outputFileResourceS = rootStream.Select("open output file", i => File.OpenWrite(i.DestinationFilePath));
 
             var parsedLineS = rootStream
-                .CrossApplyFolderFiles("get folder files", i => i.InputFolderPath, i => i.InputFilesSearchPattern)
+                .CrossApplyFolderFiles("get folder files", i => i.InputFolderPath, i => i.InputFilesSearchPattern, (f, r) => f.Name)
                 .CrossApplyTextFile("parse input file", new InputFileRowMapper(), (i, p) => { p.FileName = i; return p; });
 
             var parsedTypeLineS = rootStream

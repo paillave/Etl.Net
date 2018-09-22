@@ -16,7 +16,7 @@ namespace ComplexQuickstart.Jobs
             var outputCategoryResourceS = rootStream.Select("open output category file", i => File.OpenWrite(i.CategoryDestinationFilePath));
 
             var parsedLineS = rootStream
-                .CrossApplyFolderFiles("get folder files", i => i.InputFolderPath, i => i.InputFilesSearchPattern)
+                .CrossApplyFolderFiles("get folder files", i => i.InputFolderPath, i => i.InputFilesSearchPattern, (f, r) => f.Name)
                 .CrossApplyTextFile("parse input file", new InputFileRowMapper(), (i, p) => { p.FileName = i; return p; });
 
             var parsedTypeLineS = rootStream
