@@ -15,17 +15,22 @@ namespace Paillave.Etl.Reactive.Operators
         }
         public static Task<T> ToTaskAsync<T>(this IPushObservable<T> observable)
         {
-            return Task.Run(() =>
-            {
-                T latestValue = default(T);
-                var mtx = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
-                var disp = observable.Subscribe(
-                    v => latestValue = v,
-                    () => mtx.Set());
-                mtx.WaitOne();
-                disp.Dispose();
-                return latestValue;
-            });
+            var mtxInit = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
+            var task = Task.Run(() =>
+             {
+                 T latestValue = default(T);
+                 var mtx = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
+                 using (observable.Subscribe(
+                     v => latestValue = v,
+                     () => mtx.Set()))
+                 {
+                     mtxInit.Set(); //only once the stream is listened, the task can be returned. Otherwise, some events can be missed
+                     mtx.WaitOne();
+                     return latestValue;
+                 }
+             });
+            mtxInit.WaitOne();
+            return task;
         }
         public static IPushObservable<T> DelayTillEndOfStream<T>(this IPushObservable<T> observable)
         {

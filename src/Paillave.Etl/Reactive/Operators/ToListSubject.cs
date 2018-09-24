@@ -10,11 +10,15 @@ namespace Paillave.Etl.Reactive.Operators
     public class ToListSubject<TIn> : PushSubject<List<TIn>>
     {
         private IDisposable _subscription;
-        private List<TIn> _accumulator = new List<TIn>();
+        private List<TIn> _accumulator;
         private object _lockSync = new object();
         public ToListSubject(IPushObservable<TIn> observable)
         {
-            this._subscription = observable.Subscribe(this.HandlePushValue, this.HandleComplete, this.PushException);
+            lock (_lockSync)
+            {
+                _accumulator = new List<TIn>();
+                this._subscription = observable.Subscribe(this.HandlePushValue, this.HandleComplete, this.PushException);
+            }
         }
         private void HandlePushValue(TIn value)
         {

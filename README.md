@@ -1,7 +1,7 @@
 # Etl.Net [![Join the chat at https://gitter.im/ChoETL/Lobby](https://badges.gitter.im/ChoETL/Lobby.svg)](https://gitter.im/Etl-Net/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-| master | develop |
-| - | - |
+|master|develop|
+|-|-|
 | ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/master.svg) | ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/develop.svg) |
 | [![Build status](https://ci.appveyor.com/api/projects/status/sqjh6f6cwadxfoou/branch/master?svg=true)](https://ci.appveyor.com/project/paillave/etl-net) | [![Build status](https://ci.appveyor.com/api/projects/status/64abwe5ljblrviab/branch/develop?svg=true)](https://ci.appveyor.com/project/paillave/etl-net-hw2p7) |
 
@@ -34,7 +34,7 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Left Join | Transformation | :heavy_check_mark: |  |
 | Lookup | Transformation | :heavy_check_mark: | #23 |
 | Union | Transformation | :heavy_check_mark: | #34 |
-| Union All | Transformation | :construction: | #94 |
+| Union All | Transformation | :heavy_check_mark: | #94 |
 | Skip | Transformation | :heavy_check_mark: |  |
 | Top | Transformation | :heavy_check_mark: |  |
 | Distinct | Transformation | :heavy_check_mark: | #15 |
