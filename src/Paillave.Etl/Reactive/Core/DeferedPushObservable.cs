@@ -52,6 +52,7 @@ namespace Paillave.Etl.Reactive.Core
             }
         }
 
+        private Guid tmp = Guid.NewGuid();
         public void Start()
         {
             Task.Run(() =>

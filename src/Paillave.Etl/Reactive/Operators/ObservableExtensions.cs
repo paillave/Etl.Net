@@ -19,7 +19,9 @@ namespace Paillave.Etl.Reactive.Operators
             {
                 T latestValue = default(T);
                 var mtx = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
-                var disp = observable.Subscribe((v) => latestValue = v, () => mtx.Set());
+                var disp = observable.Subscribe(
+                    v => latestValue = v,
+                    () => mtx.Set());
                 mtx.WaitOne();
                 disp.Dispose();
                 return latestValue;
