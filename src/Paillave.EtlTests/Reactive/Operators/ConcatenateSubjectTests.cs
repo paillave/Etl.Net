@@ -4,6 +4,7 @@ using Paillave.Etl.Reactive.Core;
 using System.Collections.Generic;
 using System.Linq;
 using Paillave.Etl.Reactive.Operators;
+using System.Threading;
 
 namespace Paillave.EtlTests.Reactive.Operators
 {
@@ -65,14 +66,16 @@ namespace Paillave.EtlTests.Reactive.Operators
         [TestMethod]
         public void SimpleConcatenationWithEmptyBottomBottomStartingFirst()
         {
-            var obs1 = PushObservable.FromEnumerable(new[] { 1, 2 });
-            var obs2 = PushObservable.FromEnumerable(new int[] {  });
+            EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
+
+            var obs1 = PushObservable.FromEnumerable(new[] { 1, 2 }, waitHandle);
+            var obs2 = PushObservable.FromEnumerable(new int[] { }, waitHandle);
 
             var outputObs = obs1.Concatenate(obs2);
             var outputTask = outputObs.ToListAsync();
-
-            obs2.Start();
-            obs1.Start();
+            waitHandle.Set();
+            // obs2.Start();
+            // obs1.Start();
 
             outputTask.Wait();
             var output = outputTask.Result;
@@ -82,14 +85,18 @@ namespace Paillave.EtlTests.Reactive.Operators
         [TestMethod]
         public void SimpleConcatenationWithEmptyTopTopStartingFirst()
         {
-            var obs1 = PushObservable.FromEnumerable(new int[] { });
-            var obs2 = PushObservable.FromEnumerable(new[] { 3, 4 });
+            EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
+
+            var obs1 = PushObservable.FromEnumerable(new int[] { }, waitHandle);
+            var obs2 = PushObservable.FromEnumerable(new[] { 3, 4 }, waitHandle);
 
             var outputObs = obs1.Concatenate(obs2);
             var outputTask = outputObs.ToListAsync();
 
-            obs1.Start();
-            obs2.Start();
+            waitHandle.Set();
+
+            // obs1.Start();
+            // obs2.Start();
 
             outputTask.Wait();
             var output = outputTask.Result;

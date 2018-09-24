@@ -15,39 +15,37 @@ namespace Paillave.EtlTests.Reactive.Operators
         [TestMethod]
         public void PushMultipleValues()
         {
-            PushValues(10, false);
+            PushValuesNotAutomaticStart(10);
         }
 
         [TestCategory(nameof(DeferedPushObservableTests))]
         [TestMethod]
         public void PushNoValue()
         {
-            PushValues(0, false);
+            PushValuesNotAutomaticStart(0);
         }
 
         [TestCategory(nameof(DeferedPushObservableTests))]
         [TestMethod]
         public void PushMultipleValuesStartOnFirstSubscription()
         {
-            PushValues(10, true);
+            PushValuesAutomaticStart(10);
         }
 
         [TestCategory(nameof(DeferedPushObservableTests))]
         [TestMethod]
         public void PushNoValueStartOnFirstSubscription()
         {
-            PushValues(0, true);
+            PushValuesAutomaticStart(0);
         }
 
-        public void PushValues(int nb, bool automaticallyStartsOnHandle)
+        public void PushValuesAutomaticStart(int nb)
         {
             var inputValues = Enumerable.Range(0, nb).ToList();
             var outputValues = new List<int>();
             bool completed = false;
-            EventWaitHandle waitHandle = null;
-            if (automaticallyStartsOnHandle)
-                waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-            var observable = new DeferedPushObservable<int>((pushValue) =>
+            EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
+            var observable = new EventDeferedPushObservable<int>((pushValue) =>
               {
                   foreach (var item in inputValues)
                       pushValue(item);
@@ -63,10 +61,36 @@ namespace Paillave.EtlTests.Reactive.Operators
             //};
             observable.Subscribe(outputValues.Add);
 
-            if (!automaticallyStartsOnHandle)
-                observable.Start();
-            else
-                waitHandle.Set();
+            waitHandle.Set();
+            Assert.IsTrue(task.Wait(5000), "the stream should complete");
+            for (int i = 0; i < nb; i++)
+                Assert.AreEqual(i, outputValues[i], "all values should be the same");
+            Assert.AreEqual(inputValues.Count, outputValues.Count, "nb items from the input source must be the same that in the output");
+            Assert.IsFalse(completed, "shouldn't be completed");
+        }
+
+        public void PushValuesNotAutomaticStart(int nb)
+        {
+            var inputValues = Enumerable.Range(0, nb).ToList();
+            var outputValues = new List<int>();
+            bool completed = false;
+            var observable = new DeferedPushObservable<int>((pushValue) =>
+              {
+                  foreach (var item in inputValues)
+                      pushValue(item);
+              });
+
+            var task = observable.ToTaskAsync();
+
+            System.Threading.Thread.Sleep(99); //not more than 100!!!
+
+            //for (int i = 0; i < 5000; i++)
+            //{
+
+            //};
+            observable.Subscribe(outputValues.Add);
+
+            observable.Start();
             Assert.IsTrue(task.Wait(5000), "the stream should complete");
             for (int i = 0; i < nb; i++)
                 Assert.AreEqual(i, outputValues[i], "all values should be the same");
