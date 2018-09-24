@@ -1,17 +1,22 @@
-# Etl.Net
+# Etl.Net [![Join the chat at https://gitter.im/ChoETL/Lobby](https://badges.gitter.im/Etl-Net/Lobby.svg)](https://gitter.im/Etl-Net/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-|  | ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/master.svg) [![Build status](https://ci.appveyor.com/api/projects/status/sqjh6f6cwadxfoou/branch/master?svg=true)](https://ci.appveyor.com/project/paillave/etl-net) [![Join the chat at https://gitter.im/ChoETL/Lobby](https://badges.gitter.im/ChoETL/Lobby.svg)](https://gitter.im/Etl-Net/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) |
-|-|-|
-| Etl.Net | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) |
-| Etl.Net.EntityFrameworkCore | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) |
-| Etl.Net.TextFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.TextFile.svg)](https://www.nuget.org/packages/Etl.Net.TextFile) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.TextFile.svg)](https://www.nuget.org/packages/Etl.Net.TextFile) |
-| Etl.Net.Ftp | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.Ftp.svg)](https://www.nuget.org/packages/Etl.Net.Ftp) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.Ftp.svg)](https://www.nuget.org/packages/Etl.Net.Ftp) |
-| Etl.Net.ExcelFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) |
-| Etl.Net.SqlServer | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.SqlServer.svg)](https://www.nuget.org/packages/Etl.Net.SqlServer) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.SqlServer.svg)](https://www.nuget.org/packages/Etl.Net.SqlServer) |
-| Etl.Net.ExecutionPlan | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) [![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) |
+|master|develop|
+|-|- |
+| ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/master.svg) | ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/develop.svg) |
+| [![Build status](https://ci.appveyor.com/api/projects/status/sqjh6f6cwadxfoou/branch/master?svg=true)](https://ci.appveyor.com/project/paillave/etl-net) | [![Build status](https://ci.appveyor.com/api/projects/status/64abwe5ljblrviab/branch/develop?svg=true)](https://ci.appveyor.com/project/paillave/etl-net-hw2p7) |
 
 Implementation of a multi platform reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but that is used in the same way than Linq.
 The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
+
+| Package | nuget version | nuget downloads |
+|-|-|-|
+| Etl.Net | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) |
+| Etl.Net.EntityFrameworkCore | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) |
+| Etl.Net.TextFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.TextFile.svg)](https://www.nuget.org/packages/Etl.Net.TextFile) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.TextFile.svg)](https://www.nuget.org/packages/Etl.Net.TextFile) |
+| Etl.Net.Ftp | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.Ftp.svg)](https://www.nuget.org/packages/Etl.Net.Ftp) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.Ftp.svg)](https://www.nuget.org/packages/Etl.Net.Ftp) |
+| Etl.Net.ExcelFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) |
+| Etl.Net.SqlServer | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.SqlServer.svg)](https://www.nuget.org/packages/Etl.Net.SqlServer) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.SqlServer.svg)](https://www.nuget.org/packages/Etl.Net.SqlServer) |
+| Etl.Net.ExecutionPlan | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) |
 
 ## Developement status
 
@@ -29,6 +34,7 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Left Join | Transformation | :heavy_check_mark: |  |
 | Lookup | Transformation | :heavy_check_mark: | #23 |
 | Union | Transformation | :heavy_check_mark: | #34 |
+| Union All | Transformation | :heavy_check_mark: | #94 |
 | Skip | Transformation | :heavy_check_mark: |  |
 | Top | Transformation | :heavy_check_mark: |  |
 | Distinct | Transformation | :heavy_check_mark: | #15 |
@@ -65,7 +71,7 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | List file from SFTP | Data source | :construction: | #10 |
 | Read file from FTP | Data source | :heavy_check_mark: | #11 |
 | Read file from SFTP | Data source | :construction: | #10 |
-| Write file to FTP | Data destination | :construction: | #6 |
+| Write file to FTP | Data destination | :heavy_check_mark: | #6 |
 | Write file to SFTP | Data destination | :construction: | #5 |
 | Read data from REST service | Data source | :construction: | #9 |
 | Write data to REST service | Data destination | :construction: | #8 |

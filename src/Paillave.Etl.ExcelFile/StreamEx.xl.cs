@@ -88,7 +88,7 @@ namespace Paillave.Etl
         }
         #endregion
 
-        #region ToExcelFile
+        #region ThroughExcelFile
         //public static IStream<TIn> ToExcelFile<TIn>(this IStream<TIn> stream, string name, IStream<SystemIO.StreamWriter> resourceStream, ExcelFileDefinition<TIn> mapping) where TIn : new()
         //{
         //    return new ToExcelFileStreamNode<TIn, IStream<TIn>>(name, new ToExcelFileArgs<TIn, IStream<TIn>>
@@ -116,28 +116,42 @@ namespace Paillave.Etl
         //        TargetStream = resourceStream
         //    }).Output;
         //}
-        public static IStream<TIn> ToExcelFile<TIn>(this IStream<TIn> stream, string name, IStream<Stream> resourceStream)
+        public static IStream<TIn> ThroughExcelFile<TIn>(this IStream<TIn> stream, string name, IStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
         {
-            return new ToExcelFileStreamNode<TIn, IStream<TIn>>(name, new ToExcelFileArgs<TIn, IStream<TIn>>
+            return new ThroughExcelFileStreamNode<TIn, IStream<TIn>>(name, new ThroughExcelFileArgs<TIn, IStream<TIn>>
             {
                 MainStream = stream,
-                TargetStream = resourceStream
+                TargetStream = resourceStream,
+                Mapping = mapping
             }).Output;
         }
-        public static ISortedStream<TIn, TKey> ToExcelFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<Stream> resourceStream)
+        public static ISortedStream<TIn, TKey> ThroughExcelFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
         {
-            return new ToExcelFileStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new ToExcelFileArgs<TIn, ISortedStream<TIn, TKey>>
+            return new ThroughExcelFileStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new ThroughExcelFileArgs<TIn, ISortedStream<TIn, TKey>>
             {
                 MainStream = stream,
-                TargetStream = resourceStream
+                TargetStream = resourceStream,
+                Mapping = mapping
             }).Output;
         }
-        public static IKeyedStream<TIn, TKey> ToExcelFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<Stream> resourceStream)
+        public static IKeyedStream<TIn, TKey> ThroughExcelFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
         {
-            return new ToExcelFileStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new ToExcelFileArgs<TIn, IKeyedStream<TIn, TKey>>
+            return new ThroughExcelFileStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new ThroughExcelFileArgs<TIn, IKeyedStream<TIn, TKey>>
             {
                 MainStream = stream,
-                TargetStream = resourceStream
+                TargetStream = resourceStream,
+                Mapping = mapping
+            }).Output;
+        }
+        #endregion
+
+        #region ToExcelFile
+        public static IStream<Stream> ToExcelFile<TIn>(this IStream<TIn> stream, string name, ExcelFileDefinition<TIn> mapping = null)
+        {
+            return new ToExcelFileStreamNode<TIn>(name, new ToExcelFileArgs<TIn>
+            {
+                MainStream = stream,
+                Mapping = mapping
             }).Output;
         }
         #endregion

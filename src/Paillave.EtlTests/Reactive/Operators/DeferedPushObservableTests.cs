@@ -13,65 +13,85 @@ namespace Paillave.EtlTests.Reactive.Operators
     {
         [TestCategory(nameof(DeferedPushObservableTests))]
         [TestMethod]
-        public void PushMultipleValues()
+        public void Push10000Values()
         {
-            PushValues(10, false);
+            PushValuesNotAutomaticStart(10000);
         }
 
         [TestCategory(nameof(DeferedPushObservableTests))]
         [TestMethod]
-        public void PushNoValue()
+        public void Push100Values()
         {
-            PushValues(0, false);
+            PushValuesNotAutomaticStart(100);
         }
 
         [TestCategory(nameof(DeferedPushObservableTests))]
         [TestMethod]
-        public void PushMultipleValuesStartOnFirstSubscription()
+        public void Push10Values()
         {
-            PushValues(10, true);
+            PushValuesNotAutomaticStart(10);
         }
 
         [TestCategory(nameof(DeferedPushObservableTests))]
         [TestMethod]
-        public void PushNoValueStartOnFirstSubscription()
+        public void Push0Value()
         {
-            PushValues(0, true);
+            PushValuesNotAutomaticStart(0);
         }
 
-        public void PushValues(int nb, bool automaticallyStartsOnHandle)
+        [TestCategory(nameof(DeferedPushObservableTests))]
+        [TestMethod]
+        public void Push10000ValuesStartWithEvent()
+        {
+            PushValuesStartWithEvent(10000);
+        }
+
+        [TestCategory(nameof(DeferedPushObservableTests))]
+        [TestMethod]
+        public void Push100ValuesStartWithEvent()
+        {
+            PushValuesStartWithEvent(100);
+        }
+
+        [TestCategory(nameof(DeferedPushObservableTests))]
+        [TestMethod]
+        public void Push10ValuesStartWithEvent()
+        {
+            PushValuesStartWithEvent(10);
+        }
+
+        [TestCategory(nameof(DeferedPushObservableTests))]
+        [TestMethod]
+        public void Push0ValueStartWithEvent()
+        {
+            PushValuesStartWithEvent(0);
+        }
+
+        public void PushValuesStartWithEvent(int nb)
         {
             var inputValues = Enumerable.Range(0, nb).ToList();
             var outputValues = new List<int>();
-            bool completed = false;
-            EventWaitHandle waitHandle = null;
-            if (automaticallyStartsOnHandle)
-                waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-            var observable = new DeferedPushObservable<int>((pushValue) =>
-              {
-                  foreach (var item in inputValues)
-                      pushValue(item);
-              }, waitHandle);
-
-            var task = observable.ToTaskAsync();
-
-            System.Threading.Thread.Sleep(99); //not more than 100!!!
-
-            //for (int i = 0; i < 5000; i++)
-            //{
-
-            //};
+            EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
+            var observable = PushObservable.FromEnumerable(inputValues, waitHandle);
+            var task = observable.ToListAsync();
             observable.Subscribe(outputValues.Add);
-
-            if (!automaticallyStartsOnHandle)
-                observable.Start();
-            else
-                waitHandle.Set();
+            waitHandle.Set();
             Assert.IsTrue(task.Wait(5000), "the stream should complete");
-            for (int i = 0; i < nb; i++)
-                Assert.AreEqual(i, outputValues[i], "all values should be the same");
-            Assert.AreEqual(inputValues.Count, outputValues.Count, "nb items from the input source must be the same that in the output");
-            Assert.IsFalse(completed, "shouldn't be completed");
+            CollectionAssert.AreEquivalent(inputValues, outputValues);
+            CollectionAssert.AreEquivalent(inputValues, task.Result);
+        }
+
+        public void PushValuesNotAutomaticStart(int nb)
+        {
+            var inputValues = Enumerable.Range(0, nb).ToList();
+            var outputValues = new List<int>();
+            var observable = PushObservable.FromEnumerable(inputValues);
+            var task = observable.ToListAsync();
+            observable.Subscribe(outputValues.Add);
+            observable.Start();
+            Assert.IsTrue(task.Wait(5000), "the stream should complete");
+            CollectionAssert.AreEquivalent(inputValues, outputValues);
+            CollectionAssert.AreEquivalent(inputValues, task.Result);
         }
     }
 }

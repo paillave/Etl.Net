@@ -19,7 +19,7 @@ namespace FtpQuickstart
             public void DefineProcess(IStream<SimpleConfig> rootStream)
             {
                 rootStream.CrossApplyFtpFiles("get file from ftp", rootStream.Select("get ftp cnx", i => i.ConnectionInfo), i => i.Folder)
-                    .ToAction("write to console", i => Console.WriteLine(i.Name));
+                    .ThroughAction("write to console", i => Console.WriteLine(i.Name));
             }
         }
         static void Main(string[] args)

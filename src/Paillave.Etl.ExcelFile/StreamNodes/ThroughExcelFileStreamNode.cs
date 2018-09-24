@@ -14,26 +14,33 @@ using System.Linq;
 
 namespace Paillave.Etl.ExcelFile.StreamNodes
 {
-    public class ToExcelFileArgs<TIn>
+    public class ThroughExcelFileArgs<TIn, TStream>
+        where TStream : IStream<TIn>
     {
-        public IStream<TIn> MainStream { get; set; }
+        public TStream MainStream { get; set; }
+        public IStream<Stream> TargetStream { get; set; }
         public ExcelFileDefinition<TIn> Mapping { get; set; }
     }
-    public class ToExcelFileStreamNode<TIn> : StreamNodeBase<Stream, IStream<Stream>, ToExcelFileArgs<TIn>>
+    public class ThroughExcelFileStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ThroughExcelFileArgs<TIn, TStream>>
+        where TStream : IStream<TIn>
     {
         public override bool IsAwaitable => true;
 
-        public ToExcelFileStreamNode(string name, ToExcelFileArgs<TIn> args) : base(name, args)
+        public ThroughExcelFileStreamNode(string name, ThroughExcelFileArgs<TIn, TStream> args) : base(name, args)
         {
         }
 
-        protected override IStream<Stream> CreateOutputStream(ToExcelFileArgs<TIn> args)
+        protected override TStream CreateOutputStream(ThroughExcelFileArgs<TIn, TStream> args)
         {
-            var obs = args.MainStream.Observable.ToList().Map(ProcessValueToOutput);
-            return CreateUnsortedStream(obs);
+            var firstStreamWriter = args.TargetStream.Observable.First().DelayTillEndOfStream();
+            var obs = args.MainStream.Observable.ToList()
+                .CombineWithLatest(firstStreamWriter, (i, r) => { ProcessValueToOutput(r, i); return i; }, true)
+                //.CombineWithLatest(firstStreamWriter, (i, r) => { ProcessValueToOutput(r, args.Mapping, i); return i; }, true)
+                .FlatMap(i => PushObservable.FromEnumerable(i));
+            return CreateMatchingStream(obs, args.MainStream);
         }
-
-        protected Stream ProcessValueToOutput(IList<TIn> value)
+        //protected void ProcessValueToOutput(SystemIO.StreamWriter streamWriter, ExcelFileDefinition<TIn> mapping, IList<TIn> value)
+        protected void ProcessValueToOutput(Stream streamWriter, IList<TIn> value)
         {
             var pck = new ExcelPackage();
             var style = pck.Workbook.Styles.CreateNamedStyle("Date");
@@ -64,10 +71,8 @@ namespace Paillave.Etl.ExcelFile.StreamNodes
 
                 r1.AutoFitColumns();
             }
-            MemoryStream stream = new MemoryStream();
-            BinaryWriter bw = new BinaryWriter(stream);
+            BinaryWriter bw = new BinaryWriter(streamWriter);
             bw.Write(pck.GetAsByteArray());
-            return stream;
         }
     }
 }

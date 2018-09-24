@@ -129,28 +129,28 @@ namespace Paillave.Etl
         }
         #endregion
 
-        #region ToTextFile
-        public static IStream<TIn> ToTextFile<TIn>(this IStream<TIn> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
+        #region ThroughTextFile
+        public static IStream<TIn> ThroughTextFile<TIn>(this IStream<TIn> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
         {
-            return new ToFlatFileStreamNode<TIn, IStream<TIn>>(name, new ToFlatFileArgs<TIn, IStream<TIn>>
+            return new ThroughFlatFileStreamNode<TIn, IStream<TIn>>(name, new ThroughFlatFileArgs<TIn, IStream<TIn>>
             {
                 MainStream = stream,
                 Mapping = mapping,
                 TargetStream = resourceStream
             }).Output;
         }
-        public static ISortedStream<TIn, TKey> ToTextFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
+        public static ISortedStream<TIn, TKey> ThroughTextFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
         {
-            return new ToFlatFileStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new ToFlatFileArgs<TIn, ISortedStream<TIn, TKey>>
+            return new ThroughFlatFileStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new ThroughFlatFileArgs<TIn, ISortedStream<TIn, TKey>>
             {
                 MainStream = stream,
                 Mapping = mapping,
                 TargetStream = resourceStream
             }).Output;
         }
-        public static IKeyedStream<TIn, TKey> ToTextFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
+        public static IKeyedStream<TIn, TKey> ThroughTextFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
         {
-            return new ToFlatFileStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new ToFlatFileArgs<TIn, IKeyedStream<TIn, TKey>>
+            return new ThroughFlatFileStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new ThroughFlatFileArgs<TIn, IKeyedStream<TIn, TKey>>
             {
                 MainStream = stream,
                 Mapping = mapping,
@@ -159,30 +159,14 @@ namespace Paillave.Etl
         }
         #endregion
 
-        #region CrossApplyFolderFiles
-        public static IStream<LocalFilesValue> CrossApplyFolderFiles<TIn>(this IStream<TIn> stream, string name, Func<TIn, string> getFolderPath, string pattern = "*", SearchOption option = SearchOption.TopDirectoryOnly)
+        #region ToTextFile
+        public static IStream<Stream> ToTextFile<TIn>(this IStream<TIn> stream, string name, FlatFileDefinition<TIn> mapping)
         {
-            return stream.CrossApply(name, new LocalFilesValuesProvider(), i => new LocalFilesValuesProviderArgs { RootFolder = getFolderPath(i), SearchPattern = pattern }, (i, j) => i);
-        }
-        public static IStream<LocalFilesValue> CrossApplyFolderFiles(this IStream<string> stream, string name, string pattern = "*", SearchOption option = SearchOption.TopDirectoryOnly)
-        {
-            return stream.CrossApply(name, new LocalFilesValuesProvider(), i => new LocalFilesValuesProviderArgs { RootFolder = i, SearchPattern = pattern }, (i, j) => i);
-        }
-        public static IStream<LocalFilesValue> CrossApplyFolderFiles<TIn>(this IStream<TIn> stream, string name, Func<TIn, string> getFolderPath, Func<TIn, string> getSearchPattern, SearchOption option = SearchOption.TopDirectoryOnly)
-        {
-            return stream.CrossApply(name, new LocalFilesValuesProvider(), i => new LocalFilesValuesProviderArgs { RootFolder = getFolderPath(i), SearchPattern = getSearchPattern(i) }, (i, j) => i);
-        }
-        public static IStream<TOut> CrossApplyFolderFiles<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, string> getFolderPath, Func<LocalFilesValue, TIn, TOut> selector, string pattern = "*", SearchOption option = SearchOption.TopDirectoryOnly)
-        {
-            return stream.CrossApply(name, new LocalFilesValuesProvider(), i => new LocalFilesValuesProviderArgs { RootFolder = getFolderPath(i), SearchPattern = pattern }, selector);
-        }
-        public static IStream<TOut> CrossApplyFolderFiles<TOut>(this IStream<string> stream, string name, Func<LocalFilesValue, string, TOut> selector, string pattern = "*", SearchOption option = SearchOption.TopDirectoryOnly)
-        {
-            return stream.CrossApply(name, new LocalFilesValuesProvider(), i => new LocalFilesValuesProviderArgs { RootFolder = i, SearchPattern = pattern }, selector);
-        }
-        public static IStream<TOut> CrossApplyFolderFiles<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, string> getFolderPath, Func<TIn, string> getSearchPattern, Func<LocalFilesValue, TIn, TOut> selector, SearchOption option = SearchOption.TopDirectoryOnly)
-        {
-            return stream.CrossApply(name, new LocalFilesValuesProvider(), i => new LocalFilesValuesProviderArgs { RootFolder = getFolderPath(i), SearchPattern = getSearchPattern(i) }, selector);
+            return new ToFlatFileStreamNode<TIn>(name, new ToFlatFileArgs<TIn>
+            {
+                MainStream = stream,
+                Mapping = mapping,
+            }).Output;
         }
         #endregion
     }

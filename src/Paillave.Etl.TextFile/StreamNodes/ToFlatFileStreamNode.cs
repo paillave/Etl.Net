@@ -10,46 +10,38 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl.TextFile.StreamNodes
 {
-    public class ToFlatFileArgs<TIn, TStream>
-        where TStream : IStream<TIn>
+    public class ToFlatFileArgs<TIn>
     {
-        public TStream MainStream { get; set; }
-        public IStream<SystemIO.Stream> TargetStream { get; set; }
+        public IStream<TIn> MainStream { get; set; }
         public FlatFileDefinition<TIn> Mapping { get; set; }
     }
-    public class ToFlatFileStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ToFlatFileArgs<TIn, TStream>>
-        where TStream : IStream<TIn>
+    public class ToFlatFileStreamNode<TIn> : StreamNodeBase<Stream, IStream<Stream>, ToFlatFileArgs<TIn>>
     {
         private readonly LineSerializer<TIn> _serialize;
         private StreamWriter _streamWriter;
+        private Stream _stream;
         public override bool IsAwaitable => true;
 
-        public ToFlatFileStreamNode(string name, ToFlatFileArgs<TIn, TStream> args) : base(name, args)
+        public ToFlatFileStreamNode(string name, ToFlatFileArgs<TIn> args) : base(name, args)
         {
+            _stream = new MemoryStream();
+            _streamWriter = new StreamWriter(_stream, Encoding.Default, 1024, true);
+            _streamWriter.WriteLine(args.Mapping.GenerateDefaultHeaderLine());
             _serialize = args.Mapping.GetSerializer();
         }
 
-        protected override TStream CreateOutputStream(ToFlatFileArgs<TIn, TStream> args)
+        protected override IStream<Stream> CreateOutputStream(ToFlatFileArgs<TIn> args)
         {
-            var firstStreamWriter = args.TargetStream.Observable.First().Do(i => PreProcess(i, args.Mapping)).DelayTillEndOfStream();
-            var obs = args.MainStream.Observable
-                .CombineWithLatest(firstStreamWriter, (i, r) => { ProcessValueToOutput(r, args.Mapping, i); return i; }, true);
-            return CreateMatchingStream(obs, args.MainStream);
+            var obs = args.MainStream.Observable.Do(ProcessValueToOutput).Last().Map(i =>
+            {
+                _streamWriter.Dispose();
+                return _stream;
+            });
+            return CreateUnsortedStream(obs);
         }
-        private void PreProcess(SystemIO.Stream stream, FlatFileDefinition<TIn> mapping)
-        {
-            _streamWriter = new StreamWriter(stream, Encoding.Default, 1024, true);
-            _streamWriter.WriteLine(mapping.GenerateDefaultHeaderLine());
-        }
-        protected void ProcessValueToOutput(SystemIO.Stream stream, FlatFileDefinition<TIn> mapping, TIn value)
+        private void ProcessValueToOutput(TIn value)
         {
             _streamWriter.WriteLine(_serialize.Serialize(value));
-        }
-
-        protected override void PostProcess()
-        {
-            if (_streamWriter != null)
-                _streamWriter.Dispose();
         }
     }
 }

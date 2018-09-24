@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 
 namespace Paillave.Etl.SqlServer.StreamNodes
 {
-    public class ToSqlCommandArgs<TIn, TStream>
+    public class ThroughSqlCommandArgs<TIn, TStream>
         where TIn : class
         where TStream : IStream<TIn>
     {
@@ -20,17 +20,17 @@ namespace Paillave.Etl.SqlServer.StreamNodes
         public TStream SourceStream { get; set; }
         public IStream<SqlConnection> SqlConnectionStream { get; set; }
     }
-    public class ToSqlCommandStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ToSqlCommandArgs<TIn, TStream>>
+    public class ThroughSqlCommandStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ThroughSqlCommandArgs<TIn, TStream>>
         where TIn : class
         where TStream : IStream<TIn>
     {
         private static IDictionary<string, PropertyInfo> _inPropertyInfos = typeof(TIn).GetProperties().ToDictionary(i => i.Name, StringComparer.InvariantCultureIgnoreCase);
         public override bool IsAwaitable => true;
-        public ToSqlCommandStreamNode(string name, ToSqlCommandArgs<TIn, TStream> args) : base(name, args)
+        public ThroughSqlCommandStreamNode(string name, ThroughSqlCommandArgs<TIn, TStream> args) : base(name, args)
         {
         }
 
-        protected override TStream CreateOutputStream(ToSqlCommandArgs<TIn, TStream> args)
+        protected override TStream CreateOutputStream(ThroughSqlCommandArgs<TIn, TStream> args)
         {
             var dbContextStream = args.SqlConnectionStream.Observable.First();
             var ret = args.SourceStream.Observable

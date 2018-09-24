@@ -41,8 +41,8 @@ namespace ExcelQuickstart
                 )
                 .Select("transform", i => new { TheName = i.Name, i.Modified })
                 //.CrossApplyExcelSheets("get excel sheets", (s, f) => new { Sheet = s.Name, File = f })
-                .ToExcelFile("write to output file", outputFile)
-                .ToAction("write to console", i => Console.WriteLine($"{i.TheName} -> {i.Modified}"));
+                .ThroughExcelFile("write to output file", outputFile)
+                .ThroughAction("write to console", i => Console.WriteLine($"{i.TheName} -> {i.Modified}"));
         }
     }
     class Program

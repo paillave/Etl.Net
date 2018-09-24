@@ -17,10 +17,10 @@ namespace Paillave.Etl
                 NoParallelisation = noParallelisation
             }));
         }
-        public static IStream<TIn> ToSqlServer<TIn, TRes>(this IStream<TIn> stream, string name, IStream<SqlConnection> sqlConnection)
+        public static IStream<TIn> ThroughSqlServer<TIn, TRes>(this IStream<TIn> stream, string name, IStream<SqlConnection> sqlConnection)
             where TIn : class
         {
-            return new ToSqlCommandStreamNode<TIn, IStream<TIn>>(name, new ToSqlCommandArgs<TIn, IStream<TIn>>
+            return new ThroughSqlCommandStreamNode<TIn, IStream<TIn>>(name, new ThroughSqlCommandArgs<TIn, IStream<TIn>>
             {
                 SourceStream = stream
             }).Output;
