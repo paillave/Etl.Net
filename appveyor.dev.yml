@@ -1,7 +1,7 @@
 version: 1.0.{build}-alpha
 branches:
   only:
-  - master
+  - develop
 image: Visual Studio 2017
 configuration: Release
 platform: Any CPU
