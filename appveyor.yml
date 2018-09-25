@@ -5,6 +5,8 @@ branches:
 image: Visual Studio 2017
 configuration: Release
 platform: Any CPU
+init:
+- ps: if(-not $env:APPVEYOR_PULL_REQUEST_NUMBER) { $env:is_not_pr = "true"; }
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
