@@ -45,51 +45,30 @@ deploy:
   api_key:
     secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
   artifact: Paillave.Etl
-  on:
-    branch: master
-    is_not_pr: true
 - provider: NuGet
   api_key:
     secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
   artifact: Paillave.Etl.EntityFrameworkCore
-  on:
-    branch: master
-    is_not_pr: true
 - provider: NuGet
   api_key:
     secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
   artifact: Paillave.Etl.ExecutionPlan
-  on:
-    branch: master
-    is_not_pr: true
 - provider: NuGet
   api_key:
     secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
   artifact: Paillave.Etl.TextFile
-  on:
-    branch: master
-    is_not_pr: true
 - provider: NuGet
   api_key:
     secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
   artifact: Paillave.Etl.ExcelFile
-  on:
-    branch: master
-    is_not_pr: true
 - provider: NuGet
   api_key:
     secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
   artifact: Paillave.Etl.SqlServer
-  on:
-    branch: master
-    is_not_pr: true
 - provider: NuGet
   api_key:
     secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
   artifact: Paillave.Etl.Ftp
-  on:
-    branch: master
-    is_not_pr: true
 notifications:
 - provider: Webhook
   url: https://webhooks.gitter.im/e/24499395a6cd92120c65
