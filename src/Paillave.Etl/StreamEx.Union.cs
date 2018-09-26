@@ -26,5 +26,14 @@ namespace Paillave.Etl
                 Stream2 = inputStream2
             }).Output;
         }
+        public static IStream<TOut> Union<TIn, TOut>(this IStream<TIn> stream, string name, params Func<IStream<TIn>, IStream<TOut>>[] subProcesses)
+        {
+            return new SubProcessesUnionStreamNode<TIn, TOut>(name, new SubProcessesUnionArgs<TIn, TOut>
+            {
+                Stream = stream,
+                NoParallelisation = false,
+                SubProcesses = subProcesses
+            }).Output;
+        }
     }
 }
