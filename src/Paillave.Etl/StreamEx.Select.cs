@@ -18,6 +18,16 @@ namespace Paillave.Etl
 {
     public static partial class StreamEx
     {
+        /// <summary>
+        /// Transform the input stream into a similar stream but with a different structure and calcultation
+        /// </summary>
+        /// <param name="stream">Input stream</param>
+        /// <param name="name">Name of the operation</param>
+        /// <param name="mapper">Transformation to apply on an occurence of an element of the stream</param>
+        /// <param name="excludeNull">Any output that is null won't be issued</param>
+        /// <typeparam name="TIn">Input type</typeparam>
+        /// <typeparam name="TOut">Output type</typeparam>
+        /// <returns>Output stream</returns>
         public static IStream<TOut> Select<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> mapper, bool excludeNull = false)
         {
             return new SelectStreamNode<TIn, TOut>(name, new SelectArgs<TIn, TOut>
@@ -27,6 +37,18 @@ namespace Paillave.Etl
                 ExcludeNull = excludeNull
             }).Output;
         }
+        /// <summary>
+        /// Transform the input stream into a similar stream but with a different structure and calcultation
+        /// </summary>
+        /// <param name="stream">Input stream</param>
+        /// <param name="name">Name of the operation</param>
+        /// <param name="initialContext">Value of the initial context</param>
+        /// <param name="mapper">Transformation to apply on an occurence of an element of the stream</param>
+        /// <param name="excludeNull">Any output that is null won't be issued</param>
+        /// <typeparam name="TIn">Input type</typeparam>
+        /// <typeparam name="TOut">Output type</typeparam>
+        /// <typeparam name="TCtx">Context type</typeparam>
+        /// <returns>Output stream</returns>
         public static IStream<TOut> Select<TIn, TOut, TCtx>(this IStream<TIn> stream, string name, TCtx initialContext, Func<TIn, TCtx, Action<TCtx>, TOut> mapper, bool excludeNull = false)
         {
             return new SelectStreamNode<TIn, TOut>(name, new SelectArgs<TIn, TOut>
