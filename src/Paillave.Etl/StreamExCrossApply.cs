@@ -16,7 +16,7 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
-    public static partial class StreamEx
+    public static partial class StreamExCrossApply
     {
         public static IStream<TOut> CrossApply<TIn, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, IValuesProvider<TValueIn, TValueOut> valuesProvider, Func<TIn, TValueIn> inputValueSelector, Func<TValueOut, TIn, TOut> outputValueSelector)
         {

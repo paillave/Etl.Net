@@ -16,7 +16,7 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
-    public static partial class StreamEx
+    public static partial class StreamExPivot
     {
         public static IStream<AggregationResult<TIn, TKey, TAggr>> Pivot<TIn, TAggr, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, Expression<Func<TIn, TAggr>> aggregationDescriptor)
         {

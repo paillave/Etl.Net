@@ -16,7 +16,7 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
-    public static partial class StreamEx
+    public static partial class StreamExUnpivot
     {
         public static IStream<TOut> Unpivot<TIn, TUnpivoted, TOut>(this IStream<TIn> stream, string name, IEnumerable<Func<TIn, TUnpivoted>> fieldsToUnpivot, Func<TIn, TUnpivoted, TOut> resultSelector)
         {

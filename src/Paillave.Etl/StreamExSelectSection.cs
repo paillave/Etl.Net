@@ -16,7 +16,7 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
-    public static partial class StreamEx
+    public static partial class StreamExSelectSection
     {
         public static IStream<TIn> SelectSection<TIn>(this IStream<TIn> stream, string name, KeepingState initialState, Func<TIn, SwitchBehavior> switcher)
         {

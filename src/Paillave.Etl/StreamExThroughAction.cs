@@ -16,7 +16,7 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
-    public static partial class StreamEx
+    public static partial class StreamExThroughAction
     {
         #region Simple process row
         public static IStream<TIn> ThroughAction<TIn>(this IStream<TIn> stream, string name, Action<TIn> processRow)

@@ -16,7 +16,7 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
-    public static partial class StreamEx
+    public static partial class StreamExLeftJoin
     {
         public static IStream<TOut> LeftJoin<TInLeft, TInRight, TOut, TKey>(this ISortedStream<TInLeft, TKey> leftStream, string name, IKeyedStream<TInRight, TKey> rightStream, Func<TInLeft, TInRight, TOut> resultSelector)
         {

@@ -16,7 +16,7 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
-    public static partial class StreamEx
+    public static partial class StreamExWhere
     {
         public static IKeyedStream<TIn, TKey> Where<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, Func<TIn, bool> predicate)
         {

@@ -16,7 +16,7 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
-    public static partial class StreamEx
+    public static partial class StreamExApply
     {
         public static IStream<TOut> Select<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> streamToApply, Func<TIn1, TIn2, int, TOut> resultSelector, bool excludeNull = false)
         {

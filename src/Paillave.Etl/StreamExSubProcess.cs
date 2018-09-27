@@ -16,7 +16,7 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
-    public static partial class StreamEx
+    public static partial class StreamExSubProcess
     {
         public static IStream<TOut> ToSubProcesses<TIn, TOut>(this IStream<TIn> stream, string name, Func<IStream<TIn>, IStream<TOut>> subProcess, bool noParallelisation = false)
         {

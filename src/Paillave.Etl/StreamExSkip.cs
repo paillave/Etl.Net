@@ -16,27 +16,27 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
-    public static partial class StreamEx
+    public static partial class StreamExSkip
     {
-        public static ISortedStream<TIn, TKey> Top<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, int count)
+        public static ISortedStream<TIn, TKey> Skip<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, int count)
         {
-            return new TopStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new TopArgs<TIn, ISortedStream<TIn, TKey>>
+            return new SkipStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new SkipArgs<TIn, ISortedStream<TIn, TKey>>
             {
                 Input = stream,
                 Count = count
             }).Output;
         }
-        public static IKeyedStream<TIn, TKey> Top<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, int count)
+        public static IKeyedStream<TIn, TKey> Skip<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, int count)
         {
-            return new TopStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new TopArgs<TIn, IKeyedStream<TIn, TKey>>
+            return new SkipStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new SkipArgs<TIn, IKeyedStream<TIn, TKey>>
             {
                 Input = stream,
                 Count = count
             }).Output;
         }
-        public static IStream<TIn> Top<TIn>(this IStream<TIn> stream, string name, int count)
+        public static IStream<TIn> Skip<TIn>(this IStream<TIn> stream, string name, int count)
         {
-            return new TopStreamNode<TIn, IStream<TIn>>(name, new TopArgs<TIn, IStream<TIn>>
+            return new SkipStreamNode<TIn, IStream<TIn>>(name, new SkipArgs<TIn, IStream<TIn>>
             {
                 Input = stream,
                 Count = count

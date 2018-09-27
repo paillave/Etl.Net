@@ -8,7 +8,7 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
-    public static class StreamExTf
+    public static class StreamExFiles
     {
         public static IStream<LocalFilesValue> CrossApplyFolderFiles<TIn>(this IStream<TIn> stream, string name, Func<TIn, string> getFolderPath, string pattern = "*", SearchOption option = SearchOption.TopDirectoryOnly)
         {

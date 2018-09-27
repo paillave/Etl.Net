@@ -16,7 +16,7 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
-    public static partial class StreamEx
+    public static partial class StreamExSelectStreamStatistics
     {
         public static Task<StreamStatistics> GetStreamStatisticsAsync(this IStream<TraceEvent> input)
         {

@@ -16,19 +16,19 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
-    public static partial class StreamEx
+    public static partial class StreamExSort
     {
-        public static IKeyedStream<TIn, TKey> EnsureKeyed<TIn, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, object sortPositions = null)
+        public static ISortedStream<TIn, TKey> Sort<TIn, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, object keyPositions = null)
         {
-            return new EnsureKeyedStreamNode<TIn, TKey>(name, new EnsureKeyedArgs<TIn, TKey>
+            return new SortStreamNode<TIn, TKey>(name, new SortArgs<TIn, TKey>
             {
                 Input = stream,
-                SortDefinition = SortDefinition.Create(getKey, sortPositions)
+                SortDefinition = SortDefinition.Create(getKey, keyPositions)
             }).Output;
         }
-        public static IKeyedStream<TIn, TKey> EnsureKeyed<TIn, TKey>(this IStream<TIn> stream, string name, SortDefinition<TIn, TKey> sortDefinition)
+        public static ISortedStream<TIn, TKey> Sort<TIn, TKey>(this IStream<TIn> stream, string name, SortDefinition<TIn, TKey> sortDefinition)
         {
-            return new EnsureKeyedStreamNode<TIn, TKey>(name, new EnsureKeyedArgs<TIn, TKey>
+            return new SortStreamNode<TIn, TKey>(name, new SortArgs<TIn, TKey>
             {
                 Input = stream,
                 SortDefinition = sortDefinition

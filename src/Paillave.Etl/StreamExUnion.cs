@@ -16,22 +16,22 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
-    public static partial class StreamEx
+    public static partial class StreamExUnion
     {
-        public static IStream<I> UnionAll<I>(this IStream<I> stream, string name, IStream<I> inputStream2)
+        public static IStream<I> Union<I>(this IStream<I> stream, string name, IStream<I> inputStream2)
         {
-            return new UnionAllStreamNode<I>(name, new UnionAllArgs<I>
+            return new UnionStreamNode<I>(name, new UnionArgs<I>
             {
                 Stream1 = stream,
                 Stream2 = inputStream2
             }).Output;
         }
-        public static IStream<TOut> UnionAll<TIn, TOut>(this IStream<TIn> stream, string name, params Func<IStream<TIn>, IStream<TOut>>[] subProcesses)
+        public static IStream<TOut> Union<TIn, TOut>(this IStream<TIn> stream, string name, params Func<IStream<TIn>, IStream<TOut>>[] subProcesses)
         {
             return new SubProcessesUnionStreamNode<TIn, TOut>(name, new SubProcessesUnionArgs<TIn, TOut>
             {
                 Stream = stream,
-                NoParallelisation = true,
+                NoParallelisation = false,
                 SubProcesses = subProcesses
             }).Output;
         }

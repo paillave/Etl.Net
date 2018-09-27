@@ -16,7 +16,7 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
-    public static partial class StreamEx
+    public static partial class StreamExSelect
     {
         /// <summary>
         /// Transform the input stream into a similar stream but with a different structure and calcultation
