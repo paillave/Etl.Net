@@ -18,9 +18,10 @@ The reactive approach for the implementation of this engine ensures parallelized
 | Etl.Net.SqlServer | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.SqlServer.svg)](https://www.nuget.org/packages/Etl.Net.SqlServer) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.SqlServer.svg)](https://www.nuget.org/packages/Etl.Net.SqlServer) |
 | Etl.Net.ExecutionPlan | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) |
 
-## Developement status
+## Developement status :construction:
 
-**:construction: This library is still under development, don't use it on production environment yet as its api structure is subject for changes.:construction:**
+> [!WARNING]
+> This library is still under development, don't use it on production environment yet as its api structure is subject for changes.
 
 The first alpha release is expected once it starts to be a decent candidate to replace SSIS for common use cases.
 
@@ -76,9 +77,10 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Read data from REST service | Data source | :construction: | #9 |
 | Write data to REST service | Data destination | :construction: | #8 |
 
-*Follow the status in the issue section*
-
-*New requests are very welcome in the issue section*
+> [!NOTE]
+> Follow the status in the issue section
+> 
+> New requests are very welcome in the issue section
 
 ## Runtime features
 
@@ -101,7 +103,8 @@ The first alpha release is expected once it starts to be a decent candidate to r
 | Raise a warning on the risky node when a performance issue or a bad practice is detected given statistics | :construction: | #81 |
 | Interprets a T-SQL-like language script to build a job definition on the fly and run it | :construction: | #44 |
 
-*New requests are very welcome in the issue section*
+> [!NOTE]
+> New requests are very welcome in the [issue section](https://github.com/paillave/Etl.Net/issues)
 
 ## Simple Quickstart :suspect:
 
@@ -423,7 +426,9 @@ This program first shows the estimated execution plan:
 Then it shows the actual execution with statistics when hovering streams, and input and outputs when hovering nodes:
 ![Actual execution plan](./docs/ActualExecutionPlan.PNG "Actual execution plan")
 
-## Documentation
+## Documentation :construction:
 
-**:construction: Documentation will be done once all essential features and bugs are solved.**
+> [!IMPORTANT]
+> Documentation will be done once all essential features and bugs are solved.
+> 
 [gitbook documentation](https://paillave.gitbook.io/etl-net/)
