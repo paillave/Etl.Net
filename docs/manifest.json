@@ -1,0 +1,404 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/Users/paill/Documents/GitHub/Etl.Net/docfx_project",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExAggregate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExAggregate.html",
+          "hash": "64D16DjDocJAorrRPx/DJw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExApply.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExApply.html",
+          "hash": "jRHXOA7ifzEhatoN5S7s2Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExCrossApply.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExCrossApply.html",
+          "hash": "51bjIbt4d9LuEaVK9LTu9w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExCrossApplyAction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExCrossApplyAction.html",
+          "hash": "iM1pj8HLy4yusCOsswa9Mg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExDistinct.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExDistinct.html",
+          "hash": "z1AlcNd2EGG/UN+s88hZ0Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExEnsuredKeyed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExEnsuredKeyed.html",
+          "hash": "0rbkK/mj8j1kzrN3vU4uxg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExEnsuredSorted.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExEnsuredSorted.html",
+          "hash": "EiEJTcLbF92jEJ04weXzPg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExFiles.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExFiles.html",
+          "hash": "EHZKKJIV9tpYJRU4k/dhcA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExLeftJoin.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExLeftJoin.html",
+          "hash": "CEx4oqpNwcl6zPv4mheU9Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExLookup.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExLookup.html",
+          "hash": "sTy5/N//Fwto0r60ABIUvA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExPivot.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExPivot.html",
+          "hash": "Jm4PS0AkUgbyB3vYZ+ZBzw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExSelect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExSelect.html",
+          "hash": "OLa150Vjy+9KliYxaMcddw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExSelectSection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExSelectSection.html",
+          "hash": "HJ0wHzPUZelcxa12p3IQeA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExSelectStreamStatistics.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExSelectStreamStatistics.html",
+          "hash": "PFHrCHaJNjtaE6KWLUbUqw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExSkip.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExSkip.html",
+          "hash": "ohO1vlxsyaTfeXpXLifZUA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExSort.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExSort.html",
+          "hash": "xzlcGTTPi2yYUKCLneO9ug=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExSubProcess.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExSubProcess.html",
+          "hash": "oTSntkhHxUFnX9wHQfaG0g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExThroughAction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExThroughAction.html",
+          "hash": "nevrIdNNALgl+rn0r8STnw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExTop.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExTop.html",
+          "hash": "/0QUBV8qqBKIkvbj8O4NFg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExUnion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExUnion.html",
+          "hash": "/5zpwLhdQq/75tELcG4plQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExUnionAll.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExUnionAll.html",
+          "hash": "i9I2toy30E69DxIswJPNTg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExUnpivot.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExUnpivot.html",
+          "hash": "pqbSbzHUrsuIcuegj9zR5Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.StreamExWhere.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.StreamExWhere.html",
+          "hash": "wYEYpZwQiphTmAVCEHXDBQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.html",
+          "hash": "OXUTGVY3D7Yu4fJikFDB3Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "8IXMUJ3nVdd5zPO9Ss0aLQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "88nxBIATW8fD89m+ypNzEQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "F+9Mz7AD8suMc52+FuxmgA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "t7iiFrmuYmrKWisdq+lN6Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "cueYjHFOu6wpE3bXQDVHuw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "k+/dkjFuwAVS32HduMpmBw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build"
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build"
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build"
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
+        "incrementalPhase": "postProcessing"
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
