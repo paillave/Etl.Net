@@ -80,32 +80,7 @@
     <div class="level0"><span class="xref">System.Object</span></div>
     <div class="level1"><span class="xref">StreamExCrossApplyAction</span></div>
   </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.Object.ToString()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetHashCode()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
-    </div>
-  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Paillave.Etl.html">Paillave.Etl</a></h6>
-  <h6><strong>Assembly</strong>: cs.temp.dll.dll</h6>
   <h5 id="Paillave_Etl_StreamExCrossApplyAction_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static class StreamExCrossApplyAction</code></pre>
@@ -191,12 +166,12 @@
   
   
   <a id="Paillave_Etl_StreamExCrossApplyAction_CrossApplyAction_" data-uid="Paillave.Etl.StreamExCrossApplyAction.CrossApplyAction*"></a>
-  <h4 id="Paillave_Etl_StreamExCrossApplyAction_CrossApplyAction__3_IStream___0__System_String_IStream___1__System_Action___0___1_System_Action___2___System_Boolean_" data-uid="Paillave.Etl.StreamExCrossApplyAction.CrossApplyAction``3(IStream{``0},System.String,IStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)">CrossApplyAction&lt;TIn, TRes, TOut&gt;(IStream&lt;TIn&gt;, String, IStream&lt;TRes&gt;, Action&lt;TIn, TRes, Action&lt;TOut&gt;&gt;, Boolean)</h4>
+  <h4 id="Paillave_Etl_StreamExCrossApplyAction_CrossApplyAction__3_IStream___0__System_String_IStream___1__System_Action___0___1_System_Action___2___System_Boolean_" data-uid="Paillave.Etl.StreamExCrossApplyAction.CrossApplyAction``3(IStream{``0},System.String,IStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)">CrossApplyAction&lt;TIn1, TIn2, TOut&gt;(IStream&lt;TIn1&gt;, String, IStream&lt;TIn2&gt;, Action&lt;TIn1, TIn2, Action&lt;TOut&gt;&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyAction&lt;TIn, TRes, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, IStream&lt;TRes&gt; resourceStream, Action&lt;TIn, TRes, Action&lt;TOut&gt;&gt; valuesProducer, bool noParallelisation = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyAction&lt;TIn1, TIn2, TOut&gt;(this IStream&lt;TIn1&gt; stream, string name, IStream&lt;TIn2&gt; resourceStream, Action&lt;TIn1, TIn2, Action&lt;TOut&gt;&gt; valuesProducer, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -209,7 +184,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IStream</span>&lt;TIn&gt;</td>
+        <td><span class="xref">IStream</span>&lt;TIn1&gt;</td>
         <td><span class="parametername">stream</span></td>
         <td></td>
       </tr>
@@ -219,12 +194,12 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IStream</span>&lt;TRes&gt;</td>
+        <td><span class="xref">IStream</span>&lt;TIn2&gt;</td>
         <td><span class="parametername">resourceStream</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Action</span>&lt;TIn, TRes, <span class="xref">System.Action</span>&lt;TOut&gt;&gt;</td>
+        <td><span class="xref">System.Action</span>&lt;TIn1, TIn2, <span class="xref">System.Action</span>&lt;TOut&gt;&gt;</td>
         <td><span class="parametername">valuesProducer</span></td>
         <td></td>
       </tr>
@@ -260,11 +235,11 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">TIn</span></td>
+        <td><span class="parametername">TIn1</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="parametername">TRes</span></td>
+        <td><span class="parametername">TIn2</span></td>
         <td></td>
       </tr>
       <tr>

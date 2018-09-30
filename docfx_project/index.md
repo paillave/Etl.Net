@@ -1,5 +1,3 @@
-<!-- ![Logo Etl.Net](images/full-black-logo.svg) -->
-
 # Etl.Net
 
 ## What it is

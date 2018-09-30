@@ -2,74 +2,72 @@
 - uid: Paillave.Etl
   name: Paillave.Etl
   items:
-  - uid: Paillave.Etl.StreamExAggregate
-    name: StreamExAggregate
-  - uid: Paillave.Etl.StreamExApply
-    name: StreamExApply
-  - uid: Paillave.Etl.StreamExCrossApply
-    name: StreamExCrossApply
-  - uid: Paillave.Etl.StreamExCrossApplyAction
-    name: StreamExCrossApplyAction
-  - uid: Paillave.Etl.StreamExDistinct
-    name: StreamExDistinct
-  - uid: Paillave.Etl.StreamExEnsuredKeyed
-    name: StreamExEnsuredKeyed
-  - uid: Paillave.Etl.StreamExEnsuredSorted
-    name: StreamExEnsuredSorted
-  - uid: Paillave.Etl.StreamExFiles
-    name: StreamExFiles
-  - uid: Paillave.Etl.StreamExLeftJoin
-    name: StreamExLeftJoin
-  - uid: Paillave.Etl.StreamExLookup
-    name: StreamExLookup
-  - uid: Paillave.Etl.StreamExPivot
-    name: StreamExPivot
-  - uid: Paillave.Etl.StreamExSelect
-    name: StreamExSelect
-  - uid: Paillave.Etl.StreamExSelectSection
-    name: StreamExSelectSection
-  - uid: Paillave.Etl.StreamExSelectStreamStatistics
-    name: StreamExSelectStreamStatistics
-  - uid: Paillave.Etl.StreamExSkip
-    name: StreamExSkip
-  - uid: Paillave.Etl.StreamExSort
-    name: StreamExSort
-  - uid: Paillave.Etl.StreamExSubProcess
-    name: StreamExSubProcess
-  - uid: Paillave.Etl.StreamExThroughAction
-    name: StreamExThroughAction
-  - uid: Paillave.Etl.StreamExTop
-    name: StreamExTop
-  - uid: Paillave.Etl.StreamExUnion
-    name: StreamExUnion
-  - uid: Paillave.Etl.StreamExUnionAll
-    name: StreamExUnionAll
-  - uid: Paillave.Etl.StreamExUnpivot
-    name: StreamExUnpivot
-  - uid: Paillave.Etl.StreamExWhere
-    name: StreamExWhere
-- uid: Paillave.Etl.EntityFrameworkCore
-  name: Paillave.Etl.EntityFrameworkCore
+  - uid: Paillave.Etl.AggregateEx
+    name: AggregateEx
+  - uid: Paillave.Etl.CrossApplyActionEx
+    name: CrossApplyActionEx
+  - uid: Paillave.Etl.CrossApplyEx
+    name: CrossApplyEx
+  - uid: Paillave.Etl.CrossApplyFolderFilesEx
+    name: CrossApplyFolderFilesEx
+  - uid: Paillave.Etl.DistinctEx
+    name: DistinctEx
+  - uid: Paillave.Etl.EnsuredKeyedEx
+    name: EnsuredKeyedEx
+  - uid: Paillave.Etl.EnsuredSortedEx
+    name: EnsuredSortedEx
+  - uid: Paillave.Etl.GetStreamStatisticsEx
+    name: GetStreamStatisticsEx
+  - uid: Paillave.Etl.LeftJoinEx
+    name: LeftJoinEx
+  - uid: Paillave.Etl.LookupEx
+    name: LookupEx
+  - uid: Paillave.Etl.PivotEx
+    name: PivotEx
+  - uid: Paillave.Etl.SelectEx
+    name: SelectEx
+  - uid: Paillave.Etl.SelectSectionEx
+    name: SelectSectionEx
+  - uid: Paillave.Etl.SkipEx
+    name: SkipEx
+  - uid: Paillave.Etl.SortEx
+    name: SortEx
+  - uid: Paillave.Etl.ThroughActionEx
+    name: ThroughActionEx
+  - uid: Paillave.Etl.ToGroupEx
+    name: ToGroupEx
+  - uid: Paillave.Etl.ToLocalFileEx
+    name: ToLocalFileEx
+  - uid: Paillave.Etl.TopEx
+    name: TopEx
+  - uid: Paillave.Etl.ToSubProcessEx
+    name: ToSubProcessEx
+  - uid: Paillave.Etl.UnionAllEx
+    name: UnionAllEx
+  - uid: Paillave.Etl.UnionEx
+    name: UnionEx
+  - uid: Paillave.Etl.UnpivotEx
+    name: UnpivotEx
+  - uid: Paillave.Etl.WhereEx
+    name: WhereEx
+- uid: Paillave.Etl.StreamNodes
+  name: Paillave.Etl.StreamNodes
   items:
-  - uid: Paillave.Etl.EntityFrameworkCore.StreamExEfc
-    name: StreamExEfc
-- uid: Paillave.Etl.ExcelFile
-  name: Paillave.Etl.ExcelFile
-  items:
-  - uid: Paillave.Etl.ExcelFile.StreamExXl
-    name: StreamExXl
-- uid: Paillave.Etl.Ftp
-  name: Paillave.Etl.Ftp
-  items:
-  - uid: Paillave.Etl.Ftp.StreamExFtp
-    name: StreamExFtp
-- uid: Paillave.Etl.SqlServer
-  name: Paillave.Etl.SqlServer
-  items:
-  - uid: Paillave.Etl.SqlServer.StreamExSsv
-    name: StreamExSsv
-- uid: Paillave.Etl.TextFile
-  name: Paillave.Etl.TextFile
-  items:
-  - uid: Paillave.Etl.TextFile.StreamExTf
-    name: StreamExTf
+  - uid: Paillave.Etl.StreamNodes.ContextSelectProcessor`3
+    name: ContextSelectProcessor<TIn, TOut, TCtx>
+    name.vb: ContextSelectProcessor(Of TIn, TOut, TCtx)
+  - uid: Paillave.Etl.StreamNodes.ContextSelectWithIndexProcessor`3
+    name: ContextSelectWithIndexProcessor<TIn, TOut, TCtx>
+    name.vb: ContextSelectWithIndexProcessor(Of TIn, TOut, TCtx)
+  - uid: Paillave.Etl.StreamNodes.ISelectProcessor`2
+    name: ISelectProcessor<TIn, TOut>
+    name.vb: ISelectProcessor(Of TIn, TOut)
+  - uid: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2
+    name: ISelectWithIndexProcessor<TIn, TOut>
+    name.vb: ISelectWithIndexProcessor(Of TIn, TOut)
+  - uid: Paillave.Etl.StreamNodes.SimpleSelectProcessor`2
+    name: SimpleSelectProcessor<TIn, TOut>
+    name.vb: SimpleSelectProcessor(Of TIn, TOut)
+  - uid: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2
+    name: SimpleSelectWithIndexProcessor<TIn, TOut>
+    name.vb: SimpleSelectWithIndexProcessor(Of TIn, TOut)

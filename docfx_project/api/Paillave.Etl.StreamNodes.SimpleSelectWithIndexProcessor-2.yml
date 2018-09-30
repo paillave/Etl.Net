@@ -1,0 +1,806 @@
+### YamlMime:ManagedReference
+items:
+- uid: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2
+  commentId: T:Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2
+  id: SimpleSelectWithIndexProcessor`2
+  parent: Paillave.Etl.StreamNodes
+  children:
+  - Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2.#ctor(System.Func{`0,System.Int32,`1})
+  - Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2.ProcessRow(`0,System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: SimpleSelectWithIndexProcessor<TIn, TOut>
+  nameWithType: SimpleSelectWithIndexProcessor<TIn, TOut>
+  fullName: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor<TIn, TOut>
+  type: Class
+  source:
+    id: SimpleSelectWithIndexProcessor
+    path: ''
+    startLine: 1441
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.StreamNodes
+  summary: "\nImplementation of a select transformation using occurrence index\n"
+  example: []
+  syntax:
+    content: 'public class SimpleSelectWithIndexProcessor<TIn, TOut> : ISelectWithIndexProcessor<TIn, TOut>'
+    typeParameters:
+    - id: TIn
+      description: Input type
+    - id: TOut
+      description: Outout type
+    content.vb: >-
+      Public Class SimpleSelectWithIndexProcessor(Of TIn, TOut)
+          Implements ISelectWithIndexProcessor(Of TIn, TOut)
+  inheritance:
+  - System.Object
+  implements:
+  - Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{{TIn},{TOut}}
+  inheritedMembers:
+  - System.Object.ToString
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  nameWithType.vb: SimpleSelectWithIndexProcessor(Of TIn, TOut)
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+  fullName.vb: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor(Of TIn, TOut)
+  name.vb: SimpleSelectWithIndexProcessor(Of TIn, TOut)
+- uid: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2.#ctor(System.Func{`0,System.Int32,`1})
+  commentId: M:Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2.#ctor(System.Func{`0,System.Int32,`1})
+  id: '#ctor(System.Func{`0,System.Int32,`1})'
+  parent: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2
+  langs:
+  - csharp
+  - vb
+  name: SimpleSelectWithIndexProcessor(Func<TIn, Int32, TOut>)
+  nameWithType: SimpleSelectWithIndexProcessor<TIn, TOut>.SimpleSelectWithIndexProcessor(Func<TIn, Int32, TOut>)
+  fullName: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor<TIn, TOut>.SimpleSelectWithIndexProcessor(System.Func<TIn, System.Int32, TOut>)
+  type: Constructor
+  source:
+    id: .ctor
+    path: ''
+    startLine: 1448
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.StreamNodes
+  summary: "\nBuilds the processor giving the process to be applied at any occurrence using index occurrence as a parameter\n"
+  example: []
+  syntax:
+    content: public SimpleSelectWithIndexProcessor(Func<TIn, int, TOut> selector)
+    parameters:
+    - id: selector
+      type: System.Func{{TIn},System.Int32,{TOut}}
+      description: Delegate describing the tranformation using the occurrence index
+    content.vb: Public Sub New(selector As Func(Of TIn, Integer, TOut))
+  overload: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2.#ctor*
+  nameWithType.vb: SimpleSelectWithIndexProcessor(Of TIn, TOut).SimpleSelectWithIndexProcessor(Func(Of TIn, Int32, TOut))
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+  fullName.vb: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor(Of TIn, TOut).SimpleSelectWithIndexProcessor(System.Func(Of TIn, System.Int32, TOut))
+  name.vb: SimpleSelectWithIndexProcessor(Func(Of TIn, Int32, TOut))
+- uid: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2.ProcessRow(`0,System.Int32)
+  commentId: M:Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2.ProcessRow(`0,System.Int32)
+  id: ProcessRow(`0,System.Int32)
+  parent: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2
+  langs:
+  - csharp
+  - vb
+  name: ProcessRow(TIn, Int32)
+  nameWithType: SimpleSelectWithIndexProcessor<TIn, TOut>.ProcessRow(TIn, Int32)
+  fullName: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor<TIn, TOut>.ProcessRow(TIn, System.Int32)
+  type: Method
+  source:
+    id: ProcessRow
+    path: ''
+    startLine: 1458
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.StreamNodes
+  summary: "\nTransformation to apply on an occurrence of an element of the stream\n"
+  example: []
+  syntax:
+    content: public TOut ProcessRow(TIn value, int index)
+    parameters:
+    - id: value
+      type: '{TIn}'
+      description: Input value
+    - id: index
+      type: System.Int32
+      description: Occurrence index
+    return:
+      type: '{TOut}'
+      description: Output value
+    content.vb: Public Function ProcessRow(value As TIn, index As Integer) As TOut
+  overload: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2.ProcessRow*
+  implements:
+  - Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{{TIn},{TOut}}.ProcessRow({TIn},System.Int32)
+  nameWithType.vb: SimpleSelectWithIndexProcessor(Of TIn, TOut).ProcessRow(TIn, Int32)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+  fullName.vb: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor(Of TIn, TOut).ProcessRow(TIn, System.Int32)
+references:
+- uid: Paillave.Etl.StreamNodes
+  commentId: N:Paillave.Etl.StreamNodes
+  name: Paillave.Etl.StreamNodes
+  nameWithType: Paillave.Etl.StreamNodes
+  fullName: Paillave.Etl.StreamNodes
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{{TIn},{TOut}}
+  commentId: T:Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{``0,``1}
+  parent: Paillave.Etl.StreamNodes
+  definition: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2
+  name: ISelectWithIndexProcessor<TIn, TOut>
+  nameWithType: ISelectWithIndexProcessor<TIn, TOut>
+  fullName: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor<TIn, TOut>
+  nameWithType.vb: ISelectWithIndexProcessor(Of TIn, TOut)
+  fullName.vb: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor(Of TIn, TOut)
+  name.vb: ISelectWithIndexProcessor(Of TIn, TOut)
+  spec.csharp:
+  - uid: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2
+    name: ISelectWithIndexProcessor
+    nameWithType: ISelectWithIndexProcessor
+    fullName: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2
+    name: ISelectWithIndexProcessor
+    nameWithType: ISelectWithIndexProcessor
+    fullName: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2
+  commentId: T:Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2
+  name: ISelectWithIndexProcessor<TIn, TOut>
+  nameWithType: ISelectWithIndexProcessor<TIn, TOut>
+  fullName: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor<TIn, TOut>
+  nameWithType.vb: ISelectWithIndexProcessor(Of TIn, TOut)
+  fullName.vb: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor(Of TIn, TOut)
+  name.vb: ISelectWithIndexProcessor(Of TIn, TOut)
+  spec.csharp:
+  - uid: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2
+    name: ISelectWithIndexProcessor
+    nameWithType: ISelectWithIndexProcessor
+    fullName: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2
+    name: ISelectWithIndexProcessor
+    nameWithType: ISelectWithIndexProcessor
+    fullName: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2.#ctor*
+  commentId: Overload:Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2.#ctor
+  name: SimpleSelectWithIndexProcessor
+  nameWithType: SimpleSelectWithIndexProcessor<TIn, TOut>.SimpleSelectWithIndexProcessor
+  fullName: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor<TIn, TOut>.SimpleSelectWithIndexProcessor
+  nameWithType.vb: SimpleSelectWithIndexProcessor(Of TIn, TOut).SimpleSelectWithIndexProcessor
+  fullName.vb: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor(Of TIn, TOut).SimpleSelectWithIndexProcessor
+- uid: System.Func{{TIn},System.Int32,{TOut}}
+  commentId: T:System.Func{``0,System.Int32,``1}
+  parent: System
+  definition: System.Func`3
+  name: Func<TIn, Int32, TOut>
+  nameWithType: Func<TIn, Int32, TOut>
+  fullName: System.Func<TIn, System.Int32, TOut>
+  nameWithType.vb: Func(Of TIn, Int32, TOut)
+  fullName.vb: System.Func(Of TIn, System.Int32, TOut)
+  name.vb: Func(Of TIn, Int32, TOut)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func`3
+  commentId: T:System.Func`3
+  isExternal: true
+  name: Func<T1, T2, TResult>
+  nameWithType: Func<T1, T2, TResult>
+  fullName: System.Func<T1, T2, TResult>
+  nameWithType.vb: Func(Of T1, T2, TResult)
+  fullName.vb: System.Func(Of T1, T2, TResult)
+  name.vb: Func(Of T1, T2, TResult)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2.ProcessRow*
+  commentId: Overload:Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2.ProcessRow
+  name: ProcessRow
+  nameWithType: SimpleSelectWithIndexProcessor<TIn, TOut>.ProcessRow
+  fullName: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor<TIn, TOut>.ProcessRow
+  nameWithType.vb: SimpleSelectWithIndexProcessor(Of TIn, TOut).ProcessRow
+  fullName.vb: Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor(Of TIn, TOut).ProcessRow
+- uid: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{{TIn},{TOut}}.ProcessRow({TIn},System.Int32)
+  commentId: M:Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{`0,`1}.ProcessRow(`0,System.Int32)
+  parent: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{{TIn},{TOut}}
+  definition: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2.ProcessRow(`0,System.Int32)
+  name: ProcessRow(TIn, Int32)
+  nameWithType: ISelectWithIndexProcessor<TIn, TOut>.ProcessRow(TIn, Int32)
+  fullName: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor<TIn, TOut>.ProcessRow(TIn, System.Int32)
+  nameWithType.vb: ISelectWithIndexProcessor(Of TIn, TOut).ProcessRow(TIn, Int32)
+  fullName.vb: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor(Of TIn, TOut).ProcessRow(TIn, System.Int32)
+  spec.csharp:
+  - uid: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2.ProcessRow(`0,System.Int32)
+    name: ProcessRow
+    nameWithType: ISelectWithIndexProcessor<TIn, TOut>.ProcessRow
+    fullName: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor<TIn, TOut>.ProcessRow
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2.ProcessRow(`0,System.Int32)
+    name: ProcessRow
+    nameWithType: ISelectWithIndexProcessor(Of TIn, TOut).ProcessRow
+    fullName: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor(Of TIn, TOut).ProcessRow
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: '{TIn}'
+  commentId: '!:TIn'
+  definition: TIn
+  name: TIn
+  nameWithType: TIn
+  fullName: TIn
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: '{TOut}'
+  commentId: '!:TOut'
+  definition: TOut
+  name: TOut
+  nameWithType: TOut
+  fullName: TOut
+- uid: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2.ProcessRow(`0,System.Int32)
+  commentId: M:Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2.ProcessRow(`0,System.Int32)
+  isExternal: true
+  name: ProcessRow(TIn, Int32)
+  nameWithType: ISelectWithIndexProcessor<TIn, TOut>.ProcessRow(TIn, Int32)
+  fullName: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor<TIn, TOut>.ProcessRow(TIn, System.Int32)
+  nameWithType.vb: ISelectWithIndexProcessor(Of TIn, TOut).ProcessRow(TIn, Int32)
+  fullName.vb: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor(Of TIn, TOut).ProcessRow(TIn, System.Int32)
+  spec.csharp:
+  - uid: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2.ProcessRow(`0,System.Int32)
+    name: ProcessRow
+    nameWithType: ISelectWithIndexProcessor<TIn, TOut>.ProcessRow
+    fullName: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor<TIn, TOut>.ProcessRow
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2.ProcessRow(`0,System.Int32)
+    name: ProcessRow
+    nameWithType: ISelectWithIndexProcessor(Of TIn, TOut).ProcessRow
+    fullName: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor(Of TIn, TOut).ProcessRow
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: TIn
+  name: TIn
+  nameWithType: TIn
+  fullName: TIn
+- uid: TOut
+  name: TOut
+  nameWithType: TOut
+  fullName: TOut

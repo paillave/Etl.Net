@@ -1,0 +1,123 @@
+### YamlMime:ManagedReference
+items:
+- uid: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2
+  commentId: T:Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2
+  id: ISelectWithIndexProcessor`2
+  parent: Paillave.Etl.StreamNodes
+  children:
+  - Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2.ProcessRow(`0,System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: ISelectWithIndexProcessor<TIn, TOut>
+  nameWithType: ISelectWithIndexProcessor<TIn, TOut>
+  fullName: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor<TIn, TOut>
+  type: Interface
+  source:
+    id: ISelectWithIndexProcessor
+    path: ''
+    startLine: 1426
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.StreamNodes
+  summary: "\nDescription of a select transformation depending on occurrence index. \nThe same instance of processor will be used by a select node, so it can contain a whole set of variables a as a context.\n"
+  example: []
+  syntax:
+    content: public interface ISelectWithIndexProcessor<TIn, TOut>
+    typeParameters:
+    - id: TIn
+      description: Input type
+    - id: TOut
+      description: Outout type
+    content.vb: Public Interface ISelectWithIndexProcessor(Of TIn, TOut)
+  nameWithType.vb: ISelectWithIndexProcessor(Of TIn, TOut)
+  modifiers.csharp:
+  - public
+  - interface
+  modifiers.vb:
+  - Public
+  - Interface
+  fullName.vb: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor(Of TIn, TOut)
+  name.vb: ISelectWithIndexProcessor(Of TIn, TOut)
+- uid: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2.ProcessRow(`0,System.Int32)
+  commentId: M:Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2.ProcessRow(`0,System.Int32)
+  id: ProcessRow(`0,System.Int32)
+  parent: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2
+  langs:
+  - csharp
+  - vb
+  name: ProcessRow(TIn, Int32)
+  nameWithType: ISelectWithIndexProcessor<TIn, TOut>.ProcessRow(TIn, Int32)
+  fullName: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor<TIn, TOut>.ProcessRow(TIn, System.Int32)
+  type: Method
+  source:
+    id: ProcessRow
+    path: ''
+    startLine: 1434
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.StreamNodes
+  summary: "\nTransformation to apply on an occurrence of an element of the stream\n"
+  example: []
+  syntax:
+    content: TOut ProcessRow(TIn value, int index)
+    parameters:
+    - id: value
+      type: '{TIn}'
+      description: Input value
+    - id: index
+      type: System.Int32
+      description: Occurrence index
+    return:
+      type: '{TOut}'
+      description: Output value
+    content.vb: Function ProcessRow(value As TIn, index As Integer) As TOut
+  overload: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2.ProcessRow*
+  nameWithType.vb: ISelectWithIndexProcessor(Of TIn, TOut).ProcessRow(TIn, Int32)
+  fullName.vb: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor(Of TIn, TOut).ProcessRow(TIn, System.Int32)
+references:
+- uid: Paillave.Etl.StreamNodes
+  commentId: N:Paillave.Etl.StreamNodes
+  name: Paillave.Etl.StreamNodes
+  nameWithType: Paillave.Etl.StreamNodes
+  fullName: Paillave.Etl.StreamNodes
+- uid: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2.ProcessRow*
+  commentId: Overload:Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2.ProcessRow
+  name: ProcessRow
+  nameWithType: ISelectWithIndexProcessor<TIn, TOut>.ProcessRow
+  fullName: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor<TIn, TOut>.ProcessRow
+  nameWithType.vb: ISelectWithIndexProcessor(Of TIn, TOut).ProcessRow
+  fullName.vb: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor(Of TIn, TOut).ProcessRow
+- uid: '{TIn}'
+  commentId: '!:TIn'
+  definition: TIn
+  name: TIn
+  nameWithType: TIn
+  fullName: TIn
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: '{TOut}'
+  commentId: '!:TOut'
+  definition: TOut
+  name: TOut
+  nameWithType: TOut
+  fullName: TOut
+- uid: TIn
+  name: TIn
+  nameWithType: TIn
+  fullName: TIn
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: TOut
+  name: TOut
+  nameWithType: TOut
+  fullName: TOut
