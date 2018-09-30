@@ -6,8 +6,9 @@ using System.IO;
 using System.Linq;
 using Paillave.Etl.TextFile.StreamNodes;
 using SystemIO = System.IO;
+using Paillave.Etl;
 
-namespace Paillave.Etl
+namespace Paillave.Etl.TextFile
 {
     public static class StreamExTf
     {

@@ -4,8 +4,9 @@ using Paillave.Etl.EntityFrameworkCore.StreamNodes;
 using Paillave.Etl.EntityFrameworkCore.ValuesProviders;
 using System;
 using System.Linq;
+using Paillave.Etl;
 
-namespace Paillave.Etl
+namespace Paillave.Etl.EntityFrameworkCore
 {
     public static class StreamExEfc
     {

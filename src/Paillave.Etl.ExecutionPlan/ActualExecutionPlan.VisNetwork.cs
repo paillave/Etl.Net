@@ -8,8 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Paillave.Etl;
 
-namespace Paillave.Etl
+namespace Paillave.Etl.ExecutionPlan
 {
     //http://resources.jointjs.com/demos/layout
     public static partial class ExecutionStatusEx

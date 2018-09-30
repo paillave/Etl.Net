@@ -1,0 +1,75 @@
+### YamlMime:TableOfContent
+- uid: Paillave.Etl
+  name: Paillave.Etl
+  items:
+  - uid: Paillave.Etl.StreamExAggregate
+    name: StreamExAggregate
+  - uid: Paillave.Etl.StreamExApply
+    name: StreamExApply
+  - uid: Paillave.Etl.StreamExCrossApply
+    name: StreamExCrossApply
+  - uid: Paillave.Etl.StreamExCrossApplyAction
+    name: StreamExCrossApplyAction
+  - uid: Paillave.Etl.StreamExDistinct
+    name: StreamExDistinct
+  - uid: Paillave.Etl.StreamExEnsuredKeyed
+    name: StreamExEnsuredKeyed
+  - uid: Paillave.Etl.StreamExEnsuredSorted
+    name: StreamExEnsuredSorted
+  - uid: Paillave.Etl.StreamExFiles
+    name: StreamExFiles
+  - uid: Paillave.Etl.StreamExLeftJoin
+    name: StreamExLeftJoin
+  - uid: Paillave.Etl.StreamExLookup
+    name: StreamExLookup
+  - uid: Paillave.Etl.StreamExPivot
+    name: StreamExPivot
+  - uid: Paillave.Etl.StreamExSelect
+    name: StreamExSelect
+  - uid: Paillave.Etl.StreamExSelectSection
+    name: StreamExSelectSection
+  - uid: Paillave.Etl.StreamExSelectStreamStatistics
+    name: StreamExSelectStreamStatistics
+  - uid: Paillave.Etl.StreamExSkip
+    name: StreamExSkip
+  - uid: Paillave.Etl.StreamExSort
+    name: StreamExSort
+  - uid: Paillave.Etl.StreamExSubProcess
+    name: StreamExSubProcess
+  - uid: Paillave.Etl.StreamExThroughAction
+    name: StreamExThroughAction
+  - uid: Paillave.Etl.StreamExTop
+    name: StreamExTop
+  - uid: Paillave.Etl.StreamExUnion
+    name: StreamExUnion
+  - uid: Paillave.Etl.StreamExUnionAll
+    name: StreamExUnionAll
+  - uid: Paillave.Etl.StreamExUnpivot
+    name: StreamExUnpivot
+  - uid: Paillave.Etl.StreamExWhere
+    name: StreamExWhere
+- uid: Paillave.Etl.EntityFrameworkCore
+  name: Paillave.Etl.EntityFrameworkCore
+  items:
+  - uid: Paillave.Etl.EntityFrameworkCore.StreamExEfc
+    name: StreamExEfc
+- uid: Paillave.Etl.ExcelFile
+  name: Paillave.Etl.ExcelFile
+  items:
+  - uid: Paillave.Etl.ExcelFile.StreamExXl
+    name: StreamExXl
+- uid: Paillave.Etl.Ftp
+  name: Paillave.Etl.Ftp
+  items:
+  - uid: Paillave.Etl.Ftp.StreamExFtp
+    name: StreamExFtp
+- uid: Paillave.Etl.SqlServer
+  name: Paillave.Etl.SqlServer
+  items:
+  - uid: Paillave.Etl.SqlServer.StreamExSsv
+    name: StreamExSsv
+- uid: Paillave.Etl.TextFile
+  name: Paillave.Etl.TextFile
+  items:
+  - uid: Paillave.Etl.TextFile.StreamExTf
+    name: StreamExTf

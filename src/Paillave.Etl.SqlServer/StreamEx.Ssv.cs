@@ -1,11 +1,12 @@
-﻿using Paillave.Etl.Core.Streams;
+﻿using Paillave.Etl;
+using Paillave.Etl.Core.Streams;
 using Paillave.Etl.SqlServer.StreamNodes;
 using Paillave.Etl.SqlServer.ValuesProviders;
 using System;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace Paillave.Etl
+namespace Paillave.Etl.SqlServer
 {
     public static class StreamExSsv
     {

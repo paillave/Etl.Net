@@ -26,7 +26,8 @@
       "command": "docfx",
       "type": "process",
       "args": [
-        "docfx_project/docfx.json"
+        "docfx_project/docfx.json",
+        "--serve"
       ],
       "problemMatcher": []
     }

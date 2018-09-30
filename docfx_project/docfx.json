@@ -4,7 +4,7 @@
       "src": [
         {
           "files": [
-            "Paillave.Etl/StreamEx*.cs"
+            "**/StreamEx*.cs"
           ],
           "exclude":["Paillave.Etl/StreamEx.cs"],
           "src":"../src"
@@ -54,7 +54,8 @@
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
-      "default"
+      "default",
+      "_exported_templates/default"
     ],
     "postProcessors": [],
     "markdownEngineName": "markdig",

@@ -1,6 +1,7 @@
 ﻿using ComplexQuickstart.StreamTypes;
 using System.IO;
 using Paillave.Etl;
+using Paillave.Etl.TextFile;
 using Paillave.Etl.Core.Streams;
 using System;
 

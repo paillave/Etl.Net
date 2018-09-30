@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-
-namespace Paillave.Etl
+using Paillave.Etl;
+namespace Paillave.Etl.ExecutionPlan
 {
     public class VisNetworkDescription
     {

@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Paillave.Etl;
 
-namespace Paillave.Etl
+namespace Paillave.Etl.ExecutionPlan
 {
     public static partial class JobDefinitionStructureEx
     {

@@ -1,0 +1,901 @@
+### YamlMime:ManagedReference
+items:
+- uid: Paillave.Etl.StreamExApply
+  commentId: T:Paillave.Etl.StreamExApply
+  id: StreamExApply
+  parent: Paillave.Etl
+  children:
+  - Paillave.Etl.StreamExApply.Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  - Paillave.Etl.StreamExApply.Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: StreamExApply
+  nameWithType: StreamExApply
+  fullName: Paillave.Etl.StreamExApply
+  type: Class
+  source:
+    id: StreamExApply
+    path: ''
+    startLine: 60
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl
+  syntax:
+    content: public static class StreamExApply
+    content.vb: Public Module StreamExApply
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.ToString
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  modifiers.csharp:
+  - public
+  - static
+  - class
+  modifiers.vb:
+  - Public
+  - Module
+- uid: Paillave.Etl.StreamExApply.Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
+  commentId: M:Paillave.Etl.StreamExApply.Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
+  id: Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.StreamExApply
+  langs:
+  - csharp
+  - vb
+  name: Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, IStream<TIn2>, Func<TIn1, TIn2, Int32, TOut>, Boolean)
+  nameWithType: StreamExApply.Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, IStream<TIn2>, Func<TIn1, TIn2, Int32, TOut>, Boolean)
+  fullName: Paillave.Etl.StreamExApply.Select<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, IStream<TIn2>, System.Func<TIn1, TIn2, System.Int32, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: Select
+    path: ''
+    startLine: 62
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl
+  syntax:
+    content: public static IStream<TOut> Select<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> streamToApply, Func<TIn1, TIn2, int, TOut> resultSelector, bool excludeNull = false)
+    parameters:
+    - id: stream
+      type: IStream{{TIn1}}
+    - id: name
+      type: System.String
+    - id: streamToApply
+      type: IStream{{TIn2}}
+    - id: resultSelector
+      type: System.Func{{TIn1},{TIn2},System.Int32,{TOut}}
+    - id: excludeNull
+      type: System.Boolean
+    typeParameters:
+    - id: TIn1
+    - id: TIn2
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function Select(Of TIn1, TIn2, TOut)(stream As IStream(Of TIn1), name As String, streamToApply As IStream(Of TIn2), resultSelector As Func(Of TIn1, TIn2, Integer, TOut), excludeNull As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.StreamExApply.Select*
+  nameWithType.vb: StreamExApply.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, IStream(Of TIn2), Func(Of TIn1, TIn2, Int32, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.StreamExApply.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, IStream(Of TIn2), System.Func(Of TIn1, TIn2, System.Int32, TOut), System.Boolean)
+  name.vb: Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, IStream(Of TIn2), Func(Of TIn1, TIn2, Int32, TOut), Boolean)
+- uid: Paillave.Etl.StreamExApply.Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  commentId: M:Paillave.Etl.StreamExApply.Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  id: Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.StreamExApply
+  langs:
+  - csharp
+  - vb
+  name: Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, IStream<TIn2>, Func<TIn1, TIn2, TOut>, Boolean)
+  nameWithType: StreamExApply.Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, IStream<TIn2>, Func<TIn1, TIn2, TOut>, Boolean)
+  fullName: Paillave.Etl.StreamExApply.Select<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, IStream<TIn2>, System.Func<TIn1, TIn2, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: Select
+    path: ''
+    startLine: 72
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl
+  syntax:
+    content: public static IStream<TOut> Select<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> streamToApply, Func<TIn1, TIn2, TOut> resultSelector, bool excludeNull = false)
+    parameters:
+    - id: stream
+      type: IStream{{TIn1}}
+    - id: name
+      type: System.String
+    - id: streamToApply
+      type: IStream{{TIn2}}
+    - id: resultSelector
+      type: System.Func{{TIn1},{TIn2},{TOut}}
+    - id: excludeNull
+      type: System.Boolean
+    typeParameters:
+    - id: TIn1
+    - id: TIn2
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function Select(Of TIn1, TIn2, TOut)(stream As IStream(Of TIn1), name As String, streamToApply As IStream(Of TIn2), resultSelector As Func(Of TIn1, TIn2, TOut), excludeNull As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.StreamExApply.Select*
+  nameWithType.vb: StreamExApply.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, IStream(Of TIn2), Func(Of TIn1, TIn2, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.StreamExApply.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, IStream(Of TIn2), System.Func(Of TIn1, TIn2, TOut), System.Boolean)
+  name.vb: Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, IStream(Of TIn2), Func(Of TIn1, TIn2, TOut), Boolean)
+references:
+- uid: Paillave.Etl
+  commentId: N:Paillave.Etl
+  name: Paillave.Etl
+  nameWithType: Paillave.Etl
+  fullName: Paillave.Etl
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Paillave.Etl.StreamExApply.Select*
+  commentId: Overload:Paillave.Etl.StreamExApply.Select
+  name: Select
+  nameWithType: StreamExApply.Select
+  fullName: Paillave.Etl.StreamExApply.Select
+- uid: IStream{{TIn1}}
+  commentId: '!:IStream{``0}'
+  definition: IStream`1
+  name: IStream<TIn1>
+  nameWithType: IStream<TIn1>
+  fullName: IStream<TIn1>
+  nameWithType.vb: IStream(Of TIn1)
+  fullName.vb: IStream(Of TIn1)
+  name.vb: IStream(Of TIn1)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn1
+    nameWithType: TIn1
+    fullName: TIn1
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn1
+    nameWithType: TIn1
+    fullName: TIn1
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: IStream{{TIn2}}
+  commentId: '!:IStream{``1}'
+  definition: IStream`1
+  name: IStream<TIn2>
+  nameWithType: IStream<TIn2>
+  fullName: IStream<TIn2>
+  nameWithType.vb: IStream(Of TIn2)
+  fullName.vb: IStream(Of TIn2)
+  name.vb: IStream(Of TIn2)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn2
+    nameWithType: TIn2
+    fullName: TIn2
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn2
+    nameWithType: TIn2
+    fullName: TIn2
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TIn1},{TIn2},System.Int32,{TOut}}
+  commentId: T:System.Func{``0,``1,System.Int32,``2}
+  parent: System
+  definition: System.Func`4
+  name: Func<TIn1, TIn2, Int32, TOut>
+  nameWithType: Func<TIn1, TIn2, Int32, TOut>
+  fullName: System.Func<TIn1, TIn2, System.Int32, TOut>
+  nameWithType.vb: Func(Of TIn1, TIn2, Int32, TOut)
+  fullName.vb: System.Func(Of TIn1, TIn2, System.Int32, TOut)
+  name.vb: Func(Of TIn1, TIn2, Int32, TOut)
+  spec.csharp:
+  - uid: System.Func`4
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn1
+    nameWithType: TIn1
+    fullName: TIn1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TIn2
+    nameWithType: TIn2
+    fullName: TIn2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`4
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn1
+    nameWithType: TIn1
+    fullName: TIn1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TIn2
+    nameWithType: TIn2
+    fullName: TIn2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: IStream{{TOut}}
+  commentId: '!:IStream{``2}'
+  definition: IStream`1
+  name: IStream<TOut>
+  nameWithType: IStream<TOut>
+  fullName: IStream<TOut>
+  nameWithType.vb: IStream(Of TOut)
+  fullName.vb: IStream(Of TOut)
+  name.vb: IStream(Of TOut)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream`1
+  isExternal: true
+  name: IStream<>
+  nameWithType: IStream<>
+  fullName: IStream<>
+  nameWithType.vb: IStream(Of )
+  fullName.vb: IStream(Of )
+  name.vb: IStream(Of )
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func`4
+  commentId: T:System.Func`4
+  isExternal: true
+  name: Func<T1, T2, T3, TResult>
+  nameWithType: Func<T1, T2, T3, TResult>
+  fullName: System.Func<T1, T2, T3, TResult>
+  nameWithType.vb: Func(Of T1, T2, T3, TResult)
+  fullName.vb: System.Func(Of T1, T2, T3, TResult)
+  name.vb: Func(Of T1, T2, T3, TResult)
+  spec.csharp:
+  - uid: System.Func`4
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T3
+    nameWithType: T3
+    fullName: T3
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`4
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T3
+    nameWithType: T3
+    fullName: T3
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TIn1},{TIn2},{TOut}}
+  commentId: T:System.Func{``0,``1,``2}
+  parent: System
+  definition: System.Func`3
+  name: Func<TIn1, TIn2, TOut>
+  nameWithType: Func<TIn1, TIn2, TOut>
+  fullName: System.Func<TIn1, TIn2, TOut>
+  nameWithType.vb: Func(Of TIn1, TIn2, TOut)
+  fullName.vb: System.Func(Of TIn1, TIn2, TOut)
+  name.vb: Func(Of TIn1, TIn2, TOut)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn1
+    nameWithType: TIn1
+    fullName: TIn1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TIn2
+    nameWithType: TIn2
+    fullName: TIn2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn1
+    nameWithType: TIn1
+    fullName: TIn1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TIn2
+    nameWithType: TIn2
+    fullName: TIn2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func`3
+  commentId: T:System.Func`3
+  isExternal: true
+  name: Func<T1, T2, TResult>
+  nameWithType: Func<T1, T2, TResult>
+  fullName: System.Func<T1, T2, TResult>
+  nameWithType.vb: Func(Of T1, T2, TResult)
+  fullName.vb: System.Func(Of T1, T2, TResult)
+  name.vb: Func(Of T1, T2, TResult)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: )
+    nameWithType: )
+    fullName: )
