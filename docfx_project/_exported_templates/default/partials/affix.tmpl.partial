@@ -2,7 +2,7 @@
 
 <div class="hidden-sm col-md-2" role="complementary">
   <div class="sideaffix">
-    <p><img src="/images/full-black-logo.svg" alt="Logo Etl.Net"></p>
+    <p><img src="../images/full-black-logo.svg" alt="Logo Etl.Net"></p>
     {{^_disableContribution}}
     <div class="contribution">
       <ul class="nav">
