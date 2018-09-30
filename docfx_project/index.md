@@ -51,11 +51,11 @@ When it is about including ETL process in an applications, many developers don't
 - Executing the full solution on a development computer for debug or even simple development purpose is complex. Usually, once source of an application are retrieved from source control, a hit on F5 should be sufficient to successfully execute the application. With an SSIS process, developing the solution needs an SSIS deployment somewhere prior to execute the application, with all the necessary setups. During debug of the application it self, it won't be possible to enter into debug of the ETL process if it is hosted in SSIS.
 - SSIS needs to be installed on development computers. This makes the solution more complex to apprehend where normal application simply need dotnet core + visual studio code or visual studio community to be executed with a simple F5. Moreover, depending on the context, installing SSIS on a development computer is not always easy or possible (security policies).
 
-> A regular developers needs to download his sources, hit F5, and debug!
+> A regular developer needs to download his sources, hit F5, and debug!
 
 ### It is simple and easy... really
 
-> Simply add a references to Nuget
+> Simply add references to Nuget
 
 Just add a reference to the core packages (Etl.Net) and some of its extensions depending on the need (Etl.Net.TextFile, Etl.Net.EntityFrameworkCore...) from Nuget and you can develop and execute on the go. The rest is a very simple development extremely close to Linq!
 
