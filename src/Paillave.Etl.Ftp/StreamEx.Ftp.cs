@@ -6,8 +6,9 @@ using System;
 using System.IO;
 using System.Linq;
 using SystemIO = System.IO;
+using Paillave.Etl;
 
-namespace Paillave.Etl
+namespace Paillave.Etl.Ftp
 {
     public static class StreamExFtp
     {

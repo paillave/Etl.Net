@@ -6,6 +6,7 @@ using Paillave.Etl.TextFile.Core;
 using ComplexQuickstart.Jobs;
 using ComplexQuickstart.StreamTypes;
 using Paillave.Etl.Core;
+using Paillave.Etl.ExecutionPlan;
 
 namespace ComplexQuickstart
 {

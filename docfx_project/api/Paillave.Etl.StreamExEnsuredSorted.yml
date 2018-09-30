@@ -1,0 +1,831 @@
+### YamlMime:ManagedReference
+items:
+- uid: Paillave.Etl.StreamExEnsuredSorted
+  commentId: T:Paillave.Etl.StreamExEnsuredSorted
+  id: StreamExEnsuredSorted
+  parent: Paillave.Etl
+  children:
+  - Paillave.Etl.StreamExEnsuredSorted.EnsureSorted``2(IStream{``0},System.String,SortDefinition{``0,``1})
+  - Paillave.Etl.StreamExEnsuredSorted.EnsureSorted``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
+  langs:
+  - csharp
+  - vb
+  name: StreamExEnsuredSorted
+  nameWithType: StreamExEnsuredSorted
+  fullName: Paillave.Etl.StreamExEnsuredSorted
+  type: Class
+  source:
+    id: StreamExEnsuredSorted
+    path: ''
+    startLine: 284
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl
+  syntax:
+    content: public static class StreamExEnsuredSorted
+    content.vb: Public Module StreamExEnsuredSorted
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.ToString
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  modifiers.csharp:
+  - public
+  - static
+  - class
+  modifiers.vb:
+  - Public
+  - Module
+- uid: Paillave.Etl.StreamExEnsuredSorted.EnsureSorted``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
+  commentId: M:Paillave.Etl.StreamExEnsuredSorted.EnsureSorted``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
+  id: EnsureSorted``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
+  isExtensionMethod: true
+  parent: Paillave.Etl.StreamExEnsuredSorted
+  langs:
+  - csharp
+  - vb
+  name: EnsureSorted<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)
+  nameWithType: StreamExEnsuredSorted.EnsureSorted<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)
+  fullName: Paillave.Etl.StreamExEnsuredSorted.EnsureSorted<TIn, TKey>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Object)
+  type: Method
+  source:
+    id: EnsureSorted
+    path: ''
+    startLine: 286
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl
+  syntax:
+    content: public static ISortedStream<TIn, TKey> EnsureSorted<TIn, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, object sortPositions = null)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: getKey
+      type: System.Func{{TIn},{TKey}}
+    - id: sortPositions
+      type: System.Object
+    typeParameters:
+    - id: TIn
+    - id: TKey
+    return:
+      type: ISortedStream{{TIn},{TKey}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function EnsureSorted(Of TIn, TKey)(stream As IStream(Of TIn), name As String, getKey As Func(Of TIn, TKey), sortPositions As Object = Nothing) As ISortedStream(Of TIn, TKey)
+  overload: Paillave.Etl.StreamExEnsuredSorted.EnsureSorted*
+  nameWithType.vb: StreamExEnsuredSorted.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), String, Func(Of TIn, TKey), Object)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.StreamExEnsuredSorted.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), System.String, System.Func(Of TIn, TKey), System.Object)
+  name.vb: EnsureSorted(Of TIn, TKey)(IStream(Of TIn), String, Func(Of TIn, TKey), Object)
+- uid: Paillave.Etl.StreamExEnsuredSorted.EnsureSorted``2(IStream{``0},System.String,SortDefinition{``0,``1})
+  commentId: M:Paillave.Etl.StreamExEnsuredSorted.EnsureSorted``2(IStream{``0},System.String,SortDefinition{``0,``1})
+  id: EnsureSorted``2(IStream{``0},System.String,SortDefinition{``0,``1})
+  isExtensionMethod: true
+  parent: Paillave.Etl.StreamExEnsuredSorted
+  langs:
+  - csharp
+  - vb
+  name: EnsureSorted<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)
+  nameWithType: StreamExEnsuredSorted.EnsureSorted<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)
+  fullName: Paillave.Etl.StreamExEnsuredSorted.EnsureSorted<TIn, TKey>(IStream<TIn>, System.String, SortDefinition<TIn, TKey>)
+  type: Method
+  source:
+    id: EnsureSorted
+    path: ''
+    startLine: 294
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl
+  syntax:
+    content: public static ISortedStream<TIn, TKey> EnsureSorted<TIn, TKey>(this IStream<TIn> stream, string name, SortDefinition<TIn, TKey> sortDefinition)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: sortDefinition
+      type: SortDefinition{{TIn},{TKey}}
+    typeParameters:
+    - id: TIn
+    - id: TKey
+    return:
+      type: ISortedStream{{TIn},{TKey}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function EnsureSorted(Of TIn, TKey)(stream As IStream(Of TIn), name As String, sortDefinition As SortDefinition(Of TIn, TKey)) As ISortedStream(Of TIn, TKey)
+  overload: Paillave.Etl.StreamExEnsuredSorted.EnsureSorted*
+  nameWithType.vb: StreamExEnsuredSorted.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), String, SortDefinition(Of TIn, TKey))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.StreamExEnsuredSorted.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), System.String, SortDefinition(Of TIn, TKey))
+  name.vb: EnsureSorted(Of TIn, TKey)(IStream(Of TIn), String, SortDefinition(Of TIn, TKey))
+references:
+- uid: Paillave.Etl
+  commentId: N:Paillave.Etl
+  name: Paillave.Etl
+  nameWithType: Paillave.Etl
+  fullName: Paillave.Etl
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Paillave.Etl.StreamExEnsuredSorted.EnsureSorted*
+  commentId: Overload:Paillave.Etl.StreamExEnsuredSorted.EnsureSorted
+  name: EnsureSorted
+  nameWithType: StreamExEnsuredSorted.EnsureSorted
+  fullName: Paillave.Etl.StreamExEnsuredSorted.EnsureSorted
+- uid: IStream{{TIn}}
+  commentId: '!:IStream{``0}'
+  definition: IStream`1
+  name: IStream<TIn>
+  nameWithType: IStream<TIn>
+  fullName: IStream<TIn>
+  nameWithType.vb: IStream(Of TIn)
+  fullName.vb: IStream(Of TIn)
+  name.vb: IStream(Of TIn)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Func{{TIn},{TKey}}
+  commentId: T:System.Func{``0,``2}
+  parent: System
+  definition: System.Func`2
+  name: Func<TIn, TKey>
+  nameWithType: Func<TIn, TKey>
+  fullName: System.Func<TIn, TKey>
+  nameWithType.vb: Func(Of TIn, TKey)
+  fullName.vb: System.Func(Of TIn, TKey)
+  name.vb: Func(Of TIn, TKey)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISortedStream{{TIn},{TKey}}
+  commentId: '!:ISortedStream{``0,``2}'
+  definition: ISortedStream`2
+  name: ISortedStream<TIn, TKey>
+  nameWithType: ISortedStream<TIn, TKey>
+  fullName: ISortedStream<TIn, TKey>
+  nameWithType.vb: ISortedStream(Of TIn, TKey)
+  fullName.vb: ISortedStream(Of TIn, TKey)
+  name.vb: ISortedStream(Of TIn, TKey)
+  spec.csharp:
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream`1
+  isExternal: true
+  name: IStream<>
+  nameWithType: IStream<>
+  fullName: IStream<>
+  nameWithType.vb: IStream(Of )
+  fullName.vb: IStream(Of )
+  name.vb: IStream(Of )
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func`2
+  commentId: T:System.Func`2
+  isExternal: true
+  name: Func<T, TResult>
+  nameWithType: Func<T, TResult>
+  fullName: System.Func<T, TResult>
+  nameWithType.vb: Func(Of T, TResult)
+  fullName.vb: System.Func(Of T, TResult)
+  name.vb: Func(Of T, TResult)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISortedStream`2
+  isExternal: true
+  name: ISortedStream<, >
+  nameWithType: ISortedStream<, >
+  fullName: ISortedStream<, >
+  nameWithType.vb: ISortedStream(Of , )
+  fullName.vb: ISortedStream(Of , )
+  name.vb: ISortedStream(Of , )
+  spec.csharp:
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: SortDefinition{{TIn},{TKey}}
+  commentId: '!:SortDefinition{``0,``1}'
+  definition: SortDefinition`2
+  name: SortDefinition<TIn, TKey>
+  nameWithType: SortDefinition<TIn, TKey>
+  fullName: SortDefinition<TIn, TKey>
+  nameWithType.vb: SortDefinition(Of TIn, TKey)
+  fullName.vb: SortDefinition(Of TIn, TKey)
+  name.vb: SortDefinition(Of TIn, TKey)
+  spec.csharp:
+  - uid: SortDefinition`2
+    name: SortDefinition
+    nameWithType: SortDefinition
+    fullName: SortDefinition
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: SortDefinition`2
+    name: SortDefinition
+    nameWithType: SortDefinition
+    fullName: SortDefinition
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: SortDefinition`2
+  isExternal: true
+  name: SortDefinition<, >
+  nameWithType: SortDefinition<, >
+  fullName: SortDefinition<, >
+  nameWithType.vb: SortDefinition(Of , )
+  fullName.vb: SortDefinition(Of , )
+  name.vb: SortDefinition(Of , )
+  spec.csharp:
+  - uid: SortDefinition`2
+    name: SortDefinition
+    nameWithType: SortDefinition
+    fullName: SortDefinition
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: SortDefinition`2
+    name: SortDefinition
+    nameWithType: SortDefinition
+    fullName: SortDefinition
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )

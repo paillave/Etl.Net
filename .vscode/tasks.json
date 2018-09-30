@@ -5,15 +5,31 @@
       "label": "build",
       "command": "dotnet",
       "type": "process",
-      "args": ["build", "${workspaceFolder}/src/Paillave.Etl.sln"],
+      "args": [
+        "build",
+        "${workspaceFolder}/src/Paillave.Etl.sln"
+      ],
       "problemMatcher": "$msCompile"
     },
     {
       "label": "clean",
       "command": "dotnet",
       "type": "process",
-      "args": ["clean", "${workspaceFolder}/src/Paillave.Etl.sln"],
+      "args": [
+        "clean",
+        "${workspaceFolder}/src/Paillave.Etl.sln"
+      ],
       "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build documentation",
+      "command": "docfx",
+      "type": "process",
+      "args": [
+        "docfx_project/docfx.json",
+        "--serve"
+      ],
+      "problemMatcher": []
     }
   ]
 }

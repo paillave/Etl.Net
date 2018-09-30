@@ -6,7 +6,7 @@
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseUrl>https://github.com/paillave/Etl.Net/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/paillave/Etl.Net</PackageProjectUrl>
+    <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive text file xml</PackageTags>
     <Product>ETL.net XML files extensions</Product>
     <Description>XML files extensions for Etl.Net</Description>

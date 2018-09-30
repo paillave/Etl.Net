@@ -1,4 +1,5 @@
-﻿using Paillave.Etl.Core.Streams;
+﻿using Paillave.Etl;
+using Paillave.Etl.Core.Streams;
 using Paillave.Etl.ExcelFile.Core;
 using Paillave.Etl.ExcelFile.StreamNodes;
 using Paillave.Etl.ExcelFile.ValuesProviders;
@@ -6,7 +7,7 @@ using System;
 using System.IO;
 using SystemIO = System.IO;
 
-namespace Paillave.Etl
+namespace Paillave.Etl.ExcelFile
 {
     public static class StreamExXl
     {
