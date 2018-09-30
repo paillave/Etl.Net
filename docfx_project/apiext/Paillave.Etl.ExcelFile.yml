@@ -1,0 +1,22 @@
+### YamlMime:ManagedReference
+items:
+- uid: Paillave.Etl.ExcelFile
+  commentId: N:Paillave.Etl.ExcelFile
+  id: Paillave.Etl.ExcelFile
+  children:
+  - Paillave.Etl.ExcelFile.ExcelFileEx
+  langs:
+  - csharp
+  - vb
+  name: Paillave.Etl.ExcelFile
+  nameWithType: Paillave.Etl.ExcelFile
+  fullName: Paillave.Etl.ExcelFile
+  type: Namespace
+  assemblies:
+  - cs.temp.dll
+references:
+- uid: Paillave.Etl.ExcelFile.ExcelFileEx
+  commentId: T:Paillave.Etl.ExcelFile.ExcelFileEx
+  name: ExcelFileEx
+  nameWithType: ExcelFileEx
+  fullName: Paillave.Etl.ExcelFile.ExcelFileEx

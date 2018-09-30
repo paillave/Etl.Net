@@ -1,6 +1,10 @@
-- name: Recipes & Patterns
+- uid: RecipesPatterns 
+  name: Recipes & Patterns
   href: recipes/
-  homepage: recipes/intro.md
+  homepage: recipes/index.md
 - name: Api Documentation
   href: api/
   homepage: api/index.md
+- name: Extensions Api Documentation
+  href: apiext/
+  homepage: apiext/index.md

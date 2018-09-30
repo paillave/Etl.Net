@@ -4,13 +4,30 @@
       "src": [
         {
           "files": [
-            "**/StreamEx*.cs"
+            "**/Paillave.Etl/**/*.StreamEx.cs",
+            "**/SelectProcessor.cs"
           ],
-          "exclude":["Paillave.Etl/StreamEx.cs"],
+          "exclude":[],
           "src":"../src"
         }
       ],
       "dest": "api",
+      "disableGitFeatures": false,
+      "disableDefaultFilter": false
+    },
+    {
+      "src": [
+        {
+          "files": [
+            "**/*.StreamEx.cs"
+          ],
+          "exclude":[
+            "**/Paillave.Etl/**/*.StreamEx.cs"
+          ],
+          "src":"../src"
+        }
+      ],
+      "dest": "apiext",
       "disableGitFeatures": false,
       "disableDefaultFilter": false
     }
@@ -29,6 +46,12 @@
           "recipes/**/toc.yml",
           "toc.yml",
           "*.md"
+        ]
+      },
+      {
+        "files": [
+          "apiext/**.yml",
+          "apiext/index.md"
         ]
       }
     ],

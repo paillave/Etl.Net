@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Etl.Net: Quick presentation </title>
+    <title>Etl.Net </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Etl.Net: Quick presentation ">
+    <meta name="title" content="Etl.Net ">
     <meta name="generator" content="docfx 2.39.2.0">
     
     <link rel="shortcut icon" href="favicon.ico">
@@ -60,9 +60,8 @@
         <div class="article row grid">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
+<h1 id="etlnet">Etl.Net</h1>
 
-<p><img src="images/full-black-logo.svg" alt="Logo Etl.Net"></p>
-<h1 id="etlnet-quick-presentation">Etl.Net: Quick presentation</h1>
 <h2 id="what-it-is">What it is</h2>
 <p>Etl.Net is a complete ETL for .net developers who need to embed SSIS-like features into their applications.</p>
 <p>It contains every transformation and capabilities of SSIS:</p>
@@ -75,7 +74,7 @@
 <h2 id="why-it-was-made">Why it was made</h2>
 <h3 id="the-etl-reference-for-microsoft-developers-ssis">The ETL reference for Microsoft developers: SSIS</h3>
 <blockquote>
-<p>SSIS is a fantastic tool!</p>
+<p>SSIS is a fantastic tool.</p>
 </blockquote>
 <p>SSIS is a great straight forward tool to process big chunks of data. It supports out of the box a lot of formats, protocols, and databases. It contains a quiet exhaustive mass processing operators. It is very fast. It exposes a very well done server for scheduling, parameterization, tracing, and activity reporting. Its development tool is very clear. Deployments are very simple and straight forward procedures...</p>
 <blockquote>
@@ -93,7 +92,7 @@
 <p>Development are made on .Net Standard 2.0. This permits Etl.Net to be used on any platform that supports .net: Windows, Linux or mac with .net core or even mobile devices with application that are implement with xamarin.</p>
 <h3 id="it-is-open-source">It is open source</h3>
 <blockquote>
-<p>Get advantages of the open source community!</p>
+<p>Get advantages of the open source community.</p>
 </blockquote>
 <p>Anybody can push a new request for it to be improved so that some developers may implement it for you. You can even add your own amendments for them to be candidates as new features at the next release. Of course, open source involves complete transparency about what Etl.Net does under the hood.</p>
 <h3 id="it-is-made-for-developers">It is made for developers</h3>
@@ -107,29 +106,46 @@
 <li>SSIS needs to be installed on development computers. This makes the solution more complex to apprehend where normal application simply need dotnet core + visual studio code or visual studio community to be executed with a simple F5. Moreover, depending on the context, installing SSIS on a development computer is not always easy or possible (security policies).</li>
 </ul>
 <blockquote>
-<p>A regular developers needs to download his sources, hit F5, and debug!</p>
+<p>A regular developer needs to download his sources, hit F5, and debug.</p>
 </blockquote>
 <h3 id="it-is-simple-and-easy-really">It is simple and easy... really</h3>
 <blockquote>
-<p>Simply add a references to Nuget</p>
+<p>Simply add references to Nuget</p>
 </blockquote>
-<p>Just add a reference to the core packages (Etl.Net) and some of its extensions depending on the need (Etl.Net.TextFile, Etl.Net.EntityFrameworkCore...) from Nuget and you can develop and execute on the go. The rest is a very simple development extremely close to Linq!</p>
+<p>Just add a reference to the core package (Etl.Net) and some of its extensions depending on the need (Etl.Net.TextFile, Etl.Net.EntityFrameworkCore...) from Nuget and you can develop and execute on the go. The rest is a very simple development extremely close to Linq.</p>
 <h3 id="it-is-designed-to-be-very-simple-to-extend">It is designed to be very simple to extend</h3>
 <blockquote>
 <p>SSIS extension is a horribly complex process compared to usual .net tool kits and frameworks.</p>
 </blockquote>
-<p>When it is about SSIS extensibility , you have to swim quiet deep in the abyss of hell: after dealing with the quiet complex SDK to extend it and the big amount of lines of codes to implement your extension, you will have to ensure it is well deployed in the GAC of your development computer, but also on the GAC of every SSIS server where it will be deployed. To use it in development, you must also install it correctly on your development computer so that Sql Server Data Tools for BI recognizes it and makes it available in your toolbox.</p>
+<p>When it is about SSIS extensibility , you have to swim quiet deep in the abyss of hell: after dealing with the very complex SDK to extend it and the big amount of lines of codes to implement your extension, you will have to ensure it is well deployed in the GAC of your development computer, but also on the GAC of every SSIS server where it will be deployed. To use it for development, you must also install it correctly on your development computer so that Sql Server Data Tools for BI recognizes it and makes it available in your visual studio toolbox.</p>
 <blockquote>
 <p>An Etl.Net extension can be developed, debugged and used within in 5mn... literally.</p>
 </blockquote>
 <p>Etl.net extensibility is based on a simple development wether it is embedded within the application, in another shared assembly or a Nuget package. It is as simple as a couple of lines of code since a set of base classes permits extensions to be easily implemented for most of typical use cases.</p>
 <h2 id="installation">Installation</h2>
-<p>With dot net core:</p>
+<p>No installation is necessary. Simple reference to a nuget packages are enough.</p>
+<div class="tabGroup" id="tabgroup_CeZOj-G++Q">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_CeZOj-G++Q_dotnetcore" role="tab" aria-controls="tabpanel_CeZOj-G++Q_dotnetcore" data-tab="dotnetcore" tabindex="0" aria-selected="true">dotnet core</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_CeZOj-G++Q_dotnetframework" role="tab" aria-controls="tabpanel_CeZOj-G++Q_dotnetframework" data-tab="dotnetframework" tabindex="-1">dotnet framework</a>
+</li>
+</ul>
+<section id="tabpanel_CeZOj-G++Q_dotnetcore" role="tabpanel" data-tab="dotnetcore">
+
+<p>Powershell:</p>
 <pre><code class="lang-powershell">dotnet add package etl.net
 </code></pre>
-<p>With dot net framework:</p>
+</section>
+<section id="tabpanel_CeZOj-G++Q_dotnetframework" role="tabpanel" data-tab="dotnetframework" aria-hidden="true" hidden="hidden">
+
+<p>Powershell:</p>
 <pre><code class="lang-powershell">nuget install etl.net
 </code></pre>
+</section>
+</div>
 <h2 id="quickstart">Quickstart</h2>
 <h3 id="prepare-the-application">Prepare the application</h3>
 <p>Command line:</p>
@@ -139,7 +155,21 @@ dotnet add package Etl.Net --version 1.0.124-alpha
 dotnet add package Etl.Net.TextFile --version 1.0.124-alpha
 </code></pre>
 <h3 id="implement-the-process">Implement the process</h3>
-<p>Program.cs:</p>
+<div class="tabGroup" id="tabgroup_CeZOj-G++Q-1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_CeZOj-G++Q-1_SimpleConfig" role="tab" aria-controls="tabpanel_CeZOj-G++Q-1_SimpleConfig" data-tab="SimpleConfig" tabindex="0" aria-selected="true">SimpleConfig.cs</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_CeZOj-G++Q-1_SimpleQuickstartJob" role="tab" aria-controls="tabpanel_CeZOj-G++Q-1_SimpleQuickstartJob" data-tab="SimpleQuickstartJob" tabindex="-1">SimpleQuickstartJob.cs</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_CeZOj-G++Q-1_Program" role="tab" aria-controls="tabpanel_CeZOj-G++Q-1_Program" data-tab="Program" tabindex="-1">Program.cs</a>
+</li>
+</ul>
+<section id="tabpanel_CeZOj-G++Q-1_SimpleConfig" role="tabpanel" data-tab="SimpleConfig">
+
+<p>C# code:</p>
 <pre><code class="lang-csharp" name="Main">using Paillave.Etl;
 using System;
 using System.IO;
@@ -155,7 +185,21 @@ namespace SimpleQuickstart
         public string InputFilePath { get; set; }
         public string OutputFilePath { get; set; }
     }
+}
+</code></pre></section>
+<section id="tabpanel_CeZOj-G++Q-1_SimpleQuickstartJob" role="tabpanel" data-tab="SimpleQuickstartJob" aria-hidden="true" hidden="hidden">
 
+<p>C# code:</p>
+<pre><code class="lang-csharp" name="Main">using Paillave.Etl;
+using System;
+using System.IO;
+using Paillave.Etl.Core;
+using Paillave.Etl.TextFile.Core;
+using Paillave.Etl.Core.Streams;
+using Paillave.Etl.TextFile;
+
+namespace SimpleQuickstart
+{
     public class SimpleQuickstartJob : IStreamProcessDefinition&lt;SimpleConfig&gt;
     {
         public string Name =&gt; &quot;Simple quickstart&quot;;
@@ -204,6 +248,21 @@ namespace SimpleQuickstart
                     }));
         }
     }
+}
+</code></pre></section>
+<section id="tabpanel_CeZOj-G++Q-1_Program" role="tabpanel" data-tab="Program" aria-hidden="true" hidden="hidden">
+
+<p>C# code:</p>
+<pre><code class="lang-csharp" name="Main">using Paillave.Etl;
+using System;
+using System.IO;
+using Paillave.Etl.Core;
+using Paillave.Etl.TextFile.Core;
+using Paillave.Etl.Core.Streams;
+using Paillave.Etl.TextFile;
+
+namespace SimpleQuickstart
+{
     class Program
     {
         static void Main(string[] args)
@@ -220,11 +279,14 @@ namespace SimpleQuickstart
         }
     }
 }
-</code></pre></article>
+</code></pre></section>
+</div>
+</article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">
             <div class="sideaffix">
+              <p><img src="/images/full-black-logo.svg" alt="Logo Etl.Net"></p>
               <div class="contribution">
                 <ul class="nav">
                   <li>

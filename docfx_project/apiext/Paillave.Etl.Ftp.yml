@@ -1,0 +1,22 @@
+### YamlMime:ManagedReference
+items:
+- uid: Paillave.Etl.Ftp
+  commentId: N:Paillave.Etl.Ftp
+  id: Paillave.Etl.Ftp
+  children:
+  - Paillave.Etl.Ftp.FtpEx
+  langs:
+  - csharp
+  - vb
+  name: Paillave.Etl.Ftp
+  nameWithType: Paillave.Etl.Ftp
+  fullName: Paillave.Etl.Ftp
+  type: Namespace
+  assemblies:
+  - cs.temp.dll
+references:
+- uid: Paillave.Etl.Ftp.FtpEx
+  commentId: T:Paillave.Etl.Ftp.FtpEx
+  name: FtpEx
+  nameWithType: FtpEx
+  fullName: Paillave.Etl.Ftp.FtpEx

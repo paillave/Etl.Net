@@ -1,0 +1,26 @@
+### YamlMime:TableOfContent
+- uid: Paillave.Etl.EntityFrameworkCore
+  name: Paillave.Etl.EntityFrameworkCore
+  items:
+  - uid: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx
+    name: EntityFrameworkCoreEx
+- uid: Paillave.Etl.ExcelFile
+  name: Paillave.Etl.ExcelFile
+  items:
+  - uid: Paillave.Etl.ExcelFile.ExcelFileEx
+    name: ExcelFileEx
+- uid: Paillave.Etl.Ftp
+  name: Paillave.Etl.Ftp
+  items:
+  - uid: Paillave.Etl.Ftp.FtpEx
+    name: FtpEx
+- uid: Paillave.Etl.SqlServer
+  name: Paillave.Etl.SqlServer
+  items:
+  - uid: Paillave.Etl.SqlServer.SqlServerEx
+    name: SqlServerEx
+- uid: Paillave.Etl.TextFile
+  name: Paillave.Etl.TextFile
+  items:
+  - uid: Paillave.Etl.TextFile.TextFileEx
+    name: TextFileEx
