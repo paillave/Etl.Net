@@ -16,6 +16,12 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
+    /// <summary>
+    /// Set of extensions to transform elements of the input stream into another element.
+    /// </summary>
+    /// <remarks>
+    /// If TOut implements <c>IDisposable</c> it will be automatically disposed once the ETL process is finished.
+    /// </remarks>
     public static partial class SelectEx
     {
         /// <summary>
@@ -28,6 +34,22 @@ namespace Paillave.Etl
         /// <typeparam name="TIn">Input type</typeparam>
         /// <typeparam name="TOut">Output type</typeparam>
         /// <returns>Output stream</returns>
+        /// <example>
+        /// This example creates a file path from the input value and open it for writing.
+        /// <code>
+        /// public class MyJob : IStreamProcessDefinition&lt;string&gt;
+        /// {
+        ///     public string Name => "example select";
+        ///     public void DefineProcess(IStream&lt;string&gt; rootStream)
+        ///     {
+        ///         rootStream
+        ///             .Select("get file path from its name", fileName => Path.Combine("C:\", fileName))
+        ///             // Values issued by the following select will be automatically disposed once the process is completed.
+        ///             .Select("open the file", path => File.OpenWrite(path)); 
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
         public static IStream<TOut> Select<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> resultSelector, bool excludeNull = false)
         {
             return new SelectStreamNode<TIn, TOut>(name, new SelectArgs<TIn, TOut>

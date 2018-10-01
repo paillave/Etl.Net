@@ -23,10 +23,13 @@ items:
   source:
     id: SelectEx
     path: ''
-    startLine: 521
+    startLine: 527
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
+  summary: "\nSet of extensions to transform elements of the input stream into another element.\n"
+  remarks: "\nIf TOut implements <code>IDisposable</code> it will be automatically disposed once the ETL process is finished.\n"
+  example: []
   syntax:
     content: public static class SelectEx
     content.vb: Public Module SelectEx
@@ -62,12 +65,13 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 533
+    startLine: 553
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   summary: "\nTransform the input stream into a similar stream but with a different structure and calculation using a lambda expression\n"
-  example: []
+  example:
+  - "\n<pre><code>public class MyJob : IStreamProcessDefinition&lt;string>\n{\n    public string Name => &quot;example select&quot;;\n    public void DefineProcess(IStream&lt;string> rootStream)\n    {\n        rootStream\n            .Select(&quot;get file path from its name&quot;, fileName => Path.Combine(&quot;C:\\&quot;, fileName))\n            .Select(&quot;open the file&quot;, path => File.OpenWrite(path)); //values issued by this select will be automatically disposed once the process is completed.\n    }\n}</code></pre>\n"
   syntax:
     content: public static IStream<TOut> Select<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> resultSelector, bool excludeNull = false)
     parameters:
@@ -120,7 +124,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 554
+    startLine: 574
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -183,7 +187,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 573
+    startLine: 593
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -241,7 +245,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 592
+    startLine: 612
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -299,7 +303,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 611
+    startLine: 631
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -357,7 +361,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 632
+    startLine: 652
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -420,7 +424,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 654
+    startLine: 674
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -483,7 +487,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 677
+    startLine: 697
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl

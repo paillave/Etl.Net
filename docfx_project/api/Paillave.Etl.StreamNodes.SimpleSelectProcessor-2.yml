@@ -17,7 +17,7 @@ items:
   source:
     id: SimpleSelectProcessor
     path: ''
-    startLine: 1362
+    startLine: 1382
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.StreamNodes
@@ -68,7 +68,7 @@ items:
   source:
     id: .ctor
     path: ''
-    startLine: 1369
+    startLine: 1389
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.StreamNodes
@@ -103,7 +103,7 @@ items:
   source:
     id: ProcessRow
     path: ''
-    startLine: 1378
+    startLine: 1398
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.StreamNodes

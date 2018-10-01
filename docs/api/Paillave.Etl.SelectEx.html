@@ -73,7 +73,8 @@
   
   <h1 id="Paillave_Etl_SelectEx" data-uid="Paillave.Etl.SelectEx" class="text-break">Class SelectEx
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>Set of extensions to transform elements of the input stream into another element.</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
@@ -85,6 +86,9 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static class SelectEx</code></pre>
   </div>
+  <h5 id="Paillave_Etl_SelectEx_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>If TOut implements <code>IDisposable</code> it will be automatically disposed once the ETL process is finished.</p>
+</div>
   <h3 id="methods">Methods
   </h3>
   
@@ -339,6 +343,18 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="Paillave_Etl_SelectEx_Select__2_IStream___0__System_String_System_Func___0___1__System_Boolean__examples">Examples</h5>
+  <pre><code>public class MyJob : IStreamProcessDefinition&lt;string>
+{
+    public string Name => &quot;example select&quot;;
+    public void DefineProcess(IStream&lt;string> rootStream)
+    {
+        rootStream
+            .Select(&quot;get file path from its name&quot;, fileName => Path.Combine(&quot;C:\&quot;, fileName))
+            .Select(&quot;open the file&quot;, path => File.OpenWrite(path)); //values issued by this select will be automatically disposed once the process is completed.
+    }
+}</code></pre>
+
   
   
   <a id="Paillave_Etl_SelectEx_Select_" data-uid="Paillave.Etl.SelectEx.Select*"></a>
