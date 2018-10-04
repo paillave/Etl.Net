@@ -71,6 +71,27 @@ namespace Paillave.Etl
         /// <typeparam name="TOut">Output type</typeparam>
         /// <typeparam name="TCtx">Context type</typeparam>
         /// <returns>Output stream</returns>
+        /// <example>
+        /// This example returns a dataset by replacing null values with the latest not null value.
+        /// <code>
+        /// public class CrossApplyActionJobs : IStreamProcessDefinition<object>
+        /// {
+        ///     public string Name => "import file";
+        ///     public void DefineProcess(IStream<object> rootStream)
+        ///     {
+        ///         rootStream
+        ///             .CrossApplyEnumerable("create some values", (input) => Enumerable.Range(0, 10).Select(i => new { Id = i, Value = (i % 3 == 0) ? i : (int?)null }))
+        ///             .Select("set null value to the previous not null value", 0, (i, ctx, setCtx) =>
+        ///             {
+        ///                 var v = i.Value ?? ctx;
+        ///                 setCtx(v);
+        ///                 return new { i.Id, Value = v };
+        ///             });
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
+
         public static IStream<TOut> Select<TIn, TOut, TCtx>(this IStream<TIn> stream, string name, TCtx initialContext, Func<TIn, TCtx, Action<TCtx>, TOut> resultSelector, bool excludeNull = false)
         {
             return new SelectStreamNode<TIn, TOut>(name, new SelectArgs<TIn, TOut>
