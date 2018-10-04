@@ -74,10 +74,10 @@ namespace Paillave.Etl
         /// <example>
         /// This example returns a dataset by replacing null values with the latest not null value.
         /// <code>
-        /// public class CrossApplyActionJobs : IStreamProcessDefinition<object>
+        /// public class CrossApplyActionJobs : IStreamProcessDefinition&lt;object&gt;
         /// {
         ///     public string Name => "import file";
-        ///     public void DefineProcess(IStream<object> rootStream)
+        ///     public void DefineProcess(IStream&lt;object&gt; rootStream)
         ///     {
         ///         rootStream
         ///             .CrossApplyEnumerable("create some values", (input) => Enumerable.Range(0, 10).Select(i => new { Id = i, Value = (i % 3 == 0) ? i : (int?)null }))
