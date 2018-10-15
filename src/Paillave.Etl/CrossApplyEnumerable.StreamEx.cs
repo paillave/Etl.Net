@@ -16,8 +16,21 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl
 {
+    /// <summary>
+    /// Produce a stream of rows based on an enumerable
+    /// </summary>
     public static partial class CrossApplyEnumerableEx
     {
+        /// <summary>
+        /// Produces a stream of rows based on a enumerable using input stream
+        /// </summary>
+        /// <param name="stream">Input stream</param>
+        /// <param name="name">Name of the operation</param>
+        /// <param name="values">Enumerable that contains values to submit to the output stream</param>
+        /// <param name="noParallelisation">if set to true, values won't be issued concurrently, preventing them to be mixed</param>
+        /// <typeparam name="TIn">Input type</typeparam>
+        /// <typeparam name="TOut">Output type</typeparam>
+        /// <returns>Output stream</returns>
         public static IStream<TOut> CrossApplyEnumerable<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, IEnumerable<TOut>> values, bool noParallelisation = false)
         {
             return stream.CrossApply(name, new ActionValuesProvider<TIn, TOut>(new ActionValuesProviderArgs<TIn, TOut>()
@@ -30,9 +43,21 @@ namespace Paillave.Etl
                 }
             }), i => i, (i, _) => i);
         }
-        public static IStream<TOut> CrossApplyEnumerable<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> resourceStream, Func<TIn1, TIn2, IEnumerable<TOut>> values, bool noParallelisation = false)
+        /// <summary>
+        /// Produces a stream of rows based on a enumerable using input stream and resource stream
+        /// </summary>
+        /// <param name="stream">Input stream</param>
+        /// <param name="name">Name of the operation</param>
+        /// <param name="streamToApply">The stream that contains the single element that will be applied to each element of the main stream with the result selector</param>
+        /// <param name="values">Enumerable that contains values to submit to the output stream</param>
+        /// <param name="noParallelisation">if set to true, values won't be issued concurrently, preventing them to be mixed</param>
+        /// <typeparam name="TIn1">Input type</typeparam>
+        /// <typeparam name="TIn2">Resource type</typeparam>
+        /// <typeparam name="TOut">Output type</typeparam>
+        /// <returns>Output stream</returns>
+        public static IStream<TOut> CrossApplyEnumerable<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> streamToApply, Func<TIn1, TIn2, IEnumerable<TOut>> values, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, resourceStream, new ActionResourceValuesProvider<TIn1, TIn2, TOut>(new ActionResourceValuesProviderArgs<TIn1, TIn2, TOut>()
+            return stream.CrossApply(name, streamToApply, new ActionResourceValuesProvider<TIn1, TIn2, TOut>(new ActionResourceValuesProviderArgs<TIn1, TIn2, TOut>()
             {
                 NoParallelisation = noParallelisation,
                 ProduceValues = (input1, input2, push) =>

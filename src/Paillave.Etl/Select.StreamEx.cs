@@ -111,6 +111,44 @@ namespace Paillave.Etl
         /// <typeparam name="TIn">Input type</typeparam>
         /// <typeparam name="TOut">Output type</typeparam>
         /// <returns>Output stream</returns>
+        /// <example>
+        /// This example returns a dataset by replacing null values with the latest not null value.
+        /// <code>
+        /// public class CrossApplyActionJobs2 : IStreamProcessDefinition&lt;object&gt;
+        /// {
+        ///     public string Name => "import file";
+        ///     public void DefineProcess(IStream&lt;object&gt; rootStream)
+        ///     {
+        ///         rootStream
+        ///             .CrossApplyEnumerable("create some values", (input) => Enumerable.Range(0, 10).Select(i => new MyInputType { Id = i, Value = (i % 3 == 0) ? i : (int?)null }))
+        ///             .Select("set null value to the previous not null value", new MySelectProcessor());
+        ///     }
+        ///     private class MyInputType
+        ///     {
+        ///         public int Id { get; set; }
+        ///         public int? Value { get; set; }
+        ///     }
+        ///     private class MyOutputType
+        ///     {
+        ///         public int Id { get; set; }
+        ///         public int Value { get; set; }
+        ///     }
+        ///     private class MySelectProcessor : ISelectProcessor&lt;MyInputType, MyOutputType&gt;
+        ///     {
+        ///         private int _lastValue = 0;
+        ///         public MyOutputType ProcessRow(MyInputType value)
+        ///         {
+        ///             if (value.Value != null) _lastValue = value.Value.Value;
+        ///             return new MyOutputType
+        ///             {
+        ///                 Id = value.Id,
+        ///                 Value = _lastValue
+        ///             };
+        ///         }
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
         public static IStream<TOut> Select<TIn, TOut>(this IStream<TIn> stream, string name, ISelectProcessor<TIn, TOut> processor, bool excludeNull = false)
         {
             return new SelectStreamNode<TIn, TOut>(name, new SelectArgs<TIn, TOut>

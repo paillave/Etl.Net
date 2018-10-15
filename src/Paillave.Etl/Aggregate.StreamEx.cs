@@ -30,6 +30,25 @@ namespace Paillave.Etl
         /// <typeparam name="TAggr">Aggregation type</typeparam>
         /// <typeparam name="TKey">Key type</typeparam>
         /// <returns>Output type</returns>
+        /// <example>
+        /// This example computes the average of every element grouped by their modulo 3.
+        /// <code>
+        /// public class ComputeAverageJob : IStreamProcessDefinition<object>
+        /// {
+        ///     public string Name => "import file";
+        ///     public void DefineProcess(IStream<object> rootStream)
+        ///     {
+        ///         rootStream
+        ///             .CrossApplyEnumerable("create some values", (input) => Enumerable.Range(0, 10))
+        ///             .Aggregate("aggregate values for average computation",
+        ///                 i => new { sum = 0, nb = 0 },
+        ///                 i => i % 3,
+        ///                 (previousAggr, value) => new { sum = previousAggr.sum + value, nb = previousAggr.nb + 1 })
+        ///             .Select("compute average", i => new { i.Key, Avg = i.Aggregation.sum / i.Aggregation.nb });
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
         public static IStream<AggregationResult<TIn, TKey, TAggr>> Aggregate<TIn, TAggr, TKey>(this IStream<TIn> stream, string name, Func<TIn, TAggr> emptyAggregation, Func<TIn, TKey> getKey, Func<TAggr, TIn, TAggr> aggregate)
         {
             return new AggregateStreamNode<TIn, TAggr, TKey>(name, new AggregateArgs<TIn, TAggr, TKey>
