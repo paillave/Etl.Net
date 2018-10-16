@@ -6,10 +6,9 @@ using System.Linq;
 
 namespace ExamplesQuickStart.Jobs
 {
-    public class ComputeAverageJob : IStreamProcessDefinition<object>
+    public class ComputeAverageJob
     {
-        public string Name => "import file";
-        public void DefineProcess(ISingleStream<object> rootStream)
+        public static void DefineProcess(ISingleStream<object> rootStream)
         {
             rootStream
                 .CrossApplyEnumerable("create some values", (input) => Enumerable.Range(0, 10))

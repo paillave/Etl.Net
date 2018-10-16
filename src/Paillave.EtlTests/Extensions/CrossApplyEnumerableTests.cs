@@ -6,18 +6,18 @@ using Paillave.Etl.Extensions;
 
 namespace Paillave.EtlTests.Extensions
 {
-    // [TestClass()]
+    //TODO: Make test
+    [TestClass()]
     public class CrossApplyEnumerableTests
     {
-        // [TestCategory(nameof(CrossApplyEnumerableTests))]
-        // [TestMethod]
-        // public void NoElements()
-        // {
-        //     StreamProcessRunner.Create()
-        //     StreamProcessDefinition.Create<object>(rootStream =>
-        //     {
-        //         rootStream.CrossApplyEnumerable("list elements", _ => Enumerable.Range(0, 10));
-        //     });
-        // }
+        [TestCategory(nameof(CrossApplyEnumerableTests))]
+        [TestMethod]
+        public void NoElements()
+        {
+            StreamProcessRunner.Create<object>(rootStream =>
+            {
+                rootStream.CrossApplyEnumerable("list elements", _ => Enumerable.Range(0, 10));
+            }).ExecuteAsync(null).Wait();
+        }
     }
 }

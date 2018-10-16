@@ -9,11 +9,9 @@ using System;
 
 namespace ComplexQuickstart.Jobs
 {
-    public class ComplexQuickstartJob : IStreamProcessDefinition<MyConfig>
+    public class ComplexQuickstartJob
     {
-        public string Name => "import file";
-
-        public void DefineProcess(ISingleStream<MyConfig> rootStream)
+        public static void DefineProcess(ISingleStream<MyConfig> rootStream)
         {
             var outputFileResourceS = rootStream.Select("open output file", i => (Stream)File.OpenWrite(i.DestinationFilePath));
             var outputCategoryResourceS = rootStream.Select("open output category file", i => (Stream)File.OpenWrite(i.CategoryDestinationFilePath));

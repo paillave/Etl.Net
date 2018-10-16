@@ -5,10 +5,9 @@ using System.Linq;
 
 namespace ExamplesQuickStart.Jobs
 {
-    public class CrossApplyActionJobs : IStreamProcessDefinition<object>
+    public class CrossApplyActionJobs
     {
-        public string Name => "import file";
-        public void DefineProcess(ISingleStream<object> rootStream)
+        public static void DefineProcess(ISingleStream<object> rootStream)
         {
             rootStream
                 .CrossApplyEnumerable("create some values", (input) => Enumerable.Range(0, 10).Select(i => new { Id = i, Value = (i % 3 == 0) ? i : (int?)null }))
