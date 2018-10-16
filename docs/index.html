@@ -206,7 +206,7 @@ namespace SimpleQuickstart
 
         public void DefineProcess(ISingleStream&lt;SimpleConfig&gt; rootStream)
         {
-            var outputFileS = rootStream.Select(&quot;open output file&quot;, i =&gt; File.OpenWrite(i.OutputFilePath));
+            var outputFileS = rootStream.Select(&quot;open output file&quot;, i =&gt; (Stream)File.OpenWrite(i.OutputFilePath));
             rootStream
                 .CrossApplyTextFile(&quot;read input file&quot;,
                     FlatFileDefinition.Create(i =&gt; new

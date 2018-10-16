@@ -17,9 +17,9 @@ items:
   - Paillave.Etl.TextFile.TextFileEx.CrossApplyTextFile``2(IStream{Stream},System.String,FlatFileDefinition{``0},System.Func{``0,``1},System.Boolean)
   - Paillave.Etl.TextFile.TextFileEx.CrossApplyTextFile``2(IStream{System.String},System.String,FlatFileDefinition{``0},System.Func{System.String,``0,``1},System.Boolean)
   - Paillave.Etl.TextFile.TextFileEx.CrossApplyTextFile``3(IStream{``0},System.String,FlatFileDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},System.Boolean)
-  - Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``1(IStream{``0},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
-  - Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(IKeyedStream{``0,``1},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
-  - Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(ISortedStream{``0,``1},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
+  - Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``1(IStream{``0},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  - Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  - Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(ISortedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
   - Paillave.Etl.TextFile.TextFileEx.ToTextFile``1(IStream{``0},System.String,FlatFileDefinition{``0})
   langs:
   - csharp
@@ -31,7 +31,7 @@ items:
   source:
     id: TextFileEx
     path: ''
-    startLine: 311
+    startLine: 313
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
@@ -70,7 +70,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 314
+    startLine: 316
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
@@ -118,7 +118,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 324
+    startLine: 326
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
@@ -166,7 +166,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 334
+    startLine: 336
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
@@ -217,7 +217,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 344
+    startLine: 346
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
@@ -271,7 +271,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 354
+    startLine: 356
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
@@ -322,7 +322,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 364
+    startLine: 366
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
@@ -373,7 +373,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 375
+    startLine: 377
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
@@ -417,7 +417,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 384
+    startLine: 386
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
@@ -461,7 +461,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 393
+    startLine: 395
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
@@ -509,7 +509,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 402
+    startLine: 404
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
@@ -560,7 +560,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 411
+    startLine: 413
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
@@ -608,7 +608,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 420
+    startLine: 422
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
@@ -641,34 +641,34 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.TextFile.TextFileEx.CrossApplyTextFile(Of TOut)(IStream(Of Stream), System.String, System.Func(Of System.String, TOut), System.Boolean)
   name.vb: CrossApplyTextFile(Of TOut)(IStream(Of Stream), String, Func(Of String, TOut), Boolean)
-- uid: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``1(IStream{``0},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
-  commentId: M:Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``1(IStream{``0},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
-  id: ThroughTextFile``1(IStream{``0},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
+- uid: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``1(IStream{``0},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  commentId: M:Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``1(IStream{``0},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  id: ThroughTextFile``1(IStream{``0},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
   isExtensionMethod: true
   parent: Paillave.Etl.TextFile.TextFileEx
   langs:
   - csharp
   - vb
-  name: ThroughTextFile<TIn>(IStream<TIn>, String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
-  nameWithType: TextFileEx.ThroughTextFile<TIn>(IStream<TIn>, String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
-  fullName: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile<TIn>(IStream<TIn>, System.String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  name: ThroughTextFile<TIn>(IStream<TIn>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  nameWithType: TextFileEx.ThroughTextFile<TIn>(IStream<TIn>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  fullName: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile<TIn>(IStream<TIn>, System.String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
   type: Method
   source:
     id: ThroughTextFile
     path: ''
-    startLine: 432
+    startLine: 434
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
   syntax:
-    content: public static IStream<TIn> ThroughTextFile<TIn>(this IStream<TIn> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
+    content: public static IStream<TIn> ThroughTextFile<TIn>(this IStream<TIn> stream, string name, ISingleStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{SystemIO.Stream}
+      type: ISingleStream{SystemIO.Stream}
     - id: mapping
       type: FlatFileDefinition{{TIn}}
     typeParameters:
@@ -678,45 +678,45 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughTextFile(Of TIn)(stream As IStream(Of TIn), name As String, resourceStream As IStream(Of SystemIO.Stream), mapping As FlatFileDefinition(Of TIn)) As IStream(Of TIn)
+      Public Shared Function ThroughTextFile(Of TIn)(stream As IStream(Of TIn), name As String, resourceStream As ISingleStream(Of SystemIO.Stream), mapping As FlatFileDefinition(Of TIn)) As IStream(Of TIn)
   overload: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile*
-  nameWithType.vb: TextFileEx.ThroughTextFile(Of TIn)(IStream(Of TIn), String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  nameWithType.vb: TextFileEx.ThroughTextFile(Of TIn)(IStream(Of TIn), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile(Of TIn)(IStream(Of TIn), System.String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
-  name.vb: ThroughTextFile(Of TIn)(IStream(Of TIn), String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
-- uid: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(ISortedStream{``0,``1},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
-  commentId: M:Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(ISortedStream{``0,``1},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
-  id: ThroughTextFile``2(ISortedStream{``0,``1},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
+  fullName.vb: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile(Of TIn)(IStream(Of TIn), System.String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  name.vb: ThroughTextFile(Of TIn)(IStream(Of TIn), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+- uid: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(ISortedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  commentId: M:Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(ISortedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  id: ThroughTextFile``2(ISortedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
   isExtensionMethod: true
   parent: Paillave.Etl.TextFile.TextFileEx
   langs:
   - csharp
   - vb
-  name: ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
-  nameWithType: TextFileEx.ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
-  fullName: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  name: ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  nameWithType: TextFileEx.ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  fullName: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
   type: Method
   source:
     id: ThroughTextFile
     path: ''
-    startLine: 441
+    startLine: 443
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
   syntax:
-    content: public static ISortedStream<TIn, TKey> ThroughTextFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
+    content: public static ISortedStream<TIn, TKey> ThroughTextFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, ISingleStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
     parameters:
     - id: stream
       type: ISortedStream{{TIn},{TKey}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{SystemIO.Stream}
+      type: ISingleStream{SystemIO.Stream}
     - id: mapping
       type: FlatFileDefinition{{TIn}}
     typeParameters:
@@ -727,45 +727,45 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughTextFile(Of TIn, TKey)(stream As ISortedStream(Of TIn, TKey), name As String, resourceStream As IStream(Of SystemIO.Stream), mapping As FlatFileDefinition(Of TIn)) As ISortedStream(Of TIn, TKey)
+      Public Shared Function ThroughTextFile(Of TIn, TKey)(stream As ISortedStream(Of TIn, TKey), name As String, resourceStream As ISingleStream(Of SystemIO.Stream), mapping As FlatFileDefinition(Of TIn)) As ISortedStream(Of TIn, TKey)
   overload: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile*
-  nameWithType.vb: TextFileEx.ThroughTextFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  nameWithType.vb: TextFileEx.ThroughTextFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), System.String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
-  name.vb: ThroughTextFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
-- uid: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(IKeyedStream{``0,``1},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
-  commentId: M:Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(IKeyedStream{``0,``1},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
-  id: ThroughTextFile``2(IKeyedStream{``0,``1},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
+  fullName.vb: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), System.String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  name.vb: ThroughTextFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+- uid: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  commentId: M:Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  id: ThroughTextFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
   isExtensionMethod: true
   parent: Paillave.Etl.TextFile.TextFileEx
   langs:
   - csharp
   - vb
-  name: ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
-  nameWithType: TextFileEx.ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
-  fullName: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  name: ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  nameWithType: TextFileEx.ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  fullName: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
   type: Method
   source:
     id: ThroughTextFile
     path: ''
-    startLine: 450
+    startLine: 452
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
   syntax:
-    content: public static IKeyedStream<TIn, TKey> ThroughTextFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
+    content: public static IKeyedStream<TIn, TKey> ThroughTextFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, ISingleStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
     parameters:
     - id: stream
       type: IKeyedStream{{TIn},{TKey}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{SystemIO.Stream}
+      type: ISingleStream{SystemIO.Stream}
     - id: mapping
       type: FlatFileDefinition{{TIn}}
     typeParameters:
@@ -776,17 +776,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughTextFile(Of TIn, TKey)(stream As IKeyedStream(Of TIn, TKey), name As String, resourceStream As IStream(Of SystemIO.Stream), mapping As FlatFileDefinition(Of TIn)) As IKeyedStream(Of TIn, TKey)
+      Public Shared Function ThroughTextFile(Of TIn, TKey)(stream As IKeyedStream(Of TIn, TKey), name As String, resourceStream As ISingleStream(Of SystemIO.Stream), mapping As FlatFileDefinition(Of TIn)) As IKeyedStream(Of TIn, TKey)
   overload: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile*
-  nameWithType.vb: TextFileEx.ThroughTextFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  nameWithType.vb: TextFileEx.ThroughTextFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), System.String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
-  name.vb: ThroughTextFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  fullName.vb: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), System.String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  name.vb: ThroughTextFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
 - uid: Paillave.Etl.TextFile.TextFileEx.ToTextFile``1(IStream{``0},System.String,FlatFileDefinition{``0})
   commentId: M:Paillave.Etl.TextFile.TextFileEx.ToTextFile``1(IStream{``0},System.String,FlatFileDefinition{``0})
   id: ToTextFile``1(IStream{``0},System.String,FlatFileDefinition{``0})
@@ -802,7 +802,7 @@ items:
   source:
     id: ToTextFile
     path: ''
-    startLine: 462
+    startLine: 464
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile
@@ -2023,20 +2023,20 @@ references:
   name: ThroughTextFile
   nameWithType: TextFileEx.ThroughTextFile
   fullName: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile
-- uid: IStream{SystemIO.Stream}
-  commentId: '!:IStream{SystemIO.Stream}'
-  definition: IStream`1
-  name: IStream<SystemIO.Stream>
-  nameWithType: IStream<SystemIO.Stream>
-  fullName: IStream<SystemIO.Stream>
-  nameWithType.vb: IStream(Of SystemIO.Stream)
-  fullName.vb: IStream(Of SystemIO.Stream)
-  name.vb: IStream(Of SystemIO.Stream)
+- uid: ISingleStream{SystemIO.Stream}
+  commentId: '!:ISingleStream{SystemIO.Stream}'
+  definition: ISingleStream`1
+  name: ISingleStream<SystemIO.Stream>
+  nameWithType: ISingleStream<SystemIO.Stream>
+  fullName: ISingleStream<SystemIO.Stream>
+  nameWithType.vb: ISingleStream(Of SystemIO.Stream)
+  fullName.vb: ISingleStream(Of SystemIO.Stream)
+  name.vb: ISingleStream(Of SystemIO.Stream)
   spec.csharp:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: <
     nameWithType: <
@@ -2050,10 +2050,10 @@ references:
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
@@ -2102,6 +2102,44 @@ references:
   - name: TIn
     nameWithType: TIn
     fullName: TIn
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream`1
+  isExternal: true
+  name: ISingleStream<>
+  nameWithType: ISingleStream<>
+  fullName: ISingleStream<>
+  nameWithType.vb: ISingleStream(Of )
+  fullName.vb: ISingleStream(Of )
+  name.vb: ISingleStream(Of )
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
   - name: )
     nameWithType: )
     fullName: )

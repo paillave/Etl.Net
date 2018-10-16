@@ -12,7 +12,7 @@
           "hash": "RMHiIlC4/ud8uEceutpO4w=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -408,7 +408,7 @@
           "hash": "a4xEeui5NBepQnNS8ZTqkg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -465,10 +465,10 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.ExcelFile.ExcelFileEx.html",
-          "hash": "QEPbJLPDg7OGyYboM3Q7ig=="
+          "hash": "HzAOGMVYPxT9kHHp1SF2CQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -480,7 +480,7 @@
           "hash": "wNjnifZG7+Swly+nlxsNew=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -513,10 +513,10 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.SqlServer.SqlServerEx.html",
-          "hash": "lRK0dEaT948uicNFI5BfQg=="
+          "hash": "uELmXoUvS3eYPLhTbqhUZw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -528,7 +528,7 @@
           "hash": "8IgcVaVeM/efpym8w9pwfA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -537,10 +537,10 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.TextFile.TextFileEx.html",
-          "hash": "zjs7kZP0XXgvr1zIL/Qr5Q=="
+          "hash": "E8TZTA0lKm12xQyWUCOYmg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -552,7 +552,7 @@
           "hash": "KW1+qNCe+nj3+UDprVlaVg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -596,10 +596,10 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "ZrvsrvaQKFjy6EA6vZqPyA=="
+          "hash": "ghh8B0uG/3g+GrEXeww+QA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -652,6 +652,14 @@
         "incrementalPhase": "build"
       },
       "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build"
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build"
+        },
         "TocDocumentProcessor": {
           "can_incremental": false,
           "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
@@ -660,14 +668,6 @@
         "ResourceDocumentProcessor": {
           "can_incremental": false,
           "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build"
-        },
-        "ConceptualDocumentProcessor": {
-          "can_incremental": true,
-          "incrementalPhase": "build"
-        },
-        "ManagedReferenceDocumentProcessor": {
-          "can_incremental": true,
           "incrementalPhase": "build"
         }
       }

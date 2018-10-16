@@ -117,7 +117,7 @@ namespace Paillave.Etl.ExcelFile
         //        TargetStream = resourceStream
         //    }).Output;
         //}
-        public static IStream<TIn> ThroughExcelFile<TIn>(this IStream<TIn> stream, string name, IStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
+        public static IStream<TIn> ThroughExcelFile<TIn>(this IStream<TIn> stream, string name, ISingleStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
         {
             return new ThroughExcelFileStreamNode<TIn, IStream<TIn>>(name, new ThroughExcelFileArgs<TIn, IStream<TIn>>
             {
@@ -126,7 +126,7 @@ namespace Paillave.Etl.ExcelFile
                 Mapping = mapping
             }).Output;
         }
-        public static ISortedStream<TIn, TKey> ThroughExcelFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
+        public static ISortedStream<TIn, TKey> ThroughExcelFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, ISingleStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
         {
             return new ThroughExcelFileStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new ThroughExcelFileArgs<TIn, ISortedStream<TIn, TKey>>
             {
@@ -135,7 +135,7 @@ namespace Paillave.Etl.ExcelFile
                 Mapping = mapping
             }).Output;
         }
-        public static IKeyedStream<TIn, TKey> ThroughExcelFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
+        public static IKeyedStream<TIn, TKey> ThroughExcelFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, ISingleStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
         {
             return new ThroughExcelFileStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new ThroughExcelFileArgs<TIn, IKeyedStream<TIn, TKey>>
             {

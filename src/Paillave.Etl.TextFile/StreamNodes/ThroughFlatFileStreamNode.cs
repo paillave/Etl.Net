@@ -14,7 +14,7 @@ namespace Paillave.Etl.TextFile.StreamNodes
         where TStream : IStream<TIn>
     {
         public TStream MainStream { get; set; }
-        public IStream<SystemIO.Stream> TargetStream { get; set; }
+        public ISingleStream<SystemIO.Stream> TargetStream { get; set; }
         public FlatFileDefinition<TIn> Mapping { get; set; }
     }
     public class ThroughFlatFileStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ThroughFlatFileArgs<TIn, TStream>>

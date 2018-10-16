@@ -14,9 +14,9 @@ items:
   - Paillave.Etl.ExcelFile.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String})
   - Paillave.Etl.ExcelFile.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0})
   - Paillave.Etl.ExcelFile.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1})
-  - Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,IStream{Stream},ExcelFileDefinition{``0})
-  - Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,IStream{Stream},ExcelFileDefinition{``0})
-  - Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(ISortedStream{``0,``1},System.String,IStream{Stream},ExcelFileDefinition{``0})
+  - Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  - Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  - Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(ISortedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
   - Paillave.Etl.ExcelFile.ExcelFileEx.ToExcelFile``1(IStream{``0},System.String,ExcelFileDefinition{``0})
   langs:
   - csharp
@@ -473,17 +473,17 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.ExcelFile.ExcelFileEx.CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), System.String, ExcelFileDefinition(Of TParsed))
   name.vb: CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed))
-- uid: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,IStream{Stream},ExcelFileDefinition{``0})
-  commentId: M:Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,IStream{Stream},ExcelFileDefinition{``0})
-  id: ThroughExcelFile``1(IStream{``0},System.String,IStream{Stream},ExcelFileDefinition{``0})
+- uid: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  commentId: M:Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  id: ThroughExcelFile``1(IStream{``0},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
   isExtensionMethod: true
   parent: Paillave.Etl.ExcelFile.ExcelFileEx
   langs:
   - csharp
   - vb
-  name: ThroughExcelFile<TIn>(IStream<TIn>, String, IStream<Stream>, ExcelFileDefinition<TIn>)
-  nameWithType: ExcelFileEx.ThroughExcelFile<TIn>(IStream<TIn>, String, IStream<Stream>, ExcelFileDefinition<TIn>)
-  fullName: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile<TIn>(IStream<TIn>, System.String, IStream<Stream>, ExcelFileDefinition<TIn>)
+  name: ThroughExcelFile<TIn>(IStream<TIn>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  nameWithType: ExcelFileEx.ThroughExcelFile<TIn>(IStream<TIn>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  fullName: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile<TIn>(IStream<TIn>, System.String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
   type: Method
   source:
     id: ThroughExcelFile
@@ -493,14 +493,14 @@ items:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile
   syntax:
-    content: public static IStream<TIn> ThroughExcelFile<TIn>(this IStream<TIn> stream, string name, IStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
+    content: public static IStream<TIn> ThroughExcelFile<TIn>(this IStream<TIn> stream, string name, ISingleStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{Stream}
+      type: ISingleStream{Stream}
     - id: mapping
       type: ExcelFileDefinition{{TIn}}
     typeParameters:
@@ -510,28 +510,28 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughExcelFile(Of TIn)(stream As IStream(Of TIn), name As String, resourceStream As IStream(Of Stream), mapping As ExcelFileDefinition(Of TIn) = Nothing) As IStream(Of TIn)
+      Public Shared Function ThroughExcelFile(Of TIn)(stream As IStream(Of TIn), name As String, resourceStream As ISingleStream(Of Stream), mapping As ExcelFileDefinition(Of TIn) = Nothing) As IStream(Of TIn)
   overload: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile*
-  nameWithType.vb: ExcelFileEx.ThroughExcelFile(Of TIn)(IStream(Of TIn), String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
+  nameWithType.vb: ExcelFileEx.ThroughExcelFile(Of TIn)(IStream(Of TIn), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile(Of TIn)(IStream(Of TIn), System.String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
-  name.vb: ThroughExcelFile(Of TIn)(IStream(Of TIn), String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
-- uid: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(ISortedStream{``0,``1},System.String,IStream{Stream},ExcelFileDefinition{``0})
-  commentId: M:Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(ISortedStream{``0,``1},System.String,IStream{Stream},ExcelFileDefinition{``0})
-  id: ThroughExcelFile``2(ISortedStream{``0,``1},System.String,IStream{Stream},ExcelFileDefinition{``0})
+  fullName.vb: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile(Of TIn)(IStream(Of TIn), System.String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+  name.vb: ThroughExcelFile(Of TIn)(IStream(Of TIn), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+- uid: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(ISortedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  commentId: M:Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(ISortedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  id: ThroughExcelFile``2(ISortedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
   isExtensionMethod: true
   parent: Paillave.Etl.ExcelFile.ExcelFileEx
   langs:
   - csharp
   - vb
-  name: ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, IStream<Stream>, ExcelFileDefinition<TIn>)
-  nameWithType: ExcelFileEx.ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, IStream<Stream>, ExcelFileDefinition<TIn>)
-  fullName: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, IStream<Stream>, ExcelFileDefinition<TIn>)
+  name: ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  nameWithType: ExcelFileEx.ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  fullName: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
   type: Method
   source:
     id: ThroughExcelFile
@@ -541,14 +541,14 @@ items:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile
   syntax:
-    content: public static ISortedStream<TIn, TKey> ThroughExcelFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
+    content: public static ISortedStream<TIn, TKey> ThroughExcelFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, ISingleStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
     parameters:
     - id: stream
       type: ISortedStream{{TIn},{TKey}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{Stream}
+      type: ISingleStream{Stream}
     - id: mapping
       type: ExcelFileDefinition{{TIn}}
     typeParameters:
@@ -559,28 +559,28 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughExcelFile(Of TIn, TKey)(stream As ISortedStream(Of TIn, TKey), name As String, resourceStream As IStream(Of Stream), mapping As ExcelFileDefinition(Of TIn) = Nothing) As ISortedStream(Of TIn, TKey)
+      Public Shared Function ThroughExcelFile(Of TIn, TKey)(stream As ISortedStream(Of TIn, TKey), name As String, resourceStream As ISingleStream(Of Stream), mapping As ExcelFileDefinition(Of TIn) = Nothing) As ISortedStream(Of TIn, TKey)
   overload: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile*
-  nameWithType.vb: ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
+  nameWithType.vb: ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), System.String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
-  name.vb: ThroughExcelFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
-- uid: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,IStream{Stream},ExcelFileDefinition{``0})
-  commentId: M:Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,IStream{Stream},ExcelFileDefinition{``0})
-  id: ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,IStream{Stream},ExcelFileDefinition{``0})
+  fullName.vb: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), System.String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+  name.vb: ThroughExcelFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+- uid: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  commentId: M:Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  id: ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
   isExtensionMethod: true
   parent: Paillave.Etl.ExcelFile.ExcelFileEx
   langs:
   - csharp
   - vb
-  name: ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, IStream<Stream>, ExcelFileDefinition<TIn>)
-  nameWithType: ExcelFileEx.ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, IStream<Stream>, ExcelFileDefinition<TIn>)
-  fullName: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, IStream<Stream>, ExcelFileDefinition<TIn>)
+  name: ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  nameWithType: ExcelFileEx.ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  fullName: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
   type: Method
   source:
     id: ThroughExcelFile
@@ -590,14 +590,14 @@ items:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile
   syntax:
-    content: public static IKeyedStream<TIn, TKey> ThroughExcelFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
+    content: public static IKeyedStream<TIn, TKey> ThroughExcelFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, ISingleStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
     parameters:
     - id: stream
       type: IKeyedStream{{TIn},{TKey}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{Stream}
+      type: ISingleStream{Stream}
     - id: mapping
       type: ExcelFileDefinition{{TIn}}
     typeParameters:
@@ -608,17 +608,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughExcelFile(Of TIn, TKey)(stream As IKeyedStream(Of TIn, TKey), name As String, resourceStream As IStream(Of Stream), mapping As ExcelFileDefinition(Of TIn) = Nothing) As IKeyedStream(Of TIn, TKey)
+      Public Shared Function ThroughExcelFile(Of TIn, TKey)(stream As IKeyedStream(Of TIn, TKey), name As String, resourceStream As ISingleStream(Of Stream), mapping As ExcelFileDefinition(Of TIn) = Nothing) As IKeyedStream(Of TIn, TKey)
   overload: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile*
-  nameWithType.vb: ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
+  nameWithType.vb: ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), System.String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
-  name.vb: ThroughExcelFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
+  fullName.vb: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), System.String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+  name.vb: ThroughExcelFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
 - uid: Paillave.Etl.ExcelFile.ExcelFileEx.ToExcelFile``1(IStream{``0},System.String,ExcelFileDefinition{``0})
   commentId: M:Paillave.Etl.ExcelFile.ExcelFileEx.ToExcelFile``1(IStream{``0},System.String,ExcelFileDefinition{``0})
   id: ToExcelFile``1(IStream{``0},System.String,ExcelFileDefinition{``0})
@@ -1844,6 +1844,49 @@ references:
   name: ThroughExcelFile
   nameWithType: ExcelFileEx.ThroughExcelFile
   fullName: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile
+- uid: ISingleStream{Stream}
+  commentId: '!:ISingleStream{Stream}'
+  definition: ISingleStream`1
+  name: ISingleStream<Stream>
+  nameWithType: ISingleStream<Stream>
+  fullName: ISingleStream<Stream>
+  nameWithType.vb: ISingleStream(Of Stream)
+  fullName.vb: ISingleStream(Of Stream)
+  name.vb: ISingleStream(Of Stream)
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Stream
+    name: Stream
+    nameWithType: Stream
+    fullName: Stream
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Stream
+    name: Stream
+    nameWithType: Stream
+    fullName: Stream
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
 - uid: ExcelFileDefinition{{TIn}}
   commentId: '!:ExcelFileDefinition{``0}'
   definition: ExcelFileDefinition`1
@@ -1880,6 +1923,44 @@ references:
   - name: TIn
     nameWithType: TIn
     fullName: TIn
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream`1
+  isExternal: true
+  name: ISingleStream<>
+  nameWithType: ISingleStream<>
+  fullName: ISingleStream<>
+  nameWithType.vb: ISingleStream(Of )
+  fullName.vb: ISingleStream(Of )
+  name.vb: ISingleStream(Of )
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
   - name: )
     nameWithType: )
     fullName: )
