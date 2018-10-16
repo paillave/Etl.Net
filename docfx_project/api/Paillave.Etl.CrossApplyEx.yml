@@ -6,9 +6,9 @@ items:
   parent: Paillave.Etl
   children:
   - Paillave.Etl.CrossApplyEx.CrossApply``2(IStream{``0},System.String,IValuesProvider{``0,``1})
-  - Paillave.Etl.CrossApplyEx.CrossApply``3(IStream{``0},System.String,IStream{``1},IValuesProvider{``0,``1,``2})
+  - Paillave.Etl.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``0,``1,``2})
   - Paillave.Etl.CrossApplyEx.CrossApply``4(IStream{``0},System.String,IValuesProvider{``1,``2},System.Func{``0,``1},System.Func{``2,``0,``3})
-  - Paillave.Etl.CrossApplyEx.CrossApply``5(IStream{``0},System.String,IStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
+  - Paillave.Etl.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
   langs:
   - csharp
   - vb
@@ -19,7 +19,7 @@ items:
   source:
     id: CrossApplyEx
     path: ''
-    startLine: 83
+    startLine: 102
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -58,7 +58,7 @@ items:
   source:
     id: CrossApply
     path: ''
-    startLine: 85
+    startLine: 104
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -111,7 +111,7 @@ items:
   source:
     id: CrossApply
     path: ''
-    startLine: 95
+    startLine: 114
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -143,34 +143,34 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.CrossApplyEx.CrossApply(Of TIn, TOut)(IStream(Of TIn), System.String, IValuesProvider(Of TIn, TOut))
   name.vb: CrossApply(Of TIn, TOut)(IStream(Of TIn), String, IValuesProvider(Of TIn, TOut))
-- uid: Paillave.Etl.CrossApplyEx.CrossApply``5(IStream{``0},System.String,IStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
-  commentId: M:Paillave.Etl.CrossApplyEx.CrossApply``5(IStream{``0},System.String,IStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
-  id: CrossApply``5(IStream{``0},System.String,IStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
+- uid: Paillave.Etl.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
+  commentId: M:Paillave.Etl.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
+  id: CrossApply``5(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
   isExtensionMethod: true
   parent: Paillave.Etl.CrossApplyEx
   langs:
   - csharp
   - vb
-  name: CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(IStream<TIn>, String, IStream<TRes>, IValuesProvider<TValueIn, TRes, TValueOut>, Func<TIn, TRes, TValueIn>, Func<TValueOut, TIn, TRes, TOut>)
-  nameWithType: CrossApplyEx.CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(IStream<TIn>, String, IStream<TRes>, IValuesProvider<TValueIn, TRes, TValueOut>, Func<TIn, TRes, TValueIn>, Func<TValueOut, TIn, TRes, TOut>)
-  fullName: Paillave.Etl.CrossApplyEx.CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(IStream<TIn>, System.String, IStream<TRes>, IValuesProvider<TValueIn, TRes, TValueOut>, System.Func<TIn, TRes, TValueIn>, System.Func<TValueOut, TIn, TRes, TOut>)
+  name: CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(IStream<TIn>, String, ISingleStream<TRes>, IValuesProvider<TValueIn, TRes, TValueOut>, Func<TIn, TRes, TValueIn>, Func<TValueOut, TIn, TRes, TOut>)
+  nameWithType: CrossApplyEx.CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(IStream<TIn>, String, ISingleStream<TRes>, IValuesProvider<TValueIn, TRes, TValueOut>, Func<TIn, TRes, TValueIn>, Func<TValueOut, TIn, TRes, TOut>)
+  fullName: Paillave.Etl.CrossApplyEx.CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(IStream<TIn>, System.String, ISingleStream<TRes>, IValuesProvider<TValueIn, TRes, TValueOut>, System.Func<TIn, TRes, TValueIn>, System.Func<TValueOut, TIn, TRes, TOut>)
   type: Method
   source:
     id: CrossApply
     path: ''
-    startLine: 105
+    startLine: 124
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   syntax:
-    content: public static IStream<TOut> CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, IValuesProvider<TValueIn, TRes, TValueOut> valuesProvider, Func<TIn, TRes, TValueIn> inputValueSelector, Func<TValueOut, TIn, TRes, TOut> outputValueSelector)
+    content: public static IStream<TOut> CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, ISingleStream<TRes> resourceStream, IValuesProvider<TValueIn, TRes, TValueOut> valuesProvider, Func<TIn, TRes, TValueIn> inputValueSelector, Func<TValueOut, TIn, TRes, TOut> outputValueSelector)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{{TRes}}
+      type: ISingleStream{{TRes}}
     - id: valuesProvider
       type: IValuesProvider{{TValueIn},{TRes},{TValueOut}}
     - id: inputValueSelector
@@ -188,45 +188,45 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApply(Of TIn, TRes, TValueIn, TValueOut, TOut)(stream As IStream(Of TIn), name As String, resourceStream As IStream(Of TRes), valuesProvider As IValuesProvider(Of TValueIn, TRes, TValueOut), inputValueSelector As Func(Of TIn, TRes, TValueIn), outputValueSelector As Func(Of TValueOut, TIn, TRes, TOut)) As IStream(Of TOut)
+      Public Shared Function CrossApply(Of TIn, TRes, TValueIn, TValueOut, TOut)(stream As IStream(Of TIn), name As String, resourceStream As ISingleStream(Of TRes), valuesProvider As IValuesProvider(Of TValueIn, TRes, TValueOut), inputValueSelector As Func(Of TIn, TRes, TValueIn), outputValueSelector As Func(Of TValueOut, TIn, TRes, TOut)) As IStream(Of TOut)
   overload: Paillave.Etl.CrossApplyEx.CrossApply*
-  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TRes, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, IStream(Of TRes), IValuesProvider(Of TValueIn, TRes, TValueOut), Func(Of TIn, TRes, TValueIn), Func(Of TValueOut, TIn, TRes, TOut))
+  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TRes, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, ISingleStream(Of TRes), IValuesProvider(Of TValueIn, TRes, TValueOut), Func(Of TIn, TRes, TValueIn), Func(Of TValueOut, TIn, TRes, TOut))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.CrossApplyEx.CrossApply(Of TIn, TRes, TValueIn, TValueOut, TOut)(IStream(Of TIn), System.String, IStream(Of TRes), IValuesProvider(Of TValueIn, TRes, TValueOut), System.Func(Of TIn, TRes, TValueIn), System.Func(Of TValueOut, TIn, TRes, TOut))
-  name.vb: CrossApply(Of TIn, TRes, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, IStream(Of TRes), IValuesProvider(Of TValueIn, TRes, TValueOut), Func(Of TIn, TRes, TValueIn), Func(Of TValueOut, TIn, TRes, TOut))
-- uid: Paillave.Etl.CrossApplyEx.CrossApply``3(IStream{``0},System.String,IStream{``1},IValuesProvider{``0,``1,``2})
-  commentId: M:Paillave.Etl.CrossApplyEx.CrossApply``3(IStream{``0},System.String,IStream{``1},IValuesProvider{``0,``1,``2})
-  id: CrossApply``3(IStream{``0},System.String,IStream{``1},IValuesProvider{``0,``1,``2})
+  fullName.vb: Paillave.Etl.CrossApplyEx.CrossApply(Of TIn, TRes, TValueIn, TValueOut, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TRes), IValuesProvider(Of TValueIn, TRes, TValueOut), System.Func(Of TIn, TRes, TValueIn), System.Func(Of TValueOut, TIn, TRes, TOut))
+  name.vb: CrossApply(Of TIn, TRes, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, ISingleStream(Of TRes), IValuesProvider(Of TValueIn, TRes, TValueOut), Func(Of TIn, TRes, TValueIn), Func(Of TValueOut, TIn, TRes, TOut))
+- uid: Paillave.Etl.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``0,``1,``2})
+  commentId: M:Paillave.Etl.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``0,``1,``2})
+  id: CrossApply``3(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``0,``1,``2})
   isExtensionMethod: true
   parent: Paillave.Etl.CrossApplyEx
   langs:
   - csharp
   - vb
-  name: CrossApply<TIn, TRes, TOut>(IStream<TIn>, String, IStream<TRes>, IValuesProvider<TIn, TRes, TOut>)
-  nameWithType: CrossApplyEx.CrossApply<TIn, TRes, TOut>(IStream<TIn>, String, IStream<TRes>, IValuesProvider<TIn, TRes, TOut>)
-  fullName: Paillave.Etl.CrossApplyEx.CrossApply<TIn, TRes, TOut>(IStream<TIn>, System.String, IStream<TRes>, IValuesProvider<TIn, TRes, TOut>)
+  name: CrossApply<TIn, TRes, TOut>(IStream<TIn>, String, ISingleStream<TRes>, IValuesProvider<TIn, TRes, TOut>)
+  nameWithType: CrossApplyEx.CrossApply<TIn, TRes, TOut>(IStream<TIn>, String, ISingleStream<TRes>, IValuesProvider<TIn, TRes, TOut>)
+  fullName: Paillave.Etl.CrossApplyEx.CrossApply<TIn, TRes, TOut>(IStream<TIn>, System.String, ISingleStream<TRes>, IValuesProvider<TIn, TRes, TOut>)
   type: Method
   source:
     id: CrossApply
     path: ''
-    startLine: 116
+    startLine: 135
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   syntax:
-    content: public static IStream<TOut> CrossApply<TIn, TRes, TOut>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, IValuesProvider<TIn, TRes, TOut> valuesProvider)
+    content: public static IStream<TOut> CrossApply<TIn, TRes, TOut>(this IStream<TIn> stream, string name, ISingleStream<TRes> resourceStream, IValuesProvider<TIn, TRes, TOut> valuesProvider)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{{TRes}}
+      type: ISingleStream{{TRes}}
     - id: valuesProvider
       type: IValuesProvider{{TIn},{TRes},{TOut}}
     typeParameters:
@@ -238,17 +238,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApply(Of TIn, TRes, TOut)(stream As IStream(Of TIn), name As String, resourceStream As IStream(Of TRes), valuesProvider As IValuesProvider(Of TIn, TRes, TOut)) As IStream(Of TOut)
+      Public Shared Function CrossApply(Of TIn, TRes, TOut)(stream As IStream(Of TIn), name As String, resourceStream As ISingleStream(Of TRes), valuesProvider As IValuesProvider(Of TIn, TRes, TOut)) As IStream(Of TOut)
   overload: Paillave.Etl.CrossApplyEx.CrossApply*
-  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TRes, TOut)(IStream(Of TIn), String, IStream(Of TRes), IValuesProvider(Of TIn, TRes, TOut))
+  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TRes, TOut)(IStream(Of TIn), String, ISingleStream(Of TRes), IValuesProvider(Of TIn, TRes, TOut))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.CrossApplyEx.CrossApply(Of TIn, TRes, TOut)(IStream(Of TIn), System.String, IStream(Of TRes), IValuesProvider(Of TIn, TRes, TOut))
-  name.vb: CrossApply(Of TIn, TRes, TOut)(IStream(Of TIn), String, IStream(Of TRes), IValuesProvider(Of TIn, TRes, TOut))
+  fullName.vb: Paillave.Etl.CrossApplyEx.CrossApply(Of TIn, TRes, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TRes), IValuesProvider(Of TIn, TRes, TOut))
+  name.vb: CrossApply(Of TIn, TRes, TOut)(IStream(Of TIn), String, ISingleStream(Of TRes), IValuesProvider(Of TIn, TRes, TOut))
 references:
 - uid: Paillave.Etl
   commentId: N:Paillave.Etl
@@ -1057,20 +1057,20 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: IStream{{TRes}}
-  commentId: '!:IStream{``1}'
-  definition: IStream`1
-  name: IStream<TRes>
-  nameWithType: IStream<TRes>
-  fullName: IStream<TRes>
-  nameWithType.vb: IStream(Of TRes)
-  fullName.vb: IStream(Of TRes)
-  name.vb: IStream(Of TRes)
+- uid: ISingleStream{{TRes}}
+  commentId: '!:ISingleStream{``1}'
+  definition: ISingleStream`1
+  name: ISingleStream<TRes>
+  nameWithType: ISingleStream<TRes>
+  fullName: ISingleStream<TRes>
+  nameWithType.vb: ISingleStream(Of TRes)
+  fullName.vb: ISingleStream(Of TRes)
+  name.vb: ISingleStream(Of TRes)
   spec.csharp:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: <
     nameWithType: <
@@ -1082,10 +1082,10 @@ references:
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
@@ -1296,6 +1296,44 @@ references:
   - name: TOut
     nameWithType: TOut
     fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream`1
+  isExternal: true
+  name: ISingleStream<>
+  nameWithType: ISingleStream<>
+  fullName: ISingleStream<>
+  nameWithType.vb: ISingleStream(Of )
+  fullName.vb: ISingleStream(Of )
+  name.vb: ISingleStream(Of )
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
   - name: )
     nameWithType: )
     fullName: )

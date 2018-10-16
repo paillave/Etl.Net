@@ -11,7 +11,7 @@ namespace ComplexQuickstart.Jobs
     {
         public string Name => "import file";
 
-        public void DefineProcess(IStream<MyConfig> rootStream)
+        public void DefineProcess(ISingleStream<MyConfig> rootStream)
         {
             var outputFileResourceS = rootStream.Select("open output file", i => File.OpenWrite(i.DestinationFilePath));
             var outputCategoryResourceS = rootStream.Select("open output category file", i => File.OpenWrite(i.CategoryDestinationFilePath));

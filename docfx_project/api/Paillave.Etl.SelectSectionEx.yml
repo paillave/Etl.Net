@@ -19,7 +19,7 @@ items:
   source:
     id: SelectSectionEx
     path: ''
-    startLine: 728
+    startLine: 984
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -58,7 +58,7 @@ items:
   source:
     id: SelectSection
     path: ''
-    startLine: 730
+    startLine: 986
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -106,7 +106,7 @@ items:
   source:
     id: SelectSection
     path: ''
-    startLine: 739
+    startLine: 995
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -152,7 +152,7 @@ items:
   source:
     id: SelectSection
     path: ''
-    startLine: 747
+    startLine: 1003
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -202,7 +202,7 @@ items:
   source:
     id: SelectSection
     path: ''
-    startLine: 757
+    startLine: 1013
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl

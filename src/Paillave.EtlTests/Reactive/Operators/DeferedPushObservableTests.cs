@@ -9,58 +9,58 @@ using System.Threading;
 namespace Paillave.EtlTests.Reactive.Operators
 {
     [TestClass]
-    public class DeferedPushObservableTests
+    public class DeferredPushObservableTests
     {
-        [TestCategory(nameof(DeferedPushObservableTests))]
+        [TestCategory(nameof(DeferredPushObservableTests))]
         [TestMethod]
         public void Push10000Values()
         {
             PushValuesNotAutomaticStart(10000);
         }
 
-        [TestCategory(nameof(DeferedPushObservableTests))]
+        [TestCategory(nameof(DeferredPushObservableTests))]
         [TestMethod]
         public void Push100Values()
         {
             PushValuesNotAutomaticStart(100);
         }
 
-        [TestCategory(nameof(DeferedPushObservableTests))]
+        [TestCategory(nameof(DeferredPushObservableTests))]
         [TestMethod]
         public void Push10Values()
         {
             PushValuesNotAutomaticStart(10);
         }
 
-        [TestCategory(nameof(DeferedPushObservableTests))]
+        [TestCategory(nameof(DeferredPushObservableTests))]
         [TestMethod]
         public void Push0Value()
         {
             PushValuesNotAutomaticStart(0);
         }
 
-        [TestCategory(nameof(DeferedPushObservableTests))]
+        [TestCategory(nameof(DeferredPushObservableTests))]
         [TestMethod]
         public void Push10000ValuesStartWithEvent()
         {
             PushValuesStartWithEvent(10000);
         }
 
-        [TestCategory(nameof(DeferedPushObservableTests))]
+        [TestCategory(nameof(DeferredPushObservableTests))]
         [TestMethod]
         public void Push100ValuesStartWithEvent()
         {
             PushValuesStartWithEvent(100);
         }
 
-        [TestCategory(nameof(DeferedPushObservableTests))]
+        [TestCategory(nameof(DeferredPushObservableTests))]
         [TestMethod]
         public void Push10ValuesStartWithEvent()
         {
             PushValuesStartWithEvent(10);
         }
 
-        [TestCategory(nameof(DeferedPushObservableTests))]
+        [TestCategory(nameof(DeferredPushObservableTests))]
         [TestMethod]
         public void Push0ValueStartWithEvent()
         {

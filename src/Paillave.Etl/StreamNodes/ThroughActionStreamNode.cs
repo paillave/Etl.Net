@@ -113,7 +113,7 @@ namespace Paillave.Etl.StreamNodes
     public class ThroughActionArgs<TIn, TStream, TResource> where TStream : IStream<TIn>
     {
         public TStream Stream { get; set; }
-        public IStream<TResource> ResourceStream { get; set; }
+        public ISingleStream<TResource> ResourceStream { get; set; }
         public IThroughActionProcessor<TIn, TResource> Processor { get; set; }
     }
     public class ThroughActionStreamNode<TIn, TStream, TResource> : StreamNodeBase<TIn, TStream, ThroughActionArgs<TIn, TStream, TResource>> where TStream : IStream<TIn>

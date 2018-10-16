@@ -1,29 +1,29 @@
 ### YamlMime:ManagedReference
 items:
-- uid: Paillave.Etl.EnsuredKeyedEx
-  commentId: T:Paillave.Etl.EnsuredKeyedEx
-  id: EnsuredKeyedEx
+- uid: Paillave.Etl.EnsureSortedEx
+  commentId: T:Paillave.Etl.EnsureSortedEx
+  id: EnsureSortedEx
   parent: Paillave.Etl
   children:
-  - Paillave.Etl.EnsuredKeyedEx.EnsureKeyed``2(IStream{``0},System.String,SortDefinition{``0,``1})
-  - Paillave.Etl.EnsuredKeyedEx.EnsureKeyed``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
+  - Paillave.Etl.EnsureSortedEx.EnsureSorted``2(IStream{``0},System.String,SortDefinition{``0,``1})
+  - Paillave.Etl.EnsureSortedEx.EnsureSorted``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
   langs:
   - csharp
   - vb
-  name: EnsuredKeyedEx
-  nameWithType: EnsuredKeyedEx
-  fullName: Paillave.Etl.EnsuredKeyedEx
+  name: EnsureSortedEx
+  nameWithType: EnsureSortedEx
+  fullName: Paillave.Etl.EnsureSortedEx
   type: Class
   source:
-    id: EnsuredKeyedEx
+    id: EnsureSortedEx
     path: ''
-    startLine: 288
+    startLine: 448
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   syntax:
-    content: public static class EnsuredKeyedEx
-    content.vb: Public Module EnsuredKeyedEx
+    content: public static class EnsureSortedEx
+    content.vb: Public Module EnsureSortedEx
   inheritance:
   - System.Object
   inheritedMembers:
@@ -41,27 +41,27 @@ items:
   modifiers.vb:
   - Public
   - Module
-- uid: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
-  commentId: M:Paillave.Etl.EnsuredKeyedEx.EnsureKeyed``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
-  id: EnsureKeyed``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
+- uid: Paillave.Etl.EnsureSortedEx.EnsureSorted``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
+  commentId: M:Paillave.Etl.EnsureSortedEx.EnsureSorted``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
+  id: EnsureSorted``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
   isExtensionMethod: true
-  parent: Paillave.Etl.EnsuredKeyedEx
+  parent: Paillave.Etl.EnsureSortedEx
   langs:
   - csharp
   - vb
-  name: EnsureKeyed<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)
-  nameWithType: EnsuredKeyedEx.EnsureKeyed<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)
-  fullName: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed<TIn, TKey>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Object)
+  name: EnsureSorted<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)
+  nameWithType: EnsureSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)
+  fullName: Paillave.Etl.EnsureSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Object)
   type: Method
   source:
-    id: EnsureKeyed
+    id: EnsureSorted
     path: ''
-    startLine: 290
+    startLine: 450
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   syntax:
-    content: public static IKeyedStream<TIn, TKey> EnsureKeyed<TIn, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, object sortPositions = null)
+    content: public static ISortedStream<TIn, TKey> EnsureSorted<TIn, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, object sortPositions = null)
     parameters:
     - id: stream
       type: IStream{{TIn}}
@@ -75,42 +75,42 @@ items:
     - id: TIn
     - id: TKey
     return:
-      type: IKeyedStream{{TIn},{TKey}}
+      type: ISortedStream{{TIn},{TKey}}
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function EnsureKeyed(Of TIn, TKey)(stream As IStream(Of TIn), name As String, getKey As Func(Of TIn, TKey), sortPositions As Object = Nothing) As IKeyedStream(Of TIn, TKey)
-  overload: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed*
-  nameWithType.vb: EnsuredKeyedEx.EnsureKeyed(Of TIn, TKey)(IStream(Of TIn), String, Func(Of TIn, TKey), Object)
+      Public Shared Function EnsureSorted(Of TIn, TKey)(stream As IStream(Of TIn), name As String, getKey As Func(Of TIn, TKey), sortPositions As Object = Nothing) As ISortedStream(Of TIn, TKey)
+  overload: Paillave.Etl.EnsureSortedEx.EnsureSorted*
+  nameWithType.vb: EnsureSortedEx.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), String, Func(Of TIn, TKey), Object)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed(Of TIn, TKey)(IStream(Of TIn), System.String, System.Func(Of TIn, TKey), System.Object)
-  name.vb: EnsureKeyed(Of TIn, TKey)(IStream(Of TIn), String, Func(Of TIn, TKey), Object)
-- uid: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed``2(IStream{``0},System.String,SortDefinition{``0,``1})
-  commentId: M:Paillave.Etl.EnsuredKeyedEx.EnsureKeyed``2(IStream{``0},System.String,SortDefinition{``0,``1})
-  id: EnsureKeyed``2(IStream{``0},System.String,SortDefinition{``0,``1})
+  fullName.vb: Paillave.Etl.EnsureSortedEx.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), System.String, System.Func(Of TIn, TKey), System.Object)
+  name.vb: EnsureSorted(Of TIn, TKey)(IStream(Of TIn), String, Func(Of TIn, TKey), Object)
+- uid: Paillave.Etl.EnsureSortedEx.EnsureSorted``2(IStream{``0},System.String,SortDefinition{``0,``1})
+  commentId: M:Paillave.Etl.EnsureSortedEx.EnsureSorted``2(IStream{``0},System.String,SortDefinition{``0,``1})
+  id: EnsureSorted``2(IStream{``0},System.String,SortDefinition{``0,``1})
   isExtensionMethod: true
-  parent: Paillave.Etl.EnsuredKeyedEx
+  parent: Paillave.Etl.EnsureSortedEx
   langs:
   - csharp
   - vb
-  name: EnsureKeyed<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)
-  nameWithType: EnsuredKeyedEx.EnsureKeyed<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)
-  fullName: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed<TIn, TKey>(IStream<TIn>, System.String, SortDefinition<TIn, TKey>)
+  name: EnsureSorted<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)
+  nameWithType: EnsureSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)
+  fullName: Paillave.Etl.EnsureSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, System.String, SortDefinition<TIn, TKey>)
   type: Method
   source:
-    id: EnsureKeyed
+    id: EnsureSorted
     path: ''
-    startLine: 298
+    startLine: 458
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   syntax:
-    content: public static IKeyedStream<TIn, TKey> EnsureKeyed<TIn, TKey>(this IStream<TIn> stream, string name, SortDefinition<TIn, TKey> sortDefinition)
+    content: public static ISortedStream<TIn, TKey> EnsureSorted<TIn, TKey>(this IStream<TIn> stream, string name, SortDefinition<TIn, TKey> sortDefinition)
     parameters:
     - id: stream
       type: IStream{{TIn}}
@@ -122,21 +122,21 @@ items:
     - id: TIn
     - id: TKey
     return:
-      type: IKeyedStream{{TIn},{TKey}}
+      type: ISortedStream{{TIn},{TKey}}
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function EnsureKeyed(Of TIn, TKey)(stream As IStream(Of TIn), name As String, sortDefinition As SortDefinition(Of TIn, TKey)) As IKeyedStream(Of TIn, TKey)
-  overload: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed*
-  nameWithType.vb: EnsuredKeyedEx.EnsureKeyed(Of TIn, TKey)(IStream(Of TIn), String, SortDefinition(Of TIn, TKey))
+      Public Shared Function EnsureSorted(Of TIn, TKey)(stream As IStream(Of TIn), name As String, sortDefinition As SortDefinition(Of TIn, TKey)) As ISortedStream(Of TIn, TKey)
+  overload: Paillave.Etl.EnsureSortedEx.EnsureSorted*
+  nameWithType.vb: EnsureSortedEx.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), String, SortDefinition(Of TIn, TKey))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed(Of TIn, TKey)(IStream(Of TIn), System.String, SortDefinition(Of TIn, TKey))
-  name.vb: EnsureKeyed(Of TIn, TKey)(IStream(Of TIn), String, SortDefinition(Of TIn, TKey))
+  fullName.vb: Paillave.Etl.EnsureSortedEx.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), System.String, SortDefinition(Of TIn, TKey))
+  name.vb: EnsureSorted(Of TIn, TKey)(IStream(Of TIn), String, SortDefinition(Of TIn, TKey))
 references:
 - uid: Paillave.Etl
   commentId: N:Paillave.Etl
@@ -435,11 +435,11 @@ references:
   name: System
   nameWithType: System
   fullName: System
-- uid: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed*
-  commentId: Overload:Paillave.Etl.EnsuredKeyedEx.EnsureKeyed
-  name: EnsureKeyed
-  nameWithType: EnsuredKeyedEx.EnsureKeyed
-  fullName: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed
+- uid: Paillave.Etl.EnsureSortedEx.EnsureSorted*
+  commentId: Overload:Paillave.Etl.EnsureSortedEx.EnsureSorted
+  name: EnsureSorted
+  nameWithType: EnsureSortedEx.EnsureSorted
+  fullName: Paillave.Etl.EnsureSortedEx.EnsureSorted
 - uid: IStream{{TIn}}
   commentId: '!:IStream{``0}'
   definition: IStream`1
@@ -538,20 +538,20 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: IKeyedStream{{TIn},{TKey}}
-  commentId: '!:IKeyedStream{``0,``1}'
-  definition: IKeyedStream`2
-  name: IKeyedStream<TIn, TKey>
-  nameWithType: IKeyedStream<TIn, TKey>
-  fullName: IKeyedStream<TIn, TKey>
-  nameWithType.vb: IKeyedStream(Of TIn, TKey)
-  fullName.vb: IKeyedStream(Of TIn, TKey)
-  name.vb: IKeyedStream(Of TIn, TKey)
+- uid: ISortedStream{{TIn},{TKey}}
+  commentId: '!:ISortedStream{``0,``2}'
+  definition: ISortedStream`2
+  name: ISortedStream<TIn, TKey>
+  nameWithType: ISortedStream<TIn, TKey>
+  fullName: ISortedStream<TIn, TKey>
+  nameWithType.vb: ISortedStream(Of TIn, TKey)
+  fullName.vb: ISortedStream(Of TIn, TKey)
+  name.vb: ISortedStream(Of TIn, TKey)
   spec.csharp:
-  - uid: IKeyedStream`2
-    name: IKeyedStream
-    nameWithType: IKeyedStream
-    fullName: IKeyedStream
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
     isExternal: true
   - name: <
     nameWithType: <
@@ -569,10 +569,10 @@ references:
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: IKeyedStream`2
-    name: IKeyedStream
-    nameWithType: IKeyedStream
-    fullName: IKeyedStream
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
@@ -678,19 +678,19 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: IKeyedStream`2
+- uid: ISortedStream`2
   isExternal: true
-  name: IKeyedStream<, >
-  nameWithType: IKeyedStream<, >
-  fullName: IKeyedStream<, >
-  nameWithType.vb: IKeyedStream(Of , )
-  fullName.vb: IKeyedStream(Of , )
-  name.vb: IKeyedStream(Of , )
+  name: ISortedStream<, >
+  nameWithType: ISortedStream<, >
+  fullName: ISortedStream<, >
+  nameWithType.vb: ISortedStream(Of , )
+  fullName.vb: ISortedStream(Of , )
+  name.vb: ISortedStream(Of , )
   spec.csharp:
-  - uid: IKeyedStream`2
-    name: IKeyedStream
-    nameWithType: IKeyedStream
-    fullName: IKeyedStream
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
     isExternal: true
   - name: <
     nameWithType: <
@@ -708,10 +708,10 @@ references:
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: IKeyedStream`2
-    name: IKeyedStream
-    nameWithType: IKeyedStream
-    fullName: IKeyedStream
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '

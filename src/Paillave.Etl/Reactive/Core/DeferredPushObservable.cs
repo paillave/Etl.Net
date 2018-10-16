@@ -7,17 +7,14 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl.Reactive.Core
 {
-    public class EventDeferedPushObservable<T> : PushObservableBase<T>
+    public class DeferredPushObservable<T> : PushObservableBase<T>, IDeferredPushObservable<T>
     {
         private bool _isComplete = false;
         private Action<Action<T>> _valuesFactory;
-        private WaitHandle _startSynchronizer = null;
         private object lockObject = new object();
-        public EventDeferedPushObservable(Action<Action<T>> valuesFactory, WaitHandle startSynchronizer)
+        public DeferredPushObservable(Action<Action<T>> valuesFactory)
         {
             _valuesFactory = valuesFactory;
-            _startSynchronizer = startSynchronizer;
-            this.Start();
         }
         private void Complete()
         {
@@ -53,11 +50,10 @@ namespace Paillave.Etl.Reactive.Core
         }
 
         private Guid tmp = Guid.NewGuid();
-        private void Start()
+        public void Start()
         {
             Task.Run(() =>
             {
-                this._startSynchronizer.WaitOne();
                 try
                 {
                     _valuesFactory(PushValue);

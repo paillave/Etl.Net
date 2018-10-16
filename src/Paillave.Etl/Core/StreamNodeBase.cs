@@ -68,6 +68,11 @@ namespace Paillave.Etl.Core
             return new Stream<TOut>(this.Tracer, this.ExecutionContext, this.NodeName, observable);
         }
 
+        protected ISingleStream<TOut> CreateSingleStream(IPushObservable<TOut> observable)
+        {
+            return new SingleStream<TOut>(this.Tracer, this.ExecutionContext, this.NodeName, observable);
+        }
+
         protected ISortedStream<TOut, TKey> CreateSortedStream<TKey>(IPushObservable<TOut> observable, SortDefinition<TOut, TKey> sortDefinition)
         {
             return new SortedStream<TOut, TKey>(this.Tracer, this.ExecutionContext, this.NodeName, observable, sortDefinition);

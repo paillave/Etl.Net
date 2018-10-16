@@ -73,7 +73,7 @@ namespace Paillave.Etl
         #endregion
 
         #region Process and preprocess row
-        public static IStream<TIn> ThroughAction<TIn, TResource>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
+        public static IStream<TIn> ThroughAction<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
         {
             return new ThroughActionStreamNode<TIn, IStream<TIn>, TResource>(name, new ThroughActionArgs<TIn, IStream<TIn>, TResource>
             {
@@ -82,7 +82,7 @@ namespace Paillave.Etl
                 Processor = new SimpleThroughActionProcessor<TIn, TResource>(processRow, preProcess)
             }).Output;
         }
-        public static ISortedStream<TIn, TKey> ThroughAction<TIn, TResource, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
+        public static ISortedStream<TIn, TKey> ThroughAction<TIn, TResource, TKey>(this ISortedStream<TIn, TKey> stream, string name, ISingleStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
         {
             return new ThroughActionStreamNode<TIn, ISortedStream<TIn, TKey>, TResource>(name, new ThroughActionArgs<TIn, ISortedStream<TIn, TKey>, TResource>
             {
@@ -91,7 +91,7 @@ namespace Paillave.Etl
                 Processor = new SimpleThroughActionProcessor<TIn, TResource>(processRow, preProcess)
             }).Output;
         }
-        public static IKeyedStream<TIn, TKey> ThroughAction<TIn, TResource, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
+        public static IKeyedStream<TIn, TKey> ThroughAction<TIn, TResource, TKey>(this IKeyedStream<TIn, TKey> stream, string name, ISingleStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
         {
             return new ThroughActionStreamNode<TIn, IKeyedStream<TIn, TKey>, TResource>(name, new ThroughActionArgs<TIn, IKeyedStream<TIn, TKey>, TResource>
             {
@@ -103,7 +103,7 @@ namespace Paillave.Etl
         #endregion
 
         #region Process and preprocess processor
-        public static IStream<TIn> ThroughAction<TIn, TResource>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, IThroughActionProcessor<TIn, TResource> processor)
+        public static IStream<TIn> ThroughAction<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> resourceStream, IThroughActionProcessor<TIn, TResource> processor)
         {
             return new ThroughActionStreamNode<TIn, IStream<TIn>, TResource>(name, new ThroughActionArgs<TIn, IStream<TIn>, TResource>
             {
@@ -112,7 +112,7 @@ namespace Paillave.Etl
                 Processor = processor
             }).Output;
         }
-        public static ISortedStream<TIn, TKey> ThroughAction<TIn, TResource, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, IThroughActionProcessor<TIn, TResource> processor)
+        public static ISortedStream<TIn, TKey> ThroughAction<TIn, TResource, TKey>(this ISortedStream<TIn, TKey> stream, string name, ISingleStream<TResource> resourceStream, IThroughActionProcessor<TIn, TResource> processor)
         {
             return new ThroughActionStreamNode<TIn, ISortedStream<TIn, TKey>, TResource>(name, new ThroughActionArgs<TIn, ISortedStream<TIn, TKey>, TResource>
             {
@@ -121,7 +121,7 @@ namespace Paillave.Etl
                 Processor = processor
             }).Output;
         }
-        public static IKeyedStream<TIn, TKey> ThroughAction<TIn, TResource, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, IThroughActionProcessor<TIn, TResource> processor)
+        public static IKeyedStream<TIn, TKey> ThroughAction<TIn, TResource, TKey>(this IKeyedStream<TIn, TKey> stream, string name, ISingleStream<TResource> resourceStream, IThroughActionProcessor<TIn, TResource> processor)
         {
             return new ThroughActionStreamNode<TIn, IKeyedStream<TIn, TKey>, TResource>(name, new ThroughActionArgs<TIn, IKeyedStream<TIn, TKey>, TResource>
             {
@@ -160,7 +160,7 @@ namespace Paillave.Etl
         #endregion
 
         #region Process and preprocess row with context
-        public static IStream<TIn> ThroughAction<TIn, TResource, TCtx>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource, TCtx, Action<TCtx>> processRow, Action<TResource, Action<TCtx>> preProcess = null)
+        public static IStream<TIn> ThroughAction<TIn, TResource, TCtx>(this IStream<TIn> stream, string name, ISingleStream<TResource> resourceStream, Action<TIn, TResource, TCtx, Action<TCtx>> processRow, Action<TResource, Action<TCtx>> preProcess = null)
         {
             return new ThroughActionStreamNode<TIn, IStream<TIn>, TResource>(name, new ThroughActionArgs<TIn, IStream<TIn>, TResource>
             {
@@ -169,7 +169,7 @@ namespace Paillave.Etl
                 Processor = new ContextThroughActionProcessor<TIn, TResource, TCtx>(processRow, preProcess)
             }).Output;
         }
-        public static ISortedStream<TIn, TKey> ThroughAction<TIn, TResource, TCtx, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource, TCtx, Action<TCtx>> processRow, Action<TResource, Action<TCtx>> preProcess = null)
+        public static ISortedStream<TIn, TKey> ThroughAction<TIn, TResource, TCtx, TKey>(this ISortedStream<TIn, TKey> stream, string name, ISingleStream<TResource> resourceStream, Action<TIn, TResource, TCtx, Action<TCtx>> processRow, Action<TResource, Action<TCtx>> preProcess = null)
         {
             return new ThroughActionStreamNode<TIn, ISortedStream<TIn, TKey>, TResource>(name, new ThroughActionArgs<TIn, ISortedStream<TIn, TKey>, TResource>
             {
@@ -178,7 +178,7 @@ namespace Paillave.Etl
                 Processor = new ContextThroughActionProcessor<TIn, TResource, TCtx>(processRow, preProcess)
             }).Output;
         }
-        public static IKeyedStream<TIn, TKey> ThroughAction<TIn, TResource, TCtx, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource, TCtx, Action<TCtx>> processRow, Action<TResource, Action<TCtx>> preProcess = null)
+        public static IKeyedStream<TIn, TKey> ThroughAction<TIn, TResource, TCtx, TKey>(this IKeyedStream<TIn, TKey> stream, string name, ISingleStream<TResource> resourceStream, Action<TIn, TResource, TCtx, Action<TCtx>> processRow, Action<TResource, Action<TCtx>> preProcess = null)
         {
             return new ThroughActionStreamNode<TIn, IKeyedStream<TIn, TKey>, TResource>(name, new ThroughActionArgs<TIn, IKeyedStream<TIn, TKey>, TResource>
             {

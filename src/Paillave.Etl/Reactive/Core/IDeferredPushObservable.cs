@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl.Reactive.Core
 {
-    public interface IDeferedPushObservable<out T>: IPushObservable<T>
+    public interface IDeferredPushObservable<out T>: IPushObservable<T>
     {
         void Start();
     }

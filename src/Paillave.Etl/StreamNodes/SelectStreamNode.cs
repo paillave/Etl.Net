@@ -53,4 +53,50 @@ namespace Paillave.Etl.StreamNodes
         }
     }
     #endregion
+
+    #region Simple Single select
+    public class SelectSingleArgs<TIn, TOut>
+    {
+        public ISingleStream<TIn> Stream { get; set; }
+        public ISelectProcessor<TIn, TOut> Processor { get; set; }
+        public bool ExcludeNull { get; set; }
+    }
+    public class SelectSingleStreamNode<TIn, TOut> : StreamNodeBase<TOut, ISingleStream<TOut>, SelectSingleArgs<TIn, TOut>>
+    {
+        public SelectSingleStreamNode(string name, SelectSingleArgs<TIn, TOut> args) : base(name, args)
+        {
+        }
+
+        protected override ISingleStream<TOut> CreateOutputStream(SelectSingleArgs<TIn, TOut> args)
+        {
+            IPushObservable<TOut> obs = args.Stream.Observable.Map(WrapSelectForDisposal<TIn, TOut>(args.Processor.ProcessRow));
+            if (args.ExcludeNull)
+                obs = obs.Filter(i => i != null);
+            return base.CreateSingleStream(obs);
+        }
+    }
+    #endregion
+
+    #region Select Single with index
+    public class SelectSingleWithIndexArgs<TIn, TOut>
+    {
+        public ISingleStream<TIn> Stream { get; set; }
+        public ISelectWithIndexProcessor<TIn, TOut> Processor { get; set; }
+        public bool ExcludeNull { get; set; }
+    }
+    public class SelectSingleWithIndexStreamNode<TIn, TOut> : StreamNodeBase<TOut, ISingleStream<TOut>, SelectSingleWithIndexArgs<TIn, TOut>>
+    {
+        public SelectSingleWithIndexStreamNode(string name, SelectSingleWithIndexArgs<TIn, TOut> args) : base(name, args)
+        {
+        }
+
+        protected override ISingleStream<TOut> CreateOutputStream(SelectSingleWithIndexArgs<TIn, TOut> args)
+        {
+            IPushObservable<TOut> obs = args.Stream.Observable.Map(WrapSelectIndexForDisposal<TIn, TOut>(args.Processor.ProcessRow));
+            if (args.ExcludeNull)
+                obs = obs.Filter(i => i != null);
+            return base.CreateSingleStream(obs);
+        }
+    }
+    #endregion
 }

@@ -10,7 +10,7 @@ namespace Paillave.Etl.SqlServer
 {
     public static class SqlServerEx
     {
-        public static IStream<TOut> CrossApplySqlServerQuery<TIn, TRes, TOut>(this IStream<TIn> stream, string name, IStream<SqlConnection> sqlConnection, string sqlQuery, bool noParallelisation = false)
+        public static IStream<TOut> CrossApplySqlServerQuery<TIn, TRes, TOut>(this IStream<TIn> stream, string name, ISingleStream<SqlConnection> sqlConnection, string sqlQuery, bool noParallelisation = false)
         {
             return stream.CrossApply(name, sqlConnection, new SqlCommandValueProvider<TIn, TOut>(new SqlCommandValueProviderArgs<TIn, TOut>()
             {

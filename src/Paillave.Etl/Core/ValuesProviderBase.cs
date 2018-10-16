@@ -43,9 +43,9 @@ namespace Paillave.Etl.Core
         {
             _semaphore = noParallelisation ? new Semaphore(1, 1) : new Semaphore(10, 10);
         }
-        public virtual IDeferedPushObservable<TOut> PushValues(TIn input)
+        public virtual IDeferredPushObservable<TOut> PushValues(TIn input)
         {
-            return new DeferedPushObservable<TOut>(pushValue => PushValues(input, pushValue));
+            return new DeferredPushObservable<TOut>(pushValue => PushValues(input, pushValue));
         }
 
         protected virtual void PushValues(TIn input, Action<TOut> pushValue) { }
@@ -61,9 +61,9 @@ namespace Paillave.Etl.Core
         {
             _semaphore = noParallelisation ? new Semaphore(1, 1) : new Semaphore(10, 10);
         }
-        public virtual IDeferedPushObservable<TOut> PushValues(TRes resource, TIn input)
+        public virtual IDeferredPushObservable<TOut> PushValues(TRes resource, TIn input)
         {
-            return new DeferedPushObservable<TOut>(pushValue => PushValues(resource, input, pushValue));
+            return new DeferredPushObservable<TOut>(pushValue => PushValues(resource, input, pushValue));
         }
 
         protected virtual void PushValues(TRes resource, TIn input, Action<TOut> pushValue) { }

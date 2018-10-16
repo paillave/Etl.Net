@@ -1,6 +1,6 @@
 {
   "homepages": [],
-  "source_base_path": "C:/Users/sroyer/Source/Repos/Etl.Net/docfx_project",
+  "source_base_path": "C:/Users/paill/Documents/GitHub/Etl.Net/docfx_project",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -9,10 +9,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.AggregateEx.html",
-          "hash": "UwRiJI9V0X+YRfYQ1Tq/Ig=="
+          "hash": "RMHiIlC4/ud8uEceutpO4w=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -21,7 +21,19 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.CrossApplyActionEx.html",
-          "hash": "DJU95d4pqjKMP7DSE75psg=="
+          "hash": "wL9Z6mbOk9m3+4x9pqs5eA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.CrossApplyEnumerableEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.CrossApplyEnumerableEx.html",
+          "hash": "4P1vRhr3YvFTqrftk7wcog=="
         }
       },
       "is_incremental": true,
@@ -33,7 +45,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.CrossApplyEx.html",
-          "hash": "iyN4+i/G38RzvEbdCqR7og=="
+          "hash": "J42aWdkw+4PU/c1n/WIiTg=="
         }
       },
       "is_incremental": true,
@@ -65,11 +77,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.EnsuredKeyedEx.yml",
+      "source_relative_path": "api/Paillave.Etl.EnsureKeyedEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.EnsuredKeyedEx.html",
-          "hash": "50u/iSpwITUC8ZJfAmzM3g=="
+          "relative_path": "api/Paillave.Etl.EnsureKeyedEx.html",
+          "hash": "/c5BcNphTEaMQ/04WN98fg=="
         }
       },
       "is_incremental": true,
@@ -77,11 +89,23 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.EnsuredSortedEx.yml",
+      "source_relative_path": "api/Paillave.Etl.EnsureSingleEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.EnsuredSortedEx.html",
-          "hash": "Jfrn7KaaqnpKM91Wzqt7vQ=="
+          "relative_path": "api/Paillave.Etl.EnsureSingleEx.html",
+          "hash": "VtE8SlGk46YUcbeJFPZVJg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.EnsureSortedEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.EnsureSortedEx.html",
+          "hash": "+wa/LSqIGxiMjmpYiU8Xkw=="
         }
       },
       "is_incremental": true,
@@ -141,10 +165,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.SelectEx.html",
-          "hash": "BsjVjBgkso2Cf3JQvLC8Xw=="
+          "hash": "zXkU8kzl5JKuLHe/IBNSBA=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -273,7 +297,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.ThroughActionEx.html",
-          "hash": "EzvjDtW8zyNq8cTrO+LYTg=="
+          "hash": "89Z7gKq7J+PFURJchgR65g=="
         }
       },
       "is_incremental": true,
@@ -381,7 +405,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.html",
-          "hash": "IB8qnzOzzc2scgD1qLaFkw=="
+          "hash": "a4xEeui5NBepQnNS8ZTqkg=="
         }
       },
       "is_incremental": false,
@@ -405,7 +429,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "R7k1CpYmfZi8nBNSAsWPPA=="
+          "hash": "jQL6VxpHgb9puKpzTRF1jA=="
         }
       },
       "is_incremental": false,
@@ -417,7 +441,7 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.html",
-          "hash": "T6F9N/4X31/3HxSPXalU5Q=="
+          "hash": "X1tyRtiCS+MVZKT6IK1xvg=="
         }
       },
       "is_incremental": true,
@@ -465,7 +489,7 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.Ftp.FtpEx.html",
-          "hash": "DSAd88wZLgdbmPUkiU2+Yw=="
+          "hash": "dOLiO7Km47fMTnHW9YWKfg=="
         }
       },
       "is_incremental": true,
@@ -489,7 +513,7 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.SqlServer.SqlServerEx.html",
-          "hash": "poOSGhBT+J5Ozqla3oMzPA=="
+          "hash": "lRK0dEaT948uicNFI5BfQg=="
         }
       },
       "is_incremental": true,
@@ -572,7 +596,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "LHc6xCU277200FIvyti6uA=="
+          "hash": "ZrvsrvaQKFjy6EA6vZqPyA=="
         }
       },
       "is_incremental": true,
@@ -633,17 +657,17 @@
           "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build"
         },
-        "ManagedReferenceDocumentProcessor": {
-          "can_incremental": true,
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build"
         },
         "ConceptualDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build"
         },
-        "ResourceDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
           "incrementalPhase": "build"
         }
       }

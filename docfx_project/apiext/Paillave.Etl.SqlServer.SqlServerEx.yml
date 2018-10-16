@@ -5,7 +5,7 @@ items:
   id: SqlServerEx
   parent: Paillave.Etl.SqlServer
   children:
-  - Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery``3(IStream{``0},System.String,IStream{SqlConnection},System.String,System.Boolean)
+  - Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery``3(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)
   - Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer``2(IStream{``0},System.String,IStream{SqlConnection})
   langs:
   - csharp
@@ -41,17 +41,17 @@ items:
   modifiers.vb:
   - Public
   - Module
-- uid: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery``3(IStream{``0},System.String,IStream{SqlConnection},System.String,System.Boolean)
-  commentId: M:Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery``3(IStream{``0},System.String,IStream{SqlConnection},System.String,System.Boolean)
-  id: CrossApplySqlServerQuery``3(IStream{``0},System.String,IStream{SqlConnection},System.String,System.Boolean)
+- uid: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery``3(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)
+  commentId: M:Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery``3(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)
+  id: CrossApplySqlServerQuery``3(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.SqlServer.SqlServerEx
   langs:
   - csharp
   - vb
-  name: CrossApplySqlServerQuery<TIn, TRes, TOut>(IStream<TIn>, String, IStream<SqlConnection>, String, Boolean)
-  nameWithType: SqlServerEx.CrossApplySqlServerQuery<TIn, TRes, TOut>(IStream<TIn>, String, IStream<SqlConnection>, String, Boolean)
-  fullName: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery<TIn, TRes, TOut>(IStream<TIn>, System.String, IStream<SqlConnection>, System.String, System.Boolean)
+  name: CrossApplySqlServerQuery<TIn, TRes, TOut>(IStream<TIn>, String, ISingleStream<SqlConnection>, String, Boolean)
+  nameWithType: SqlServerEx.CrossApplySqlServerQuery<TIn, TRes, TOut>(IStream<TIn>, String, ISingleStream<SqlConnection>, String, Boolean)
+  fullName: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery<TIn, TRes, TOut>(IStream<TIn>, System.String, ISingleStream<SqlConnection>, System.String, System.Boolean)
   type: Method
   source:
     id: CrossApplySqlServerQuery
@@ -61,14 +61,14 @@ items:
   - cs.temp.dll
   namespace: Paillave.Etl.SqlServer
   syntax:
-    content: public static IStream<TOut> CrossApplySqlServerQuery<TIn, TRes, TOut>(this IStream<TIn> stream, string name, IStream<SqlConnection> sqlConnection, string sqlQuery, bool noParallelisation = false)
+    content: public static IStream<TOut> CrossApplySqlServerQuery<TIn, TRes, TOut>(this IStream<TIn> stream, string name, ISingleStream<SqlConnection> sqlConnection, string sqlQuery, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: sqlConnection
-      type: IStream{SqlConnection}
+      type: ISingleStream{SqlConnection}
     - id: sqlQuery
       type: System.String
     - id: noParallelisation
@@ -82,17 +82,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplySqlServerQuery(Of TIn, TRes, TOut)(stream As IStream(Of TIn), name As String, sqlConnection As IStream(Of SqlConnection), sqlQuery As String, noParallelisation As Boolean = False) As IStream(Of TOut)
+      Public Shared Function CrossApplySqlServerQuery(Of TIn, TRes, TOut)(stream As IStream(Of TIn), name As String, sqlConnection As ISingleStream(Of SqlConnection), sqlQuery As String, noParallelisation As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery*
-  nameWithType.vb: SqlServerEx.CrossApplySqlServerQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, IStream(Of SqlConnection), String, Boolean)
+  nameWithType.vb: SqlServerEx.CrossApplySqlServerQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, ISingleStream(Of SqlConnection), String, Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery(Of TIn, TRes, TOut)(IStream(Of TIn), System.String, IStream(Of SqlConnection), System.String, System.Boolean)
-  name.vb: CrossApplySqlServerQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, IStream(Of SqlConnection), String, Boolean)
+  fullName.vb: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery(Of TIn, TRes, TOut)(IStream(Of TIn), System.String, ISingleStream(Of SqlConnection), System.String, System.Boolean)
+  name.vb: CrossApplySqlServerQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, ISingleStream(Of SqlConnection), String, Boolean)
 - uid: Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer``2(IStream{``0},System.String,IStream{SqlConnection})
   commentId: M:Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer``2(IStream{``0},System.String,IStream{SqlConnection})
   id: ThroughSqlServer``2(IStream{``0},System.String,IStream{SqlConnection})
@@ -491,20 +491,20 @@ references:
   name: String
   nameWithType: String
   fullName: System.String
-- uid: IStream{SqlConnection}
-  commentId: '!:IStream{SqlConnection}'
-  definition: IStream`1
-  name: IStream<SqlConnection>
-  nameWithType: IStream<SqlConnection>
-  fullName: IStream<SqlConnection>
-  nameWithType.vb: IStream(Of SqlConnection)
-  fullName.vb: IStream(Of SqlConnection)
-  name.vb: IStream(Of SqlConnection)
+- uid: ISingleStream{SqlConnection}
+  commentId: '!:ISingleStream{SqlConnection}'
+  definition: ISingleStream`1
+  name: ISingleStream<SqlConnection>
+  nameWithType: ISingleStream<SqlConnection>
+  fullName: ISingleStream<SqlConnection>
+  nameWithType.vb: ISingleStream(Of SqlConnection)
+  fullName.vb: ISingleStream(Of SqlConnection)
+  name.vb: ISingleStream(Of SqlConnection)
   spec.csharp:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: <
     nameWithType: <
@@ -518,10 +518,10 @@ references:
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
@@ -618,8 +618,89 @@ references:
   - name: )
     nameWithType: )
     fullName: )
+- uid: ISingleStream`1
+  isExternal: true
+  name: ISingleStream<>
+  nameWithType: ISingleStream<>
+  fullName: ISingleStream<>
+  nameWithType.vb: ISingleStream(Of )
+  fullName.vb: ISingleStream(Of )
+  name.vb: ISingleStream(Of )
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
 - uid: Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer*
   commentId: Overload:Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer
   name: ThroughSqlServer
   nameWithType: SqlServerEx.ThroughSqlServer
   fullName: Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer
+- uid: IStream{SqlConnection}
+  commentId: '!:IStream{SqlConnection}'
+  definition: IStream`1
+  name: IStream<SqlConnection>
+  nameWithType: IStream<SqlConnection>
+  fullName: IStream<SqlConnection>
+  nameWithType.vb: IStream(Of SqlConnection)
+  fullName.vb: IStream(Of SqlConnection)
+  name.vb: IStream(Of SqlConnection)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: SqlConnection
+    name: SqlConnection
+    nameWithType: SqlConnection
+    fullName: SqlConnection
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: SqlConnection
+    name: SqlConnection
+    nameWithType: SqlConnection
+    fullName: SqlConnection
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )

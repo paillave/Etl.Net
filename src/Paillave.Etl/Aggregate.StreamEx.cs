@@ -33,10 +33,10 @@ namespace Paillave.Etl
         /// <example>
         /// This example computes the average of every element grouped by their modulo 3.
         /// <code>
-        /// public class ComputeAverageJob : IStreamProcessDefinition<object>
+        /// public class ComputeAverageJob : IStreamProcessDefinition&lt;object&gt;
         /// {
         ///     public string Name => "import file";
-        ///     public void DefineProcess(IStream<object> rootStream)
+        ///     public void DefineProcess(IStream&lt;object&gt; rootStream)
         ///     {
         ///         rootStream
         ///             .CrossApplyEnumerable("create some values", (input) => Enumerable.Range(0, 10))

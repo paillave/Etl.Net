@@ -59,6 +59,15 @@ namespace Paillave.Etl
                 ExcludeNull = excludeNull
             }).Output;
         }
+        public static ISingleStream<TOut> Select<TIn, TOut>(this ISingleStream<TIn> stream, string name, Func<TIn, TOut> resultSelector, bool excludeNull = false)
+        {
+            return new SelectSingleStreamNode<TIn, TOut>(name, new SelectSingleArgs<TIn, TOut>
+            {
+                Stream = stream,
+                Processor = new SimpleSelectProcessor<TIn, TOut>(resultSelector),
+                ExcludeNull = excludeNull
+            }).Output;
+        }
         /// <summary>
         /// Transform the input stream into a similar stream but with a different structure and calculation using a lambda expression that works with a context
         /// </summary>
@@ -95,6 +104,15 @@ namespace Paillave.Etl
         public static IStream<TOut> Select<TIn, TOut, TCtx>(this IStream<TIn> stream, string name, TCtx initialContext, Func<TIn, TCtx, Action<TCtx>, TOut> resultSelector, bool excludeNull = false)
         {
             return new SelectStreamNode<TIn, TOut>(name, new SelectArgs<TIn, TOut>
+            {
+                Stream = stream,
+                Processor = new ContextSelectProcessor<TIn, TOut, TCtx>(resultSelector, initialContext),
+                ExcludeNull = excludeNull
+            }).Output;
+        }
+        public static ISingleStream<TOut> Select<TIn, TOut, TCtx>(this ISingleStream<TIn> stream, string name, TCtx initialContext, Func<TIn, TCtx, Action<TCtx>, TOut> resultSelector, bool excludeNull = false)
+        {
+            return new SelectSingleStreamNode<TIn, TOut>(name, new SelectSingleArgs<TIn, TOut>
             {
                 Stream = stream,
                 Processor = new ContextSelectProcessor<TIn, TOut, TCtx>(resultSelector, initialContext),
@@ -158,6 +176,15 @@ namespace Paillave.Etl
                 ExcludeNull = excludeNull
             }).Output;
         }
+        public static ISingleStream<TOut> Select<TIn, TOut>(this ISingleStream<TIn> stream, string name, ISelectProcessor<TIn, TOut> processor, bool excludeNull = false)
+        {
+            return new SelectSingleStreamNode<TIn, TOut>(name, new SelectSingleArgs<TIn, TOut>
+            {
+                Stream = stream,
+                Processor = processor,
+                ExcludeNull = excludeNull
+            }).Output;
+        }
         /// <summary>
         /// Transform the input stream into a similar stream but with a different structure and calculation using a processor based on the occurrence index
         /// </summary>
@@ -177,6 +204,15 @@ namespace Paillave.Etl
                 ExcludeNull = excludeNull
             }).Output;
         }
+        public static ISingleStream<TOut> Select<TIn, TOut>(this ISingleStream<TIn> stream, string name, ISelectWithIndexProcessor<TIn, TOut> processor, bool excludeNull = false)
+        {
+            return new SelectSingleWithIndexStreamNode<TIn, TOut>(name, new SelectSingleWithIndexArgs<TIn, TOut>
+            {
+                Stream = stream,
+                Processor = processor,
+                ExcludeNull = excludeNull
+            }).Output;
+        }
         /// <summary>
         /// Transform the input stream into a similar stream but with a different structure and calculation using a lambda expression based on the occurrence index
         /// </summary>
@@ -190,6 +226,15 @@ namespace Paillave.Etl
         public static IStream<TOut> Select<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, int, TOut> resultSelector, bool excludeNull = false)
         {
             return new SelectWithIndexStreamNode<TIn, TOut>(name, new SelectWithIndexArgs<TIn, TOut>
+            {
+                Stream = stream,
+                Processor = new SimpleSelectWithIndexProcessor<TIn, TOut>(resultSelector),
+                ExcludeNull = excludeNull
+            }).Output;
+        }
+        public static ISingleStream<TOut> Select<TIn, TOut>(this ISingleStream<TIn> stream, string name, Func<TIn, int, TOut> resultSelector, bool excludeNull = false)
+        {
+            return new SelectSingleWithIndexStreamNode<TIn, TOut>(name, new SelectSingleWithIndexArgs<TIn, TOut>
             {
                 Stream = stream,
                 Processor = new SimpleSelectWithIndexProcessor<TIn, TOut>(resultSelector),
@@ -217,6 +262,15 @@ namespace Paillave.Etl
                 ExcludeNull = excludeNull
             }).Output;
         }
+        public static ISingleStream<TOut> Select<TIn, TOut, TCtx>(this ISingleStream<TIn> stream, string name, TCtx initialContext, Func<TIn, int, TCtx, Action<TCtx>, TOut> resultSelector, bool excludeNull = false)
+        {
+            return new SelectSingleWithIndexStreamNode<TIn, TOut>(name, new SelectSingleWithIndexArgs<TIn, TOut>
+            {
+                Stream = stream,
+                Processor = new ContextSelectWithIndexProcessor<TIn, TOut, TCtx>(resultSelector, initialContext),
+                ExcludeNull = excludeNull
+            }).Output;
+        }
         /// <summary>
         /// Transform the input stream into a similar stream but with a different structure and calculation using a lambda expression. 
         /// The calculation takes in consideration a single element stream
@@ -230,9 +284,19 @@ namespace Paillave.Etl
         /// <typeparam name="TIn2">Applied stream type</typeparam>
         /// <typeparam name="TOut">Output stream</typeparam>
         /// <returns>Output stream</returns>
-        public static IStream<TOut> Select<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> streamToApply, Func<TIn1, TIn2, int, TOut> resultSelector, bool excludeNull = false)
+        public static IStream<TOut> Select<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, ISingleStream<TIn2> streamToApply, Func<TIn1, TIn2, int, TOut> resultSelector, bool excludeNull = false)
         {
             return new ApplyStreamNode<TIn1, TIn2, TOut>(name, new ApplyArgs<TIn1, TIn2, TOut>
+            {
+                MainStream = stream,
+                StreamToApply = streamToApply,
+                IndexSelector = resultSelector,
+                ExcludeNull = excludeNull
+            }).Output;
+        }
+        public static ISingleStream<TOut> Select<TIn1, TIn2, TOut>(this ISingleStream<TIn1> stream, string name, ISingleStream<TIn2> streamToApply, Func<TIn1, TIn2, int, TOut> resultSelector, bool excludeNull = false)
+        {
+            return new ApplySingleStreamNode<TIn1, TIn2, TOut>(name, new ApplySingleArgs<TIn1, TIn2, TOut>
             {
                 MainStream = stream,
                 StreamToApply = streamToApply,
@@ -253,9 +317,19 @@ namespace Paillave.Etl
         /// <typeparam name="TIn2">Applied stream type</typeparam>
         /// <typeparam name="TOut">Output stream</typeparam>
         /// <returns>Output stream</returns>
-        public static IStream<TOut> Select<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> streamToApply, Func<TIn1, TIn2, TOut> resultSelector, bool excludeNull = false)
+        public static IStream<TOut> Select<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, ISingleStream<TIn2> streamToApply, Func<TIn1, TIn2, TOut> resultSelector, bool excludeNull = false)
         {
             return new ApplyStreamNode<TIn1, TIn2, TOut>(name, new ApplyArgs<TIn1, TIn2, TOut>
+            {
+                MainStream = stream,
+                StreamToApply = streamToApply,
+                Selector = resultSelector,
+                ExcludeNull = excludeNull
+            }).Output;
+        }
+        public static ISingleStream<TOut> Select<TIn1, TIn2, TOut>(this ISingleStream<TIn1> stream, string name, ISingleStream<TIn2> streamToApply, Func<TIn1, TIn2, TOut> resultSelector, bool excludeNull = false)
+        {
+            return new ApplySingleStreamNode<TIn1, TIn2, TOut>(name, new ApplySingleArgs<TIn1, TIn2, TOut>
             {
                 MainStream = stream,
                 StreamToApply = streamToApply,

@@ -55,7 +55,7 @@ namespace Paillave.Etl
         /// <typeparam name="TIn2">Resource type</typeparam>
         /// <typeparam name="TOut">Output type</typeparam>
         /// <returns>Output stream</returns>
-        public static IStream<TOut> CrossApplyEnumerable<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> streamToApply, Func<TIn1, TIn2, IEnumerable<TOut>> values, bool noParallelisation = false)
+        public static IStream<TOut> CrossApplyEnumerable<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, ISingleStream<TIn2> streamToApply, Func<TIn1, TIn2, IEnumerable<TOut>> values, bool noParallelisation = false)
         {
             return stream.CrossApply(name, streamToApply, new ActionResourceValuesProvider<TIn1, TIn2, TOut>(new ActionResourceValuesProviderArgs<TIn1, TIn2, TOut>()
             {

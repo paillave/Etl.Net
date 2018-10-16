@@ -12,7 +12,7 @@ namespace Paillave.Etl.StreamNodes
     public class ToSubProcessArgs<TIn, TOut>
     {
         public IStream<TIn> Stream { get; set; }
-        public Func<IStream<TIn>, IStream<TOut>> SubProcess { get; set; }
+        public Func<ISingleStream<TIn>, IStream<TOut>> SubProcess { get; set; }
         public bool NoParallelisation { get; set; }
     }
     public class ToSubProcessStreamNode<TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, ToSubProcessArgs<TIn, TOut>>
@@ -28,11 +28,11 @@ namespace Paillave.Etl.StreamNodes
             var outputObservable = args.Stream.Observable.FlatMap(i =>
                 {
                     EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-                    var inputStream = new Stream<TIn>(this.Tracer, this.ExecutionContext, this.NodeName, PushObservable.FromSingle(i, waitHandle));
+                    var inputStream = new SingleStream<TIn>(this.Tracer, this.ExecutionContext, this.NodeName, PushObservable.FromSingle(i, waitHandle));
                     var outputStream = args.SubProcess(inputStream);
                     this.ExecutionContext.AddToWaitForCompletion(this.NodeName, outputStream.Observable);
                     outputStream.Observable.Subscribe(j => { }, () => semaphore.Release());
-                    return new DeferedWrapperPushObservable<TOut>(outputStream.Observable, () =>
+                    return new DeferredWrapperPushObservable<TOut>(outputStream.Observable, () =>
                     {
                         semaphore.WaitOne();
                         waitHandle.Set();

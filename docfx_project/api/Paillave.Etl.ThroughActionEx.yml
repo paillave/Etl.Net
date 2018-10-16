@@ -12,17 +12,17 @@ items:
   - Paillave.Etl.ThroughActionEx.ThroughAction``2(ISortedStream{``0,``1},System.String,IThroughActionProcessor{``0})
   - Paillave.Etl.ThroughActionEx.ThroughAction``2(ISortedStream{``0,``1},System.String,System.Action{``0})
   - Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,``1,System.Action{``0,``1,System.Action{``1}})
-  - Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
-  - Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
+  - Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
+  - Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
   - Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``1},System.String,``2,System.Action{``0,``2,System.Action{``2}})
-  - Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
-  - Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
+  - Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
+  - Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
   - Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``1},System.String,``2,System.Action{``0,``2,System.Action{``2}})
-  - Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
-  - Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
-  - Paillave.Etl.ThroughActionEx.ThroughAction``3(IStream{``0},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
-  - Paillave.Etl.ThroughActionEx.ThroughAction``4(IKeyedStream{``0,``3},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
-  - Paillave.Etl.ThroughActionEx.ThroughAction``4(ISortedStream{``0,``3},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  - Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
+  - Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
+  - Paillave.Etl.ThroughActionEx.ThroughAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  - Paillave.Etl.ThroughActionEx.ThroughAction``4(IKeyedStream{``0,``3},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  - Paillave.Etl.ThroughActionEx.ThroughAction``4(ISortedStream{``0,``3},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
   langs:
   - csharp
   - vb
@@ -33,7 +33,7 @@ items:
   source:
     id: ThroughActionEx
     path: ''
-    startLine: 905
+    startLine: 1161
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -72,7 +72,7 @@ items:
   source:
     id: ThroughAction
     path: ''
-    startLine: 908
+    startLine: 1164
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -118,7 +118,7 @@ items:
   source:
     id: ThroughAction
     path: ''
-    startLine: 916
+    startLine: 1172
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -165,7 +165,7 @@ items:
   source:
     id: ThroughAction
     path: ''
-    startLine: 924
+    startLine: 1180
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -212,7 +212,7 @@ items:
   source:
     id: ThroughAction
     path: ''
-    startLine: 935
+    startLine: 1191
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -258,7 +258,7 @@ items:
   source:
     id: ThroughAction
     path: ''
-    startLine: 943
+    startLine: 1199
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -305,7 +305,7 @@ items:
   source:
     id: ThroughAction
     path: ''
-    startLine: 951
+    startLine: 1207
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -337,34 +337,34 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), System.String, IThroughActionProcessor(Of TIn))
   name.vb: ThroughAction(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, IThroughActionProcessor(Of TIn))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
-  id: ThroughAction``2(IStream{``0},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
+  id: ThroughAction``2(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
   isExtensionMethod: true
   parent: Paillave.Etl.ThroughActionEx
   langs:
   - csharp
   - vb
-  name: ThroughAction<TIn, TResource>(IStream<TIn>, String, IStream<TResource>, Action<TIn, TResource>, Action<TResource>)
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, String, IStream<TResource>, Action<TIn, TResource>, Action<TResource>)
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, System.String, IStream<TResource>, System.Action<TIn, TResource>, System.Action<TResource>)
+  name: ThroughAction<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, Action<TIn, TResource>, Action<TResource>)
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, Action<TIn, TResource>, Action<TResource>)
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource>, System.Action<TResource>)
   type: Method
   source:
     id: ThroughAction
     path: ''
-    startLine: 962
+    startLine: 1218
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   syntax:
-    content: public static IStream<TIn> ThroughAction<TIn, TResource>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
+    content: public static IStream<TIn> ThroughAction<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{{TResource}}
+      type: ISingleStream{{TResource}}
     - id: processRow
       type: System.Action{{TIn},{TResource}}
     - id: preProcess
@@ -377,45 +377,45 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughAction(Of TIn, TResource)(stream As IStream(Of TIn), name As String, resourceStream As IStream(Of TResource), processRow As Action(Of TIn, TResource), preProcess As Action(Of TResource) = Nothing) As IStream(Of TIn)
+      Public Shared Function ThroughAction(Of TIn, TResource)(stream As IStream(Of TIn), name As String, resourceStream As ISingleStream(Of TResource), processRow As Action(Of TIn, TResource), preProcess As Action(Of TResource) = Nothing) As IStream(Of TIn)
   overload: Paillave.Etl.ThroughActionEx.ThroughAction*
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource)(IStream(Of TIn), String, IStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource)(IStream(Of TIn), String, ISingleStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource)(IStream(Of TIn), System.String, IStream(Of TResource), System.Action(Of TIn, TResource), System.Action(Of TResource))
-  name.vb: ThroughAction(Of TIn, TResource)(IStream(Of TIn), String, IStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
-  id: ThroughAction``3(ISortedStream{``0,``2},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource)(IStream(Of TIn), System.String, ISingleStream(Of TResource), System.Action(Of TIn, TResource), System.Action(Of TResource))
+  name.vb: ThroughAction(Of TIn, TResource)(IStream(Of TIn), String, ISingleStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
+  id: ThroughAction``3(ISortedStream{``0,``2},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
   isExtensionMethod: true
   parent: Paillave.Etl.ThroughActionEx
   langs:
   - csharp
   - vb
-  name: ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, Action<TIn, TResource>, Action<TResource>)
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, Action<TIn, TResource>, Action<TResource>)
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, System.String, IStream<TResource>, System.Action<TIn, TResource>, System.Action<TResource>)
+  name: ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource>, Action<TResource>)
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource>, Action<TResource>)
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource>, System.Action<TResource>)
   type: Method
   source:
     id: ThroughAction
     path: ''
-    startLine: 971
+    startLine: 1227
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   syntax:
-    content: public static ISortedStream<TIn, TKey> ThroughAction<TIn, TResource, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
+    content: public static ISortedStream<TIn, TKey> ThroughAction<TIn, TResource, TKey>(this ISortedStream<TIn, TKey> stream, string name, ISingleStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
     parameters:
     - id: stream
       type: ISortedStream{{TIn},{TKey}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{{TResource}}
+      type: ISingleStream{{TResource}}
     - id: processRow
       type: System.Action{{TIn},{TResource}}
     - id: preProcess
@@ -429,45 +429,45 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughAction(Of TIn, TResource, TKey)(stream As ISortedStream(Of TIn, TKey), name As String, resourceStream As IStream(Of TResource), processRow As Action(Of TIn, TResource), preProcess As Action(Of TResource) = Nothing) As ISortedStream(Of TIn, TKey)
+      Public Shared Function ThroughAction(Of TIn, TResource, TKey)(stream As ISortedStream(Of TIn, TKey), name As String, resourceStream As ISingleStream(Of TResource), processRow As Action(Of TIn, TResource), preProcess As Action(Of TResource) = Nothing) As ISortedStream(Of TIn, TKey)
   overload: Paillave.Etl.ThroughActionEx.ThroughAction*
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), System.String, IStream(Of TResource), System.Action(Of TIn, TResource), System.Action(Of TResource))
-  name.vb: ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
-  id: ThroughAction``3(IKeyedStream{``0,``2},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), System.String, ISingleStream(Of TResource), System.Action(Of TIn, TResource), System.Action(Of TResource))
+  name.vb: ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
+  id: ThroughAction``3(IKeyedStream{``0,``2},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
   isExtensionMethod: true
   parent: Paillave.Etl.ThroughActionEx
   langs:
   - csharp
   - vb
-  name: ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, Action<TIn, TResource>, Action<TResource>)
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, Action<TIn, TResource>, Action<TResource>)
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, System.String, IStream<TResource>, System.Action<TIn, TResource>, System.Action<TResource>)
+  name: ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource>, Action<TResource>)
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource>, Action<TResource>)
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource>, System.Action<TResource>)
   type: Method
   source:
     id: ThroughAction
     path: ''
-    startLine: 980
+    startLine: 1236
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   syntax:
-    content: public static IKeyedStream<TIn, TKey> ThroughAction<TIn, TResource, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
+    content: public static IKeyedStream<TIn, TKey> ThroughAction<TIn, TResource, TKey>(this IKeyedStream<TIn, TKey> stream, string name, ISingleStream<TResource> resourceStream, Action<TIn, TResource> processRow, Action<TResource> preProcess = null)
     parameters:
     - id: stream
       type: IKeyedStream{{TIn},{TKey}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{{TResource}}
+      type: ISingleStream{{TResource}}
     - id: processRow
       type: System.Action{{TIn},{TResource}}
     - id: preProcess
@@ -481,45 +481,45 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughAction(Of TIn, TResource, TKey)(stream As IKeyedStream(Of TIn, TKey), name As String, resourceStream As IStream(Of TResource), processRow As Action(Of TIn, TResource), preProcess As Action(Of TResource) = Nothing) As IKeyedStream(Of TIn, TKey)
+      Public Shared Function ThroughAction(Of TIn, TResource, TKey)(stream As IKeyedStream(Of TIn, TKey), name As String, resourceStream As ISingleStream(Of TResource), processRow As Action(Of TIn, TResource), preProcess As Action(Of TResource) = Nothing) As IKeyedStream(Of TIn, TKey)
   overload: Paillave.Etl.ThroughActionEx.ThroughAction*
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), System.String, IStream(Of TResource), System.Action(Of TIn, TResource), System.Action(Of TResource))
-  name.vb: ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
-  id: ThroughAction``2(IStream{``0},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), System.String, ISingleStream(Of TResource), System.Action(Of TIn, TResource), System.Action(Of TResource))
+  name.vb: ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
+  id: ThroughAction``2(IStream{``0},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
   isExtensionMethod: true
   parent: Paillave.Etl.ThroughActionEx
   langs:
   - csharp
   - vb
-  name: ThroughAction<TIn, TResource>(IStream<TIn>, String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, System.String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  name: ThroughAction<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, System.String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
   type: Method
   source:
     id: ThroughAction
     path: ''
-    startLine: 992
+    startLine: 1248
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   syntax:
-    content: public static IStream<TIn> ThroughAction<TIn, TResource>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, IThroughActionProcessor<TIn, TResource> processor)
+    content: public static IStream<TIn> ThroughAction<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> resourceStream, IThroughActionProcessor<TIn, TResource> processor)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{{TResource}}
+      type: ISingleStream{{TResource}}
     - id: processor
       type: IThroughActionProcessor{{TIn},{TResource}}
     typeParameters:
@@ -530,45 +530,45 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughAction(Of TIn, TResource)(stream As IStream(Of TIn), name As String, resourceStream As IStream(Of TResource), processor As IThroughActionProcessor(Of TIn, TResource)) As IStream(Of TIn)
+      Public Shared Function ThroughAction(Of TIn, TResource)(stream As IStream(Of TIn), name As String, resourceStream As ISingleStream(Of TResource), processor As IThroughActionProcessor(Of TIn, TResource)) As IStream(Of TIn)
   overload: Paillave.Etl.ThroughActionEx.ThroughAction*
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource)(IStream(Of TIn), String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource)(IStream(Of TIn), String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource)(IStream(Of TIn), System.String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
-  name.vb: ThroughAction(Of TIn, TResource)(IStream(Of TIn), String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
-  id: ThroughAction``3(ISortedStream{``0,``2},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource)(IStream(Of TIn), System.String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+  name.vb: ThroughAction(Of TIn, TResource)(IStream(Of TIn), String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
+  id: ThroughAction``3(ISortedStream{``0,``2},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
   isExtensionMethod: true
   parent: Paillave.Etl.ThroughActionEx
   langs:
   - csharp
   - vb
-  name: ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, System.String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  name: ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
   type: Method
   source:
     id: ThroughAction
     path: ''
-    startLine: 1001
+    startLine: 1257
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   syntax:
-    content: public static ISortedStream<TIn, TKey> ThroughAction<TIn, TResource, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, IThroughActionProcessor<TIn, TResource> processor)
+    content: public static ISortedStream<TIn, TKey> ThroughAction<TIn, TResource, TKey>(this ISortedStream<TIn, TKey> stream, string name, ISingleStream<TResource> resourceStream, IThroughActionProcessor<TIn, TResource> processor)
     parameters:
     - id: stream
       type: ISortedStream{{TIn},{TKey}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{{TResource}}
+      type: ISingleStream{{TResource}}
     - id: processor
       type: IThroughActionProcessor{{TIn},{TResource}}
     typeParameters:
@@ -580,45 +580,45 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughAction(Of TIn, TResource, TKey)(stream As ISortedStream(Of TIn, TKey), name As String, resourceStream As IStream(Of TResource), processor As IThroughActionProcessor(Of TIn, TResource)) As ISortedStream(Of TIn, TKey)
+      Public Shared Function ThroughAction(Of TIn, TResource, TKey)(stream As ISortedStream(Of TIn, TKey), name As String, resourceStream As ISingleStream(Of TResource), processor As IThroughActionProcessor(Of TIn, TResource)) As ISortedStream(Of TIn, TKey)
   overload: Paillave.Etl.ThroughActionEx.ThroughAction*
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), System.String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
-  name.vb: ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
-  id: ThroughAction``3(IKeyedStream{``0,``2},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), System.String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+  name.vb: ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
+  id: ThroughAction``3(IKeyedStream{``0,``2},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
   isExtensionMethod: true
   parent: Paillave.Etl.ThroughActionEx
   langs:
   - csharp
   - vb
-  name: ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, System.String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  name: ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
   type: Method
   source:
     id: ThroughAction
     path: ''
-    startLine: 1010
+    startLine: 1266
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   syntax:
-    content: public static IKeyedStream<TIn, TKey> ThroughAction<TIn, TResource, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, IThroughActionProcessor<TIn, TResource> processor)
+    content: public static IKeyedStream<TIn, TKey> ThroughAction<TIn, TResource, TKey>(this IKeyedStream<TIn, TKey> stream, string name, ISingleStream<TResource> resourceStream, IThroughActionProcessor<TIn, TResource> processor)
     parameters:
     - id: stream
       type: IKeyedStream{{TIn},{TKey}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{{TResource}}
+      type: ISingleStream{{TResource}}
     - id: processor
       type: IThroughActionProcessor{{TIn},{TResource}}
     typeParameters:
@@ -630,17 +630,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughAction(Of TIn, TResource, TKey)(stream As IKeyedStream(Of TIn, TKey), name As String, resourceStream As IStream(Of TResource), processor As IThroughActionProcessor(Of TIn, TResource)) As IKeyedStream(Of TIn, TKey)
+      Public Shared Function ThroughAction(Of TIn, TResource, TKey)(stream As IKeyedStream(Of TIn, TKey), name As String, resourceStream As ISingleStream(Of TResource), processor As IThroughActionProcessor(Of TIn, TResource)) As IKeyedStream(Of TIn, TKey)
   overload: Paillave.Etl.ThroughActionEx.ThroughAction*
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), System.String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
-  name.vb: ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), System.String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+  name.vb: ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
 - uid: Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,``1,System.Action{``0,``1,System.Action{``1}})
   commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,``1,System.Action{``0,``1,System.Action{``1}})
   id: ThroughAction``2(IStream{``0},System.String,``1,System.Action{``0,``1,System.Action{``1}})
@@ -656,7 +656,7 @@ items:
   source:
     id: ThroughAction
     path: ''
-    startLine: 1022
+    startLine: 1278
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -705,7 +705,7 @@ items:
   source:
     id: ThroughAction
     path: ''
-    startLine: 1030
+    startLine: 1286
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -755,7 +755,7 @@ items:
   source:
     id: ThroughAction
     path: ''
-    startLine: 1038
+    startLine: 1294
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -790,34 +790,34 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TKey, TCtx)(IKeyedStream(Of TIn, TKey), System.String, TCtx, System.Action(Of TIn, TCtx, System.Action(Of TCtx)))
   name.vb: ThroughAction(Of TIn, TKey, TCtx)(IKeyedStream(Of TIn, TKey), String, TCtx, Action(Of TIn, TCtx, Action(Of TCtx)))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(IStream{``0},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(IStream{``0},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
-  id: ThroughAction``3(IStream{``0},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  id: ThroughAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
   isExtensionMethod: true
   parent: Paillave.Etl.ThroughActionEx
   langs:
   - csharp
   - vb
-  name: ThroughAction<TIn, TResource, TCtx>(IStream<TIn>, String, IStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TCtx>(IStream<TIn>, String, IStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TCtx>(IStream<TIn>, System.String, IStream<TResource>, System.Action<TIn, TResource, TCtx, System.Action<TCtx>>, System.Action<TResource, System.Action<TCtx>>)
+  name: ThroughAction<TIn, TResource, TCtx>(IStream<TIn>, String, ISingleStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TCtx>(IStream<TIn>, String, ISingleStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TCtx>(IStream<TIn>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource, TCtx, System.Action<TCtx>>, System.Action<TResource, System.Action<TCtx>>)
   type: Method
   source:
     id: ThroughAction
     path: ''
-    startLine: 1049
+    startLine: 1305
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   syntax:
-    content: public static IStream<TIn> ThroughAction<TIn, TResource, TCtx>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource, TCtx, Action<TCtx>> processRow, Action<TResource, Action<TCtx>> preProcess = null)
+    content: public static IStream<TIn> ThroughAction<TIn, TResource, TCtx>(this IStream<TIn> stream, string name, ISingleStream<TResource> resourceStream, Action<TIn, TResource, TCtx, Action<TCtx>> processRow, Action<TResource, Action<TCtx>> preProcess = null)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{{TResource}}
+      type: ISingleStream{{TResource}}
     - id: processRow
       type: System.Action{{TIn},{TResource},{TCtx},System.Action{{TCtx}}}
     - id: preProcess
@@ -831,45 +831,45 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughAction(Of TIn, TResource, TCtx)(stream As IStream(Of TIn), name As String, resourceStream As IStream(Of TResource), processRow As Action(Of TIn, TResource, TCtx, Action(Of TCtx)), preProcess As Action(Of TResource, Action(Of TCtx)) = Nothing) As IStream(Of TIn)
+      Public Shared Function ThroughAction(Of TIn, TResource, TCtx)(stream As IStream(Of TIn), name As String, resourceStream As ISingleStream(Of TResource), processRow As Action(Of TIn, TResource, TCtx, Action(Of TCtx)), preProcess As Action(Of TResource, Action(Of TCtx)) = Nothing) As IStream(Of TIn)
   overload: Paillave.Etl.ThroughActionEx.ThroughAction*
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx)(IStream(Of TIn), String, IStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx)(IStream(Of TIn), String, ISingleStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx)(IStream(Of TIn), System.String, IStream(Of TResource), System.Action(Of TIn, TResource, TCtx, System.Action(Of TCtx)), System.Action(Of TResource, System.Action(Of TCtx)))
-  name.vb: ThroughAction(Of TIn, TResource, TCtx)(IStream(Of TIn), String, IStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``4(ISortedStream{``0,``3},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``4(ISortedStream{``0,``3},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
-  id: ThroughAction``4(ISortedStream{``0,``3},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx)(IStream(Of TIn), System.String, ISingleStream(Of TResource), System.Action(Of TIn, TResource, TCtx, System.Action(Of TCtx)), System.Action(Of TResource, System.Action(Of TCtx)))
+  name.vb: ThroughAction(Of TIn, TResource, TCtx)(IStream(Of TIn), String, ISingleStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``4(ISortedStream{``0,``3},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``4(ISortedStream{``0,``3},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  id: ThroughAction``4(ISortedStream{``0,``3},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
   isExtensionMethod: true
   parent: Paillave.Etl.ThroughActionEx
   langs:
   - csharp
   - vb
-  name: ThroughAction<TIn, TResource, TCtx, TKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(ISortedStream<TIn, TKey>, System.String, IStream<TResource>, System.Action<TIn, TResource, TCtx, System.Action<TCtx>>, System.Action<TResource, System.Action<TCtx>>)
+  name: ThroughAction<TIn, TResource, TCtx, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource, TCtx, System.Action<TCtx>>, System.Action<TResource, System.Action<TCtx>>)
   type: Method
   source:
     id: ThroughAction
     path: ''
-    startLine: 1058
+    startLine: 1314
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   syntax:
-    content: public static ISortedStream<TIn, TKey> ThroughAction<TIn, TResource, TCtx, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource, TCtx, Action<TCtx>> processRow, Action<TResource, Action<TCtx>> preProcess = null)
+    content: public static ISortedStream<TIn, TKey> ThroughAction<TIn, TResource, TCtx, TKey>(this ISortedStream<TIn, TKey> stream, string name, ISingleStream<TResource> resourceStream, Action<TIn, TResource, TCtx, Action<TCtx>> processRow, Action<TResource, Action<TCtx>> preProcess = null)
     parameters:
     - id: stream
       type: ISortedStream{{TIn},{TKey}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{{TResource}}
+      type: ISingleStream{{TResource}}
     - id: processRow
       type: System.Action{{TIn},{TResource},{TCtx},System.Action{{TCtx}}}
     - id: preProcess
@@ -884,45 +884,45 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughAction(Of TIn, TResource, TCtx, TKey)(stream As ISortedStream(Of TIn, TKey), name As String, resourceStream As IStream(Of TResource), processRow As Action(Of TIn, TResource, TCtx, Action(Of TCtx)), preProcess As Action(Of TResource, Action(Of TCtx)) = Nothing) As ISortedStream(Of TIn, TKey)
+      Public Shared Function ThroughAction(Of TIn, TResource, TCtx, TKey)(stream As ISortedStream(Of TIn, TKey), name As String, resourceStream As ISingleStream(Of TResource), processRow As Action(Of TIn, TResource, TCtx, Action(Of TCtx)), preProcess As Action(Of TResource, Action(Of TCtx)) = Nothing) As ISortedStream(Of TIn, TKey)
   overload: Paillave.Etl.ThroughActionEx.ThroughAction*
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(ISortedStream(Of TIn, TKey), System.String, IStream(Of TResource), System.Action(Of TIn, TResource, TCtx, System.Action(Of TCtx)), System.Action(Of TResource, System.Action(Of TCtx)))
-  name.vb: ThroughAction(Of TIn, TResource, TCtx, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``4(IKeyedStream{``0,``3},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``4(IKeyedStream{``0,``3},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
-  id: ThroughAction``4(IKeyedStream{``0,``3},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(ISortedStream(Of TIn, TKey), System.String, ISingleStream(Of TResource), System.Action(Of TIn, TResource, TCtx, System.Action(Of TCtx)), System.Action(Of TResource, System.Action(Of TCtx)))
+  name.vb: ThroughAction(Of TIn, TResource, TCtx, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``4(IKeyedStream{``0,``3},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``4(IKeyedStream{``0,``3},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  id: ThroughAction``4(IKeyedStream{``0,``3},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
   isExtensionMethod: true
   parent: Paillave.Etl.ThroughActionEx
   langs:
   - csharp
   - vb
-  name: ThroughAction<TIn, TResource, TCtx, TKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(IKeyedStream<TIn, TKey>, System.String, IStream<TResource>, System.Action<TIn, TResource, TCtx, System.Action<TCtx>>, System.Action<TResource, System.Action<TCtx>>)
+  name: ThroughAction<TIn, TResource, TCtx, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource, TCtx, System.Action<TCtx>>, System.Action<TResource, System.Action<TCtx>>)
   type: Method
   source:
     id: ThroughAction
     path: ''
-    startLine: 1067
+    startLine: 1323
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   syntax:
-    content: public static IKeyedStream<TIn, TKey> ThroughAction<TIn, TResource, TCtx, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, Action<TIn, TResource, TCtx, Action<TCtx>> processRow, Action<TResource, Action<TCtx>> preProcess = null)
+    content: public static IKeyedStream<TIn, TKey> ThroughAction<TIn, TResource, TCtx, TKey>(this IKeyedStream<TIn, TKey> stream, string name, ISingleStream<TResource> resourceStream, Action<TIn, TResource, TCtx, Action<TCtx>> processRow, Action<TResource, Action<TCtx>> preProcess = null)
     parameters:
     - id: stream
       type: IKeyedStream{{TIn},{TKey}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{{TResource}}
+      type: ISingleStream{{TResource}}
     - id: processRow
       type: System.Action{{TIn},{TResource},{TCtx},System.Action{{TCtx}}}
     - id: preProcess
@@ -937,17 +937,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughAction(Of TIn, TResource, TCtx, TKey)(stream As IKeyedStream(Of TIn, TKey), name As String, resourceStream As IStream(Of TResource), processRow As Action(Of TIn, TResource, TCtx, Action(Of TCtx)), preProcess As Action(Of TResource, Action(Of TCtx)) = Nothing) As IKeyedStream(Of TIn, TKey)
+      Public Shared Function ThroughAction(Of TIn, TResource, TCtx, TKey)(stream As IKeyedStream(Of TIn, TKey), name As String, resourceStream As ISingleStream(Of TResource), processRow As Action(Of TIn, TResource, TCtx, Action(Of TCtx)), preProcess As Action(Of TResource, Action(Of TCtx)) = Nothing) As IKeyedStream(Of TIn, TKey)
   overload: Paillave.Etl.ThroughActionEx.ThroughAction*
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(IKeyedStream(Of TIn, TKey), System.String, IStream(Of TResource), System.Action(Of TIn, TResource, TCtx, System.Action(Of TCtx)), System.Action(Of TResource, System.Action(Of TCtx)))
-  name.vb: ThroughAction(Of TIn, TResource, TCtx, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(IKeyedStream(Of TIn, TKey), System.String, ISingleStream(Of TResource), System.Action(Of TIn, TResource, TCtx, System.Action(Of TCtx)), System.Action(Of TResource, System.Action(Of TCtx)))
+  name.vb: ThroughAction(Of TIn, TResource, TCtx, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
 references:
 - uid: Paillave.Etl
   commentId: N:Paillave.Etl
@@ -1693,20 +1693,20 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: IStream{{TResource}}
-  commentId: '!:IStream{``1}'
-  definition: IStream`1
-  name: IStream<TResource>
-  nameWithType: IStream<TResource>
-  fullName: IStream<TResource>
-  nameWithType.vb: IStream(Of TResource)
-  fullName.vb: IStream(Of TResource)
-  name.vb: IStream(Of TResource)
+- uid: ISingleStream{{TResource}}
+  commentId: '!:ISingleStream{``1}'
+  definition: ISingleStream`1
+  name: ISingleStream<TResource>
+  nameWithType: ISingleStream<TResource>
+  fullName: ISingleStream<TResource>
+  nameWithType.vb: ISingleStream(Of TResource)
+  fullName.vb: ISingleStream(Of TResource)
+  name.vb: ISingleStream(Of TResource)
   spec.csharp:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: <
     nameWithType: <
@@ -1718,10 +1718,10 @@ references:
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
@@ -1821,6 +1821,44 @@ references:
   - name: TResource
     nameWithType: TResource
     fullName: TResource
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream`1
+  isExternal: true
+  name: ISingleStream<>
+  nameWithType: ISingleStream<>
+  fullName: ISingleStream<>
+  nameWithType.vb: ISingleStream(Of )
+  fullName.vb: ISingleStream(Of )
+  name.vb: ISingleStream(Of )
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
   - name: )
     nameWithType: )
     fullName: )

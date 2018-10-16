@@ -8,7 +8,7 @@ namespace Paillave.Etl
 {
     public interface IStreamProcessDefinition<TConfig>
     {
-        void DefineProcess(IStream<TConfig> rootStream);
+        void DefineProcess(ISingleStream<TConfig> rootStream);
         string Name { get; }
     }
 }
