@@ -6,16 +6,20 @@
     name: AggregateEx
   - uid: Paillave.Etl.CrossApplyActionEx
     name: CrossApplyActionEx
+  - uid: Paillave.Etl.CrossApplyEnumerableEx
+    name: CrossApplyEnumerableEx
   - uid: Paillave.Etl.CrossApplyEx
     name: CrossApplyEx
   - uid: Paillave.Etl.CrossApplyFolderFilesEx
     name: CrossApplyFolderFilesEx
   - uid: Paillave.Etl.DistinctEx
     name: DistinctEx
-  - uid: Paillave.Etl.EnsuredKeyedEx
-    name: EnsuredKeyedEx
-  - uid: Paillave.Etl.EnsuredSortedEx
-    name: EnsuredSortedEx
+  - uid: Paillave.Etl.EnsureKeyedEx
+    name: EnsureKeyedEx
+  - uid: Paillave.Etl.EnsureSingleEx
+    name: EnsureSingleEx
+  - uid: Paillave.Etl.EnsureSortedEx
+    name: EnsureSortedEx
   - uid: Paillave.Etl.GetStreamStatisticsEx
     name: GetStreamStatisticsEx
   - uid: Paillave.Etl.LeftJoinEx

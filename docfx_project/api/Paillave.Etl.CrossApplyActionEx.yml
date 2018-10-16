@@ -6,7 +6,7 @@ items:
   parent: Paillave.Etl
   children:
   - Paillave.Etl.CrossApplyActionEx.CrossApplyAction``2(IStream{``0},System.String,System.Action{``0,System.Action{``1}},System.Boolean)
-  - Paillave.Etl.CrossApplyActionEx.CrossApplyAction``3(IStream{``0},System.String,IStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
+  - Paillave.Etl.CrossApplyActionEx.CrossApplyAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
   langs:
   - csharp
   - vb
@@ -17,7 +17,7 @@ items:
   source:
     id: CrossApplyActionEx
     path: ''
-    startLine: 148
+    startLine: 167
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -56,7 +56,7 @@ items:
   source:
     id: CrossApplyAction
     path: ''
-    startLine: 150
+    startLine: 169
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -90,34 +90,34 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.CrossApplyActionEx.CrossApplyAction(Of TIn, TOut)(IStream(Of TIn), System.String, System.Action(Of TIn, System.Action(Of TOut)), System.Boolean)
   name.vb: CrossApplyAction(Of TIn, TOut)(IStream(Of TIn), String, Action(Of TIn, Action(Of TOut)), Boolean)
-- uid: Paillave.Etl.CrossApplyActionEx.CrossApplyAction``3(IStream{``0},System.String,IStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
-  commentId: M:Paillave.Etl.CrossApplyActionEx.CrossApplyAction``3(IStream{``0},System.String,IStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
-  id: CrossApplyAction``3(IStream{``0},System.String,IStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
+- uid: Paillave.Etl.CrossApplyActionEx.CrossApplyAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
+  commentId: M:Paillave.Etl.CrossApplyActionEx.CrossApplyAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
+  id: CrossApplyAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.CrossApplyActionEx
   langs:
   - csharp
   - vb
-  name: CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, String, IStream<TIn2>, Action<TIn1, TIn2, Action<TOut>>, Boolean)
-  nameWithType: CrossApplyActionEx.CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, String, IStream<TIn2>, Action<TIn1, TIn2, Action<TOut>>, Boolean)
-  fullName: Paillave.Etl.CrossApplyActionEx.CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, IStream<TIn2>, System.Action<TIn1, TIn2, System.Action<TOut>>, System.Boolean)
+  name: CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Action<TIn1, TIn2, Action<TOut>>, Boolean)
+  nameWithType: CrossApplyActionEx.CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Action<TIn1, TIn2, Action<TOut>>, Boolean)
+  fullName: Paillave.Etl.CrossApplyActionEx.CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, ISingleStream<TIn2>, System.Action<TIn1, TIn2, System.Action<TOut>>, System.Boolean)
   type: Method
   source:
     id: CrossApplyAction
     path: ''
-    startLine: 158
+    startLine: 177
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   syntax:
-    content: public static IStream<TOut> CrossApplyAction<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> resourceStream, Action<TIn1, TIn2, Action<TOut>> valuesProducer, bool noParallelisation = false)
+    content: public static IStream<TOut> CrossApplyAction<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, ISingleStream<TIn2> resourceStream, Action<TIn1, TIn2, Action<TOut>> valuesProducer, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{{TIn1}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{{TIn2}}
+      type: ISingleStream{{TIn2}}
     - id: valuesProducer
       type: System.Action{{TIn1},{TIn2},System.Action{{TOut}}}
     - id: noParallelisation
@@ -131,17 +131,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyAction(Of TIn1, TIn2, TOut)(stream As IStream(Of TIn1), name As String, resourceStream As IStream(Of TIn2), valuesProducer As Action(Of TIn1, TIn2, Action(Of TOut)), noParallelisation As Boolean = False) As IStream(Of TOut)
+      Public Shared Function CrossApplyAction(Of TIn1, TIn2, TOut)(stream As IStream(Of TIn1), name As String, resourceStream As ISingleStream(Of TIn2), valuesProducer As Action(Of TIn1, TIn2, Action(Of TOut)), noParallelisation As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.CrossApplyActionEx.CrossApplyAction*
-  nameWithType.vb: CrossApplyActionEx.CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, IStream(Of TIn2), Action(Of TIn1, TIn2, Action(Of TOut)), Boolean)
+  nameWithType.vb: CrossApplyActionEx.CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Action(Of TIn1, TIn2, Action(Of TOut)), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.CrossApplyActionEx.CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, IStream(Of TIn2), System.Action(Of TIn1, TIn2, System.Action(Of TOut)), System.Boolean)
-  name.vb: CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, IStream(Of TIn2), Action(Of TIn1, TIn2, Action(Of TOut)), Boolean)
+  fullName.vb: Paillave.Etl.CrossApplyActionEx.CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, ISingleStream(Of TIn2), System.Action(Of TIn1, TIn2, System.Action(Of TOut)), System.Boolean)
+  name.vb: CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Action(Of TIn1, TIn2, Action(Of TOut)), Boolean)
 references:
 - uid: Paillave.Etl
   commentId: N:Paillave.Etl
@@ -739,20 +739,20 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: IStream{{TIn2}}
-  commentId: '!:IStream{``1}'
-  definition: IStream`1
-  name: IStream<TIn2>
-  nameWithType: IStream<TIn2>
-  fullName: IStream<TIn2>
-  nameWithType.vb: IStream(Of TIn2)
-  fullName.vb: IStream(Of TIn2)
-  name.vb: IStream(Of TIn2)
+- uid: ISingleStream{{TIn2}}
+  commentId: '!:ISingleStream{``1}'
+  definition: ISingleStream`1
+  name: ISingleStream<TIn2>
+  nameWithType: ISingleStream<TIn2>
+  fullName: ISingleStream<TIn2>
+  nameWithType.vb: ISingleStream(Of TIn2)
+  fullName.vb: ISingleStream(Of TIn2)
+  name.vb: ISingleStream(Of TIn2)
   spec.csharp:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: <
     nameWithType: <
@@ -764,10 +764,10 @@ references:
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
@@ -861,6 +861,44 @@ references:
   - name: )
     nameWithType: )
     fullName: )
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream`1
+  isExternal: true
+  name: ISingleStream<>
+  nameWithType: ISingleStream<>
+  fullName: ISingleStream<>
+  nameWithType.vb: ISingleStream(Of )
+  fullName.vb: ISingleStream(Of )
+  name.vb: ISingleStream(Of )
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
   - name: )
     nameWithType: )
     fullName: )

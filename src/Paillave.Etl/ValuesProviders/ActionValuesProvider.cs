@@ -21,9 +21,9 @@ namespace Paillave.Etl.ValuesProviders
         {
             _args = args;
         }
-        public override IDeferedPushObservable<TOut> PushValues(TIn input)
+        public override IDeferredPushObservable<TOut> PushValues(TIn input)
         {
-            return new DeferedPushObservable<TOut>(pushValue =>
+            return new DeferredPushObservable<TOut>(pushValue =>
             {
                 using (base.OpenProcess())
                     _args.ProduceValues(input, pushValue);
@@ -42,9 +42,9 @@ namespace Paillave.Etl.ValuesProviders
         {
             _args = args;
         }
-        public override IDeferedPushObservable<TOut> PushValues(TRes resource, TIn input)
+        public override IDeferredPushObservable<TOut> PushValues(TRes resource, TIn input)
         {
-            return new DeferedPushObservable<TOut>(pushValue =>
+            return new DeferredPushObservable<TOut>(pushValue =>
             {
                 using (base.OpenProcess())
                     _args.ProduceValues(input, resource, pushValue);

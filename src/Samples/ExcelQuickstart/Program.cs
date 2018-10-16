@@ -23,7 +23,7 @@ namespace ExcelQuickstart
     {
         public string Name => "Excel quickstart";
 
-        public void DefineProcess(IStream<SimpleConfig> rootStream)
+        public void DefineProcess(ISingleStream<SimpleConfig> rootStream)
         {
             var outputFile = rootStream.Select("open output file", i => File.OpenWrite(i.OutputFile));
             rootStream

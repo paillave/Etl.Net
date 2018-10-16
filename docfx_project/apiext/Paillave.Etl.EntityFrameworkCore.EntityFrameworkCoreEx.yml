@@ -5,7 +5,7 @@ items:
   id: EntityFrameworkCoreEx
   parent: Paillave.Etl.EntityFrameworkCore
   children:
-  - Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,IQueryable{``2}},System.Boolean)
+  - Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,IQueryable{``2}},System.Boolean)
   - Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,IStream{``1},BulkLoadMode,System.Int32)
   - Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IKeyedStream{``0,``2},System.String,IStream{``1},BulkLoadMode,System.Int32)
   - Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(ISortedStream{``0,``2},System.String,IStream{``1},BulkLoadMode,System.Int32)
@@ -43,17 +43,17 @@ items:
   modifiers.vb:
   - Public
   - Module
-- uid: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,IQueryable{``2}},System.Boolean)
-  commentId: M:Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,IQueryable{``2}},System.Boolean)
-  id: CrossApplyEntityFrameworkCoreQuery``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,IQueryable{``2}},System.Boolean)
+- uid: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,IQueryable{``2}},System.Boolean)
+  commentId: M:Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,IQueryable{``2}},System.Boolean)
+  id: CrossApplyEntityFrameworkCoreQuery``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,IQueryable{``2}},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx
   langs:
   - csharp
   - vb
-  name: CrossApplyEntityFrameworkCoreQuery<TIn, TRes, TOut>(IStream<TIn>, String, IStream<TRes>, Func<TIn, TRes, IQueryable<TOut>>, Boolean)
-  nameWithType: EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery<TIn, TRes, TOut>(IStream<TIn>, String, IStream<TRes>, Func<TIn, TRes, IQueryable<TOut>>, Boolean)
-  fullName: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery<TIn, TRes, TOut>(IStream<TIn>, System.String, IStream<TRes>, System.Func<TIn, TRes, IQueryable<TOut>>, System.Boolean)
+  name: CrossApplyEntityFrameworkCoreQuery<TIn, TRes, TOut>(IStream<TIn>, String, ISingleStream<TRes>, Func<TIn, TRes, IQueryable<TOut>>, Boolean)
+  nameWithType: EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery<TIn, TRes, TOut>(IStream<TIn>, String, ISingleStream<TRes>, Func<TIn, TRes, IQueryable<TOut>>, Boolean)
+  fullName: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery<TIn, TRes, TOut>(IStream<TIn>, System.String, ISingleStream<TRes>, System.Func<TIn, TRes, IQueryable<TOut>>, System.Boolean)
   type: Method
   source:
     id: CrossApplyEntityFrameworkCoreQuery
@@ -64,7 +64,7 @@ items:
   namespace: Paillave.Etl.EntityFrameworkCore
   syntax:
     content: >-
-      public static IStream<TOut> CrossApplyEntityFrameworkCoreQuery<TIn, TRes, TOut>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, Func<TIn, TRes, IQueryable<TOut>> getQuery, bool noParallelisation = false)
+      public static IStream<TOut> CrossApplyEntityFrameworkCoreQuery<TIn, TRes, TOut>(this IStream<TIn> stream, string name, ISingleStream<TRes> resourceStream, Func<TIn, TRes, IQueryable<TOut>> getQuery, bool noParallelisation = false)
           where TRes : DbContext
     parameters:
     - id: stream
@@ -72,7 +72,7 @@ items:
     - id: name
       type: System.String
     - id: resourceStream
-      type: IStream{{TRes}}
+      type: ISingleStream{{TRes}}
     - id: getQuery
       type: System.Func{{TIn},{TRes},IQueryable{{TOut}}}
     - id: noParallelisation
@@ -86,17 +86,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyEntityFrameworkCoreQuery(Of TIn, TRes As DbContext, TOut)(stream As IStream(Of TIn), name As String, resourceStream As IStream(Of TRes), getQuery As Func(Of TIn, TRes, IQueryable(Of TOut)), noParallelisation As Boolean = False) As IStream(Of TOut)
+      Public Shared Function CrossApplyEntityFrameworkCoreQuery(Of TIn, TRes As DbContext, TOut)(stream As IStream(Of TIn), name As String, resourceStream As ISingleStream(Of TRes), getQuery As Func(Of TIn, TRes, IQueryable(Of TOut)), noParallelisation As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery*
-  nameWithType.vb: EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, IStream(Of TRes), Func(Of TIn, TRes, IQueryable(Of TOut)), Boolean)
+  nameWithType.vb: EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, ISingleStream(Of TRes), Func(Of TIn, TRes, IQueryable(Of TOut)), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery(Of TIn, TRes, TOut)(IStream(Of TIn), System.String, IStream(Of TRes), System.Func(Of TIn, TRes, IQueryable(Of TOut)), System.Boolean)
-  name.vb: CrossApplyEntityFrameworkCoreQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, IStream(Of TRes), Func(Of TIn, TRes, IQueryable(Of TOut)), Boolean)
+  fullName.vb: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery(Of TIn, TRes, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TRes), System.Func(Of TIn, TRes, IQueryable(Of TOut)), System.Boolean)
+  name.vb: CrossApplyEntityFrameworkCoreQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, ISingleStream(Of TRes), Func(Of TIn, TRes, IQueryable(Of TOut)), Boolean)
 - uid: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,IStream{``1},BulkLoadMode,System.Int32)
   commentId: M:Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,IStream{``1},BulkLoadMode,System.Int32)
   id: ThroughEntityFrameworkCore``2(IStream{``0},System.String,IStream{``1},BulkLoadMode,System.Int32)
@@ -607,20 +607,20 @@ references:
   name: String
   nameWithType: String
   fullName: System.String
-- uid: IStream{{TRes}}
-  commentId: '!:IStream{``1}'
-  definition: IStream`1
-  name: IStream<TRes>
-  nameWithType: IStream<TRes>
-  fullName: IStream<TRes>
-  nameWithType.vb: IStream(Of TRes)
-  fullName.vb: IStream(Of TRes)
-  name.vb: IStream(Of TRes)
+- uid: ISingleStream{{TRes}}
+  commentId: '!:ISingleStream{``1}'
+  definition: ISingleStream`1
+  name: ISingleStream<TRes>
+  nameWithType: ISingleStream<TRes>
+  fullName: ISingleStream<TRes>
+  nameWithType.vb: ISingleStream(Of TRes)
+  fullName.vb: ISingleStream(Of TRes)
+  name.vb: ISingleStream(Of TRes)
   spec.csharp:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: <
     nameWithType: <
@@ -632,10 +632,10 @@ references:
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
@@ -816,6 +816,44 @@ references:
   - name: )
     nameWithType: )
     fullName: )
+- uid: ISingleStream`1
+  isExternal: true
+  name: ISingleStream<>
+  nameWithType: ISingleStream<>
+  fullName: ISingleStream<>
+  nameWithType.vb: ISingleStream(Of )
+  fullName.vb: ISingleStream(Of )
+  name.vb: ISingleStream(Of )
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
 - uid: System.Func`3
   commentId: T:System.Func`3
   isExternal: true
@@ -884,6 +922,45 @@ references:
   name: ThroughEntityFrameworkCore
   nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore
   fullName: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.ThroughEntityFrameworkCore
+- uid: IStream{{TRes}}
+  commentId: '!:IStream{``1}'
+  definition: IStream`1
+  name: IStream<TRes>
+  nameWithType: IStream<TRes>
+  fullName: IStream<TRes>
+  nameWithType.vb: IStream(Of TRes)
+  fullName.vb: IStream(Of TRes)
+  name.vb: IStream(Of TRes)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TRes
+    nameWithType: TRes
+    fullName: TRes
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TRes
+    nameWithType: TRes
+    fullName: TRes
+  - name: )
+    nameWithType: )
+    fullName: )
 - uid: BulkLoadMode
   isExternal: true
   name: BulkLoadMode

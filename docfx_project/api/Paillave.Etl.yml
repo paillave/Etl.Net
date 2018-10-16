@@ -6,11 +6,13 @@ items:
   children:
   - Paillave.Etl.AggregateEx
   - Paillave.Etl.CrossApplyActionEx
+  - Paillave.Etl.CrossApplyEnumerableEx
   - Paillave.Etl.CrossApplyEx
   - Paillave.Etl.CrossApplyFolderFilesEx
   - Paillave.Etl.DistinctEx
-  - Paillave.Etl.EnsuredKeyedEx
-  - Paillave.Etl.EnsuredSortedEx
+  - Paillave.Etl.EnsureKeyedEx
+  - Paillave.Etl.EnsureSingleEx
+  - Paillave.Etl.EnsureSortedEx
   - Paillave.Etl.GetStreamStatisticsEx
   - Paillave.Etl.LeftJoinEx
   - Paillave.Etl.LookupEx
@@ -53,6 +55,11 @@ references:
   name: CrossApplyActionEx
   nameWithType: CrossApplyActionEx
   fullName: Paillave.Etl.CrossApplyActionEx
+- uid: Paillave.Etl.CrossApplyEnumerableEx
+  commentId: T:Paillave.Etl.CrossApplyEnumerableEx
+  name: CrossApplyEnumerableEx
+  nameWithType: CrossApplyEnumerableEx
+  fullName: Paillave.Etl.CrossApplyEnumerableEx
 - uid: Paillave.Etl.CrossApplyFolderFilesEx
   commentId: T:Paillave.Etl.CrossApplyFolderFilesEx
   name: CrossApplyFolderFilesEx
@@ -63,16 +70,21 @@ references:
   name: DistinctEx
   nameWithType: DistinctEx
   fullName: Paillave.Etl.DistinctEx
-- uid: Paillave.Etl.EnsuredKeyedEx
-  commentId: T:Paillave.Etl.EnsuredKeyedEx
-  name: EnsuredKeyedEx
-  nameWithType: EnsuredKeyedEx
-  fullName: Paillave.Etl.EnsuredKeyedEx
-- uid: Paillave.Etl.EnsuredSortedEx
-  commentId: T:Paillave.Etl.EnsuredSortedEx
-  name: EnsuredSortedEx
-  nameWithType: EnsuredSortedEx
-  fullName: Paillave.Etl.EnsuredSortedEx
+- uid: Paillave.Etl.EnsureKeyedEx
+  commentId: T:Paillave.Etl.EnsureKeyedEx
+  name: EnsureKeyedEx
+  nameWithType: EnsureKeyedEx
+  fullName: Paillave.Etl.EnsureKeyedEx
+- uid: Paillave.Etl.EnsureSingleEx
+  commentId: T:Paillave.Etl.EnsureSingleEx
+  name: EnsureSingleEx
+  nameWithType: EnsureSingleEx
+  fullName: Paillave.Etl.EnsureSingleEx
+- uid: Paillave.Etl.EnsureSortedEx
+  commentId: T:Paillave.Etl.EnsureSortedEx
+  name: EnsureSortedEx
+  nameWithType: EnsureSortedEx
+  fullName: Paillave.Etl.EnsureSortedEx
 - uid: Paillave.Etl.GetStreamStatisticsEx
   commentId: T:Paillave.Etl.GetStreamStatisticsEx
   name: GetStreamStatisticsEx

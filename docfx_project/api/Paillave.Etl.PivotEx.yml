@@ -17,7 +17,7 @@ items:
   source:
     id: PivotEx
     path: ''
-    startLine: 481
+    startLine: 602
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -56,7 +56,7 @@ items:
   source:
     id: Pivot
     path: ''
-    startLine: 483
+    startLine: 604
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -106,7 +106,7 @@ items:
   source:
     id: Pivot
     path: ''
-    startLine: 492
+    startLine: 613
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl

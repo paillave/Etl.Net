@@ -60,15 +60,46 @@ references:
   fullName.vb: Paillave.Etl.CrossApplyActionEx.CrossApplyAction(Of TIn, TOut)(IStream(Of TIn), System.String, System.Action(Of TIn, System.Action(Of TOut)), System.Boolean)
   nameWithType: CrossApplyActionEx.CrossApplyAction<TIn, TOut>(IStream<TIn>, String, Action<TIn, Action<TOut>>, Boolean)
   nameWithType.vb: CrossApplyActionEx.CrossApplyAction(Of TIn, TOut)(IStream(Of TIn), String, Action(Of TIn, Action(Of TOut)), Boolean)
-- uid: Paillave.Etl.CrossApplyActionEx.CrossApplyAction``3(IStream{``0},System.String,IStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
-  name: CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, String, IStream<TIn2>, Action<TIn1, TIn2, Action<TOut>>, Boolean)
-  href: api/Paillave.Etl.CrossApplyActionEx.html#Paillave_Etl_CrossApplyActionEx_CrossApplyAction__3_IStream___0__System_String_IStream___1__System_Action___0___1_System_Action___2___System_Boolean_
-  commentId: M:Paillave.Etl.CrossApplyActionEx.CrossApplyAction``3(IStream{``0},System.String,IStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
-  name.vb: CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, IStream(Of TIn2), Action(Of TIn1, TIn2, Action(Of TOut)), Boolean)
-  fullName: Paillave.Etl.CrossApplyActionEx.CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, IStream<TIn2>, System.Action<TIn1, TIn2, System.Action<TOut>>, System.Boolean)
-  fullName.vb: Paillave.Etl.CrossApplyActionEx.CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, IStream(Of TIn2), System.Action(Of TIn1, TIn2, System.Action(Of TOut)), System.Boolean)
-  nameWithType: CrossApplyActionEx.CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, String, IStream<TIn2>, Action<TIn1, TIn2, Action<TOut>>, Boolean)
-  nameWithType.vb: CrossApplyActionEx.CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, IStream(Of TIn2), Action(Of TIn1, TIn2, Action(Of TOut)), Boolean)
+- uid: Paillave.Etl.CrossApplyActionEx.CrossApplyAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
+  name: CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Action<TIn1, TIn2, Action<TOut>>, Boolean)
+  href: api/Paillave.Etl.CrossApplyActionEx.html#Paillave_Etl_CrossApplyActionEx_CrossApplyAction__3_IStream___0__System_String_ISingleStream___1__System_Action___0___1_System_Action___2___System_Boolean_
+  commentId: M:Paillave.Etl.CrossApplyActionEx.CrossApplyAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
+  name.vb: CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Action(Of TIn1, TIn2, Action(Of TOut)), Boolean)
+  fullName: Paillave.Etl.CrossApplyActionEx.CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, ISingleStream<TIn2>, System.Action<TIn1, TIn2, System.Action<TOut>>, System.Boolean)
+  fullName.vb: Paillave.Etl.CrossApplyActionEx.CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, ISingleStream(Of TIn2), System.Action(Of TIn1, TIn2, System.Action(Of TOut)), System.Boolean)
+  nameWithType: CrossApplyActionEx.CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Action<TIn1, TIn2, Action<TOut>>, Boolean)
+  nameWithType.vb: CrossApplyActionEx.CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Action(Of TIn1, TIn2, Action(Of TOut)), Boolean)
+- uid: Paillave.Etl.CrossApplyEnumerableEx
+  name: CrossApplyEnumerableEx
+  href: api/Paillave.Etl.CrossApplyEnumerableEx.html
+  commentId: T:Paillave.Etl.CrossApplyEnumerableEx
+  fullName: Paillave.Etl.CrossApplyEnumerableEx
+  nameWithType: CrossApplyEnumerableEx
+- uid: Paillave.Etl.CrossApplyEnumerableEx.CrossApplyEnumerable*
+  name: CrossApplyEnumerable
+  href: api/Paillave.Etl.CrossApplyEnumerableEx.html#Paillave_Etl_CrossApplyEnumerableEx_CrossApplyEnumerable_
+  commentId: Overload:Paillave.Etl.CrossApplyEnumerableEx.CrossApplyEnumerable
+  isSpec: "True"
+  fullName: Paillave.Etl.CrossApplyEnumerableEx.CrossApplyEnumerable
+  nameWithType: CrossApplyEnumerableEx.CrossApplyEnumerable
+- uid: Paillave.Etl.CrossApplyEnumerableEx.CrossApplyEnumerable``2(IStream{``0},System.String,System.Func{``0,System.Collections.Generic.IEnumerable{``1}},System.Boolean)
+  name: CrossApplyEnumerable<TIn, TOut>(IStream<TIn>, String, Func<TIn, IEnumerable<TOut>>, Boolean)
+  href: api/Paillave.Etl.CrossApplyEnumerableEx.html#Paillave_Etl_CrossApplyEnumerableEx_CrossApplyEnumerable__2_IStream___0__System_String_System_Func___0_System_Collections_Generic_IEnumerable___1___System_Boolean_
+  commentId: M:Paillave.Etl.CrossApplyEnumerableEx.CrossApplyEnumerable``2(IStream{``0},System.String,System.Func{``0,System.Collections.Generic.IEnumerable{``1}},System.Boolean)
+  name.vb: CrossApplyEnumerable(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, IEnumerable(Of TOut)), Boolean)
+  fullName: Paillave.Etl.CrossApplyEnumerableEx.CrossApplyEnumerable<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.Collections.Generic.IEnumerable<TOut>>, System.Boolean)
+  fullName.vb: Paillave.Etl.CrossApplyEnumerableEx.CrossApplyEnumerable(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.Collections.Generic.IEnumerable(Of TOut)), System.Boolean)
+  nameWithType: CrossApplyEnumerableEx.CrossApplyEnumerable<TIn, TOut>(IStream<TIn>, String, Func<TIn, IEnumerable<TOut>>, Boolean)
+  nameWithType.vb: CrossApplyEnumerableEx.CrossApplyEnumerable(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, IEnumerable(Of TOut)), Boolean)
+- uid: Paillave.Etl.CrossApplyEnumerableEx.CrossApplyEnumerable``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Collections.Generic.IEnumerable{``2}},System.Boolean)
+  name: CrossApplyEnumerable<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, IEnumerable<TOut>>, Boolean)
+  href: api/Paillave.Etl.CrossApplyEnumerableEx.html#Paillave_Etl_CrossApplyEnumerableEx_CrossApplyEnumerable__3_IStream___0__System_String_ISingleStream___1__System_Func___0___1_System_Collections_Generic_IEnumerable___2___System_Boolean_
+  commentId: M:Paillave.Etl.CrossApplyEnumerableEx.CrossApplyEnumerable``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Collections.Generic.IEnumerable{``2}},System.Boolean)
+  name.vb: CrossApplyEnumerable(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, IEnumerable(Of TOut)), Boolean)
+  fullName: Paillave.Etl.CrossApplyEnumerableEx.CrossApplyEnumerable<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, ISingleStream<TIn2>, System.Func<TIn1, TIn2, System.Collections.Generic.IEnumerable<TOut>>, System.Boolean)
+  fullName.vb: Paillave.Etl.CrossApplyEnumerableEx.CrossApplyEnumerable(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, ISingleStream(Of TIn2), System.Func(Of TIn1, TIn2, System.Collections.Generic.IEnumerable(Of TOut)), System.Boolean)
+  nameWithType: CrossApplyEnumerableEx.CrossApplyEnumerable<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, IEnumerable<TOut>>, Boolean)
+  nameWithType.vb: CrossApplyEnumerableEx.CrossApplyEnumerable(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, IEnumerable(Of TOut)), Boolean)
 - uid: Paillave.Etl.CrossApplyEx
   name: CrossApplyEx
   href: api/Paillave.Etl.CrossApplyEx.html
@@ -91,15 +122,15 @@ references:
   fullName.vb: Paillave.Etl.CrossApplyEx.CrossApply(Of TIn, TOut)(IStream(Of TIn), System.String, IValuesProvider(Of TIn, TOut))
   nameWithType: CrossApplyEx.CrossApply<TIn, TOut>(IStream<TIn>, String, IValuesProvider<TIn, TOut>)
   nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TOut)(IStream(Of TIn), String, IValuesProvider(Of TIn, TOut))
-- uid: Paillave.Etl.CrossApplyEx.CrossApply``3(IStream{``0},System.String,IStream{``1},IValuesProvider{``0,``1,``2})
-  name: CrossApply<TIn, TRes, TOut>(IStream<TIn>, String, IStream<TRes>, IValuesProvider<TIn, TRes, TOut>)
-  href: api/Paillave.Etl.CrossApplyEx.html#Paillave_Etl_CrossApplyEx_CrossApply__3_IStream___0__System_String_IStream___1__IValuesProvider___0___1___2__
-  commentId: M:Paillave.Etl.CrossApplyEx.CrossApply``3(IStream{``0},System.String,IStream{``1},IValuesProvider{``0,``1,``2})
-  name.vb: CrossApply(Of TIn, TRes, TOut)(IStream(Of TIn), String, IStream(Of TRes), IValuesProvider(Of TIn, TRes, TOut))
-  fullName: Paillave.Etl.CrossApplyEx.CrossApply<TIn, TRes, TOut>(IStream<TIn>, System.String, IStream<TRes>, IValuesProvider<TIn, TRes, TOut>)
-  fullName.vb: Paillave.Etl.CrossApplyEx.CrossApply(Of TIn, TRes, TOut)(IStream(Of TIn), System.String, IStream(Of TRes), IValuesProvider(Of TIn, TRes, TOut))
-  nameWithType: CrossApplyEx.CrossApply<TIn, TRes, TOut>(IStream<TIn>, String, IStream<TRes>, IValuesProvider<TIn, TRes, TOut>)
-  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TRes, TOut)(IStream(Of TIn), String, IStream(Of TRes), IValuesProvider(Of TIn, TRes, TOut))
+- uid: Paillave.Etl.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``0,``1,``2})
+  name: CrossApply<TIn, TRes, TOut>(IStream<TIn>, String, ISingleStream<TRes>, IValuesProvider<TIn, TRes, TOut>)
+  href: api/Paillave.Etl.CrossApplyEx.html#Paillave_Etl_CrossApplyEx_CrossApply__3_IStream___0__System_String_ISingleStream___1__IValuesProvider___0___1___2__
+  commentId: M:Paillave.Etl.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``0,``1,``2})
+  name.vb: CrossApply(Of TIn, TRes, TOut)(IStream(Of TIn), String, ISingleStream(Of TRes), IValuesProvider(Of TIn, TRes, TOut))
+  fullName: Paillave.Etl.CrossApplyEx.CrossApply<TIn, TRes, TOut>(IStream<TIn>, System.String, ISingleStream<TRes>, IValuesProvider<TIn, TRes, TOut>)
+  fullName.vb: Paillave.Etl.CrossApplyEx.CrossApply(Of TIn, TRes, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TRes), IValuesProvider(Of TIn, TRes, TOut))
+  nameWithType: CrossApplyEx.CrossApply<TIn, TRes, TOut>(IStream<TIn>, String, ISingleStream<TRes>, IValuesProvider<TIn, TRes, TOut>)
+  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TRes, TOut)(IStream(Of TIn), String, ISingleStream(Of TRes), IValuesProvider(Of TIn, TRes, TOut))
 - uid: Paillave.Etl.CrossApplyEx.CrossApply``4(IStream{``0},System.String,IValuesProvider{``1,``2},System.Func{``0,``1},System.Func{``2,``0,``3})
   name: CrossApply<TIn, TValueIn, TValueOut, TOut>(IStream<TIn>, String, IValuesProvider<TValueIn, TValueOut>, Func<TIn, TValueIn>, Func<TValueOut, TIn, TOut>)
   href: api/Paillave.Etl.CrossApplyEx.html#Paillave_Etl_CrossApplyEx_CrossApply__4_IStream___0__System_String_IValuesProvider___1___2__System_Func___0___1__System_Func___2___0___3__
@@ -109,15 +140,15 @@ references:
   fullName.vb: Paillave.Etl.CrossApplyEx.CrossApply(Of TIn, TValueIn, TValueOut, TOut)(IStream(Of TIn), System.String, IValuesProvider(Of TValueIn, TValueOut), System.Func(Of TIn, TValueIn), System.Func(Of TValueOut, TIn, TOut))
   nameWithType: CrossApplyEx.CrossApply<TIn, TValueIn, TValueOut, TOut>(IStream<TIn>, String, IValuesProvider<TValueIn, TValueOut>, Func<TIn, TValueIn>, Func<TValueOut, TIn, TOut>)
   nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, IValuesProvider(Of TValueIn, TValueOut), Func(Of TIn, TValueIn), Func(Of TValueOut, TIn, TOut))
-- uid: Paillave.Etl.CrossApplyEx.CrossApply``5(IStream{``0},System.String,IStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
-  name: CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(IStream<TIn>, String, IStream<TRes>, IValuesProvider<TValueIn, TRes, TValueOut>, Func<TIn, TRes, TValueIn>, Func<TValueOut, TIn, TRes, TOut>)
-  href: api/Paillave.Etl.CrossApplyEx.html#Paillave_Etl_CrossApplyEx_CrossApply__5_IStream___0__System_String_IStream___1__IValuesProvider___2___1___3__System_Func___0___1___2__System_Func___3___0___1___4__
-  commentId: M:Paillave.Etl.CrossApplyEx.CrossApply``5(IStream{``0},System.String,IStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
-  name.vb: CrossApply(Of TIn, TRes, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, IStream(Of TRes), IValuesProvider(Of TValueIn, TRes, TValueOut), Func(Of TIn, TRes, TValueIn), Func(Of TValueOut, TIn, TRes, TOut))
-  fullName: Paillave.Etl.CrossApplyEx.CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(IStream<TIn>, System.String, IStream<TRes>, IValuesProvider<TValueIn, TRes, TValueOut>, System.Func<TIn, TRes, TValueIn>, System.Func<TValueOut, TIn, TRes, TOut>)
-  fullName.vb: Paillave.Etl.CrossApplyEx.CrossApply(Of TIn, TRes, TValueIn, TValueOut, TOut)(IStream(Of TIn), System.String, IStream(Of TRes), IValuesProvider(Of TValueIn, TRes, TValueOut), System.Func(Of TIn, TRes, TValueIn), System.Func(Of TValueOut, TIn, TRes, TOut))
-  nameWithType: CrossApplyEx.CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(IStream<TIn>, String, IStream<TRes>, IValuesProvider<TValueIn, TRes, TValueOut>, Func<TIn, TRes, TValueIn>, Func<TValueOut, TIn, TRes, TOut>)
-  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TRes, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, IStream(Of TRes), IValuesProvider(Of TValueIn, TRes, TValueOut), Func(Of TIn, TRes, TValueIn), Func(Of TValueOut, TIn, TRes, TOut))
+- uid: Paillave.Etl.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
+  name: CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(IStream<TIn>, String, ISingleStream<TRes>, IValuesProvider<TValueIn, TRes, TValueOut>, Func<TIn, TRes, TValueIn>, Func<TValueOut, TIn, TRes, TOut>)
+  href: api/Paillave.Etl.CrossApplyEx.html#Paillave_Etl_CrossApplyEx_CrossApply__5_IStream___0__System_String_ISingleStream___1__IValuesProvider___2___1___3__System_Func___0___1___2__System_Func___3___0___1___4__
+  commentId: M:Paillave.Etl.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
+  name.vb: CrossApply(Of TIn, TRes, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, ISingleStream(Of TRes), IValuesProvider(Of TValueIn, TRes, TValueOut), Func(Of TIn, TRes, TValueIn), Func(Of TValueOut, TIn, TRes, TOut))
+  fullName: Paillave.Etl.CrossApplyEx.CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(IStream<TIn>, System.String, ISingleStream<TRes>, IValuesProvider<TValueIn, TRes, TValueOut>, System.Func<TIn, TRes, TValueIn>, System.Func<TValueOut, TIn, TRes, TOut>)
+  fullName.vb: Paillave.Etl.CrossApplyEx.CrossApply(Of TIn, TRes, TValueIn, TValueOut, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TRes), IValuesProvider(Of TValueIn, TRes, TValueOut), System.Func(Of TIn, TRes, TValueIn), System.Func(Of TValueOut, TIn, TRes, TOut))
+  nameWithType: CrossApplyEx.CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(IStream<TIn>, String, ISingleStream<TRes>, IValuesProvider<TValueIn, TRes, TValueOut>, Func<TIn, TRes, TValueIn>, Func<TValueOut, TIn, TRes, TOut>)
+  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TRes, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, ISingleStream(Of TRes), IValuesProvider(Of TValueIn, TRes, TValueOut), Func(Of TIn, TRes, TValueIn), Func(Of TValueOut, TIn, TRes, TOut))
 - uid: Paillave.Etl.CrossApplyFolderFilesEx
   name: CrossApplyFolderFilesEx
   href: api/Paillave.Etl.CrossApplyFolderFilesEx.html
@@ -216,68 +247,90 @@ references:
   fullName.vb: Paillave.Etl.DistinctEx.Distinct(Of TIn, TKey)(IStream(Of TIn), System.String, System.Func(Of TIn, TKey))
   nameWithType: DistinctEx.Distinct<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>)
   nameWithType.vb: DistinctEx.Distinct(Of TIn, TKey)(IStream(Of TIn), String, Func(Of TIn, TKey))
-- uid: Paillave.Etl.EnsuredKeyedEx
-  name: EnsuredKeyedEx
-  href: api/Paillave.Etl.EnsuredKeyedEx.html
-  commentId: T:Paillave.Etl.EnsuredKeyedEx
-  fullName: Paillave.Etl.EnsuredKeyedEx
-  nameWithType: EnsuredKeyedEx
-- uid: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed*
+- uid: Paillave.Etl.EnsureKeyedEx
+  name: EnsureKeyedEx
+  href: api/Paillave.Etl.EnsureKeyedEx.html
+  commentId: T:Paillave.Etl.EnsureKeyedEx
+  fullName: Paillave.Etl.EnsureKeyedEx
+  nameWithType: EnsureKeyedEx
+- uid: Paillave.Etl.EnsureKeyedEx.EnsureKeyed*
   name: EnsureKeyed
-  href: api/Paillave.Etl.EnsuredKeyedEx.html#Paillave_Etl_EnsuredKeyedEx_EnsureKeyed_
-  commentId: Overload:Paillave.Etl.EnsuredKeyedEx.EnsureKeyed
+  href: api/Paillave.Etl.EnsureKeyedEx.html#Paillave_Etl_EnsureKeyedEx_EnsureKeyed_
+  commentId: Overload:Paillave.Etl.EnsureKeyedEx.EnsureKeyed
   isSpec: "True"
-  fullName: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed
-  nameWithType: EnsuredKeyedEx.EnsureKeyed
-- uid: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed``2(IStream{``0},System.String,SortDefinition{``0,``1})
+  fullName: Paillave.Etl.EnsureKeyedEx.EnsureKeyed
+  nameWithType: EnsureKeyedEx.EnsureKeyed
+- uid: Paillave.Etl.EnsureKeyedEx.EnsureKeyed``2(IStream{``0},System.String,SortDefinition{``0,``1})
   name: EnsureKeyed<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)
-  href: api/Paillave.Etl.EnsuredKeyedEx.html#Paillave_Etl_EnsuredKeyedEx_EnsureKeyed__2_IStream___0__System_String_SortDefinition___0___1__
-  commentId: M:Paillave.Etl.EnsuredKeyedEx.EnsureKeyed``2(IStream{``0},System.String,SortDefinition{``0,``1})
+  href: api/Paillave.Etl.EnsureKeyedEx.html#Paillave_Etl_EnsureKeyedEx_EnsureKeyed__2_IStream___0__System_String_SortDefinition___0___1__
+  commentId: M:Paillave.Etl.EnsureKeyedEx.EnsureKeyed``2(IStream{``0},System.String,SortDefinition{``0,``1})
   name.vb: EnsureKeyed(Of TIn, TKey)(IStream(Of TIn), String, SortDefinition(Of TIn, TKey))
-  fullName: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed<TIn, TKey>(IStream<TIn>, System.String, SortDefinition<TIn, TKey>)
-  fullName.vb: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed(Of TIn, TKey)(IStream(Of TIn), System.String, SortDefinition(Of TIn, TKey))
-  nameWithType: EnsuredKeyedEx.EnsureKeyed<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)
-  nameWithType.vb: EnsuredKeyedEx.EnsureKeyed(Of TIn, TKey)(IStream(Of TIn), String, SortDefinition(Of TIn, TKey))
-- uid: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
+  fullName: Paillave.Etl.EnsureKeyedEx.EnsureKeyed<TIn, TKey>(IStream<TIn>, System.String, SortDefinition<TIn, TKey>)
+  fullName.vb: Paillave.Etl.EnsureKeyedEx.EnsureKeyed(Of TIn, TKey)(IStream(Of TIn), System.String, SortDefinition(Of TIn, TKey))
+  nameWithType: EnsureKeyedEx.EnsureKeyed<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)
+  nameWithType.vb: EnsureKeyedEx.EnsureKeyed(Of TIn, TKey)(IStream(Of TIn), String, SortDefinition(Of TIn, TKey))
+- uid: Paillave.Etl.EnsureKeyedEx.EnsureKeyed``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
   name: EnsureKeyed<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)
-  href: api/Paillave.Etl.EnsuredKeyedEx.html#Paillave_Etl_EnsuredKeyedEx_EnsureKeyed__2_IStream___0__System_String_System_Func___0___1__System_Object_
-  commentId: M:Paillave.Etl.EnsuredKeyedEx.EnsureKeyed``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
+  href: api/Paillave.Etl.EnsureKeyedEx.html#Paillave_Etl_EnsureKeyedEx_EnsureKeyed__2_IStream___0__System_String_System_Func___0___1__System_Object_
+  commentId: M:Paillave.Etl.EnsureKeyedEx.EnsureKeyed``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
   name.vb: EnsureKeyed(Of TIn, TKey)(IStream(Of TIn), String, Func(Of TIn, TKey), Object)
-  fullName: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed<TIn, TKey>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Object)
-  fullName.vb: Paillave.Etl.EnsuredKeyedEx.EnsureKeyed(Of TIn, TKey)(IStream(Of TIn), System.String, System.Func(Of TIn, TKey), System.Object)
-  nameWithType: EnsuredKeyedEx.EnsureKeyed<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)
-  nameWithType.vb: EnsuredKeyedEx.EnsureKeyed(Of TIn, TKey)(IStream(Of TIn), String, Func(Of TIn, TKey), Object)
-- uid: Paillave.Etl.EnsuredSortedEx
-  name: EnsuredSortedEx
-  href: api/Paillave.Etl.EnsuredSortedEx.html
-  commentId: T:Paillave.Etl.EnsuredSortedEx
-  fullName: Paillave.Etl.EnsuredSortedEx
-  nameWithType: EnsuredSortedEx
-- uid: Paillave.Etl.EnsuredSortedEx.EnsureSorted*
-  name: EnsureSorted
-  href: api/Paillave.Etl.EnsuredSortedEx.html#Paillave_Etl_EnsuredSortedEx_EnsureSorted_
-  commentId: Overload:Paillave.Etl.EnsuredSortedEx.EnsureSorted
+  fullName: Paillave.Etl.EnsureKeyedEx.EnsureKeyed<TIn, TKey>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Object)
+  fullName.vb: Paillave.Etl.EnsureKeyedEx.EnsureKeyed(Of TIn, TKey)(IStream(Of TIn), System.String, System.Func(Of TIn, TKey), System.Object)
+  nameWithType: EnsureKeyedEx.EnsureKeyed<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)
+  nameWithType.vb: EnsureKeyedEx.EnsureKeyed(Of TIn, TKey)(IStream(Of TIn), String, Func(Of TIn, TKey), Object)
+- uid: Paillave.Etl.EnsureSingleEx
+  name: EnsureSingleEx
+  href: api/Paillave.Etl.EnsureSingleEx.html
+  commentId: T:Paillave.Etl.EnsureSingleEx
+  fullName: Paillave.Etl.EnsureSingleEx
+  nameWithType: EnsureSingleEx
+- uid: Paillave.Etl.EnsureSingleEx.EnsureSingle*
+  name: EnsureSingle
+  href: api/Paillave.Etl.EnsureSingleEx.html#Paillave_Etl_EnsureSingleEx_EnsureSingle_
+  commentId: Overload:Paillave.Etl.EnsureSingleEx.EnsureSingle
   isSpec: "True"
-  fullName: Paillave.Etl.EnsuredSortedEx.EnsureSorted
-  nameWithType: EnsuredSortedEx.EnsureSorted
-- uid: Paillave.Etl.EnsuredSortedEx.EnsureSorted``2(IStream{``0},System.String,SortDefinition{``0,``1})
+  fullName: Paillave.Etl.EnsureSingleEx.EnsureSingle
+  nameWithType: EnsureSingleEx.EnsureSingle
+- uid: Paillave.Etl.EnsureSingleEx.EnsureSingle``1(IStream{``0},System.String,System.Object)
+  name: EnsureSingle<TIn>(IStream<TIn>, String, Object)
+  href: api/Paillave.Etl.EnsureSingleEx.html#Paillave_Etl_EnsureSingleEx_EnsureSingle__1_IStream___0__System_String_System_Object_
+  commentId: M:Paillave.Etl.EnsureSingleEx.EnsureSingle``1(IStream{``0},System.String,System.Object)
+  name.vb: EnsureSingle(Of TIn)(IStream(Of TIn), String, Object)
+  fullName: Paillave.Etl.EnsureSingleEx.EnsureSingle<TIn>(IStream<TIn>, System.String, System.Object)
+  fullName.vb: Paillave.Etl.EnsureSingleEx.EnsureSingle(Of TIn)(IStream(Of TIn), System.String, System.Object)
+  nameWithType: EnsureSingleEx.EnsureSingle<TIn>(IStream<TIn>, String, Object)
+  nameWithType.vb: EnsureSingleEx.EnsureSingle(Of TIn)(IStream(Of TIn), String, Object)
+- uid: Paillave.Etl.EnsureSortedEx
+  name: EnsureSortedEx
+  href: api/Paillave.Etl.EnsureSortedEx.html
+  commentId: T:Paillave.Etl.EnsureSortedEx
+  fullName: Paillave.Etl.EnsureSortedEx
+  nameWithType: EnsureSortedEx
+- uid: Paillave.Etl.EnsureSortedEx.EnsureSorted*
+  name: EnsureSorted
+  href: api/Paillave.Etl.EnsureSortedEx.html#Paillave_Etl_EnsureSortedEx_EnsureSorted_
+  commentId: Overload:Paillave.Etl.EnsureSortedEx.EnsureSorted
+  isSpec: "True"
+  fullName: Paillave.Etl.EnsureSortedEx.EnsureSorted
+  nameWithType: EnsureSortedEx.EnsureSorted
+- uid: Paillave.Etl.EnsureSortedEx.EnsureSorted``2(IStream{``0},System.String,SortDefinition{``0,``1})
   name: EnsureSorted<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)
-  href: api/Paillave.Etl.EnsuredSortedEx.html#Paillave_Etl_EnsuredSortedEx_EnsureSorted__2_IStream___0__System_String_SortDefinition___0___1__
-  commentId: M:Paillave.Etl.EnsuredSortedEx.EnsureSorted``2(IStream{``0},System.String,SortDefinition{``0,``1})
+  href: api/Paillave.Etl.EnsureSortedEx.html#Paillave_Etl_EnsureSortedEx_EnsureSorted__2_IStream___0__System_String_SortDefinition___0___1__
+  commentId: M:Paillave.Etl.EnsureSortedEx.EnsureSorted``2(IStream{``0},System.String,SortDefinition{``0,``1})
   name.vb: EnsureSorted(Of TIn, TKey)(IStream(Of TIn), String, SortDefinition(Of TIn, TKey))
-  fullName: Paillave.Etl.EnsuredSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, System.String, SortDefinition<TIn, TKey>)
-  fullName.vb: Paillave.Etl.EnsuredSortedEx.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), System.String, SortDefinition(Of TIn, TKey))
-  nameWithType: EnsuredSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)
-  nameWithType.vb: EnsuredSortedEx.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), String, SortDefinition(Of TIn, TKey))
-- uid: Paillave.Etl.EnsuredSortedEx.EnsureSorted``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
+  fullName: Paillave.Etl.EnsureSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, System.String, SortDefinition<TIn, TKey>)
+  fullName.vb: Paillave.Etl.EnsureSortedEx.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), System.String, SortDefinition(Of TIn, TKey))
+  nameWithType: EnsureSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)
+  nameWithType.vb: EnsureSortedEx.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), String, SortDefinition(Of TIn, TKey))
+- uid: Paillave.Etl.EnsureSortedEx.EnsureSorted``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
   name: EnsureSorted<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)
-  href: api/Paillave.Etl.EnsuredSortedEx.html#Paillave_Etl_EnsuredSortedEx_EnsureSorted__2_IStream___0__System_String_System_Func___0___1__System_Object_
-  commentId: M:Paillave.Etl.EnsuredSortedEx.EnsureSorted``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
+  href: api/Paillave.Etl.EnsureSortedEx.html#Paillave_Etl_EnsureSortedEx_EnsureSorted__2_IStream___0__System_String_System_Func___0___1__System_Object_
+  commentId: M:Paillave.Etl.EnsureSortedEx.EnsureSorted``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
   name.vb: EnsureSorted(Of TIn, TKey)(IStream(Of TIn), String, Func(Of TIn, TKey), Object)
-  fullName: Paillave.Etl.EnsuredSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Object)
-  fullName.vb: Paillave.Etl.EnsuredSortedEx.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), System.String, System.Func(Of TIn, TKey), System.Object)
-  nameWithType: EnsuredSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)
-  nameWithType.vb: EnsuredSortedEx.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), String, Func(Of TIn, TKey), Object)
+  fullName: Paillave.Etl.EnsureSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Object)
+  fullName.vb: Paillave.Etl.EnsureSortedEx.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), System.String, System.Func(Of TIn, TKey), System.Object)
+  nameWithType: EnsureSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)
+  nameWithType.vb: EnsureSortedEx.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), String, Func(Of TIn, TKey), Object)
 - uid: Paillave.Etl.EntityFrameworkCore
   name: Paillave.Etl.EntityFrameworkCore
   href: apiext/Paillave.Etl.EntityFrameworkCore.html
@@ -297,15 +350,15 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery
   nameWithType: EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery
-- uid: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,IQueryable{``2}},System.Boolean)
-  name: CrossApplyEntityFrameworkCoreQuery<TIn, TRes, TOut>(IStream<TIn>, String, IStream<TRes>, Func<TIn, TRes, IQueryable<TOut>>, Boolean)
-  href: apiext/Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_EntityFrameworkCoreEx_CrossApplyEntityFrameworkCoreQuery__3_IStream___0__System_String_IStream___1__System_Func___0___1_IQueryable___2___System_Boolean_
-  commentId: M:Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,IQueryable{``2}},System.Boolean)
-  name.vb: CrossApplyEntityFrameworkCoreQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, IStream(Of TRes), Func(Of TIn, TRes, IQueryable(Of TOut)), Boolean)
-  fullName: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery<TIn, TRes, TOut>(IStream<TIn>, System.String, IStream<TRes>, System.Func<TIn, TRes, IQueryable<TOut>>, System.Boolean)
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery(Of TIn, TRes, TOut)(IStream(Of TIn), System.String, IStream(Of TRes), System.Func(Of TIn, TRes, IQueryable(Of TOut)), System.Boolean)
-  nameWithType: EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery<TIn, TRes, TOut>(IStream<TIn>, String, IStream<TRes>, Func<TIn, TRes, IQueryable<TOut>>, Boolean)
-  nameWithType.vb: EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, IStream(Of TRes), Func(Of TIn, TRes, IQueryable(Of TOut)), Boolean)
+- uid: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,IQueryable{``2}},System.Boolean)
+  name: CrossApplyEntityFrameworkCoreQuery<TIn, TRes, TOut>(IStream<TIn>, String, ISingleStream<TRes>, Func<TIn, TRes, IQueryable<TOut>>, Boolean)
+  href: apiext/Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_EntityFrameworkCoreEx_CrossApplyEntityFrameworkCoreQuery__3_IStream___0__System_String_ISingleStream___1__System_Func___0___1_IQueryable___2___System_Boolean_
+  commentId: M:Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,IQueryable{``2}},System.Boolean)
+  name.vb: CrossApplyEntityFrameworkCoreQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, ISingleStream(Of TRes), Func(Of TIn, TRes, IQueryable(Of TOut)), Boolean)
+  fullName: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery<TIn, TRes, TOut>(IStream<TIn>, System.String, ISingleStream<TRes>, System.Func<TIn, TRes, IQueryable<TOut>>, System.Boolean)
+  fullName.vb: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery(Of TIn, TRes, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TRes), System.Func(Of TIn, TRes, IQueryable(Of TOut)), System.Boolean)
+  nameWithType: EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery<TIn, TRes, TOut>(IStream<TIn>, String, ISingleStream<TRes>, Func<TIn, TRes, IQueryable<TOut>>, Boolean)
+  nameWithType.vb: EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, ISingleStream(Of TRes), Func(Of TIn, TRes, IQueryable(Of TOut)), Boolean)
 - uid: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*
   name: ThroughEntityFrameworkCore
   href: apiext/Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_EntityFrameworkCoreEx_ThroughEntityFrameworkCore_
@@ -509,15 +562,15 @@ references:
   commentId: T:Paillave.Etl.Ftp.FtpEx
   fullName: Paillave.Etl.Ftp.FtpEx
   nameWithType: FtpEx
-- uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,IStream{FtpConnectionInfo})
-  name: CrossApplyFtpFiles(IStream<String>, String, IStream<FtpConnectionInfo>)
-  href: apiext/Paillave.Etl.Ftp.FtpEx.html#Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles_IStream_System_String__System_String_IStream_FtpConnectionInfo__
-  commentId: M:Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,IStream{FtpConnectionInfo})
-  name.vb: CrossApplyFtpFiles(IStream(Of String), String, IStream(Of FtpConnectionInfo))
-  fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream<System.String>, System.String, IStream<FtpConnectionInfo>)
-  fullName.vb: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream(Of System.String), System.String, IStream(Of FtpConnectionInfo))
-  nameWithType: FtpEx.CrossApplyFtpFiles(IStream<String>, String, IStream<FtpConnectionInfo>)
-  nameWithType.vb: FtpEx.CrossApplyFtpFiles(IStream(Of String), String, IStream(Of FtpConnectionInfo))
+- uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo})
+  name: CrossApplyFtpFiles(IStream<String>, String, ISingleStream<FtpConnectionInfo>)
+  href: apiext/Paillave.Etl.Ftp.FtpEx.html#Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles_IStream_System_String__System_String_ISingleStream_FtpConnectionInfo__
+  commentId: M:Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo})
+  name.vb: CrossApplyFtpFiles(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo))
+  fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream<System.String>, System.String, ISingleStream<FtpConnectionInfo>)
+  fullName.vb: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream(Of System.String), System.String, ISingleStream(Of FtpConnectionInfo))
+  nameWithType: FtpEx.CrossApplyFtpFiles(IStream<String>, String, ISingleStream<FtpConnectionInfo>)
+  nameWithType.vb: FtpEx.CrossApplyFtpFiles(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo))
 - uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles*
   name: CrossApplyFtpFiles
   href: apiext/Paillave.Etl.Ftp.FtpEx.html#Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles_
@@ -525,33 +578,33 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles
   nameWithType: FtpEx.CrossApplyFtpFiles
-- uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,IStream{FtpConnectionInfo},System.Func{``0,System.String})
-  name: CrossApplyFtpFiles<TIn>(IStream<TIn>, String, IStream<FtpConnectionInfo>, Func<TIn, String>)
-  href: apiext/Paillave.Etl.Ftp.FtpEx.html#Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles__1_IStream___0__System_String_IStream_FtpConnectionInfo__System_Func___0_System_String__
-  commentId: M:Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,IStream{FtpConnectionInfo},System.Func{``0,System.String})
-  name.vb: CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), String, IStream(Of FtpConnectionInfo), Func(Of TIn, String))
-  fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles<TIn>(IStream<TIn>, System.String, IStream<FtpConnectionInfo>, System.Func<TIn, System.String>)
-  fullName.vb: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), System.String, IStream(Of FtpConnectionInfo), System.Func(Of TIn, System.String))
-  nameWithType: FtpEx.CrossApplyFtpFiles<TIn>(IStream<TIn>, String, IStream<FtpConnectionInfo>, Func<TIn, String>)
-  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), String, IStream(Of FtpConnectionInfo), Func(Of TIn, String))
-- uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,IStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
-  name: CrossApplyFtpFiles<TOut>(IStream<String>, String, IStream<FtpConnectionInfo>, Func<FtpFilesValue, String, FtpConnectionInfo, TOut>)
-  href: apiext/Paillave.Etl.Ftp.FtpEx.html#Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles__1_IStream_System_String__System_String_IStream_FtpConnectionInfo__System_Func_FtpFilesValue_System_String_FtpConnectionInfo___0__
-  commentId: M:Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,IStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
-  name.vb: CrossApplyFtpFiles(Of TOut)(IStream(Of String), String, IStream(Of FtpConnectionInfo), Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut))
-  fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles<TOut>(IStream<System.String>, System.String, IStream<FtpConnectionInfo>, System.Func<FtpFilesValue, System.String, FtpConnectionInfo, TOut>)
-  fullName.vb: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(Of TOut)(IStream(Of System.String), System.String, IStream(Of FtpConnectionInfo), System.Func(Of FtpFilesValue, System.String, FtpConnectionInfo, TOut))
-  nameWithType: FtpEx.CrossApplyFtpFiles<TOut>(IStream<String>, String, IStream<FtpConnectionInfo>, Func<FtpFilesValue, String, FtpConnectionInfo, TOut>)
-  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TOut)(IStream(Of String), String, IStream(Of FtpConnectionInfo), Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut))
-- uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,IStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
-  name: CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, String, IStream<FtpConnectionInfo>, Func<TIn, String>, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
-  href: apiext/Paillave.Etl.Ftp.FtpEx.html#Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles__2_IStream___0__System_String_IStream_FtpConnectionInfo__System_Func___0_System_String__System_Func_FtpFilesValue___0_FtpConnectionInfo___1__
-  commentId: M:Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,IStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
-  name.vb: CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), String, IStream(Of FtpConnectionInfo), Func(Of TIn, String), Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
-  fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, System.String, IStream<FtpConnectionInfo>, System.Func<TIn, System.String>, System.Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
-  fullName.vb: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), System.String, IStream(Of FtpConnectionInfo), System.Func(Of TIn, System.String), System.Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
-  nameWithType: FtpEx.CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, String, IStream<FtpConnectionInfo>, Func<TIn, String>, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
-  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), String, IStream(Of FtpConnectionInfo), Func(Of TIn, String), Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
+- uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String})
+  name: CrossApplyFtpFiles<TIn>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>)
+  href: apiext/Paillave.Etl.Ftp.FtpEx.html#Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles__1_IStream___0__System_String_ISingleStream_FtpConnectionInfo__System_Func___0_System_String__
+  commentId: M:Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String})
+  name.vb: CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String))
+  fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles<TIn>(IStream<TIn>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<TIn, System.String>)
+  fullName.vb: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), System.String, ISingleStream(Of FtpConnectionInfo), System.Func(Of TIn, System.String))
+  nameWithType: FtpEx.CrossApplyFtpFiles<TIn>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>)
+  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String))
+- uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
+  name: CrossApplyFtpFiles<TOut>(IStream<String>, String, ISingleStream<FtpConnectionInfo>, Func<FtpFilesValue, String, FtpConnectionInfo, TOut>)
+  href: apiext/Paillave.Etl.Ftp.FtpEx.html#Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles__1_IStream_System_String__System_String_ISingleStream_FtpConnectionInfo__System_Func_FtpFilesValue_System_String_FtpConnectionInfo___0__
+  commentId: M:Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
+  name.vb: CrossApplyFtpFiles(Of TOut)(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo), Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut))
+  fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles<TOut>(IStream<System.String>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<FtpFilesValue, System.String, FtpConnectionInfo, TOut>)
+  fullName.vb: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(Of TOut)(IStream(Of System.String), System.String, ISingleStream(Of FtpConnectionInfo), System.Func(Of FtpFilesValue, System.String, FtpConnectionInfo, TOut))
+  nameWithType: FtpEx.CrossApplyFtpFiles<TOut>(IStream<String>, String, ISingleStream<FtpConnectionInfo>, Func<FtpFilesValue, String, FtpConnectionInfo, TOut>)
+  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TOut)(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo), Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut))
+- uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
+  name: CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
+  href: apiext/Paillave.Etl.Ftp.FtpEx.html#Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles__2_IStream___0__System_String_ISingleStream_FtpConnectionInfo__System_Func___0_System_String__System_Func_FtpFilesValue___0_FtpConnectionInfo___1__
+  commentId: M:Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
+  name.vb: CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String), Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
+  fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<TIn, System.String>, System.Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
+  fullName.vb: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), System.String, ISingleStream(Of FtpConnectionInfo), System.Func(Of TIn, System.String), System.Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
+  nameWithType: FtpEx.CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
+  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String), Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
 - uid: Paillave.Etl.Ftp.FtpEx.ToFtpFile*
   name: ToFtpFile
   href: apiext/Paillave.Etl.Ftp.FtpEx.html#Paillave_Etl_Ftp_FtpEx_ToFtpFile_
@@ -678,6 +731,42 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.SelectEx.Select
   nameWithType: SelectEx.Select
+- uid: Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean)
+  name: Select<TIn, TOut>(ISingleStream<TIn>, String, ISelectProcessor<TIn, TOut>, Boolean)
+  href: api/Paillave.Etl.SelectEx.html#Paillave_Etl_SelectEx_Select__2_ISingleStream___0__System_String_Paillave_Etl_StreamNodes_ISelectProcessor___0___1__System_Boolean_
+  commentId: M:Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean)
+  name.vb: Select(Of TIn, TOut)(ISingleStream(Of TIn), String, ISelectProcessor(Of TIn, TOut), Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, System.String, Paillave.Etl.StreamNodes.ISelectProcessor<TIn, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut)(ISingleStream(Of TIn), System.String, Paillave.Etl.StreamNodes.ISelectProcessor(Of TIn, TOut), System.Boolean)
+  nameWithType: SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, String, ISelectProcessor<TIn, TOut>, Boolean)
+  nameWithType.vb: SelectEx.Select(Of TIn, TOut)(ISingleStream(Of TIn), String, ISelectProcessor(Of TIn, TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{``0,``1},System.Boolean)
+  name: Select<TIn, TOut>(ISingleStream<TIn>, String, ISelectWithIndexProcessor<TIn, TOut>, Boolean)
+  href: api/Paillave.Etl.SelectEx.html#Paillave_Etl_SelectEx_Select__2_ISingleStream___0__System_String_Paillave_Etl_StreamNodes_ISelectWithIndexProcessor___0___1__System_Boolean_
+  commentId: M:Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{``0,``1},System.Boolean)
+  name.vb: Select(Of TIn, TOut)(ISingleStream(Of TIn), String, ISelectWithIndexProcessor(Of TIn, TOut), Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, System.String, Paillave.Etl.StreamNodes.ISelectWithIndexProcessor<TIn, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut)(ISingleStream(Of TIn), System.String, Paillave.Etl.StreamNodes.ISelectWithIndexProcessor(Of TIn, TOut), System.Boolean)
+  nameWithType: SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, String, ISelectWithIndexProcessor<TIn, TOut>, Boolean)
+  nameWithType.vb: SelectEx.Select(Of TIn, TOut)(ISingleStream(Of TIn), String, ISelectWithIndexProcessor(Of TIn, TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,System.Func{``0,``1},System.Boolean)
+  name: Select<TIn, TOut>(ISingleStream<TIn>, String, Func<TIn, TOut>, Boolean)
+  href: api/Paillave.Etl.SelectEx.html#Paillave_Etl_SelectEx_Select__2_ISingleStream___0__System_String_System_Func___0___1__System_Boolean_
+  commentId: M:Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,System.Func{``0,``1},System.Boolean)
+  name.vb: Select(Of TIn, TOut)(ISingleStream(Of TIn), String, Func(Of TIn, TOut), Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, System.String, System.Func<TIn, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut)(ISingleStream(Of TIn), System.String, System.Func(Of TIn, TOut), System.Boolean)
+  nameWithType: SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, String, Func<TIn, TOut>, Boolean)
+  nameWithType.vb: SelectEx.Select(Of TIn, TOut)(ISingleStream(Of TIn), String, Func(Of TIn, TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,System.Func{``0,System.Int32,``1},System.Boolean)
+  name: Select<TIn, TOut>(ISingleStream<TIn>, String, Func<TIn, Int32, TOut>, Boolean)
+  href: api/Paillave.Etl.SelectEx.html#Paillave_Etl_SelectEx_Select__2_ISingleStream___0__System_String_System_Func___0_System_Int32___1__System_Boolean_
+  commentId: M:Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,System.Func{``0,System.Int32,``1},System.Boolean)
+  name.vb: Select(Of TIn, TOut)(ISingleStream(Of TIn), String, Func(Of TIn, Int32, TOut), Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, System.String, System.Func<TIn, System.Int32, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut)(ISingleStream(Of TIn), System.String, System.Func(Of TIn, System.Int32, TOut), System.Boolean)
+  nameWithType: SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, String, Func<TIn, Int32, TOut>, Boolean)
+  nameWithType.vb: SelectEx.Select(Of TIn, TOut)(ISingleStream(Of TIn), String, Func(Of TIn, Int32, TOut), Boolean)
 - uid: Paillave.Etl.SelectEx.Select``2(IStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean)
   name: Select<TIn, TOut>(IStream<TIn>, String, ISelectProcessor<TIn, TOut>, Boolean)
   href: api/Paillave.Etl.SelectEx.html#Paillave_Etl_SelectEx_Select__2_IStream___0__System_String_Paillave_Etl_StreamNodes_ISelectProcessor___0___1__System_Boolean_
@@ -714,6 +803,42 @@ references:
   fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.Int32, TOut), System.Boolean)
   nameWithType: SelectEx.Select<TIn, TOut>(IStream<TIn>, String, Func<TIn, Int32, TOut>, Boolean)
   nameWithType.vb: SelectEx.Select(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, Int32, TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean)
+  name: Select<TIn, TOut, TCtx>(ISingleStream<TIn>, String, TCtx, Func<TIn, TCtx, Action<TCtx>, TOut>, Boolean)
+  href: api/Paillave.Etl.SelectEx.html#Paillave_Etl_SelectEx_Select__3_ISingleStream___0__System_String___2_System_Func___0___2_System_Action___2____1__System_Boolean_
+  commentId: M:Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean)
+  name.vb: Select(Of TIn, TOut, TCtx)(ISingleStream(Of TIn), String, TCtx, Func(Of TIn, TCtx, Action(Of TCtx), TOut), Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn, TOut, TCtx>(ISingleStream<TIn>, System.String, TCtx, System.Func<TIn, TCtx, System.Action<TCtx>, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut, TCtx)(ISingleStream(Of TIn), System.String, TCtx, System.Func(Of TIn, TCtx, System.Action(Of TCtx), TOut), System.Boolean)
+  nameWithType: SelectEx.Select<TIn, TOut, TCtx>(ISingleStream<TIn>, String, TCtx, Func<TIn, TCtx, Action<TCtx>, TOut>, Boolean)
+  nameWithType.vb: SelectEx.Select(Of TIn, TOut, TCtx)(ISingleStream(Of TIn), String, TCtx, Func(Of TIn, TCtx, Action(Of TCtx), TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,``2,System.Func{``0,System.Int32,``2,System.Action{``2},``1},System.Boolean)
+  name: Select<TIn, TOut, TCtx>(ISingleStream<TIn>, String, TCtx, Func<TIn, Int32, TCtx, Action<TCtx>, TOut>, Boolean)
+  href: api/Paillave.Etl.SelectEx.html#Paillave_Etl_SelectEx_Select__3_ISingleStream___0__System_String___2_System_Func___0_System_Int32___2_System_Action___2____1__System_Boolean_
+  commentId: M:Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,``2,System.Func{``0,System.Int32,``2,System.Action{``2},``1},System.Boolean)
+  name.vb: Select(Of TIn, TOut, TCtx)(ISingleStream(Of TIn), String, TCtx, Func(Of TIn, Int32, TCtx, Action(Of TCtx), TOut), Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn, TOut, TCtx>(ISingleStream<TIn>, System.String, TCtx, System.Func<TIn, System.Int32, TCtx, System.Action<TCtx>, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut, TCtx)(ISingleStream(Of TIn), System.String, TCtx, System.Func(Of TIn, System.Int32, TCtx, System.Action(Of TCtx), TOut), System.Boolean)
+  nameWithType: SelectEx.Select<TIn, TOut, TCtx>(ISingleStream<TIn>, String, TCtx, Func<TIn, Int32, TCtx, Action<TCtx>, TOut>, Boolean)
+  nameWithType.vb: SelectEx.Select(Of TIn, TOut, TCtx)(ISingleStream(Of TIn), String, TCtx, Func(Of TIn, Int32, TCtx, Action(Of TCtx), TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  name: Select<TIn1, TIn2, TOut>(ISingleStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, TOut>, Boolean)
+  href: api/Paillave.Etl.SelectEx.html#Paillave_Etl_SelectEx_Select__3_ISingleStream___0__System_String_ISingleStream___1__System_Func___0___1___2__System_Boolean_
+  commentId: M:Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  name.vb: Select(Of TIn1, TIn2, TOut)(ISingleStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, TOut), Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn1, TIn2, TOut>(ISingleStream<TIn1>, System.String, ISingleStream<TIn2>, System.Func<TIn1, TIn2, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn1, TIn2, TOut)(ISingleStream(Of TIn1), System.String, ISingleStream(Of TIn2), System.Func(Of TIn1, TIn2, TOut), System.Boolean)
+  nameWithType: SelectEx.Select<TIn1, TIn2, TOut>(ISingleStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, TOut>, Boolean)
+  nameWithType.vb: SelectEx.Select(Of TIn1, TIn2, TOut)(ISingleStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
+  name: Select<TIn1, TIn2, TOut>(ISingleStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, Int32, TOut>, Boolean)
+  href: api/Paillave.Etl.SelectEx.html#Paillave_Etl_SelectEx_Select__3_ISingleStream___0__System_String_ISingleStream___1__System_Func___0___1_System_Int32___2__System_Boolean_
+  commentId: M:Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
+  name.vb: Select(Of TIn1, TIn2, TOut)(ISingleStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, Int32, TOut), Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn1, TIn2, TOut>(ISingleStream<TIn1>, System.String, ISingleStream<TIn2>, System.Func<TIn1, TIn2, System.Int32, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn1, TIn2, TOut)(ISingleStream(Of TIn1), System.String, ISingleStream(Of TIn2), System.Func(Of TIn1, TIn2, System.Int32, TOut), System.Boolean)
+  nameWithType: SelectEx.Select<TIn1, TIn2, TOut>(ISingleStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, Int32, TOut>, Boolean)
+  nameWithType.vb: SelectEx.Select(Of TIn1, TIn2, TOut)(ISingleStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, Int32, TOut), Boolean)
 - uid: Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean)
   name: Select<TIn, TOut, TCtx>(IStream<TIn>, String, TCtx, Func<TIn, TCtx, Action<TCtx>, TOut>, Boolean)
   href: api/Paillave.Etl.SelectEx.html#Paillave_Etl_SelectEx_Select__3_IStream___0__System_String___2_System_Func___0___2_System_Action___2____1__System_Boolean_
@@ -732,24 +857,24 @@ references:
   fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut, TCtx)(IStream(Of TIn), System.String, TCtx, System.Func(Of TIn, System.Int32, TCtx, System.Action(Of TCtx), TOut), System.Boolean)
   nameWithType: SelectEx.Select<TIn, TOut, TCtx>(IStream<TIn>, String, TCtx, Func<TIn, Int32, TCtx, Action<TCtx>, TOut>, Boolean)
   nameWithType.vb: SelectEx.Select(Of TIn, TOut, TCtx)(IStream(Of TIn), String, TCtx, Func(Of TIn, Int32, TCtx, Action(Of TCtx), TOut), Boolean)
-- uid: Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,``2},System.Boolean)
-  name: Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, IStream<TIn2>, Func<TIn1, TIn2, TOut>, Boolean)
-  href: api/Paillave.Etl.SelectEx.html#Paillave_Etl_SelectEx_Select__3_IStream___0__System_String_IStream___1__System_Func___0___1___2__System_Boolean_
-  commentId: M:Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,``2},System.Boolean)
-  name.vb: Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, IStream(Of TIn2), Func(Of TIn1, TIn2, TOut), Boolean)
-  fullName: Paillave.Etl.SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, IStream<TIn2>, System.Func<TIn1, TIn2, TOut>, System.Boolean)
-  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, IStream(Of TIn2), System.Func(Of TIn1, TIn2, TOut), System.Boolean)
-  nameWithType: SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, IStream<TIn2>, Func<TIn1, TIn2, TOut>, Boolean)
-  nameWithType.vb: SelectEx.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, IStream(Of TIn2), Func(Of TIn1, TIn2, TOut), Boolean)
-- uid: Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
-  name: Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, IStream<TIn2>, Func<TIn1, TIn2, Int32, TOut>, Boolean)
-  href: api/Paillave.Etl.SelectEx.html#Paillave_Etl_SelectEx_Select__3_IStream___0__System_String_IStream___1__System_Func___0___1_System_Int32___2__System_Boolean_
-  commentId: M:Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
-  name.vb: Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, IStream(Of TIn2), Func(Of TIn1, TIn2, Int32, TOut), Boolean)
-  fullName: Paillave.Etl.SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, IStream<TIn2>, System.Func<TIn1, TIn2, System.Int32, TOut>, System.Boolean)
-  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, IStream(Of TIn2), System.Func(Of TIn1, TIn2, System.Int32, TOut), System.Boolean)
-  nameWithType: SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, IStream<TIn2>, Func<TIn1, TIn2, Int32, TOut>, Boolean)
-  nameWithType.vb: SelectEx.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, IStream(Of TIn2), Func(Of TIn1, TIn2, Int32, TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  name: Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, TOut>, Boolean)
+  href: api/Paillave.Etl.SelectEx.html#Paillave_Etl_SelectEx_Select__3_IStream___0__System_String_ISingleStream___1__System_Func___0___1___2__System_Boolean_
+  commentId: M:Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  name.vb: Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, TOut), Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, ISingleStream<TIn2>, System.Func<TIn1, TIn2, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, ISingleStream(Of TIn2), System.Func(Of TIn1, TIn2, TOut), System.Boolean)
+  nameWithType: SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, TOut>, Boolean)
+  nameWithType.vb: SelectEx.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
+  name: Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, Int32, TOut>, Boolean)
+  href: api/Paillave.Etl.SelectEx.html#Paillave_Etl_SelectEx_Select__3_IStream___0__System_String_ISingleStream___1__System_Func___0___1_System_Int32___2__System_Boolean_
+  commentId: M:Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
+  name.vb: Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, Int32, TOut), Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, ISingleStream<TIn2>, System.Func<TIn1, TIn2, System.Int32, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, ISingleStream(Of TIn2), System.Func(Of TIn1, TIn2, System.Int32, TOut), System.Boolean)
+  nameWithType: SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, Int32, TOut>, Boolean)
+  nameWithType.vb: SelectEx.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, Int32, TOut), Boolean)
 - uid: Paillave.Etl.SelectSectionEx
   name: SelectSectionEx
   href: api/Paillave.Etl.SelectSectionEx.html
@@ -889,15 +1014,15 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery
   nameWithType: SqlServerEx.CrossApplySqlServerQuery
-- uid: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery``3(IStream{``0},System.String,IStream{SqlConnection},System.String,System.Boolean)
-  name: CrossApplySqlServerQuery<TIn, TRes, TOut>(IStream<TIn>, String, IStream<SqlConnection>, String, Boolean)
-  href: apiext/Paillave.Etl.SqlServer.SqlServerEx.html#Paillave_Etl_SqlServer_SqlServerEx_CrossApplySqlServerQuery__3_IStream___0__System_String_IStream_SqlConnection__System_String_System_Boolean_
-  commentId: M:Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery``3(IStream{``0},System.String,IStream{SqlConnection},System.String,System.Boolean)
-  name.vb: CrossApplySqlServerQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, IStream(Of SqlConnection), String, Boolean)
-  fullName: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery<TIn, TRes, TOut>(IStream<TIn>, System.String, IStream<SqlConnection>, System.String, System.Boolean)
-  fullName.vb: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery(Of TIn, TRes, TOut)(IStream(Of TIn), System.String, IStream(Of SqlConnection), System.String, System.Boolean)
-  nameWithType: SqlServerEx.CrossApplySqlServerQuery<TIn, TRes, TOut>(IStream<TIn>, String, IStream<SqlConnection>, String, Boolean)
-  nameWithType.vb: SqlServerEx.CrossApplySqlServerQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, IStream(Of SqlConnection), String, Boolean)
+- uid: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery``3(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)
+  name: CrossApplySqlServerQuery<TIn, TRes, TOut>(IStream<TIn>, String, ISingleStream<SqlConnection>, String, Boolean)
+  href: apiext/Paillave.Etl.SqlServer.SqlServerEx.html#Paillave_Etl_SqlServer_SqlServerEx_CrossApplySqlServerQuery__3_IStream___0__System_String_ISingleStream_SqlConnection__System_String_System_Boolean_
+  commentId: M:Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery``3(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)
+  name.vb: CrossApplySqlServerQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, ISingleStream(Of SqlConnection), String, Boolean)
+  fullName: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery<TIn, TRes, TOut>(IStream<TIn>, System.String, ISingleStream<SqlConnection>, System.String, System.Boolean)
+  fullName.vb: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery(Of TIn, TRes, TOut)(IStream(Of TIn), System.String, ISingleStream(Of SqlConnection), System.String, System.Boolean)
+  nameWithType: SqlServerEx.CrossApplySqlServerQuery<TIn, TRes, TOut>(IStream<TIn>, String, ISingleStream<SqlConnection>, String, Boolean)
+  nameWithType.vb: SqlServerEx.CrossApplySqlServerQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, ISingleStream(Of SqlConnection), String, Boolean)
 - uid: Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer*
   name: ThroughSqlServer
   href: apiext/Paillave.Etl.SqlServer.SqlServerEx.html#Paillave_Etl_SqlServer_SqlServerEx_ThroughSqlServer_
@@ -1401,24 +1526,24 @@ references:
   fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TCtx)(IStream(Of TIn), System.String, TCtx, System.Action(Of TIn, TCtx, System.Action(Of TCtx)))
   nameWithType: ThroughActionEx.ThroughAction<TIn, TCtx>(IStream<TIn>, String, TCtx, Action<TIn, TCtx, Action<TCtx>>)
   nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TCtx)(IStream(Of TIn), String, TCtx, Action(Of TIn, TCtx, Action(Of TCtx)))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
-  name: ThroughAction<TIn, TResource>(IStream<TIn>, String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
-  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__2_IStream___0__System_String_IStream___1__IThroughActionProcessor___0___1__
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
-  name.vb: ThroughAction(Of TIn, TResource)(IStream(Of TIn), String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, System.String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource)(IStream(Of TIn), System.String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource)(IStream(Of TIn), String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
-  name: ThroughAction<TIn, TResource>(IStream<TIn>, String, IStream<TResource>, Action<TIn, TResource>, Action<TResource>)
-  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__2_IStream___0__System_String_IStream___1__System_Action___0___1__System_Action___1__
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
-  name.vb: ThroughAction(Of TIn, TResource)(IStream(Of TIn), String, IStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, System.String, IStream<TResource>, System.Action<TIn, TResource>, System.Action<TResource>)
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource)(IStream(Of TIn), System.String, IStream(Of TResource), System.Action(Of TIn, TResource), System.Action(Of TResource))
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, String, IStream<TResource>, Action<TIn, TResource>, Action<TResource>)
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource)(IStream(Of TIn), String, IStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
+  name: ThroughAction<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__2_IStream___0__System_String_ISingleStream___1__IThroughActionProcessor___0___1__
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
+  name.vb: ThroughAction(Of TIn, TResource)(IStream(Of TIn), String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, System.String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource)(IStream(Of TIn), System.String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource)(IStream(Of TIn), String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
+  name: ThroughAction<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, Action<TIn, TResource>, Action<TResource>)
+  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__2_IStream___0__System_String_ISingleStream___1__System_Action___0___1__System_Action___1__
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
+  name.vb: ThroughAction(Of TIn, TResource)(IStream(Of TIn), String, ISingleStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource>, System.Action<TResource>)
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource)(IStream(Of TIn), System.String, ISingleStream(Of TResource), System.Action(Of TIn, TResource), System.Action(Of TResource))
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, Action<TIn, TResource>, Action<TResource>)
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource)(IStream(Of TIn), String, ISingleStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
 - uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``1},System.String,``2,System.Action{``0,``2,System.Action{``2}})
   name: ThroughAction<TIn, TKey, TCtx>(IKeyedStream<TIn, TKey>, String, TCtx, Action<TIn, TCtx, Action<TCtx>>)
   href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__3_IKeyedStream___0___1__System_String___2_System_Action___0___2_System_Action___2___
@@ -1428,24 +1553,24 @@ references:
   fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TKey, TCtx)(IKeyedStream(Of TIn, TKey), System.String, TCtx, System.Action(Of TIn, TCtx, System.Action(Of TCtx)))
   nameWithType: ThroughActionEx.ThroughAction<TIn, TKey, TCtx>(IKeyedStream<TIn, TKey>, String, TCtx, Action<TIn, TCtx, Action<TCtx>>)
   nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TKey, TCtx)(IKeyedStream(Of TIn, TKey), String, TCtx, Action(Of TIn, TCtx, Action(Of TCtx)))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
-  name: ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
-  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__3_IKeyedStream___0___2__System_String_IStream___1__IThroughActionProcessor___0___1__
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
-  name.vb: ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, System.String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), System.String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
-  name: ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, Action<TIn, TResource>, Action<TResource>)
-  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__3_IKeyedStream___0___2__System_String_IStream___1__System_Action___0___1__System_Action___1__
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
-  name.vb: ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, System.String, IStream<TResource>, System.Action<TIn, TResource>, System.Action<TResource>)
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), System.String, IStream(Of TResource), System.Action(Of TIn, TResource), System.Action(Of TResource))
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, Action<TIn, TResource>, Action<TResource>)
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
+  name: ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__3_IKeyedStream___0___2__System_String_ISingleStream___1__IThroughActionProcessor___0___1__
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
+  name.vb: ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), System.String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
+  name: ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource>, Action<TResource>)
+  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__3_IKeyedStream___0___2__System_String_ISingleStream___1__System_Action___0___1__System_Action___1__
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
+  name.vb: ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource>, System.Action<TResource>)
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), System.String, ISingleStream(Of TResource), System.Action(Of TIn, TResource), System.Action(Of TResource))
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource>, Action<TResource>)
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
 - uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``1},System.String,``2,System.Action{``0,``2,System.Action{``2}})
   name: ThroughAction<TIn, TKey, TCtx>(ISortedStream<TIn, TKey>, String, TCtx, Action<TIn, TCtx, Action<TCtx>>)
   href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__3_ISortedStream___0___1__System_String___2_System_Action___0___2_System_Action___2___
@@ -1455,51 +1580,51 @@ references:
   fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TKey, TCtx)(ISortedStream(Of TIn, TKey), System.String, TCtx, System.Action(Of TIn, TCtx, System.Action(Of TCtx)))
   nameWithType: ThroughActionEx.ThroughAction<TIn, TKey, TCtx>(ISortedStream<TIn, TKey>, String, TCtx, Action<TIn, TCtx, Action<TCtx>>)
   nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TKey, TCtx)(ISortedStream(Of TIn, TKey), String, TCtx, Action(Of TIn, TCtx, Action(Of TCtx)))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
-  name: ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
-  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__3_ISortedStream___0___2__System_String_IStream___1__IThroughActionProcessor___0___1__
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,IStream{``1},IThroughActionProcessor{``0,``1})
-  name.vb: ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, System.String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), System.String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, IThroughActionProcessor<TIn, TResource>)
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
-  name: ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, Action<TIn, TResource>, Action<TResource>)
-  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__3_ISortedStream___0___2__System_String_IStream___1__System_Action___0___1__System_Action___1__
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,IStream{``1},System.Action{``0,``1},System.Action{``1})
-  name.vb: ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, System.String, IStream<TResource>, System.Action<TIn, TResource>, System.Action<TResource>)
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), System.String, IStream(Of TResource), System.Action(Of TIn, TResource), System.Action(Of TResource))
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, Action<TIn, TResource>, Action<TResource>)
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(IStream{``0},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
-  name: ThroughAction<TIn, TResource, TCtx>(IStream<TIn>, String, IStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
-  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__3_IStream___0__System_String_IStream___1__System_Action___0___1___2_System_Action___2___System_Action___1_System_Action___2___
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(IStream{``0},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
-  name.vb: ThroughAction(Of TIn, TResource, TCtx)(IStream(Of TIn), String, IStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TCtx>(IStream<TIn>, System.String, IStream<TResource>, System.Action<TIn, TResource, TCtx, System.Action<TCtx>>, System.Action<TResource, System.Action<TCtx>>)
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx)(IStream(Of TIn), System.String, IStream(Of TResource), System.Action(Of TIn, TResource, TCtx, System.Action(Of TCtx)), System.Action(Of TResource, System.Action(Of TCtx)))
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TCtx>(IStream<TIn>, String, IStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx)(IStream(Of TIn), String, IStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``4(IKeyedStream{``0,``3},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
-  name: ThroughAction<TIn, TResource, TCtx, TKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
-  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__4_IKeyedStream___0___3__System_String_IStream___1__System_Action___0___1___2_System_Action___2___System_Action___1_System_Action___2___
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``4(IKeyedStream{``0,``3},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
-  name.vb: ThroughAction(Of TIn, TResource, TCtx, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(IKeyedStream<TIn, TKey>, System.String, IStream<TResource>, System.Action<TIn, TResource, TCtx, System.Action<TCtx>>, System.Action<TResource, System.Action<TCtx>>)
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(IKeyedStream(Of TIn, TKey), System.String, IStream(Of TResource), System.Action(Of TIn, TResource, TCtx, System.Action(Of TCtx)), System.Action(Of TResource, System.Action(Of TCtx)))
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
-- uid: Paillave.Etl.ThroughActionEx.ThroughAction``4(ISortedStream{``0,``3},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
-  name: ThroughAction<TIn, TResource, TCtx, TKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
-  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__4_ISortedStream___0___3__System_String_IStream___1__System_Action___0___1___2_System_Action___2___System_Action___1_System_Action___2___
-  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``4(ISortedStream{``0,``3},System.String,IStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
-  name.vb: ThroughAction(Of TIn, TResource, TCtx, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
-  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(ISortedStream<TIn, TKey>, System.String, IStream<TResource>, System.Action<TIn, TResource, TCtx, System.Action<TCtx>>, System.Action<TResource, System.Action<TCtx>>)
-  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(ISortedStream(Of TIn, TKey), System.String, IStream(Of TResource), System.Action(Of TIn, TResource, TCtx, System.Action(Of TCtx)), System.Action(Of TResource, System.Action(Of TCtx)))
-  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
-  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
+  name: ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__3_ISortedStream___0___2__System_String_ISingleStream___1__IThroughActionProcessor___0___1__
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})
+  name.vb: ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), System.String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of TResource), IThroughActionProcessor(Of TIn, TResource))
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
+  name: ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource>, Action<TResource>)
+  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__3_ISortedStream___0___2__System_String_ISingleStream___1__System_Action___0___1__System_Action___1__
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})
+  name.vb: ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource>, System.Action<TResource>)
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), System.String, ISingleStream(Of TResource), System.Action(Of TIn, TResource), System.Action(Of TResource))
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource>, Action<TResource>)
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource), Action(Of TResource))
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  name: ThroughAction<TIn, TResource, TCtx>(IStream<TIn>, String, ISingleStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
+  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__3_IStream___0__System_String_ISingleStream___1__System_Action___0___1___2_System_Action___2___System_Action___1_System_Action___2___
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  name.vb: ThroughAction(Of TIn, TResource, TCtx)(IStream(Of TIn), String, ISingleStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TCtx>(IStream<TIn>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource, TCtx, System.Action<TCtx>>, System.Action<TResource, System.Action<TCtx>>)
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx)(IStream(Of TIn), System.String, ISingleStream(Of TResource), System.Action(Of TIn, TResource, TCtx, System.Action(Of TCtx)), System.Action(Of TResource, System.Action(Of TCtx)))
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TCtx>(IStream<TIn>, String, ISingleStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx)(IStream(Of TIn), String, ISingleStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``4(IKeyedStream{``0,``3},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  name: ThroughAction<TIn, TResource, TCtx, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
+  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__4_IKeyedStream___0___3__System_String_ISingleStream___1__System_Action___0___1___2_System_Action___2___System_Action___1_System_Action___2___
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``4(IKeyedStream{``0,``3},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  name.vb: ThroughAction(Of TIn, TResource, TCtx, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource, TCtx, System.Action<TCtx>>, System.Action<TResource, System.Action<TCtx>>)
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(IKeyedStream(Of TIn, TKey), System.String, ISingleStream(Of TResource), System.Action(Of TIn, TResource, TCtx, System.Action(Of TCtx)), System.Action(Of TResource, System.Action(Of TCtx)))
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
+- uid: Paillave.Etl.ThroughActionEx.ThroughAction``4(ISortedStream{``0,``3},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  name: ThroughAction<TIn, TResource, TCtx, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
+  href: api/Paillave.Etl.ThroughActionEx.html#Paillave_Etl_ThroughActionEx_ThroughAction__4_ISortedStream___0___3__System_String_ISingleStream___1__System_Action___0___1___2_System_Action___2___System_Action___1_System_Action___2___
+  commentId: M:Paillave.Etl.ThroughActionEx.ThroughAction``4(ISortedStream{``0,``3},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})
+  name.vb: ThroughAction(Of TIn, TResource, TCtx, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
+  fullName: Paillave.Etl.ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource, TCtx, System.Action<TCtx>>, System.Action<TResource, System.Action<TCtx>>)
+  fullName.vb: Paillave.Etl.ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(ISortedStream(Of TIn, TKey), System.String, ISingleStream(Of TResource), System.Action(Of TIn, TResource, TCtx, System.Action(Of TCtx)), System.Action(Of TResource, System.Action(Of TCtx)))
+  nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
+  nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
 - uid: Paillave.Etl.ToGroupEx
   name: ToGroupEx
   href: api/Paillave.Etl.ToGroupEx.html

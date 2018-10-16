@@ -38,7 +38,7 @@ namespace Paillave.Etl
                 ValuesProvider = valuesProvider
             }).Output;
         }
-        public static IStream<TOut> CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, IValuesProvider<TValueIn, TRes, TValueOut> valuesProvider, Func<TIn, TRes, TValueIn> inputValueSelector, Func<TValueOut, TIn, TRes, TOut> outputValueSelector)
+        public static IStream<TOut> CrossApply<TIn, TRes, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, ISingleStream<TRes> resourceStream, IValuesProvider<TValueIn, TRes, TValueOut> valuesProvider, Func<TIn, TRes, TValueIn> inputValueSelector, Func<TValueOut, TIn, TRes, TOut> outputValueSelector)
         {
             return new CrossApplyStreamNode<TIn, TRes, TValueIn, TValueOut, TOut>(name, new CrossApplyArgs<TIn, TRes, TValueIn, TValueOut, TOut>
             {
@@ -49,7 +49,7 @@ namespace Paillave.Etl
                 StreamToApply = resourceStream
             }).Output;
         }
-        public static IStream<TOut> CrossApply<TIn, TRes, TOut>(this IStream<TIn> stream, string name, IStream<TRes> resourceStream, IValuesProvider<TIn, TRes, TOut> valuesProvider)
+        public static IStream<TOut> CrossApply<TIn, TRes, TOut>(this IStream<TIn> stream, string name, ISingleStream<TRes> resourceStream, IValuesProvider<TIn, TRes, TOut> valuesProvider)
         {
             return new CrossApplyStreamNode<TIn, TRes, TIn, TOut, TOut>(name, new CrossApplyArgs<TIn, TRes, TIn, TOut, TOut>
             {

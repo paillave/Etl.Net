@@ -17,7 +17,7 @@ items:
   source:
     id: ToLocalFileEx
     path: ''
-    startLine: 1102
+    startLine: 1378
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -56,7 +56,7 @@ items:
   source:
     id: ToLocalFile
     path: ''
-    startLine: 1104
+    startLine: 1380
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -100,7 +100,7 @@ items:
   source:
     id: ToLocalFile
     path: ''
-    startLine: 1113
+    startLine: 1389
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl

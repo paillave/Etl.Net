@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Paillave.Etl.Reactive.Core
 {
-    public class DeferedWrapperPushObservable<T> : IDeferedPushObservable<T>
+    public class DeferredWrapperPushObservable<T> : IDeferredPushObservable<T>
     {
         private Action _start;
         private IPushObservable<T> _observable;
-        public DeferedWrapperPushObservable(IPushObservable<T> observable, Action start)
+        public DeferredWrapperPushObservable(IPushObservable<T> observable, Action start)
         {
             _observable = observable;
             _start = start;

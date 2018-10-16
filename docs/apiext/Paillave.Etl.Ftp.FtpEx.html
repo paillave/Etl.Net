@@ -90,12 +90,12 @@
   
   
   <a id="Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles_" data-uid="Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles*"></a>
-  <h4 id="Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles_IStream_System_String__System_String_IStream_FtpConnectionInfo__" data-uid="Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,IStream{FtpConnectionInfo})">CrossApplyFtpFiles(IStream&lt;String&gt;, String, IStream&lt;FtpConnectionInfo&gt;)</h4>
+  <h4 id="Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles_IStream_System_String__System_String_ISingleStream_FtpConnectionInfo__" data-uid="Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo})">CrossApplyFtpFiles(IStream&lt;String&gt;, String, ISingleStream&lt;FtpConnectionInfo&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;FtpFilesValue&gt; CrossApplyFtpFiles(this IStream&lt;string&gt; stream, string name, IStream&lt;FtpConnectionInfo&gt; connectionInfoS)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;FtpFilesValue&gt; CrossApplyFtpFiles(this IStream&lt;string&gt; stream, string name, ISingleStream&lt;FtpConnectionInfo&gt; connectionInfoS)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -118,7 +118,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IStream</span>&lt;<span class="xref">FtpConnectionInfo</span>&gt;</td>
+        <td><span class="xref">ISingleStream</span>&lt;<span class="xref">FtpConnectionInfo</span>&gt;</td>
         <td><span class="parametername">connectionInfoS</span></td>
         <td></td>
       </tr>
@@ -142,12 +142,12 @@
   
   
   <a id="Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles_" data-uid="Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles*"></a>
-  <h4 id="Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles__1_IStream___0__System_String_IStream_FtpConnectionInfo__System_Func___0_System_String__" data-uid="Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,IStream{FtpConnectionInfo},System.Func{``0,System.String})">CrossApplyFtpFiles&lt;TIn&gt;(IStream&lt;TIn&gt;, String, IStream&lt;FtpConnectionInfo&gt;, Func&lt;TIn, String&gt;)</h4>
+  <h4 id="Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles__1_IStream___0__System_String_ISingleStream_FtpConnectionInfo__System_Func___0_System_String__" data-uid="Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String})">CrossApplyFtpFiles&lt;TIn&gt;(IStream&lt;TIn&gt;, String, ISingleStream&lt;FtpConnectionInfo&gt;, Func&lt;TIn, String&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;FtpFilesValue&gt; CrossApplyFtpFiles&lt;TIn&gt;(this IStream&lt;TIn&gt; stream, string name, IStream&lt;FtpConnectionInfo&gt; connectionInfoS, Func&lt;TIn, string&gt; getFolderPath)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;FtpFilesValue&gt; CrossApplyFtpFiles&lt;TIn&gt;(this IStream&lt;TIn&gt; stream, string name, ISingleStream&lt;FtpConnectionInfo&gt; connectionInfoS, Func&lt;TIn, string&gt; getFolderPath)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -170,7 +170,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IStream</span>&lt;<span class="xref">FtpConnectionInfo</span>&gt;</td>
+        <td><span class="xref">ISingleStream</span>&lt;<span class="xref">FtpConnectionInfo</span>&gt;</td>
         <td><span class="parametername">connectionInfoS</span></td>
         <td></td>
       </tr>
@@ -214,12 +214,12 @@
   
   
   <a id="Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles_" data-uid="Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles*"></a>
-  <h4 id="Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles__1_IStream_System_String__System_String_IStream_FtpConnectionInfo__System_Func_FtpFilesValue_System_String_FtpConnectionInfo___0__" data-uid="Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,IStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})">CrossApplyFtpFiles&lt;TOut&gt;(IStream&lt;String&gt;, String, IStream&lt;FtpConnectionInfo&gt;, Func&lt;FtpFilesValue, String, FtpConnectionInfo, TOut&gt;)</h4>
+  <h4 id="Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles__1_IStream_System_String__System_String_ISingleStream_FtpConnectionInfo__System_Func_FtpFilesValue_System_String_FtpConnectionInfo___0__" data-uid="Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})">CrossApplyFtpFiles&lt;TOut&gt;(IStream&lt;String&gt;, String, ISingleStream&lt;FtpConnectionInfo&gt;, Func&lt;FtpFilesValue, String, FtpConnectionInfo, TOut&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyFtpFiles&lt;TOut&gt;(this IStream&lt;string&gt; stream, string name, IStream&lt;FtpConnectionInfo&gt; connectionInfoS, Func&lt;FtpFilesValue, string, FtpConnectionInfo, TOut&gt; selector)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyFtpFiles&lt;TOut&gt;(this IStream&lt;string&gt; stream, string name, ISingleStream&lt;FtpConnectionInfo&gt; connectionInfoS, Func&lt;FtpFilesValue, string, FtpConnectionInfo, TOut&gt; selector)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -242,7 +242,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IStream</span>&lt;<span class="xref">FtpConnectionInfo</span>&gt;</td>
+        <td><span class="xref">ISingleStream</span>&lt;<span class="xref">FtpConnectionInfo</span>&gt;</td>
         <td><span class="parametername">connectionInfoS</span></td>
         <td></td>
       </tr>
@@ -286,12 +286,12 @@
   
   
   <a id="Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles_" data-uid="Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles*"></a>
-  <h4 id="Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles__2_IStream___0__System_String_IStream_FtpConnectionInfo__System_Func___0_System_String__System_Func_FtpFilesValue___0_FtpConnectionInfo___1__" data-uid="Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,IStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})">CrossApplyFtpFiles&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, IStream&lt;FtpConnectionInfo&gt;, Func&lt;TIn, String&gt;, Func&lt;FtpFilesValue, TIn, FtpConnectionInfo, TOut&gt;)</h4>
+  <h4 id="Paillave_Etl_Ftp_FtpEx_CrossApplyFtpFiles__2_IStream___0__System_String_ISingleStream_FtpConnectionInfo__System_Func___0_System_String__System_Func_FtpFilesValue___0_FtpConnectionInfo___1__" data-uid="Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})">CrossApplyFtpFiles&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, ISingleStream&lt;FtpConnectionInfo&gt;, Func&lt;TIn, String&gt;, Func&lt;FtpFilesValue, TIn, FtpConnectionInfo, TOut&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyFtpFiles&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, IStream&lt;FtpConnectionInfo&gt; connectionInfoS, Func&lt;TIn, string&gt; getFolderPath, Func&lt;FtpFilesValue, TIn, FtpConnectionInfo, TOut&gt; selector)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyFtpFiles&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, ISingleStream&lt;FtpConnectionInfo&gt; connectionInfoS, Func&lt;TIn, string&gt; getFolderPath, Func&lt;FtpFilesValue, TIn, FtpConnectionInfo, TOut&gt; selector)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -314,7 +314,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IStream</span>&lt;<span class="xref">FtpConnectionInfo</span>&gt;</td>
+        <td><span class="xref">ISingleStream</span>&lt;<span class="xref">FtpConnectionInfo</span>&gt;</td>
         <td><span class="parametername">connectionInfoS</span></td>
         <td></td>
       </tr>

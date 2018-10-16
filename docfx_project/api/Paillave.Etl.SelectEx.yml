@@ -5,14 +5,22 @@ items:
   id: SelectEx
   parent: Paillave.Etl
   children:
+  - Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean)
+  - Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{``0,``1},System.Boolean)
+  - Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,System.Func{``0,``1},System.Boolean)
+  - Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,System.Func{``0,System.Int32,``1},System.Boolean)
   - Paillave.Etl.SelectEx.Select``2(IStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean)
   - Paillave.Etl.SelectEx.Select``2(IStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{``0,``1},System.Boolean)
   - Paillave.Etl.SelectEx.Select``2(IStream{``0},System.String,System.Func{``0,``1},System.Boolean)
   - Paillave.Etl.SelectEx.Select``2(IStream{``0},System.String,System.Func{``0,System.Int32,``1},System.Boolean)
+  - Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean)
+  - Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,``2,System.Func{``0,System.Int32,``2,System.Action{``2},``1},System.Boolean)
+  - Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  - Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
   - Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean)
   - Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,``2,System.Func{``0,System.Int32,``2,System.Action{``2},``1},System.Boolean)
-  - Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,``2},System.Boolean)
-  - Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
+  - Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  - Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
   langs:
   - csharp
   - vb
@@ -23,10 +31,13 @@ items:
   source:
     id: SelectEx
     path: ''
-    startLine: 521
+    startLine: 648
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
+  summary: "\nSet of extensions to transform elements of the input stream into another element.\n"
+  remarks: "\nIf TOut implements <code>IDisposable</code> it will be automatically disposed once the ETL process is finished.\n"
+  example: []
   syntax:
     content: public static class SelectEx
     content.vb: Public Module SelectEx
@@ -62,12 +73,13 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 533
+    startLine: 676
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   summary: "\nTransform the input stream into a similar stream but with a different structure and calculation using a lambda expression\n"
-  example: []
+  example:
+  - "\nThis example creates a file path from the input value and open it for writing.\n<pre><code>public class MyJob : IStreamProcessDefinition&lt;string>\n{\n    public string Name => &quot;example select&quot;;\n    public void DefineProcess(IStream&lt;string> rootStream)\n    {\n        rootStream\n            .Select(&quot;get file path from its name&quot;, fileName => Path.Combine(&quot;C:\\&quot;, fileName))\n            // Values issued by the following select will be automatically disposed once the process is completed.\n            .Select(&quot;open the file&quot;, path => File.OpenWrite(path)); \n    }\n}</code></pre>\n"
   syntax:
     content: public static IStream<TOut> Select<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> resultSelector, bool excludeNull = false)
     parameters:
@@ -105,6 +117,55 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, TOut), System.Boolean)
   name.vb: Select(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,System.Func{``0,``1},System.Boolean)
+  commentId: M:Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,System.Func{``0,``1},System.Boolean)
+  id: Select``2(ISingleStream{``0},System.String,System.Func{``0,``1},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.SelectEx
+  langs:
+  - csharp
+  - vb
+  name: Select<TIn, TOut>(ISingleStream<TIn>, String, Func<TIn, TOut>, Boolean)
+  nameWithType: SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, String, Func<TIn, TOut>, Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, System.String, System.Func<TIn, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: Select
+    path: ''
+    startLine: 685
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl
+  syntax:
+    content: public static ISingleStream<TOut> Select<TIn, TOut>(this ISingleStream<TIn> stream, string name, Func<TIn, TOut> resultSelector, bool excludeNull = false)
+    parameters:
+    - id: stream
+      type: ISingleStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: resultSelector
+      type: System.Func{{TIn},{TOut}}
+    - id: excludeNull
+      type: System.Boolean
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    return:
+      type: ISingleStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function Select(Of TIn, TOut)(stream As ISingleStream(Of TIn), name As String, resultSelector As Func(Of TIn, TOut), excludeNull As Boolean = False) As ISingleStream(Of TOut)
+  overload: Paillave.Etl.SelectEx.Select*
+  nameWithType.vb: SelectEx.Select(Of TIn, TOut)(ISingleStream(Of TIn), String, Func(Of TIn, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut)(ISingleStream(Of TIn), System.String, System.Func(Of TIn, TOut), System.Boolean)
+  name.vb: Select(Of TIn, TOut)(ISingleStream(Of TIn), String, Func(Of TIn, TOut), Boolean)
 - uid: Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean)
   commentId: M:Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean)
   id: Select``3(IStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean)
@@ -120,12 +181,13 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 554
+    startLine: 727
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   summary: "\nTransform the input stream into a similar stream but with a different structure and calculation using a lambda expression that works with a context\n"
-  example: []
+  example:
+  - "\nThis example returns a dataset by replacing null values with the latest not null value.\n<pre><code>public class CrossApplyActionJobs : IStreamProcessDefinition&lt;object>\n{\n    public string Name => &quot;import file&quot;;\n    public void DefineProcess(IStream&lt;object> rootStream)\n    {\n        rootStream\n            .CrossApplyEnumerable(&quot;create some values&quot;, (input) => Enumerable.Range(0, 10).Select(i => new { Id = i, Value = (i % 3 == 0) ? i : (int?)null }))\n            .Select(&quot;set null value to the previous not null value&quot;, 0, (i, ctx, setCtx) =>\n            {\n                var v = i.Value ?? ctx;\n                setCtx(v);\n                return new { i.Id, Value = v };\n            });\n    }\n}</code></pre>\n"
   syntax:
     content: public static IStream<TOut> Select<TIn, TOut, TCtx>(this IStream<TIn> stream, string name, TCtx initialContext, Func<TIn, TCtx, Action<TCtx>, TOut> resultSelector, bool excludeNull = false)
     parameters:
@@ -168,6 +230,58 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut, TCtx)(IStream(Of TIn), System.String, TCtx, System.Func(Of TIn, TCtx, System.Action(Of TCtx), TOut), System.Boolean)
   name.vb: Select(Of TIn, TOut, TCtx)(IStream(Of TIn), String, TCtx, Func(Of TIn, TCtx, Action(Of TCtx), TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean)
+  commentId: M:Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean)
+  id: Select``3(ISingleStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.SelectEx
+  langs:
+  - csharp
+  - vb
+  name: Select<TIn, TOut, TCtx>(ISingleStream<TIn>, String, TCtx, Func<TIn, TCtx, Action<TCtx>, TOut>, Boolean)
+  nameWithType: SelectEx.Select<TIn, TOut, TCtx>(ISingleStream<TIn>, String, TCtx, Func<TIn, TCtx, Action<TCtx>, TOut>, Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn, TOut, TCtx>(ISingleStream<TIn>, System.String, TCtx, System.Func<TIn, TCtx, System.Action<TCtx>, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: Select
+    path: ''
+    startLine: 736
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl
+  syntax:
+    content: public static ISingleStream<TOut> Select<TIn, TOut, TCtx>(this ISingleStream<TIn> stream, string name, TCtx initialContext, Func<TIn, TCtx, Action<TCtx>, TOut> resultSelector, bool excludeNull = false)
+    parameters:
+    - id: stream
+      type: ISingleStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: initialContext
+      type: '{TCtx}'
+    - id: resultSelector
+      type: System.Func{{TIn},{TCtx},System.Action{{TCtx}},{TOut}}
+    - id: excludeNull
+      type: System.Boolean
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    - id: TCtx
+    return:
+      type: ISingleStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function Select(Of TIn, TOut, TCtx)(stream As ISingleStream(Of TIn), name As String, initialContext As TCtx, resultSelector As Func(Of TIn, TCtx, Action(Of TCtx), TOut), excludeNull As Boolean = False) As ISingleStream(Of TOut)
+  overload: Paillave.Etl.SelectEx.Select*
+  nameWithType.vb: SelectEx.Select(Of TIn, TOut, TCtx)(ISingleStream(Of TIn), String, TCtx, Func(Of TIn, TCtx, Action(Of TCtx), TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut, TCtx)(ISingleStream(Of TIn), System.String, TCtx, System.Func(Of TIn, TCtx, System.Action(Of TCtx), TOut), System.Boolean)
+  name.vb: Select(Of TIn, TOut, TCtx)(ISingleStream(Of TIn), String, TCtx, Func(Of TIn, TCtx, Action(Of TCtx), TOut), Boolean)
 - uid: Paillave.Etl.SelectEx.Select``2(IStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean)
   commentId: M:Paillave.Etl.SelectEx.Select``2(IStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean)
   id: Select``2(IStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean)
@@ -183,12 +297,13 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 573
+    startLine: 793
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   summary: "\nTransform the input stream into a similar stream but with a different structure and calculation using a processor\n"
-  example: []
+  example:
+  - "\nThis example returns a dataset by replacing null values with the latest not null value.\n<pre><code>public class CrossApplyActionJobs2 : IStreamProcessDefinition&lt;object>\n{\n    public string Name => &quot;import file&quot;;\n    public void DefineProcess(IStream&lt;object> rootStream)\n    {\n        rootStream\n            .CrossApplyEnumerable(&quot;create some values&quot;, (input) => Enumerable.Range(0, 10).Select(i => new MyInputType { Id = i, Value = (i % 3 == 0) ? i : (int?)null }))\n            .Select(&quot;set null value to the previous not null value&quot;, new MySelectProcessor());\n    }\n    private class MyInputType\n    {\n        public int Id { get; set; }\n        public int? Value { get; set; }\n    }\n    private class MyOutputType\n    {\n        public int Id { get; set; }\n        public int Value { get; set; }\n    }\n    private class MySelectProcessor : ISelectProcessor&lt;MyInputType, MyOutputType>\n    {\n        private int _lastValue = 0;\n        public MyOutputType ProcessRow(MyInputType value)\n        {\n            if (value.Value != null) _lastValue = value.Value.Value;\n            return new MyOutputType\n            {\n                Id = value.Id,\n                Value = _lastValue\n            };\n        }\n    }\n}</code></pre>\n"
   syntax:
     content: public static IStream<TOut> Select<TIn, TOut>(this IStream<TIn> stream, string name, ISelectProcessor<TIn, TOut> processor, bool excludeNull = false)
     parameters:
@@ -226,6 +341,55 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut)(IStream(Of TIn), System.String, Paillave.Etl.StreamNodes.ISelectProcessor(Of TIn, TOut), System.Boolean)
   name.vb: Select(Of TIn, TOut)(IStream(Of TIn), String, ISelectProcessor(Of TIn, TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean)
+  commentId: M:Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean)
+  id: Select``2(ISingleStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.SelectEx
+  langs:
+  - csharp
+  - vb
+  name: Select<TIn, TOut>(ISingleStream<TIn>, String, ISelectProcessor<TIn, TOut>, Boolean)
+  nameWithType: SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, String, ISelectProcessor<TIn, TOut>, Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, System.String, Paillave.Etl.StreamNodes.ISelectProcessor<TIn, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: Select
+    path: ''
+    startLine: 802
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl
+  syntax:
+    content: public static ISingleStream<TOut> Select<TIn, TOut>(this ISingleStream<TIn> stream, string name, ISelectProcessor<TIn, TOut> processor, bool excludeNull = false)
+    parameters:
+    - id: stream
+      type: ISingleStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: processor
+      type: Paillave.Etl.StreamNodes.ISelectProcessor{{TIn},{TOut}}
+    - id: excludeNull
+      type: System.Boolean
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    return:
+      type: ISingleStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function Select(Of TIn, TOut)(stream As ISingleStream(Of TIn), name As String, processor As ISelectProcessor(Of TIn, TOut), excludeNull As Boolean = False) As ISingleStream(Of TOut)
+  overload: Paillave.Etl.SelectEx.Select*
+  nameWithType.vb: SelectEx.Select(Of TIn, TOut)(ISingleStream(Of TIn), String, ISelectProcessor(Of TIn, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut)(ISingleStream(Of TIn), System.String, Paillave.Etl.StreamNodes.ISelectProcessor(Of TIn, TOut), System.Boolean)
+  name.vb: Select(Of TIn, TOut)(ISingleStream(Of TIn), String, ISelectProcessor(Of TIn, TOut), Boolean)
 - uid: Paillave.Etl.SelectEx.Select``2(IStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{``0,``1},System.Boolean)
   commentId: M:Paillave.Etl.SelectEx.Select``2(IStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{``0,``1},System.Boolean)
   id: Select``2(IStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{``0,``1},System.Boolean)
@@ -241,7 +405,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 592
+    startLine: 821
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -284,6 +448,55 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut)(IStream(Of TIn), System.String, Paillave.Etl.StreamNodes.ISelectWithIndexProcessor(Of TIn, TOut), System.Boolean)
   name.vb: Select(Of TIn, TOut)(IStream(Of TIn), String, ISelectWithIndexProcessor(Of TIn, TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{``0,``1},System.Boolean)
+  commentId: M:Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{``0,``1},System.Boolean)
+  id: Select``2(ISingleStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{``0,``1},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.SelectEx
+  langs:
+  - csharp
+  - vb
+  name: Select<TIn, TOut>(ISingleStream<TIn>, String, ISelectWithIndexProcessor<TIn, TOut>, Boolean)
+  nameWithType: SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, String, ISelectWithIndexProcessor<TIn, TOut>, Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, System.String, Paillave.Etl.StreamNodes.ISelectWithIndexProcessor<TIn, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: Select
+    path: ''
+    startLine: 830
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl
+  syntax:
+    content: public static ISingleStream<TOut> Select<TIn, TOut>(this ISingleStream<TIn> stream, string name, ISelectWithIndexProcessor<TIn, TOut> processor, bool excludeNull = false)
+    parameters:
+    - id: stream
+      type: ISingleStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: processor
+      type: Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{{TIn},{TOut}}
+    - id: excludeNull
+      type: System.Boolean
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    return:
+      type: ISingleStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function Select(Of TIn, TOut)(stream As ISingleStream(Of TIn), name As String, processor As ISelectWithIndexProcessor(Of TIn, TOut), excludeNull As Boolean = False) As ISingleStream(Of TOut)
+  overload: Paillave.Etl.SelectEx.Select*
+  nameWithType.vb: SelectEx.Select(Of TIn, TOut)(ISingleStream(Of TIn), String, ISelectWithIndexProcessor(Of TIn, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut)(ISingleStream(Of TIn), System.String, Paillave.Etl.StreamNodes.ISelectWithIndexProcessor(Of TIn, TOut), System.Boolean)
+  name.vb: Select(Of TIn, TOut)(ISingleStream(Of TIn), String, ISelectWithIndexProcessor(Of TIn, TOut), Boolean)
 - uid: Paillave.Etl.SelectEx.Select``2(IStream{``0},System.String,System.Func{``0,System.Int32,``1},System.Boolean)
   commentId: M:Paillave.Etl.SelectEx.Select``2(IStream{``0},System.String,System.Func{``0,System.Int32,``1},System.Boolean)
   id: Select``2(IStream{``0},System.String,System.Func{``0,System.Int32,``1},System.Boolean)
@@ -299,7 +512,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 611
+    startLine: 849
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -342,6 +555,55 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.Int32, TOut), System.Boolean)
   name.vb: Select(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, Int32, TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,System.Func{``0,System.Int32,``1},System.Boolean)
+  commentId: M:Paillave.Etl.SelectEx.Select``2(ISingleStream{``0},System.String,System.Func{``0,System.Int32,``1},System.Boolean)
+  id: Select``2(ISingleStream{``0},System.String,System.Func{``0,System.Int32,``1},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.SelectEx
+  langs:
+  - csharp
+  - vb
+  name: Select<TIn, TOut>(ISingleStream<TIn>, String, Func<TIn, Int32, TOut>, Boolean)
+  nameWithType: SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, String, Func<TIn, Int32, TOut>, Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, System.String, System.Func<TIn, System.Int32, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: Select
+    path: ''
+    startLine: 858
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl
+  syntax:
+    content: public static ISingleStream<TOut> Select<TIn, TOut>(this ISingleStream<TIn> stream, string name, Func<TIn, int, TOut> resultSelector, bool excludeNull = false)
+    parameters:
+    - id: stream
+      type: ISingleStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: resultSelector
+      type: System.Func{{TIn},System.Int32,{TOut}}
+    - id: excludeNull
+      type: System.Boolean
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    return:
+      type: ISingleStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function Select(Of TIn, TOut)(stream As ISingleStream(Of TIn), name As String, resultSelector As Func(Of TIn, Integer, TOut), excludeNull As Boolean = False) As ISingleStream(Of TOut)
+  overload: Paillave.Etl.SelectEx.Select*
+  nameWithType.vb: SelectEx.Select(Of TIn, TOut)(ISingleStream(Of TIn), String, Func(Of TIn, Int32, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut)(ISingleStream(Of TIn), System.String, System.Func(Of TIn, System.Int32, TOut), System.Boolean)
+  name.vb: Select(Of TIn, TOut)(ISingleStream(Of TIn), String, Func(Of TIn, Int32, TOut), Boolean)
 - uid: Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,``2,System.Func{``0,System.Int32,``2,System.Action{``2},``1},System.Boolean)
   commentId: M:Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,``2,System.Func{``0,System.Int32,``2,System.Action{``2},``1},System.Boolean)
   id: Select``3(IStream{``0},System.String,``2,System.Func{``0,System.Int32,``2,System.Action{``2},``1},System.Boolean)
@@ -357,7 +619,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 632
+    startLine: 879
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
@@ -405,29 +667,81 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut, TCtx)(IStream(Of TIn), System.String, TCtx, System.Func(Of TIn, System.Int32, TCtx, System.Action(Of TCtx), TOut), System.Boolean)
   name.vb: Select(Of TIn, TOut, TCtx)(IStream(Of TIn), String, TCtx, Func(Of TIn, Int32, TCtx, Action(Of TCtx), TOut), Boolean)
-- uid: Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
-  commentId: M:Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
-  id: Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
+- uid: Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,``2,System.Func{``0,System.Int32,``2,System.Action{``2},``1},System.Boolean)
+  commentId: M:Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,``2,System.Func{``0,System.Int32,``2,System.Action{``2},``1},System.Boolean)
+  id: Select``3(ISingleStream{``0},System.String,``2,System.Func{``0,System.Int32,``2,System.Action{``2},``1},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.SelectEx
   langs:
   - csharp
   - vb
-  name: Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, IStream<TIn2>, Func<TIn1, TIn2, Int32, TOut>, Boolean)
-  nameWithType: SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, IStream<TIn2>, Func<TIn1, TIn2, Int32, TOut>, Boolean)
-  fullName: Paillave.Etl.SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, IStream<TIn2>, System.Func<TIn1, TIn2, System.Int32, TOut>, System.Boolean)
+  name: Select<TIn, TOut, TCtx>(ISingleStream<TIn>, String, TCtx, Func<TIn, Int32, TCtx, Action<TCtx>, TOut>, Boolean)
+  nameWithType: SelectEx.Select<TIn, TOut, TCtx>(ISingleStream<TIn>, String, TCtx, Func<TIn, Int32, TCtx, Action<TCtx>, TOut>, Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn, TOut, TCtx>(ISingleStream<TIn>, System.String, TCtx, System.Func<TIn, System.Int32, TCtx, System.Action<TCtx>, TOut>, System.Boolean)
   type: Method
   source:
     id: Select
     path: ''
-    startLine: 654
+    startLine: 888
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl
+  syntax:
+    content: public static ISingleStream<TOut> Select<TIn, TOut, TCtx>(this ISingleStream<TIn> stream, string name, TCtx initialContext, Func<TIn, int, TCtx, Action<TCtx>, TOut> resultSelector, bool excludeNull = false)
+    parameters:
+    - id: stream
+      type: ISingleStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: initialContext
+      type: '{TCtx}'
+    - id: resultSelector
+      type: System.Func{{TIn},System.Int32,{TCtx},System.Action{{TCtx}},{TOut}}
+    - id: excludeNull
+      type: System.Boolean
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    - id: TCtx
+    return:
+      type: ISingleStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function Select(Of TIn, TOut, TCtx)(stream As ISingleStream(Of TIn), name As String, initialContext As TCtx, resultSelector As Func(Of TIn, Integer, TCtx, Action(Of TCtx), TOut), excludeNull As Boolean = False) As ISingleStream(Of TOut)
+  overload: Paillave.Etl.SelectEx.Select*
+  nameWithType.vb: SelectEx.Select(Of TIn, TOut, TCtx)(ISingleStream(Of TIn), String, TCtx, Func(Of TIn, Int32, TCtx, Action(Of TCtx), TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn, TOut, TCtx)(ISingleStream(Of TIn), System.String, TCtx, System.Func(Of TIn, System.Int32, TCtx, System.Action(Of TCtx), TOut), System.Boolean)
+  name.vb: Select(Of TIn, TOut, TCtx)(ISingleStream(Of TIn), String, TCtx, Func(Of TIn, Int32, TCtx, Action(Of TCtx), TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
+  commentId: M:Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
+  id: Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.SelectEx
+  langs:
+  - csharp
+  - vb
+  name: Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, Int32, TOut>, Boolean)
+  nameWithType: SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, Int32, TOut>, Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, ISingleStream<TIn2>, System.Func<TIn1, TIn2, System.Int32, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: Select
+    path: ''
+    startLine: 910
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   summary: "\nTransform the input stream into a similar stream but with a different structure and calculation using a lambda expression. \nThe calculation takes in consideration a single element stream\n"
   example: []
   syntax:
-    content: public static IStream<TOut> Select<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> streamToApply, Func<TIn1, TIn2, int, TOut> resultSelector, bool excludeNull = false)
+    content: public static IStream<TOut> Select<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, ISingleStream<TIn2> streamToApply, Func<TIn1, TIn2, int, TOut> resultSelector, bool excludeNull = false)
     parameters:
     - id: stream
       type: IStream{{TIn1}}
@@ -436,7 +750,7 @@ items:
       type: System.String
       description: Name of the operation
     - id: streamToApply
-      type: IStream{{TIn2}}
+      type: ISingleStream{{TIn2}}
       description: The stream that contains the single element that will be applied to each element of the main stream with the result selector
     - id: resultSelector
       type: System.Func{{TIn1},{TIn2},System.Int32,{TOut}}
@@ -457,40 +771,92 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function Select(Of TIn1, TIn2, TOut)(stream As IStream(Of TIn1), name As String, streamToApply As IStream(Of TIn2), resultSelector As Func(Of TIn1, TIn2, Integer, TOut), excludeNull As Boolean = False) As IStream(Of TOut)
+      Public Shared Function Select(Of TIn1, TIn2, TOut)(stream As IStream(Of TIn1), name As String, streamToApply As ISingleStream(Of TIn2), resultSelector As Func(Of TIn1, TIn2, Integer, TOut), excludeNull As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.SelectEx.Select*
-  nameWithType.vb: SelectEx.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, IStream(Of TIn2), Func(Of TIn1, TIn2, Int32, TOut), Boolean)
+  nameWithType.vb: SelectEx.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, Int32, TOut), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, IStream(Of TIn2), System.Func(Of TIn1, TIn2, System.Int32, TOut), System.Boolean)
-  name.vb: Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, IStream(Of TIn2), Func(Of TIn1, TIn2, Int32, TOut), Boolean)
-- uid: Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,``2},System.Boolean)
-  commentId: M:Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,``2},System.Boolean)
-  id: Select``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, ISingleStream(Of TIn2), System.Func(Of TIn1, TIn2, System.Int32, TOut), System.Boolean)
+  name.vb: Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, Int32, TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
+  commentId: M:Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
+  id: Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.SelectEx
   langs:
   - csharp
   - vb
-  name: Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, IStream<TIn2>, Func<TIn1, TIn2, TOut>, Boolean)
-  nameWithType: SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, IStream<TIn2>, Func<TIn1, TIn2, TOut>, Boolean)
-  fullName: Paillave.Etl.SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, IStream<TIn2>, System.Func<TIn1, TIn2, TOut>, System.Boolean)
+  name: Select<TIn1, TIn2, TOut>(ISingleStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, Int32, TOut>, Boolean)
+  nameWithType: SelectEx.Select<TIn1, TIn2, TOut>(ISingleStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, Int32, TOut>, Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn1, TIn2, TOut>(ISingleStream<TIn1>, System.String, ISingleStream<TIn2>, System.Func<TIn1, TIn2, System.Int32, TOut>, System.Boolean)
   type: Method
   source:
     id: Select
     path: ''
-    startLine: 677
+    startLine: 920
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl
+  syntax:
+    content: public static ISingleStream<TOut> Select<TIn1, TIn2, TOut>(this ISingleStream<TIn1> stream, string name, ISingleStream<TIn2> streamToApply, Func<TIn1, TIn2, int, TOut> resultSelector, bool excludeNull = false)
+    parameters:
+    - id: stream
+      type: ISingleStream{{TIn1}}
+    - id: name
+      type: System.String
+    - id: streamToApply
+      type: ISingleStream{{TIn2}}
+    - id: resultSelector
+      type: System.Func{{TIn1},{TIn2},System.Int32,{TOut}}
+    - id: excludeNull
+      type: System.Boolean
+    typeParameters:
+    - id: TIn1
+    - id: TIn2
+    - id: TOut
+    return:
+      type: ISingleStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function Select(Of TIn1, TIn2, TOut)(stream As ISingleStream(Of TIn1), name As String, streamToApply As ISingleStream(Of TIn2), resultSelector As Func(Of TIn1, TIn2, Integer, TOut), excludeNull As Boolean = False) As ISingleStream(Of TOut)
+  overload: Paillave.Etl.SelectEx.Select*
+  nameWithType.vb: SelectEx.Select(Of TIn1, TIn2, TOut)(ISingleStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, Int32, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn1, TIn2, TOut)(ISingleStream(Of TIn1), System.String, ISingleStream(Of TIn2), System.Func(Of TIn1, TIn2, System.Int32, TOut), System.Boolean)
+  name.vb: Select(Of TIn1, TIn2, TOut)(ISingleStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, Int32, TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  commentId: M:Paillave.Etl.SelectEx.Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  id: Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.SelectEx
+  langs:
+  - csharp
+  - vb
+  name: Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, TOut>, Boolean)
+  nameWithType: SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, TOut>, Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, ISingleStream<TIn2>, System.Func<TIn1, TIn2, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: Select
+    path: ''
+    startLine: 943
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl
   summary: "\nTransform the input stream into a similar stream but with a different structure and calculation using a lambda expression and the occurrence index. \nThe calculation takes in consideration a single element stream\n"
   example: []
   syntax:
-    content: public static IStream<TOut> Select<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> streamToApply, Func<TIn1, TIn2, TOut> resultSelector, bool excludeNull = false)
+    content: public static IStream<TOut> Select<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, ISingleStream<TIn2> streamToApply, Func<TIn1, TIn2, TOut> resultSelector, bool excludeNull = false)
     parameters:
     - id: stream
       type: IStream{{TIn1}}
@@ -499,7 +865,7 @@ items:
       type: System.String
       description: Name of the operation
     - id: streamToApply
-      type: IStream{{TIn2}}
+      type: ISingleStream{{TIn2}}
       description: The stream that contains the single element that will be applied to each element of the main stream with the result selector
     - id: resultSelector
       type: System.Func{{TIn1},{TIn2},{TOut}}
@@ -520,17 +886,69 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function Select(Of TIn1, TIn2, TOut)(stream As IStream(Of TIn1), name As String, streamToApply As IStream(Of TIn2), resultSelector As Func(Of TIn1, TIn2, TOut), excludeNull As Boolean = False) As IStream(Of TOut)
+      Public Shared Function Select(Of TIn1, TIn2, TOut)(stream As IStream(Of TIn1), name As String, streamToApply As ISingleStream(Of TIn2), resultSelector As Func(Of TIn1, TIn2, TOut), excludeNull As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.SelectEx.Select*
-  nameWithType.vb: SelectEx.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, IStream(Of TIn2), Func(Of TIn1, TIn2, TOut), Boolean)
+  nameWithType.vb: SelectEx.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, TOut), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, IStream(Of TIn2), System.Func(Of TIn1, TIn2, TOut), System.Boolean)
-  name.vb: Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, IStream(Of TIn2), Func(Of TIn1, TIn2, TOut), Boolean)
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, ISingleStream(Of TIn2), System.Func(Of TIn1, TIn2, TOut), System.Boolean)
+  name.vb: Select(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, TOut), Boolean)
+- uid: Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  commentId: M:Paillave.Etl.SelectEx.Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  id: Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.SelectEx
+  langs:
+  - csharp
+  - vb
+  name: Select<TIn1, TIn2, TOut>(ISingleStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, TOut>, Boolean)
+  nameWithType: SelectEx.Select<TIn1, TIn2, TOut>(ISingleStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, TOut>, Boolean)
+  fullName: Paillave.Etl.SelectEx.Select<TIn1, TIn2, TOut>(ISingleStream<TIn1>, System.String, ISingleStream<TIn2>, System.Func<TIn1, TIn2, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: Select
+    path: ''
+    startLine: 953
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl
+  syntax:
+    content: public static ISingleStream<TOut> Select<TIn1, TIn2, TOut>(this ISingleStream<TIn1> stream, string name, ISingleStream<TIn2> streamToApply, Func<TIn1, TIn2, TOut> resultSelector, bool excludeNull = false)
+    parameters:
+    - id: stream
+      type: ISingleStream{{TIn1}}
+    - id: name
+      type: System.String
+    - id: streamToApply
+      type: ISingleStream{{TIn2}}
+    - id: resultSelector
+      type: System.Func{{TIn1},{TIn2},{TOut}}
+    - id: excludeNull
+      type: System.Boolean
+    typeParameters:
+    - id: TIn1
+    - id: TIn2
+    - id: TOut
+    return:
+      type: ISingleStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function Select(Of TIn1, TIn2, TOut)(stream As ISingleStream(Of TIn1), name As String, streamToApply As ISingleStream(Of TIn2), resultSelector As Func(Of TIn1, TIn2, TOut), excludeNull As Boolean = False) As ISingleStream(Of TOut)
+  overload: Paillave.Etl.SelectEx.Select*
+  nameWithType.vb: SelectEx.Select(Of TIn1, TIn2, TOut)(ISingleStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.SelectEx.Select(Of TIn1, TIn2, TOut)(ISingleStream(Of TIn1), System.String, ISingleStream(Of TIn2), System.Func(Of TIn1, TIn2, TOut), System.Boolean)
+  name.vb: Select(Of TIn1, TIn2, TOut)(ISingleStream(Of TIn1), String, ISingleStream(Of TIn2), Func(Of TIn1, TIn2, TOut), Boolean)
 references:
 - uid: Paillave.Etl
   commentId: N:Paillave.Etl
@@ -1064,6 +1482,122 @@ references:
   - name: TResult
     nameWithType: TResult
     fullName: TResult
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream{{TIn}}
+  commentId: '!:ISingleStream{``0}'
+  definition: ISingleStream`1
+  name: ISingleStream<TIn>
+  nameWithType: ISingleStream<TIn>
+  fullName: ISingleStream<TIn>
+  nameWithType.vb: ISingleStream(Of TIn)
+  fullName.vb: ISingleStream(Of TIn)
+  name.vb: ISingleStream(Of TIn)
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream{{TOut}}
+  commentId: '!:ISingleStream{``1}'
+  definition: ISingleStream`1
+  name: ISingleStream<TOut>
+  nameWithType: ISingleStream<TOut>
+  fullName: ISingleStream<TOut>
+  nameWithType.vb: ISingleStream(Of TOut)
+  fullName.vb: ISingleStream(Of TOut)
+  name.vb: ISingleStream(Of TOut)
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream`1
+  isExternal: true
+  name: ISingleStream<>
+  nameWithType: ISingleStream<>
+  fullName: ISingleStream<>
+  nameWithType.vb: ISingleStream(Of )
+  fullName.vb: ISingleStream(Of )
+  name.vb: ISingleStream(Of )
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
   - name: )
     nameWithType: )
     fullName: )
@@ -1822,20 +2356,20 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: IStream{{TIn2}}
-  commentId: '!:IStream{``1}'
-  definition: IStream`1
-  name: IStream<TIn2>
-  nameWithType: IStream<TIn2>
-  fullName: IStream<TIn2>
-  nameWithType.vb: IStream(Of TIn2)
-  fullName.vb: IStream(Of TIn2)
-  name.vb: IStream(Of TIn2)
+- uid: ISingleStream{{TIn2}}
+  commentId: '!:ISingleStream{``1}'
+  definition: ISingleStream`1
+  name: ISingleStream<TIn2>
+  nameWithType: ISingleStream<TIn2>
+  fullName: ISingleStream<TIn2>
+  nameWithType.vb: ISingleStream(Of TIn2)
+  fullName.vb: ISingleStream(Of TIn2)
+  name.vb: ISingleStream(Of TIn2)
   spec.csharp:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: <
     nameWithType: <
@@ -1847,10 +2381,10 @@ references:
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
@@ -1938,6 +2472,45 @@ references:
   - name: TOut
     nameWithType: TOut
     fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream{{TIn1}}
+  commentId: '!:ISingleStream{``0}'
+  definition: ISingleStream`1
+  name: ISingleStream<TIn1>
+  nameWithType: ISingleStream<TIn1>
+  fullName: ISingleStream<TIn1>
+  nameWithType.vb: ISingleStream(Of TIn1)
+  fullName.vb: ISingleStream(Of TIn1)
+  name.vb: ISingleStream(Of TIn1)
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn1
+    nameWithType: TIn1
+    fullName: TIn1
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn1
+    nameWithType: TIn1
+    fullName: TIn1
   - name: )
     nameWithType: )
     fullName: )

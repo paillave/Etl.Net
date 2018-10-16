@@ -26,7 +26,7 @@ namespace Paillave.Etl
                 ProduceValues = valuesProducer
             }), i => i, (i, _) => i);
         }
-        public static IStream<TOut> CrossApplyAction<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> resourceStream, Action<TIn1, TIn2, Action<TOut>> valuesProducer, bool noParallelisation = false)
+        public static IStream<TOut> CrossApplyAction<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, ISingleStream<TIn2> resourceStream, Action<TIn1, TIn2, Action<TOut>> valuesProducer, bool noParallelisation = false)
         {
             return stream.CrossApply(name, resourceStream, new ActionResourceValuesProvider<TIn1, TIn2, TOut>(new ActionResourceValuesProviderArgs<TIn1, TIn2, TOut>()
             {

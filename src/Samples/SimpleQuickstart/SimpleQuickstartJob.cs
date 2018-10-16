@@ -12,7 +12,7 @@ namespace SimpleQuickstart
     {
         public string Name => "Simple quickstart";
 
-        public void DefineProcess(IStream<SimpleConfig> rootStream)
+        public void DefineProcess(ISingleStream<SimpleConfig> rootStream)
         {
             var outputFileS = rootStream.Select("open output file", i => File.OpenWrite(i.OutputFilePath));
             rootStream

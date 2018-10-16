@@ -8,10 +8,10 @@ namespace Paillave.Etl.Core
 {
     public interface IValuesProvider<TValueIn, TValueOut>
     {
-        IDeferedPushObservable<TValueOut> PushValues(TValueIn args);
+        IDeferredPushObservable<TValueOut> PushValues(TValueIn args);
     }
     public interface IValuesProvider<TValueIn, TInToApply, TValueOut>
     {
-        IDeferedPushObservable<TValueOut> PushValues(TInToApply resource, TValueIn args);
+        IDeferredPushObservable<TValueOut> PushValues(TInToApply resource, TValueIn args);
     }
 }

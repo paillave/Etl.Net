@@ -12,15 +12,15 @@ namespace Paillave.Etl.Reactive.Operators
     {
         public static IPushObservable<TOut> FromEnumerable<TOut>(IEnumerable<TOut> enumerable, WaitHandle startSynchronizer)
         {
-            return new EventDeferedPushObservable<TOut>(pushValue =>
+            return new EventDeferredPushObservable<TOut>(pushValue =>
             {
                 foreach (var item in enumerable)
                     pushValue(item);
             }, startSynchronizer);
         }
-        public static IDeferedPushObservable<TOut> FromEnumerable<TOut>(IEnumerable<TOut> enumerable)
+        public static IDeferredPushObservable<TOut> FromEnumerable<TOut>(IEnumerable<TOut> enumerable)
         {
-            return new DeferedPushObservable<TOut>(pushValue =>
+            return new DeferredPushObservable<TOut>(pushValue =>
             {
                 foreach (var item in enumerable)
                     pushValue(item);
@@ -28,17 +28,17 @@ namespace Paillave.Etl.Reactive.Operators
         }
         public static IPushObservable<TOut> FromSingle<TOut>(TOut item, WaitHandle startSynchronizer)
         {
-            return new EventDeferedPushObservable<TOut>(pushValue => pushValue(item), startSynchronizer);
+            return new EventDeferredPushObservable<TOut>(pushValue => pushValue(item), startSynchronizer);
         }
-        public static IDeferedPushObservable<TOut> FromSingle<TOut>(TOut item)
+        public static IDeferredPushObservable<TOut> FromSingle<TOut>(TOut item)
         {
-            return new DeferedPushObservable<TOut>(pushValue => pushValue(item));
+            return new DeferredPushObservable<TOut>(pushValue => pushValue(item));
         }
         public static IPushObservable<int> Range(int from, int count, WaitHandle startSynchronizer)
         {
             return FromEnumerable(Enumerable.Range(from, count), startSynchronizer);
         }
-        public static IDeferedPushObservable<int> Range(int from, int count)
+        public static IDeferredPushObservable<int> Range(int from, int count)
         {
             return FromEnumerable(Enumerable.Range(from, count));
         }
@@ -52,11 +52,11 @@ namespace Paillave.Etl.Reactive.Operators
         }
         public static IPushObservable<TOut> Empty<TOut>(WaitHandle startSynchronizer)
         {
-            return new EventDeferedPushObservable<TOut>(i => { }, startSynchronizer);
+            return new EventDeferredPushObservable<TOut>(i => { }, startSynchronizer);
         }
-        public static IDeferedPushObservable<TOut> Empty<TOut>()
+        public static IDeferredPushObservable<TOut> Empty<TOut>()
         {
-            return new DeferedPushObservable<TOut>(i => { });
+            return new DeferredPushObservable<TOut>(i => { });
         }
     }
 }

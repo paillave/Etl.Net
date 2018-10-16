@@ -57,7 +57,7 @@ namespace Paillave.Etl.Reactive.Operators
                     _outSubscriptions.TryDispose(outSubscription);
                     TryComplete();
                 }, base.PushException);
-                var defered = outS as IDeferedPushObservable<TOut>;
+                var defered = outS as IDeferredPushObservable<TOut>;
                 if (defered != null) defered.Start();
                 _outSubscriptions.Set(outSubscription);
             }

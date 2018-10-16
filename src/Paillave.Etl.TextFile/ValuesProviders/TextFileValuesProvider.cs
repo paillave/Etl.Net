@@ -22,9 +22,9 @@ namespace Paillave.Etl.TextFile.ValuesProviders
         {
             _args = args;
         }
-        public override IDeferedPushObservable<TOut> PushValues(TIn input)
+        public override IDeferredPushObservable<TOut> PushValues(TIn input)
         {
-            var src = new DeferedPushObservable<string>(pushValue =>
+            var src = new DeferredPushObservable<string>(pushValue =>
             {
                 using (base.OpenProcess())
                 using (var sr = new StreamReader(_args.DataStreamSelector(input)))
@@ -32,7 +32,7 @@ namespace Paillave.Etl.TextFile.ValuesProviders
                         pushValue(sr.ReadLine());
             });
             var ret = src.Map(dataLine => _args.ResultSelector(input, dataLine));
-            return new DeferedWrapperPushObservable<TOut>(ret, src.Start);
+            return new DeferredWrapperPushObservable<TOut>(ret, src.Start);
         }
     }
 }

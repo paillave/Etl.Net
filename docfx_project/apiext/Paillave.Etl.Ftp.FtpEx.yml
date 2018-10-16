@@ -5,10 +5,10 @@ items:
   id: FtpEx
   parent: Paillave.Etl.Ftp
   children:
-  - Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,IStream{FtpConnectionInfo})
-  - Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,IStream{FtpConnectionInfo},System.Func{``0,System.String})
-  - Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,IStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
-  - Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,IStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
+  - Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo})
+  - Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String})
+  - Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
+  - Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
   - Paillave.Etl.Ftp.FtpEx.ToFtpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})
   langs:
   - csharp
@@ -44,17 +44,17 @@ items:
   modifiers.vb:
   - Public
   - Module
-- uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,IStream{FtpConnectionInfo},System.Func{``0,System.String})
-  commentId: M:Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,IStream{FtpConnectionInfo},System.Func{``0,System.String})
-  id: CrossApplyFtpFiles``1(IStream{``0},System.String,IStream{FtpConnectionInfo},System.Func{``0,System.String})
+- uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String})
+  commentId: M:Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String})
+  id: CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String})
   isExtensionMethod: true
   parent: Paillave.Etl.Ftp.FtpEx
   langs:
   - csharp
   - vb
-  name: CrossApplyFtpFiles<TIn>(IStream<TIn>, String, IStream<FtpConnectionInfo>, Func<TIn, String>)
-  nameWithType: FtpEx.CrossApplyFtpFiles<TIn>(IStream<TIn>, String, IStream<FtpConnectionInfo>, Func<TIn, String>)
-  fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles<TIn>(IStream<TIn>, System.String, IStream<FtpConnectionInfo>, System.Func<TIn, System.String>)
+  name: CrossApplyFtpFiles<TIn>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>)
+  nameWithType: FtpEx.CrossApplyFtpFiles<TIn>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>)
+  fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles<TIn>(IStream<TIn>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<TIn, System.String>)
   type: Method
   source:
     id: CrossApplyFtpFiles
@@ -64,14 +64,14 @@ items:
   - cs.temp.dll
   namespace: Paillave.Etl.Ftp
   syntax:
-    content: public static IStream<FtpFilesValue> CrossApplyFtpFiles<TIn>(this IStream<TIn> stream, string name, IStream<FtpConnectionInfo> connectionInfoS, Func<TIn, string> getFolderPath)
+    content: public static IStream<FtpFilesValue> CrossApplyFtpFiles<TIn>(this IStream<TIn> stream, string name, ISingleStream<FtpConnectionInfo> connectionInfoS, Func<TIn, string> getFolderPath)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: connectionInfoS
-      type: IStream{FtpConnectionInfo}
+      type: ISingleStream{FtpConnectionInfo}
     - id: getFolderPath
       type: System.Func{{TIn},System.String}
     typeParameters:
@@ -81,28 +81,28 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyFtpFiles(Of TIn)(stream As IStream(Of TIn), name As String, connectionInfoS As IStream(Of FtpConnectionInfo), getFolderPath As Func(Of TIn, String)) As IStream(Of FtpFilesValue)
+      Public Shared Function CrossApplyFtpFiles(Of TIn)(stream As IStream(Of TIn), name As String, connectionInfoS As ISingleStream(Of FtpConnectionInfo), getFolderPath As Func(Of TIn, String)) As IStream(Of FtpFilesValue)
   overload: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles*
-  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), String, IStream(Of FtpConnectionInfo), Func(Of TIn, String))
+  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), System.String, IStream(Of FtpConnectionInfo), System.Func(Of TIn, System.String))
-  name.vb: CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), String, IStream(Of FtpConnectionInfo), Func(Of TIn, String))
-- uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,IStream{FtpConnectionInfo})
-  commentId: M:Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,IStream{FtpConnectionInfo})
-  id: CrossApplyFtpFiles(IStream{System.String},System.String,IStream{FtpConnectionInfo})
+  fullName.vb: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), System.String, ISingleStream(Of FtpConnectionInfo), System.Func(Of TIn, System.String))
+  name.vb: CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String))
+- uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo})
+  commentId: M:Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo})
+  id: CrossApplyFtpFiles(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo})
   isExtensionMethod: true
   parent: Paillave.Etl.Ftp.FtpEx
   langs:
   - csharp
   - vb
-  name: CrossApplyFtpFiles(IStream<String>, String, IStream<FtpConnectionInfo>)
-  nameWithType: FtpEx.CrossApplyFtpFiles(IStream<String>, String, IStream<FtpConnectionInfo>)
-  fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream<System.String>, System.String, IStream<FtpConnectionInfo>)
+  name: CrossApplyFtpFiles(IStream<String>, String, ISingleStream<FtpConnectionInfo>)
+  nameWithType: FtpEx.CrossApplyFtpFiles(IStream<String>, String, ISingleStream<FtpConnectionInfo>)
+  fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream<System.String>, System.String, ISingleStream<FtpConnectionInfo>)
   type: Method
   source:
     id: CrossApplyFtpFiles
@@ -112,41 +112,41 @@ items:
   - cs.temp.dll
   namespace: Paillave.Etl.Ftp
   syntax:
-    content: public static IStream<FtpFilesValue> CrossApplyFtpFiles(this IStream<string> stream, string name, IStream<FtpConnectionInfo> connectionInfoS)
+    content: public static IStream<FtpFilesValue> CrossApplyFtpFiles(this IStream<string> stream, string name, ISingleStream<FtpConnectionInfo> connectionInfoS)
     parameters:
     - id: stream
       type: IStream{System.String}
     - id: name
       type: System.String
     - id: connectionInfoS
-      type: IStream{FtpConnectionInfo}
+      type: ISingleStream{FtpConnectionInfo}
     return:
       type: IStream{FtpFilesValue}
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyFtpFiles(stream As IStream(Of String), name As String, connectionInfoS As IStream(Of FtpConnectionInfo)) As IStream(Of FtpFilesValue)
+      Public Shared Function CrossApplyFtpFiles(stream As IStream(Of String), name As String, connectionInfoS As ISingleStream(Of FtpConnectionInfo)) As IStream(Of FtpFilesValue)
   overload: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles*
-  nameWithType.vb: FtpEx.CrossApplyFtpFiles(IStream(Of String), String, IStream(Of FtpConnectionInfo))
+  nameWithType.vb: FtpEx.CrossApplyFtpFiles(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream(Of System.String), System.String, IStream(Of FtpConnectionInfo))
-  name.vb: CrossApplyFtpFiles(IStream(Of String), String, IStream(Of FtpConnectionInfo))
-- uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,IStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
-  commentId: M:Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,IStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
-  id: CrossApplyFtpFiles``2(IStream{``0},System.String,IStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
+  fullName.vb: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(IStream(Of System.String), System.String, ISingleStream(Of FtpConnectionInfo))
+  name.vb: CrossApplyFtpFiles(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo))
+- uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
+  commentId: M:Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
+  id: CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
   isExtensionMethod: true
   parent: Paillave.Etl.Ftp.FtpEx
   langs:
   - csharp
   - vb
-  name: CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, String, IStream<FtpConnectionInfo>, Func<TIn, String>, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
-  nameWithType: FtpEx.CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, String, IStream<FtpConnectionInfo>, Func<TIn, String>, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
-  fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, System.String, IStream<FtpConnectionInfo>, System.Func<TIn, System.String>, System.Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
+  name: CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
+  nameWithType: FtpEx.CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
+  fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<TIn, System.String>, System.Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
   type: Method
   source:
     id: CrossApplyFtpFiles
@@ -156,14 +156,14 @@ items:
   - cs.temp.dll
   namespace: Paillave.Etl.Ftp
   syntax:
-    content: public static IStream<TOut> CrossApplyFtpFiles<TIn, TOut>(this IStream<TIn> stream, string name, IStream<FtpConnectionInfo> connectionInfoS, Func<TIn, string> getFolderPath, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut> selector)
+    content: public static IStream<TOut> CrossApplyFtpFiles<TIn, TOut>(this IStream<TIn> stream, string name, ISingleStream<FtpConnectionInfo> connectionInfoS, Func<TIn, string> getFolderPath, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut> selector)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: connectionInfoS
-      type: IStream{FtpConnectionInfo}
+      type: ISingleStream{FtpConnectionInfo}
     - id: getFolderPath
       type: System.Func{{TIn},System.String}
     - id: selector
@@ -176,28 +176,28 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyFtpFiles(Of TIn, TOut)(stream As IStream(Of TIn), name As String, connectionInfoS As IStream(Of FtpConnectionInfo), getFolderPath As Func(Of TIn, String), selector As Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut)) As IStream(Of TOut)
+      Public Shared Function CrossApplyFtpFiles(Of TIn, TOut)(stream As IStream(Of TIn), name As String, connectionInfoS As ISingleStream(Of FtpConnectionInfo), getFolderPath As Func(Of TIn, String), selector As Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut)) As IStream(Of TOut)
   overload: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles*
-  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), String, IStream(Of FtpConnectionInfo), Func(Of TIn, String), Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
+  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String), Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), System.String, IStream(Of FtpConnectionInfo), System.Func(Of TIn, System.String), System.Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
-  name.vb: CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), String, IStream(Of FtpConnectionInfo), Func(Of TIn, String), Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
-- uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,IStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
-  commentId: M:Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,IStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
-  id: CrossApplyFtpFiles``1(IStream{System.String},System.String,IStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
+  fullName.vb: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), System.String, ISingleStream(Of FtpConnectionInfo), System.Func(Of TIn, System.String), System.Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
+  name.vb: CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String), Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
+- uid: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
+  commentId: M:Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
+  id: CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
   isExtensionMethod: true
   parent: Paillave.Etl.Ftp.FtpEx
   langs:
   - csharp
   - vb
-  name: CrossApplyFtpFiles<TOut>(IStream<String>, String, IStream<FtpConnectionInfo>, Func<FtpFilesValue, String, FtpConnectionInfo, TOut>)
-  nameWithType: FtpEx.CrossApplyFtpFiles<TOut>(IStream<String>, String, IStream<FtpConnectionInfo>, Func<FtpFilesValue, String, FtpConnectionInfo, TOut>)
-  fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles<TOut>(IStream<System.String>, System.String, IStream<FtpConnectionInfo>, System.Func<FtpFilesValue, System.String, FtpConnectionInfo, TOut>)
+  name: CrossApplyFtpFiles<TOut>(IStream<String>, String, ISingleStream<FtpConnectionInfo>, Func<FtpFilesValue, String, FtpConnectionInfo, TOut>)
+  nameWithType: FtpEx.CrossApplyFtpFiles<TOut>(IStream<String>, String, ISingleStream<FtpConnectionInfo>, Func<FtpFilesValue, String, FtpConnectionInfo, TOut>)
+  fullName: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles<TOut>(IStream<System.String>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<FtpFilesValue, System.String, FtpConnectionInfo, TOut>)
   type: Method
   source:
     id: CrossApplyFtpFiles
@@ -207,14 +207,14 @@ items:
   - cs.temp.dll
   namespace: Paillave.Etl.Ftp
   syntax:
-    content: public static IStream<TOut> CrossApplyFtpFiles<TOut>(this IStream<string> stream, string name, IStream<FtpConnectionInfo> connectionInfoS, Func<FtpFilesValue, string, FtpConnectionInfo, TOut> selector)
+    content: public static IStream<TOut> CrossApplyFtpFiles<TOut>(this IStream<string> stream, string name, ISingleStream<FtpConnectionInfo> connectionInfoS, Func<FtpFilesValue, string, FtpConnectionInfo, TOut> selector)
     parameters:
     - id: stream
       type: IStream{System.String}
     - id: name
       type: System.String
     - id: connectionInfoS
-      type: IStream{FtpConnectionInfo}
+      type: ISingleStream{FtpConnectionInfo}
     - id: selector
       type: System.Func{FtpFilesValue,System.String,FtpConnectionInfo,{TOut}}
     typeParameters:
@@ -224,17 +224,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyFtpFiles(Of TOut)(stream As IStream(Of String), name As String, connectionInfoS As IStream(Of FtpConnectionInfo), selector As Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut)) As IStream(Of TOut)
+      Public Shared Function CrossApplyFtpFiles(Of TOut)(stream As IStream(Of String), name As String, connectionInfoS As ISingleStream(Of FtpConnectionInfo), selector As Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut)) As IStream(Of TOut)
   overload: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles*
-  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TOut)(IStream(Of String), String, IStream(Of FtpConnectionInfo), Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut))
+  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TOut)(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo), Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(Of TOut)(IStream(Of System.String), System.String, IStream(Of FtpConnectionInfo), System.Func(Of FtpFilesValue, System.String, FtpConnectionInfo, TOut))
-  name.vb: CrossApplyFtpFiles(Of TOut)(IStream(Of String), String, IStream(Of FtpConnectionInfo), Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut))
+  fullName.vb: Paillave.Etl.Ftp.FtpEx.CrossApplyFtpFiles(Of TOut)(IStream(Of System.String), System.String, ISingleStream(Of FtpConnectionInfo), System.Func(Of FtpFilesValue, System.String, FtpConnectionInfo, TOut))
+  name.vb: CrossApplyFtpFiles(Of TOut)(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo), Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut))
 - uid: Paillave.Etl.Ftp.FtpEx.ToFtpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})
   commentId: M:Paillave.Etl.Ftp.FtpEx.ToFtpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})
   id: ToFtpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})
@@ -634,20 +634,20 @@ references:
   name: String
   nameWithType: String
   fullName: System.String
-- uid: IStream{FtpConnectionInfo}
-  commentId: '!:IStream{FtpConnectionInfo}'
-  definition: IStream`1
-  name: IStream<FtpConnectionInfo>
-  nameWithType: IStream<FtpConnectionInfo>
-  fullName: IStream<FtpConnectionInfo>
-  nameWithType.vb: IStream(Of FtpConnectionInfo)
-  fullName.vb: IStream(Of FtpConnectionInfo)
-  name.vb: IStream(Of FtpConnectionInfo)
+- uid: ISingleStream{FtpConnectionInfo}
+  commentId: '!:ISingleStream{FtpConnectionInfo}'
+  definition: ISingleStream`1
+  name: ISingleStream<FtpConnectionInfo>
+  nameWithType: ISingleStream<FtpConnectionInfo>
+  fullName: ISingleStream<FtpConnectionInfo>
+  nameWithType.vb: ISingleStream(Of FtpConnectionInfo)
+  fullName.vb: ISingleStream(Of FtpConnectionInfo)
+  name.vb: ISingleStream(Of FtpConnectionInfo)
   spec.csharp:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: <
     nameWithType: <
@@ -661,10 +661,10 @@ references:
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
@@ -804,6 +804,44 @@ references:
     name: IStream
     nameWithType: IStream
     fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream`1
+  isExternal: true
+  name: ISingleStream<>
+  nameWithType: ISingleStream<>
+  fullName: ISingleStream<>
+  nameWithType.vb: ISingleStream(Of )
+  fullName.vb: ISingleStream(Of )
+  name.vb: ISingleStream(Of )
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
