@@ -13,7 +13,7 @@ namespace SubProcessQuickStart.Jobs
 
         public void DefineProcess(ISingleStream<MyConfig> rootStream)
         {
-            var outputFileResourceS = rootStream.Select("open output file", i => File.OpenWrite(i.DestinationFilePath));
+            var outputFileResourceS = rootStream.Select("open output file", i => (Stream)File.OpenWrite(i.DestinationFilePath));
 
             var parsedLineS = rootStream
                 .CrossApplyFolderFiles("get folder files", i => i.InputFolderPath, i => i.InputFilesSearchPattern, (f, r) => f.Name)
@@ -32,7 +32,8 @@ namespace SubProcessQuickStart.Jobs
                 {
                     var groupOutputFileS = groupedLines
                         .Top("Take first row", 1)
-                        .Select("Open output file", i => File.OpenWrite(Path.Combine(i.Cfg.CategoryDestinationFolder, $"Category-{i.Data.Category}.csv")));
+                        .EnsureSingle("Ensure only one element in group")
+                        .Select("Open output file", i => (Stream)File.OpenWrite(Path.Combine(i.Cfg.CategoryDestinationFolder, $"Category-{i.Data.Category}.csv")));
                     groupedLines
                         .Select("create output data", i => new OutputFileRow { Id = i.Data.Id, Name = i.Data.Name, FileName = i.Data.FileName })
                         .ThroughTextFile("Write lines to matching category text file", groupOutputFileS, new OutputFileRowMapper());

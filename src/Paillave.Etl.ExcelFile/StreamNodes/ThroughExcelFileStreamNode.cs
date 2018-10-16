@@ -18,7 +18,7 @@ namespace Paillave.Etl.ExcelFile.StreamNodes
         where TStream : IStream<TIn>
     {
         public TStream MainStream { get; set; }
-        public IStream<Stream> TargetStream { get; set; }
+        public ISingleStream<Stream> TargetStream { get; set; }
         public ExcelFileDefinition<TIn> Mapping { get; set; }
     }
     public class ThroughExcelFileStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ThroughExcelFileArgs<TIn, TStream>>

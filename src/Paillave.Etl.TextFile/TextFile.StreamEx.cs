@@ -131,7 +131,7 @@ namespace Paillave.Etl.TextFile
         #endregion
 
         #region ThroughTextFile
-        public static IStream<TIn> ThroughTextFile<TIn>(this IStream<TIn> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
+        public static IStream<TIn> ThroughTextFile<TIn>(this IStream<TIn> stream, string name, ISingleStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
         {
             return new ThroughFlatFileStreamNode<TIn, IStream<TIn>>(name, new ThroughFlatFileArgs<TIn, IStream<TIn>>
             {
@@ -140,7 +140,7 @@ namespace Paillave.Etl.TextFile
                 TargetStream = resourceStream
             }).Output;
         }
-        public static ISortedStream<TIn, TKey> ThroughTextFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
+        public static ISortedStream<TIn, TKey> ThroughTextFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, ISingleStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
         {
             return new ThroughFlatFileStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new ThroughFlatFileArgs<TIn, ISortedStream<TIn, TKey>>
             {
@@ -149,7 +149,7 @@ namespace Paillave.Etl.TextFile
                 TargetStream = resourceStream
             }).Output;
         }
-        public static IKeyedStream<TIn, TKey> ThroughTextFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
+        public static IKeyedStream<TIn, TKey> ThroughTextFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, ISingleStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
         {
             return new ThroughFlatFileStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new ThroughFlatFileArgs<TIn, IKeyedStream<TIn, TKey>>
             {

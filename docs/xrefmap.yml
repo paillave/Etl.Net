@@ -507,33 +507,33 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile
   nameWithType: ExcelFileEx.ThroughExcelFile
-- uid: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,IStream{Stream},ExcelFileDefinition{``0})
-  name: ThroughExcelFile<TIn>(IStream<TIn>, String, IStream<Stream>, ExcelFileDefinition<TIn>)
-  href: apiext/Paillave.Etl.ExcelFile.ExcelFileEx.html#Paillave_Etl_ExcelFile_ExcelFileEx_ThroughExcelFile__1_IStream___0__System_String_IStream_Stream__ExcelFileDefinition___0__
-  commentId: M:Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,IStream{Stream},ExcelFileDefinition{``0})
-  name.vb: ThroughExcelFile(Of TIn)(IStream(Of TIn), String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
-  fullName: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile<TIn>(IStream<TIn>, System.String, IStream<Stream>, ExcelFileDefinition<TIn>)
-  fullName.vb: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile(Of TIn)(IStream(Of TIn), System.String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
-  nameWithType: ExcelFileEx.ThroughExcelFile<TIn>(IStream<TIn>, String, IStream<Stream>, ExcelFileDefinition<TIn>)
-  nameWithType.vb: ExcelFileEx.ThroughExcelFile(Of TIn)(IStream(Of TIn), String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
-- uid: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,IStream{Stream},ExcelFileDefinition{``0})
-  name: ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, IStream<Stream>, ExcelFileDefinition<TIn>)
-  href: apiext/Paillave.Etl.ExcelFile.ExcelFileEx.html#Paillave_Etl_ExcelFile_ExcelFileEx_ThroughExcelFile__2_IKeyedStream___0___1__System_String_IStream_Stream__ExcelFileDefinition___0__
-  commentId: M:Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,IStream{Stream},ExcelFileDefinition{``0})
-  name.vb: ThroughExcelFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
-  fullName: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, IStream<Stream>, ExcelFileDefinition<TIn>)
-  fullName.vb: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), System.String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
-  nameWithType: ExcelFileEx.ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, IStream<Stream>, ExcelFileDefinition<TIn>)
-  nameWithType.vb: ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
-- uid: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(ISortedStream{``0,``1},System.String,IStream{Stream},ExcelFileDefinition{``0})
-  name: ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, IStream<Stream>, ExcelFileDefinition<TIn>)
-  href: apiext/Paillave.Etl.ExcelFile.ExcelFileEx.html#Paillave_Etl_ExcelFile_ExcelFileEx_ThroughExcelFile__2_ISortedStream___0___1__System_String_IStream_Stream__ExcelFileDefinition___0__
-  commentId: M:Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(ISortedStream{``0,``1},System.String,IStream{Stream},ExcelFileDefinition{``0})
-  name.vb: ThroughExcelFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
-  fullName: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, IStream<Stream>, ExcelFileDefinition<TIn>)
-  fullName.vb: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), System.String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
-  nameWithType: ExcelFileEx.ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, IStream<Stream>, ExcelFileDefinition<TIn>)
-  nameWithType.vb: ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of Stream), ExcelFileDefinition(Of TIn))
+- uid: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  name: ThroughExcelFile<TIn>(IStream<TIn>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  href: apiext/Paillave.Etl.ExcelFile.ExcelFileEx.html#Paillave_Etl_ExcelFile_ExcelFileEx_ThroughExcelFile__1_IStream___0__System_String_ISingleStream_Stream__ExcelFileDefinition___0__
+  commentId: M:Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  name.vb: ThroughExcelFile(Of TIn)(IStream(Of TIn), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+  fullName: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile<TIn>(IStream<TIn>, System.String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  fullName.vb: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile(Of TIn)(IStream(Of TIn), System.String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+  nameWithType: ExcelFileEx.ThroughExcelFile<TIn>(IStream<TIn>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  nameWithType.vb: ExcelFileEx.ThroughExcelFile(Of TIn)(IStream(Of TIn), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+- uid: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  name: ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  href: apiext/Paillave.Etl.ExcelFile.ExcelFileEx.html#Paillave_Etl_ExcelFile_ExcelFileEx_ThroughExcelFile__2_IKeyedStream___0___1__System_String_ISingleStream_Stream__ExcelFileDefinition___0__
+  commentId: M:Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  name.vb: ThroughExcelFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+  fullName: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  fullName.vb: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), System.String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+  nameWithType: ExcelFileEx.ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  nameWithType.vb: ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+- uid: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(ISortedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  name: ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  href: apiext/Paillave.Etl.ExcelFile.ExcelFileEx.html#Paillave_Etl_ExcelFile_ExcelFileEx_ThroughExcelFile__2_ISortedStream___0___1__System_String_ISingleStream_Stream__ExcelFileDefinition___0__
+  commentId: M:Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile``2(ISortedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  name.vb: ThroughExcelFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+  fullName: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  fullName.vb: Paillave.Etl.ExcelFile.ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), System.String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+  nameWithType: ExcelFileEx.ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  nameWithType.vb: ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
 - uid: Paillave.Etl.ExcelFile.ExcelFileEx.ToExcelFile*
   name: ToExcelFile
   href: apiext/Paillave.Etl.ExcelFile.ExcelFileEx.html#Paillave_Etl_ExcelFile_ExcelFileEx_ToExcelFile_
@@ -1014,15 +1014,15 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery
   nameWithType: SqlServerEx.CrossApplySqlServerQuery
-- uid: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery``3(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)
-  name: CrossApplySqlServerQuery<TIn, TRes, TOut>(IStream<TIn>, String, ISingleStream<SqlConnection>, String, Boolean)
-  href: apiext/Paillave.Etl.SqlServer.SqlServerEx.html#Paillave_Etl_SqlServer_SqlServerEx_CrossApplySqlServerQuery__3_IStream___0__System_String_ISingleStream_SqlConnection__System_String_System_Boolean_
-  commentId: M:Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery``3(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)
-  name.vb: CrossApplySqlServerQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, ISingleStream(Of SqlConnection), String, Boolean)
-  fullName: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery<TIn, TRes, TOut>(IStream<TIn>, System.String, ISingleStream<SqlConnection>, System.String, System.Boolean)
-  fullName.vb: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery(Of TIn, TRes, TOut)(IStream(Of TIn), System.String, ISingleStream(Of SqlConnection), System.String, System.Boolean)
-  nameWithType: SqlServerEx.CrossApplySqlServerQuery<TIn, TRes, TOut>(IStream<TIn>, String, ISingleStream<SqlConnection>, String, Boolean)
-  nameWithType.vb: SqlServerEx.CrossApplySqlServerQuery(Of TIn, TRes, TOut)(IStream(Of TIn), String, ISingleStream(Of SqlConnection), String, Boolean)
+- uid: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery``2(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)
+  name: CrossApplySqlServerQuery<TIn, TOut>(IStream<TIn>, String, ISingleStream<SqlConnection>, String, Boolean)
+  href: apiext/Paillave.Etl.SqlServer.SqlServerEx.html#Paillave_Etl_SqlServer_SqlServerEx_CrossApplySqlServerQuery__2_IStream___0__System_String_ISingleStream_SqlConnection__System_String_System_Boolean_
+  commentId: M:Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery``2(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)
+  name.vb: CrossApplySqlServerQuery(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of SqlConnection), String, Boolean)
+  fullName: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery<TIn, TOut>(IStream<TIn>, System.String, ISingleStream<SqlConnection>, System.String, System.Boolean)
+  fullName.vb: Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery(Of TIn, TOut)(IStream(Of TIn), System.String, ISingleStream(Of SqlConnection), System.String, System.Boolean)
+  nameWithType: SqlServerEx.CrossApplySqlServerQuery<TIn, TOut>(IStream<TIn>, String, ISingleStream<SqlConnection>, String, Boolean)
+  nameWithType.vb: SqlServerEx.CrossApplySqlServerQuery(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of SqlConnection), String, Boolean)
 - uid: Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer*
   name: ThroughSqlServer
   href: apiext/Paillave.Etl.SqlServer.SqlServerEx.html#Paillave_Etl_SqlServer_SqlServerEx_ThroughSqlServer_
@@ -1030,15 +1030,15 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer
   nameWithType: SqlServerEx.ThroughSqlServer
-- uid: Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer``2(IStream{``0},System.String,IStream{SqlConnection})
-  name: ThroughSqlServer<TIn, TRes>(IStream<TIn>, String, IStream<SqlConnection>)
-  href: apiext/Paillave.Etl.SqlServer.SqlServerEx.html#Paillave_Etl_SqlServer_SqlServerEx_ThroughSqlServer__2_IStream___0__System_String_IStream_SqlConnection__
-  commentId: M:Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer``2(IStream{``0},System.String,IStream{SqlConnection})
-  name.vb: ThroughSqlServer(Of TIn, TRes)(IStream(Of TIn), String, IStream(Of SqlConnection))
-  fullName: Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer<TIn, TRes>(IStream<TIn>, System.String, IStream<SqlConnection>)
-  fullName.vb: Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer(Of TIn, TRes)(IStream(Of TIn), System.String, IStream(Of SqlConnection))
-  nameWithType: SqlServerEx.ThroughSqlServer<TIn, TRes>(IStream<TIn>, String, IStream<SqlConnection>)
-  nameWithType.vb: SqlServerEx.ThroughSqlServer(Of TIn, TRes)(IStream(Of TIn), String, IStream(Of SqlConnection))
+- uid: Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer``1(IStream{``0},System.String,ISingleStream{SqlConnection},System.String)
+  name: ThroughSqlServer<TIn>(IStream<TIn>, String, ISingleStream<SqlConnection>, String)
+  href: apiext/Paillave.Etl.SqlServer.SqlServerEx.html#Paillave_Etl_SqlServer_SqlServerEx_ThroughSqlServer__1_IStream___0__System_String_ISingleStream_SqlConnection__System_String_
+  commentId: M:Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer``1(IStream{``0},System.String,ISingleStream{SqlConnection},System.String)
+  name.vb: ThroughSqlServer(Of TIn)(IStream(Of TIn), String, ISingleStream(Of SqlConnection), String)
+  fullName: Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer<TIn>(IStream<TIn>, System.String, ISingleStream<SqlConnection>, System.String)
+  fullName.vb: Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer(Of TIn)(IStream(Of TIn), System.String, ISingleStream(Of SqlConnection), System.String)
+  nameWithType: SqlServerEx.ThroughSqlServer<TIn>(IStream<TIn>, String, ISingleStream<SqlConnection>, String)
+  nameWithType.vb: SqlServerEx.ThroughSqlServer(Of TIn)(IStream(Of TIn), String, ISingleStream(Of SqlConnection), String)
 - uid: Paillave.Etl.StreamNodes
   name: Paillave.Etl.StreamNodes
   href: api/Paillave.Etl.StreamNodes.html
@@ -1407,33 +1407,33 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile
   nameWithType: TextFileEx.ThroughTextFile
-- uid: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``1(IStream{``0},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
-  name: ThroughTextFile<TIn>(IStream<TIn>, String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
-  href: apiext/Paillave.Etl.TextFile.TextFileEx.html#Paillave_Etl_TextFile_TextFileEx_ThroughTextFile__1_IStream___0__System_String_IStream_SystemIO_Stream__FlatFileDefinition___0__
-  commentId: M:Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``1(IStream{``0},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
-  name.vb: ThroughTextFile(Of TIn)(IStream(Of TIn), String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
-  fullName: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile<TIn>(IStream<TIn>, System.String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
-  fullName.vb: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile(Of TIn)(IStream(Of TIn), System.String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
-  nameWithType: TextFileEx.ThroughTextFile<TIn>(IStream<TIn>, String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
-  nameWithType.vb: TextFileEx.ThroughTextFile(Of TIn)(IStream(Of TIn), String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
-- uid: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(IKeyedStream{``0,``1},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
-  name: ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
-  href: apiext/Paillave.Etl.TextFile.TextFileEx.html#Paillave_Etl_TextFile_TextFileEx_ThroughTextFile__2_IKeyedStream___0___1__System_String_IStream_SystemIO_Stream__FlatFileDefinition___0__
-  commentId: M:Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(IKeyedStream{``0,``1},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
-  name.vb: ThroughTextFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
-  fullName: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
-  fullName.vb: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), System.String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
-  nameWithType: TextFileEx.ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
-  nameWithType.vb: TextFileEx.ThroughTextFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
-- uid: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(ISortedStream{``0,``1},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
-  name: ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
-  href: apiext/Paillave.Etl.TextFile.TextFileEx.html#Paillave_Etl_TextFile_TextFileEx_ThroughTextFile__2_ISortedStream___0___1__System_String_IStream_SystemIO_Stream__FlatFileDefinition___0__
-  commentId: M:Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(ISortedStream{``0,``1},System.String,IStream{SystemIO.Stream},FlatFileDefinition{``0})
-  name.vb: ThroughTextFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
-  fullName: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
-  fullName.vb: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), System.String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
-  nameWithType: TextFileEx.ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, IStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
-  nameWithType.vb: TextFileEx.ThroughTextFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+- uid: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``1(IStream{``0},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  name: ThroughTextFile<TIn>(IStream<TIn>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  href: apiext/Paillave.Etl.TextFile.TextFileEx.html#Paillave_Etl_TextFile_TextFileEx_ThroughTextFile__1_IStream___0__System_String_ISingleStream_SystemIO_Stream__FlatFileDefinition___0__
+  commentId: M:Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``1(IStream{``0},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  name.vb: ThroughTextFile(Of TIn)(IStream(Of TIn), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  fullName: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile<TIn>(IStream<TIn>, System.String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  fullName.vb: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile(Of TIn)(IStream(Of TIn), System.String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  nameWithType: TextFileEx.ThroughTextFile<TIn>(IStream<TIn>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  nameWithType.vb: TextFileEx.ThroughTextFile(Of TIn)(IStream(Of TIn), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+- uid: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  name: ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  href: apiext/Paillave.Etl.TextFile.TextFileEx.html#Paillave_Etl_TextFile_TextFileEx_ThroughTextFile__2_IKeyedStream___0___1__System_String_ISingleStream_SystemIO_Stream__FlatFileDefinition___0__
+  commentId: M:Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  name.vb: ThroughTextFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  fullName: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  fullName.vb: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), System.String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  nameWithType: TextFileEx.ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  nameWithType.vb: TextFileEx.ThroughTextFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+- uid: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(ISortedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  name: ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  href: apiext/Paillave.Etl.TextFile.TextFileEx.html#Paillave_Etl_TextFile_TextFileEx_ThroughTextFile__2_ISortedStream___0___1__System_String_ISingleStream_SystemIO_Stream__FlatFileDefinition___0__
+  commentId: M:Paillave.Etl.TextFile.TextFileEx.ThroughTextFile``2(ISortedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  name.vb: ThroughTextFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  fullName: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  fullName.vb: Paillave.Etl.TextFile.TextFileEx.ThroughTextFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), System.String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  nameWithType: TextFileEx.ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  nameWithType.vb: TextFileEx.ThroughTextFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
 - uid: Paillave.Etl.TextFile.TextFileEx.ToTextFile*
   name: ToTextFile
   href: apiext/Paillave.Etl.TextFile.TextFileEx.html#Paillave_Etl_TextFile_TextFileEx_ToTextFile_

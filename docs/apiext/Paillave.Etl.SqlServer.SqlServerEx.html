@@ -90,12 +90,12 @@
   
   
   <a id="Paillave_Etl_SqlServer_SqlServerEx_CrossApplySqlServerQuery_" data-uid="Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery*"></a>
-  <h4 id="Paillave_Etl_SqlServer_SqlServerEx_CrossApplySqlServerQuery__3_IStream___0__System_String_ISingleStream_SqlConnection__System_String_System_Boolean_" data-uid="Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery``3(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)">CrossApplySqlServerQuery&lt;TIn, TRes, TOut&gt;(IStream&lt;TIn&gt;, String, ISingleStream&lt;SqlConnection&gt;, String, Boolean)</h4>
+  <h4 id="Paillave_Etl_SqlServer_SqlServerEx_CrossApplySqlServerQuery__2_IStream___0__System_String_ISingleStream_SqlConnection__System_String_System_Boolean_" data-uid="Paillave.Etl.SqlServer.SqlServerEx.CrossApplySqlServerQuery``2(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)">CrossApplySqlServerQuery&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, ISingleStream&lt;SqlConnection&gt;, String, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplySqlServerQuery&lt;TIn, TRes, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, ISingleStream&lt;SqlConnection&gt; sqlConnection, string sqlQuery, bool noParallelisation = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplySqlServerQuery&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, ISingleStream&lt;SqlConnection&gt; sqlConnection, string sqlQuery, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -163,10 +163,6 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="parametername">TRes</span></td>
-        <td></td>
-      </tr>
-      <tr>
         <td><span class="parametername">TOut</span></td>
         <td></td>
       </tr>
@@ -175,12 +171,12 @@
   
   
   <a id="Paillave_Etl_SqlServer_SqlServerEx_ThroughSqlServer_" data-uid="Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer*"></a>
-  <h4 id="Paillave_Etl_SqlServer_SqlServerEx_ThroughSqlServer__2_IStream___0__System_String_IStream_SqlConnection__" data-uid="Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer``2(IStream{``0},System.String,IStream{SqlConnection})">ThroughSqlServer&lt;TIn, TRes&gt;(IStream&lt;TIn&gt;, String, IStream&lt;SqlConnection&gt;)</h4>
+  <h4 id="Paillave_Etl_SqlServer_SqlServerEx_ThroughSqlServer__1_IStream___0__System_String_ISingleStream_SqlConnection__System_String_" data-uid="Paillave.Etl.SqlServer.SqlServerEx.ThroughSqlServer``1(IStream{``0},System.String,ISingleStream{SqlConnection},System.String)">ThroughSqlServer&lt;TIn&gt;(IStream&lt;TIn&gt;, String, ISingleStream&lt;SqlConnection&gt;, String)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TIn&gt; ThroughSqlServer&lt;TIn, TRes&gt;(this IStream&lt;TIn&gt; stream, string name, IStream&lt;SqlConnection&gt; sqlConnection)
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TIn&gt; ThroughSqlServer&lt;TIn&gt;(this IStream&lt;TIn&gt; stream, string name, ISingleStream&lt;SqlConnection&gt; sqlConnection, string sqlQuery)
     where TIn : class</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -204,8 +200,13 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IStream</span>&lt;<span class="xref">SqlConnection</span>&gt;</td>
+        <td><span class="xref">ISingleStream</span>&lt;<span class="xref">SqlConnection</span>&gt;</td>
         <td><span class="parametername">sqlConnection</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">sqlQuery</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -236,10 +237,6 @@
     <tbody>
       <tr>
         <td><span class="parametername">TIn</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TRes</span></td>
         <td></td>
       </tr>
     </tbody>

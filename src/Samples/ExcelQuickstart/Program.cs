@@ -25,7 +25,7 @@ namespace ExcelQuickstart
 
         public void DefineProcess(ISingleStream<SimpleConfig> rootStream)
         {
-            var outputFile = rootStream.Select("open output file", i => File.OpenWrite(i.OutputFile));
+            var outputFile = rootStream.Select("open output file", i => (Stream)File.OpenWrite(i.OutputFile));
             rootStream
                 .CrossApplyFolderFiles("get excel files", i => i.InputDirectory, (f, r) => f.Name, "*.xlsx")
                 .Select("link to root stream", rootStream, (i, s) => new { FileName = i, OutputFileName = s.OutputFile })
