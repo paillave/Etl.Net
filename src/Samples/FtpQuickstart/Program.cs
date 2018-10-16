@@ -1,6 +1,8 @@
 ﻿using Paillave.Etl;
+using Paillave.Etl.Extensions;
 using Paillave.Etl.Core.Streams;
 using Paillave.Etl.Ftp;
+using Paillave.Etl.Ftp.Extensions;
 using System;
 
 namespace FtpQuickstart

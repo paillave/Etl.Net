@@ -28,21 +28,23 @@ Execution plan extensions for Etl.Net
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ActualExecutionPlan.D3Sankey.html" />
+    <None Remove="Resources/*" />
+    <!-- <None Remove="ActualExecutionPlan.D3Sankey.html" />
     <None Remove="ActualExecutionPlan.PlotySankey.html" />
     <None Remove="ActualExecutionPlan.VisNetwork.html" />
     <None Remove="EstimatedExecutionPlan.D3Sankey.html" />
     <None Remove="EstimatedExecutionPlan.PlotySankey.html" />
-    <None Remove="EstimatedExecutionPlan.VisNetwork.html" />
+    <None Remove="EstimatedExecutionPlan.VisNetwork.html" /> -->
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="EstimatedExecutionPlan.PlotySankey.html" />
+    <EmbeddedResource Include="Resources/*" />
+    <!-- <EmbeddedResource Include="EstimatedExecutionPlan.PlotySankey.html" />
     <EmbeddedResource Include="EstimatedExecutionPlan.D3Sankey.html" />
     <EmbeddedResource Include="EstimatedExecutionPlan.VisNetwork.html" />
     <EmbeddedResource Include="ActualExecutionPlan.VisNetwork.html" />
     <EmbeddedResource Include="ActualExecutionPlan.PlotySankey.html" />
-    <EmbeddedResource Include="ActualExecutionPlan.D3Sankey.html" />
+    <EmbeddedResource Include="ActualExecutionPlan.D3Sankey.html" /> -->
   </ItemGroup>
 
   <ItemGroup>

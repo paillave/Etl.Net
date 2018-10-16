@@ -1,4 +1,5 @@
 using Paillave.Etl;
+using Paillave.Etl.Extensions;
 using Paillave.Etl.Core.Streams;
 using System.Linq;
 

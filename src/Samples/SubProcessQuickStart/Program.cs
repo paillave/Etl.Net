@@ -1,4 +1,5 @@
 ﻿using Paillave.Etl;
+using Paillave.Etl.Extensions;
 using System.IO;
 using Paillave.Etl.Core.Streams;
 using System;
@@ -7,6 +8,7 @@ using SubProcessQuickStart.Jobs;
 using SubProcessQuickStart.StreamTypes;
 using Paillave.Etl.Core;
 using Paillave.Etl.ExecutionPlan;
+using Paillave.Etl.ExecutionPlan.Extensions;
 
 namespace SubProcessQuickStart
 {

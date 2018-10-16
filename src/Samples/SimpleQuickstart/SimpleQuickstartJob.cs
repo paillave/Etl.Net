@@ -1,10 +1,12 @@
 ﻿using Paillave.Etl;
+using Paillave.Etl.Extensions;
 using System;
 using System.IO;
 using Paillave.Etl.Core;
 using Paillave.Etl.TextFile.Core;
 using Paillave.Etl.Core.Streams;
 using Paillave.Etl.TextFile;
+using Paillave.Etl.TextFile.Extensions;
 
 namespace SimpleQuickstart
 {

@@ -1,5 +1,6 @@
 ﻿using Paillave.Etl.Core;
 using Paillave.Etl.Core.Streams;
+using Paillave.Etl.Extensions;
 using Paillave.Etl.Reactive.Core;
 using Paillave.Etl.Reactive.Disposables;
 using Paillave.Etl.Reactive.Operators;

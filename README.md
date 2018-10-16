@@ -22,6 +22,7 @@ The reactive approach for the implementation of this engine ensures parallelized
 
 > [!WARNING]
 > This library is still under development, don't use it on production environment yet as its api structure is subject for changes.
+> The documentation is being written with a large set of unit tests
 
 The first alpha release is expected once it starts to be a decent candidate to replace SSIS for common use cases.
 
