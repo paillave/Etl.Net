@@ -1,0 +1,1433 @@
+### YamlMime:ManagedReference
+items:
+- uid: Paillave.Etl.Ftp.Extensions.FtpEx
+  commentId: T:Paillave.Etl.Ftp.Extensions.FtpEx
+  id: FtpEx
+  parent: Paillave.Etl.Ftp.Extensions
+  children:
+  - Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo})
+  - Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String})
+  - Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
+  - Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
+  - Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})
+  langs:
+  - csharp
+  - vb
+  name: FtpEx
+  nameWithType: FtpEx
+  fullName: Paillave.Etl.Ftp.Extensions.FtpEx
+  type: Class
+  source:
+    id: FtpEx
+    path: ''
+    startLine: 235
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Ftp.Extensions
+  syntax:
+    content: public static class FtpEx
+    content.vb: Public Module FtpEx
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.ToString
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  modifiers.csharp:
+  - public
+  - static
+  - class
+  modifiers.vb:
+  - Public
+  - Module
+- uid: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String})
+  commentId: M:Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String})
+  id: CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String})
+  isExtensionMethod: true
+  parent: Paillave.Etl.Ftp.Extensions.FtpEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyFtpFiles<TIn>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>)
+  nameWithType: FtpEx.CrossApplyFtpFiles<TIn>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>)
+  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles<TIn>(IStream<TIn>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<TIn, System.String>)
+  type: Method
+  source:
+    id: CrossApplyFtpFiles
+    path: ''
+    startLine: 238
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Ftp.Extensions
+  syntax:
+    content: public static IStream<FtpFilesValue> CrossApplyFtpFiles<TIn>(this IStream<TIn> stream, string name, ISingleStream<FtpConnectionInfo> connectionInfoS, Func<TIn, string> getFolderPath)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: connectionInfoS
+      type: ISingleStream{FtpConnectionInfo}
+    - id: getFolderPath
+      type: System.Func{{TIn},System.String}
+    typeParameters:
+    - id: TIn
+    return:
+      type: IStream{FtpFilesValue}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyFtpFiles(Of TIn)(stream As IStream(Of TIn), name As String, connectionInfoS As ISingleStream(Of FtpConnectionInfo), getFolderPath As Func(Of TIn, String)) As IStream(Of FtpFilesValue)
+  overload: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles*
+  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), System.String, ISingleStream(Of FtpConnectionInfo), System.Func(Of TIn, System.String))
+  name.vb: CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String))
+- uid: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo})
+  commentId: M:Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo})
+  id: CrossApplyFtpFiles(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo})
+  isExtensionMethod: true
+  parent: Paillave.Etl.Ftp.Extensions.FtpEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyFtpFiles(IStream<String>, String, ISingleStream<FtpConnectionInfo>)
+  nameWithType: FtpEx.CrossApplyFtpFiles(IStream<String>, String, ISingleStream<FtpConnectionInfo>)
+  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(IStream<System.String>, System.String, ISingleStream<FtpConnectionInfo>)
+  type: Method
+  source:
+    id: CrossApplyFtpFiles
+    path: ''
+    startLine: 242
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Ftp.Extensions
+  syntax:
+    content: public static IStream<FtpFilesValue> CrossApplyFtpFiles(this IStream<string> stream, string name, ISingleStream<FtpConnectionInfo> connectionInfoS)
+    parameters:
+    - id: stream
+      type: IStream{System.String}
+    - id: name
+      type: System.String
+    - id: connectionInfoS
+      type: ISingleStream{FtpConnectionInfo}
+    return:
+      type: IStream{FtpFilesValue}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyFtpFiles(stream As IStream(Of String), name As String, connectionInfoS As ISingleStream(Of FtpConnectionInfo)) As IStream(Of FtpFilesValue)
+  overload: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles*
+  nameWithType.vb: FtpEx.CrossApplyFtpFiles(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(IStream(Of System.String), System.String, ISingleStream(Of FtpConnectionInfo))
+  name.vb: CrossApplyFtpFiles(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo))
+- uid: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
+  commentId: M:Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
+  id: CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
+  isExtensionMethod: true
+  parent: Paillave.Etl.Ftp.Extensions.FtpEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
+  nameWithType: FtpEx.CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
+  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<TIn, System.String>, System.Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
+  type: Method
+  source:
+    id: CrossApplyFtpFiles
+    path: ''
+    startLine: 246
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Ftp.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyFtpFiles<TIn, TOut>(this IStream<TIn> stream, string name, ISingleStream<FtpConnectionInfo> connectionInfoS, Func<TIn, string> getFolderPath, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut> selector)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: connectionInfoS
+      type: ISingleStream{FtpConnectionInfo}
+    - id: getFolderPath
+      type: System.Func{{TIn},System.String}
+    - id: selector
+      type: System.Func{FtpFilesValue,{TIn},FtpConnectionInfo,{TOut}}
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyFtpFiles(Of TIn, TOut)(stream As IStream(Of TIn), name As String, connectionInfoS As ISingleStream(Of FtpConnectionInfo), getFolderPath As Func(Of TIn, String), selector As Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut)) As IStream(Of TOut)
+  overload: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles*
+  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String), Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), System.String, ISingleStream(Of FtpConnectionInfo), System.Func(Of TIn, System.String), System.Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
+  name.vb: CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String), Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
+- uid: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
+  commentId: M:Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
+  id: CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
+  isExtensionMethod: true
+  parent: Paillave.Etl.Ftp.Extensions.FtpEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyFtpFiles<TOut>(IStream<String>, String, ISingleStream<FtpConnectionInfo>, Func<FtpFilesValue, String, FtpConnectionInfo, TOut>)
+  nameWithType: FtpEx.CrossApplyFtpFiles<TOut>(IStream<String>, String, ISingleStream<FtpConnectionInfo>, Func<FtpFilesValue, String, FtpConnectionInfo, TOut>)
+  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles<TOut>(IStream<System.String>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<FtpFilesValue, System.String, FtpConnectionInfo, TOut>)
+  type: Method
+  source:
+    id: CrossApplyFtpFiles
+    path: ''
+    startLine: 250
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Ftp.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyFtpFiles<TOut>(this IStream<string> stream, string name, ISingleStream<FtpConnectionInfo> connectionInfoS, Func<FtpFilesValue, string, FtpConnectionInfo, TOut> selector)
+    parameters:
+    - id: stream
+      type: IStream{System.String}
+    - id: name
+      type: System.String
+    - id: connectionInfoS
+      type: ISingleStream{FtpConnectionInfo}
+    - id: selector
+      type: System.Func{FtpFilesValue,System.String,FtpConnectionInfo,{TOut}}
+    typeParameters:
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyFtpFiles(Of TOut)(stream As IStream(Of String), name As String, connectionInfoS As ISingleStream(Of FtpConnectionInfo), selector As Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut)) As IStream(Of TOut)
+  overload: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles*
+  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TOut)(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo), Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(Of TOut)(IStream(Of System.String), System.String, ISingleStream(Of FtpConnectionInfo), System.Func(Of FtpFilesValue, System.String, FtpConnectionInfo, TOut))
+  name.vb: CrossApplyFtpFiles(Of TOut)(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo), Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut))
+- uid: Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})
+  commentId: M:Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})
+  id: ToFtpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})
+  isExtensionMethod: true
+  parent: Paillave.Etl.Ftp.Extensions.FtpEx
+  langs:
+  - csharp
+  - vb
+  name: ToFtpFile<TParams>(IStream<Stream>, String, IStream<TParams>, Func<TParams, String>, Func<TParams, FtpConnectionInfo>)
+  nameWithType: FtpEx.ToFtpFile<TParams>(IStream<Stream>, String, IStream<TParams>, Func<TParams, String>, Func<TParams, FtpConnectionInfo>)
+  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile<TParams>(IStream<Stream>, System.String, IStream<TParams>, System.Func<TParams, System.String>, System.Func<TParams, FtpConnectionInfo>)
+  type: Method
+  source:
+    id: ToFtpFile
+    path: ''
+    startLine: 257
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Ftp.Extensions
+  syntax:
+    content: public static IStream<Stream> ToFtpFile<TParams>(this IStream<Stream> stream, string name, IStream<TParams> paramsStream, Func<TParams, string> getOutputFilePath, Func<TParams, FtpConnectionInfo> getConnectionInfo)
+    parameters:
+    - id: stream
+      type: IStream{Stream}
+    - id: name
+      type: System.String
+    - id: paramsStream
+      type: IStream{{TParams}}
+    - id: getOutputFilePath
+      type: System.Func{{TParams},System.String}
+    - id: getConnectionInfo
+      type: System.Func{{TParams},FtpConnectionInfo}
+    typeParameters:
+    - id: TParams
+    return:
+      type: IStream{Stream}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function ToFtpFile(Of TParams)(stream As IStream(Of Stream), name As String, paramsStream As IStream(Of TParams), getOutputFilePath As Func(Of TParams, String), getConnectionInfo As Func(Of TParams, FtpConnectionInfo)) As IStream(Of Stream)
+  overload: Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile*
+  nameWithType.vb: FtpEx.ToFtpFile(Of TParams)(IStream(Of Stream), String, IStream(Of TParams), Func(Of TParams, String), Func(Of TParams, FtpConnectionInfo))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile(Of TParams)(IStream(Of Stream), System.String, IStream(Of TParams), System.Func(Of TParams, System.String), System.Func(Of TParams, FtpConnectionInfo))
+  name.vb: ToFtpFile(Of TParams)(IStream(Of Stream), String, IStream(Of TParams), Func(Of TParams, String), Func(Of TParams, FtpConnectionInfo))
+references:
+- uid: Paillave.Etl.Ftp.Extensions
+  commentId: N:Paillave.Etl.Ftp.Extensions
+  name: Paillave.Etl.Ftp.Extensions
+  nameWithType: Paillave.Etl.Ftp.Extensions
+  fullName: Paillave.Etl.Ftp.Extensions
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles*
+  commentId: Overload:Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles
+  name: CrossApplyFtpFiles
+  nameWithType: FtpEx.CrossApplyFtpFiles
+  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles
+- uid: IStream{{TIn}}
+  commentId: '!:IStream{``0}'
+  definition: IStream`1
+  name: IStream<TIn>
+  nameWithType: IStream<TIn>
+  fullName: IStream<TIn>
+  nameWithType.vb: IStream(Of TIn)
+  fullName.vb: IStream(Of TIn)
+  name.vb: IStream(Of TIn)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: ISingleStream{FtpConnectionInfo}
+  commentId: '!:ISingleStream{FtpConnectionInfo}'
+  definition: ISingleStream`1
+  name: ISingleStream<FtpConnectionInfo>
+  nameWithType: ISingleStream<FtpConnectionInfo>
+  fullName: ISingleStream<FtpConnectionInfo>
+  nameWithType.vb: ISingleStream(Of FtpConnectionInfo)
+  fullName.vb: ISingleStream(Of FtpConnectionInfo)
+  name.vb: ISingleStream(Of FtpConnectionInfo)
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: FtpConnectionInfo
+    name: FtpConnectionInfo
+    nameWithType: FtpConnectionInfo
+    fullName: FtpConnectionInfo
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: FtpConnectionInfo
+    name: FtpConnectionInfo
+    nameWithType: FtpConnectionInfo
+    fullName: FtpConnectionInfo
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TIn},System.String}
+  commentId: T:System.Func{``0,System.String}
+  parent: System
+  definition: System.Func`2
+  name: Func<TIn, String>
+  nameWithType: Func<TIn, String>
+  fullName: System.Func<TIn, System.String>
+  nameWithType.vb: Func(Of TIn, String)
+  fullName.vb: System.Func(Of TIn, System.String)
+  name.vb: Func(Of TIn, String)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{FtpFilesValue}
+  commentId: '!:IStream{FtpFilesValue}'
+  definition: IStream`1
+  name: IStream<FtpFilesValue>
+  nameWithType: IStream<FtpFilesValue>
+  fullName: IStream<FtpFilesValue>
+  nameWithType.vb: IStream(Of FtpFilesValue)
+  fullName.vb: IStream(Of FtpFilesValue)
+  name.vb: IStream(Of FtpFilesValue)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: FtpFilesValue
+    name: FtpFilesValue
+    nameWithType: FtpFilesValue
+    fullName: FtpFilesValue
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: FtpFilesValue
+    name: FtpFilesValue
+    nameWithType: FtpFilesValue
+    fullName: FtpFilesValue
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream`1
+  isExternal: true
+  name: IStream<>
+  nameWithType: IStream<>
+  fullName: IStream<>
+  nameWithType.vb: IStream(Of )
+  fullName.vb: IStream(Of )
+  name.vb: IStream(Of )
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream`1
+  isExternal: true
+  name: ISingleStream<>
+  nameWithType: ISingleStream<>
+  fullName: ISingleStream<>
+  nameWithType.vb: ISingleStream(Of )
+  fullName.vb: ISingleStream(Of )
+  name.vb: ISingleStream(Of )
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func`2
+  commentId: T:System.Func`2
+  isExternal: true
+  name: Func<T, TResult>
+  nameWithType: Func<T, TResult>
+  fullName: System.Func<T, TResult>
+  nameWithType.vb: Func(Of T, TResult)
+  fullName.vb: System.Func(Of T, TResult)
+  name.vb: Func(Of T, TResult)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{System.String}
+  commentId: '!:IStream{System.String}'
+  definition: IStream`1
+  name: IStream<String>
+  nameWithType: IStream<String>
+  fullName: IStream<System.String>
+  nameWithType.vb: IStream(Of String)
+  fullName.vb: IStream(Of System.String)
+  name.vb: IStream(Of String)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{FtpFilesValue,{TIn},FtpConnectionInfo,{TOut}}
+  commentId: T:System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1}
+  parent: System
+  definition: System.Func`4
+  name: Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>
+  nameWithType: Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>
+  fullName: System.Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>
+  nameWithType.vb: Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut)
+  fullName.vb: System.Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut)
+  name.vb: Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut)
+  spec.csharp:
+  - uid: System.Func`4
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: FtpFilesValue
+    name: FtpFilesValue
+    nameWithType: FtpFilesValue
+    fullName: FtpFilesValue
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: FtpConnectionInfo
+    name: FtpConnectionInfo
+    nameWithType: FtpConnectionInfo
+    fullName: FtpConnectionInfo
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`4
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: FtpFilesValue
+    name: FtpFilesValue
+    nameWithType: FtpFilesValue
+    fullName: FtpFilesValue
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: FtpConnectionInfo
+    name: FtpConnectionInfo
+    nameWithType: FtpConnectionInfo
+    fullName: FtpConnectionInfo
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{{TOut}}
+  commentId: '!:IStream{``2}'
+  definition: IStream`1
+  name: IStream<TOut>
+  nameWithType: IStream<TOut>
+  fullName: IStream<TOut>
+  nameWithType.vb: IStream(Of TOut)
+  fullName.vb: IStream(Of TOut)
+  name.vb: IStream(Of TOut)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func`4
+  commentId: T:System.Func`4
+  isExternal: true
+  name: Func<T1, T2, T3, TResult>
+  nameWithType: Func<T1, T2, T3, TResult>
+  fullName: System.Func<T1, T2, T3, TResult>
+  nameWithType.vb: Func(Of T1, T2, T3, TResult)
+  fullName.vb: System.Func(Of T1, T2, T3, TResult)
+  name.vb: Func(Of T1, T2, T3, TResult)
+  spec.csharp:
+  - uid: System.Func`4
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T3
+    nameWithType: T3
+    fullName: T3
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`4
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T3
+    nameWithType: T3
+    fullName: T3
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{FtpFilesValue,System.String,FtpConnectionInfo,{TOut}}
+  commentId: T:System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0}
+  parent: System
+  definition: System.Func`4
+  name: Func<FtpFilesValue, String, FtpConnectionInfo, TOut>
+  nameWithType: Func<FtpFilesValue, String, FtpConnectionInfo, TOut>
+  fullName: System.Func<FtpFilesValue, System.String, FtpConnectionInfo, TOut>
+  nameWithType.vb: Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut)
+  fullName.vb: System.Func(Of FtpFilesValue, System.String, FtpConnectionInfo, TOut)
+  name.vb: Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut)
+  spec.csharp:
+  - uid: System.Func`4
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: FtpFilesValue
+    name: FtpFilesValue
+    nameWithType: FtpFilesValue
+    fullName: FtpFilesValue
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: FtpConnectionInfo
+    name: FtpConnectionInfo
+    nameWithType: FtpConnectionInfo
+    fullName: FtpConnectionInfo
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`4
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: FtpFilesValue
+    name: FtpFilesValue
+    nameWithType: FtpFilesValue
+    fullName: FtpFilesValue
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: FtpConnectionInfo
+    name: FtpConnectionInfo
+    nameWithType: FtpConnectionInfo
+    fullName: FtpConnectionInfo
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile*
+  commentId: Overload:Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile
+  name: ToFtpFile
+  nameWithType: FtpEx.ToFtpFile
+  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile
+- uid: IStream{Stream}
+  commentId: '!:IStream{Stream}'
+  definition: IStream`1
+  name: IStream<Stream>
+  nameWithType: IStream<Stream>
+  fullName: IStream<Stream>
+  nameWithType.vb: IStream(Of Stream)
+  fullName.vb: IStream(Of Stream)
+  name.vb: IStream(Of Stream)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Stream
+    name: Stream
+    nameWithType: Stream
+    fullName: Stream
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Stream
+    name: Stream
+    nameWithType: Stream
+    fullName: Stream
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{{TParams}}
+  commentId: '!:IStream{``0}'
+  definition: IStream`1
+  name: IStream<TParams>
+  nameWithType: IStream<TParams>
+  fullName: IStream<TParams>
+  nameWithType.vb: IStream(Of TParams)
+  fullName.vb: IStream(Of TParams)
+  name.vb: IStream(Of TParams)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TParams
+    nameWithType: TParams
+    fullName: TParams
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TParams
+    nameWithType: TParams
+    fullName: TParams
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TParams},System.String}
+  commentId: T:System.Func{``0,System.String}
+  parent: System
+  definition: System.Func`2
+  name: Func<TParams, String>
+  nameWithType: Func<TParams, String>
+  fullName: System.Func<TParams, System.String>
+  nameWithType.vb: Func(Of TParams, String)
+  fullName.vb: System.Func(Of TParams, System.String)
+  name.vb: Func(Of TParams, String)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TParams
+    nameWithType: TParams
+    fullName: TParams
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TParams
+    nameWithType: TParams
+    fullName: TParams
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TParams},FtpConnectionInfo}
+  commentId: T:System.Func{``0,FtpConnectionInfo}
+  parent: System
+  definition: System.Func`2
+  name: Func<TParams, FtpConnectionInfo>
+  nameWithType: Func<TParams, FtpConnectionInfo>
+  fullName: System.Func<TParams, FtpConnectionInfo>
+  nameWithType.vb: Func(Of TParams, FtpConnectionInfo)
+  fullName.vb: System.Func(Of TParams, FtpConnectionInfo)
+  name.vb: Func(Of TParams, FtpConnectionInfo)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TParams
+    nameWithType: TParams
+    fullName: TParams
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: FtpConnectionInfo
+    name: FtpConnectionInfo
+    nameWithType: FtpConnectionInfo
+    fullName: FtpConnectionInfo
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TParams
+    nameWithType: TParams
+    fullName: TParams
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: FtpConnectionInfo
+    name: FtpConnectionInfo
+    nameWithType: FtpConnectionInfo
+    fullName: FtpConnectionInfo
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )

@@ -1,0 +1,2352 @@
+### YamlMime:ManagedReference
+items:
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx
+  commentId: T:Paillave.Etl.TextFile.Extensions.TextFileEx
+  id: TextFileEx
+  parent: Paillave.Etl.TextFile.Extensions
+  children:
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream{Stream},System.String,System.Boolean)
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream{System.String},System.String,System.Boolean)
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{``0},System.String,System.Func{``0,System.String},System.Boolean)
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{Stream},System.String,FlatFileDefinition{``0},System.Boolean)
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{Stream},System.String,System.Func{System.String,``0},System.Boolean)
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{System.String},System.String,FlatFileDefinition{``0},System.Boolean)
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{System.String},System.String,System.Func{System.String,System.String,``0},System.Boolean)
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,FlatFileDefinition{``1},System.Func{``0,System.String},System.Boolean)
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String,``1},System.Boolean)
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{Stream},System.String,FlatFileDefinition{``0},System.Func{``0,``1},System.Boolean)
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{System.String},System.String,FlatFileDefinition{``0},System.Func{System.String,``0,``1},System.Boolean)
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``3(IStream{``0},System.String,FlatFileDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},System.Boolean)
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile``1(IStream{``0},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile``2(ISortedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.ToTextFile``1(IStream{``0},System.String,FlatFileDefinition{``0})
+  langs:
+  - csharp
+  - vb
+  name: TextFileEx
+  nameWithType: TextFileEx
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx
+  type: Class
+  source:
+    id: TextFileEx
+    path: ''
+    startLine: 318
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static class TextFileEx
+    content.vb: Public Module TextFileEx
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.ToString
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  modifiers.csharp:
+  - public
+  - static
+  - class
+  modifiers.vb:
+  - Public
+  - Module
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{System.String},System.String,FlatFileDefinition{``0},System.Boolean)
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{System.String},System.String,FlatFileDefinition{``0},System.Boolean)
+  id: CrossApplyTextFile``1(IStream{System.String},System.String,FlatFileDefinition{``0},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyTextFile<TOut>(IStream<String>, String, FlatFileDefinition<TOut>, Boolean)
+  nameWithType: TextFileEx.CrossApplyTextFile<TOut>(IStream<String>, String, FlatFileDefinition<TOut>, Boolean)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TOut>(IStream<System.String>, System.String, FlatFileDefinition<TOut>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyTextFile
+    path: ''
+    startLine: 321
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<string> stream, string name, FlatFileDefinition<TOut> args, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{System.String}
+    - id: name
+      type: System.String
+    - id: args
+      type: FlatFileDefinition{{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyTextFile(Of TOut)(stream As IStream(Of String), name As String, args As FlatFileDefinition(Of TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile*
+  nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TOut)(IStream(Of String), String, FlatFileDefinition(Of TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TOut)(IStream(Of System.String), System.String, FlatFileDefinition(Of TOut), System.Boolean)
+  name.vb: CrossApplyTextFile(Of TOut)(IStream(Of String), String, FlatFileDefinition(Of TOut), Boolean)
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{Stream},System.String,FlatFileDefinition{``0},System.Boolean)
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{Stream},System.String,FlatFileDefinition{``0},System.Boolean)
+  id: CrossApplyTextFile``1(IStream{Stream},System.String,FlatFileDefinition{``0},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyTextFile<TOut>(IStream<Stream>, String, FlatFileDefinition<TOut>, Boolean)
+  nameWithType: TextFileEx.CrossApplyTextFile<TOut>(IStream<Stream>, String, FlatFileDefinition<TOut>, Boolean)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TOut>(IStream<Stream>, System.String, FlatFileDefinition<TOut>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyTextFile
+    path: ''
+    startLine: 331
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<Stream> stream, string name, FlatFileDefinition<TOut> args, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{Stream}
+    - id: name
+      type: System.String
+    - id: args
+      type: FlatFileDefinition{{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyTextFile(Of TOut)(stream As IStream(Of Stream), name As String, args As FlatFileDefinition(Of TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile*
+  nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TOut)(IStream(Of Stream), String, FlatFileDefinition(Of TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TOut)(IStream(Of Stream), System.String, FlatFileDefinition(Of TOut), System.Boolean)
+  name.vb: CrossApplyTextFile(Of TOut)(IStream(Of Stream), String, FlatFileDefinition(Of TOut), Boolean)
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,FlatFileDefinition{``1},System.Func{``0,System.String},System.Boolean)
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,FlatFileDefinition{``1},System.Func{``0,System.String},System.Boolean)
+  id: CrossApplyTextFile``2(IStream{``0},System.String,FlatFileDefinition{``1},System.Func{``0,System.String},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyTextFile<TIn, TOut>(IStream<TIn>, String, FlatFileDefinition<TOut>, Func<TIn, String>, Boolean)
+  nameWithType: TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, String, FlatFileDefinition<TOut>, Func<TIn, String>, Boolean)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, System.String, FlatFileDefinition<TOut>, System.Func<TIn, System.String>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyTextFile
+    path: ''
+    startLine: 341
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyTextFile<TIn, TOut>(this IStream<TIn> stream, string name, FlatFileDefinition<TOut> args, Func<TIn, string> filePathSelector, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: args
+      type: FlatFileDefinition{{TOut}}
+    - id: filePathSelector
+      type: System.Func{{TIn},System.String}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyTextFile(Of TIn, TOut)(stream As IStream(Of TIn), name As String, args As FlatFileDefinition(Of TOut), filePathSelector As Func(Of TIn, String), noParallelisation As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile*
+  nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), String, FlatFileDefinition(Of TOut), Func(Of TIn, String), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), System.String, FlatFileDefinition(Of TOut), System.Func(Of TIn, System.String), System.Boolean)
+  name.vb: CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), String, FlatFileDefinition(Of TOut), Func(Of TIn, String), Boolean)
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``3(IStream{``0},System.String,FlatFileDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},System.Boolean)
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``3(IStream{``0},System.String,FlatFileDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},System.Boolean)
+  id: CrossApplyTextFile``3(IStream{``0},System.String,FlatFileDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyTextFile<TIn, TParsed, TOut>(IStream<TIn>, String, FlatFileDefinition<TParsed>, Func<TIn, String>, Func<TIn, TParsed, TOut>, Boolean)
+  nameWithType: TextFileEx.CrossApplyTextFile<TIn, TParsed, TOut>(IStream<TIn>, String, FlatFileDefinition<TParsed>, Func<TIn, String>, Func<TIn, TParsed, TOut>, Boolean)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TIn, TParsed, TOut>(IStream<TIn>, System.String, FlatFileDefinition<TParsed>, System.Func<TIn, System.String>, System.Func<TIn, TParsed, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyTextFile
+    path: ''
+    startLine: 351
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyTextFile<TIn, TParsed, TOut>(this IStream<TIn> stream, string name, FlatFileDefinition<TParsed> args, Func<TIn, string> filePathSelector, Func<TIn, TParsed, TOut> resultSelector, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: args
+      type: FlatFileDefinition{{TParsed}}
+    - id: filePathSelector
+      type: System.Func{{TIn},System.String}
+    - id: resultSelector
+      type: System.Func{{TIn},{TParsed},{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TIn
+    - id: TParsed
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyTextFile(Of TIn, TParsed, TOut)(stream As IStream(Of TIn), name As String, args As FlatFileDefinition(Of TParsed), filePathSelector As Func(Of TIn, String), resultSelector As Func(Of TIn, TParsed, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile*
+  nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TIn, TParsed, TOut)(IStream(Of TIn), String, FlatFileDefinition(Of TParsed), Func(Of TIn, String), Func(Of TIn, TParsed, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TIn, TParsed, TOut)(IStream(Of TIn), System.String, FlatFileDefinition(Of TParsed), System.Func(Of TIn, System.String), System.Func(Of TIn, TParsed, TOut), System.Boolean)
+  name.vb: CrossApplyTextFile(Of TIn, TParsed, TOut)(IStream(Of TIn), String, FlatFileDefinition(Of TParsed), Func(Of TIn, String), Func(Of TIn, TParsed, TOut), Boolean)
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{System.String},System.String,FlatFileDefinition{``0},System.Func{System.String,``0,``1},System.Boolean)
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{System.String},System.String,FlatFileDefinition{``0},System.Func{System.String,``0,``1},System.Boolean)
+  id: CrossApplyTextFile``2(IStream{System.String},System.String,FlatFileDefinition{``0},System.Func{System.String,``0,``1},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyTextFile<TParsed, TOut>(IStream<String>, String, FlatFileDefinition<TParsed>, Func<String, TParsed, TOut>, Boolean)
+  nameWithType: TextFileEx.CrossApplyTextFile<TParsed, TOut>(IStream<String>, String, FlatFileDefinition<TParsed>, Func<String, TParsed, TOut>, Boolean)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TParsed, TOut>(IStream<System.String>, System.String, FlatFileDefinition<TParsed>, System.Func<System.String, TParsed, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyTextFile
+    path: ''
+    startLine: 361
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyTextFile<TParsed, TOut>(this IStream<string> stream, string name, FlatFileDefinition<TParsed> args, Func<string, TParsed, TOut> resultSelector, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{System.String}
+    - id: name
+      type: System.String
+    - id: args
+      type: FlatFileDefinition{{TParsed}}
+    - id: resultSelector
+      type: System.Func{System.String,{TParsed},{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TParsed
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyTextFile(Of TParsed, TOut)(stream As IStream(Of String), name As String, args As FlatFileDefinition(Of TParsed), resultSelector As Func(Of String, TParsed, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile*
+  nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TParsed, TOut)(IStream(Of String), String, FlatFileDefinition(Of TParsed), Func(Of String, TParsed, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TParsed, TOut)(IStream(Of System.String), System.String, FlatFileDefinition(Of TParsed), System.Func(Of System.String, TParsed, TOut), System.Boolean)
+  name.vb: CrossApplyTextFile(Of TParsed, TOut)(IStream(Of String), String, FlatFileDefinition(Of TParsed), Func(Of String, TParsed, TOut), Boolean)
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{Stream},System.String,FlatFileDefinition{``0},System.Func{``0,``1},System.Boolean)
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{Stream},System.String,FlatFileDefinition{``0},System.Func{``0,``1},System.Boolean)
+  id: CrossApplyTextFile``2(IStream{Stream},System.String,FlatFileDefinition{``0},System.Func{``0,``1},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyTextFile<TParsed, TOut>(IStream<Stream>, String, FlatFileDefinition<TParsed>, Func<TParsed, TOut>, Boolean)
+  nameWithType: TextFileEx.CrossApplyTextFile<TParsed, TOut>(IStream<Stream>, String, FlatFileDefinition<TParsed>, Func<TParsed, TOut>, Boolean)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TParsed, TOut>(IStream<Stream>, System.String, FlatFileDefinition<TParsed>, System.Func<TParsed, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyTextFile
+    path: ''
+    startLine: 371
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyTextFile<TParsed, TOut>(this IStream<Stream> stream, string name, FlatFileDefinition<TParsed> args, Func<TParsed, TOut> resultSelector, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{Stream}
+    - id: name
+      type: System.String
+    - id: args
+      type: FlatFileDefinition{{TParsed}}
+    - id: resultSelector
+      type: System.Func{{TParsed},{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TParsed
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyTextFile(Of TParsed, TOut)(stream As IStream(Of Stream), name As String, args As FlatFileDefinition(Of TParsed), resultSelector As Func(Of TParsed, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile*
+  nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TParsed, TOut)(IStream(Of Stream), String, FlatFileDefinition(Of TParsed), Func(Of TParsed, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TParsed, TOut)(IStream(Of Stream), System.String, FlatFileDefinition(Of TParsed), System.Func(Of TParsed, TOut), System.Boolean)
+  name.vb: CrossApplyTextFile(Of TParsed, TOut)(IStream(Of Stream), String, FlatFileDefinition(Of TParsed), Func(Of TParsed, TOut), Boolean)
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream{System.String},System.String,System.Boolean)
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream{System.String},System.String,System.Boolean)
+  id: CrossApplyTextFile(IStream{System.String},System.String,System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyTextFile(IStream<String>, String, Boolean)
+  nameWithType: TextFileEx.CrossApplyTextFile(IStream<String>, String, Boolean)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream<System.String>, System.String, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyTextFile
+    path: ''
+    startLine: 382
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static IStream<string> CrossApplyTextFile(this IStream<string> stream, string name, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{System.String}
+    - id: name
+      type: System.String
+    - id: noParallelisation
+      type: System.Boolean
+    return:
+      type: IStream{System.String}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyTextFile(stream As IStream(Of String), name As String, noParallelisation As Boolean = False) As IStream(Of String)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile*
+  nameWithType.vb: TextFileEx.CrossApplyTextFile(IStream(Of String), String, Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream(Of System.String), System.String, System.Boolean)
+  name.vb: CrossApplyTextFile(IStream(Of String), String, Boolean)
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream{Stream},System.String,System.Boolean)
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream{Stream},System.String,System.Boolean)
+  id: CrossApplyTextFile(IStream{Stream},System.String,System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyTextFile(IStream<Stream>, String, Boolean)
+  nameWithType: TextFileEx.CrossApplyTextFile(IStream<Stream>, String, Boolean)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream<Stream>, System.String, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyTextFile
+    path: ''
+    startLine: 391
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static IStream<string> CrossApplyTextFile(this IStream<Stream> stream, string name, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{Stream}
+    - id: name
+      type: System.String
+    - id: noParallelisation
+      type: System.Boolean
+    return:
+      type: IStream{System.String}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyTextFile(stream As IStream(Of Stream), name As String, noParallelisation As Boolean = False) As IStream(Of String)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile*
+  nameWithType.vb: TextFileEx.CrossApplyTextFile(IStream(Of Stream), String, Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream(Of Stream), System.String, System.Boolean)
+  name.vb: CrossApplyTextFile(IStream(Of Stream), String, Boolean)
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{``0},System.String,System.Func{``0,System.String},System.Boolean)
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{``0},System.String,System.Func{``0,System.String},System.Boolean)
+  id: CrossApplyTextFile``1(IStream{``0},System.String,System.Func{``0,System.String},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyTextFile<TIn>(IStream<TIn>, String, Func<TIn, String>, Boolean)
+  nameWithType: TextFileEx.CrossApplyTextFile<TIn>(IStream<TIn>, String, Func<TIn, String>, Boolean)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyTextFile
+    path: ''
+    startLine: 400
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static IStream<string> CrossApplyTextFile<TIn>(this IStream<TIn> stream, string name, Func<TIn, string> filePathSelector, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: filePathSelector
+      type: System.Func{{TIn},System.String}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TIn
+    return:
+      type: IStream{System.String}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyTextFile(Of TIn)(stream As IStream(Of TIn), name As String, filePathSelector As Func(Of TIn, String), noParallelisation As Boolean = False) As IStream(Of String)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile*
+  nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Boolean)
+  name.vb: CrossApplyTextFile(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), Boolean)
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String,``1},System.Boolean)
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String,``1},System.Boolean)
+  id: CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String,``1},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyTextFile<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String, TOut>, Boolean)
+  nameWithType: TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String, TOut>, Boolean)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<TIn, System.String, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyTextFile
+    path: ''
+    startLine: 409
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyTextFile<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, string> filePathSelector, Func<TIn, string, TOut> resultSelector, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: filePathSelector
+      type: System.Func{{TIn},System.String}
+    - id: resultSelector
+      type: System.Func{{TIn},System.String,{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyTextFile(Of TIn, TOut)(stream As IStream(Of TIn), name As String, filePathSelector As Func(Of TIn, String), resultSelector As Func(Of TIn, String, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile*
+  nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of TIn, System.String, TOut), System.Boolean)
+  name.vb: CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String, TOut), Boolean)
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{System.String},System.String,System.Func{System.String,System.String,``0},System.Boolean)
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{System.String},System.String,System.Func{System.String,System.String,``0},System.Boolean)
+  id: CrossApplyTextFile``1(IStream{System.String},System.String,System.Func{System.String,System.String,``0},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyTextFile<TOut>(IStream<String>, String, Func<String, String, TOut>, Boolean)
+  nameWithType: TextFileEx.CrossApplyTextFile<TOut>(IStream<String>, String, Func<String, String, TOut>, Boolean)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TOut>(IStream<System.String>, System.String, System.Func<System.String, System.String, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyTextFile
+    path: ''
+    startLine: 418
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<string> stream, string name, Func<string, string, TOut> resultSelector, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{System.String}
+    - id: name
+      type: System.String
+    - id: resultSelector
+      type: System.Func{System.String,System.String,{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyTextFile(Of TOut)(stream As IStream(Of String), name As String, resultSelector As Func(Of String, String, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile*
+  nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TOut)(IStream(Of String), String, Func(Of String, String, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TOut)(IStream(Of System.String), System.String, System.Func(Of System.String, System.String, TOut), System.Boolean)
+  name.vb: CrossApplyTextFile(Of TOut)(IStream(Of String), String, Func(Of String, String, TOut), Boolean)
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{Stream},System.String,System.Func{System.String,``0},System.Boolean)
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{Stream},System.String,System.Func{System.String,``0},System.Boolean)
+  id: CrossApplyTextFile``1(IStream{Stream},System.String,System.Func{System.String,``0},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyTextFile<TOut>(IStream<Stream>, String, Func<String, TOut>, Boolean)
+  nameWithType: TextFileEx.CrossApplyTextFile<TOut>(IStream<Stream>, String, Func<String, TOut>, Boolean)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TOut>(IStream<Stream>, System.String, System.Func<System.String, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyTextFile
+    path: ''
+    startLine: 427
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<Stream> stream, string name, Func<string, TOut> resultSelector, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{Stream}
+    - id: name
+      type: System.String
+    - id: resultSelector
+      type: System.Func{System.String,{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyTextFile(Of TOut)(stream As IStream(Of Stream), name As String, resultSelector As Func(Of String, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile*
+  nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TOut)(IStream(Of Stream), String, Func(Of String, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TOut)(IStream(Of Stream), System.String, System.Func(Of System.String, TOut), System.Boolean)
+  name.vb: CrossApplyTextFile(Of TOut)(IStream(Of Stream), String, Func(Of String, TOut), Boolean)
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile``1(IStream{``0},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile``1(IStream{``0},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  id: ThroughTextFile``1(IStream{``0},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: ThroughTextFile<TIn>(IStream<TIn>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  nameWithType: TextFileEx.ThroughTextFile<TIn>(IStream<TIn>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile<TIn>(IStream<TIn>, System.String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  type: Method
+  source:
+    id: ThroughTextFile
+    path: ''
+    startLine: 439
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static IStream<TIn> ThroughTextFile<TIn>(this IStream<TIn> stream, string name, ISingleStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: resourceStream
+      type: ISingleStream{SystemIO.Stream}
+    - id: mapping
+      type: FlatFileDefinition{{TIn}}
+    typeParameters:
+    - id: TIn
+    return:
+      type: IStream{{TIn}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function ThroughTextFile(Of TIn)(stream As IStream(Of TIn), name As String, resourceStream As ISingleStream(Of SystemIO.Stream), mapping As FlatFileDefinition(Of TIn)) As IStream(Of TIn)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile*
+  nameWithType.vb: TextFileEx.ThroughTextFile(Of TIn)(IStream(Of TIn), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile(Of TIn)(IStream(Of TIn), System.String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  name.vb: ThroughTextFile(Of TIn)(IStream(Of TIn), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile``2(ISortedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile``2(ISortedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  id: ThroughTextFile``2(ISortedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  nameWithType: TextFileEx.ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  type: Method
+  source:
+    id: ThroughTextFile
+    path: ''
+    startLine: 448
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static ISortedStream<TIn, TKey> ThroughTextFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, ISingleStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
+    parameters:
+    - id: stream
+      type: ISortedStream{{TIn},{TKey}}
+    - id: name
+      type: System.String
+    - id: resourceStream
+      type: ISingleStream{SystemIO.Stream}
+    - id: mapping
+      type: FlatFileDefinition{{TIn}}
+    typeParameters:
+    - id: TIn
+    - id: TKey
+    return:
+      type: ISortedStream{{TIn},{TKey}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function ThroughTextFile(Of TIn, TKey)(stream As ISortedStream(Of TIn, TKey), name As String, resourceStream As ISingleStream(Of SystemIO.Stream), mapping As FlatFileDefinition(Of TIn)) As ISortedStream(Of TIn, TKey)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile*
+  nameWithType.vb: TextFileEx.ThroughTextFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), System.String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  name.vb: ThroughTextFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  id: ThroughTextFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  nameWithType: TextFileEx.ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)
+  type: Method
+  source:
+    id: ThroughTextFile
+    path: ''
+    startLine: 457
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static IKeyedStream<TIn, TKey> ThroughTextFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, ISingleStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
+    parameters:
+    - id: stream
+      type: IKeyedStream{{TIn},{TKey}}
+    - id: name
+      type: System.String
+    - id: resourceStream
+      type: ISingleStream{SystemIO.Stream}
+    - id: mapping
+      type: FlatFileDefinition{{TIn}}
+    typeParameters:
+    - id: TIn
+    - id: TKey
+    return:
+      type: IKeyedStream{{TIn},{TKey}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function ThroughTextFile(Of TIn, TKey)(stream As IKeyedStream(Of TIn, TKey), name As String, resourceStream As ISingleStream(Of SystemIO.Stream), mapping As FlatFileDefinition(Of TIn)) As IKeyedStream(Of TIn, TKey)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile*
+  nameWithType.vb: TextFileEx.ThroughTextFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), System.String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+  name.vb: ThroughTextFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of SystemIO.Stream), FlatFileDefinition(Of TIn))
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.ToTextFile``1(IStream{``0},System.String,FlatFileDefinition{``0})
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.ToTextFile``1(IStream{``0},System.String,FlatFileDefinition{``0})
+  id: ToTextFile``1(IStream{``0},System.String,FlatFileDefinition{``0})
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: ToTextFile<TIn>(IStream<TIn>, String, FlatFileDefinition<TIn>)
+  nameWithType: TextFileEx.ToTextFile<TIn>(IStream<TIn>, String, FlatFileDefinition<TIn>)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.ToTextFile<TIn>(IStream<TIn>, System.String, FlatFileDefinition<TIn>)
+  type: Method
+  source:
+    id: ToTextFile
+    path: ''
+    startLine: 469
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static IStream<Stream> ToTextFile<TIn>(this IStream<TIn> stream, string name, FlatFileDefinition<TIn> mapping)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: mapping
+      type: FlatFileDefinition{{TIn}}
+    typeParameters:
+    - id: TIn
+    return:
+      type: IStream{Stream}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function ToTextFile(Of TIn)(stream As IStream(Of TIn), name As String, mapping As FlatFileDefinition(Of TIn)) As IStream(Of Stream)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.ToTextFile*
+  nameWithType.vb: TextFileEx.ToTextFile(Of TIn)(IStream(Of TIn), String, FlatFileDefinition(Of TIn))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.ToTextFile(Of TIn)(IStream(Of TIn), System.String, FlatFileDefinition(Of TIn))
+  name.vb: ToTextFile(Of TIn)(IStream(Of TIn), String, FlatFileDefinition(Of TIn))
+references:
+- uid: Paillave.Etl.TextFile.Extensions
+  commentId: N:Paillave.Etl.TextFile.Extensions
+  name: Paillave.Etl.TextFile.Extensions
+  nameWithType: Paillave.Etl.TextFile.Extensions
+  fullName: Paillave.Etl.TextFile.Extensions
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile*
+  commentId: Overload:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile
+  name: CrossApplyTextFile
+  nameWithType: TextFileEx.CrossApplyTextFile
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile
+- uid: IStream{System.String}
+  commentId: '!:IStream{System.String}'
+  definition: IStream`1
+  name: IStream<String>
+  nameWithType: IStream<String>
+  fullName: IStream<System.String>
+  nameWithType.vb: IStream(Of String)
+  fullName.vb: IStream(Of System.String)
+  name.vb: IStream(Of String)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: FlatFileDefinition{{TOut}}
+  commentId: '!:FlatFileDefinition{``0}'
+  definition: FlatFileDefinition`1
+  name: FlatFileDefinition<TOut>
+  nameWithType: FlatFileDefinition<TOut>
+  fullName: FlatFileDefinition<TOut>
+  nameWithType.vb: FlatFileDefinition(Of TOut)
+  fullName.vb: FlatFileDefinition(Of TOut)
+  name.vb: FlatFileDefinition(Of TOut)
+  spec.csharp:
+  - uid: FlatFileDefinition`1
+    name: FlatFileDefinition
+    nameWithType: FlatFileDefinition
+    fullName: FlatFileDefinition
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: FlatFileDefinition`1
+    name: FlatFileDefinition
+    nameWithType: FlatFileDefinition
+    fullName: FlatFileDefinition
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: IStream{{TOut}}
+  commentId: '!:IStream{``2}'
+  definition: IStream`1
+  name: IStream<TOut>
+  nameWithType: IStream<TOut>
+  fullName: IStream<TOut>
+  nameWithType.vb: IStream(Of TOut)
+  fullName.vb: IStream(Of TOut)
+  name.vb: IStream(Of TOut)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream`1
+  isExternal: true
+  name: IStream<>
+  nameWithType: IStream<>
+  fullName: IStream<>
+  nameWithType.vb: IStream(Of )
+  fullName.vb: IStream(Of )
+  name.vb: IStream(Of )
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: FlatFileDefinition`1
+  isExternal: true
+  name: FlatFileDefinition<>
+  nameWithType: FlatFileDefinition<>
+  fullName: FlatFileDefinition<>
+  nameWithType.vb: FlatFileDefinition(Of )
+  fullName.vb: FlatFileDefinition(Of )
+  name.vb: FlatFileDefinition(Of )
+  spec.csharp:
+  - uid: FlatFileDefinition`1
+    name: FlatFileDefinition
+    nameWithType: FlatFileDefinition
+    fullName: FlatFileDefinition
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: FlatFileDefinition`1
+    name: FlatFileDefinition
+    nameWithType: FlatFileDefinition
+    fullName: FlatFileDefinition
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{Stream}
+  commentId: '!:IStream{Stream}'
+  definition: IStream`1
+  name: IStream<Stream>
+  nameWithType: IStream<Stream>
+  fullName: IStream<Stream>
+  nameWithType.vb: IStream(Of Stream)
+  fullName.vb: IStream(Of Stream)
+  name.vb: IStream(Of Stream)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Stream
+    name: Stream
+    nameWithType: Stream
+    fullName: Stream
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Stream
+    name: Stream
+    nameWithType: Stream
+    fullName: Stream
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{{TIn}}
+  commentId: '!:IStream{``0}'
+  definition: IStream`1
+  name: IStream<TIn>
+  nameWithType: IStream<TIn>
+  fullName: IStream<TIn>
+  nameWithType.vb: IStream(Of TIn)
+  fullName.vb: IStream(Of TIn)
+  name.vb: IStream(Of TIn)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TIn},System.String}
+  commentId: T:System.Func{``0,System.String}
+  parent: System
+  definition: System.Func`2
+  name: Func<TIn, String>
+  nameWithType: Func<TIn, String>
+  fullName: System.Func<TIn, System.String>
+  nameWithType.vb: Func(Of TIn, String)
+  fullName.vb: System.Func(Of TIn, System.String)
+  name.vb: Func(Of TIn, String)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func`2
+  commentId: T:System.Func`2
+  isExternal: true
+  name: Func<T, TResult>
+  nameWithType: Func<T, TResult>
+  fullName: System.Func<T, TResult>
+  nameWithType.vb: Func(Of T, TResult)
+  fullName.vb: System.Func(Of T, TResult)
+  name.vb: Func(Of T, TResult)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: FlatFileDefinition{{TParsed}}
+  commentId: '!:FlatFileDefinition{``1}'
+  definition: FlatFileDefinition`1
+  name: FlatFileDefinition<TParsed>
+  nameWithType: FlatFileDefinition<TParsed>
+  fullName: FlatFileDefinition<TParsed>
+  nameWithType.vb: FlatFileDefinition(Of TParsed)
+  fullName.vb: FlatFileDefinition(Of TParsed)
+  name.vb: FlatFileDefinition(Of TParsed)
+  spec.csharp:
+  - uid: FlatFileDefinition`1
+    name: FlatFileDefinition
+    nameWithType: FlatFileDefinition
+    fullName: FlatFileDefinition
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TParsed
+    nameWithType: TParsed
+    fullName: TParsed
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: FlatFileDefinition`1
+    name: FlatFileDefinition
+    nameWithType: FlatFileDefinition
+    fullName: FlatFileDefinition
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TParsed
+    nameWithType: TParsed
+    fullName: TParsed
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TIn},{TParsed},{TOut}}
+  commentId: T:System.Func{``0,``1,``2}
+  parent: System
+  definition: System.Func`3
+  name: Func<TIn, TParsed, TOut>
+  nameWithType: Func<TIn, TParsed, TOut>
+  fullName: System.Func<TIn, TParsed, TOut>
+  nameWithType.vb: Func(Of TIn, TParsed, TOut)
+  fullName.vb: System.Func(Of TIn, TParsed, TOut)
+  name.vb: Func(Of TIn, TParsed, TOut)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TParsed
+    nameWithType: TParsed
+    fullName: TParsed
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TParsed
+    nameWithType: TParsed
+    fullName: TParsed
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func`3
+  commentId: T:System.Func`3
+  isExternal: true
+  name: Func<T1, T2, TResult>
+  nameWithType: Func<T1, T2, TResult>
+  fullName: System.Func<T1, T2, TResult>
+  nameWithType.vb: Func(Of T1, T2, TResult)
+  fullName.vb: System.Func(Of T1, T2, TResult)
+  name.vb: Func(Of T1, T2, TResult)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{System.String,{TParsed},{TOut}}
+  commentId: T:System.Func{System.String,``0,``1}
+  parent: System
+  definition: System.Func`3
+  name: Func<String, TParsed, TOut>
+  nameWithType: Func<String, TParsed, TOut>
+  fullName: System.Func<System.String, TParsed, TOut>
+  nameWithType.vb: Func(Of String, TParsed, TOut)
+  fullName.vb: System.Func(Of System.String, TParsed, TOut)
+  name.vb: Func(Of String, TParsed, TOut)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TParsed
+    nameWithType: TParsed
+    fullName: TParsed
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TParsed
+    nameWithType: TParsed
+    fullName: TParsed
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TParsed},{TOut}}
+  commentId: T:System.Func{``0,``1}
+  parent: System
+  definition: System.Func`2
+  name: Func<TParsed, TOut>
+  nameWithType: Func<TParsed, TOut>
+  fullName: System.Func<TParsed, TOut>
+  nameWithType.vb: Func(Of TParsed, TOut)
+  fullName.vb: System.Func(Of TParsed, TOut)
+  name.vb: Func(Of TParsed, TOut)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TParsed
+    nameWithType: TParsed
+    fullName: TParsed
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TParsed
+    nameWithType: TParsed
+    fullName: TParsed
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TIn},System.String,{TOut}}
+  commentId: T:System.Func{``0,System.String,``1}
+  parent: System
+  definition: System.Func`3
+  name: Func<TIn, String, TOut>
+  nameWithType: Func<TIn, String, TOut>
+  fullName: System.Func<TIn, System.String, TOut>
+  nameWithType.vb: Func(Of TIn, String, TOut)
+  fullName.vb: System.Func(Of TIn, System.String, TOut)
+  name.vb: Func(Of TIn, String, TOut)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{System.String,System.String,{TOut}}
+  commentId: T:System.Func{System.String,System.String,``0}
+  parent: System
+  definition: System.Func`3
+  name: Func<String, String, TOut>
+  nameWithType: Func<String, String, TOut>
+  fullName: System.Func<System.String, System.String, TOut>
+  nameWithType.vb: Func(Of String, String, TOut)
+  fullName.vb: System.Func(Of System.String, System.String, TOut)
+  name.vb: Func(Of String, String, TOut)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{System.String,{TOut}}
+  commentId: T:System.Func{System.String,``0}
+  parent: System
+  definition: System.Func`2
+  name: Func<String, TOut>
+  nameWithType: Func<String, TOut>
+  fullName: System.Func<System.String, TOut>
+  nameWithType.vb: Func(Of String, TOut)
+  fullName.vb: System.Func(Of System.String, TOut)
+  name.vb: Func(Of String, TOut)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile*
+  commentId: Overload:Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile
+  name: ThroughTextFile
+  nameWithType: TextFileEx.ThroughTextFile
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile
+- uid: ISingleStream{SystemIO.Stream}
+  commentId: '!:ISingleStream{SystemIO.Stream}'
+  definition: ISingleStream`1
+  name: ISingleStream<SystemIO.Stream>
+  nameWithType: ISingleStream<SystemIO.Stream>
+  fullName: ISingleStream<SystemIO.Stream>
+  nameWithType.vb: ISingleStream(Of SystemIO.Stream)
+  fullName.vb: ISingleStream(Of SystemIO.Stream)
+  name.vb: ISingleStream(Of SystemIO.Stream)
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: SystemIO.Stream
+    name: SystemIO.Stream
+    nameWithType: SystemIO.Stream
+    fullName: SystemIO.Stream
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: SystemIO.Stream
+    name: SystemIO.Stream
+    nameWithType: SystemIO.Stream
+    fullName: SystemIO.Stream
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: FlatFileDefinition{{TIn}}
+  commentId: '!:FlatFileDefinition{``0}'
+  definition: FlatFileDefinition`1
+  name: FlatFileDefinition<TIn>
+  nameWithType: FlatFileDefinition<TIn>
+  fullName: FlatFileDefinition<TIn>
+  nameWithType.vb: FlatFileDefinition(Of TIn)
+  fullName.vb: FlatFileDefinition(Of TIn)
+  name.vb: FlatFileDefinition(Of TIn)
+  spec.csharp:
+  - uid: FlatFileDefinition`1
+    name: FlatFileDefinition
+    nameWithType: FlatFileDefinition
+    fullName: FlatFileDefinition
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: FlatFileDefinition`1
+    name: FlatFileDefinition
+    nameWithType: FlatFileDefinition
+    fullName: FlatFileDefinition
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream`1
+  isExternal: true
+  name: ISingleStream<>
+  nameWithType: ISingleStream<>
+  fullName: ISingleStream<>
+  nameWithType.vb: ISingleStream(Of )
+  fullName.vb: ISingleStream(Of )
+  name.vb: ISingleStream(Of )
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISortedStream{{TIn},{TKey}}
+  commentId: '!:ISortedStream{``0,``2}'
+  definition: ISortedStream`2
+  name: ISortedStream<TIn, TKey>
+  nameWithType: ISortedStream<TIn, TKey>
+  fullName: ISortedStream<TIn, TKey>
+  nameWithType.vb: ISortedStream(Of TIn, TKey)
+  fullName.vb: ISortedStream(Of TIn, TKey)
+  name.vb: ISortedStream(Of TIn, TKey)
+  spec.csharp:
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISortedStream`2
+  isExternal: true
+  name: ISortedStream<, >
+  nameWithType: ISortedStream<, >
+  fullName: ISortedStream<, >
+  nameWithType.vb: ISortedStream(Of , )
+  fullName.vb: ISortedStream(Of , )
+  name.vb: ISortedStream(Of , )
+  spec.csharp:
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IKeyedStream{{TIn},{TKey}}
+  commentId: '!:IKeyedStream{``0,``2}'
+  definition: IKeyedStream`2
+  name: IKeyedStream<TIn, TKey>
+  nameWithType: IKeyedStream<TIn, TKey>
+  fullName: IKeyedStream<TIn, TKey>
+  nameWithType.vb: IKeyedStream(Of TIn, TKey)
+  fullName.vb: IKeyedStream(Of TIn, TKey)
+  name.vb: IKeyedStream(Of TIn, TKey)
+  spec.csharp:
+  - uid: IKeyedStream`2
+    name: IKeyedStream
+    nameWithType: IKeyedStream
+    fullName: IKeyedStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IKeyedStream`2
+    name: IKeyedStream
+    nameWithType: IKeyedStream
+    fullName: IKeyedStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IKeyedStream`2
+  isExternal: true
+  name: IKeyedStream<, >
+  nameWithType: IKeyedStream<, >
+  fullName: IKeyedStream<, >
+  nameWithType.vb: IKeyedStream(Of , )
+  fullName.vb: IKeyedStream(Of , )
+  name.vb: IKeyedStream(Of , )
+  spec.csharp:
+  - uid: IKeyedStream`2
+    name: IKeyedStream
+    nameWithType: IKeyedStream
+    fullName: IKeyedStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IKeyedStream`2
+    name: IKeyedStream
+    nameWithType: IKeyedStream
+    fullName: IKeyedStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.ToTextFile*
+  commentId: Overload:Paillave.Etl.TextFile.Extensions.TextFileEx.ToTextFile
+  name: ToTextFile
+  nameWithType: TextFileEx.ToTextFile
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.ToTextFile

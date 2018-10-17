@@ -1,0 +1,22 @@
+### YamlMime:ManagedReference
+items:
+- uid: Paillave.Etl.TextFile.Extensions
+  commentId: N:Paillave.Etl.TextFile.Extensions
+  id: Paillave.Etl.TextFile.Extensions
+  children:
+  - Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: Paillave.Etl.TextFile.Extensions
+  nameWithType: Paillave.Etl.TextFile.Extensions
+  fullName: Paillave.Etl.TextFile.Extensions
+  type: Namespace
+  assemblies:
+  - cs.temp.dll
+references:
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx
+  commentId: T:Paillave.Etl.TextFile.Extensions.TextFileEx
+  name: TextFileEx
+  nameWithType: TextFileEx
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx

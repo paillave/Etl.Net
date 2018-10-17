@@ -1,58 +1,58 @@
 ### YamlMime:TableOfContent
-- uid: Paillave.Etl
-  name: Paillave.Etl
+- uid: Paillave.Etl.Extensions
+  name: Paillave.Etl.Extensions
   items:
-  - uid: Paillave.Etl.AggregateEx
+  - uid: Paillave.Etl.Extensions.AggregateEx
     name: AggregateEx
-  - uid: Paillave.Etl.CrossApplyActionEx
+  - uid: Paillave.Etl.Extensions.CrossApplyActionEx
     name: CrossApplyActionEx
-  - uid: Paillave.Etl.CrossApplyEnumerableEx
+  - uid: Paillave.Etl.Extensions.CrossApplyEnumerableEx
     name: CrossApplyEnumerableEx
-  - uid: Paillave.Etl.CrossApplyEx
+  - uid: Paillave.Etl.Extensions.CrossApplyEx
     name: CrossApplyEx
-  - uid: Paillave.Etl.CrossApplyFolderFilesEx
+  - uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx
     name: CrossApplyFolderFilesEx
-  - uid: Paillave.Etl.DistinctEx
+  - uid: Paillave.Etl.Extensions.DistinctEx
     name: DistinctEx
-  - uid: Paillave.Etl.EnsureKeyedEx
+  - uid: Paillave.Etl.Extensions.EnsureKeyedEx
     name: EnsureKeyedEx
-  - uid: Paillave.Etl.EnsureSingleEx
+  - uid: Paillave.Etl.Extensions.EnsureSingleEx
     name: EnsureSingleEx
-  - uid: Paillave.Etl.EnsureSortedEx
+  - uid: Paillave.Etl.Extensions.EnsureSortedEx
     name: EnsureSortedEx
-  - uid: Paillave.Etl.GetStreamStatisticsEx
+  - uid: Paillave.Etl.Extensions.GetStreamStatisticsEx
     name: GetStreamStatisticsEx
-  - uid: Paillave.Etl.LeftJoinEx
+  - uid: Paillave.Etl.Extensions.LeftJoinEx
     name: LeftJoinEx
-  - uid: Paillave.Etl.LookupEx
+  - uid: Paillave.Etl.Extensions.LookupEx
     name: LookupEx
-  - uid: Paillave.Etl.PivotEx
+  - uid: Paillave.Etl.Extensions.PivotEx
     name: PivotEx
-  - uid: Paillave.Etl.SelectEx
+  - uid: Paillave.Etl.Extensions.SelectEx
     name: SelectEx
-  - uid: Paillave.Etl.SelectSectionEx
+  - uid: Paillave.Etl.Extensions.SelectSectionEx
     name: SelectSectionEx
-  - uid: Paillave.Etl.SkipEx
+  - uid: Paillave.Etl.Extensions.SkipEx
     name: SkipEx
-  - uid: Paillave.Etl.SortEx
+  - uid: Paillave.Etl.Extensions.SortEx
     name: SortEx
-  - uid: Paillave.Etl.ThroughActionEx
+  - uid: Paillave.Etl.Extensions.ThroughActionEx
     name: ThroughActionEx
-  - uid: Paillave.Etl.ToGroupEx
+  - uid: Paillave.Etl.Extensions.ToGroupEx
     name: ToGroupEx
-  - uid: Paillave.Etl.ToLocalFileEx
+  - uid: Paillave.Etl.Extensions.ToLocalFileEx
     name: ToLocalFileEx
-  - uid: Paillave.Etl.TopEx
+  - uid: Paillave.Etl.Extensions.TopEx
     name: TopEx
-  - uid: Paillave.Etl.ToSubProcessEx
+  - uid: Paillave.Etl.Extensions.ToSubProcessEx
     name: ToSubProcessEx
-  - uid: Paillave.Etl.UnionAllEx
+  - uid: Paillave.Etl.Extensions.UnionAllEx
     name: UnionAllEx
-  - uid: Paillave.Etl.UnionEx
+  - uid: Paillave.Etl.Extensions.UnionEx
     name: UnionEx
-  - uid: Paillave.Etl.UnpivotEx
+  - uid: Paillave.Etl.Extensions.UnpivotEx
     name: UnpivotEx
-  - uid: Paillave.Etl.WhereEx
+  - uid: Paillave.Etl.Extensions.WhereEx
     name: WhereEx
 - uid: Paillave.Etl.StreamNodes
   name: Paillave.Etl.StreamNodes

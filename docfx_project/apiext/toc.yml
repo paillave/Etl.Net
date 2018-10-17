@@ -1,26 +1,26 @@
 ### YamlMime:TableOfContent
-- uid: Paillave.Etl.EntityFrameworkCore
-  name: Paillave.Etl.EntityFrameworkCore
+- uid: Paillave.Etl.EntityFrameworkCore.Extensions
+  name: Paillave.Etl.EntityFrameworkCore.Extensions
   items:
-  - uid: Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx
+  - uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx
     name: EntityFrameworkCoreEx
-- uid: Paillave.Etl.ExcelFile
-  name: Paillave.Etl.ExcelFile
+- uid: Paillave.Etl.ExcelFile.Extensions
+  name: Paillave.Etl.ExcelFile.Extensions
   items:
-  - uid: Paillave.Etl.ExcelFile.ExcelFileEx
+  - uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
     name: ExcelFileEx
-- uid: Paillave.Etl.Ftp
-  name: Paillave.Etl.Ftp
+- uid: Paillave.Etl.Ftp.Extensions
+  name: Paillave.Etl.Ftp.Extensions
   items:
-  - uid: Paillave.Etl.Ftp.FtpEx
+  - uid: Paillave.Etl.Ftp.Extensions.FtpEx
     name: FtpEx
-- uid: Paillave.Etl.SqlServer
-  name: Paillave.Etl.SqlServer
+- uid: Paillave.Etl.SqlServer.Extensions
+  name: Paillave.Etl.SqlServer.Extensions
   items:
-  - uid: Paillave.Etl.SqlServer.SqlServerEx
+  - uid: Paillave.Etl.SqlServer.Extensions.SqlServerEx
     name: SqlServerEx
-- uid: Paillave.Etl.TextFile
-  name: Paillave.Etl.TextFile
+- uid: Paillave.Etl.TextFile.Extensions
+  name: Paillave.Etl.TextFile.Extensions
   items:
-  - uid: Paillave.Etl.TextFile.TextFileEx
+  - uid: Paillave.Etl.TextFile.Extensions.TextFileEx
     name: TextFileEx

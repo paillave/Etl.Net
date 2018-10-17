@@ -1,0 +1,2173 @@
+### YamlMime:ManagedReference
+items:
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  commentId: T:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  id: ExcelFileEx
+  parent: Paillave.Etl.ExcelFile.Extensions
+  children:
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0})
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection})
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1})
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2})
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{Stream},System.String)
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{System.String},System.String)
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String})
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0})
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1})
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``2(ISortedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ToExcelFile``1(IStream{``0},System.String,ExcelFileDefinition{``0})
+  langs:
+  - csharp
+  - vb
+  name: ExcelFileEx
+  nameWithType: ExcelFileEx
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  type: Class
+  source:
+    id: ExcelFileEx
+    path: ''
+    startLine: 72
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.ExcelFile.Extensions
+  syntax:
+    content: public static class ExcelFileEx
+    content.vb: Public Module ExcelFileEx
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.ToString
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  modifiers.csharp:
+  - public
+  - static
+  - class
+  modifiers.vb:
+  - Public
+  - Module
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String})
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String})
+  id: CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String})
+  isExtensionMethod: true
+  parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyExcelSheets<TIn>(IStream<TIn>, String, Func<TIn, String>)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TIn>(IStream<TIn>, String, Func<TIn, String>)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>)
+  type: Method
+  source:
+    id: CrossApplyExcelSheets
+    path: ''
+    startLine: 75
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.ExcelFile.Extensions
+  syntax:
+    content: public static IStream<ExcelSheetSelection> CrossApplyExcelSheets<TIn>(this IStream<TIn> stream, string name, Func<TIn, string> getExcelFilePath)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: getExcelFilePath
+      type: System.Func{{TIn},System.String}
+    typeParameters:
+    - id: TIn
+    return:
+      type: IStream{ExcelSheetSelection}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyExcelSheets(Of TIn)(stream As IStream(Of TIn), name As String, getExcelFilePath As Func(Of TIn, String)) As IStream(Of ExcelSheetSelection)
+  overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String))
+  name.vb: CrossApplyExcelSheets(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String))
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{System.String},System.String)
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{System.String},System.String)
+  id: CrossApplyExcelSheets(IStream{System.String},System.String)
+  isExtensionMethod: true
+  parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyExcelSheets(IStream<String>, String)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets(IStream<String>, String)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream<System.String>, System.String)
+  type: Method
+  source:
+    id: CrossApplyExcelSheets
+    path: ''
+    startLine: 83
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.ExcelFile.Extensions
+  syntax:
+    content: public static IStream<ExcelSheetSelection> CrossApplyExcelSheets(this IStream<string> stream, string name)
+    parameters:
+    - id: stream
+      type: IStream{System.String}
+    - id: name
+      type: System.String
+    return:
+      type: IStream{ExcelSheetSelection}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyExcelSheets(stream As IStream(Of String), name As String) As IStream(Of ExcelSheetSelection)
+  overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(IStream(Of String), String)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream(Of System.String), System.String)
+  name.vb: CrossApplyExcelSheets(IStream(Of String), String)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{Stream},System.String)
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{Stream},System.String)
+  id: CrossApplyExcelSheets(IStream{Stream},System.String)
+  isExtensionMethod: true
+  parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyExcelSheets(IStream<Stream>, String)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets(IStream<Stream>, String)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream<Stream>, System.String)
+  type: Method
+  source:
+    id: CrossApplyExcelSheets
+    path: ''
+    startLine: 91
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.ExcelFile.Extensions
+  syntax:
+    content: public static IStream<ExcelSheetSelection> CrossApplyExcelSheets(this IStream<Stream> stream, string name)
+    parameters:
+    - id: stream
+      type: IStream{Stream}
+    - id: name
+      type: System.String
+    return:
+      type: IStream{ExcelSheetSelection}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyExcelSheets(stream As IStream(Of Stream), name As String) As IStream(Of ExcelSheetSelection)
+  overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(IStream(Of Stream), String)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream(Of Stream), System.String)
+  name.vb: CrossApplyExcelSheets(IStream(Of Stream), String)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1})
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1})
+  id: CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1})
+  isExtensionMethod: true
+  parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<ExcelSheetSelection, TIn, TOut>)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<ExcelSheetSelection, TIn, TOut>)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<ExcelSheetSelection, TIn, TOut>)
+  type: Method
+  source:
+    id: CrossApplyExcelSheets
+    path: ''
+    startLine: 99
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.ExcelFile.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyExcelSheets<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, string> getExcelFilePath, Func<ExcelSheetSelection, TIn, TOut> selector)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: getExcelFilePath
+      type: System.Func{{TIn},System.String}
+    - id: selector
+      type: System.Func{ExcelSheetSelection,{TIn},{TOut}}
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyExcelSheets(Of TIn, TOut)(stream As IStream(Of TIn), name As String, getExcelFilePath As Func(Of TIn, String), selector As Func(Of ExcelSheetSelection, TIn, TOut)) As IStream(Of TOut)
+  overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of ExcelSheetSelection, TIn, TOut))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of ExcelSheetSelection, TIn, TOut))
+  name.vb: CrossApplyExcelSheets(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of ExcelSheetSelection, TIn, TOut))
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0})
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0})
+  id: CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0})
+  isExtensionMethod: true
+  parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyExcelSheets<TOut>(IStream<String>, String, Func<ExcelSheetSelection, String, TOut>)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<String>, String, Func<ExcelSheetSelection, String, TOut>)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<System.String>, System.String, System.Func<ExcelSheetSelection, System.String, TOut>)
+  type: Method
+  source:
+    id: CrossApplyExcelSheets
+    path: ''
+    startLine: 107
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.ExcelFile.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyExcelSheets<TOut>(this IStream<string> stream, string name, Func<ExcelSheetSelection, string, TOut> selector)
+    parameters:
+    - id: stream
+      type: IStream{System.String}
+    - id: name
+      type: System.String
+    - id: selector
+      type: System.Func{ExcelSheetSelection,System.String,{TOut}}
+    typeParameters:
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyExcelSheets(Of TOut)(stream As IStream(Of String), name As String, selector As Func(Of ExcelSheetSelection, String, TOut)) As IStream(Of TOut)
+  overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TOut)(IStream(Of String), String, Func(Of ExcelSheetSelection, String, TOut))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TOut)(IStream(Of System.String), System.String, System.Func(Of ExcelSheetSelection, System.String, TOut))
+  name.vb: CrossApplyExcelSheets(Of TOut)(IStream(Of String), String, Func(Of ExcelSheetSelection, String, TOut))
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1})
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1})
+  id: CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1})
+  isExtensionMethod: true
+  parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>, Func<TParsed, ExcelSheetSelection, TOut>)
+  nameWithType: ExcelFileEx.CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>, Func<TParsed, ExcelSheetSelection, TOut>)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, System.String, ExcelFileDefinition<TParsed>, System.Func<TParsed, ExcelSheetSelection, TOut>)
+  type: Method
+  source:
+    id: CrossApplyExcelRows
+    path: ''
+    startLine: 118
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.ExcelFile.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyExcelRows<TParsed, TOut>(this IStream<ExcelSheetSelection> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TParsed, ExcelSheetSelection, TOut> selector)
+    parameters:
+    - id: stream
+      type: IStream{ExcelSheetSelection}
+    - id: name
+      type: System.String
+    - id: mapping
+      type: ExcelFileDefinition{{TParsed}}
+    - id: selector
+      type: System.Func{{TParsed},ExcelSheetSelection,{TOut}}
+    typeParameters:
+    - id: TParsed
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyExcelRows(Of TParsed, TOut)(stream As IStream(Of ExcelSheetSelection), name As String, mapping As ExcelFileDefinition(Of TParsed), selector As Func(Of TParsed, ExcelSheetSelection, TOut)) As IStream(Of TOut)
+  overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows*
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TParsed, TOut)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed), Func(Of TParsed, ExcelSheetSelection, TOut))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TParsed, TOut)(IStream(Of ExcelSheetSelection), System.String, ExcelFileDefinition(Of TParsed), System.Func(Of TParsed, ExcelSheetSelection, TOut))
+  name.vb: CrossApplyExcelRows(Of TParsed, TOut)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed), Func(Of TParsed, ExcelSheetSelection, TOut))
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2})
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2})
+  id: CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2})
+  isExtensionMethod: true
+  parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>, Func<TParsed, TIn, TOut>)
+  nameWithType: ExcelFileEx.CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>, Func<TParsed, TIn, TOut>)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, System.String, ExcelFileDefinition<TParsed>, System.Func<TIn, ExcelSheetSelection>, System.Func<TParsed, TIn, TOut>)
+  type: Method
+  source:
+    id: CrossApplyExcelRows
+    path: ''
+    startLine: 126
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.ExcelFile.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyExcelRows<TIn, TParsed, TOut>(this IStream<TIn> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TIn, ExcelSheetSelection> sheetSelection, Func<TParsed, TIn, TOut> selector)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: mapping
+      type: ExcelFileDefinition{{TParsed}}
+    - id: sheetSelection
+      type: System.Func{{TIn},ExcelSheetSelection}
+    - id: selector
+      type: System.Func{{TParsed},{TIn},{TOut}}
+    typeParameters:
+    - id: TIn
+    - id: TParsed
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyExcelRows(Of TIn, TParsed, TOut)(stream As IStream(Of TIn), name As String, mapping As ExcelFileDefinition(Of TParsed), sheetSelection As Func(Of TIn, ExcelSheetSelection), selector As Func(Of TParsed, TIn, TOut)) As IStream(Of TOut)
+  overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows*
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed, TOut)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection), Func(Of TParsed, TIn, TOut))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed, TOut)(IStream(Of TIn), System.String, ExcelFileDefinition(Of TParsed), System.Func(Of TIn, ExcelSheetSelection), System.Func(Of TParsed, TIn, TOut))
+  name.vb: CrossApplyExcelRows(Of TIn, TParsed, TOut)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection), Func(Of TParsed, TIn, TOut))
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection})
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection})
+  id: CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection})
+  isExtensionMethod: true
+  parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>)
+  nameWithType: ExcelFileEx.CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, System.String, ExcelFileDefinition<TParsed>, System.Func<TIn, ExcelSheetSelection>)
+  type: Method
+  source:
+    id: CrossApplyExcelRows
+    path: ''
+    startLine: 134
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.ExcelFile.Extensions
+  syntax:
+    content: public static IStream<TParsed> CrossApplyExcelRows<TIn, TParsed>(this IStream<TIn> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TIn, ExcelSheetSelection> sheetSelection)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: mapping
+      type: ExcelFileDefinition{{TParsed}}
+    - id: sheetSelection
+      type: System.Func{{TIn},ExcelSheetSelection}
+    typeParameters:
+    - id: TIn
+    - id: TParsed
+    return:
+      type: IStream{{TParsed}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyExcelRows(Of TIn, TParsed)(stream As IStream(Of TIn), name As String, mapping As ExcelFileDefinition(Of TParsed), sheetSelection As Func(Of TIn, ExcelSheetSelection)) As IStream(Of TParsed)
+  overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows*
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed)(IStream(Of TIn), System.String, ExcelFileDefinition(Of TParsed), System.Func(Of TIn, ExcelSheetSelection))
+  name.vb: CrossApplyExcelRows(Of TIn, TParsed)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection))
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0})
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0})
+  id: CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0})
+  isExtensionMethod: true
+  parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>)
+  nameWithType: ExcelFileEx.CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, System.String, ExcelFileDefinition<TParsed>)
+  type: Method
+  source:
+    id: CrossApplyExcelRows
+    path: ''
+    startLine: 142
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.ExcelFile.Extensions
+  syntax:
+    content: public static IStream<TParsed> CrossApplyExcelRows<TParsed>(this IStream<ExcelSheetSelection> stream, string name, ExcelFileDefinition<TParsed> mapping)
+    parameters:
+    - id: stream
+      type: IStream{ExcelSheetSelection}
+    - id: name
+      type: System.String
+    - id: mapping
+      type: ExcelFileDefinition{{TParsed}}
+    typeParameters:
+    - id: TParsed
+    return:
+      type: IStream{{TParsed}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyExcelRows(Of TParsed)(stream As IStream(Of ExcelSheetSelection), name As String, mapping As ExcelFileDefinition(Of TParsed)) As IStream(Of TParsed)
+  overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows*
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), System.String, ExcelFileDefinition(Of TParsed))
+  name.vb: CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed))
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  id: ThroughExcelFile``1(IStream{``0},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  isExtensionMethod: true
+  parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  langs:
+  - csharp
+  - vb
+  name: ThroughExcelFile<TIn>(IStream<TIn>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  nameWithType: ExcelFileEx.ThroughExcelFile<TIn>(IStream<TIn>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile<TIn>(IStream<TIn>, System.String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  type: Method
+  source:
+    id: ThroughExcelFile
+    path: ''
+    startLine: 180
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.ExcelFile.Extensions
+  syntax:
+    content: public static IStream<TIn> ThroughExcelFile<TIn>(this IStream<TIn> stream, string name, ISingleStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: resourceStream
+      type: ISingleStream{Stream}
+    - id: mapping
+      type: ExcelFileDefinition{{TIn}}
+    typeParameters:
+    - id: TIn
+    return:
+      type: IStream{{TIn}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function ThroughExcelFile(Of TIn)(stream As IStream(Of TIn), name As String, resourceStream As ISingleStream(Of Stream), mapping As ExcelFileDefinition(Of TIn) = Nothing) As IStream(Of TIn)
+  overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile*
+  nameWithType.vb: ExcelFileEx.ThroughExcelFile(Of TIn)(IStream(Of TIn), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile(Of TIn)(IStream(Of TIn), System.String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+  name.vb: ThroughExcelFile(Of TIn)(IStream(Of TIn), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``2(ISortedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``2(ISortedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  id: ThroughExcelFile``2(ISortedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  isExtensionMethod: true
+  parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  langs:
+  - csharp
+  - vb
+  name: ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  nameWithType: ExcelFileEx.ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  type: Method
+  source:
+    id: ThroughExcelFile
+    path: ''
+    startLine: 189
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.ExcelFile.Extensions
+  syntax:
+    content: public static ISortedStream<TIn, TKey> ThroughExcelFile<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, ISingleStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
+    parameters:
+    - id: stream
+      type: ISortedStream{{TIn},{TKey}}
+    - id: name
+      type: System.String
+    - id: resourceStream
+      type: ISingleStream{Stream}
+    - id: mapping
+      type: ExcelFileDefinition{{TIn}}
+    typeParameters:
+    - id: TIn
+    - id: TKey
+    return:
+      type: ISortedStream{{TIn},{TKey}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function ThroughExcelFile(Of TIn, TKey)(stream As ISortedStream(Of TIn, TKey), name As String, resourceStream As ISingleStream(Of Stream), mapping As ExcelFileDefinition(Of TIn) = Nothing) As ISortedStream(Of TIn, TKey)
+  overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile*
+  nameWithType.vb: ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), System.String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+  name.vb: ThroughExcelFile(Of TIn, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  id: ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
+  isExtensionMethod: true
+  parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  langs:
+  - csharp
+  - vb
+  name: ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  nameWithType: ExcelFileEx.ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)
+  type: Method
+  source:
+    id: ThroughExcelFile
+    path: ''
+    startLine: 198
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.ExcelFile.Extensions
+  syntax:
+    content: public static IKeyedStream<TIn, TKey> ThroughExcelFile<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, ISingleStream<Stream> resourceStream, ExcelFileDefinition<TIn> mapping = null)
+    parameters:
+    - id: stream
+      type: IKeyedStream{{TIn},{TKey}}
+    - id: name
+      type: System.String
+    - id: resourceStream
+      type: ISingleStream{Stream}
+    - id: mapping
+      type: ExcelFileDefinition{{TIn}}
+    typeParameters:
+    - id: TIn
+    - id: TKey
+    return:
+      type: IKeyedStream{{TIn},{TKey}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function ThroughExcelFile(Of TIn, TKey)(stream As IKeyedStream(Of TIn, TKey), name As String, resourceStream As ISingleStream(Of Stream), mapping As ExcelFileDefinition(Of TIn) = Nothing) As IKeyedStream(Of TIn, TKey)
+  overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile*
+  nameWithType.vb: ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), System.String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+  name.vb: ThroughExcelFile(Of TIn, TKey)(IKeyedStream(Of TIn, TKey), String, ISingleStream(Of Stream), ExcelFileDefinition(Of TIn))
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ToExcelFile``1(IStream{``0},System.String,ExcelFileDefinition{``0})
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ToExcelFile``1(IStream{``0},System.String,ExcelFileDefinition{``0})
+  id: ToExcelFile``1(IStream{``0},System.String,ExcelFileDefinition{``0})
+  isExtensionMethod: true
+  parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  langs:
+  - csharp
+  - vb
+  name: ToExcelFile<TIn>(IStream<TIn>, String, ExcelFileDefinition<TIn>)
+  nameWithType: ExcelFileEx.ToExcelFile<TIn>(IStream<TIn>, String, ExcelFileDefinition<TIn>)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ToExcelFile<TIn>(IStream<TIn>, System.String, ExcelFileDefinition<TIn>)
+  type: Method
+  source:
+    id: ToExcelFile
+    path: ''
+    startLine: 210
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.ExcelFile.Extensions
+  syntax:
+    content: public static IStream<Stream> ToExcelFile<TIn>(this IStream<TIn> stream, string name, ExcelFileDefinition<TIn> mapping = null)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: mapping
+      type: ExcelFileDefinition{{TIn}}
+    typeParameters:
+    - id: TIn
+    return:
+      type: IStream{Stream}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function ToExcelFile(Of TIn)(stream As IStream(Of TIn), name As String, mapping As ExcelFileDefinition(Of TIn) = Nothing) As IStream(Of Stream)
+  overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ToExcelFile*
+  nameWithType.vb: ExcelFileEx.ToExcelFile(Of TIn)(IStream(Of TIn), String, ExcelFileDefinition(Of TIn))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ToExcelFile(Of TIn)(IStream(Of TIn), System.String, ExcelFileDefinition(Of TIn))
+  name.vb: ToExcelFile(Of TIn)(IStream(Of TIn), String, ExcelFileDefinition(Of TIn))
+references:
+- uid: Paillave.Etl.ExcelFile.Extensions
+  commentId: N:Paillave.Etl.ExcelFile.Extensions
+  name: Paillave.Etl.ExcelFile.Extensions
+  nameWithType: Paillave.Etl.ExcelFile.Extensions
+  fullName: Paillave.Etl.ExcelFile.Extensions
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*
+  commentId: Overload:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets
+  name: CrossApplyExcelSheets
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets
+- uid: IStream{{TIn}}
+  commentId: '!:IStream{``0}'
+  definition: IStream`1
+  name: IStream<TIn>
+  nameWithType: IStream<TIn>
+  fullName: IStream<TIn>
+  nameWithType.vb: IStream(Of TIn)
+  fullName.vb: IStream(Of TIn)
+  name.vb: IStream(Of TIn)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Func{{TIn},System.String}
+  commentId: T:System.Func{``0,System.String}
+  parent: System
+  definition: System.Func`2
+  name: Func<TIn, String>
+  nameWithType: Func<TIn, String>
+  fullName: System.Func<TIn, System.String>
+  nameWithType.vb: Func(Of TIn, String)
+  fullName.vb: System.Func(Of TIn, System.String)
+  name.vb: Func(Of TIn, String)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{ExcelSheetSelection}
+  commentId: '!:IStream{ExcelSheetSelection}'
+  definition: IStream`1
+  name: IStream<ExcelSheetSelection>
+  nameWithType: IStream<ExcelSheetSelection>
+  fullName: IStream<ExcelSheetSelection>
+  nameWithType.vb: IStream(Of ExcelSheetSelection)
+  fullName.vb: IStream(Of ExcelSheetSelection)
+  name.vb: IStream(Of ExcelSheetSelection)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: ExcelSheetSelection
+    name: ExcelSheetSelection
+    nameWithType: ExcelSheetSelection
+    fullName: ExcelSheetSelection
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: ExcelSheetSelection
+    name: ExcelSheetSelection
+    nameWithType: ExcelSheetSelection
+    fullName: ExcelSheetSelection
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream`1
+  isExternal: true
+  name: IStream<>
+  nameWithType: IStream<>
+  fullName: IStream<>
+  nameWithType.vb: IStream(Of )
+  fullName.vb: IStream(Of )
+  name.vb: IStream(Of )
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func`2
+  commentId: T:System.Func`2
+  isExternal: true
+  name: Func<T, TResult>
+  nameWithType: Func<T, TResult>
+  fullName: System.Func<T, TResult>
+  nameWithType.vb: Func(Of T, TResult)
+  fullName.vb: System.Func(Of T, TResult)
+  name.vb: Func(Of T, TResult)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{System.String}
+  commentId: '!:IStream{System.String}'
+  definition: IStream`1
+  name: IStream<String>
+  nameWithType: IStream<String>
+  fullName: IStream<System.String>
+  nameWithType.vb: IStream(Of String)
+  fullName.vb: IStream(Of System.String)
+  name.vb: IStream(Of String)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{Stream}
+  commentId: '!:IStream{Stream}'
+  definition: IStream`1
+  name: IStream<Stream>
+  nameWithType: IStream<Stream>
+  fullName: IStream<Stream>
+  nameWithType.vb: IStream(Of Stream)
+  fullName.vb: IStream(Of Stream)
+  name.vb: IStream(Of Stream)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Stream
+    name: Stream
+    nameWithType: Stream
+    fullName: Stream
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Stream
+    name: Stream
+    nameWithType: Stream
+    fullName: Stream
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{ExcelSheetSelection,{TIn},{TOut}}
+  commentId: T:System.Func{ExcelSheetSelection,``0,``1}
+  parent: System
+  definition: System.Func`3
+  name: Func<ExcelSheetSelection, TIn, TOut>
+  nameWithType: Func<ExcelSheetSelection, TIn, TOut>
+  fullName: System.Func<ExcelSheetSelection, TIn, TOut>
+  nameWithType.vb: Func(Of ExcelSheetSelection, TIn, TOut)
+  fullName.vb: System.Func(Of ExcelSheetSelection, TIn, TOut)
+  name.vb: Func(Of ExcelSheetSelection, TIn, TOut)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: ExcelSheetSelection
+    name: ExcelSheetSelection
+    nameWithType: ExcelSheetSelection
+    fullName: ExcelSheetSelection
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: ExcelSheetSelection
+    name: ExcelSheetSelection
+    nameWithType: ExcelSheetSelection
+    fullName: ExcelSheetSelection
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{{TOut}}
+  commentId: '!:IStream{``2}'
+  definition: IStream`1
+  name: IStream<TOut>
+  nameWithType: IStream<TOut>
+  fullName: IStream<TOut>
+  nameWithType.vb: IStream(Of TOut)
+  fullName.vb: IStream(Of TOut)
+  name.vb: IStream(Of TOut)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func`3
+  commentId: T:System.Func`3
+  isExternal: true
+  name: Func<T1, T2, TResult>
+  nameWithType: Func<T1, T2, TResult>
+  fullName: System.Func<T1, T2, TResult>
+  nameWithType.vb: Func(Of T1, T2, TResult)
+  fullName.vb: System.Func(Of T1, T2, TResult)
+  name.vb: Func(Of T1, T2, TResult)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{ExcelSheetSelection,System.String,{TOut}}
+  commentId: T:System.Func{ExcelSheetSelection,System.String,``0}
+  parent: System
+  definition: System.Func`3
+  name: Func<ExcelSheetSelection, String, TOut>
+  nameWithType: Func<ExcelSheetSelection, String, TOut>
+  fullName: System.Func<ExcelSheetSelection, System.String, TOut>
+  nameWithType.vb: Func(Of ExcelSheetSelection, String, TOut)
+  fullName.vb: System.Func(Of ExcelSheetSelection, System.String, TOut)
+  name.vb: Func(Of ExcelSheetSelection, String, TOut)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: ExcelSheetSelection
+    name: ExcelSheetSelection
+    nameWithType: ExcelSheetSelection
+    fullName: ExcelSheetSelection
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: ExcelSheetSelection
+    name: ExcelSheetSelection
+    nameWithType: ExcelSheetSelection
+    fullName: ExcelSheetSelection
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows*
+  commentId: Overload:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows
+  name: CrossApplyExcelRows
+  nameWithType: ExcelFileEx.CrossApplyExcelRows
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows
+- uid: ExcelFileDefinition{{TParsed}}
+  commentId: '!:ExcelFileDefinition{``0}'
+  definition: ExcelFileDefinition`1
+  name: ExcelFileDefinition<TParsed>
+  nameWithType: ExcelFileDefinition<TParsed>
+  fullName: ExcelFileDefinition<TParsed>
+  nameWithType.vb: ExcelFileDefinition(Of TParsed)
+  fullName.vb: ExcelFileDefinition(Of TParsed)
+  name.vb: ExcelFileDefinition(Of TParsed)
+  spec.csharp:
+  - uid: ExcelFileDefinition`1
+    name: ExcelFileDefinition
+    nameWithType: ExcelFileDefinition
+    fullName: ExcelFileDefinition
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TParsed
+    nameWithType: TParsed
+    fullName: TParsed
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ExcelFileDefinition`1
+    name: ExcelFileDefinition
+    nameWithType: ExcelFileDefinition
+    fullName: ExcelFileDefinition
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TParsed
+    nameWithType: TParsed
+    fullName: TParsed
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TParsed},ExcelSheetSelection,{TOut}}
+  commentId: T:System.Func{``0,ExcelSheetSelection,``1}
+  parent: System
+  definition: System.Func`3
+  name: Func<TParsed, ExcelSheetSelection, TOut>
+  nameWithType: Func<TParsed, ExcelSheetSelection, TOut>
+  fullName: System.Func<TParsed, ExcelSheetSelection, TOut>
+  nameWithType.vb: Func(Of TParsed, ExcelSheetSelection, TOut)
+  fullName.vb: System.Func(Of TParsed, ExcelSheetSelection, TOut)
+  name.vb: Func(Of TParsed, ExcelSheetSelection, TOut)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TParsed
+    nameWithType: TParsed
+    fullName: TParsed
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: ExcelSheetSelection
+    name: ExcelSheetSelection
+    nameWithType: ExcelSheetSelection
+    fullName: ExcelSheetSelection
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TParsed
+    nameWithType: TParsed
+    fullName: TParsed
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: ExcelSheetSelection
+    name: ExcelSheetSelection
+    nameWithType: ExcelSheetSelection
+    fullName: ExcelSheetSelection
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ExcelFileDefinition`1
+  isExternal: true
+  name: ExcelFileDefinition<>
+  nameWithType: ExcelFileDefinition<>
+  fullName: ExcelFileDefinition<>
+  nameWithType.vb: ExcelFileDefinition(Of )
+  fullName.vb: ExcelFileDefinition(Of )
+  name.vb: ExcelFileDefinition(Of )
+  spec.csharp:
+  - uid: ExcelFileDefinition`1
+    name: ExcelFileDefinition
+    nameWithType: ExcelFileDefinition
+    fullName: ExcelFileDefinition
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ExcelFileDefinition`1
+    name: ExcelFileDefinition
+    nameWithType: ExcelFileDefinition
+    fullName: ExcelFileDefinition
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TIn},ExcelSheetSelection}
+  commentId: T:System.Func{``0,ExcelSheetSelection}
+  parent: System
+  definition: System.Func`2
+  name: Func<TIn, ExcelSheetSelection>
+  nameWithType: Func<TIn, ExcelSheetSelection>
+  fullName: System.Func<TIn, ExcelSheetSelection>
+  nameWithType.vb: Func(Of TIn, ExcelSheetSelection)
+  fullName.vb: System.Func(Of TIn, ExcelSheetSelection)
+  name.vb: Func(Of TIn, ExcelSheetSelection)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: ExcelSheetSelection
+    name: ExcelSheetSelection
+    nameWithType: ExcelSheetSelection
+    fullName: ExcelSheetSelection
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: ExcelSheetSelection
+    name: ExcelSheetSelection
+    nameWithType: ExcelSheetSelection
+    fullName: ExcelSheetSelection
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TParsed},{TIn},{TOut}}
+  commentId: T:System.Func{``1,``0,``2}
+  parent: System
+  definition: System.Func`3
+  name: Func<TParsed, TIn, TOut>
+  nameWithType: Func<TParsed, TIn, TOut>
+  fullName: System.Func<TParsed, TIn, TOut>
+  nameWithType.vb: Func(Of TParsed, TIn, TOut)
+  fullName.vb: System.Func(Of TParsed, TIn, TOut)
+  name.vb: Func(Of TParsed, TIn, TOut)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TParsed
+    nameWithType: TParsed
+    fullName: TParsed
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TParsed
+    nameWithType: TParsed
+    fullName: TParsed
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{{TParsed}}
+  commentId: '!:IStream{``1}'
+  definition: IStream`1
+  name: IStream<TParsed>
+  nameWithType: IStream<TParsed>
+  fullName: IStream<TParsed>
+  nameWithType.vb: IStream(Of TParsed)
+  fullName.vb: IStream(Of TParsed)
+  name.vb: IStream(Of TParsed)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TParsed
+    nameWithType: TParsed
+    fullName: TParsed
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TParsed
+    nameWithType: TParsed
+    fullName: TParsed
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile*
+  commentId: Overload:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile
+  name: ThroughExcelFile
+  nameWithType: ExcelFileEx.ThroughExcelFile
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile
+- uid: ISingleStream{Stream}
+  commentId: '!:ISingleStream{Stream}'
+  definition: ISingleStream`1
+  name: ISingleStream<Stream>
+  nameWithType: ISingleStream<Stream>
+  fullName: ISingleStream<Stream>
+  nameWithType.vb: ISingleStream(Of Stream)
+  fullName.vb: ISingleStream(Of Stream)
+  name.vb: ISingleStream(Of Stream)
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Stream
+    name: Stream
+    nameWithType: Stream
+    fullName: Stream
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Stream
+    name: Stream
+    nameWithType: Stream
+    fullName: Stream
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ExcelFileDefinition{{TIn}}
+  commentId: '!:ExcelFileDefinition{``0}'
+  definition: ExcelFileDefinition`1
+  name: ExcelFileDefinition<TIn>
+  nameWithType: ExcelFileDefinition<TIn>
+  fullName: ExcelFileDefinition<TIn>
+  nameWithType.vb: ExcelFileDefinition(Of TIn)
+  fullName.vb: ExcelFileDefinition(Of TIn)
+  name.vb: ExcelFileDefinition(Of TIn)
+  spec.csharp:
+  - uid: ExcelFileDefinition`1
+    name: ExcelFileDefinition
+    nameWithType: ExcelFileDefinition
+    fullName: ExcelFileDefinition
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ExcelFileDefinition`1
+    name: ExcelFileDefinition
+    nameWithType: ExcelFileDefinition
+    fullName: ExcelFileDefinition
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream`1
+  isExternal: true
+  name: ISingleStream<>
+  nameWithType: ISingleStream<>
+  fullName: ISingleStream<>
+  nameWithType.vb: ISingleStream(Of )
+  fullName.vb: ISingleStream(Of )
+  name.vb: ISingleStream(Of )
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISortedStream{{TIn},{TKey}}
+  commentId: '!:ISortedStream{``0,``2}'
+  definition: ISortedStream`2
+  name: ISortedStream<TIn, TKey>
+  nameWithType: ISortedStream<TIn, TKey>
+  fullName: ISortedStream<TIn, TKey>
+  nameWithType.vb: ISortedStream(Of TIn, TKey)
+  fullName.vb: ISortedStream(Of TIn, TKey)
+  name.vb: ISortedStream(Of TIn, TKey)
+  spec.csharp:
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISortedStream`2
+  isExternal: true
+  name: ISortedStream<, >
+  nameWithType: ISortedStream<, >
+  fullName: ISortedStream<, >
+  nameWithType.vb: ISortedStream(Of , )
+  fullName.vb: ISortedStream(Of , )
+  name.vb: ISortedStream(Of , )
+  spec.csharp:
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IKeyedStream{{TIn},{TKey}}
+  commentId: '!:IKeyedStream{``0,``2}'
+  definition: IKeyedStream`2
+  name: IKeyedStream<TIn, TKey>
+  nameWithType: IKeyedStream<TIn, TKey>
+  fullName: IKeyedStream<TIn, TKey>
+  nameWithType.vb: IKeyedStream(Of TIn, TKey)
+  fullName.vb: IKeyedStream(Of TIn, TKey)
+  name.vb: IKeyedStream(Of TIn, TKey)
+  spec.csharp:
+  - uid: IKeyedStream`2
+    name: IKeyedStream
+    nameWithType: IKeyedStream
+    fullName: IKeyedStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IKeyedStream`2
+    name: IKeyedStream
+    nameWithType: IKeyedStream
+    fullName: IKeyedStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IKeyedStream`2
+  isExternal: true
+  name: IKeyedStream<, >
+  nameWithType: IKeyedStream<, >
+  fullName: IKeyedStream<, >
+  nameWithType.vb: IKeyedStream(Of , )
+  fullName.vb: IKeyedStream(Of , )
+  name.vb: IKeyedStream(Of , )
+  spec.csharp:
+  - uid: IKeyedStream`2
+    name: IKeyedStream
+    nameWithType: IKeyedStream
+    fullName: IKeyedStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IKeyedStream`2
+    name: IKeyedStream
+    nameWithType: IKeyedStream
+    fullName: IKeyedStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ToExcelFile*
+  commentId: Overload:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ToExcelFile
+  name: ToExcelFile
+  nameWithType: ExcelFileEx.ToExcelFile
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ToExcelFile
