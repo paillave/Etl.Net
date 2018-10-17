@@ -26,7 +26,7 @@ namespace Paillave.Etl
             _jobDefinition = jobDefinition ?? (_jobDefinition => { });
             _jobName = jobName;
         }
-        public Task<ExecutionStatus> ExecuteAsync(TConfig config, ITraceStreamProcessDefinition traceStreamProcessDefinition = null)
+        public Task<ExecutionStatus> ExecuteAsync(TConfig config, Action<IStream<TraceEvent>> traceProcessDefinition = null)
         {
             Guid executionId = Guid.NewGuid();
             EventWaitHandle startSynchronizer = new EventWaitHandle(false, EventResetMode.ManualReset);
@@ -37,7 +37,7 @@ namespace Paillave.Etl
             JobExecutionContext jobExecutionContext = new JobExecutionContext(_jobName, executionId, startSynchronizer, traceSubject);
             var startupStream = new SingleStream<TConfig>(new Tracer(jobExecutionContext, new CurrentExecutionNodeContext(_jobName)), jobExecutionContext, _jobName, startupSubject.First());
 
-            traceStreamProcessDefinition?.DefineProcess(traceStream);
+            if (traceProcessDefinition != null) traceProcessDefinition(traceStream);
             _jobDefinition(startupStream);
 
             Task<StreamStatistics> jobExecutionStatus = traceStream.GetStreamStatisticsAsync();
