@@ -138,8 +138,8 @@ namespace Paillave.Etl
             {
                 this.ExecutionId = executionId;
                 this.JobName = null;
-                this._traceSubject = PushObservable.Empty<TraceEvent>(this.StartSynchronizer);
                 this.StartSynchronizer = startSynchronizer;
+                this._traceSubject = PushObservable.Empty<TraceEvent>(this.StartSynchronizer);
             }
             public Guid ExecutionId { get; }
             public string JobName { get; }
