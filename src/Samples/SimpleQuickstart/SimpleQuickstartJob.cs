@@ -1,18 +1,18 @@
 ﻿using Paillave.Etl;
+using Paillave.Etl.Extensions;
 using System;
 using System.IO;
 using Paillave.Etl.Core;
 using Paillave.Etl.TextFile.Core;
 using Paillave.Etl.Core.Streams;
 using Paillave.Etl.TextFile;
+using Paillave.Etl.TextFile.Extensions;
 
 namespace SimpleQuickstart
 {
-    public class SimpleQuickstartJob : IStreamProcessDefinition<SimpleConfig>
+    public class SimpleQuickstartJob
     {
-        public string Name => "Simple quickstart";
-
-        public void DefineProcess(ISingleStream<SimpleConfig> rootStream)
+        public static void DefineProcess(ISingleStream<SimpleConfig> rootStream)
         {
             var outputFileS = rootStream.Select("open output file", i => (Stream)File.OpenWrite(i.OutputFilePath));
             rootStream

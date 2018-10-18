@@ -1,14 +1,14 @@
 using Paillave.Etl;
+using Paillave.Etl.Extensions;
 using Paillave.Etl.Core.Streams;
 using Paillave.Etl.StreamNodes;
 using System.Linq;
 
 namespace ExamplesQuickStart.Jobs
 {
-    public class CrossApplyActionJobs2 : IStreamProcessDefinition<object>
+    public class CrossApplyActionJobs2
     {
-        public string Name => "import file";
-        public void DefineProcess(ISingleStream<object> rootStream)
+        public static void DefineProcess(ISingleStream<object> rootStream)
         {
             rootStream
                 .CrossApplyEnumerable("create some values", (input) => Enumerable.Range(0, 10).Select(i => new MyInputType { Id = i, Value = (i % 3 == 0) ? i : (int?)null }))

@@ -14,7 +14,8 @@ namespace SimpleQuickstart
         {
             var testFilesDirectory = args[0];
 
-            new StreamProcessRunner<SimpleQuickstartJob, SimpleConfig>().ExecuteAsync(new SimpleConfig
+            // new StreamProcessRunner<SimpleQuickstartJob, SimpleConfig>().ExecuteAsync(new SimpleConfig
+            StreamProcessRunner.Create<SimpleConfig>(SimpleQuickstartJob.DefineProcess).ExecuteAsync(new SimpleConfig
             {
                 InputFilePath = Path.Combine(testFilesDirectory, "simpleinputfile.csv"),
                 OutputFilePath = Path.Combine(testFilesDirectory, "simpleoutputfile.csv")

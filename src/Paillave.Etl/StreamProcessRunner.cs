@@ -1,5 +1,6 @@
 ﻿using Paillave.Etl.Core;
 using Paillave.Etl.Core.Streams;
+using Paillave.Etl.Extensions;
 using Paillave.Etl.Reactive.Core;
 using Paillave.Etl.Reactive.Disposables;
 using Paillave.Etl.Reactive.Operators;
@@ -11,16 +12,21 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl
 {
-    public static class StreamProcessRunner
+    public class StreamProcessRunner
     {
-        public static StreamProcessRunner<TJob, TConfig> Create<TJob, TConfig>() where TJob : IStreamProcessDefinition<TConfig>, new()
-        {
-            return new StreamProcessRunner<TJob, TConfig>();
-        }
+        public static StreamProcessRunner<TConfig> Create<TConfig>(Action<ISingleStream<TConfig>> jobDefinition, string jobName = "NoName") => new StreamProcessRunner<TConfig>(jobDefinition, jobName);
     }
-    public class StreamProcessRunner<TJob, TConfig> where TJob : IStreamProcessDefinition<TConfig>, new()
+
+    public class StreamProcessRunner<TConfig>
     {
-        public Task<ExecutionStatus> ExecuteAsync(TConfig config, ITraceStreamProcessDefinition traceStreamProcessDefinition = null)
+        private Action<ISingleStream<TConfig>> _jobDefinition;
+        private string _jobName;
+        public StreamProcessRunner(Action<ISingleStream<TConfig>> jobDefinition, string jobName = "NoName")
+        {
+            _jobDefinition = jobDefinition ?? (_jobDefinition => { });
+            _jobName = jobName;
+        }
+        public Task<ExecutionStatus> ExecuteAsync(TConfig config, Action<IStream<TraceEvent>> traceProcessDefinition = null)
         {
             Guid executionId = Guid.NewGuid();
             EventWaitHandle startSynchronizer = new EventWaitHandle(false, EventResetMode.ManualReset);
@@ -28,12 +34,11 @@ namespace Paillave.Etl
             IPushSubject<TConfig> startupSubject = new PushSubject<TConfig>();
             IExecutionContext traceExecutionContext = new TraceExecutionContext(startSynchronizer, executionId);
             var traceStream = new Stream<TraceEvent>(null, traceExecutionContext, null, traceSubject);
-            TJob jobDefinition = new TJob();
-            JobExecutionContext jobExecutionContext = new JobExecutionContext(jobDefinition.Name, executionId, startSynchronizer, traceSubject);
-            var startupStream = new SingleStream<TConfig>(new Tracer(jobExecutionContext, new CurrentExecutionNodeContext(jobDefinition.Name)), jobExecutionContext, jobDefinition.Name, startupSubject.First());
+            JobExecutionContext jobExecutionContext = new JobExecutionContext(_jobName, executionId, startSynchronizer, traceSubject);
+            var startupStream = new SingleStream<TConfig>(new Tracer(jobExecutionContext, new CurrentExecutionNodeContext(_jobName)), jobExecutionContext, _jobName, startupSubject.First());
 
-            traceStreamProcessDefinition?.DefineProcess(traceStream);
-            jobDefinition.DefineProcess(startupStream);
+            if (traceProcessDefinition != null) traceProcessDefinition(traceStream);
+            _jobDefinition(startupStream);
 
             Task<StreamStatistics> jobExecutionStatus = traceStream.GetStreamStatisticsAsync();
 
@@ -50,11 +55,10 @@ namespace Paillave.Etl
         }
         public JobDefinitionStructure GetDefinitionStructure()
         {
-            TJob jobDefinition = new TJob();
-            GetDefinitionExecutionContext jobExecutionContext = new GetDefinitionExecutionContext(jobDefinition.Name);
+            GetDefinitionExecutionContext jobExecutionContext = new GetDefinitionExecutionContext(_jobName);
             //JobExecutionContext jobExecutionContext = new JobExecutionContext(jobDefinition.Name, Guid.Empty, null, null);
-            var startupStream = new SingleStream<TConfig>(new Tracer(jobExecutionContext, new CurrentExecutionNodeContext(jobDefinition.Name)), jobExecutionContext, jobDefinition.Name, PushObservable.Empty<TConfig>());
-            jobDefinition.DefineProcess(startupStream);
+            var startupStream = new SingleStream<TConfig>(new Tracer(jobExecutionContext, new CurrentExecutionNodeContext(_jobName)), jobExecutionContext, _jobName, PushObservable.Empty<TConfig>());
+            _jobDefinition(startupStream);
             return jobExecutionContext.GetDefinitionStructure();
         }
         private class CurrentExecutionNodeContext : INodeContext
@@ -134,8 +138,8 @@ namespace Paillave.Etl
             {
                 this.ExecutionId = executionId;
                 this.JobName = null;
-                this._traceSubject = PushObservable.Empty<TraceEvent>(this.StartSynchronizer);
                 this.StartSynchronizer = startSynchronizer;
+                this._traceSubject = PushObservable.Empty<TraceEvent>(this.StartSynchronizer);
             }
             public Guid ExecutionId { get; }
             public string JobName { get; }

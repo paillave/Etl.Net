@@ -5,206 +5,326 @@
   "files": [
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.AggregateEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.AggregateEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.AggregateEx.html",
-          "hash": "RMHiIlC4/ud8uEceutpO4w=="
+          "relative_path": "api/Paillave.Etl.Extensions.AggregateEx.html",
+          "hash": "WSMiNoGu38jr8qhtKtHbHA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.CrossApplyActionEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.CrossApplyActionEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.CrossApplyActionEx.html",
-          "hash": "wL9Z6mbOk9m3+4x9pqs5eA=="
+          "relative_path": "api/Paillave.Etl.Extensions.CrossApplyActionEx.html",
+          "hash": "SJr4ruCfwGnjMBDrzRtnjw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.CrossApplyEnumerableEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.CrossApplyEnumerableEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.CrossApplyEnumerableEx.html",
-          "hash": "4P1vRhr3YvFTqrftk7wcog=="
+          "relative_path": "api/Paillave.Etl.Extensions.CrossApplyEnumerableEx.html",
+          "hash": "6dcstuWjvphOExzJ1jAARA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.CrossApplyEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.CrossApplyEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.CrossApplyEx.html",
-          "hash": "J42aWdkw+4PU/c1n/WIiTg=="
+          "relative_path": "api/Paillave.Etl.Extensions.CrossApplyEx.html",
+          "hash": "eb/sFfaW2MC/11wcFr/xOw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.CrossApplyFolderFilesEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.CrossApplyFolderFilesEx.html",
-          "hash": "Ttf5uPMR+SfmiRc4XA74NA=="
+          "relative_path": "api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html",
+          "hash": "qrnd4SV2wNb7Gb49eycN1g=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.DistinctEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.DistinctEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.DistinctEx.html",
-          "hash": "sHplPi4TKyGoeXNQpvfNnQ=="
+          "relative_path": "api/Paillave.Etl.Extensions.DistinctEx.html",
+          "hash": "kDDR1t/9UrjZpGMH0wsHFQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.EnsureKeyedEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.EnsureKeyedEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.EnsureKeyedEx.html",
-          "hash": "/c5BcNphTEaMQ/04WN98fg=="
+          "relative_path": "api/Paillave.Etl.Extensions.EnsureKeyedEx.html",
+          "hash": "JowP5IvaKU8DUBN9tXIW+A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.EnsureSingleEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.EnsureSingleEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.EnsureSingleEx.html",
-          "hash": "VtE8SlGk46YUcbeJFPZVJg=="
+          "relative_path": "api/Paillave.Etl.Extensions.EnsureSingleEx.html",
+          "hash": "beGG4PTjeA397i3bd9fAQw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.EnsureSortedEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.EnsureSortedEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.EnsureSortedEx.html",
-          "hash": "+wa/LSqIGxiMjmpYiU8Xkw=="
+          "relative_path": "api/Paillave.Etl.Extensions.EnsureSortedEx.html",
+          "hash": "Y4QliGVM9Dh7TjknpJcf/g=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.GetStreamStatisticsEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.GetStreamStatisticsEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.GetStreamStatisticsEx.html",
-          "hash": "beuyBgNKScNwD99MR+A1sg=="
+          "relative_path": "api/Paillave.Etl.Extensions.GetStreamStatisticsEx.html",
+          "hash": "OlZjUE+viYIBkcHuSn+ZFQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.LeftJoinEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.LeftJoinEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.LeftJoinEx.html",
-          "hash": "a/SuRrfaoiL7okJhMwH+DQ=="
+          "relative_path": "api/Paillave.Etl.Extensions.LeftJoinEx.html",
+          "hash": "FYO+lZ4nOZaThQUGEIqdxg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.LookupEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.LookupEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.LookupEx.html",
-          "hash": "XT0tu5lB9lASflxdOAznEA=="
+          "relative_path": "api/Paillave.Etl.Extensions.LookupEx.html",
+          "hash": "arHHTVRK641fRh8cUp0BRg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.PivotEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.PivotEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.PivotEx.html",
-          "hash": "ytdElvCIXdmu1lzCUvXaQw=="
+          "relative_path": "api/Paillave.Etl.Extensions.PivotEx.html",
+          "hash": "YATcc9xSkYKMj2e3RwrXhQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.SelectEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.SelectEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.SelectEx.html",
-          "hash": "zXkU8kzl5JKuLHe/IBNSBA=="
+          "relative_path": "api/Paillave.Etl.Extensions.SelectEx.html",
+          "hash": "sbwZPfkt4S56ybmFw6y5cA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.SelectSectionEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.SelectSectionEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.SelectSectionEx.html",
-          "hash": "Cm+M+AlvazDuOgXaqogGPw=="
+          "relative_path": "api/Paillave.Etl.Extensions.SelectSectionEx.html",
+          "hash": "il7MMtFDuiUHytIr5uFzQw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.SkipEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.SkipEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.SkipEx.html",
-          "hash": "HuYsVxmJnwqrHpUvFZlF0Q=="
+          "relative_path": "api/Paillave.Etl.Extensions.SkipEx.html",
+          "hash": "9BcS6QPHnkHXXYY6A8rHxQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.SortEx.yml",
+      "source_relative_path": "api/Paillave.Etl.Extensions.SortEx.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Paillave.Etl.SortEx.html",
-          "hash": "wIJOnxy0TR4Aj39oH7CQLw=="
+          "relative_path": "api/Paillave.Etl.Extensions.SortEx.html",
+          "hash": "IgsyFoe9cvpCKILF5WHVjw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.Extensions.ThroughActionEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.Extensions.ThroughActionEx.html",
+          "hash": "hhNRsi1CqiMd8IpGpmhopg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.Extensions.ToGroupEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.Extensions.ToGroupEx.html",
+          "hash": "p9yGNlTjgntQyYru1kFyqg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.Extensions.ToLocalFileEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.Extensions.ToLocalFileEx.html",
+          "hash": "Xh9gMVOgtyByKkBnJ56z1A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.Extensions.ToSubProcessEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.Extensions.ToSubProcessEx.html",
+          "hash": "QigXQ7lEa0fOwEd9xGylOw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.Extensions.TopEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.Extensions.TopEx.html",
+          "hash": "NifmGt1rf0Dio2ykVw9VNg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.Extensions.UnionAllEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.Extensions.UnionAllEx.html",
+          "hash": "5YwoRZReedgWwnaYqVsl2A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.Extensions.UnionEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.Extensions.UnionEx.html",
+          "hash": "5rJoU2keVPr8PFSPqG2bdQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.Extensions.UnpivotEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.Extensions.UnpivotEx.html",
+          "hash": "c6CGXp8BlbV0SmEKiT0fkA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.Extensions.WhereEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.Extensions.WhereEx.html",
+          "hash": "X4mYyXwppzIHjljR8RfTew=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Paillave.Etl.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Paillave.Etl.Extensions.html",
+          "hash": "ZpnzFtfKgLjfpa1wyJc4hA=="
+        }
+      },
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -216,7 +336,7 @@
           "hash": "RMBrEtHRc24LBnT49rYqsg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -228,7 +348,7 @@
           "hash": "g0ac2Ox0b03IEGynPP9GWQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -240,7 +360,7 @@
           "hash": "mAz7syMSh8qOiTLV7Z8X1Q=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -252,7 +372,7 @@
           "hash": "5qPchxOptEOmePMHgeSFkw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -264,7 +384,7 @@
           "hash": "82NIUEjRmwXYIhLNZhVWsA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -276,7 +396,7 @@
           "hash": "jii0evDAG3uqWUu0+2+C6g=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -288,127 +408,7 @@
           "hash": "2MHuSsvDLSgPWfcw3yYPTg=="
         }
       },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.ThroughActionEx.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Paillave.Etl.ThroughActionEx.html",
-          "hash": "89Z7gKq7J+PFURJchgR65g=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.ToGroupEx.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Paillave.Etl.ToGroupEx.html",
-          "hash": "5hoeUw4oVLlqEhBGvbZgOw=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.ToLocalFileEx.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Paillave.Etl.ToLocalFileEx.html",
-          "hash": "hIvqtxO4ALq1vOoRUyQrqA=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.ToSubProcessEx.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Paillave.Etl.ToSubProcessEx.html",
-          "hash": "hzCmYgSa8GKZrEhH7eYJGg=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.TopEx.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Paillave.Etl.TopEx.html",
-          "hash": "k0kJJR3xytOoUsRq/q8jWA=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.UnionAllEx.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Paillave.Etl.UnionAllEx.html",
-          "hash": "szJIfNbA/f5cvqjosbtXoQ=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.UnionEx.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Paillave.Etl.UnionEx.html",
-          "hash": "z2INT1dHRlYXTpcEsCkrcg=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.UnpivotEx.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Paillave.Etl.UnpivotEx.html",
-          "hash": "ccl3FGAum1SAEZfYoL33NQ=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.WhereEx.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Paillave.Etl.WhereEx.html",
-          "hash": "qeh6Zbljk5azQwU5APDOKw=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Paillave.Etl.html",
-          "hash": "a4xEeui5NBepQnNS8ZTqkg=="
-        }
-      },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -420,7 +420,7 @@
           "hash": "KE7ujaiOgrT4XMfeFJ1C0Q=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -429,7 +429,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "jQL6VxpHgb9puKpzTRF1jA=="
+          "hash": "fJo79fHdDCISUQhk1IULXA=="
         }
       },
       "is_incremental": false,
@@ -437,35 +437,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "apiext/Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.yml",
+      "source_relative_path": "apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.yml",
       "output": {
         ".html": {
-          "relative_path": "apiext/Paillave.Etl.EntityFrameworkCore.EntityFrameworkCoreEx.html",
-          "hash": "X1tyRtiCS+MVZKT6IK1xvg=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "apiext/Paillave.Etl.EntityFrameworkCore.yml",
-      "output": {
-        ".html": {
-          "relative_path": "apiext/Paillave.Etl.EntityFrameworkCore.html",
-          "hash": "Hj3HrYbUhQl4u5SOJYP9Vw=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "apiext/Paillave.Etl.ExcelFile.ExcelFileEx.yml",
-      "output": {
-        ".html": {
-          "relative_path": "apiext/Paillave.Etl.ExcelFile.ExcelFileEx.html",
-          "hash": "HzAOGMVYPxT9kHHp1SF2CQ=="
+          "relative_path": "apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html",
+          "hash": "HeyOESrs9We/3T7Cn+WIow=="
         }
       },
       "is_incremental": false,
@@ -473,11 +449,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "apiext/Paillave.Etl.ExcelFile.yml",
+      "source_relative_path": "apiext/Paillave.Etl.EntityFrameworkCore.Extensions.yml",
       "output": {
         ".html": {
-          "relative_path": "apiext/Paillave.Etl.ExcelFile.html",
-          "hash": "wNjnifZG7+Swly+nlxsNew=="
+          "relative_path": "apiext/Paillave.Etl.EntityFrameworkCore.Extensions.html",
+          "hash": "Xns6rzTBiXO6Rmk6UEQVBA=="
         }
       },
       "is_incremental": false,
@@ -485,35 +461,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "apiext/Paillave.Etl.Ftp.FtpEx.yml",
+      "source_relative_path": "apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
       "output": {
         ".html": {
-          "relative_path": "apiext/Paillave.Etl.Ftp.FtpEx.html",
-          "hash": "dOLiO7Km47fMTnHW9YWKfg=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "apiext/Paillave.Etl.Ftp.yml",
-      "output": {
-        ".html": {
-          "relative_path": "apiext/Paillave.Etl.Ftp.html",
-          "hash": "CtKYwrrAp1m6i5my27lDEg=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "apiext/Paillave.Etl.SqlServer.SqlServerEx.yml",
-      "output": {
-        ".html": {
-          "relative_path": "apiext/Paillave.Etl.SqlServer.SqlServerEx.html",
-          "hash": "uELmXoUvS3eYPLhTbqhUZw=="
+          "relative_path": "apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html",
+          "hash": "4CprQaXpUtk9aotrB8ZWZQ=="
         }
       },
       "is_incremental": false,
@@ -521,11 +473,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "apiext/Paillave.Etl.SqlServer.yml",
+      "source_relative_path": "apiext/Paillave.Etl.ExcelFile.Extensions.yml",
       "output": {
         ".html": {
-          "relative_path": "apiext/Paillave.Etl.SqlServer.html",
-          "hash": "8IgcVaVeM/efpym8w9pwfA=="
+          "relative_path": "apiext/Paillave.Etl.ExcelFile.Extensions.html",
+          "hash": "jvrE4Uv+iGGyx36XY/+WGg=="
         }
       },
       "is_incremental": false,
@@ -533,11 +485,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "apiext/Paillave.Etl.TextFile.TextFileEx.yml",
+      "source_relative_path": "apiext/Paillave.Etl.Ftp.Extensions.FtpEx.yml",
       "output": {
         ".html": {
-          "relative_path": "apiext/Paillave.Etl.TextFile.TextFileEx.html",
-          "hash": "E8TZTA0lKm12xQyWUCOYmg=="
+          "relative_path": "apiext/Paillave.Etl.Ftp.Extensions.FtpEx.html",
+          "hash": "vKs3gg28a+tNfCbDR16lQg=="
         }
       },
       "is_incremental": false,
@@ -545,11 +497,59 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "apiext/Paillave.Etl.TextFile.yml",
+      "source_relative_path": "apiext/Paillave.Etl.Ftp.Extensions.yml",
       "output": {
         ".html": {
-          "relative_path": "apiext/Paillave.Etl.TextFile.html",
-          "hash": "KW1+qNCe+nj3+UDprVlaVg=="
+          "relative_path": "apiext/Paillave.Etl.Ftp.Extensions.html",
+          "hash": "q7IvvlarHgXuKbpn4FXU6Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "apiext/Paillave.Etl.SqlServer.Extensions.SqlServerEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "apiext/Paillave.Etl.SqlServer.Extensions.SqlServerEx.html",
+          "hash": "7qpi5oWY0E1g1ps4jnSkVQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "apiext/Paillave.Etl.SqlServer.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "apiext/Paillave.Etl.SqlServer.Extensions.html",
+          "hash": "yaYGIkdkUp9PANGU49EWJA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "apiext/Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "apiext/Paillave.Etl.TextFile.Extensions.TextFileEx.html",
+          "hash": "j2zY8a/yA19PjVsUfRBF7A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "apiext/Paillave.Etl.TextFile.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "apiext/Paillave.Etl.TextFile.Extensions.html",
+          "hash": "vI3RzXcgFiQ2qQHn9mipBg=="
         }
       },
       "is_incremental": false,
@@ -564,7 +564,7 @@
           "hash": "o41La91+gb/BB9uqCYaLXA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -573,7 +573,7 @@
       "output": {
         ".html": {
           "relative_path": "apiext/toc.html",
-          "hash": "cZKqwNnQ4MjH37lArX1xUQ=="
+          "hash": "t6rgF4QFSwyp/1yqSzWDZw=="
         }
       },
       "is_incremental": false,
@@ -596,7 +596,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "ghh8B0uG/3g+GrEXeww+QA=="
+          "hash": "/W/jIihs9I1g5vDeuTTSPQ=="
         }
       },
       "is_incremental": false,
@@ -652,17 +652,17 @@
         "incrementalPhase": "build"
       },
       "processors": {
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build"
+        },
         "ConceptualDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build"
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
-          "incrementalPhase": "build"
-        },
-        "TocDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build"
         },
         "ResourceDocumentProcessor": {

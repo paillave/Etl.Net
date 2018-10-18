@@ -1,6 +1,8 @@
 ﻿using Paillave.Etl;
+using Paillave.Etl.Extensions;
 using Paillave.Etl.Core.Streams;
 using Paillave.Etl.ExcelFile;
+using Paillave.Etl.ExcelFile.Extensions;
 using Paillave.Etl.ExcelFile.Core;
 using System;
 using System.IO;
@@ -19,11 +21,9 @@ namespace ExcelQuickstart
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
     }
-    public class ExcelQuickstartJob : IStreamProcessDefinition<SimpleConfig>
+    public class ExcelQuickstartJob
     {
-        public string Name => "Excel quickstart";
-
-        public void DefineProcess(ISingleStream<SimpleConfig> rootStream)
+        public static void DefineProcess(ISingleStream<SimpleConfig> rootStream)
         {
             var outputFile = rootStream.Select("open output file", i => (Stream)File.OpenWrite(i.OutputFile));
             rootStream
@@ -53,7 +53,7 @@ namespace ExcelQuickstart
             var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\Samples\TestFiles";
             // var testFilesDirectory = @"C:\Users\paill\Documents\GitHub\Etl.Net\src\Samples\TestFiles";
 
-            new StreamProcessRunner<ExcelQuickstartJob, SimpleConfig>().ExecuteAsync(new SimpleConfig
+            StreamProcessRunner.Create<SimpleConfig>(ExcelQuickstartJob.DefineProcess).ExecuteAsync(new SimpleConfig
             {
                 InputDirectory = testFilesDirectory,
                 OutputFile = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\Samples\testoutput.xlsx"

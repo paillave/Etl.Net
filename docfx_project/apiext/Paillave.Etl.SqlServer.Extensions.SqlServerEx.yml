@@ -1,0 +1,663 @@
+### YamlMime:ManagedReference
+items:
+- uid: Paillave.Etl.SqlServer.Extensions.SqlServerEx
+  commentId: T:Paillave.Etl.SqlServer.Extensions.SqlServerEx
+  id: SqlServerEx
+  parent: Paillave.Etl.SqlServer.Extensions
+  children:
+  - Paillave.Etl.SqlServer.Extensions.SqlServerEx.CrossApplySqlServerQuery``2(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)
+  - Paillave.Etl.SqlServer.Extensions.SqlServerEx.ThroughSqlServer``1(IStream{``0},System.String,ISingleStream{SqlConnection},System.String)
+  langs:
+  - csharp
+  - vb
+  name: SqlServerEx
+  nameWithType: SqlServerEx
+  fullName: Paillave.Etl.SqlServer.Extensions.SqlServerEx
+  type: Class
+  source:
+    id: SqlServerEx
+    path: ''
+    startLine: 282
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.SqlServer.Extensions
+  syntax:
+    content: public static class SqlServerEx
+    content.vb: Public Module SqlServerEx
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.ToString
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  modifiers.csharp:
+  - public
+  - static
+  - class
+  modifiers.vb:
+  - Public
+  - Module
+- uid: Paillave.Etl.SqlServer.Extensions.SqlServerEx.CrossApplySqlServerQuery``2(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)
+  commentId: M:Paillave.Etl.SqlServer.Extensions.SqlServerEx.CrossApplySqlServerQuery``2(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)
+  id: CrossApplySqlServerQuery``2(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.SqlServer.Extensions.SqlServerEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplySqlServerQuery<TIn, TOut>(IStream<TIn>, String, ISingleStream<SqlConnection>, String, Boolean)
+  nameWithType: SqlServerEx.CrossApplySqlServerQuery<TIn, TOut>(IStream<TIn>, String, ISingleStream<SqlConnection>, String, Boolean)
+  fullName: Paillave.Etl.SqlServer.Extensions.SqlServerEx.CrossApplySqlServerQuery<TIn, TOut>(IStream<TIn>, System.String, ISingleStream<SqlConnection>, System.String, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplySqlServerQuery
+    path: ''
+    startLine: 284
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.SqlServer.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplySqlServerQuery<TIn, TOut>(this IStream<TIn> stream, string name, ISingleStream<SqlConnection> sqlConnection, string sqlQuery, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: sqlConnection
+      type: ISingleStream{SqlConnection}
+    - id: sqlQuery
+      type: System.String
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplySqlServerQuery(Of TIn, TOut)(stream As IStream(Of TIn), name As String, sqlConnection As ISingleStream(Of SqlConnection), sqlQuery As String, noParallelisation As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.SqlServer.Extensions.SqlServerEx.CrossApplySqlServerQuery*
+  nameWithType.vb: SqlServerEx.CrossApplySqlServerQuery(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of SqlConnection), String, Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.SqlServer.Extensions.SqlServerEx.CrossApplySqlServerQuery(Of TIn, TOut)(IStream(Of TIn), System.String, ISingleStream(Of SqlConnection), System.String, System.Boolean)
+  name.vb: CrossApplySqlServerQuery(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of SqlConnection), String, Boolean)
+- uid: Paillave.Etl.SqlServer.Extensions.SqlServerEx.ThroughSqlServer``1(IStream{``0},System.String,ISingleStream{SqlConnection},System.String)
+  commentId: M:Paillave.Etl.SqlServer.Extensions.SqlServerEx.ThroughSqlServer``1(IStream{``0},System.String,ISingleStream{SqlConnection},System.String)
+  id: ThroughSqlServer``1(IStream{``0},System.String,ISingleStream{SqlConnection},System.String)
+  isExtensionMethod: true
+  parent: Paillave.Etl.SqlServer.Extensions.SqlServerEx
+  langs:
+  - csharp
+  - vb
+  name: ThroughSqlServer<TIn>(IStream<TIn>, String, ISingleStream<SqlConnection>, String)
+  nameWithType: SqlServerEx.ThroughSqlServer<TIn>(IStream<TIn>, String, ISingleStream<SqlConnection>, String)
+  fullName: Paillave.Etl.SqlServer.Extensions.SqlServerEx.ThroughSqlServer<TIn>(IStream<TIn>, System.String, ISingleStream<SqlConnection>, System.String)
+  type: Method
+  source:
+    id: ThroughSqlServer
+    path: ''
+    startLine: 292
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.SqlServer.Extensions
+  syntax:
+    content: >-
+      public static IStream<TIn> ThroughSqlServer<TIn>(this IStream<TIn> stream, string name, ISingleStream<SqlConnection> sqlConnection, string sqlQuery)
+          where TIn : class
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: sqlConnection
+      type: ISingleStream{SqlConnection}
+    - id: sqlQuery
+      type: System.String
+    typeParameters:
+    - id: TIn
+    return:
+      type: IStream{{TIn}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function ThroughSqlServer(Of TIn As Class)(stream As IStream(Of TIn), name As String, sqlConnection As ISingleStream(Of SqlConnection), sqlQuery As String) As IStream(Of TIn)
+  overload: Paillave.Etl.SqlServer.Extensions.SqlServerEx.ThroughSqlServer*
+  nameWithType.vb: SqlServerEx.ThroughSqlServer(Of TIn)(IStream(Of TIn), String, ISingleStream(Of SqlConnection), String)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.SqlServer.Extensions.SqlServerEx.ThroughSqlServer(Of TIn)(IStream(Of TIn), System.String, ISingleStream(Of SqlConnection), System.String)
+  name.vb: ThroughSqlServer(Of TIn)(IStream(Of TIn), String, ISingleStream(Of SqlConnection), String)
+references:
+- uid: Paillave.Etl.SqlServer.Extensions
+  commentId: N:Paillave.Etl.SqlServer.Extensions
+  name: Paillave.Etl.SqlServer.Extensions
+  nameWithType: Paillave.Etl.SqlServer.Extensions
+  fullName: Paillave.Etl.SqlServer.Extensions
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Paillave.Etl.SqlServer.Extensions.SqlServerEx.CrossApplySqlServerQuery*
+  commentId: Overload:Paillave.Etl.SqlServer.Extensions.SqlServerEx.CrossApplySqlServerQuery
+  name: CrossApplySqlServerQuery
+  nameWithType: SqlServerEx.CrossApplySqlServerQuery
+  fullName: Paillave.Etl.SqlServer.Extensions.SqlServerEx.CrossApplySqlServerQuery
+- uid: IStream{{TIn}}
+  commentId: '!:IStream{``0}'
+  definition: IStream`1
+  name: IStream<TIn>
+  nameWithType: IStream<TIn>
+  fullName: IStream<TIn>
+  nameWithType.vb: IStream(Of TIn)
+  fullName.vb: IStream(Of TIn)
+  name.vb: IStream(Of TIn)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: ISingleStream{SqlConnection}
+  commentId: '!:ISingleStream{SqlConnection}'
+  definition: ISingleStream`1
+  name: ISingleStream<SqlConnection>
+  nameWithType: ISingleStream<SqlConnection>
+  fullName: ISingleStream<SqlConnection>
+  nameWithType.vb: ISingleStream(Of SqlConnection)
+  fullName.vb: ISingleStream(Of SqlConnection)
+  name.vb: ISingleStream(Of SqlConnection)
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: SqlConnection
+    name: SqlConnection
+    nameWithType: SqlConnection
+    fullName: SqlConnection
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: SqlConnection
+    name: SqlConnection
+    nameWithType: SqlConnection
+    fullName: SqlConnection
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: IStream{{TOut}}
+  commentId: '!:IStream{``2}'
+  definition: IStream`1
+  name: IStream<TOut>
+  nameWithType: IStream<TOut>
+  fullName: IStream<TOut>
+  nameWithType.vb: IStream(Of TOut)
+  fullName.vb: IStream(Of TOut)
+  name.vb: IStream(Of TOut)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream`1
+  isExternal: true
+  name: IStream<>
+  nameWithType: IStream<>
+  fullName: IStream<>
+  nameWithType.vb: IStream(Of )
+  fullName.vb: IStream(Of )
+  name.vb: IStream(Of )
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream`1
+  isExternal: true
+  name: ISingleStream<>
+  nameWithType: ISingleStream<>
+  fullName: ISingleStream<>
+  nameWithType.vb: ISingleStream(Of )
+  fullName.vb: ISingleStream(Of )
+  name.vb: ISingleStream(Of )
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Paillave.Etl.SqlServer.Extensions.SqlServerEx.ThroughSqlServer*
+  commentId: Overload:Paillave.Etl.SqlServer.Extensions.SqlServerEx.ThroughSqlServer
+  name: ThroughSqlServer
+  nameWithType: SqlServerEx.ThroughSqlServer
+  fullName: Paillave.Etl.SqlServer.Extensions.SqlServerEx.ThroughSqlServer

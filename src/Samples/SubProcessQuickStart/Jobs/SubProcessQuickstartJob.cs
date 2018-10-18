@@ -1,17 +1,17 @@
 ﻿using SubProcessQuickStart.StreamTypes;
 using System.IO;
 using Paillave.Etl;
+using Paillave.Etl.Extensions;
 using Paillave.Etl.TextFile;
+using Paillave.Etl.TextFile.Extensions;
 using Paillave.Etl.Core.Streams;
 using System;
 
 namespace SubProcessQuickStart.Jobs
 {
-    public class SubProcessQuickstartJob : IStreamProcessDefinition<MyConfig>
+    public class SubProcessQuickstartJob
     {
-        public string Name => "import file";
-
-        public void DefineProcess(ISingleStream<MyConfig> rootStream)
+        public static void DefineProcess(ISingleStream<MyConfig> rootStream)
         {
             var outputFileResourceS = rootStream.Select("open output file", i => (Stream)File.OpenWrite(i.DestinationFilePath));
 

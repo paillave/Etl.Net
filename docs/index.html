@@ -191,20 +191,20 @@ namespace SimpleQuickstart
 
 <p>C# code:</p>
 <pre><code class="lang-csharp" name="Main">using Paillave.Etl;
+using Paillave.Etl.Extensions;
 using System;
 using System.IO;
 using Paillave.Etl.Core;
 using Paillave.Etl.TextFile.Core;
 using Paillave.Etl.Core.Streams;
 using Paillave.Etl.TextFile;
+using Paillave.Etl.TextFile.Extensions;
 
 namespace SimpleQuickstart
 {
-    public class SimpleQuickstartJob : IStreamProcessDefinition&lt;SimpleConfig&gt;
+    public class SimpleQuickstartJob
     {
-        public string Name =&gt; &quot;Simple quickstart&quot;;
-
-        public void DefineProcess(ISingleStream&lt;SimpleConfig&gt; rootStream)
+        public static void DefineProcess(ISingleStream&lt;SimpleConfig&gt; rootStream)
         {
             var outputFileS = rootStream.Select(&quot;open output file&quot;, i =&gt; (Stream)File.OpenWrite(i.OutputFilePath));
             rootStream
@@ -269,7 +269,8 @@ namespace SimpleQuickstart
         {
             var testFilesDirectory = args[0];
 
-            new StreamProcessRunner&lt;SimpleQuickstartJob, SimpleConfig&gt;().ExecuteAsync(new SimpleConfig
+            // new StreamProcessRunner&lt;SimpleQuickstartJob, SimpleConfig&gt;().ExecuteAsync(new SimpleConfig
+            StreamProcessRunner.Create&lt;SimpleConfig&gt;(SimpleQuickstartJob.DefineProcess).ExecuteAsync(new SimpleConfig
             {
                 InputFilePath = Path.Combine(testFilesDirectory, &quot;simpleinputfile.csv&quot;),
                 OutputFilePath = Path.Combine(testFilesDirectory, &quot;simpleoutputfile.csv&quot;)

@@ -22,6 +22,7 @@ The reactive approach for the implementation of this engine ensures parallelized
 
 > [!WARNING]
 > This library is still under development, don't use it on production environment yet as its api structure is subject for changes.
+> The documentation is being written with a large set of unit tests
 
 The first alpha release is expected once it starts to be a decent candidate to replace SSIS for common use cases.
 
@@ -124,11 +125,9 @@ namespace SimpleQuickstart
         public string OutputFilePath { get; set; }
     }
 
-    public class SimpleQuickstartJob : IStreamProcessDefinition<SimpleConfig>
+    public class SimpleQuickstartJob
     {
-        public string Name => "Simple quickstart";
-
-        public void DefineProcess(IStream<SimpleConfig> rootStream)
+        public static void DefineProcess(IStream<SimpleConfig> rootStream)
         {
             var outputFileS = rootStream.Select("open output file", i => new StreamWriter(i.OutputFilePath));
             rootStream
@@ -158,7 +157,7 @@ namespace SimpleQuickstart
         {
             var testFilesDirectory = @"XXXXXXXXXXXX\Etl.Net\src\TestFiles";
 
-            new StreamProcessRunner<SimpleQuickstartJob, SimpleConfig>().ExecuteAsync(new SimpleConfig
+            StreamProcessRunner.Create<SimpleConfig>(SimpleQuickstartJob.DefineProcess).ExecuteAsync(new SimpleConfig
             {
                 InputFilePath = Path.Combine(testFilesDirectory, "simpleinputfile.csv"),
                 OutputFilePath = Path.Combine(testFilesDirectory, "simpleoutputfile.csv")
@@ -346,11 +345,9 @@ using System;
 
 namespace ComplexQuickstart.Jobs
 {
-    public class ComplexQuickstartJob : IStreamProcessDefinition<MyConfig>
+    public class ComplexQuickstartJob
     {
-        public string Name => "import file";
-
-        public void DefineProcess(IStream<MyConfig> rootStream)
+        public static void DefineProcess(IStream<MyConfig> rootStream)
         {
             var outputFileResourceS = rootStream.Select("open output file", i => new StreamWriter(i.DestinationFilePath));
             var outputCategoryResourceS = rootStream.Select("open output category file", i => new StreamWriter(i.CategoryDestinationFilePath));
@@ -397,9 +394,9 @@ namespace ComplexQuickstart
     {
         static void Main(string[] args)
         {
-            var runner = new StreamProcessRunner<ComplexQuickstartJob, MyConfig>();
+            var runner = StreamProcessRunner.Create<MyConfig>(ComplexQuickstartJob.DefineProcess);
             runner.GetDefinitionStructure().OpenEstimatedExecutionPlanVisNetwork();
-            StreamProcessDefinition<TraceEvent> traceStreamProcessDefinition = new StreamProcessDefinition<TraceEvent>(traceStream => traceStream.ToAction("logs to console", Console.WriteLine));
+            Action<IStream<TraceEvent>> traceStreamProcessDefinition = traceStream => traceStream.ThroughAction("logs to console", Console.WriteLine);
             var testFilesDirectory = @"XXXXXXXXXXXXXXXX\Etl.Net\src\TestFiles";
             var task = runner.ExecuteAsync(new MyConfig
             {

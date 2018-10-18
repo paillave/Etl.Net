@@ -1,4 +1,5 @@
 ﻿using Paillave.Etl;
+using Paillave.Etl.Extensions;
 using System.IO;
 using Paillave.Etl.Core.Streams;
 using System;
@@ -7,6 +8,7 @@ using SubProcessQuickStart.Jobs;
 using SubProcessQuickStart.StreamTypes;
 using Paillave.Etl.Core;
 using Paillave.Etl.ExecutionPlan;
+using Paillave.Etl.ExecutionPlan.Extensions;
 
 namespace SubProcessQuickStart
 {
@@ -14,9 +16,9 @@ namespace SubProcessQuickStart
     {
         static void Main(string[] args)
         {
-            var runner = new StreamProcessRunner<SubProcessQuickstartJob, MyConfig>();
+            var runner = StreamProcessRunner.Create<MyConfig>(SubProcessQuickstartJob.DefineProcess);
             runner.GetDefinitionStructure().OpenEstimatedExecutionPlanVisNetwork();
-            TraceStreamProcessDefinition traceStreamProcessDefinition = new TraceStreamProcessDefinition(traceStream => traceStream.ThroughAction("logs to console", Console.WriteLine));
+            Action<IStream<TraceEvent>> traceStreamProcessDefinition = traceStream => traceStream.ThroughAction("logs to console", Console.WriteLine);
             var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\Samples\TestFiles";
             // var testFilesDirectory = @"C:\Users\paill\source\repos\Etl.Net\src\Samples\TestFiles";
             var task = runner.ExecuteAsync(new MyConfig

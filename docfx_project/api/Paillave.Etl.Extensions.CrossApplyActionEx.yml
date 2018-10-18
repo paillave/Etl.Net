@@ -1,0 +1,967 @@
+### YamlMime:ManagedReference
+items:
+- uid: Paillave.Etl.Extensions.CrossApplyActionEx
+  commentId: T:Paillave.Etl.Extensions.CrossApplyActionEx
+  id: CrossApplyActionEx
+  parent: Paillave.Etl.Extensions
+  children:
+  - Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction``2(IStream{``0},System.String,System.Action{``0,System.Action{``1}},System.Boolean)
+  - Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyActionEx
+  nameWithType: CrossApplyActionEx
+  fullName: Paillave.Etl.Extensions.CrossApplyActionEx
+  type: Class
+  source:
+    id: CrossApplyActionEx
+    path: ''
+    startLine: 167
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Extensions
+  syntax:
+    content: public static class CrossApplyActionEx
+    content.vb: Public Module CrossApplyActionEx
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.ToString
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  modifiers.csharp:
+  - public
+  - static
+  - class
+  modifiers.vb:
+  - Public
+  - Module
+- uid: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction``2(IStream{``0},System.String,System.Action{``0,System.Action{``1}},System.Boolean)
+  commentId: M:Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction``2(IStream{``0},System.String,System.Action{``0,System.Action{``1}},System.Boolean)
+  id: CrossApplyAction``2(IStream{``0},System.String,System.Action{``0,System.Action{``1}},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.Extensions.CrossApplyActionEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyAction<TIn, TOut>(IStream<TIn>, String, Action<TIn, Action<TOut>>, Boolean)
+  nameWithType: CrossApplyActionEx.CrossApplyAction<TIn, TOut>(IStream<TIn>, String, Action<TIn, Action<TOut>>, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction<TIn, TOut>(IStream<TIn>, System.String, System.Action<TIn, System.Action<TOut>>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyAction
+    path: ''
+    startLine: 169
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyAction<TIn, TOut>(this IStream<TIn> stream, string name, Action<TIn, Action<TOut>> valuesProducer, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: valuesProducer
+      type: System.Action{{TIn},System.Action{{TOut}}}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyAction(Of TIn, TOut)(stream As IStream(Of TIn), name As String, valuesProducer As Action(Of TIn, Action(Of TOut)), noParallelisation As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction*
+  nameWithType.vb: CrossApplyActionEx.CrossApplyAction(Of TIn, TOut)(IStream(Of TIn), String, Action(Of TIn, Action(Of TOut)), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction(Of TIn, TOut)(IStream(Of TIn), System.String, System.Action(Of TIn, System.Action(Of TOut)), System.Boolean)
+  name.vb: CrossApplyAction(Of TIn, TOut)(IStream(Of TIn), String, Action(Of TIn, Action(Of TOut)), Boolean)
+- uid: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
+  commentId: M:Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
+  id: CrossApplyAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.Extensions.CrossApplyActionEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Action<TIn1, TIn2, Action<TOut>>, Boolean)
+  nameWithType: CrossApplyActionEx.CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Action<TIn1, TIn2, Action<TOut>>, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, ISingleStream<TIn2>, System.Action<TIn1, TIn2, System.Action<TOut>>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyAction
+    path: ''
+    startLine: 177
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyAction<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, ISingleStream<TIn2> resourceStream, Action<TIn1, TIn2, Action<TOut>> valuesProducer, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{{TIn1}}
+    - id: name
+      type: System.String
+    - id: resourceStream
+      type: ISingleStream{{TIn2}}
+    - id: valuesProducer
+      type: System.Action{{TIn1},{TIn2},System.Action{{TOut}}}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TIn1
+    - id: TIn2
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyAction(Of TIn1, TIn2, TOut)(stream As IStream(Of TIn1), name As String, resourceStream As ISingleStream(Of TIn2), valuesProducer As Action(Of TIn1, TIn2, Action(Of TOut)), noParallelisation As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction*
+  nameWithType.vb: CrossApplyActionEx.CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Action(Of TIn1, TIn2, Action(Of TOut)), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, ISingleStream(Of TIn2), System.Action(Of TIn1, TIn2, System.Action(Of TOut)), System.Boolean)
+  name.vb: CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Action(Of TIn1, TIn2, Action(Of TOut)), Boolean)
+references:
+- uid: Paillave.Etl.Extensions
+  commentId: N:Paillave.Etl.Extensions
+  name: Paillave.Etl.Extensions
+  nameWithType: Paillave.Etl.Extensions
+  fullName: Paillave.Etl.Extensions
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction*
+  commentId: Overload:Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction
+  name: CrossApplyAction
+  nameWithType: CrossApplyActionEx.CrossApplyAction
+  fullName: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction
+- uid: IStream{{TIn}}
+  commentId: '!:IStream{``0}'
+  definition: IStream`1
+  name: IStream<TIn>
+  nameWithType: IStream<TIn>
+  fullName: IStream<TIn>
+  nameWithType.vb: IStream(Of TIn)
+  fullName.vb: IStream(Of TIn)
+  name.vb: IStream(Of TIn)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: System.Action{{TIn},System.Action{{TOut}}}
+  commentId: T:System.Action{``0,System.Action{``1}}
+  parent: System
+  definition: System.Action`2
+  name: Action<TIn, Action<TOut>>
+  nameWithType: Action<TIn, Action<TOut>>
+  fullName: System.Action<TIn, System.Action<TOut>>
+  nameWithType.vb: Action(Of TIn, Action(Of TOut))
+  fullName.vb: System.Action(Of TIn, System.Action(Of TOut))
+  name.vb: Action(Of TIn, Action(Of TOut))
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Action`1
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Action`1
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: IStream{{TOut}}
+  commentId: '!:IStream{``3}'
+  definition: IStream`1
+  name: IStream<TOut>
+  nameWithType: IStream<TOut>
+  fullName: IStream<TOut>
+  nameWithType.vb: IStream(Of TOut)
+  fullName.vb: IStream(Of TOut)
+  name.vb: IStream(Of TOut)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream`1
+  isExternal: true
+  name: IStream<>
+  nameWithType: IStream<>
+  fullName: IStream<>
+  nameWithType.vb: IStream(Of )
+  fullName.vb: IStream(Of )
+  name.vb: IStream(Of )
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Action`2
+  commentId: T:System.Action`2
+  isExternal: true
+  name: Action<T1, T2>
+  nameWithType: Action<T1, T2>
+  fullName: System.Action<T1, T2>
+  nameWithType.vb: Action(Of T1, T2)
+  fullName.vb: System.Action(Of T1, T2)
+  name.vb: Action(Of T1, T2)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{{TIn1}}
+  commentId: '!:IStream{``0}'
+  definition: IStream`1
+  name: IStream<TIn1>
+  nameWithType: IStream<TIn1>
+  fullName: IStream<TIn1>
+  nameWithType.vb: IStream(Of TIn1)
+  fullName.vb: IStream(Of TIn1)
+  name.vb: IStream(Of TIn1)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn1
+    nameWithType: TIn1
+    fullName: TIn1
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn1
+    nameWithType: TIn1
+    fullName: TIn1
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream{{TIn2}}
+  commentId: '!:ISingleStream{``1}'
+  definition: ISingleStream`1
+  name: ISingleStream<TIn2>
+  nameWithType: ISingleStream<TIn2>
+  fullName: ISingleStream<TIn2>
+  nameWithType.vb: ISingleStream(Of TIn2)
+  fullName.vb: ISingleStream(Of TIn2)
+  name.vb: ISingleStream(Of TIn2)
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn2
+    nameWithType: TIn2
+    fullName: TIn2
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn2
+    nameWithType: TIn2
+    fullName: TIn2
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Action{{TIn1},{TIn2},System.Action{{TOut}}}
+  commentId: T:System.Action{``0,``1,System.Action{``2}}
+  parent: System
+  definition: System.Action`3
+  name: Action<TIn1, TIn2, Action<TOut>>
+  nameWithType: Action<TIn1, TIn2, Action<TOut>>
+  fullName: System.Action<TIn1, TIn2, System.Action<TOut>>
+  nameWithType.vb: Action(Of TIn1, TIn2, Action(Of TOut))
+  fullName.vb: System.Action(Of TIn1, TIn2, System.Action(Of TOut))
+  name.vb: Action(Of TIn1, TIn2, Action(Of TOut))
+  spec.csharp:
+  - uid: System.Action`3
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn1
+    nameWithType: TIn1
+    fullName: TIn1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TIn2
+    nameWithType: TIn2
+    fullName: TIn2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Action`1
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Action`3
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn1
+    nameWithType: TIn1
+    fullName: TIn1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TIn2
+    nameWithType: TIn2
+    fullName: TIn2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Action`1
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream`1
+  isExternal: true
+  name: ISingleStream<>
+  nameWithType: ISingleStream<>
+  fullName: ISingleStream<>
+  nameWithType.vb: ISingleStream(Of )
+  fullName.vb: ISingleStream(Of )
+  name.vb: ISingleStream(Of )
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Action`3
+  commentId: T:System.Action`3
+  isExternal: true
+  name: Action<T1, T2, T3>
+  nameWithType: Action<T1, T2, T3>
+  fullName: System.Action<T1, T2, T3>
+  nameWithType.vb: Action(Of T1, T2, T3)
+  fullName.vb: System.Action(Of T1, T2, T3)
+  name.vb: Action(Of T1, T2, T3)
+  spec.csharp:
+  - uid: System.Action`3
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T3
+    nameWithType: T3
+    fullName: T3
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Action`3
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T3
+    nameWithType: T3
+    fullName: T3
+  - name: )
+    nameWithType: )
+    fullName: )
