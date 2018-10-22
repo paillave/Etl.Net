@@ -21,7 +21,7 @@ items:
   source:
     id: CrossApplyFolderFilesEx
     path: ''
-    startLine: 270
+    startLine: 279
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -60,7 +60,7 @@ items:
   source:
     id: CrossApplyFolderFiles
     path: ''
-    startLine: 272
+    startLine: 281
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -110,7 +110,7 @@ items:
   source:
     id: CrossApplyFolderFiles
     path: ''
-    startLine: 280
+    startLine: 289
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -156,7 +156,7 @@ items:
   source:
     id: CrossApplyFolderFiles
     path: ''
-    startLine: 288
+    startLine: 297
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -206,7 +206,7 @@ items:
   source:
     id: CrossApplyFolderFiles
     path: ''
-    startLine: 296
+    startLine: 305
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -259,7 +259,7 @@ items:
   source:
     id: CrossApplyFolderFiles
     path: ''
-    startLine: 304
+    startLine: 313
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -309,7 +309,7 @@ items:
   source:
     id: CrossApplyFolderFiles
     path: ''
-    startLine: 312
+    startLine: 321
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

@@ -30,19 +30,19 @@ namespace Paillave.Etl.ValuesProviders
             });
         }
     }
-    public class ActionResourceValuesProviderArgs<TIn, TRes, TOut>
+    public class ActionResourceValuesProviderArgs<TIn, TResource, TOut>
     {
         public bool NoParallelisation { get; set; } = false;
-        public Action<TIn, TRes, Action<TOut>> ProduceValues { get; set; }
+        public Action<TIn, TResource, Action<TOut>> ProduceValues { get; set; }
     }
-    public class ActionResourceValuesProvider<TIn, TRes, TOut> : ValuesProviderBase<TIn, TRes, TOut>
+    public class ActionResourceValuesProvider<TIn, TResource, TOut> : ValuesProviderBase<TIn, TResource, TOut>
     {
-        private ActionResourceValuesProviderArgs<TIn, TRes, TOut> _args;
-        public ActionResourceValuesProvider(ActionResourceValuesProviderArgs<TIn, TRes, TOut> args) : base(args.NoParallelisation)
+        private ActionResourceValuesProviderArgs<TIn, TResource, TOut> _args;
+        public ActionResourceValuesProvider(ActionResourceValuesProviderArgs<TIn, TResource, TOut> args) : base(args.NoParallelisation)
         {
             _args = args;
         }
-        public override IDeferredPushObservable<TOut> PushValues(TRes resource, TIn input)
+        public override IDeferredPushObservable<TOut> PushValues(TResource resource, TIn input)
         {
             return new DeferredPushObservable<TOut>(pushValue =>
             {

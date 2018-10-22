@@ -34,21 +34,18 @@ namespace Paillave.Etl.SqlServer.ValuesProviders
         }
         protected override void PushValues(SqlConnection resource, TIn input, Action<TOut> pushValue)
         {
-            using (base.OpenProcess())
+            var command = new SqlCommand(_args.SqlQuery, resource);
+            Regex getParamRegex = new Regex(@"(?<param>@\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            var allMatches = getParamRegex.Matches(_args.SqlQuery);
+            foreach (var match in allMatches)
             {
-                var command = new SqlCommand(_args.SqlQuery, resource);
-                Regex getParamRegex = new Regex(@"(?<param>@\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                var allMatches = getParamRegex.Matches(_args.SqlQuery);
-                foreach (var match in allMatches)
-                {
-                    string parameterName = match.ToString();
-                    command.Parameters.Add(new SqlParameter($"{parameterName}", _inPropertyInfos[parameterName].GetValue(input)));
-                }
-
-                using (var reader = command.ExecuteReader())
-                    while (reader.Read())
-                        pushValue(CreateRecord(reader));
+                string parameterName = match.ToString();
+                command.Parameters.Add(new SqlParameter($"{parameterName}", _inPropertyInfos[parameterName].GetValue(input)));
             }
+
+            using (var reader = command.ExecuteReader())
+                while (reader.Read())
+                    pushValue(CreateRecord(reader));
         }
     }
 }

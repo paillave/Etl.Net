@@ -45,12 +45,16 @@ namespace Paillave.Etl.Core
         }
         public virtual IDeferredPushObservable<TOut> PushValues(TIn input)
         {
-            return new DeferredPushObservable<TOut>(pushValue => PushValues(input, pushValue));
+            return new DeferredPushObservable<TOut>(pushValue =>
+            {
+                using (OpenProcess())
+                    PushValues(input, pushValue);
+            });
         }
 
         protected virtual void PushValues(TIn input, Action<TOut> pushValue) { }
     }
-    public abstract class ValuesProviderBase<TIn, TRes, TOut> : IValuesProvider<TIn, TRes, TOut>
+    public abstract class ValuesProviderBase<TIn, TResource, TOut> : IValuesProvider<TIn, TResource, TOut>
     {
         private Semaphore _semaphore;
         protected IDisposable OpenProcess()
@@ -61,11 +65,15 @@ namespace Paillave.Etl.Core
         {
             _semaphore = noParallelisation ? new Semaphore(1, 1) : new Semaphore(10, 10);
         }
-        public virtual IDeferredPushObservable<TOut> PushValues(TRes resource, TIn input)
+        public virtual IDeferredPushObservable<TOut> PushValues(TResource resource, TIn input)
         {
-            return new DeferredPushObservable<TOut>(pushValue => PushValues(resource, input, pushValue));
+            return new DeferredPushObservable<TOut>(pushValue =>
+            {
+                using (OpenProcess())
+                    PushValues(resource, input, pushValue);
+            });
         }
 
-        protected virtual void PushValues(TRes resource, TIn input, Action<TOut> pushValue) { }
+        protected virtual void PushValues(TResource resource, TIn input, Action<TOut> pushValue) { }
     }
 }

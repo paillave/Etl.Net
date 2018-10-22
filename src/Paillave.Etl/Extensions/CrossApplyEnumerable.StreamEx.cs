@@ -43,6 +43,7 @@ namespace Paillave.Etl.Extensions
                 }
             }), i => i, (i, _) => i);
         }
+
         /// <summary>
         /// Produces a stream of rows based on a enumerable using input stream and resource stream
         /// </summary>

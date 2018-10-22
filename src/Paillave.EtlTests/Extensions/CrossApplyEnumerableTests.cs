@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +15,8 @@ namespace Paillave.EtlTests.Extensions
         [TestMethod]
         public void ProduceList()
         {
-            var inputList = Enumerable.Range(0, 10).ToList();
+            #region produce list
+            var inputList = Enumerable.Range(0, 100).ToList();
             var outputList = new List<int>();
 
             StreamProcessRunner.Create<object>(rootStream =>
@@ -25,6 +27,28 @@ namespace Paillave.EtlTests.Extensions
             }).ExecuteAsync(null).Wait();
 
             CollectionAssert.AreEquivalent(inputList, outputList);
+            #endregion
+        }
+
+        [TestCategory(nameof(CrossApplyEnumerableTests))]
+        [TestMethod]
+        public void ProduceListWithOneItem()
+        {
+            #region produce list with one "resource" item
+            var inputList = Enumerable.Range(0, 100).ToList();
+            var inputResource = 1;
+            var outputList = new List<int>();
+
+            StreamProcessRunner.Create<object>(rootStream =>
+            {
+                var resourceStream = rootStream.Select("get another resource", _ => inputResource);
+                rootStream
+                    .CrossApplyEnumerable("list elements", resourceStream, (_, res) => inputList.Select(i => i + res).ToList())
+                    .ThroughAction("collect values", outputList.Add);
+            }).ExecuteAsync(null).Wait();
+
+            CollectionAssert.AreEquivalent(inputList.Select(i => i + inputResource).ToList(), outputList);
+            #endregion
         }
     }
 }

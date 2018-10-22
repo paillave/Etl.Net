@@ -22,9 +22,8 @@ namespace Paillave.Etl.EntityFrameworkCore.ValuesProviders
         }
         protected override void PushValues(TContext resource, TIn input, Action<TOut> pushValue)
         {
-            using (base.OpenProcess())
-                foreach (var item in _args.GetQuery(input, resource).ToList())
-                    pushValue(item);
+            foreach (var item in _args.GetQuery(input, resource).ToList())
+                pushValue(item);
         }
     }
 }

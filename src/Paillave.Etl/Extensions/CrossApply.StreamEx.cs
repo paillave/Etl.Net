@@ -18,13 +18,13 @@ namespace Paillave.Etl.Extensions
 {
     public static partial class CrossApplyEx
     {
-        public static IStream<TOut> CrossApply<TIn, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, IValuesProvider<TValueIn, TValueOut> valuesProvider, Func<TIn, TValueIn> inputValueSelector, Func<TValueOut, TIn, TOut> outputValueSelector)
+        public static IStream<TOut> CrossApply<TIn, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, IValuesProvider<TValueIn, TValueOut> valuesProvider, Func<TIn, TValueIn> preProcessValue, Func<TValueOut, TIn, TOut> postProcessValue)
         {
             return new CrossApplyStreamNode<TIn, TValueIn, TValueOut, TOut>(name, new CrossApplyArgs<TIn, TValueIn, TValueOut, TOut>
             {
                 Stream = stream,
-                GetValueIn = inputValueSelector,
-                GetValueOut = outputValueSelector,
+                GetValueIn = preProcessValue,
+                GetValueOut = postProcessValue,
                 ValuesProvider = valuesProvider
             }).Output;
         }
@@ -38,13 +38,13 @@ namespace Paillave.Etl.Extensions
                 ValuesProvider = valuesProvider
             }).Output;
         }
-        public static IStream<TOut> CrossApply<TIn, TResource, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, ISingleStream<TResource> resourceStream, IValuesProvider<TValueIn, TResource, TValueOut> valuesProvider, Func<TIn, TResource, TValueIn> inputValueSelector, Func<TValueOut, TIn, TResource, TOut> outputValueSelector)
+        public static IStream<TOut> CrossApply<TIn, TResource, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, ISingleStream<TResource> resourceStream, IValuesProvider<TValueIn, TResource, TValueOut> valuesProvider, Func<TIn, TResource, TValueIn> preProcessValue, Func<TValueOut, TIn, TResource, TOut> postProcessValue)
         {
             return new CrossApplyStreamNode<TIn, TResource, TValueIn, TValueOut, TOut>(name, new CrossApplyArgs<TIn, TResource, TValueIn, TValueOut, TOut>
             {
                 MainStream = stream,
-                GetValueIn = inputValueSelector,
-                GetValueOut = outputValueSelector,
+                GetValueIn = preProcessValue,
+                GetValueOut = postProcessValue,
                 ValuesProvider = valuesProvider,
                 StreamToApply = resourceStream
             }).Output;

@@ -16,7 +16,7 @@ items:
   source:
     id: UnpivotEx
     path: ''
-    startLine: 1546
+    startLine: 1555
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -55,7 +55,7 @@ items:
   source:
     id: Unpivot
     path: ''
-    startLine: 1548
+    startLine: 1557
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

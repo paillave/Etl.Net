@@ -3,12 +3,9 @@
     {
       "src": [
         {
-          "files": [
-            "**/Paillave.Etl/**/*.StreamEx.cs",
-            "**/SelectProcessor.cs"
-          ],
-          "exclude":[],
-          "src":"../src"
+          "files": ["**/Paillave.Etl/**/*.StreamEx.cs", "**/SelectProcessor.cs", "**/ValuesProviderBase.cs", "**/IValuesProvider.cs"],
+          "exclude": [],
+          "src": "../src"
         }
       ],
       "dest": "api",
@@ -18,13 +15,9 @@
     {
       "src": [
         {
-          "files": [
-            "**/*.StreamEx.cs"
-          ],
-          "exclude":[
-            "**/Paillave.Etl/**/*.StreamEx.cs"
-          ],
-          "src":"../src"
+          "files": ["**/*.StreamEx.cs"],
+          "exclude": ["**/Paillave.Etl/**/*.StreamEx.cs"],
+          "src": "../src"
         }
       ],
       "dest": "apiext",
@@ -35,51 +28,30 @@
   "build": {
     "content": [
       {
-        "files": [
-          "api/**.yml",
-          "api/index.md"
-        ]
+        "files": ["api/**.yml", "api/index.md"]
       },
       {
-        "files": [
-          "recipes/**.md",
-          "recipes/**/toc.yml",
-          "toc.yml",
-          "*.md"
-        ]
+        "files": ["recipes/**.md", "recipes/**/toc.yml", "toc.yml", "*.md"]
       },
       {
-        "files": [
-          "apiext/**.yml",
-          "apiext/index.md"
-        ]
+        "files": ["apiext/**.yml", "apiext/index.md"]
       }
     ],
     "resource": [
       {
-        "files": [
-          "images/**"
-        ]
+        "files": ["images/**"]
       }
     ],
     "overwrite": [
       {
-        "files": [
-          "apidoc/**.md"
-        ],
-        "exclude": [
-          "obj/**",
-          "_site/**"
-        ]
+        "files": ["apidoc/**.md"],
+        "exclude": ["obj/**", "_site/**"]
       }
     ],
     "dest": "../docs",
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
-    "template": [
-      "default",
-      "_exported_templates/default"
-    ],
+    "template": ["default", "_exported_templates/default"],
     "postProcessors": [],
     "markdownEngineName": "markdig",
     "noLangKeyword": false,
