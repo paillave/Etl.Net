@@ -21,7 +21,9 @@ namespace Paillave.EtlTests.Extensions
             }
             protected override void PushValues(string input, Action<char> pushValue)
             {
+                // Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId} - before push for {input}");
                 input.ToList().ForEach(pushValue);
+                // Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId} - after push for {input}");
             }
         }
 
@@ -36,7 +38,18 @@ namespace Paillave.EtlTests.Extensions
         //     {
         //         rootStream
         //             .CrossApplyEnumerable("list elements", i => i, true)
-        //             .CrossApply("produce sub values", new TestValuesProvider(true))
+        //             .CrossApply("produce sub values", new TestValuesProvider(true),
+        //             i =>
+        //             {
+        //                 Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId} - before push for {i}");
+        //                 return i;
+        //             },
+        //             (o, i) =>
+        //             {
+        //                 Console.WriteLine($"{System.Threading.Thread.CurrentThread.ManagedThreadId} - getting result push for {o} -> {i}");
+        //                 return o;
+        //             }
+        //             )
         //             .ThroughAction("collect values", outputList.Add);
         //     }).ExecuteAsync(inputList).Wait();
 

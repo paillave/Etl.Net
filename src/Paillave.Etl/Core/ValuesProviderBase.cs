@@ -6,42 +6,16 @@ using System.Threading;
 
 namespace Paillave.Etl.Core
 {
-    internal class SemaphoreOpen : IDisposable
-    {
-        private Semaphore _semaphore;
-        public SemaphoreOpen(Semaphore semaphore)
-        {
-            _semaphore = semaphore;
-            _semaphore.WaitOne();
-        }
-        #region IDisposable Support
-        private bool disposedValue = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                    _semaphore.Release();
-                disposedValue = true;
-            }
-        }
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-        #endregion
-    }
     public abstract class ValuesProviderBase<TIn, TOut> : IValuesProvider<TIn, TOut>
     {
-        private Semaphore _semaphore;
+        private Synchronizer _synchronizer;
         protected IDisposable OpenProcess()
         {
-            return new SemaphoreOpen(_semaphore);
+            return _synchronizer.WaitBeforeProcess();
         }
         public ValuesProviderBase(bool noParallelisation)
         {
-            _semaphore = noParallelisation ? new Semaphore(1, 1) : new Semaphore(10, 10);
+            _synchronizer = new Synchronizer(noParallelisation);
         }
         public virtual IDeferredPushObservable<TOut> PushValues(TIn input)
         {
@@ -51,19 +25,18 @@ namespace Paillave.Etl.Core
                     PushValues(input, pushValue);
             });
         }
-
         protected virtual void PushValues(TIn input, Action<TOut> pushValue) { }
     }
     public abstract class ValuesProviderBase<TIn, TResource, TOut> : IValuesProvider<TIn, TResource, TOut>
     {
-        private Semaphore _semaphore;
+        private Synchronizer _synchronizer;
         protected IDisposable OpenProcess()
         {
-            return new SemaphoreOpen(_semaphore);
+            return _synchronizer.WaitBeforeProcess();
         }
         public ValuesProviderBase(bool noParallelisation)
         {
-            _semaphore = noParallelisation ? new Semaphore(1, 1) : new Semaphore(10, 10);
+            _synchronizer = new Synchronizer(noParallelisation);
         }
         public virtual IDeferredPushObservable<TOut> PushValues(TResource resource, TIn input)
         {

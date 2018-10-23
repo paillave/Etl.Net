@@ -10,6 +10,7 @@ namespace Paillave.Etl.StreamNodes
 {
     public class CrossApplyArgs<TInMain, TInToApply, TValueIn, TValueOut, TOut>
     {
+        public bool NoParallelisation { get; set; } = true;
         public IStream<TInMain> MainStream { get; set; }
         public ISingleStream<TInToApply> StreamToApply { get; set; }
         public Func<TInMain, TInToApply, TValueIn> GetValueIn { get; set; }
@@ -18,6 +19,7 @@ namespace Paillave.Etl.StreamNodes
     }
     public class CrossApplyArgs<TIn, TValueIn, TValueOut, TOut>
     {
+        public bool NoParallelisation { get; set; } = true;
         public IStream<TIn> Stream { get; set; }
         public Func<TIn, TValueIn> GetValueIn { get; set; }
         public Func<TValueOut, TIn, TOut> GetValueOut { get; set; }
@@ -32,10 +34,11 @@ namespace Paillave.Etl.StreamNodes
         protected override IStream<TOut> CreateOutputStream(CrossApplyArgs<TInMain, TInToApply, TValueIn, TValueOut, TOut> args)
         {
             var ob = args.MainStream.Observable.CombineWithLatest(args.StreamToApply.Observable.First(), (m, a) => new { Main = m, Apply = a });
+            var synchronizer = new Synchronizer(args.NoParallelisation);
             return base.CreateUnsortedStream(ob.FlatMap(i =>
             {
                 var def = args.ValuesProvider.PushValues(i.Apply, args.GetValueIn(i.Main, i.Apply));
-                return new DeferredWrapperPushObservable<TOut>(def.Map(o => args.GetValueOut(o, i.Main, i.Apply)), def.Start);
+                return new DeferredWrapperPushObservable<TOut>(def.Map(o => args.GetValueOut(o, i.Main, i.Apply)), def.Start, synchronizer);
             }));
         }
     }
@@ -47,10 +50,11 @@ namespace Paillave.Etl.StreamNodes
 
         protected override IStream<TOut> CreateOutputStream(CrossApplyArgs<TInMain, TValueIn, TValueOut, TOut> args)
         {
+            var synchronizer = new Synchronizer(args.NoParallelisation);
             return base.CreateUnsortedStream(args.Stream.Observable.FlatMap(i =>
             {
                 var def = args.ValuesProvider.PushValues(args.GetValueIn(i));
-                return new DeferredWrapperPushObservable<TOut>(def.Map(o => args.GetValueOut(o, i)), def.Start);
+                return new DeferredWrapperPushObservable<TOut>(def.Map(o => args.GetValueOut(o, i)), def.Start, synchronizer);
             }));
         }
     }
