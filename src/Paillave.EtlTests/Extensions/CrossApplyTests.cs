@@ -103,17 +103,6 @@ namespace Paillave.EtlTests.Extensions
             #endregion
         }
 
-
-
-
-
-
-
-
-
-
-
-
         [TestCategory(nameof(CrossApplyTests))]
         [TestMethod]
         public void ProduceSubValuesPrePost()
@@ -149,11 +138,11 @@ namespace Paillave.EtlTests.Extensions
                 var toApplyStream = rootStream.Select("get multiplier", i => i.Item2);
                 rootStream
                     .CrossApplyEnumerable("list elements", i => i.Item1, true)
-                    .CrossApply<string,int,int, int, string>("produce sub values", toApplyStream, (input, toApply, pushValue) => input.ToString().Select(i => int.Parse(i.ToString())*toApply).ToList().ForEach(pushValue), (i,j)=>int.Parse(i)+2, (val,initVal,toApply)=> $"{val/toApply}-{initVal}")
+                    .CrossApply<string, int, int, int, string>("produce sub values", toApplyStream, (input, toApply, pushValue) => input.ToString().Select(i => int.Parse(i.ToString()) * toApply).ToList().ForEach(pushValue), (i, j) => int.Parse(i) + 2, (val, initVal, toApply) => $"{val / toApply}-{initVal}")
                     .ThroughAction("collect values", outputList.Add);
             }).ExecuteAsync(new Tuple<List<string>, int>(inputList, 2)).Wait();
 
-            var expected = inputList.SelectMany(i => (int.Parse(i)+2).ToString().Select(j => int.Parse(j.ToString())*2).Select(j=>$"{j/2}-{i}").ToList()).ToList();
+            var expected = inputList.SelectMany(i => (int.Parse(i) + 2).ToString().Select(j => int.Parse(j.ToString()) * 2).Select(j => $"{j / 2}-{i}").ToList()).ToList();
             var actual = outputList;
             CollectionAssert.AreEquivalent(expected, actual);
             #endregion
@@ -175,8 +164,8 @@ namespace Paillave.EtlTests.Extensions
                     .ThroughAction("collect values", outputList.Add);
             }).ExecuteAsync(inputList).Wait();
 
-            var expected = inputList.SelectMany(i => i.Select(j => $"{j}-{i}")).OrderBy(i=>i).ToList();
-            var actual = outputList.OrderBy(i=>i).ToList();
+            var expected = inputList.SelectMany(i => i.Select(j => $"{j}-{i}")).OrderBy(i => i).ToList();
+            var actual = outputList.OrderBy(i => i).ToList();
             CollectionAssert.AreEquivalent(expected, actual);
             #endregion
         }
@@ -194,12 +183,12 @@ namespace Paillave.EtlTests.Extensions
                 var toApplyStream = rootStream.Select("get multiplier", i => i.Item2);
                 rootStream
                     .CrossApplyEnumerable("list elements", i => i.Item1)
-                    .CrossApply<string,int,int, int, string>("produce sub values", toApplyStream, (input, toApply, pushValue) => input.ToString().Select(i => int.Parse(i.ToString())*toApply).ToList().ForEach(pushValue), (i,j)=>int.Parse(i)+2, (val,initVal,toApply)=> $"{val/toApply}-{initVal}")
+                    .CrossApply<string, int, int, int, string>("produce sub values", toApplyStream, (input, toApply, pushValue) => input.ToString().Select(i => int.Parse(i.ToString()) * toApply).ToList().ForEach(pushValue), (i, j) => int.Parse(i) + 2, (val, initVal, toApply) => $"{val / toApply}-{initVal}")
                     .ThroughAction("collect values", outputList.Add);
             }).ExecuteAsync(new Tuple<List<string>, int>(inputList, 2)).Wait();
 
-            var expected = inputList.SelectMany(i => (int.Parse(i)+2).ToString().Select(j => int.Parse(j.ToString())*2).Select(j=>$"{j/2}-{i}").ToList()).OrderBy(i=>i).ToList();
-            var actual = outputList.OrderBy(i=>i).ToList();
+            var expected = inputList.SelectMany(i => (int.Parse(i) + 2).ToString().Select(j => int.Parse(j.ToString()) * 2).Select(j => $"{j / 2}-{i}").ToList()).OrderBy(i => i).ToList();
+            var actual = outputList.OrderBy(i => i).ToList();
             CollectionAssert.AreEquivalent(expected, actual);
             #endregion
         }
