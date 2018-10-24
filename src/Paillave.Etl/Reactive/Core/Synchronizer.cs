@@ -10,7 +10,7 @@ namespace Paillave.Etl.Reactive.Core
         {
             return new SemaphoreAwaiter(_semaphore);
         }
-        public Synchronizer(bool noParallelisation)
+        public Synchronizer(bool noParallelisation = false)
         {
             _semaphore = noParallelisation ? new Semaphore(1, 1) : new Semaphore(10, 10);
         }

@@ -13,80 +13,58 @@ namespace Paillave.Etl.ExcelFile.Extensions
     public static class ExcelFileEx
     {
         #region CrossApplyExcelSheets
-        public static IStream<ExcelSheetSelection> CrossApplyExcelSheets<TIn>(this IStream<TIn> stream, string name, Func<TIn, string> getExcelFilePath)
+        public static IStream<ExcelSheetSelection> CrossApplyExcelSheets<TIn>(this IStream<TIn> stream, string name, Func<TIn, string> getExcelFilePath, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new ExcelSheetsValuesProvider<TIn>(new ExcelSheetsValuesProviderArgs<TIn>
-            {
-                DataStreamSelector = i => File.OpenRead(getExcelFilePath(i)),
-                NoParallelisation = false
-            }), i => i, (i, j) => i);
+            var valueProvider = new ExcelSheetsValuesProvider();
+            return stream.CrossApply(name, (TIn inputValue, Action<ExcelSheetSelection> push) => valueProvider.PushValues<TIn>(inputValue, getExcelFilePath, push), i => i, (i, j) => i, noParallelisation);
         }
-        public static IStream<ExcelSheetSelection> CrossApplyExcelSheets(this IStream<string> stream, string name)
+        public static IStream<ExcelSheetSelection> CrossApplyExcelSheets(this IStream<string> stream, string name, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new ExcelSheetsValuesProvider<string>(new ExcelSheetsValuesProviderArgs<string>
-            {
-                DataStreamSelector = i => File.OpenRead(i),
-                NoParallelisation = false
-            }), i => i, (i, j) => i);
+            var valueProvider = new ExcelSheetsValuesProvider();
+            return stream.CrossApply<string, string, ExcelSheetSelection, ExcelSheetSelection>(name, valueProvider.PushValues, i => i, (i, j) => i, noParallelisation);
         }
-        public static IStream<ExcelSheetSelection> CrossApplyExcelSheets(this IStream<Stream> stream, string name)
+        public static IStream<ExcelSheetSelection> CrossApplyExcelSheets(this IStream<Stream> stream, string name, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new ExcelSheetsValuesProvider<Stream>(new ExcelSheetsValuesProviderArgs<Stream>
-            {
-                DataStreamSelector = i => i,
-                NoParallelisation = false
-            }), i => i, (i, j) => i);
+            var valueProvider = new ExcelSheetsValuesProvider();
+            return stream.CrossApply<Stream, Stream, ExcelSheetSelection, ExcelSheetSelection>(name, valueProvider.PushValues, i => i, (i, j) => i, noParallelisation);
         }
-        public static IStream<TOut> CrossApplyExcelSheets<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, string> getExcelFilePath, Func<ExcelSheetSelection, TIn, TOut> selector)
+        public static IStream<TOut> CrossApplyExcelSheets<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, string> getExcelFilePath, Func<ExcelSheetSelection, TIn, TOut> selector, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new ExcelSheetsValuesProvider<TIn>(new ExcelSheetsValuesProviderArgs<TIn>
-            {
-                DataStreamSelector = i => File.OpenRead(getExcelFilePath(i)),
-                NoParallelisation = false
-            }), i => i, selector);
+            var valueProvider = new ExcelSheetsValuesProvider();
+            return stream.CrossApply(name, (TIn inputValue, Action<ExcelSheetSelection> push) => valueProvider.PushValues(inputValue, getExcelFilePath, push), i => i, selector, noParallelisation);
         }
-        public static IStream<TOut> CrossApplyExcelSheets<TOut>(this IStream<string> stream, string name, Func<ExcelSheetSelection, string, TOut> selector)
+        public static IStream<TOut> CrossApplyExcelSheets<TOut>(this IStream<string> stream, string name, Func<ExcelSheetSelection, string, TOut> selector, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new ExcelSheetsValuesProvider<string>(new ExcelSheetsValuesProviderArgs<string>
-            {
-                DataStreamSelector = i => File.OpenRead(i),
-                NoParallelisation = false
-            }), i => i, selector);
+            var valueProvider = new ExcelSheetsValuesProvider();
+            return stream.CrossApply(name, valueProvider.PushValues, i => i, selector, noParallelisation);
+        }
+        public static IStream<TOut> CrossApplyExcelSheets<TOut>(this IStream<Stream> stream, string name, Func<ExcelSheetSelection, TOut> selector, bool noParallelisation = false)
+        {
+            var valueProvider = new ExcelSheetsValuesProvider();
+            return stream.CrossApply<Stream, Stream, ExcelSheetSelection, TOut>(name, valueProvider.PushValues, i => i, (i, j) => selector(i), noParallelisation);
         }
         #endregion
 
         #region CrossApplyExcelRows
-        public static IStream<TOut> CrossApplyExcelRows<TParsed, TOut>(this IStream<ExcelSheetSelection> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TParsed, ExcelSheetSelection, TOut> selector)
+        public static IStream<TOut> CrossApplyExcelRows<TParsed, TOut>(this IStream<ExcelSheetSelection> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TParsed, ExcelSheetSelection, TOut> selector, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new ExcelRowsValuesProvider<TParsed>(new ExcelRowsValuesProviderArgs<TParsed>
-            {
-                Mapping = mapping,
-                NoParallelisation = false
-            }), i => i, selector);
+            var valueProvider = new ExcelRowsValuesProvider<TParsed>(mapping);
+            return stream.CrossApply(name, valueProvider.PushValues, i => i, selector, noParallelisation);
         }
-        public static IStream<TOut> CrossApplyExcelRows<TIn, TParsed, TOut>(this IStream<TIn> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TIn, ExcelSheetSelection> sheetSelection, Func<TParsed, TIn, TOut> selector)
+        public static IStream<TOut> CrossApplyExcelRows<TIn, TParsed, TOut>(this IStream<TIn> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TIn, ExcelSheetSelection> sheetSelection, Func<TParsed, TIn, TOut> selector, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new ExcelRowsValuesProvider<TParsed>(new ExcelRowsValuesProviderArgs<TParsed>
-            {
-                Mapping = mapping,
-                NoParallelisation = false
-            }), sheetSelection, selector);
+            var valueProvider = new ExcelRowsValuesProvider<TParsed>(mapping);
+            return stream.CrossApply(name, valueProvider.PushValues, sheetSelection, selector, noParallelisation);
         }
-        public static IStream<TParsed> CrossApplyExcelRows<TIn, TParsed>(this IStream<TIn> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TIn, ExcelSheetSelection> sheetSelection)
+        public static IStream<TParsed> CrossApplyExcelRows<TIn, TParsed>(this IStream<TIn> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TIn, ExcelSheetSelection> sheetSelection, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new ExcelRowsValuesProvider<TParsed>(new ExcelRowsValuesProviderArgs<TParsed>
-            {
-                Mapping = mapping,
-                NoParallelisation = false
-            }), sheetSelection, (i, o) => i);
+            var valueProvider = new ExcelRowsValuesProvider<TParsed>(mapping);
+            return stream.CrossApply<TIn, ExcelSheetSelection, TParsed, TParsed>(name, valueProvider.PushValues, sheetSelection, (i, o) => i, noParallelisation);
         }
-        public static IStream<TParsed> CrossApplyExcelRows<TParsed>(this IStream<ExcelSheetSelection> stream, string name, ExcelFileDefinition<TParsed> mapping)
+        public static IStream<TParsed> CrossApplyExcelRows<TParsed>(this IStream<ExcelSheetSelection> stream, string name, ExcelFileDefinition<TParsed> mapping, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new ExcelRowsValuesProvider<TParsed>(new ExcelRowsValuesProviderArgs<TParsed>
-            {
-                Mapping = mapping,
-                NoParallelisation = false
-            }), i => i, (i, s) => i);
+            var valueProvider = new ExcelRowsValuesProvider<TParsed>(mapping);
+            return stream.CrossApply<ExcelSheetSelection, ExcelSheetSelection, TParsed, TParsed>(name, valueProvider.PushValues, i => i, (i, s) => i, noParallelisation);
         }
         #endregion
 
