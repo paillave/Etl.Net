@@ -18,30 +18,33 @@ namespace Paillave.Etl.Extensions
 {
     public static partial class CrossApplyEx
     {
-        public static IStream<TOut> CrossApply<TIn, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, IValuesProvider<TValueIn, TValueOut> valuesProvider, Func<TIn, TValueIn> preProcessValue, Func<TValueOut, TIn, TOut> postProcessValue)
+        public static IStream<TOut> CrossApply<TIn, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, Action<TValueIn, Action<TValueOut>> valuesProvider, Func<TIn, TValueIn> preProcessValue, Func<TValueOut, TIn, TOut> postProcessValue, bool noParallelisation = false)
         {
             return new CrossApplyStreamNode<TIn, TValueIn, TValueOut, TOut>(name, new CrossApplyArgs<TIn, TValueIn, TValueOut, TOut>
             {
+                NoParallelisation = noParallelisation,
                 Stream = stream,
                 GetValueIn = preProcessValue,
                 GetValueOut = postProcessValue,
                 ValuesProvider = valuesProvider
             }).Output;
         }
-        public static IStream<TOut> CrossApply<TIn, TOut>(this IStream<TIn> stream, string name, IValuesProvider<TIn, TOut> valuesProvider)
+        public static IStream<TOut> CrossApply<TIn, TOut>(this IStream<TIn> stream, string name, Action<TIn, Action<TOut>> valuesProvider, bool noParallelisation = false)
         {
             return new CrossApplyStreamNode<TIn, TIn, TOut, TOut>(name, new CrossApplyArgs<TIn, TIn, TOut, TOut>
             {
+                NoParallelisation = noParallelisation,
                 Stream = stream,
                 GetValueIn = i => i,
                 GetValueOut = (i, j) => i,
                 ValuesProvider = valuesProvider
             }).Output;
         }
-        public static IStream<TOut> CrossApply<TIn, TResource, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, ISingleStream<TResource> resourceStream, IValuesProvider<TValueIn, TResource, TValueOut> valuesProvider, Func<TIn, TResource, TValueIn> preProcessValue, Func<TValueOut, TIn, TResource, TOut> postProcessValue)
+        public static IStream<TOut> CrossApply<TIn, TInToApply, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, ISingleStream<TInToApply> resourceStream, Action<TValueIn, TInToApply, Action<TValueOut>> valuesProvider, Func<TIn, TInToApply, TValueIn> preProcessValue, Func<TValueOut, TIn, TInToApply, TOut> postProcessValue, bool noParallelisation = false)
         {
-            return new CrossApplyStreamNode<TIn, TResource, TValueIn, TValueOut, TOut>(name, new CrossApplyArgs<TIn, TResource, TValueIn, TValueOut, TOut>
+            return new CrossApplyStreamNode<TIn, TInToApply, TValueIn, TValueOut, TOut>(name, new CrossApplyArgs<TIn, TInToApply, TValueIn, TValueOut, TOut>
             {
+                NoParallelisation = noParallelisation,
                 MainStream = stream,
                 GetValueIn = preProcessValue,
                 GetValueOut = postProcessValue,
@@ -49,10 +52,11 @@ namespace Paillave.Etl.Extensions
                 StreamToApply = resourceStream
             }).Output;
         }
-        public static IStream<TOut> CrossApply<TIn, TResource, TOut>(this IStream<TIn> stream, string name, ISingleStream<TResource> resourceStream, IValuesProvider<TIn, TResource, TOut> valuesProvider)
+        public static IStream<TOut> CrossApply<TIn, TInToApply, TOut>(this IStream<TIn> stream, string name, ISingleStream<TInToApply> resourceStream, Action<TIn, TInToApply, Action<TOut>> valuesProvider, bool noParallelisation = false)
         {
-            return new CrossApplyStreamNode<TIn, TResource, TIn, TOut, TOut>(name, new CrossApplyArgs<TIn, TResource, TIn, TOut, TOut>
+            return new CrossApplyStreamNode<TIn, TInToApply, TIn, TOut, TOut>(name, new CrossApplyArgs<TIn, TInToApply, TIn, TOut, TOut>
             {
+                NoParallelisation = noParallelisation,
                 MainStream = stream,
                 GetValueIn = (i, j) => i,
                 GetValueOut = (i, j, k) => i,

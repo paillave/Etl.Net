@@ -9,32 +9,24 @@ using System.Collections.Generic;
 
 namespace Paillave.Etl.ExcelFile.ValuesProviders
 {
-    public class ExcelRowsValuesProviderArgs<TParsed>
+    public class ExcelRowsValuesProvider<TParsed>
     {
-        public bool NoParallelisation { get; set; } = false;
-        public ExcelFileDefinition<TParsed> Mapping { get; set; }
-    }
-    public class ExcelRowsValuesProvider<TParsed> : ValuesProviderBase<ExcelSheetSelection, TParsed>
-    {
-        private ExcelRowsValuesProviderArgs<TParsed> _args;
-        public ExcelRowsValuesProvider(ExcelRowsValuesProviderArgs<TParsed> args) : base(args.NoParallelisation)
+        private ExcelFileDefinition<TParsed> _mapping;
+        public ExcelRowsValuesProvider(ExcelFileDefinition<TParsed> mapping)
         {
-            _args = args;
+            _mapping = mapping;
         }
-        protected override void PushValues(ExcelSheetSelection input, Action<TParsed> pushValue)
+        public void PushValues(ExcelSheetSelection input, Action<TParsed> pushValue)
         {
-            using (base.OpenProcess())
+            var reader = _mapping.GetExcelReader(input.ExcelWorksheet);
+            int i = 0;
+            bool foundRow = false;
+            do
             {
-                var reader = _args.Mapping.GetExcelReader(input.ExcelWorksheet);
-                int i = 0;
-                bool foundRow = false;
-                do
-                {
-                    IDictionary<string, object> row = new Dictionary<string, object>();
-                    foundRow = ReadRow(input.ExcelWorksheet, reader, i++, row);
-                    if (foundRow) pushValue(ObjectBuilder<TParsed>.CreateInstance(row));
-                } while (foundRow);
-            }
+                IDictionary<string, object> row = new Dictionary<string, object>();
+                foundRow = ReadRow(input.ExcelWorksheet, reader, i++, row);
+                if (foundRow) pushValue(ObjectBuilder<TParsed>.CreateInstance(row));
+            } while (foundRow);
         }
         private bool ReadRow(ExcelWorksheet excelWorksheet, ExcelFileReader reader, int lineIndex, IDictionary<string, object> row)
         {

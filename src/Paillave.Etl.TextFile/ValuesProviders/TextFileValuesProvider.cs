@@ -9,30 +9,13 @@ using System.Text;
 
 namespace Paillave.Etl.TextFile.ValuesProviders
 {
-    public class TextFileValuesProviderArgs<TIn, TOut>
+    public class TextFileValuesProvider
     {
-        public Func<TIn, string, TOut> ResultSelector { get; set; }
-        public Func<TIn, Stream> DataStreamSelector { get; set; }
-        public bool NoParallelisation { get; set; } = false;
-    }
-    public class TextFileValuesProvider<TIn, TOut> : ValuesProviderBase<TIn, TOut>
-    {
-        private TextFileValuesProviderArgs<TIn, TOut> _args;
-        public TextFileValuesProvider(TextFileValuesProviderArgs<TIn, TOut> args) : base(args.NoParallelisation)
+        public void PushValues(Stream input, Action<string> push)
         {
-            _args = args;
-        }
-        public override IDeferredPushObservable<TOut> PushValues(TIn input)
-        {
-            var src = new DeferredPushObservable<string>(pushValue =>
-            {
-                using (base.OpenProcess())
-                using (var sr = new StreamReader(_args.DataStreamSelector(input)))
-                    while (!sr.EndOfStream)
-                        pushValue(sr.ReadLine());
-            });
-            var ret = src.Map(dataLine => _args.ResultSelector(input, dataLine));
-            return new DeferredWrapperPushObservable<TOut>(ret, src.Start);
+            using (var sr = new StreamReader(input))
+                while (!sr.EndOfStream)
+                    push(sr.ReadLine());
         }
     }
 }

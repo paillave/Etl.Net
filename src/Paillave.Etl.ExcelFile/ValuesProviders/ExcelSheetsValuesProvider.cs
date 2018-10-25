@@ -7,11 +7,6 @@ using System.Linq;
 
 namespace Paillave.Etl.ExcelFile.ValuesProviders
 {
-    public class ExcelSheetsValuesProviderArgs<TIn>
-    {
-        public Func<TIn, Stream> DataStreamSelector { get; set; }
-        public bool NoParallelisation { get; set; } = false;
-    }
     public class ExcelSheetSelection
     {
         internal ExcelWorksheet ExcelWorksheet { get; }
@@ -21,21 +16,22 @@ namespace Paillave.Etl.ExcelFile.ValuesProviders
         }
         public string Name => this.ExcelWorksheet.Name;
     }
-    public class ExcelSheetsValuesProvider<TIn> : ValuesProviderBase<TIn, ExcelSheetSelection>
+    public class ExcelSheetsValuesProvider
     {
-        private ExcelSheetsValuesProviderArgs<TIn> _args;
-        public ExcelSheetsValuesProvider(ExcelSheetsValuesProviderArgs<TIn> args) : base(args.NoParallelisation)
+        public void PushValues(Stream input, Action<ExcelSheetSelection> pushValue)
         {
-            _args = args;
+            var pck = new ExcelPackage(input);
+            foreach (var worksheet in pck.Workbook.Worksheets)
+                pushValue(new ExcelSheetSelection(worksheet));
         }
-        protected override void PushValues(TIn input, Action<ExcelSheetSelection> pushValue)
+        public void PushValues(string excelFilePath, Action<ExcelSheetSelection> pushValue)
         {
-            using (base.OpenProcess())
-            {
-                var pck = new ExcelPackage(_args.DataStreamSelector(input));
-                foreach (var worksheet in pck.Workbook.Worksheets)
-                    pushValue(new ExcelSheetSelection(worksheet));
-            }
+            using (var stream = File.OpenRead(excelFilePath))
+                PushValues(stream, pushValue);
+        }
+        public void PushValues<TIn>(TIn input, Func<TIn, string> getExcelFilePath, Action<ExcelSheetSelection> pushValue)
+        {
+            PushValues(getExcelFilePath(input), pushValue);
         }
     }
 }

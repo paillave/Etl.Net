@@ -15,7 +15,7 @@ namespace Paillave.Etl.StreamNodes
         public ISingleStream<TInToApply> StreamToApply { get; set; }
         public Func<TInMain, TInToApply, TValueIn> GetValueIn { get; set; }
         public Func<TValueOut, TInMain, TInToApply, TOut> GetValueOut { get; set; }
-        public IValuesProvider<TValueIn, TInToApply, TValueOut> ValuesProvider { get; set; }
+        public Action<TValueIn, TInToApply, Action<TValueOut>> ValuesProvider { get; set; }
     }
     public class CrossApplyArgs<TIn, TValueIn, TValueOut, TOut>
     {
@@ -23,7 +23,7 @@ namespace Paillave.Etl.StreamNodes
         public IStream<TIn> Stream { get; set; }
         public Func<TIn, TValueIn> GetValueIn { get; set; }
         public Func<TValueOut, TIn, TOut> GetValueOut { get; set; }
-        public IValuesProvider<TValueIn, TValueOut> ValuesProvider { get; set; }
+        public Action<TValueIn, Action<TValueOut>> ValuesProvider { get; set; }
     }
     public class CrossApplyStreamNode<TInMain, TInToApply, TValueIn, TValueOut, TOut> : StreamNodeBase<TOut, IStream<TOut>, CrossApplyArgs<TInMain, TInToApply, TValueIn, TValueOut, TOut>>
     {
@@ -33,13 +33,28 @@ namespace Paillave.Etl.StreamNodes
 
         protected override IStream<TOut> CreateOutputStream(CrossApplyArgs<TInMain, TInToApply, TValueIn, TValueOut, TOut> args)
         {
-            var ob = args.MainStream.Observable.CombineWithLatest(args.StreamToApply.Observable.First(), (m, a) => new { Main = m, Apply = a });
-            var synchronizer = new Synchronizer(args.NoParallelisation);
-            return base.CreateUnsortedStream(ob.FlatMap(i =>
+            var ob = args.MainStream.Observable.CombineWithLatest(args.StreamToApply.Observable.First(), (m, a) => new Tuple<TInMain, TInToApply>(m, a));
+            if (args.NoParallelisation)
             {
-                var def = args.ValuesProvider.PushValues(i.Apply, args.GetValueIn(i.Main, i.Apply));
-                return new DeferredWrapperPushObservable<TOut>(def.Map(o => args.GetValueOut(o, i.Main, i.Apply)), def.Start, synchronizer);
-            }));
+                return base.CreateUnsortedStream(ob.MultiMap<Tuple<TInMain, TInToApply>, TOut>((Tuple<TInMain, TInToApply> i, Action<TOut> push) =>
+                {
+                    var inputValue = args.GetValueIn(i.Item1, i.Item2);
+                    Action<TValueOut> newPush = (TValueOut e) => push(args.GetValueOut(e, i.Item1, i.Item2));
+                    args.ValuesProvider(inputValue, i.Item2, newPush);
+                }));
+            }
+            else
+            {
+                var synchronizer = new Synchronizer();
+                return base.CreateUnsortedStream(ob.FlatMap(i => new DeferredPushObservable<TOut>(push =>
+                    {
+                        var inputValue = args.GetValueIn(i.Item1, i.Item2);
+                        Action<TValueOut> newPush = (TValueOut e) => push(args.GetValueOut(e, i.Item1, i.Item2));
+                        using (synchronizer.WaitBeforeProcess())
+                            args.ValuesProvider(inputValue, i.Item2, newPush);
+                    })
+                ));
+            }
         }
     }
     public class CrossApplyStreamNode<TInMain, TValueIn, TValueOut, TOut> : StreamNodeBase<TOut, IStream<TOut>, CrossApplyArgs<TInMain, TValueIn, TValueOut, TOut>>
@@ -50,12 +65,27 @@ namespace Paillave.Etl.StreamNodes
 
         protected override IStream<TOut> CreateOutputStream(CrossApplyArgs<TInMain, TValueIn, TValueOut, TOut> args)
         {
-            var synchronizer = new Synchronizer(args.NoParallelisation);
-            return base.CreateUnsortedStream(args.Stream.Observable.FlatMap(i =>
+            if (args.NoParallelisation)
             {
-                var def = args.ValuesProvider.PushValues(args.GetValueIn(i));
-                return new DeferredWrapperPushObservable<TOut>(def.Map(o => args.GetValueOut(o, i)), def.Start, synchronizer);
-            }));
+                return base.CreateUnsortedStream(args.Stream.Observable.MultiMap<TInMain, TOut>((TInMain i, Action<TOut> push) =>
+                {
+                    var inputValue = args.GetValueIn(i);
+                    Action<TValueOut> newPush = (TValueOut e) => push(args.GetValueOut(e, i));
+                    args.ValuesProvider(inputValue, newPush);
+                }));
+            }
+            else
+            {
+                var synchronizer = new Synchronizer();
+                return base.CreateUnsortedStream(args.Stream.Observable.FlatMap(i => new DeferredPushObservable<TOut>(push =>
+                    {
+                        var inputValue = args.GetValueIn(i);
+                        Action<TValueOut> newPush = (TValueOut e) => push(args.GetValueOut(e, i));
+                        using (synchronizer.WaitBeforeProcess())
+                            args.ValuesProvider(inputValue, newPush);
+                    })
+                ));
+            }
         }
     }
 }
