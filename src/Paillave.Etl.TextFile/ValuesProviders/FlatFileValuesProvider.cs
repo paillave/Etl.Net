@@ -55,43 +55,8 @@ namespace Paillave.Etl.TextFile.ValuesProviders
             using (var sr = new StreamReader(_args.DataStreamSelector(input)))
                 while (!sr.EndOfStream)
                     src.PushValue(sr.ReadLine());
+                    
+            src.Complete();
         }
-
-        // public void PushValues(TIn input, Action<TOut> push)
-        // {
-        //     var src = new DeferredPushObservable<string>(pushValue =>
-        //     {
-        //         using (var sr = new StreamReader(_args.DataStreamSelector(input)))
-        //             while (!sr.EndOfStream)
-        //                 pushValue(sr.ReadLine());
-        //     });
-        //     IPushObservable<TOut> ret;
-        //     if (_args.Mapping.HasColumnHeader)
-        //     {
-        //         var lineParserS = src
-        //             .Skip(_args.Mapping.FirstLinesToIgnore)
-        //             .Take(1)
-        //             .Map(_args.Mapping.GetSerializer);
-        //         ret = src
-        //             .Skip(1 + _args.Mapping.FirstLinesToIgnore)
-        //             .Filter(i => !string.IsNullOrWhiteSpace(i))
-        //             .CombineWithLatest(lineParserS, (txt, parser) => parser.Deserialize(txt))
-        //             .Map(i => _args.ResultSelector(input, i))
-        //             .Do(push);
-        //     }
-        //     else
-        //     {
-        //         var serializer = _args.Mapping.GetSerializer();
-        //         ret = src
-        //             .Skip(_args.Mapping.FirstLinesToIgnore)
-        //             .Filter(i => !string.IsNullOrWhiteSpace(i))
-        //             .Map(serializer.Deserialize)
-        //             .Map(i => _args.ResultSelector(input, i))
-        //             .Do(push);
-        //     }
-        //     var task = ret.ToTaskAsync();
-        //     src.Start();
-        //     task.Wait();
-        // }
     }
 }
