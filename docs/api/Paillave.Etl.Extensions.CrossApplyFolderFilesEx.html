@@ -90,12 +90,12 @@
   
   
   <a id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles*"></a>
-  <h4 id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles_IStream_System_String__System_String_System_String_System_IO_SearchOption_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream{System.String},System.String,System.String,System.IO.SearchOption)">CrossApplyFolderFiles(IStream&lt;String&gt;, String, String, SearchOption)</h4>
+  <h4 id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles_IStream_System_String__System_String_System_String_System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream{System.String},System.String,System.String,System.Boolean,System.Boolean)">CrossApplyFolderFiles(IStream&lt;String&gt;, String, String, Boolean, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;LocalFilesValue&gt; CrossApplyFolderFiles(this IStream&lt;string&gt; stream, string name, string pattern = &quot;*&quot;, SearchOption option = SearchOption.TopDirectoryOnly)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;LocalFilesValue&gt; CrossApplyFolderFiles(this IStream&lt;string&gt; stream, string name, string pattern = &quot;*&quot;, bool recursive = false, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -123,8 +123,13 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.IO.SearchOption</span></td>
-        <td><span class="parametername">option</span></td>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">recursive</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -147,12 +152,12 @@
   
   
   <a id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles*"></a>
-  <h4 id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__1_IStream___0__System_String_System_Func___0_System_String__System_Func___0_System_String__System_IO_SearchOption_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.IO.SearchOption)">CrossApplyFolderFiles&lt;TIn&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, String&gt;, Func&lt;TIn, String&gt;, SearchOption)</h4>
+  <h4 id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__1_IStream___0__System_String_System_Func___0_System_String__System_Func___0_System_String__System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Boolean,System.Boolean)">CrossApplyFolderFiles&lt;TIn&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, String&gt;, Func&lt;TIn, String&gt;, Boolean, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;LocalFilesValue&gt; CrossApplyFolderFiles&lt;TIn&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, string&gt; getFolderPath, Func&lt;TIn, string&gt; getSearchPattern, SearchOption option = SearchOption.TopDirectoryOnly)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;LocalFilesValue&gt; CrossApplyFolderFiles&lt;TIn&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, string&gt; getFolderPath, Func&lt;TIn, string&gt; getSearchPattern, bool recursive = false, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -185,8 +190,13 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.IO.SearchOption</span></td>
-        <td><span class="parametername">option</span></td>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">recursive</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -224,12 +234,12 @@
   
   
   <a id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles*"></a>
-  <h4 id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__1_IStream___0__System_String_System_Func___0_System_String__System_String_System_IO_SearchOption_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.String,System.IO.SearchOption)">CrossApplyFolderFiles&lt;TIn&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, String&gt;, String, SearchOption)</h4>
+  <h4 id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__1_IStream___0__System_String_System_Func___0_System_String__System_String_System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.String,System.Boolean,System.Boolean)">CrossApplyFolderFiles&lt;TIn&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, String&gt;, String, Boolean, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;LocalFilesValue&gt; CrossApplyFolderFiles&lt;TIn&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, string&gt; getFolderPath, string pattern = &quot;*&quot;, SearchOption option = SearchOption.TopDirectoryOnly)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;LocalFilesValue&gt; CrossApplyFolderFiles&lt;TIn&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, string&gt; getFolderPath, string pattern = &quot;*&quot;, bool recursive = false, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -262,8 +272,13 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.IO.SearchOption</span></td>
-        <td><span class="parametername">option</span></td>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">recursive</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -301,12 +316,12 @@
   
   
   <a id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles*"></a>
-  <h4 id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__1_IStream_System_String__System_String_System_Func_LocalFilesValue_System_String___0__System_String_System_IO_SearchOption_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{System.String},System.String,System.Func{LocalFilesValue,System.String,``0},System.String,System.IO.SearchOption)">CrossApplyFolderFiles&lt;TOut&gt;(IStream&lt;String&gt;, String, Func&lt;LocalFilesValue, String, TOut&gt;, String, SearchOption)</h4>
+  <h4 id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__1_IStream_System_String__System_String_System_Func_LocalFilesValue_System_String___0__System_String_System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{System.String},System.String,System.Func{LocalFilesValue,System.String,``0},System.String,System.Boolean,System.Boolean)">CrossApplyFolderFiles&lt;TOut&gt;(IStream&lt;String&gt;, String, Func&lt;LocalFilesValue, String, TOut&gt;, String, Boolean, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyFolderFiles&lt;TOut&gt;(this IStream&lt;string&gt; stream, string name, Func&lt;LocalFilesValue, string, TOut&gt; selector, string pattern = &quot;*&quot;, SearchOption option = SearchOption.TopDirectoryOnly)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyFolderFiles&lt;TOut&gt;(this IStream&lt;string&gt; stream, string name, Func&lt;LocalFilesValue, string, TOut&gt; selector, string pattern = &quot;*&quot;, bool recursive = false, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -339,8 +354,13 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.IO.SearchOption</span></td>
-        <td><span class="parametername">option</span></td>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">recursive</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -378,12 +398,12 @@
   
   
   <a id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles*"></a>
-  <h4 id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__2_IStream___0__System_String_System_Func___0_System_String__System_Func___0_System_String__System_Func_LocalFilesValue___0___1__System_IO_SearchOption_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.IO.SearchOption)">CrossApplyFolderFiles&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, String&gt;, Func&lt;TIn, String&gt;, Func&lt;LocalFilesValue, TIn, TOut&gt;, SearchOption)</h4>
+  <h4 id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__2_IStream___0__System_String_System_Func___0_System_String__System_Func___0_System_String__System_Func_LocalFilesValue___0___1__System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.Boolean,System.Boolean)">CrossApplyFolderFiles&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, String&gt;, Func&lt;TIn, String&gt;, Func&lt;LocalFilesValue, TIn, TOut&gt;, Boolean, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyFolderFiles&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, string&gt; getFolderPath, Func&lt;TIn, string&gt; getSearchPattern, Func&lt;LocalFilesValue, TIn, TOut&gt; selector, SearchOption option = SearchOption.TopDirectoryOnly)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyFolderFiles&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, string&gt; getFolderPath, Func&lt;TIn, string&gt; getSearchPattern, Func&lt;LocalFilesValue, TIn, TOut&gt; selector, bool recursive = false, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -421,8 +441,13 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.IO.SearchOption</span></td>
-        <td><span class="parametername">option</span></td>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">recursive</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -464,12 +489,12 @@
   
   
   <a id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles*"></a>
-  <h4 id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__2_IStream___0__System_String_System_Func___0_System_String__System_Func_LocalFilesValue___0___1__System_String_System_IO_SearchOption_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.String,System.IO.SearchOption)">CrossApplyFolderFiles&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, String&gt;, Func&lt;LocalFilesValue, TIn, TOut&gt;, String, SearchOption)</h4>
+  <h4 id="Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__2_IStream___0__System_String_System_Func___0_System_String__System_Func_LocalFilesValue___0___1__System_String_System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.String,System.Boolean,System.Boolean)">CrossApplyFolderFiles&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, String&gt;, Func&lt;LocalFilesValue, TIn, TOut&gt;, String, Boolean, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyFolderFiles&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, string&gt; getFolderPath, Func&lt;LocalFilesValue, TIn, TOut&gt; selector, string pattern = &quot;*&quot;, SearchOption option = SearchOption.TopDirectoryOnly)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyFolderFiles&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, string&gt; getFolderPath, Func&lt;LocalFilesValue, TIn, TOut&gt; selector, string pattern = &quot;*&quot;, bool recursive = false, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -507,8 +532,13 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.IO.SearchOption</span></td>
-        <td><span class="parametername">option</span></td>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">recursive</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
         <td></td>
       </tr>
     </tbody>

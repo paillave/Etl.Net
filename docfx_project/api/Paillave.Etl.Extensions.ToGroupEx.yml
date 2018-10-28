@@ -16,7 +16,7 @@ items:
   source:
     id: ToGroupEx
     path: ''
-    startLine: 1363
+    startLine: 1348
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -55,7 +55,7 @@ items:
   source:
     id: ToGroup
     path: ''
-    startLine: 1365
+    startLine: 1350
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

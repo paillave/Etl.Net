@@ -17,7 +17,7 @@ items:
   source:
     id: CrossApplyEnumerableEx
     path: ''
-    startLine: 209
+    startLine: 174
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -58,13 +58,12 @@ items:
   source:
     id: CrossApplyEnumerable
     path: ''
-    startLine: 227
+    startLine: 186
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   summary: "\nProduces a stream of rows based on a enumerable using input stream\n"
-  example:
-  - "\n<pre><code class=\"cs\"><pre><code source=\"CrossApplyEnumerable.StreamEx.cs\"></code></pre>\n</code></pre>\n"
+  example: []
   syntax:
     content: public static IStream<TOut> CrossApplyEnumerable<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, IEnumerable<TOut>> values, bool noParallelisation = false)
     parameters:
@@ -117,7 +116,7 @@ items:
   source:
     id: CrossApplyEnumerable
     path: ''
-    startLine: 254
+    startLine: 207
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

@@ -90,12 +90,12 @@
   
   
   <a id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows*"></a>
-  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows__1_IStream_ExcelSheetSelection__System_String_ExcelFileDefinition___0__" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0})">CrossApplyExcelRows&lt;TParsed&gt;(IStream&lt;ExcelSheetSelection&gt;, String, ExcelFileDefinition&lt;TParsed&gt;)</h4>
+  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows__1_IStream_ExcelSheetSelection__System_String_ExcelFileDefinition___0__System_Boolean_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Boolean)">CrossApplyExcelRows&lt;TParsed&gt;(IStream&lt;ExcelSheetSelection&gt;, String, ExcelFileDefinition&lt;TParsed&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TParsed&gt; CrossApplyExcelRows&lt;TParsed&gt;(this IStream&lt;ExcelSheetSelection&gt; stream, string name, ExcelFileDefinition&lt;TParsed&gt; mapping)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TParsed&gt; CrossApplyExcelRows&lt;TParsed&gt;(this IStream&lt;ExcelSheetSelection&gt; stream, string name, ExcelFileDefinition&lt;TParsed&gt; mapping, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -120,6 +120,11 @@
       <tr>
         <td><span class="xref">ExcelFileDefinition</span>&lt;TParsed&gt;</td>
         <td><span class="parametername">mapping</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -157,12 +162,12 @@
   
   
   <a id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows*"></a>
-  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows__2_IStream___0__System_String_ExcelFileDefinition___1__System_Func___0_ExcelSheetSelection__" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection})">CrossApplyExcelRows&lt;TIn, TParsed&gt;(IStream&lt;TIn&gt;, String, ExcelFileDefinition&lt;TParsed&gt;, Func&lt;TIn, ExcelSheetSelection&gt;)</h4>
+  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows__2_IStream___0__System_String_ExcelFileDefinition___1__System_Func___0_ExcelSheetSelection__System_Boolean_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Boolean)">CrossApplyExcelRows&lt;TIn, TParsed&gt;(IStream&lt;TIn&gt;, String, ExcelFileDefinition&lt;TParsed&gt;, Func&lt;TIn, ExcelSheetSelection&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TParsed&gt; CrossApplyExcelRows&lt;TIn, TParsed&gt;(this IStream&lt;TIn&gt; stream, string name, ExcelFileDefinition&lt;TParsed&gt; mapping, Func&lt;TIn, ExcelSheetSelection&gt; sheetSelection)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TParsed&gt; CrossApplyExcelRows&lt;TIn, TParsed&gt;(this IStream&lt;TIn&gt; stream, string name, ExcelFileDefinition&lt;TParsed&gt; mapping, Func&lt;TIn, ExcelSheetSelection&gt; sheetSelection, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -192,6 +197,11 @@
       <tr>
         <td><span class="xref">System.Func</span>&lt;TIn, <span class="xref">ExcelSheetSelection</span>&gt;</td>
         <td><span class="parametername">sheetSelection</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -233,12 +243,12 @@
   
   
   <a id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows*"></a>
-  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows__2_IStream_ExcelSheetSelection__System_String_ExcelFileDefinition___0__System_Func___0_ExcelSheetSelection___1__" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1})">CrossApplyExcelRows&lt;TParsed, TOut&gt;(IStream&lt;ExcelSheetSelection&gt;, String, ExcelFileDefinition&lt;TParsed&gt;, Func&lt;TParsed, ExcelSheetSelection, TOut&gt;)</h4>
+  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows__2_IStream_ExcelSheetSelection__System_String_ExcelFileDefinition___0__System_Func___0_ExcelSheetSelection___1__System_Boolean_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1},System.Boolean)">CrossApplyExcelRows&lt;TParsed, TOut&gt;(IStream&lt;ExcelSheetSelection&gt;, String, ExcelFileDefinition&lt;TParsed&gt;, Func&lt;TParsed, ExcelSheetSelection, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyExcelRows&lt;TParsed, TOut&gt;(this IStream&lt;ExcelSheetSelection&gt; stream, string name, ExcelFileDefinition&lt;TParsed&gt; mapping, Func&lt;TParsed, ExcelSheetSelection, TOut&gt; selector)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyExcelRows&lt;TParsed, TOut&gt;(this IStream&lt;ExcelSheetSelection&gt; stream, string name, ExcelFileDefinition&lt;TParsed&gt; mapping, Func&lt;TParsed, ExcelSheetSelection, TOut&gt; selector, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -268,6 +278,11 @@
       <tr>
         <td><span class="xref">System.Func</span>&lt;TParsed, <span class="xref">ExcelSheetSelection</span>, TOut&gt;</td>
         <td><span class="parametername">selector</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -309,12 +324,12 @@
   
   
   <a id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows*"></a>
-  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows__3_IStream___0__System_String_ExcelFileDefinition___1__System_Func___0_ExcelSheetSelection__System_Func___1___0___2__" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2})">CrossApplyExcelRows&lt;TIn, TParsed, TOut&gt;(IStream&lt;TIn&gt;, String, ExcelFileDefinition&lt;TParsed&gt;, Func&lt;TIn, ExcelSheetSelection&gt;, Func&lt;TParsed, TIn, TOut&gt;)</h4>
+  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows__3_IStream___0__System_String_ExcelFileDefinition___1__System_Func___0_ExcelSheetSelection__System_Func___1___0___2__System_Boolean_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2},System.Boolean)">CrossApplyExcelRows&lt;TIn, TParsed, TOut&gt;(IStream&lt;TIn&gt;, String, ExcelFileDefinition&lt;TParsed&gt;, Func&lt;TIn, ExcelSheetSelection&gt;, Func&lt;TParsed, TIn, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyExcelRows&lt;TIn, TParsed, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, ExcelFileDefinition&lt;TParsed&gt; mapping, Func&lt;TIn, ExcelSheetSelection&gt; sheetSelection, Func&lt;TParsed, TIn, TOut&gt; selector)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyExcelRows&lt;TIn, TParsed, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, ExcelFileDefinition&lt;TParsed&gt; mapping, Func&lt;TIn, ExcelSheetSelection&gt; sheetSelection, Func&lt;TParsed, TIn, TOut&gt; selector, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -351,6 +366,11 @@
         <td><span class="parametername">selector</span></td>
         <td></td>
       </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -394,12 +414,12 @@
   
   
   <a id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*"></a>
-  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets_IStream_Stream__System_String_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{Stream},System.String)">CrossApplyExcelSheets(IStream&lt;Stream&gt;, String)</h4>
+  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets_IStream_Stream__System_String_System_Boolean_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{Stream},System.String,System.Boolean)">CrossApplyExcelSheets(IStream&lt;Stream&gt;, String, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;ExcelSheetSelection&gt; CrossApplyExcelSheets(this IStream&lt;Stream&gt; stream, string name)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;ExcelSheetSelection&gt; CrossApplyExcelSheets(this IStream&lt;Stream&gt; stream, string name, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -421,6 +441,11 @@
         <td><span class="parametername">name</span></td>
         <td></td>
       </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -441,12 +466,12 @@
   
   
   <a id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*"></a>
-  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets_IStream_System_String__System_String_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{System.String},System.String)">CrossApplyExcelSheets(IStream&lt;String&gt;, String)</h4>
+  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets_IStream_System_String__System_String_System_Boolean_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{System.String},System.String,System.Boolean)">CrossApplyExcelSheets(IStream&lt;String&gt;, String, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;ExcelSheetSelection&gt; CrossApplyExcelSheets(this IStream&lt;string&gt; stream, string name)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;ExcelSheetSelection&gt; CrossApplyExcelSheets(this IStream&lt;string&gt; stream, string name, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -468,6 +493,11 @@
         <td><span class="parametername">name</span></td>
         <td></td>
       </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -488,12 +518,12 @@
   
   
   <a id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*"></a>
-  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets__1_IStream___0__System_String_System_Func___0_System_String__" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String})">CrossApplyExcelSheets&lt;TIn&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, String&gt;)</h4>
+  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets__1_IStream___0__System_String_System_Func___0_System_String__System_Boolean_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String},System.Boolean)">CrossApplyExcelSheets&lt;TIn&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, String&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;ExcelSheetSelection&gt; CrossApplyExcelSheets&lt;TIn&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, string&gt; getExcelFilePath)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;ExcelSheetSelection&gt; CrossApplyExcelSheets&lt;TIn&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, string&gt; getExcelFilePath, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -518,6 +548,11 @@
       <tr>
         <td><span class="xref">System.Func</span>&lt;TIn, <span class="xref">System.String</span>&gt;</td>
         <td><span class="parametername">getExcelFilePath</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -555,12 +590,12 @@
   
   
   <a id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*"></a>
-  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets__1_IStream_System_String__System_String_System_Func_ExcelSheetSelection_System_String___0__" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0})">CrossApplyExcelSheets&lt;TOut&gt;(IStream&lt;String&gt;, String, Func&lt;ExcelSheetSelection, String, TOut&gt;)</h4>
+  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets__1_IStream_Stream__System_String_System_Func_ExcelSheetSelection___0__System_Boolean_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{Stream},System.String,System.Func{ExcelSheetSelection,``0},System.Boolean)">CrossApplyExcelSheets&lt;TOut&gt;(IStream&lt;Stream&gt;, String, Func&lt;ExcelSheetSelection, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyExcelSheets&lt;TOut&gt;(this IStream&lt;string&gt; stream, string name, Func&lt;ExcelSheetSelection, string, TOut&gt; selector)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyExcelSheets&lt;TOut&gt;(this IStream&lt;Stream&gt; stream, string name, Func&lt;ExcelSheetSelection, TOut&gt; selector, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -573,7 +608,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IStream</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="xref">IStream</span>&lt;<span class="xref">Stream</span>&gt;</td>
         <td><span class="parametername">stream</span></td>
         <td></td>
       </tr>
@@ -583,8 +618,13 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Func</span>&lt;<span class="xref">ExcelSheetSelection</span>, <span class="xref">System.String</span>, TOut&gt;</td>
+        <td><span class="xref">System.Func</span>&lt;<span class="xref">ExcelSheetSelection</span>, TOut&gt;</td>
         <td><span class="parametername">selector</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -622,12 +662,84 @@
   
   
   <a id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*"></a>
-  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets__2_IStream___0__System_String_System_Func___0_System_String__System_Func_ExcelSheetSelection___0___1__" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1})">CrossApplyExcelSheets&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, String&gt;, Func&lt;ExcelSheetSelection, TIn, TOut&gt;)</h4>
+  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets__1_IStream_System_String__System_String_System_Func_ExcelSheetSelection_System_String___0__System_Boolean_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0},System.Boolean)">CrossApplyExcelSheets&lt;TOut&gt;(IStream&lt;String&gt;, String, Func&lt;ExcelSheetSelection, String, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyExcelSheets&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, string&gt; getExcelFilePath, Func&lt;ExcelSheetSelection, TIn, TOut&gt; selector)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyExcelSheets&lt;TOut&gt;(this IStream&lt;string&gt; stream, string name, Func&lt;ExcelSheetSelection, string, TOut&gt; selector, bool noParallelisation = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<span class="xref">ExcelSheetSelection</span>, <span class="xref">System.String</span>, TOut&gt;</td>
+        <td><span class="parametername">selector</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TOut&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TOut</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*"></a>
+  <h4 id="Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets__2_IStream___0__System_String_System_Func___0_System_String__System_Func_ExcelSheetSelection___0___1__System_Boolean_" data-uid="Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1},System.Boolean)">CrossApplyExcelSheets&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, String&gt;, Func&lt;ExcelSheetSelection, TIn, TOut&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyExcelSheets&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, string&gt; getExcelFilePath, Func&lt;ExcelSheetSelection, TIn, TOut&gt; selector, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -657,6 +769,11 @@
       <tr>
         <td><span class="xref">System.Func</span>&lt;<span class="xref">ExcelSheetSelection</span>, TIn, TOut&gt;</td>
         <td><span class="parametername">selector</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
         <td></td>
       </tr>
     </tbody>

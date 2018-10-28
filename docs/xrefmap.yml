@@ -82,60 +82,60 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows
   nameWithType: ExcelFileEx.CrossApplyExcelRows
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0})
-  name: CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>)
-  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows__1_IStream_ExcelSheetSelection__System_String_ExcelFileDefinition___0__
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0})
-  name.vb: CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed))
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, System.String, ExcelFileDefinition<TParsed>)
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), System.String, ExcelFileDefinition(Of TParsed))
-  nameWithType: ExcelFileEx.CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>)
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed))
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection})
-  name: CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>)
-  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows__2_IStream___0__System_String_ExcelFileDefinition___1__System_Func___0_ExcelSheetSelection__
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection})
-  name.vb: CrossApplyExcelRows(Of TIn, TParsed)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection))
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, System.String, ExcelFileDefinition<TParsed>, System.Func<TIn, ExcelSheetSelection>)
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed)(IStream(Of TIn), System.String, ExcelFileDefinition(Of TParsed), System.Func(Of TIn, ExcelSheetSelection))
-  nameWithType: ExcelFileEx.CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>)
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection))
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1})
-  name: CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>, Func<TParsed, ExcelSheetSelection, TOut>)
-  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows__2_IStream_ExcelSheetSelection__System_String_ExcelFileDefinition___0__System_Func___0_ExcelSheetSelection___1__
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1})
-  name.vb: CrossApplyExcelRows(Of TParsed, TOut)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed), Func(Of TParsed, ExcelSheetSelection, TOut))
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, System.String, ExcelFileDefinition<TParsed>, System.Func<TParsed, ExcelSheetSelection, TOut>)
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TParsed, TOut)(IStream(Of ExcelSheetSelection), System.String, ExcelFileDefinition(Of TParsed), System.Func(Of TParsed, ExcelSheetSelection, TOut))
-  nameWithType: ExcelFileEx.CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>, Func<TParsed, ExcelSheetSelection, TOut>)
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TParsed, TOut)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed), Func(Of TParsed, ExcelSheetSelection, TOut))
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2})
-  name: CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>, Func<TParsed, TIn, TOut>)
-  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows__3_IStream___0__System_String_ExcelFileDefinition___1__System_Func___0_ExcelSheetSelection__System_Func___1___0___2__
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2})
-  name.vb: CrossApplyExcelRows(Of TIn, TParsed, TOut)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection), Func(Of TParsed, TIn, TOut))
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, System.String, ExcelFileDefinition<TParsed>, System.Func<TIn, ExcelSheetSelection>, System.Func<TParsed, TIn, TOut>)
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed, TOut)(IStream(Of TIn), System.String, ExcelFileDefinition(Of TParsed), System.Func(Of TIn, ExcelSheetSelection), System.Func(Of TParsed, TIn, TOut))
-  nameWithType: ExcelFileEx.CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>, Func<TParsed, TIn, TOut>)
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed, TOut)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection), Func(Of TParsed, TIn, TOut))
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{Stream},System.String)
-  name: CrossApplyExcelSheets(IStream<Stream>, String)
-  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets_IStream_Stream__System_String_
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{Stream},System.String)
-  name.vb: CrossApplyExcelSheets(IStream(Of Stream), String)
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream<Stream>, System.String)
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream(Of Stream), System.String)
-  nameWithType: ExcelFileEx.CrossApplyExcelSheets(IStream<Stream>, String)
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(IStream(Of Stream), String)
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{System.String},System.String)
-  name: CrossApplyExcelSheets(IStream<String>, String)
-  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets_IStream_System_String__System_String_
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{System.String},System.String)
-  name.vb: CrossApplyExcelSheets(IStream(Of String), String)
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream<System.String>, System.String)
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream(Of System.String), System.String)
-  nameWithType: ExcelFileEx.CrossApplyExcelSheets(IStream<String>, String)
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(IStream(Of String), String)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Boolean)
+  name: CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>, Boolean)
+  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows__1_IStream_ExcelSheetSelection__System_String_ExcelFileDefinition___0__System_Boolean_
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Boolean)
+  name.vb: CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed), Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, System.String, ExcelFileDefinition<TParsed>, System.Boolean)
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), System.String, ExcelFileDefinition(Of TParsed), System.Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>, Boolean)
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed), Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Boolean)
+  name: CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>, Boolean)
+  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows__2_IStream___0__System_String_ExcelFileDefinition___1__System_Func___0_ExcelSheetSelection__System_Boolean_
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Boolean)
+  name.vb: CrossApplyExcelRows(Of TIn, TParsed)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection), Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, System.String, ExcelFileDefinition<TParsed>, System.Func<TIn, ExcelSheetSelection>, System.Boolean)
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed)(IStream(Of TIn), System.String, ExcelFileDefinition(Of TParsed), System.Func(Of TIn, ExcelSheetSelection), System.Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>, Boolean)
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection), Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1},System.Boolean)
+  name: CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>, Func<TParsed, ExcelSheetSelection, TOut>, Boolean)
+  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows__2_IStream_ExcelSheetSelection__System_String_ExcelFileDefinition___0__System_Func___0_ExcelSheetSelection___1__System_Boolean_
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1},System.Boolean)
+  name.vb: CrossApplyExcelRows(Of TParsed, TOut)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed), Func(Of TParsed, ExcelSheetSelection, TOut), Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, System.String, ExcelFileDefinition<TParsed>, System.Func<TParsed, ExcelSheetSelection, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TParsed, TOut)(IStream(Of ExcelSheetSelection), System.String, ExcelFileDefinition(Of TParsed), System.Func(Of TParsed, ExcelSheetSelection, TOut), System.Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>, Func<TParsed, ExcelSheetSelection, TOut>, Boolean)
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TParsed, TOut)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed), Func(Of TParsed, ExcelSheetSelection, TOut), Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2},System.Boolean)
+  name: CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>, Func<TParsed, TIn, TOut>, Boolean)
+  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelRows__3_IStream___0__System_String_ExcelFileDefinition___1__System_Func___0_ExcelSheetSelection__System_Func___1___0___2__System_Boolean_
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2},System.Boolean)
+  name.vb: CrossApplyExcelRows(Of TIn, TParsed, TOut)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection), Func(Of TParsed, TIn, TOut), Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, System.String, ExcelFileDefinition<TParsed>, System.Func<TIn, ExcelSheetSelection>, System.Func<TParsed, TIn, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed, TOut)(IStream(Of TIn), System.String, ExcelFileDefinition(Of TParsed), System.Func(Of TIn, ExcelSheetSelection), System.Func(Of TParsed, TIn, TOut), System.Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>, Func<TParsed, TIn, TOut>, Boolean)
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed, TOut)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection), Func(Of TParsed, TIn, TOut), Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{Stream},System.String,System.Boolean)
+  name: CrossApplyExcelSheets(IStream<Stream>, String, Boolean)
+  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets_IStream_Stream__System_String_System_Boolean_
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{Stream},System.String,System.Boolean)
+  name.vb: CrossApplyExcelSheets(IStream(Of Stream), String, Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream<Stream>, System.String, System.Boolean)
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream(Of Stream), System.String, System.Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets(IStream<Stream>, String, Boolean)
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(IStream(Of Stream), String, Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{System.String},System.String,System.Boolean)
+  name: CrossApplyExcelSheets(IStream<String>, String, Boolean)
+  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets_IStream_System_String__System_String_System_Boolean_
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{System.String},System.String,System.Boolean)
+  name.vb: CrossApplyExcelSheets(IStream(Of String), String, Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream<System.String>, System.String, System.Boolean)
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream(Of System.String), System.String, System.Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets(IStream<String>, String, Boolean)
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(IStream(Of String), String, Boolean)
 - uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*
   name: CrossApplyExcelSheets
   href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets_
@@ -143,33 +143,42 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets
   nameWithType: ExcelFileEx.CrossApplyExcelSheets
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String})
-  name: CrossApplyExcelSheets<TIn>(IStream<TIn>, String, Func<TIn, String>)
-  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets__1_IStream___0__System_String_System_Func___0_System_String__
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String})
-  name.vb: CrossApplyExcelSheets(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String))
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>)
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String))
-  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TIn>(IStream<TIn>, String, Func<TIn, String>)
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String))
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0})
-  name: CrossApplyExcelSheets<TOut>(IStream<String>, String, Func<ExcelSheetSelection, String, TOut>)
-  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets__1_IStream_System_String__System_String_System_Func_ExcelSheetSelection_System_String___0__
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0})
-  name.vb: CrossApplyExcelSheets(Of TOut)(IStream(Of String), String, Func(Of ExcelSheetSelection, String, TOut))
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<System.String>, System.String, System.Func<ExcelSheetSelection, System.String, TOut>)
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TOut)(IStream(Of System.String), System.String, System.Func(Of ExcelSheetSelection, System.String, TOut))
-  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<String>, String, Func<ExcelSheetSelection, String, TOut>)
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TOut)(IStream(Of String), String, Func(Of ExcelSheetSelection, String, TOut))
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1})
-  name: CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<ExcelSheetSelection, TIn, TOut>)
-  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets__2_IStream___0__System_String_System_Func___0_System_String__System_Func_ExcelSheetSelection___0___1__
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1})
-  name.vb: CrossApplyExcelSheets(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of ExcelSheetSelection, TIn, TOut))
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<ExcelSheetSelection, TIn, TOut>)
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of ExcelSheetSelection, TIn, TOut))
-  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<ExcelSheetSelection, TIn, TOut>)
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of ExcelSheetSelection, TIn, TOut))
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String},System.Boolean)
+  name: CrossApplyExcelSheets<TIn>(IStream<TIn>, String, Func<TIn, String>, Boolean)
+  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets__1_IStream___0__System_String_System_Func___0_System_String__System_Boolean_
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String},System.Boolean)
+  name.vb: CrossApplyExcelSheets(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Boolean)
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TIn>(IStream<TIn>, String, Func<TIn, String>, Boolean)
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{Stream},System.String,System.Func{ExcelSheetSelection,``0},System.Boolean)
+  name: CrossApplyExcelSheets<TOut>(IStream<Stream>, String, Func<ExcelSheetSelection, TOut>, Boolean)
+  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets__1_IStream_Stream__System_String_System_Func_ExcelSheetSelection___0__System_Boolean_
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{Stream},System.String,System.Func{ExcelSheetSelection,``0},System.Boolean)
+  name.vb: CrossApplyExcelSheets(Of TOut)(IStream(Of Stream), String, Func(Of ExcelSheetSelection, TOut), Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<Stream>, System.String, System.Func<ExcelSheetSelection, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TOut)(IStream(Of Stream), System.String, System.Func(Of ExcelSheetSelection, TOut), System.Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<Stream>, String, Func<ExcelSheetSelection, TOut>, Boolean)
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TOut)(IStream(Of Stream), String, Func(Of ExcelSheetSelection, TOut), Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0},System.Boolean)
+  name: CrossApplyExcelSheets<TOut>(IStream<String>, String, Func<ExcelSheetSelection, String, TOut>, Boolean)
+  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets__1_IStream_System_String__System_String_System_Func_ExcelSheetSelection_System_String___0__System_Boolean_
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0},System.Boolean)
+  name.vb: CrossApplyExcelSheets(Of TOut)(IStream(Of String), String, Func(Of ExcelSheetSelection, String, TOut), Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<System.String>, System.String, System.Func<ExcelSheetSelection, System.String, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TOut)(IStream(Of System.String), System.String, System.Func(Of ExcelSheetSelection, System.String, TOut), System.Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<String>, String, Func<ExcelSheetSelection, String, TOut>, Boolean)
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TOut)(IStream(Of String), String, Func(Of ExcelSheetSelection, String, TOut), Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1},System.Boolean)
+  name: CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<ExcelSheetSelection, TIn, TOut>, Boolean)
+  href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_CrossApplyExcelSheets__2_IStream___0__System_String_System_Func___0_System_String__System_Func_ExcelSheetSelection___0___1__System_Boolean_
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1},System.Boolean)
+  name.vb: CrossApplyExcelSheets(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of ExcelSheetSelection, TIn, TOut), Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<ExcelSheetSelection, TIn, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of ExcelSheetSelection, TIn, TOut), System.Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<ExcelSheetSelection, TIn, TOut>, Boolean)
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of ExcelSheetSelection, TIn, TOut), Boolean)
 - uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile*
   name: ThroughExcelFile
   href: apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html#Paillave_Etl_ExcelFile_Extensions_ExcelFileEx_ThroughExcelFile_
@@ -257,37 +266,6 @@ references:
   fullName.vb: Paillave.Etl.Extensions.AggregateEx.Aggregate(Of TIn, TAggr, TKey)(IStream(Of TIn), System.String, System.Func(Of TIn, TAggr), System.Func(Of TIn, TKey), System.Func(Of TAggr, TIn, TAggr))
   nameWithType: AggregateEx.Aggregate<TIn, TAggr, TKey>(IStream<TIn>, String, Func<TIn, TAggr>, Func<TIn, TKey>, Func<TAggr, TIn, TAggr>)
   nameWithType.vb: AggregateEx.Aggregate(Of TIn, TAggr, TKey)(IStream(Of TIn), String, Func(Of TIn, TAggr), Func(Of TIn, TKey), Func(Of TAggr, TIn, TAggr))
-- uid: Paillave.Etl.Extensions.CrossApplyActionEx
-  name: CrossApplyActionEx
-  href: api/Paillave.Etl.Extensions.CrossApplyActionEx.html
-  commentId: T:Paillave.Etl.Extensions.CrossApplyActionEx
-  fullName: Paillave.Etl.Extensions.CrossApplyActionEx
-  nameWithType: CrossApplyActionEx
-- uid: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction*
-  name: CrossApplyAction
-  href: api/Paillave.Etl.Extensions.CrossApplyActionEx.html#Paillave_Etl_Extensions_CrossApplyActionEx_CrossApplyAction_
-  commentId: Overload:Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction
-  isSpec: "True"
-  fullName: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction
-  nameWithType: CrossApplyActionEx.CrossApplyAction
-- uid: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction``2(IStream{``0},System.String,System.Action{``0,System.Action{``1}},System.Boolean)
-  name: CrossApplyAction<TIn, TOut>(IStream<TIn>, String, Action<TIn, Action<TOut>>, Boolean)
-  href: api/Paillave.Etl.Extensions.CrossApplyActionEx.html#Paillave_Etl_Extensions_CrossApplyActionEx_CrossApplyAction__2_IStream___0__System_String_System_Action___0_System_Action___1___System_Boolean_
-  commentId: M:Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction``2(IStream{``0},System.String,System.Action{``0,System.Action{``1}},System.Boolean)
-  name.vb: CrossApplyAction(Of TIn, TOut)(IStream(Of TIn), String, Action(Of TIn, Action(Of TOut)), Boolean)
-  fullName: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction<TIn, TOut>(IStream<TIn>, System.String, System.Action<TIn, System.Action<TOut>>, System.Boolean)
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction(Of TIn, TOut)(IStream(Of TIn), System.String, System.Action(Of TIn, System.Action(Of TOut)), System.Boolean)
-  nameWithType: CrossApplyActionEx.CrossApplyAction<TIn, TOut>(IStream<TIn>, String, Action<TIn, Action<TOut>>, Boolean)
-  nameWithType.vb: CrossApplyActionEx.CrossApplyAction(Of TIn, TOut)(IStream(Of TIn), String, Action(Of TIn, Action(Of TOut)), Boolean)
-- uid: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
-  name: CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Action<TIn1, TIn2, Action<TOut>>, Boolean)
-  href: api/Paillave.Etl.Extensions.CrossApplyActionEx.html#Paillave_Etl_Extensions_CrossApplyActionEx_CrossApplyAction__3_IStream___0__System_String_ISingleStream___1__System_Action___0___1_System_Action___2___System_Boolean_
-  commentId: M:Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
-  name.vb: CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Action(Of TIn1, TIn2, Action(Of TOut)), Boolean)
-  fullName: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, ISingleStream<TIn2>, System.Action<TIn1, TIn2, System.Action<TOut>>, System.Boolean)
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyActionEx.CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), System.String, ISingleStream(Of TIn2), System.Action(Of TIn1, TIn2, System.Action(Of TOut)), System.Boolean)
-  nameWithType: CrossApplyActionEx.CrossApplyAction<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Action<TIn1, TIn2, Action<TOut>>, Boolean)
-  nameWithType.vb: CrossApplyActionEx.CrossApplyAction(Of TIn1, TIn2, TOut)(IStream(Of TIn1), String, ISingleStream(Of TIn2), Action(Of TIn1, TIn2, Action(Of TOut)), Boolean)
 - uid: Paillave.Etl.Extensions.CrossApplyEnumerableEx
   name: CrossApplyEnumerableEx
   href: api/Paillave.Etl.Extensions.CrossApplyEnumerableEx.html
@@ -332,57 +310,57 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply
   nameWithType: CrossApplyEx.CrossApply
-- uid: Paillave.Etl.Extensions.CrossApplyEx.CrossApply``2(IStream{``0},System.String,IValuesProvider{``0,``1})
-  name: CrossApply<TIn, TOut>(IStream<TIn>, String, IValuesProvider<TIn, TOut>)
-  href: api/Paillave.Etl.Extensions.CrossApplyEx.html#Paillave_Etl_Extensions_CrossApplyEx_CrossApply__2_IStream___0__System_String_IValuesProvider___0___1__
-  commentId: M:Paillave.Etl.Extensions.CrossApplyEx.CrossApply``2(IStream{``0},System.String,IValuesProvider{``0,``1})
-  name.vb: CrossApply(Of TIn, TOut)(IStream(Of TIn), String, IValuesProvider(Of TIn, TOut))
-  fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TOut>(IStream<TIn>, System.String, IValuesProvider<TIn, TOut>)
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyEx.CrossApply(Of TIn, TOut)(IStream(Of TIn), System.String, IValuesProvider(Of TIn, TOut))
-  nameWithType: CrossApplyEx.CrossApply<TIn, TOut>(IStream<TIn>, String, IValuesProvider<TIn, TOut>)
-  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TOut)(IStream(Of TIn), String, IValuesProvider(Of TIn, TOut))
-- uid: Paillave.Etl.Extensions.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``0,``1,``2})
-  name: CrossApply<TIn, TResource, TOut>(IStream<TIn>, String, ISingleStream<TResource>, IValuesProvider<TIn, TResource, TOut>)
-  href: api/Paillave.Etl.Extensions.CrossApplyEx.html#Paillave_Etl_Extensions_CrossApplyEx_CrossApply__3_IStream___0__System_String_ISingleStream___1__IValuesProvider___0___1___2__
-  commentId: M:Paillave.Etl.Extensions.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``0,``1,``2})
-  name.vb: CrossApply(Of TIn, TResource, TOut)(IStream(Of TIn), String, ISingleStream(Of TResource), IValuesProvider(Of TIn, TResource, TOut))
-  fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TResource, TOut>(IStream<TIn>, System.String, ISingleStream<TResource>, IValuesProvider<TIn, TResource, TOut>)
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyEx.CrossApply(Of TIn, TResource, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TResource), IValuesProvider(Of TIn, TResource, TOut))
-  nameWithType: CrossApplyEx.CrossApply<TIn, TResource, TOut>(IStream<TIn>, String, ISingleStream<TResource>, IValuesProvider<TIn, TResource, TOut>)
-  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TResource, TOut)(IStream(Of TIn), String, ISingleStream(Of TResource), IValuesProvider(Of TIn, TResource, TOut))
-- uid: Paillave.Etl.Extensions.CrossApplyEx.CrossApply``4(IStream{``0},System.String,IValuesProvider{``1,``2},System.Func{``0,``1},System.Func{``2,``0,``3})
-  name: CrossApply<TIn, TValueIn, TValueOut, TOut>(IStream<TIn>, String, IValuesProvider<TValueIn, TValueOut>, Func<TIn, TValueIn>, Func<TValueOut, TIn, TOut>)
-  href: api/Paillave.Etl.Extensions.CrossApplyEx.html#Paillave_Etl_Extensions_CrossApplyEx_CrossApply__4_IStream___0__System_String_IValuesProvider___1___2__System_Func___0___1__System_Func___2___0___3__
-  commentId: M:Paillave.Etl.Extensions.CrossApplyEx.CrossApply``4(IStream{``0},System.String,IValuesProvider{``1,``2},System.Func{``0,``1},System.Func{``2,``0,``3})
-  name.vb: CrossApply(Of TIn, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, IValuesProvider(Of TValueIn, TValueOut), Func(Of TIn, TValueIn), Func(Of TValueOut, TIn, TOut))
-  fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TValueIn, TValueOut, TOut>(IStream<TIn>, System.String, IValuesProvider<TValueIn, TValueOut>, System.Func<TIn, TValueIn>, System.Func<TValueOut, TIn, TOut>)
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyEx.CrossApply(Of TIn, TValueIn, TValueOut, TOut)(IStream(Of TIn), System.String, IValuesProvider(Of TValueIn, TValueOut), System.Func(Of TIn, TValueIn), System.Func(Of TValueOut, TIn, TOut))
-  nameWithType: CrossApplyEx.CrossApply<TIn, TValueIn, TValueOut, TOut>(IStream<TIn>, String, IValuesProvider<TValueIn, TValueOut>, Func<TIn, TValueIn>, Func<TValueOut, TIn, TOut>)
-  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, IValuesProvider(Of TValueIn, TValueOut), Func(Of TIn, TValueIn), Func(Of TValueOut, TIn, TOut))
-- uid: Paillave.Etl.Extensions.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
-  name: CrossApply<TIn, TResource, TValueIn, TValueOut, TOut>(IStream<TIn>, String, ISingleStream<TResource>, IValuesProvider<TValueIn, TResource, TValueOut>, Func<TIn, TResource, TValueIn>, Func<TValueOut, TIn, TResource, TOut>)
-  href: api/Paillave.Etl.Extensions.CrossApplyEx.html#Paillave_Etl_Extensions_CrossApplyEx_CrossApply__5_IStream___0__System_String_ISingleStream___1__IValuesProvider___2___1___3__System_Func___0___1___2__System_Func___3___0___1___4__
-  commentId: M:Paillave.Etl.Extensions.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
-  name.vb: CrossApply(Of TIn, TResource, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, ISingleStream(Of TResource), IValuesProvider(Of TValueIn, TResource, TValueOut), Func(Of TIn, TResource, TValueIn), Func(Of TValueOut, TIn, TResource, TOut))
-  fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TResource, TValueIn, TValueOut, TOut>(IStream<TIn>, System.String, ISingleStream<TResource>, IValuesProvider<TValueIn, TResource, TValueOut>, System.Func<TIn, TResource, TValueIn>, System.Func<TValueOut, TIn, TResource, TOut>)
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyEx.CrossApply(Of TIn, TResource, TValueIn, TValueOut, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TResource), IValuesProvider(Of TValueIn, TResource, TValueOut), System.Func(Of TIn, TResource, TValueIn), System.Func(Of TValueOut, TIn, TResource, TOut))
-  nameWithType: CrossApplyEx.CrossApply<TIn, TResource, TValueIn, TValueOut, TOut>(IStream<TIn>, String, ISingleStream<TResource>, IValuesProvider<TValueIn, TResource, TValueOut>, Func<TIn, TResource, TValueIn>, Func<TValueOut, TIn, TResource, TOut>)
-  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TResource, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, ISingleStream(Of TResource), IValuesProvider(Of TValueIn, TResource, TValueOut), Func(Of TIn, TResource, TValueIn), Func(Of TValueOut, TIn, TResource, TOut))
+- uid: Paillave.Etl.Extensions.CrossApplyEx.CrossApply``2(IStream{``0},System.String,System.Action{``0,System.Action{``1}},System.Boolean)
+  name: CrossApply<TIn, TOut>(IStream<TIn>, String, Action<TIn, Action<TOut>>, Boolean)
+  href: api/Paillave.Etl.Extensions.CrossApplyEx.html#Paillave_Etl_Extensions_CrossApplyEx_CrossApply__2_IStream___0__System_String_System_Action___0_System_Action___1___System_Boolean_
+  commentId: M:Paillave.Etl.Extensions.CrossApplyEx.CrossApply``2(IStream{``0},System.String,System.Action{``0,System.Action{``1}},System.Boolean)
+  name.vb: CrossApply(Of TIn, TOut)(IStream(Of TIn), String, Action(Of TIn, Action(Of TOut)), Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TOut>(IStream<TIn>, System.String, System.Action<TIn, System.Action<TOut>>, System.Boolean)
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyEx.CrossApply(Of TIn, TOut)(IStream(Of TIn), System.String, System.Action(Of TIn, System.Action(Of TOut)), System.Boolean)
+  nameWithType: CrossApplyEx.CrossApply<TIn, TOut>(IStream<TIn>, String, Action<TIn, Action<TOut>>, Boolean)
+  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TOut)(IStream(Of TIn), String, Action(Of TIn, Action(Of TOut)), Boolean)
+- uid: Paillave.Etl.Extensions.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
+  name: CrossApply<TIn, TInToApply, TOut>(IStream<TIn>, String, ISingleStream<TInToApply>, Action<TIn, TInToApply, Action<TOut>>, Boolean)
+  href: api/Paillave.Etl.Extensions.CrossApplyEx.html#Paillave_Etl_Extensions_CrossApplyEx_CrossApply__3_IStream___0__System_String_ISingleStream___1__System_Action___0___1_System_Action___2___System_Boolean_
+  commentId: M:Paillave.Etl.Extensions.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
+  name.vb: CrossApply(Of TIn, TInToApply, TOut)(IStream(Of TIn), String, ISingleStream(Of TInToApply), Action(Of TIn, TInToApply, Action(Of TOut)), Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TInToApply, TOut>(IStream<TIn>, System.String, ISingleStream<TInToApply>, System.Action<TIn, TInToApply, System.Action<TOut>>, System.Boolean)
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyEx.CrossApply(Of TIn, TInToApply, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TInToApply), System.Action(Of TIn, TInToApply, System.Action(Of TOut)), System.Boolean)
+  nameWithType: CrossApplyEx.CrossApply<TIn, TInToApply, TOut>(IStream<TIn>, String, ISingleStream<TInToApply>, Action<TIn, TInToApply, Action<TOut>>, Boolean)
+  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TInToApply, TOut)(IStream(Of TIn), String, ISingleStream(Of TInToApply), Action(Of TIn, TInToApply, Action(Of TOut)), Boolean)
+- uid: Paillave.Etl.Extensions.CrossApplyEx.CrossApply``4(IStream{``0},System.String,System.Action{``1,System.Action{``2}},System.Func{``0,``1},System.Func{``2,``0,``3},System.Boolean)
+  name: CrossApply<TIn, TValueIn, TValueOut, TOut>(IStream<TIn>, String, Action<TValueIn, Action<TValueOut>>, Func<TIn, TValueIn>, Func<TValueOut, TIn, TOut>, Boolean)
+  href: api/Paillave.Etl.Extensions.CrossApplyEx.html#Paillave_Etl_Extensions_CrossApplyEx_CrossApply__4_IStream___0__System_String_System_Action___1_System_Action___2___System_Func___0___1__System_Func___2___0___3__System_Boolean_
+  commentId: M:Paillave.Etl.Extensions.CrossApplyEx.CrossApply``4(IStream{``0},System.String,System.Action{``1,System.Action{``2}},System.Func{``0,``1},System.Func{``2,``0,``3},System.Boolean)
+  name.vb: CrossApply(Of TIn, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, Action(Of TValueIn, Action(Of TValueOut)), Func(Of TIn, TValueIn), Func(Of TValueOut, TIn, TOut), Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TValueIn, TValueOut, TOut>(IStream<TIn>, System.String, System.Action<TValueIn, System.Action<TValueOut>>, System.Func<TIn, TValueIn>, System.Func<TValueOut, TIn, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyEx.CrossApply(Of TIn, TValueIn, TValueOut, TOut)(IStream(Of TIn), System.String, System.Action(Of TValueIn, System.Action(Of TValueOut)), System.Func(Of TIn, TValueIn), System.Func(Of TValueOut, TIn, TOut), System.Boolean)
+  nameWithType: CrossApplyEx.CrossApply<TIn, TValueIn, TValueOut, TOut>(IStream<TIn>, String, Action<TValueIn, Action<TValueOut>>, Func<TIn, TValueIn>, Func<TValueOut, TIn, TOut>, Boolean)
+  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, Action(Of TValueIn, Action(Of TValueOut)), Func(Of TIn, TValueIn), Func(Of TValueOut, TIn, TOut), Boolean)
+- uid: Paillave.Etl.Extensions.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},System.Action{``2,``1,System.Action{``3}},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4},System.Boolean)
+  name: CrossApply<TIn, TInToApply, TValueIn, TValueOut, TOut>(IStream<TIn>, String, ISingleStream<TInToApply>, Action<TValueIn, TInToApply, Action<TValueOut>>, Func<TIn, TInToApply, TValueIn>, Func<TValueOut, TIn, TInToApply, TOut>, Boolean)
+  href: api/Paillave.Etl.Extensions.CrossApplyEx.html#Paillave_Etl_Extensions_CrossApplyEx_CrossApply__5_IStream___0__System_String_ISingleStream___1__System_Action___2___1_System_Action___3___System_Func___0___1___2__System_Func___3___0___1___4__System_Boolean_
+  commentId: M:Paillave.Etl.Extensions.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},System.Action{``2,``1,System.Action{``3}},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4},System.Boolean)
+  name.vb: CrossApply(Of TIn, TInToApply, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, ISingleStream(Of TInToApply), Action(Of TValueIn, TInToApply, Action(Of TValueOut)), Func(Of TIn, TInToApply, TValueIn), Func(Of TValueOut, TIn, TInToApply, TOut), Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TInToApply, TValueIn, TValueOut, TOut>(IStream<TIn>, System.String, ISingleStream<TInToApply>, System.Action<TValueIn, TInToApply, System.Action<TValueOut>>, System.Func<TIn, TInToApply, TValueIn>, System.Func<TValueOut, TIn, TInToApply, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyEx.CrossApply(Of TIn, TInToApply, TValueIn, TValueOut, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TInToApply), System.Action(Of TValueIn, TInToApply, System.Action(Of TValueOut)), System.Func(Of TIn, TInToApply, TValueIn), System.Func(Of TValueOut, TIn, TInToApply, TOut), System.Boolean)
+  nameWithType: CrossApplyEx.CrossApply<TIn, TInToApply, TValueIn, TValueOut, TOut>(IStream<TIn>, String, ISingleStream<TInToApply>, Action<TValueIn, TInToApply, Action<TValueOut>>, Func<TIn, TInToApply, TValueIn>, Func<TValueOut, TIn, TInToApply, TOut>, Boolean)
+  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TInToApply, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, ISingleStream(Of TInToApply), Action(Of TValueIn, TInToApply, Action(Of TValueOut)), Func(Of TIn, TInToApply, TValueIn), Func(Of TValueOut, TIn, TInToApply, TOut), Boolean)
 - uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx
   name: CrossApplyFolderFilesEx
   href: api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html
   commentId: T:Paillave.Etl.Extensions.CrossApplyFolderFilesEx
   fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx
   nameWithType: CrossApplyFolderFilesEx
-- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream{System.String},System.String,System.String,System.IO.SearchOption)
-  name: CrossApplyFolderFiles(IStream<String>, String, String, SearchOption)
-  href: api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html#Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles_IStream_System_String__System_String_System_String_System_IO_SearchOption_
-  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream{System.String},System.String,System.String,System.IO.SearchOption)
-  name.vb: CrossApplyFolderFiles(IStream(Of String), String, String, SearchOption)
-  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream<System.String>, System.String, System.String, System.IO.SearchOption)
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream(Of System.String), System.String, System.String, System.IO.SearchOption)
-  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream<String>, String, String, SearchOption)
-  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream(Of String), String, String, SearchOption)
+- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream{System.String},System.String,System.String,System.Boolean,System.Boolean)
+  name: CrossApplyFolderFiles(IStream<String>, String, String, Boolean, Boolean)
+  href: api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html#Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles_IStream_System_String__System_String_System_String_System_Boolean_System_Boolean_
+  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream{System.String},System.String,System.String,System.Boolean,System.Boolean)
+  name.vb: CrossApplyFolderFiles(IStream(Of String), String, String, Boolean, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream<System.String>, System.String, System.String, System.Boolean, System.Boolean)
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream(Of System.String), System.String, System.String, System.Boolean, System.Boolean)
+  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream<String>, String, String, Boolean, Boolean)
+  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream(Of String), String, String, Boolean, Boolean)
 - uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles*
   name: CrossApplyFolderFiles
   href: api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html#Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles_
@@ -390,51 +368,51 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles
   nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles
-- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.IO.SearchOption)
-  name: CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, SearchOption)
-  href: api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html#Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__1_IStream___0__System_String_System_Func___0_System_String__System_Func___0_System_String__System_IO_SearchOption_
-  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.IO.SearchOption)
-  name.vb: CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String), SearchOption)
-  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<TIn, System.String>, System.IO.SearchOption)
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of TIn, System.String), System.IO.SearchOption)
-  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, SearchOption)
-  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String), SearchOption)
-- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.String,System.IO.SearchOption)
-  name: CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, String, SearchOption)
-  href: api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html#Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__1_IStream___0__System_String_System_Func___0_System_String__System_String_System_IO_SearchOption_
-  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.String,System.IO.SearchOption)
-  name.vb: CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), String, SearchOption)
-  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.String, System.IO.SearchOption)
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.String, System.IO.SearchOption)
-  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, String, SearchOption)
-  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), String, SearchOption)
-- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{System.String},System.String,System.Func{LocalFilesValue,System.String,``0},System.String,System.IO.SearchOption)
-  name: CrossApplyFolderFiles<TOut>(IStream<String>, String, Func<LocalFilesValue, String, TOut>, String, SearchOption)
-  href: api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html#Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__1_IStream_System_String__System_String_System_Func_LocalFilesValue_System_String___0__System_String_System_IO_SearchOption_
-  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{System.String},System.String,System.Func{LocalFilesValue,System.String,``0},System.String,System.IO.SearchOption)
-  name.vb: CrossApplyFolderFiles(Of TOut)(IStream(Of String), String, Func(Of LocalFilesValue, String, TOut), String, SearchOption)
-  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TOut>(IStream<System.String>, System.String, System.Func<LocalFilesValue, System.String, TOut>, System.String, System.IO.SearchOption)
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TOut)(IStream(Of System.String), System.String, System.Func(Of LocalFilesValue, System.String, TOut), System.String, System.IO.SearchOption)
-  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TOut>(IStream<String>, String, Func<LocalFilesValue, String, TOut>, String, SearchOption)
-  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TOut)(IStream(Of String), String, Func(Of LocalFilesValue, String, TOut), String, SearchOption)
-- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.IO.SearchOption)
-  name: CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, SearchOption)
-  href: api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html#Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__2_IStream___0__System_String_System_Func___0_System_String__System_Func___0_System_String__System_Func_LocalFilesValue___0___1__System_IO_SearchOption_
-  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.IO.SearchOption)
-  name.vb: CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String), Func(Of LocalFilesValue, TIn, TOut), SearchOption)
-  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<TIn, System.String>, System.Func<LocalFilesValue, TIn, TOut>, System.IO.SearchOption)
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of TIn, System.String), System.Func(Of LocalFilesValue, TIn, TOut), System.IO.SearchOption)
-  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, SearchOption)
-  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String), Func(Of LocalFilesValue, TIn, TOut), SearchOption)
-- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.String,System.IO.SearchOption)
-  name: CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, String, SearchOption)
-  href: api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html#Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__2_IStream___0__System_String_System_Func___0_System_String__System_Func_LocalFilesValue___0___1__System_String_System_IO_SearchOption_
-  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.String,System.IO.SearchOption)
-  name.vb: CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of LocalFilesValue, TIn, TOut), String, SearchOption)
-  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<LocalFilesValue, TIn, TOut>, System.String, System.IO.SearchOption)
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of LocalFilesValue, TIn, TOut), System.String, System.IO.SearchOption)
-  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, String, SearchOption)
-  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of LocalFilesValue, TIn, TOut), String, SearchOption)
+- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Boolean,System.Boolean)
+  name: CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, Boolean, Boolean)
+  href: api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html#Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__1_IStream___0__System_String_System_Func___0_System_String__System_Func___0_System_String__System_Boolean_System_Boolean_
+  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Boolean,System.Boolean)
+  name.vb: CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String), Boolean, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<TIn, System.String>, System.Boolean, System.Boolean)
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of TIn, System.String), System.Boolean, System.Boolean)
+  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, Boolean, Boolean)
+  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String), Boolean, Boolean)
+- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.String,System.Boolean,System.Boolean)
+  name: CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, String, Boolean, Boolean)
+  href: api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html#Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__1_IStream___0__System_String_System_Func___0_System_String__System_String_System_Boolean_System_Boolean_
+  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.String,System.Boolean,System.Boolean)
+  name.vb: CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), String, Boolean, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.String, System.Boolean, System.Boolean)
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.String, System.Boolean, System.Boolean)
+  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, String, Boolean, Boolean)
+  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), String, Boolean, Boolean)
+- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{System.String},System.String,System.Func{LocalFilesValue,System.String,``0},System.String,System.Boolean,System.Boolean)
+  name: CrossApplyFolderFiles<TOut>(IStream<String>, String, Func<LocalFilesValue, String, TOut>, String, Boolean, Boolean)
+  href: api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html#Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__1_IStream_System_String__System_String_System_Func_LocalFilesValue_System_String___0__System_String_System_Boolean_System_Boolean_
+  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{System.String},System.String,System.Func{LocalFilesValue,System.String,``0},System.String,System.Boolean,System.Boolean)
+  name.vb: CrossApplyFolderFiles(Of TOut)(IStream(Of String), String, Func(Of LocalFilesValue, String, TOut), String, Boolean, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TOut>(IStream<System.String>, System.String, System.Func<LocalFilesValue, System.String, TOut>, System.String, System.Boolean, System.Boolean)
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TOut)(IStream(Of System.String), System.String, System.Func(Of LocalFilesValue, System.String, TOut), System.String, System.Boolean, System.Boolean)
+  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TOut>(IStream<String>, String, Func<LocalFilesValue, String, TOut>, String, Boolean, Boolean)
+  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TOut)(IStream(Of String), String, Func(Of LocalFilesValue, String, TOut), String, Boolean, Boolean)
+- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.Boolean,System.Boolean)
+  name: CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, Boolean, Boolean)
+  href: api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html#Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__2_IStream___0__System_String_System_Func___0_System_String__System_Func___0_System_String__System_Func_LocalFilesValue___0___1__System_Boolean_System_Boolean_
+  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.Boolean,System.Boolean)
+  name.vb: CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String), Func(Of LocalFilesValue, TIn, TOut), Boolean, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<TIn, System.String>, System.Func<LocalFilesValue, TIn, TOut>, System.Boolean, System.Boolean)
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of TIn, System.String), System.Func(Of LocalFilesValue, TIn, TOut), System.Boolean, System.Boolean)
+  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, Boolean, Boolean)
+  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String), Func(Of LocalFilesValue, TIn, TOut), Boolean, Boolean)
+- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.String,System.Boolean,System.Boolean)
+  name: CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, String, Boolean, Boolean)
+  href: api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html#Paillave_Etl_Extensions_CrossApplyFolderFilesEx_CrossApplyFolderFiles__2_IStream___0__System_String_System_Func___0_System_String__System_Func_LocalFilesValue___0___1__System_String_System_Boolean_System_Boolean_
+  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.String,System.Boolean,System.Boolean)
+  name.vb: CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of LocalFilesValue, TIn, TOut), String, Boolean, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<LocalFilesValue, TIn, TOut>, System.String, System.Boolean, System.Boolean)
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of LocalFilesValue, TIn, TOut), System.String, System.Boolean, System.Boolean)
+  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, String, Boolean, Boolean)
+  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of LocalFilesValue, TIn, TOut), String, Boolean, Boolean)
 - uid: Paillave.Etl.Extensions.DistinctEx
   name: DistinctEx
   href: api/Paillave.Etl.Extensions.DistinctEx.html
@@ -1350,15 +1328,15 @@ references:
   commentId: T:Paillave.Etl.Ftp.Extensions.FtpEx
   fullName: Paillave.Etl.Ftp.Extensions.FtpEx
   nameWithType: FtpEx
-- uid: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo})
-  name: CrossApplyFtpFiles(IStream<String>, String, ISingleStream<FtpConnectionInfo>)
-  href: apiext/Paillave.Etl.Ftp.Extensions.FtpEx.html#Paillave_Etl_Ftp_Extensions_FtpEx_CrossApplyFtpFiles_IStream_System_String__System_String_ISingleStream_FtpConnectionInfo__
-  commentId: M:Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo})
-  name.vb: CrossApplyFtpFiles(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo))
-  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(IStream<System.String>, System.String, ISingleStream<FtpConnectionInfo>)
-  fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(IStream(Of System.String), System.String, ISingleStream(Of FtpConnectionInfo))
-  nameWithType: FtpEx.CrossApplyFtpFiles(IStream<String>, String, ISingleStream<FtpConnectionInfo>)
-  nameWithType.vb: FtpEx.CrossApplyFtpFiles(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo))
+- uid: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Boolean)
+  name: CrossApplyFtpFiles(IStream<String>, String, ISingleStream<FtpConnectionInfo>, Boolean)
+  href: apiext/Paillave.Etl.Ftp.Extensions.FtpEx.html#Paillave_Etl_Ftp_Extensions_FtpEx_CrossApplyFtpFiles_IStream_System_String__System_String_ISingleStream_FtpConnectionInfo__System_Boolean_
+  commentId: M:Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Boolean)
+  name.vb: CrossApplyFtpFiles(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo), Boolean)
+  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(IStream<System.String>, System.String, ISingleStream<FtpConnectionInfo>, System.Boolean)
+  fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(IStream(Of System.String), System.String, ISingleStream(Of FtpConnectionInfo), System.Boolean)
+  nameWithType: FtpEx.CrossApplyFtpFiles(IStream<String>, String, ISingleStream<FtpConnectionInfo>, Boolean)
+  nameWithType.vb: FtpEx.CrossApplyFtpFiles(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo), Boolean)
 - uid: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles*
   name: CrossApplyFtpFiles
   href: apiext/Paillave.Etl.Ftp.Extensions.FtpEx.html#Paillave_Etl_Ftp_Extensions_FtpEx_CrossApplyFtpFiles_
@@ -1366,33 +1344,33 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles
   nameWithType: FtpEx.CrossApplyFtpFiles
-- uid: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String})
-  name: CrossApplyFtpFiles<TIn>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>)
-  href: apiext/Paillave.Etl.Ftp.Extensions.FtpEx.html#Paillave_Etl_Ftp_Extensions_FtpEx_CrossApplyFtpFiles__1_IStream___0__System_String_ISingleStream_FtpConnectionInfo__System_Func___0_System_String__
-  commentId: M:Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String})
-  name.vb: CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String))
-  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles<TIn>(IStream<TIn>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<TIn, System.String>)
-  fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), System.String, ISingleStream(Of FtpConnectionInfo), System.Func(Of TIn, System.String))
-  nameWithType: FtpEx.CrossApplyFtpFiles<TIn>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>)
-  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String))
-- uid: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
-  name: CrossApplyFtpFiles<TOut>(IStream<String>, String, ISingleStream<FtpConnectionInfo>, Func<FtpFilesValue, String, FtpConnectionInfo, TOut>)
-  href: apiext/Paillave.Etl.Ftp.Extensions.FtpEx.html#Paillave_Etl_Ftp_Extensions_FtpEx_CrossApplyFtpFiles__1_IStream_System_String__System_String_ISingleStream_FtpConnectionInfo__System_Func_FtpFilesValue_System_String_FtpConnectionInfo___0__
-  commentId: M:Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0})
-  name.vb: CrossApplyFtpFiles(Of TOut)(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo), Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut))
-  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles<TOut>(IStream<System.String>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<FtpFilesValue, System.String, FtpConnectionInfo, TOut>)
-  fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(Of TOut)(IStream(Of System.String), System.String, ISingleStream(Of FtpConnectionInfo), System.Func(Of FtpFilesValue, System.String, FtpConnectionInfo, TOut))
-  nameWithType: FtpEx.CrossApplyFtpFiles<TOut>(IStream<String>, String, ISingleStream<FtpConnectionInfo>, Func<FtpFilesValue, String, FtpConnectionInfo, TOut>)
-  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TOut)(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo), Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut))
-- uid: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
-  name: CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
-  href: apiext/Paillave.Etl.Ftp.Extensions.FtpEx.html#Paillave_Etl_Ftp_Extensions_FtpEx_CrossApplyFtpFiles__2_IStream___0__System_String_ISingleStream_FtpConnectionInfo__System_Func___0_System_String__System_Func_FtpFilesValue___0_FtpConnectionInfo___1__
-  commentId: M:Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1})
-  name.vb: CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String), Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
-  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<TIn, System.String>, System.Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
-  fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), System.String, ISingleStream(Of FtpConnectionInfo), System.Func(Of TIn, System.String), System.Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
-  nameWithType: FtpEx.CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>)
-  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String), Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut))
+- uid: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Boolean)
+  name: CrossApplyFtpFiles<TIn>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>, Boolean)
+  href: apiext/Paillave.Etl.Ftp.Extensions.FtpEx.html#Paillave_Etl_Ftp_Extensions_FtpEx_CrossApplyFtpFiles__1_IStream___0__System_String_ISingleStream_FtpConnectionInfo__System_Func___0_System_String__System_Boolean_
+  commentId: M:Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Boolean)
+  name.vb: CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String), Boolean)
+  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles<TIn>(IStream<TIn>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<TIn, System.String>, System.Boolean)
+  fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), System.String, ISingleStream(Of FtpConnectionInfo), System.Func(Of TIn, System.String), System.Boolean)
+  nameWithType: FtpEx.CrossApplyFtpFiles<TIn>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>, Boolean)
+  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TIn)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String), Boolean)
+- uid: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0},System.Boolean)
+  name: CrossApplyFtpFiles<TOut>(IStream<String>, String, ISingleStream<FtpConnectionInfo>, Func<FtpFilesValue, String, FtpConnectionInfo, TOut>, Boolean)
+  href: apiext/Paillave.Etl.Ftp.Extensions.FtpEx.html#Paillave_Etl_Ftp_Extensions_FtpEx_CrossApplyFtpFiles__1_IStream_System_String__System_String_ISingleStream_FtpConnectionInfo__System_Func_FtpFilesValue_System_String_FtpConnectionInfo___0__System_Boolean_
+  commentId: M:Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0},System.Boolean)
+  name.vb: CrossApplyFtpFiles(Of TOut)(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo), Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut), Boolean)
+  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles<TOut>(IStream<System.String>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<FtpFilesValue, System.String, FtpConnectionInfo, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(Of TOut)(IStream(Of System.String), System.String, ISingleStream(Of FtpConnectionInfo), System.Func(Of FtpFilesValue, System.String, FtpConnectionInfo, TOut), System.Boolean)
+  nameWithType: FtpEx.CrossApplyFtpFiles<TOut>(IStream<String>, String, ISingleStream<FtpConnectionInfo>, Func<FtpFilesValue, String, FtpConnectionInfo, TOut>, Boolean)
+  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TOut)(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo), Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut), Boolean)
+- uid: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1},System.Boolean)
+  name: CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>, Boolean)
+  href: apiext/Paillave.Etl.Ftp.Extensions.FtpEx.html#Paillave_Etl_Ftp_Extensions_FtpEx_CrossApplyFtpFiles__2_IStream___0__System_String_ISingleStream_FtpConnectionInfo__System_Func___0_System_String__System_Func_FtpFilesValue___0_FtpConnectionInfo___1__System_Boolean_
+  commentId: M:Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1},System.Boolean)
+  name.vb: CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String), Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut), Boolean)
+  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<TIn, System.String>, System.Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), System.String, ISingleStream(Of FtpConnectionInfo), System.Func(Of TIn, System.String), System.Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut), System.Boolean)
+  nameWithType: FtpEx.CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>, Boolean)
+  nameWithType.vb: FtpEx.CrossApplyFtpFiles(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of FtpConnectionInfo), Func(Of TIn, String), Func(Of FtpFilesValue, TIn, FtpConnectionInfo, TOut), Boolean)
 - uid: Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile*
   name: ToFtpFile
   href: apiext/Paillave.Etl.Ftp.Extensions.FtpEx.html#Paillave_Etl_Ftp_Extensions_FtpEx_ToFtpFile_
@@ -1778,15 +1756,15 @@ references:
   fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), System.String, FlatFileDefinition(Of TOut), System.Func(Of TIn, System.String), System.Boolean)
   nameWithType: TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, String, FlatFileDefinition<TOut>, Func<TIn, String>, Boolean)
   nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), String, FlatFileDefinition(Of TOut), Func(Of TIn, String), Boolean)
-- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String,``1},System.Boolean)
-  name: CrossApplyTextFile<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String, TOut>, Boolean)
-  href: apiext/Paillave.Etl.TextFile.Extensions.TextFileEx.html#Paillave_Etl_TextFile_Extensions_TextFileEx_CrossApplyTextFile__2_IStream___0__System_String_System_Func___0_System_String__System_Func___0_System_String___1__System_Boolean_
-  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String,``1},System.Boolean)
-  name.vb: CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String, TOut), Boolean)
-  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<TIn, System.String, TOut>, System.Boolean)
-  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of TIn, System.String, TOut), System.Boolean)
-  nameWithType: TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String, TOut>, Boolean)
-  nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String, TOut), Boolean)
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{System.String,``0,``1},System.Boolean)
+  name: CrossApplyTextFile<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<String, TIn, TOut>, Boolean)
+  href: apiext/Paillave.Etl.TextFile.Extensions.TextFileEx.html#Paillave_Etl_TextFile_Extensions_TextFileEx_CrossApplyTextFile__2_IStream___0__System_String_System_Func___0_System_String__System_Func_System_String___0___1__System_Boolean_
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{System.String,``0,``1},System.Boolean)
+  name.vb: CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of String, TIn, TOut), Boolean)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<System.String, TIn, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of System.String, TIn, TOut), System.Boolean)
+  nameWithType: TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<String, TIn, TOut>, Boolean)
+  nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of String, TIn, TOut), Boolean)
 - uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{Stream},System.String,FlatFileDefinition{``0},System.Func{``0,``1},System.Boolean)
   name: CrossApplyTextFile<TParsed, TOut>(IStream<Stream>, String, FlatFileDefinition<TParsed>, Func<TParsed, TOut>, Boolean)
   href: apiext/Paillave.Etl.TextFile.Extensions.TextFileEx.html#Paillave_Etl_TextFile_Extensions_TextFileEx_CrossApplyTextFile__2_IStream_Stream__System_String_FlatFileDefinition___0__System_Func___0___1__System_Boolean_

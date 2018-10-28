@@ -5,15 +5,16 @@ items:
   id: ExcelFileEx
   parent: Paillave.Etl.ExcelFile.Extensions
   children:
-  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0})
-  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection})
-  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1})
-  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2})
-  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{Stream},System.String)
-  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{System.String},System.String)
-  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String})
-  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0})
-  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1})
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Boolean)
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Boolean)
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1},System.Boolean)
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2},System.Boolean)
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{Stream},System.String,System.Boolean)
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{System.String},System.String,System.Boolean)
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String},System.Boolean)
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{Stream},System.String,System.Func{ExcelSheetSelection,``0},System.Boolean)
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0},System.Boolean)
+  - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1},System.Boolean)
   - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
   - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
   - Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``2(ISortedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
@@ -28,7 +29,7 @@ items:
   source:
     id: ExcelFileEx
     path: ''
-    startLine: 72
+    startLine: 71
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -52,27 +53,27 @@ items:
   modifiers.vb:
   - Public
   - Module
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String})
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String})
-  id: CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String})
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String},System.Boolean)
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String},System.Boolean)
+  id: CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
   langs:
   - csharp
   - vb
-  name: CrossApplyExcelSheets<TIn>(IStream<TIn>, String, Func<TIn, String>)
-  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TIn>(IStream<TIn>, String, Func<TIn, String>)
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>)
+  name: CrossApplyExcelSheets<TIn>(IStream<TIn>, String, Func<TIn, String>, Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TIn>(IStream<TIn>, String, Func<TIn, String>, Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Boolean)
   type: Method
   source:
     id: CrossApplyExcelSheets
     path: ''
-    startLine: 75
+    startLine: 74
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
   syntax:
-    content: public static IStream<ExcelSheetSelection> CrossApplyExcelSheets<TIn>(this IStream<TIn> stream, string name, Func<TIn, string> getExcelFilePath)
+    content: public static IStream<ExcelSheetSelection> CrossApplyExcelSheets<TIn>(this IStream<TIn> stream, string name, Func<TIn, string> getExcelFilePath, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{{TIn}}
@@ -80,6 +81,8 @@ items:
       type: System.String
     - id: getExcelFilePath
       type: System.Func{{TIn},System.String}
+    - id: noParallelisation
+      type: System.Boolean
     typeParameters:
     - id: TIn
     return:
@@ -87,122 +90,126 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyExcelSheets(Of TIn)(stream As IStream(Of TIn), name As String, getExcelFilePath As Func(Of TIn, String)) As IStream(Of ExcelSheetSelection)
+      Public Shared Function CrossApplyExcelSheets(Of TIn)(stream As IStream(Of TIn), name As String, getExcelFilePath As Func(Of TIn, String), noParallelisation As Boolean = False) As IStream(Of ExcelSheetSelection)
   overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String))
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String))
-  name.vb: CrossApplyExcelSheets(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String))
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{System.String},System.String)
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{System.String},System.String)
-  id: CrossApplyExcelSheets(IStream{System.String},System.String)
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Boolean)
+  name.vb: CrossApplyExcelSheets(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{System.String},System.String,System.Boolean)
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{System.String},System.String,System.Boolean)
+  id: CrossApplyExcelSheets(IStream{System.String},System.String,System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
   langs:
   - csharp
   - vb
-  name: CrossApplyExcelSheets(IStream<String>, String)
-  nameWithType: ExcelFileEx.CrossApplyExcelSheets(IStream<String>, String)
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream<System.String>, System.String)
+  name: CrossApplyExcelSheets(IStream<String>, String, Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets(IStream<String>, String, Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream<System.String>, System.String, System.Boolean)
   type: Method
   source:
     id: CrossApplyExcelSheets
     path: ''
-    startLine: 83
+    startLine: 79
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
   syntax:
-    content: public static IStream<ExcelSheetSelection> CrossApplyExcelSheets(this IStream<string> stream, string name)
+    content: public static IStream<ExcelSheetSelection> CrossApplyExcelSheets(this IStream<string> stream, string name, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{System.String}
     - id: name
       type: System.String
+    - id: noParallelisation
+      type: System.Boolean
     return:
       type: IStream{ExcelSheetSelection}
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyExcelSheets(stream As IStream(Of String), name As String) As IStream(Of ExcelSheetSelection)
+      Public Shared Function CrossApplyExcelSheets(stream As IStream(Of String), name As String, noParallelisation As Boolean = False) As IStream(Of ExcelSheetSelection)
   overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(IStream(Of String), String)
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(IStream(Of String), String, Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream(Of System.String), System.String)
-  name.vb: CrossApplyExcelSheets(IStream(Of String), String)
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{Stream},System.String)
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{Stream},System.String)
-  id: CrossApplyExcelSheets(IStream{Stream},System.String)
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream(Of System.String), System.String, System.Boolean)
+  name.vb: CrossApplyExcelSheets(IStream(Of String), String, Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{Stream},System.String,System.Boolean)
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{Stream},System.String,System.Boolean)
+  id: CrossApplyExcelSheets(IStream{Stream},System.String,System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
   langs:
   - csharp
   - vb
-  name: CrossApplyExcelSheets(IStream<Stream>, String)
-  nameWithType: ExcelFileEx.CrossApplyExcelSheets(IStream<Stream>, String)
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream<Stream>, System.String)
+  name: CrossApplyExcelSheets(IStream<Stream>, String, Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets(IStream<Stream>, String, Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream<Stream>, System.String, System.Boolean)
   type: Method
   source:
     id: CrossApplyExcelSheets
     path: ''
-    startLine: 91
+    startLine: 84
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
   syntax:
-    content: public static IStream<ExcelSheetSelection> CrossApplyExcelSheets(this IStream<Stream> stream, string name)
+    content: public static IStream<ExcelSheetSelection> CrossApplyExcelSheets(this IStream<Stream> stream, string name, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{Stream}
     - id: name
       type: System.String
+    - id: noParallelisation
+      type: System.Boolean
     return:
       type: IStream{ExcelSheetSelection}
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyExcelSheets(stream As IStream(Of Stream), name As String) As IStream(Of ExcelSheetSelection)
+      Public Shared Function CrossApplyExcelSheets(stream As IStream(Of Stream), name As String, noParallelisation As Boolean = False) As IStream(Of ExcelSheetSelection)
   overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(IStream(Of Stream), String)
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(IStream(Of Stream), String, Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream(Of Stream), System.String)
-  name.vb: CrossApplyExcelSheets(IStream(Of Stream), String)
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1})
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1})
-  id: CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1})
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream(Of Stream), System.String, System.Boolean)
+  name.vb: CrossApplyExcelSheets(IStream(Of Stream), String, Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1},System.Boolean)
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1},System.Boolean)
+  id: CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
   langs:
   - csharp
   - vb
-  name: CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<ExcelSheetSelection, TIn, TOut>)
-  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<ExcelSheetSelection, TIn, TOut>)
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<ExcelSheetSelection, TIn, TOut>)
+  name: CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<ExcelSheetSelection, TIn, TOut>, Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<ExcelSheetSelection, TIn, TOut>, Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<ExcelSheetSelection, TIn, TOut>, System.Boolean)
   type: Method
   source:
     id: CrossApplyExcelSheets
     path: ''
-    startLine: 99
+    startLine: 89
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
   syntax:
-    content: public static IStream<TOut> CrossApplyExcelSheets<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, string> getExcelFilePath, Func<ExcelSheetSelection, TIn, TOut> selector)
+    content: public static IStream<TOut> CrossApplyExcelSheets<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, string> getExcelFilePath, Func<ExcelSheetSelection, TIn, TOut> selector, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{{TIn}}
@@ -212,6 +219,8 @@ items:
       type: System.Func{{TIn},System.String}
     - id: selector
       type: System.Func{ExcelSheetSelection,{TIn},{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
     typeParameters:
     - id: TIn
     - id: TOut
@@ -220,38 +229,38 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyExcelSheets(Of TIn, TOut)(stream As IStream(Of TIn), name As String, getExcelFilePath As Func(Of TIn, String), selector As Func(Of ExcelSheetSelection, TIn, TOut)) As IStream(Of TOut)
+      Public Shared Function CrossApplyExcelSheets(Of TIn, TOut)(stream As IStream(Of TIn), name As String, getExcelFilePath As Func(Of TIn, String), selector As Func(Of ExcelSheetSelection, TIn, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of ExcelSheetSelection, TIn, TOut))
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of ExcelSheetSelection, TIn, TOut), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of ExcelSheetSelection, TIn, TOut))
-  name.vb: CrossApplyExcelSheets(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of ExcelSheetSelection, TIn, TOut))
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0})
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0})
-  id: CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0})
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of ExcelSheetSelection, TIn, TOut), System.Boolean)
+  name.vb: CrossApplyExcelSheets(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of ExcelSheetSelection, TIn, TOut), Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0},System.Boolean)
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0},System.Boolean)
+  id: CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
   langs:
   - csharp
   - vb
-  name: CrossApplyExcelSheets<TOut>(IStream<String>, String, Func<ExcelSheetSelection, String, TOut>)
-  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<String>, String, Func<ExcelSheetSelection, String, TOut>)
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<System.String>, System.String, System.Func<ExcelSheetSelection, System.String, TOut>)
+  name: CrossApplyExcelSheets<TOut>(IStream<String>, String, Func<ExcelSheetSelection, String, TOut>, Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<String>, String, Func<ExcelSheetSelection, String, TOut>, Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<System.String>, System.String, System.Func<ExcelSheetSelection, System.String, TOut>, System.Boolean)
   type: Method
   source:
     id: CrossApplyExcelSheets
     path: ''
-    startLine: 107
+    startLine: 94
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
   syntax:
-    content: public static IStream<TOut> CrossApplyExcelSheets<TOut>(this IStream<string> stream, string name, Func<ExcelSheetSelection, string, TOut> selector)
+    content: public static IStream<TOut> CrossApplyExcelSheets<TOut>(this IStream<string> stream, string name, Func<ExcelSheetSelection, string, TOut> selector, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{System.String}
@@ -259,6 +268,8 @@ items:
       type: System.String
     - id: selector
       type: System.Func{ExcelSheetSelection,System.String,{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
     typeParameters:
     - id: TOut
     return:
@@ -266,38 +277,86 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyExcelSheets(Of TOut)(stream As IStream(Of String), name As String, selector As Func(Of ExcelSheetSelection, String, TOut)) As IStream(Of TOut)
+      Public Shared Function CrossApplyExcelSheets(Of TOut)(stream As IStream(Of String), name As String, selector As Func(Of ExcelSheetSelection, String, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TOut)(IStream(Of String), String, Func(Of ExcelSheetSelection, String, TOut))
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TOut)(IStream(Of String), String, Func(Of ExcelSheetSelection, String, TOut), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TOut)(IStream(Of System.String), System.String, System.Func(Of ExcelSheetSelection, System.String, TOut))
-  name.vb: CrossApplyExcelSheets(Of TOut)(IStream(Of String), String, Func(Of ExcelSheetSelection, String, TOut))
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1})
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1})
-  id: CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1})
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TOut)(IStream(Of System.String), System.String, System.Func(Of ExcelSheetSelection, System.String, TOut), System.Boolean)
+  name.vb: CrossApplyExcelSheets(Of TOut)(IStream(Of String), String, Func(Of ExcelSheetSelection, String, TOut), Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{Stream},System.String,System.Func{ExcelSheetSelection,``0},System.Boolean)
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{Stream},System.String,System.Func{ExcelSheetSelection,``0},System.Boolean)
+  id: CrossApplyExcelSheets``1(IStream{Stream},System.String,System.Func{ExcelSheetSelection,``0},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
   langs:
   - csharp
   - vb
-  name: CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>, Func<TParsed, ExcelSheetSelection, TOut>)
-  nameWithType: ExcelFileEx.CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>, Func<TParsed, ExcelSheetSelection, TOut>)
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, System.String, ExcelFileDefinition<TParsed>, System.Func<TParsed, ExcelSheetSelection, TOut>)
+  name: CrossApplyExcelSheets<TOut>(IStream<Stream>, String, Func<ExcelSheetSelection, TOut>, Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<Stream>, String, Func<ExcelSheetSelection, TOut>, Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<Stream>, System.String, System.Func<ExcelSheetSelection, TOut>, System.Boolean)
   type: Method
   source:
-    id: CrossApplyExcelRows
+    id: CrossApplyExcelSheets
     path: ''
-    startLine: 118
+    startLine: 99
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
   syntax:
-    content: public static IStream<TOut> CrossApplyExcelRows<TParsed, TOut>(this IStream<ExcelSheetSelection> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TParsed, ExcelSheetSelection, TOut> selector)
+    content: public static IStream<TOut> CrossApplyExcelSheets<TOut>(this IStream<Stream> stream, string name, Func<ExcelSheetSelection, TOut> selector, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{Stream}
+    - id: name
+      type: System.String
+    - id: selector
+      type: System.Func{ExcelSheetSelection,{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyExcelSheets(Of TOut)(stream As IStream(Of Stream), name As String, selector As Func(Of ExcelSheetSelection, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets*
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelSheets(Of TOut)(IStream(Of Stream), String, Func(Of ExcelSheetSelection, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(Of TOut)(IStream(Of Stream), System.String, System.Func(Of ExcelSheetSelection, TOut), System.Boolean)
+  name.vb: CrossApplyExcelSheets(Of TOut)(IStream(Of Stream), String, Func(Of ExcelSheetSelection, TOut), Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1},System.Boolean)
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1},System.Boolean)
+  id: CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>, Func<TParsed, ExcelSheetSelection, TOut>, Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>, Func<TParsed, ExcelSheetSelection, TOut>, Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, System.String, ExcelFileDefinition<TParsed>, System.Func<TParsed, ExcelSheetSelection, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyExcelRows
+    path: ''
+    startLine: 107
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.ExcelFile.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyExcelRows<TParsed, TOut>(this IStream<ExcelSheetSelection> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TParsed, ExcelSheetSelection, TOut> selector, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{ExcelSheetSelection}
@@ -307,6 +366,8 @@ items:
       type: ExcelFileDefinition{{TParsed}}
     - id: selector
       type: System.Func{{TParsed},ExcelSheetSelection,{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
     typeParameters:
     - id: TParsed
     - id: TOut
@@ -315,38 +376,38 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyExcelRows(Of TParsed, TOut)(stream As IStream(Of ExcelSheetSelection), name As String, mapping As ExcelFileDefinition(Of TParsed), selector As Func(Of TParsed, ExcelSheetSelection, TOut)) As IStream(Of TOut)
+      Public Shared Function CrossApplyExcelRows(Of TParsed, TOut)(stream As IStream(Of ExcelSheetSelection), name As String, mapping As ExcelFileDefinition(Of TParsed), selector As Func(Of TParsed, ExcelSheetSelection, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows*
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TParsed, TOut)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed), Func(Of TParsed, ExcelSheetSelection, TOut))
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TParsed, TOut)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed), Func(Of TParsed, ExcelSheetSelection, TOut), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TParsed, TOut)(IStream(Of ExcelSheetSelection), System.String, ExcelFileDefinition(Of TParsed), System.Func(Of TParsed, ExcelSheetSelection, TOut))
-  name.vb: CrossApplyExcelRows(Of TParsed, TOut)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed), Func(Of TParsed, ExcelSheetSelection, TOut))
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2})
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2})
-  id: CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2})
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TParsed, TOut)(IStream(Of ExcelSheetSelection), System.String, ExcelFileDefinition(Of TParsed), System.Func(Of TParsed, ExcelSheetSelection, TOut), System.Boolean)
+  name.vb: CrossApplyExcelRows(Of TParsed, TOut)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed), Func(Of TParsed, ExcelSheetSelection, TOut), Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2},System.Boolean)
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2},System.Boolean)
+  id: CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
   langs:
   - csharp
   - vb
-  name: CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>, Func<TParsed, TIn, TOut>)
-  nameWithType: ExcelFileEx.CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>, Func<TParsed, TIn, TOut>)
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, System.String, ExcelFileDefinition<TParsed>, System.Func<TIn, ExcelSheetSelection>, System.Func<TParsed, TIn, TOut>)
+  name: CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>, Func<TParsed, TIn, TOut>, Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>, Func<TParsed, TIn, TOut>, Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, System.String, ExcelFileDefinition<TParsed>, System.Func<TIn, ExcelSheetSelection>, System.Func<TParsed, TIn, TOut>, System.Boolean)
   type: Method
   source:
     id: CrossApplyExcelRows
     path: ''
-    startLine: 126
+    startLine: 112
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
   syntax:
-    content: public static IStream<TOut> CrossApplyExcelRows<TIn, TParsed, TOut>(this IStream<TIn> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TIn, ExcelSheetSelection> sheetSelection, Func<TParsed, TIn, TOut> selector)
+    content: public static IStream<TOut> CrossApplyExcelRows<TIn, TParsed, TOut>(this IStream<TIn> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TIn, ExcelSheetSelection> sheetSelection, Func<TParsed, TIn, TOut> selector, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{{TIn}}
@@ -358,6 +419,8 @@ items:
       type: System.Func{{TIn},ExcelSheetSelection}
     - id: selector
       type: System.Func{{TParsed},{TIn},{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
     typeParameters:
     - id: TIn
     - id: TParsed
@@ -367,38 +430,38 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyExcelRows(Of TIn, TParsed, TOut)(stream As IStream(Of TIn), name As String, mapping As ExcelFileDefinition(Of TParsed), sheetSelection As Func(Of TIn, ExcelSheetSelection), selector As Func(Of TParsed, TIn, TOut)) As IStream(Of TOut)
+      Public Shared Function CrossApplyExcelRows(Of TIn, TParsed, TOut)(stream As IStream(Of TIn), name As String, mapping As ExcelFileDefinition(Of TParsed), sheetSelection As Func(Of TIn, ExcelSheetSelection), selector As Func(Of TParsed, TIn, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows*
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed, TOut)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection), Func(Of TParsed, TIn, TOut))
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed, TOut)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection), Func(Of TParsed, TIn, TOut), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed, TOut)(IStream(Of TIn), System.String, ExcelFileDefinition(Of TParsed), System.Func(Of TIn, ExcelSheetSelection), System.Func(Of TParsed, TIn, TOut))
-  name.vb: CrossApplyExcelRows(Of TIn, TParsed, TOut)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection), Func(Of TParsed, TIn, TOut))
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection})
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection})
-  id: CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection})
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed, TOut)(IStream(Of TIn), System.String, ExcelFileDefinition(Of TParsed), System.Func(Of TIn, ExcelSheetSelection), System.Func(Of TParsed, TIn, TOut), System.Boolean)
+  name.vb: CrossApplyExcelRows(Of TIn, TParsed, TOut)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection), Func(Of TParsed, TIn, TOut), Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Boolean)
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Boolean)
+  id: CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
   langs:
   - csharp
   - vb
-  name: CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>)
-  nameWithType: ExcelFileEx.CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>)
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, System.String, ExcelFileDefinition<TParsed>, System.Func<TIn, ExcelSheetSelection>)
+  name: CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>, Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>, Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, System.String, ExcelFileDefinition<TParsed>, System.Func<TIn, ExcelSheetSelection>, System.Boolean)
   type: Method
   source:
     id: CrossApplyExcelRows
     path: ''
-    startLine: 134
+    startLine: 117
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
   syntax:
-    content: public static IStream<TParsed> CrossApplyExcelRows<TIn, TParsed>(this IStream<TIn> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TIn, ExcelSheetSelection> sheetSelection)
+    content: public static IStream<TParsed> CrossApplyExcelRows<TIn, TParsed>(this IStream<TIn> stream, string name, ExcelFileDefinition<TParsed> mapping, Func<TIn, ExcelSheetSelection> sheetSelection, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{{TIn}}
@@ -408,6 +471,8 @@ items:
       type: ExcelFileDefinition{{TParsed}}
     - id: sheetSelection
       type: System.Func{{TIn},ExcelSheetSelection}
+    - id: noParallelisation
+      type: System.Boolean
     typeParameters:
     - id: TIn
     - id: TParsed
@@ -416,38 +481,38 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyExcelRows(Of TIn, TParsed)(stream As IStream(Of TIn), name As String, mapping As ExcelFileDefinition(Of TParsed), sheetSelection As Func(Of TIn, ExcelSheetSelection)) As IStream(Of TParsed)
+      Public Shared Function CrossApplyExcelRows(Of TIn, TParsed)(stream As IStream(Of TIn), name As String, mapping As ExcelFileDefinition(Of TParsed), sheetSelection As Func(Of TIn, ExcelSheetSelection), noParallelisation As Boolean = False) As IStream(Of TParsed)
   overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows*
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection))
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed)(IStream(Of TIn), System.String, ExcelFileDefinition(Of TParsed), System.Func(Of TIn, ExcelSheetSelection))
-  name.vb: CrossApplyExcelRows(Of TIn, TParsed)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection))
-- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0})
-  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0})
-  id: CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0})
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TIn, TParsed)(IStream(Of TIn), System.String, ExcelFileDefinition(Of TParsed), System.Func(Of TIn, ExcelSheetSelection), System.Boolean)
+  name.vb: CrossApplyExcelRows(Of TIn, TParsed)(IStream(Of TIn), String, ExcelFileDefinition(Of TParsed), Func(Of TIn, ExcelSheetSelection), Boolean)
+- uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Boolean)
+  commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Boolean)
+  id: CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx
   langs:
   - csharp
   - vb
-  name: CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>)
-  nameWithType: ExcelFileEx.CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>)
-  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, System.String, ExcelFileDefinition<TParsed>)
+  name: CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>, Boolean)
+  nameWithType: ExcelFileEx.CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>, Boolean)
+  fullName: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, System.String, ExcelFileDefinition<TParsed>, System.Boolean)
   type: Method
   source:
     id: CrossApplyExcelRows
     path: ''
-    startLine: 142
+    startLine: 122
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
   syntax:
-    content: public static IStream<TParsed> CrossApplyExcelRows<TParsed>(this IStream<ExcelSheetSelection> stream, string name, ExcelFileDefinition<TParsed> mapping)
+    content: public static IStream<TParsed> CrossApplyExcelRows<TParsed>(this IStream<ExcelSheetSelection> stream, string name, ExcelFileDefinition<TParsed> mapping, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{ExcelSheetSelection}
@@ -455,6 +520,8 @@ items:
       type: System.String
     - id: mapping
       type: ExcelFileDefinition{{TParsed}}
+    - id: noParallelisation
+      type: System.Boolean
     typeParameters:
     - id: TParsed
     return:
@@ -462,17 +529,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyExcelRows(Of TParsed)(stream As IStream(Of ExcelSheetSelection), name As String, mapping As ExcelFileDefinition(Of TParsed)) As IStream(Of TParsed)
+      Public Shared Function CrossApplyExcelRows(Of TParsed)(stream As IStream(Of ExcelSheetSelection), name As String, mapping As ExcelFileDefinition(Of TParsed), noParallelisation As Boolean = False) As IStream(Of TParsed)
   overload: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows*
-  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed))
+  nameWithType.vb: ExcelFileEx.CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), System.String, ExcelFileDefinition(Of TParsed))
-  name.vb: CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed))
+  fullName.vb: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), System.String, ExcelFileDefinition(Of TParsed), System.Boolean)
+  name.vb: CrossApplyExcelRows(Of TParsed)(IStream(Of ExcelSheetSelection), String, ExcelFileDefinition(Of TParsed), Boolean)
 - uid: Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
   commentId: M:Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
   id: ThroughExcelFile``1(IStream{``0},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})
@@ -488,7 +555,7 @@ items:
   source:
     id: ThroughExcelFile
     path: ''
-    startLine: 180
+    startLine: 157
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -536,7 +603,7 @@ items:
   source:
     id: ThroughExcelFile
     path: ''
-    startLine: 189
+    startLine: 166
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -585,7 +652,7 @@ items:
   source:
     id: ThroughExcelFile
     path: ''
-    startLine: 198
+    startLine: 175
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -634,7 +701,7 @@ items:
   source:
     id: ToExcelFile
     path: ''
-    startLine: 210
+    startLine: 187
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -1070,6 +1137,13 @@ references:
   - name: )
     nameWithType: )
     fullName: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
 - uid: IStream{ExcelSheetSelection}
   commentId: '!:IStream{ExcelSheetSelection}'
   definition: IStream`1
@@ -1520,6 +1594,62 @@ references:
     name: String
     nameWithType: String
     fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{ExcelSheetSelection,{TOut}}
+  commentId: T:System.Func{ExcelSheetSelection,``0}
+  parent: System
+  definition: System.Func`2
+  name: Func<ExcelSheetSelection, TOut>
+  nameWithType: Func<ExcelSheetSelection, TOut>
+  fullName: System.Func<ExcelSheetSelection, TOut>
+  nameWithType.vb: Func(Of ExcelSheetSelection, TOut)
+  fullName.vb: System.Func(Of ExcelSheetSelection, TOut)
+  name.vb: Func(Of ExcelSheetSelection, TOut)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: ExcelSheetSelection
+    name: ExcelSheetSelection
+    nameWithType: ExcelSheetSelection
+    fullName: ExcelSheetSelection
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: ExcelSheetSelection
+    name: ExcelSheetSelection
+    nameWithType: ExcelSheetSelection
+    fullName: ExcelSheetSelection
     isExternal: true
   - name: ', '
     nameWithType: ', '

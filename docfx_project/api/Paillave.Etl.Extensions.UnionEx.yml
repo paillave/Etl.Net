@@ -17,7 +17,7 @@ items:
   source:
     id: UnionEx
     path: ''
-    startLine: 1475
+    startLine: 1460
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -56,7 +56,7 @@ items:
   source:
     id: Union
     path: ''
-    startLine: 1477
+    startLine: 1462
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -102,7 +102,7 @@ items:
   source:
     id: Union
     path: ''
-    startLine: 1485
+    startLine: 1470
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

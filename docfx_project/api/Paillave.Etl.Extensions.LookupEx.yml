@@ -16,7 +16,7 @@ items:
   source:
     id: LookupEx
     path: ''
-    startLine: 577
+    startLine: 562
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -55,7 +55,7 @@ items:
   source:
     id: Lookup
     path: ''
-    startLine: 579
+    startLine: 564
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

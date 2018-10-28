@@ -90,12 +90,12 @@
   
   
   <a id="Paillave_Etl_Extensions_CrossApplyEx_CrossApply_" data-uid="Paillave.Etl.Extensions.CrossApplyEx.CrossApply*"></a>
-  <h4 id="Paillave_Etl_Extensions_CrossApplyEx_CrossApply__2_IStream___0__System_String_IValuesProvider___0___1__" data-uid="Paillave.Etl.Extensions.CrossApplyEx.CrossApply``2(IStream{``0},System.String,IValuesProvider{``0,``1})">CrossApply&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, IValuesProvider&lt;TIn, TOut&gt;)</h4>
+  <h4 id="Paillave_Etl_Extensions_CrossApplyEx_CrossApply__2_IStream___0__System_String_System_Action___0_System_Action___1___System_Boolean_" data-uid="Paillave.Etl.Extensions.CrossApplyEx.CrossApply``2(IStream{``0},System.String,System.Action{``0,System.Action{``1}},System.Boolean)">CrossApply&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Action&lt;TIn, Action&lt;TOut&gt;&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApply&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, IValuesProvider&lt;TIn, TOut&gt; valuesProvider)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApply&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Action&lt;TIn, Action&lt;TOut&gt;&gt; valuesProvider, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -118,8 +118,13 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IValuesProvider</span>&lt;TIn, TOut&gt;</td>
+        <td><span class="xref">System.Action</span>&lt;TIn, <span class="xref">System.Action</span>&lt;TOut&gt;&gt;</td>
         <td><span class="parametername">valuesProvider</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -161,12 +166,12 @@
   
   
   <a id="Paillave_Etl_Extensions_CrossApplyEx_CrossApply_" data-uid="Paillave.Etl.Extensions.CrossApplyEx.CrossApply*"></a>
-  <h4 id="Paillave_Etl_Extensions_CrossApplyEx_CrossApply__3_IStream___0__System_String_ISingleStream___1__IValuesProvider___0___1___2__" data-uid="Paillave.Etl.Extensions.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``0,``1,``2})">CrossApply&lt;TIn, TResource, TOut&gt;(IStream&lt;TIn&gt;, String, ISingleStream&lt;TResource&gt;, IValuesProvider&lt;TIn, TResource, TOut&gt;)</h4>
+  <h4 id="Paillave_Etl_Extensions_CrossApplyEx_CrossApply__3_IStream___0__System_String_ISingleStream___1__System_Action___0___1_System_Action___2___System_Boolean_" data-uid="Paillave.Etl.Extensions.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)">CrossApply&lt;TIn, TInToApply, TOut&gt;(IStream&lt;TIn&gt;, String, ISingleStream&lt;TInToApply&gt;, Action&lt;TIn, TInToApply, Action&lt;TOut&gt;&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApply&lt;TIn, TResource, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, ISingleStream&lt;TResource&gt; resourceStream, IValuesProvider&lt;TIn, TResource, TOut&gt; valuesProvider)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApply&lt;TIn, TInToApply, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, ISingleStream&lt;TInToApply&gt; resourceStream, Action&lt;TIn, TInToApply, Action&lt;TOut&gt;&gt; valuesProvider, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -189,13 +194,18 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">ISingleStream</span>&lt;TResource&gt;</td>
+        <td><span class="xref">ISingleStream</span>&lt;TInToApply&gt;</td>
         <td><span class="parametername">resourceStream</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IValuesProvider</span>&lt;TIn, TResource, TOut&gt;</td>
+        <td><span class="xref">System.Action</span>&lt;TIn, TInToApply, <span class="xref">System.Action</span>&lt;TOut&gt;&gt;</td>
         <td><span class="parametername">valuesProvider</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -229,7 +239,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="parametername">TResource</span></td>
+        <td><span class="parametername">TInToApply</span></td>
         <td></td>
       </tr>
       <tr>
@@ -241,12 +251,12 @@
   
   
   <a id="Paillave_Etl_Extensions_CrossApplyEx_CrossApply_" data-uid="Paillave.Etl.Extensions.CrossApplyEx.CrossApply*"></a>
-  <h4 id="Paillave_Etl_Extensions_CrossApplyEx_CrossApply__4_IStream___0__System_String_IValuesProvider___1___2__System_Func___0___1__System_Func___2___0___3__" data-uid="Paillave.Etl.Extensions.CrossApplyEx.CrossApply``4(IStream{``0},System.String,IValuesProvider{``1,``2},System.Func{``0,``1},System.Func{``2,``0,``3})">CrossApply&lt;TIn, TValueIn, TValueOut, TOut&gt;(IStream&lt;TIn&gt;, String, IValuesProvider&lt;TValueIn, TValueOut&gt;, Func&lt;TIn, TValueIn&gt;, Func&lt;TValueOut, TIn, TOut&gt;)</h4>
+  <h4 id="Paillave_Etl_Extensions_CrossApplyEx_CrossApply__4_IStream___0__System_String_System_Action___1_System_Action___2___System_Func___0___1__System_Func___2___0___3__System_Boolean_" data-uid="Paillave.Etl.Extensions.CrossApplyEx.CrossApply``4(IStream{``0},System.String,System.Action{``1,System.Action{``2}},System.Func{``0,``1},System.Func{``2,``0,``3},System.Boolean)">CrossApply&lt;TIn, TValueIn, TValueOut, TOut&gt;(IStream&lt;TIn&gt;, String, Action&lt;TValueIn, Action&lt;TValueOut&gt;&gt;, Func&lt;TIn, TValueIn&gt;, Func&lt;TValueOut, TIn, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApply&lt;TIn, TValueIn, TValueOut, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, IValuesProvider&lt;TValueIn, TValueOut&gt; valuesProvider, Func&lt;TIn, TValueIn&gt; inputValueSelector, Func&lt;TValueOut, TIn, TOut&gt; outputValueSelector)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApply&lt;TIn, TValueIn, TValueOut, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Action&lt;TValueIn, Action&lt;TValueOut&gt;&gt; valuesProvider, Func&lt;TIn, TValueIn&gt; preProcessValue, Func&lt;TValueOut, TIn, TOut&gt; postProcessValue, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -269,18 +279,23 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IValuesProvider</span>&lt;TValueIn, TValueOut&gt;</td>
+        <td><span class="xref">System.Action</span>&lt;TValueIn, <span class="xref">System.Action</span>&lt;TValueOut&gt;&gt;</td>
         <td><span class="parametername">valuesProvider</span></td>
         <td></td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;TIn, TValueIn&gt;</td>
-        <td><span class="parametername">inputValueSelector</span></td>
+        <td><span class="parametername">preProcessValue</span></td>
         <td></td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;TValueOut, TIn, TOut&gt;</td>
-        <td><span class="parametername">outputValueSelector</span></td>
+        <td><span class="parametername">postProcessValue</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -330,12 +345,12 @@
   
   
   <a id="Paillave_Etl_Extensions_CrossApplyEx_CrossApply_" data-uid="Paillave.Etl.Extensions.CrossApplyEx.CrossApply*"></a>
-  <h4 id="Paillave_Etl_Extensions_CrossApplyEx_CrossApply__5_IStream___0__System_String_ISingleStream___1__IValuesProvider___2___1___3__System_Func___0___1___2__System_Func___3___0___1___4__" data-uid="Paillave.Etl.Extensions.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})">CrossApply&lt;TIn, TResource, TValueIn, TValueOut, TOut&gt;(IStream&lt;TIn&gt;, String, ISingleStream&lt;TResource&gt;, IValuesProvider&lt;TValueIn, TResource, TValueOut&gt;, Func&lt;TIn, TResource, TValueIn&gt;, Func&lt;TValueOut, TIn, TResource, TOut&gt;)</h4>
+  <h4 id="Paillave_Etl_Extensions_CrossApplyEx_CrossApply__5_IStream___0__System_String_ISingleStream___1__System_Action___2___1_System_Action___3___System_Func___0___1___2__System_Func___3___0___1___4__System_Boolean_" data-uid="Paillave.Etl.Extensions.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},System.Action{``2,``1,System.Action{``3}},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4},System.Boolean)">CrossApply&lt;TIn, TInToApply, TValueIn, TValueOut, TOut&gt;(IStream&lt;TIn&gt;, String, ISingleStream&lt;TInToApply&gt;, Action&lt;TValueIn, TInToApply, Action&lt;TValueOut&gt;&gt;, Func&lt;TIn, TInToApply, TValueIn&gt;, Func&lt;TValueOut, TIn, TInToApply, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApply&lt;TIn, TResource, TValueIn, TValueOut, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, ISingleStream&lt;TResource&gt; resourceStream, IValuesProvider&lt;TValueIn, TResource, TValueOut&gt; valuesProvider, Func&lt;TIn, TResource, TValueIn&gt; inputValueSelector, Func&lt;TValueOut, TIn, TResource, TOut&gt; outputValueSelector)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApply&lt;TIn, TInToApply, TValueIn, TValueOut, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, ISingleStream&lt;TInToApply&gt; resourceStream, Action&lt;TValueIn, TInToApply, Action&lt;TValueOut&gt;&gt; valuesProvider, Func&lt;TIn, TInToApply, TValueIn&gt; preProcessValue, Func&lt;TValueOut, TIn, TInToApply, TOut&gt; postProcessValue, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -358,23 +373,28 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">ISingleStream</span>&lt;TResource&gt;</td>
+        <td><span class="xref">ISingleStream</span>&lt;TInToApply&gt;</td>
         <td><span class="parametername">resourceStream</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">IValuesProvider</span>&lt;TValueIn, TResource, TValueOut&gt;</td>
+        <td><span class="xref">System.Action</span>&lt;TValueIn, TInToApply, <span class="xref">System.Action</span>&lt;TValueOut&gt;&gt;</td>
         <td><span class="parametername">valuesProvider</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Func</span>&lt;TIn, TResource, TValueIn&gt;</td>
-        <td><span class="parametername">inputValueSelector</span></td>
+        <td><span class="xref">System.Func</span>&lt;TIn, TInToApply, TValueIn&gt;</td>
+        <td><span class="parametername">preProcessValue</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Func</span>&lt;TValueOut, TIn, TResource, TOut&gt;</td>
-        <td><span class="parametername">outputValueSelector</span></td>
+        <td><span class="xref">System.Func</span>&lt;TValueOut, TIn, TInToApply, TOut&gt;</td>
+        <td><span class="parametername">postProcessValue</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">noParallelisation</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -408,7 +428,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="parametername">TResource</span></td>
+        <td><span class="parametername">TInToApply</span></td>
         <td></td>
       </tr>
       <tr>
