@@ -1402,7 +1402,6 @@ lunr.TokenSet.fromString = function (str) {
       node.edges[char] = next
       node = next
 
-      // TODO: is this needed anymore?
       if (wildcardFound) {
         node.edges["*"] = root
       }
@@ -1459,7 +1458,6 @@ lunr.TokenSet.prototype.toArray = function () {
  * @returns {string}
  */
 lunr.TokenSet.prototype.toString = function () {
-  // NOTE: Using Object.keys here as this.edges is very likely
   // to enter 'hash-mode' with many keys being added
   //
   // avoiding a for-in loop here as it leads to the function
@@ -1508,10 +1506,6 @@ lunr.TokenSet.prototype.intersect = function (b) {
   while (stack.length) {
     frame = stack.pop()
 
-    // NOTE: As with the #toString method, we are using
-    // Object.keys and a for loop instead of a for-in loop
-    // as both of these objects enter 'hash' mode, causing
-    // the function to be de-optimised in V8
     var qEdges = Object.keys(frame.qNode.edges),
         qLen = qEdges.length,
         nEdges = Object.keys(frame.node.edges),

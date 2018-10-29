@@ -6,6 +6,7 @@ using Paillave.Etl.Reactive.Disposables;
 using Paillave.Etl.Reactive.Operators;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,6 +47,7 @@ namespace Paillave.Etl
             startupSubject.PushValue(config);
             startupSubject.Complete();
 
+            //TODO: raise exception in case of failure?
             return Task.WhenAll(
                 jobExecutionContext
                     .GetCompletionTask()
@@ -97,6 +99,7 @@ namespace Paillave.Etl
         }
         private class JobExecutionContext : IExecutionContext
         {
+            // private TraceEvent _errorTraceEvent = null;
             private readonly IPushSubject<TraceEvent> _traceSubject;
             private List<StreamToNodeLink> _streamToNodeLinks = new List<StreamToNodeLink>();
             private List<string> _nodeNamesToWait = new List<string>();
@@ -112,6 +115,7 @@ namespace Paillave.Etl
                 this.ExecutionId = executionId;
                 this.JobName = jobName;
                 this._traceSubject = traceSubject;
+                //this._traceSubject.Filter(i => i.Content.Level == TraceLevel.Error).Do(traceEvent => _errorTraceEvent = traceEvent);
                 this.StartSynchronizer = startSynchronizer;
             }
             public Guid ExecutionId { get; }
@@ -125,7 +129,13 @@ namespace Paillave.Etl
                 _nodeNamesToWait.Add(sourceNodeName);
                 _tasksToWait.Add(stream.ToTaskAsync());
             }
-            public Task GetCompletionTask() => Task.WhenAll(_tasksToWait.ToArray()).ContinueWith(_ => _disposables.Dispose());
+            public Task GetCompletionTask() => Task
+                .WhenAll(_tasksToWait.ToArray())
+                .ContinueWith(_ => _disposables.Dispose());
+            // .ContinueWith(_=>
+            // {
+            //     if (_errorTraceEvent != null) throw new JobExecutionException(_errorTraceEvent);
+            // });
             public void AddDisposable(IDisposable disposable) => _disposables.Set(disposable);
             public void AddStreamToNodeLink(StreamToNodeLink link) => _streamToNodeLinks.Add(link);
         }
