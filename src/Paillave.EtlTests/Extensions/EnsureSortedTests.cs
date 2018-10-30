@@ -53,6 +53,34 @@ namespace Paillave.EtlTests.Extensions
         }
         [TestCategory(nameof(EnsureSortedTests))]
         [TestMethod]
+        public void FailEnsureSortedNotSortedWithNoException()
+        {
+            #region ensure sorted not sorted without exception
+            var inputList = new[] { 2, 1, 3, 4, 5 }.ToList();
+            var outputList = new List<int>();
+
+            var task = StreamProcessRunner.Create<object>(rootStream =>
+            {
+                rootStream
+                    .CrossApplyEnumerable("list elements", _ => inputList)
+                    .EnsureSorted("ensure sorted", i => i)
+                    .ThroughAction("collect values", outputList.Add);
+            }).ExecuteWithNoFaultAsync(null);
+            task.Wait();
+
+            Assert.IsTrue(task.Result.Failed);
+            Assert.IsNotNull(task.Result.ErrorTraceEvents.FirstOrDefault(i => i.NodeName == "ensure sorted"));
+            Assert.IsNotNull(task.Result.StreamStatisticErrors.FirstOrDefault(i => i.NodeName == "ensure sorted"));
+            CollectionAssert.AreEquivalent(new[] { 2 }.ToList(), outputList);
+            #endregion
+        }
+
+
+
+
+        [TestCategory(nameof(EnsureSortedTests))]
+        [TestMethod]
+        [ExpectedException(typeof(AggregateException))]
         public void FailEnsureSortedNotSorted()
         {
             #region ensure sorted not sorted
@@ -67,9 +95,6 @@ namespace Paillave.EtlTests.Extensions
                     .ThroughAction("collect values", outputList.Add);
             }).ExecuteAsync(null);
             task.Wait();
-
-            Assert.IsNotNull(task.Result.StreamStatisticErrors.FirstOrDefault(i => i.NodeName == "ensure sorted"));
-            CollectionAssert.AreEquivalent(new[] { 2 }.ToList(), outputList);
             #endregion
         }
     }

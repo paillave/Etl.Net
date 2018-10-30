@@ -33,6 +33,54 @@ namespace Paillave.EtlTests.Extensions
         }
         [TestCategory(nameof(EnsureKeyedTests))]
         [TestMethod]
+        public void FailEnsureKeyedWithDuplicateWithoutException()
+        {
+            #region ensure keyed with duplicate without exception
+            var inputList = new[] { 1, 2, 2, 3, 4, 5 }.ToList();
+            var outputList = new List<int>();
+
+            var task = StreamProcessRunner.Create<object>(rootStream =>
+             {
+                 rootStream
+                     .CrossApplyEnumerable("list elements", _ => inputList)
+                     .EnsureKeyed("ensure keyed", i => i)
+                     .ThroughAction("collect values", outputList.Add);
+             }).ExecuteWithNoFaultAsync(null);
+            task.Wait();
+
+            Assert.IsTrue(task.Result.Failed);
+            Assert.IsNotNull(task.Result.ErrorTraceEvents.FirstOrDefault(i => i.NodeName == "ensure keyed"));
+            Assert.IsNotNull(task.Result.StreamStatisticErrors.FirstOrDefault(i => i.NodeName == "ensure keyed"));
+            CollectionAssert.AreEquivalent(new[] { 1, 2 }.ToList(), outputList);
+            #endregion
+        }
+        [TestCategory(nameof(EnsureKeyedTests))]
+        [TestMethod]
+        public void FailEnsureKeyedNotSortedWithoutException()
+        {
+            #region ensure keyed not sorted without exception
+            var inputList = new[] { 2, 1, 3, 4, 5 }.ToList();
+            var outputList = new List<int>();
+
+            var task = StreamProcessRunner.Create<object>(rootStream =>
+             {
+                 rootStream
+                     .CrossApplyEnumerable("list elements", _ => inputList)
+                     .EnsureKeyed("ensure keyed", i => i)
+                     .ThroughAction("collect values", outputList.Add);
+             }).ExecuteWithNoFaultAsync(null);
+            task.Wait();
+
+            Assert.IsTrue(task.Result.Failed);
+            Assert.IsNotNull(task.Result.ErrorTraceEvents.FirstOrDefault(i => i.NodeName == "ensure keyed"));
+            Assert.IsNotNull(task.Result.StreamStatisticErrors.FirstOrDefault(i => i.NodeName == "ensure keyed"));
+            CollectionAssert.AreEquivalent(new[] { 2 }.ToList(), outputList);
+            #endregion
+        }
+
+        [TestCategory(nameof(EnsureKeyedTests))]
+        [TestMethod]
+        [ExpectedException(typeof(AggregateException))]
         public void FailEnsureKeyedWithDuplicate()
         {
             #region ensure keyed with duplicate
@@ -47,13 +95,11 @@ namespace Paillave.EtlTests.Extensions
                      .ThroughAction("collect values", outputList.Add);
              }).ExecuteAsync(null);
             task.Wait();
-
-            Assert.IsNotNull(task.Result.StreamStatisticErrors.FirstOrDefault(i => i.NodeName == "ensure keyed"));
-            CollectionAssert.AreEquivalent(new[] { 1, 2 }.ToList(), outputList);
             #endregion
         }
         [TestCategory(nameof(EnsureKeyedTests))]
         [TestMethod]
+        [ExpectedException(typeof(AggregateException))]
         public void FailEnsureKeyedNotSorted()
         {
             #region ensure keyed not sorted
@@ -68,9 +114,6 @@ namespace Paillave.EtlTests.Extensions
                      .ThroughAction("collect values", outputList.Add);
              }).ExecuteAsync(null);
             task.Wait();
-
-            Assert.IsNotNull(task.Result.StreamStatisticErrors.FirstOrDefault(i => i.NodeName == "ensure keyed"));
-            CollectionAssert.AreEquivalent(new[] { 2 }.ToList(), outputList);
             #endregion
         }
     }
