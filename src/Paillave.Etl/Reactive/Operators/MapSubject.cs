@@ -32,7 +32,7 @@ namespace Paillave.Etl.Reactive.Operators
             {
                 try
                 {
-                    this.PushValue(selector(i, ++counter));
+                    this.PushValue(selector(i, counter++));
                 }
                 catch (Exception ex)
                 {
