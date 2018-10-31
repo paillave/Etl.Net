@@ -80,7 +80,6 @@ namespace Paillave.Etl.Reactive.Operators
 
         private void ProcessCurrentKeep(TIn value)
         {
-            //TODO: if just switching to keep, then increment the index section
             var switchRes = _switchToIgnore(value);
             switch (switchRes)
             {

@@ -9,9 +9,9 @@ using Paillave.Etl.Extensions;
 namespace Paillave.EtlTests.Extensions
 {
     [TestClass()]
-    public class LeftJoinTests
+    public class LookupTests
     {
-        [TestCategory(nameof(LeftJoinTests))]
+        [TestCategory(nameof(LookupTests))]
         [TestMethod]
         public void SimpleLeftJoin()
         {
@@ -22,14 +22,10 @@ namespace Paillave.EtlTests.Extensions
 
             StreamProcessRunner.Create<object>(rootStream =>
             {
-                var leftStream = rootStream
-                    .CrossApplyEnumerable("input left elements", _ => inputLeftList)
-                    .EnsureSorted("ensure left is sorted", i => i.ForeignId);
-                var rightStream = rootStream
-                    .CrossApplyEnumerable("input right elements", _ => inputRightList)
-                    .EnsureKeyed("ensure right is keyed", i => i.Id);
+                var leftStream = rootStream.CrossApplyEnumerable("input left elements", _ => inputLeftList);
+                var rightStream = rootStream.CrossApplyEnumerable("input right elements", _ => inputRightList);
                 leftStream
-                    .LeftJoin("join left and right", rightStream, (left, right) => $"{left.Id}-{right.Label}")
+                    .Lookup("join left and right", rightStream, i => i.ForeignId, i => i.Id, (left, right) => $"{left.Id}-{right.Label}")
                     .ThroughAction("collect values", outputList.Add);
             }).ExecuteAsync(null).Wait();
 
@@ -38,7 +34,7 @@ namespace Paillave.EtlTests.Extensions
             #endregion
         }
 
-        [TestCategory(nameof(LeftJoinTests))]
+        [TestCategory(nameof(LookupTests))]
         [TestMethod]
         public void LeftJoinWithNoMatch()
         {
@@ -47,16 +43,13 @@ namespace Paillave.EtlTests.Extensions
             var inputRightList = Enumerable.Range(1000, 10).Select(i => new { Id = i, Label = $"Label{i}" }).ToList();
             var outputList = new List<string>();
 
+            //TODO: Ensure there is an actual failure if the result expression fails
             StreamProcessRunner.Create<object>(rootStream =>
             {
-                var leftStream = rootStream
-                    .CrossApplyEnumerable("input left elements", _ => inputLeftList)
-                    .EnsureSorted("ensure left is sorted", i => i.ForeignId);
-                var rightStream = rootStream
-                    .CrossApplyEnumerable("input right elements", _ => inputRightList)
-                    .EnsureKeyed("ensure right is keyed", i => i.Id);
+                var leftStream = rootStream.CrossApplyEnumerable("input left elements", _ => inputLeftList);
+                var rightStream = rootStream.CrossApplyEnumerable("input right elements", _ => inputRightList);
                 leftStream
-                    .LeftJoin("join left and right", rightStream, (left, right) => $"{left.Id}-{right?.Label}")
+                    .Lookup("join left and right", rightStream, i => i.ForeignId, i => i.Id, (left, right) => $"{left.Id}-{right?.Label}")
                     .ThroughAction("collect values", outputList.Add);
             }).ExecuteAsync(null).Wait();
 
@@ -65,7 +58,7 @@ namespace Paillave.EtlTests.Extensions
             #endregion
         }
 
-        [TestCategory(nameof(LeftJoinTests))]
+        [TestCategory(nameof(LookupTests))]
         [TestMethod]
         public void LeftJoinWithSomeMatches()
         {
@@ -74,16 +67,13 @@ namespace Paillave.EtlTests.Extensions
             var inputRightList = new[] { 2, 5 }.Select(i => new { Id = i, Label = $"Label{i}" }).ToList();
             var outputList = new List<string>();
 
+            //TODO: Ensure there is an actual failure if the result expression fails
             StreamProcessRunner.Create<object>(rootStream =>
             {
-                var leftStream = rootStream
-                    .CrossApplyEnumerable("input left elements", _ => inputLeftList)
-                    .EnsureSorted("ensure left is sorted", i => i.ForeignId);
-                var rightStream = rootStream
-                    .CrossApplyEnumerable("input right elements", _ => inputRightList)
-                    .EnsureKeyed("ensure right is keyed", i => i.Id);
+                var leftStream = rootStream.CrossApplyEnumerable("input left elements", _ => inputLeftList);
+                var rightStream = rootStream.CrossApplyEnumerable("input right elements", _ => inputRightList);
                 leftStream
-                    .LeftJoin("join left and right", rightStream, (left, right) => $"{left.Id}-{right?.Label}")
+                    .Lookup("join left and right", rightStream, i => i.ForeignId, i => i.Id, (left, right) => $"{left.Id}-{right?.Label}")
                     .ThroughAction("collect values", outputList.Add);
             }).ExecuteAsync(null).Wait();
 
