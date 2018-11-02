@@ -18,10 +18,10 @@ namespace Paillave.EtlTests.Extensions
             var inputList = Enumerable.Range(0, 10).ToList();
             var outputList = new List<string>();
 
-            StreamProcessRunner.Create<object>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(inputList, rootStream =>
             {
                 rootStream
-                    .CrossApplyEnumerable("list elements", _ => inputList)
+                    .CrossApplyEnumerable("list elements", config => config)
                     .Select("produce business object", i => new { Value = i, Category = $"CAT{i % 2}" })
                     .Aggregate("compute sum per category",
                         i => "",
@@ -29,7 +29,7 @@ namespace Paillave.EtlTests.Extensions
                         (agg, elt) => $"{agg}{elt.Value}")
                     .Select("format result", i => $"{i.Key}:{i.Aggregation}")
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(null).Wait();
+            }).Wait();
 
             CollectionAssert.AreEquivalent(new[] { "CAT0:02468", "CAT1:13579" }.ToList(), outputList);
             #endregion
@@ -43,10 +43,10 @@ namespace Paillave.EtlTests.Extensions
             var inputList = Enumerable.Range(0, 10).ToList();
             var outputList = new List<string>();
 
-            StreamProcessRunner.Create<object>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(inputList, rootStream =>
             {
                 rootStream
-                    .CrossApplyEnumerable("list elements", _ => inputList)
+                    .CrossApplyEnumerable("list elements", config => config)
                     .Select("produce business object", i => new { Value = i, Category = $"CAT{i % 2}" })
                     .Aggregate("compute sum per category",
                         i => new { Nb = 0, Sum = 0 },
@@ -54,7 +54,7 @@ namespace Paillave.EtlTests.Extensions
                         (agg, elt) => new { Nb = agg.Nb + 1, Sum = agg.Sum + elt.Value })
                     .Select("format and compute result", i => $"{i.Key}:{i.Aggregation.Sum / i.Aggregation.Nb}")
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(null).Wait();
+            }).Wait();
 
             CollectionAssert.AreEquivalent(new[] { "CAT0:4", "CAT1:5" }.ToList(), outputList);
             #endregion

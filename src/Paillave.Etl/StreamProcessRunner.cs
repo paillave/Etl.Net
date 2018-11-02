@@ -17,6 +17,8 @@ namespace Paillave.Etl
     public class StreamProcessRunner
     {
         public static StreamProcessRunner<TConfig> Create<TConfig>(Action<ISingleStream<TConfig>> jobDefinition, string jobName = "NoName") => new StreamProcessRunner<TConfig>(jobDefinition, jobName);
+        public static Task<ExecutionStatus> CreateAndExecuteAsync<TConfig>(TConfig config, Action<ISingleStream<TConfig>> jobDefinition, Action<IStream<TraceEvent>> traceProcessDefinition = null, string jobName = "NoName") => new StreamProcessRunner<TConfig>(jobDefinition, jobName).ExecuteAsync(config, traceProcessDefinition);
+        public static Task<ExecutionStatus> CreateAndExecuteWithNoFaultAsync<TConfig>(TConfig config, Action<ISingleStream<TConfig>> jobDefinition, Action<IStream<TraceEvent>> traceProcessDefinition = null, string jobName = "NoName") => new StreamProcessRunner<TConfig>(jobDefinition, jobName).ExecuteWithNoFaultAsync(config, traceProcessDefinition);
     }
 
     public class StreamProcessRunner<TConfig>

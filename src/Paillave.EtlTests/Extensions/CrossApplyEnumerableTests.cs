@@ -19,12 +19,12 @@ namespace Paillave.EtlTests.Extensions
             var inputList = Enumerable.Range(0, 100).ToList();
             var outputList = new List<int>();
 
-            StreamProcessRunner.Create<object>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(inputList, rootStream =>
             {
                 rootStream
-                    .CrossApplyEnumerable("list elements", _ => inputList)
+                    .CrossApplyEnumerable("list elements", config => config)
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(null).Wait();
+            }).Wait();
 
             CollectionAssert.AreEquivalent(inputList, outputList);
             #endregion
@@ -39,13 +39,17 @@ namespace Paillave.EtlTests.Extensions
             var inputResource = 1;
             var outputList = new List<int>();
 
-            StreamProcessRunner.Create<object>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(new
             {
-                var resourceStream = rootStream.Select("get another resource", _ => inputResource);
+                InputResource = inputResource,
+                InputList = inputList
+            }, rootStream =>
+            {
+                var resourceStream = rootStream.Select("get another resource", config => config.InputResource);
                 rootStream
-                    .CrossApplyEnumerable("list elements", resourceStream, (_, res) => inputList.Select(i => i + res).ToList())
+                    .CrossApplyEnumerable("list elements", resourceStream, (config, res) => config.InputList.Select(i => i + res).ToList())
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(null).Wait();
+            }).Wait();
 
             CollectionAssert.AreEquivalent(inputList.Select(i => i + inputResource).ToList(), outputList);
             #endregion

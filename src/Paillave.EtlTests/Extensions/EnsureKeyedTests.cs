@@ -20,13 +20,13 @@ namespace Paillave.EtlTests.Extensions
             var inputList = new[] { 1, 2, 3, 4, 5 }.ToList();
             var outputList = new List<int>();
 
-            StreamProcessRunner.Create<object>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(inputList, rootStream =>
             {
                 rootStream
-                    .CrossApplyEnumerable("list elements", _ => inputList)
+                    .CrossApplyEnumerable("list elements", config => config)
                     .EnsureKeyed("ensure keyed", i => i)
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(null).Wait();
+            }).Wait();
 
             CollectionAssert.AreEquivalent(inputList, outputList);
             #endregion
@@ -39,13 +39,13 @@ namespace Paillave.EtlTests.Extensions
             var inputList = new[] { 1, 2, 2, 3, 4, 5 }.ToList();
             var outputList = new List<int>();
 
-            var task = StreamProcessRunner.Create<object>(rootStream =>
-             {
-                 rootStream
-                     .CrossApplyEnumerable("list elements", _ => inputList)
-                     .EnsureKeyed("ensure keyed", i => i)
-                     .ThroughAction("collect values", outputList.Add);
-             }).ExecuteWithNoFaultAsync(null);
+            var task = StreamProcessRunner.CreateAndExecuteWithNoFaultAsync(inputList, rootStream =>
+            {
+                rootStream
+                    .CrossApplyEnumerable("list elements", config => config)
+                    .EnsureKeyed("ensure keyed", i => i)
+                    .ThroughAction("collect values", outputList.Add);
+            });
             task.Wait();
 
             Assert.IsTrue(task.Result.Failed);
@@ -62,13 +62,13 @@ namespace Paillave.EtlTests.Extensions
             var inputList = new[] { 2, 1, 3, 4, 5 }.ToList();
             var outputList = new List<int>();
 
-            var task = StreamProcessRunner.Create<object>(rootStream =>
-             {
-                 rootStream
-                     .CrossApplyEnumerable("list elements", _ => inputList)
-                     .EnsureKeyed("ensure keyed", i => i)
-                     .ThroughAction("collect values", outputList.Add);
-             }).ExecuteWithNoFaultAsync(null);
+            var task = StreamProcessRunner.CreateAndExecuteWithNoFaultAsync(inputList, rootStream =>
+            {
+                rootStream
+                    .CrossApplyEnumerable("list elements", config => config)
+                    .EnsureKeyed("ensure keyed", i => i)
+                    .ThroughAction("collect values", outputList.Add);
+            });
             task.Wait();
 
             Assert.IsTrue(task.Result.Failed);
@@ -87,13 +87,13 @@ namespace Paillave.EtlTests.Extensions
             var inputList = new[] { 1, 2, 2, 3, 4, 5 }.ToList();
             var outputList = new List<int>();
 
-            var task = StreamProcessRunner.Create<object>(rootStream =>
-             {
-                 rootStream
-                     .CrossApplyEnumerable("list elements", _ => inputList)
-                     .EnsureKeyed("ensure keyed", i => i)
-                     .ThroughAction("collect values", outputList.Add);
-             }).ExecuteAsync(null);
+            var task = StreamProcessRunner.CreateAndExecuteAsync(inputList, rootStream =>
+            {
+                rootStream
+                    .CrossApplyEnumerable("list elements", config => config)
+                    .EnsureKeyed("ensure keyed", i => i)
+                    .ThroughAction("collect values", outputList.Add);
+            });
             task.Wait();
             #endregion
         }
@@ -106,13 +106,13 @@ namespace Paillave.EtlTests.Extensions
             var inputList = new[] { 2, 1, 3, 4, 5 }.ToList();
             var outputList = new List<int>();
 
-            var task = StreamProcessRunner.Create<object>(rootStream =>
-             {
-                 rootStream
-                     .CrossApplyEnumerable("list elements", _ => inputList)
-                     .EnsureKeyed("ensure keyed", i => i)
-                     .ThroughAction("collect values", outputList.Add);
-             }).ExecuteAsync(null);
+            var task = StreamProcessRunner.CreateAndExecuteAsync(inputList, rootStream =>
+            {
+                rootStream
+                    .CrossApplyEnumerable("list elements", config => config)
+                    .EnsureKeyed("ensure keyed", i => i)
+                    .ThroughAction("collect values", outputList.Add);
+            });
             task.Wait();
             #endregion
         }

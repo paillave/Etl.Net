@@ -48,12 +48,12 @@ namespace Paillave.EtlTests.Extensions
             var testPath = Path.Combine(tmpPath, TestFolder);
             var outputList = new List<LocalFilesValue>();
 
-            StreamProcessRunner.Create<string>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(testPath, rootStream =>
             {
                 rootStream
                     .CrossApplyFolderFiles("get all files")
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(testPath).Wait();
+            }).Wait();
 
             var expected = Enumerable.Range(0, 2).Select(i => Path.Combine(testPath, $"file{i}")).ToList();
             var actual = outputList.Select(i => i.Name).ToList();
@@ -68,12 +68,12 @@ namespace Paillave.EtlTests.Extensions
             var testPath = Path.Combine(tmpPath, TestFolder);
             var outputList = new List<LocalFilesValue>();
 
-            StreamProcessRunner.Create<string>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(testPath, rootStream =>
             {
                 rootStream
                     .CrossApplyFolderFiles("get all files", "*", true)
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(testPath).Wait();
+            }).Wait();
 
             var expected = Enumerable.Range(0, 2).Select(i => Path.Combine(testPath, $"file{i}")).Union(Enumerable.Range(0, 2).SelectMany(i => Enumerable.Range(0, 4).Select(j => Path.Combine(testPath, $"{i}", $"{i}-{j}")))).ToList();
             var actual = outputList.Select(i => i.Name).ToList();

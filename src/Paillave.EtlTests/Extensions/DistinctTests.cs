@@ -19,13 +19,13 @@ namespace Paillave.EtlTests.Extensions
             var inputList = Enumerable.Range(0, 100).Select(i => i).ToList();
             var outputList = new List<int>();
 
-            StreamProcessRunner.Create<object>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(inputList, rootStream =>
             {
                 rootStream
-                    .CrossApplyEnumerable("list elements", _ => inputList)
+                    .CrossApplyEnumerable("list elements", config => config)
                     .Distinct("distinct", i => i % 10)
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(null).Wait();
+            }).Wait();
 
             var expected = Enumerable.Range(0, 10).Select(i => i).ToList();
             CollectionAssert.AreEquivalent(expected, outputList);
@@ -39,14 +39,14 @@ namespace Paillave.EtlTests.Extensions
             var inputList = Enumerable.Range(0, 100).Select(i => i % 10).OrderBy(i => i).ToList();
             var outputList = new List<int>();
 
-            StreamProcessRunner.Create<object>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(inputList, rootStream =>
             {
                 rootStream
-                    .CrossApplyEnumerable("list elements", _ => inputList)
+                    .CrossApplyEnumerable("list elements", config => config)
                     .Sort("sort output", i => i)
                     .Distinct("distinct")
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(null).Wait();
+            }).Wait();
 
             var expected = Enumerable.Range(0, 10).Select(i => i).ToList();
             CollectionAssert.AreEquivalent(expected, outputList);

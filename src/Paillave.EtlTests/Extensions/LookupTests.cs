@@ -13,21 +13,25 @@ namespace Paillave.EtlTests.Extensions
     {
         [TestCategory(nameof(LookupTests))]
         [TestMethod]
-        public void SimpleLeftJoin()
+        public void SimpleLookup()
         {
-            #region simple left join
+            #region simple lookup
             var inputLeftList = Enumerable.Range(0, 100).Select(i => new { Id = i, ForeignId = i / 10 }).ToList();
             var inputRightList = Enumerable.Range(0, 10).Select(i => new { Id = i, Label = $"Label{i}" }).ToList();
             var outputList = new List<string>();
 
-            StreamProcessRunner.Create<object>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(new
             {
-                var leftStream = rootStream.CrossApplyEnumerable("input left elements", _ => inputLeftList);
-                var rightStream = rootStream.CrossApplyEnumerable("input right elements", _ => inputRightList);
+                InputLeftList = inputLeftList,
+                InputRightList = inputRightList
+            }, rootStream =>
+            {
+                var leftStream = rootStream.CrossApplyEnumerable("input left elements", config => config.InputLeftList);
+                var rightStream = rootStream.CrossApplyEnumerable("input right elements", config => config.InputRightList);
                 leftStream
                     .Lookup("join left and right", rightStream, i => i.ForeignId, i => i.Id, (left, right) => $"{left.Id}-{right.Label}")
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(null).Wait();
+            }).Wait();
 
             var expected = Enumerable.Range(0, 100).Select(i => $"{i}-Label{i / 10}").ToList();
             CollectionAssert.AreEquivalent(expected, outputList);
@@ -36,22 +40,26 @@ namespace Paillave.EtlTests.Extensions
 
         [TestCategory(nameof(LookupTests))]
         [TestMethod]
-        public void LeftJoinWithNoMatch()
+        public void LookupWithNoMatch()
         {
-            #region simple left join
+            #region lookup with no match
             var inputLeftList = Enumerable.Range(0, 100).Select(i => new { Id = i, ForeignId = i / 10 }).ToList();
             var inputRightList = Enumerable.Range(1000, 10).Select(i => new { Id = i, Label = $"Label{i}" }).ToList();
             var outputList = new List<string>();
 
             //TODO: Ensure there is an actual failure if the result expression fails
-            StreamProcessRunner.Create<object>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(new
             {
-                var leftStream = rootStream.CrossApplyEnumerable("input left elements", _ => inputLeftList);
-                var rightStream = rootStream.CrossApplyEnumerable("input right elements", _ => inputRightList);
+                InputLeftList = inputLeftList,
+                InputRightList = inputRightList
+            }, rootStream =>
+            {
+                var leftStream = rootStream.CrossApplyEnumerable("input left elements", config => config.InputLeftList);
+                var rightStream = rootStream.CrossApplyEnumerable("input right elements", config => config.InputRightList);
                 leftStream
                     .Lookup("join left and right", rightStream, i => i.ForeignId, i => i.Id, (left, right) => $"{left.Id}-{right?.Label}")
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(null).Wait();
+            }).Wait();
 
             var expected = Enumerable.Range(0, 100).Select(i => $"{i}-").ToList();
             CollectionAssert.AreEquivalent(expected, outputList);
@@ -60,22 +68,26 @@ namespace Paillave.EtlTests.Extensions
 
         [TestCategory(nameof(LookupTests))]
         [TestMethod]
-        public void LeftJoinWithSomeMatches()
+        public void LookupWithSomeMatches()
         {
-            #region simple left join
+            #region lookup with couple of no match
             var inputLeftList = Enumerable.Range(0, 100).Select(i => new { Id = i, ForeignId = i / 10 }).ToList();
             var inputRightList = new[] { 2, 5 }.Select(i => new { Id = i, Label = $"Label{i}" }).ToList();
             var outputList = new List<string>();
 
             //TODO: Ensure there is an actual failure if the result expression fails
-            StreamProcessRunner.Create<object>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(new
             {
-                var leftStream = rootStream.CrossApplyEnumerable("input left elements", _ => inputLeftList);
-                var rightStream = rootStream.CrossApplyEnumerable("input right elements", _ => inputRightList);
+                InputLeftList = inputLeftList,
+                InputRightList = inputRightList
+            }, rootStream =>
+            {
+                var leftStream = rootStream.CrossApplyEnumerable("input left elements", config => config.InputLeftList);
+                var rightStream = rootStream.CrossApplyEnumerable("input right elements", config => config.InputRightList);
                 leftStream
                     .Lookup("join left and right", rightStream, i => i.ForeignId, i => i.Id, (left, right) => $"{left.Id}-{right?.Label}")
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(null).Wait();
+            }).Wait();
 
             var expected = Enumerable.Range(0, 100).Select(i =>
             {

@@ -20,13 +20,13 @@ namespace Paillave.EtlTests.Extensions
             var inputList = new[] { 1 }.ToList();
             var outputList = new List<int>();
 
-            StreamProcessRunner.Create<object>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(inputList, rootStream =>
             {
                 rootStream
-                    .CrossApplyEnumerable("list elements", _ => inputList)
+                    .CrossApplyEnumerable("list elements", config => config)
                     .EnsureSingle("ensure single")
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(null).Wait();
+            }).Wait();
 
             CollectionAssert.AreEquivalent(inputList, outputList);
             #endregion
@@ -39,13 +39,13 @@ namespace Paillave.EtlTests.Extensions
             var inputList = new[] { 1, 2 }.ToList();
             var outputList = new List<int>();
 
-            var task = StreamProcessRunner.Create<object>(rootStream =>
+            var task = StreamProcessRunner.CreateAndExecuteWithNoFaultAsync(inputList, rootStream =>
             {
                 rootStream
-                    .CrossApplyEnumerable("list elements", _ => inputList)
+                    .CrossApplyEnumerable("list elements", config => config)
                     .EnsureSingle("ensure single")
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteWithNoFaultAsync(null);
+            });
             task.Wait();
 
             Assert.IsTrue(task.Result.Failed);
@@ -63,14 +63,13 @@ namespace Paillave.EtlTests.Extensions
             var inputList = new[] { 1, 2 }.ToList();
             var outputList = new List<int>();
 
-            var task = StreamProcessRunner.Create<object>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(inputList, rootStream =>
             {
                 rootStream
-                    .CrossApplyEnumerable("list elements", _ => inputList)
+                    .CrossApplyEnumerable("list elements", config => config)
                     .EnsureSingle("ensure single")
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(null);
-            task.Wait();
+            }).Wait();
             #endregion
         }
     }

@@ -20,18 +20,22 @@ namespace Paillave.EtlTests.Extensions
             var inputRightList = Enumerable.Range(0, 10).Select(i => new { Id = i, Label = $"Label{i}" }).ToList();
             var outputList = new List<string>();
 
-            StreamProcessRunner.Create<object>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(new
+            {
+                InputLeftList = inputLeftList,
+                InputRightList = inputRightList
+            }, rootStream =>
             {
                 var leftStream = rootStream
-                    .CrossApplyEnumerable("input left elements", _ => inputLeftList)
+                    .CrossApplyEnumerable("input left elements", config => config.InputLeftList)
                     .EnsureSorted("ensure left is sorted", i => i.ForeignId);
                 var rightStream = rootStream
-                    .CrossApplyEnumerable("input right elements", _ => inputRightList)
+                    .CrossApplyEnumerable("input right elements", config => config.InputRightList)
                     .EnsureKeyed("ensure right is keyed", i => i.Id);
                 leftStream
                     .LeftJoin("join left and right", rightStream, (left, right) => $"{left.Id}-{right.Label}")
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(null).Wait();
+            }).Wait();
 
             var expected = Enumerable.Range(0, 100).Select(i => $"{i}-Label{i / 10}").ToList();
             CollectionAssert.AreEquivalent(expected, outputList);
@@ -42,23 +46,27 @@ namespace Paillave.EtlTests.Extensions
         [TestMethod]
         public void LeftJoinWithNoMatch()
         {
-            #region simple left join
+            #region left join with no matches
             var inputLeftList = Enumerable.Range(0, 100).Select(i => new { Id = i, ForeignId = i / 10 }).ToList();
             var inputRightList = Enumerable.Range(1000, 10).Select(i => new { Id = i, Label = $"Label{i}" }).ToList();
             var outputList = new List<string>();
 
-            StreamProcessRunner.Create<object>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(new
+            {
+                InputLeftList = inputLeftList,
+                InputRightList = inputRightList
+            }, rootStream =>
             {
                 var leftStream = rootStream
-                    .CrossApplyEnumerable("input left elements", _ => inputLeftList)
+                    .CrossApplyEnumerable("input left elements", config => config.InputLeftList)
                     .EnsureSorted("ensure left is sorted", i => i.ForeignId);
                 var rightStream = rootStream
-                    .CrossApplyEnumerable("input right elements", _ => inputRightList)
+                    .CrossApplyEnumerable("input right elements", config => config.InputRightList)
                     .EnsureKeyed("ensure right is keyed", i => i.Id);
                 leftStream
                     .LeftJoin("join left and right", rightStream, (left, right) => $"{left.Id}-{right?.Label}")
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(null).Wait();
+            }).Wait();
 
             var expected = Enumerable.Range(0, 100).Select(i => $"{i}-").ToList();
             CollectionAssert.AreEquivalent(expected, outputList);
@@ -69,23 +77,27 @@ namespace Paillave.EtlTests.Extensions
         [TestMethod]
         public void LeftJoinWithSomeMatches()
         {
-            #region simple left join
+            #region simple left join with couple of matches
             var inputLeftList = Enumerable.Range(0, 100).Select(i => new { Id = i, ForeignId = i / 10 }).ToList();
             var inputRightList = new[] { 2, 5 }.Select(i => new { Id = i, Label = $"Label{i}" }).ToList();
             var outputList = new List<string>();
 
-            StreamProcessRunner.Create<object>(rootStream =>
+            StreamProcessRunner.CreateAndExecuteAsync(new
+            {
+                InputLeftList = inputLeftList,
+                InputRightList = inputRightList
+            }, rootStream =>
             {
                 var leftStream = rootStream
-                    .CrossApplyEnumerable("input left elements", _ => inputLeftList)
+                    .CrossApplyEnumerable("input left elements", config => config.InputLeftList)
                     .EnsureSorted("ensure left is sorted", i => i.ForeignId);
                 var rightStream = rootStream
-                    .CrossApplyEnumerable("input right elements", _ => inputRightList)
+                    .CrossApplyEnumerable("input right elements", config => config.InputRightList)
                     .EnsureKeyed("ensure right is keyed", i => i.Id);
                 leftStream
                     .LeftJoin("join left and right", rightStream, (left, right) => $"{left.Id}-{right?.Label}")
                     .ThroughAction("collect values", outputList.Add);
-            }).ExecuteAsync(null).Wait();
+            }).Wait();
 
             var expected = Enumerable.Range(0, 100).Select(i =>
             {
