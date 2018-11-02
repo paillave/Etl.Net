@@ -418,14 +418,12 @@ namespace ComplexQuickstart
 
 This program first shows the estimated execution plan:
 
-![Estimated execution plan](./docs/EstimatedExecutionPlan.PNG "Estimated execution plan")
+![Estimated execution plan](./README/EstimatedExecutionPlan.PNG "Estimated execution plan")
 
 Then it shows the actual execution with statistics when hovering streams, and input and outputs when hovering nodes:
-![Actual execution plan](./docs/ActualExecutionPlan.PNG "Actual execution plan")
+![Actual execution plan](./README/ActualExecutionPlan.PNG "Actual execution plan")
 
 ## Documentation :construction:
 
 > [!IMPORTANT]
 > Documentation will be done once all essential features and bugs are solved.
-> 
-[gitbook documentation](https://paillave.gitbook.io/etl-net/)
