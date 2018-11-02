@@ -16,10 +16,10 @@ namespace Paillave.EtlTests.Extensions
         [TestMethod]
         public void EmptyPivot()
         {
+            #region simple pivot
             var inputList = new int[] { }.Select(i => new { Key = i / 5, Value = i }).ToList();
             var outputList = new List<string>();
 
-            #region simple pivot
             StreamProcessRunner.CreateAndExecuteAsync(inputList, rootStream =>
             {
                 rootStream
@@ -41,10 +41,10 @@ namespace Paillave.EtlTests.Extensions
         [TestMethod]
         public void SimplePivot()
         {
+            #region simple pivot
             var inputList = Enumerable.Range(0, 10).Select(i => new { Key = i / 5, Value = i }).ToList();
             var outputList = new List<string>();
 
-            #region simple pivot
             StreamProcessRunner.CreateAndExecuteAsync(inputList, rootStream =>
             {
                 rootStream
@@ -69,10 +69,10 @@ namespace Paillave.EtlTests.Extensions
         [TestMethod]
         public void MultiColumnsPivot()
         {
+            #region multicolumns pivot
             var inputList = Enumerable.Range(0, 10).Select(i => new { Key = i / 5, Value = i, Col = i % 2 }).ToList();
             var outputList = new List<string>();
 
-            #region multicolumns pivot
             StreamProcessRunner.CreateAndExecuteAsync(inputList, rootStream =>
             {
                 rootStream
@@ -98,10 +98,10 @@ namespace Paillave.EtlTests.Extensions
         [TestMethod]
         public void MultiColumnsPivotWithNoValue()
         {
+            #region multicolumns pivot
             var inputList = Enumerable.Range(0, 10).Select(i => new { Key = i / 5, Value = i, Col = i % 2 }).ToList();
             var outputList = new List<string>();
 
-            #region multicolumns pivot
             StreamProcessRunner.CreateAndExecuteAsync(inputList, rootStream =>
             {
                 rootStream
@@ -127,10 +127,10 @@ namespace Paillave.EtlTests.Extensions
         [TestMethod]
         public void MultiComputationsPivot()
         {
+            #region multicomputations pivot
             var inputList = Enumerable.Range(0, 10).Select(i => new { Key = i / 5, Value = i }).ToList();
             var outputList = new List<string>();
 
-            #region multicomputations pivot
             StreamProcessRunner.CreateAndExecuteAsync(inputList, rootStream =>
             {
                 rootStream
@@ -161,10 +161,10 @@ namespace Paillave.EtlTests.Extensions
         [TestMethod]
         public void MultiColumnsMultiComputationsPivot()
         {
+            #region multicolumns multicomputations pivot
             var inputList = Enumerable.Range(0, 10).Select(i => new { Key = i / 5, Value = i, Col = i % 2 }).ToList();
             var outputList = new List<string>();
 
-            #region multicolumns multicomputations pivot
             StreamProcessRunner.CreateAndExecuteAsync(inputList, rootStream =>
             {
                 rootStream
