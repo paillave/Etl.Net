@@ -104,22 +104,4 @@ dotnet add package Etl.Net.TextFile --version 1.0.124-alpha
 
 ### Implement the process
 
-# [SimpleConfig.cs](#tab/SimpleConfig)
-
-C# code:
-
-[!code-csharp[Main](../src/Samples/SimpleQuickstart/SimpleConfig.cs)]
-
-# [SimpleQuickstartJob.cs](#tab/SimpleQuickstartJob)
-
-C# code:
-
-[!code-csharp[Main](../src/Samples/SimpleQuickstart/SimpleQuickstartJob.cs)]
-
-# [Program.cs](#tab/Program)
-
-C# code:
-
 [!code-csharp[Main](../src/Samples/SimpleQuickstart/Program.cs)]
-
-***
