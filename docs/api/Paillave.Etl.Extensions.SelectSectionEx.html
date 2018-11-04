@@ -375,6 +375,330 @@
       </tr>
     </tbody>
   </table>
+  
+  
+  <a id="Paillave_Etl_Extensions_SelectSectionEx_SelectSection_" data-uid="Paillave.Etl.Extensions.SelectSectionEx.SelectSection*"></a>
+  <h4 id="Paillave_Etl_Extensions_SelectSectionEx_SelectSection__2_IStream___0__System_String_KeepingState_System_Func___0_SwitchBehavior__System_Func___0_SwitchBehavior__System_Func___0_System_Int32___1__" data-uid="Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})">SelectSection&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, KeepingState, Func&lt;TIn, SwitchBehavior&gt;, Func&lt;TIn, SwitchBehavior&gt;, Func&lt;TIn, Int32, TOut&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; SelectSection&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, KeepingState initialState, Func&lt;TIn, SwitchBehavior&gt; switchToKeep, Func&lt;TIn, SwitchBehavior&gt; switchToIgnore, Func&lt;TIn, int, TOut&gt; resultSelector)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TIn&gt;</td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">KeepingState</span></td>
+        <td><span class="parametername">initialState</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TIn, <span class="xref">SwitchBehavior</span>&gt;</td>
+        <td><span class="parametername">switchToKeep</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TIn, <span class="xref">SwitchBehavior</span>&gt;</td>
+        <td><span class="parametername">switchToIgnore</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TIn, <span class="xref">System.Int32</span>, TOut&gt;</td>
+        <td><span class="parametername">resultSelector</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TOut&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TOut</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Paillave_Etl_Extensions_SelectSectionEx_SelectSection_" data-uid="Paillave.Etl.Extensions.SelectSectionEx.SelectSection*"></a>
+  <h4 id="Paillave_Etl_Extensions_SelectSectionEx_SelectSection__2_IStream___0__System_String_KeepingState_System_Func___0_SwitchBehavior__System_Func___0_System_Int32___1__" data-uid="Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})">SelectSection&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, KeepingState, Func&lt;TIn, SwitchBehavior&gt;, Func&lt;TIn, Int32, TOut&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; SelectSection&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, KeepingState initialState, Func&lt;TIn, SwitchBehavior&gt; switcher, Func&lt;TIn, int, TOut&gt; resultSelector)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TIn&gt;</td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">KeepingState</span></td>
+        <td><span class="parametername">initialState</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TIn, <span class="xref">SwitchBehavior</span>&gt;</td>
+        <td><span class="parametername">switcher</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TIn, <span class="xref">System.Int32</span>, TOut&gt;</td>
+        <td><span class="parametername">resultSelector</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TOut&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TOut</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Paillave_Etl_Extensions_SelectSectionEx_SelectSection_" data-uid="Paillave.Etl.Extensions.SelectSectionEx.SelectSection*"></a>
+  <h4 id="Paillave_Etl_Extensions_SelectSectionEx_SelectSection__2_IStream___0__System_String_System_Func___0_SwitchBehavior__System_Func___0_SwitchBehavior__System_Func___0_System_Int32___1__" data-uid="Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})">SelectSection&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, SwitchBehavior&gt;, Func&lt;TIn, SwitchBehavior&gt;, Func&lt;TIn, Int32, TOut&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; SelectSection&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, SwitchBehavior&gt; switchToKeep, Func&lt;TIn, SwitchBehavior&gt; switchToIgnore, Func&lt;TIn, int, TOut&gt; resultSelector)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TIn&gt;</td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TIn, <span class="xref">SwitchBehavior</span>&gt;</td>
+        <td><span class="parametername">switchToKeep</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TIn, <span class="xref">SwitchBehavior</span>&gt;</td>
+        <td><span class="parametername">switchToIgnore</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TIn, <span class="xref">System.Int32</span>, TOut&gt;</td>
+        <td><span class="parametername">resultSelector</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TOut&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TOut</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Paillave_Etl_Extensions_SelectSectionEx_SelectSection_" data-uid="Paillave.Etl.Extensions.SelectSectionEx.SelectSection*"></a>
+  <h4 id="Paillave_Etl_Extensions_SelectSectionEx_SelectSection__2_IStream___0__System_String_System_Func___0_SwitchBehavior__System_Func___0_System_Int32___1__" data-uid="Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})">SelectSection&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, SwitchBehavior&gt;, Func&lt;TIn, Int32, TOut&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; SelectSection&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, SwitchBehavior&gt; switcher, Func&lt;TIn, int, TOut&gt; resultSelector)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TIn&gt;</td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TIn, <span class="xref">SwitchBehavior</span>&gt;</td>
+        <td><span class="parametername">switcher</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TIn, <span class="xref">System.Int32</span>, TOut&gt;</td>
+        <td><span class="parametername">resultSelector</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TOut&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TOut</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
 </article>
           </div>
           

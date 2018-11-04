@@ -5,7 +5,6 @@ items:
   id: Paillave.Etl.Extensions
   children:
   - Paillave.Etl.Extensions.AggregateEx
-  - Paillave.Etl.Extensions.CrossApplyActionEx
   - Paillave.Etl.Extensions.CrossApplyEnumerableEx
   - Paillave.Etl.Extensions.CrossApplyEx
   - Paillave.Etl.Extensions.CrossApplyFolderFilesEx
@@ -50,11 +49,6 @@ references:
   name: CrossApplyEx
   nameWithType: CrossApplyEx
   fullName: Paillave.Etl.Extensions.CrossApplyEx
-- uid: Paillave.Etl.Extensions.CrossApplyActionEx
-  commentId: T:Paillave.Etl.Extensions.CrossApplyActionEx
-  name: CrossApplyActionEx
-  nameWithType: CrossApplyActionEx
-  fullName: Paillave.Etl.Extensions.CrossApplyActionEx
 - uid: Paillave.Etl.Extensions.CrossApplyEnumerableEx
   commentId: T:Paillave.Etl.Extensions.CrossApplyEnumerableEx
   name: CrossApplyEnumerableEx

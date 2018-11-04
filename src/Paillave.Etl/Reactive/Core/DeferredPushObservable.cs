@@ -52,21 +52,22 @@ namespace Paillave.Etl.Reactive.Core
         private Guid tmp = Guid.NewGuid();
         public void Start()
         {
-            Task.Run(() =>
+            Task.Run(() => InternStart());
+        }
+        private void InternStart()
+        {
+            try
             {
-                try
-                {
-                    _valuesFactory(PushValue);
-                }
-                catch (Exception ex)
-                {
-                    PushException(ex);
-                }
-                finally
-                {
-                    Complete();
-                }
-            });
+                _valuesFactory(PushValue);
+            }
+            catch (Exception ex)
+            {
+                PushException(ex);
+            }
+            finally
+            {
+                Complete();
+            }
         }
 
         public override IDisposable Subscribe(ISubscription<T> subscription)

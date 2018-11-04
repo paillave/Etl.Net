@@ -479,42 +479,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Paillave_Etl_Extensions_SelectEx_Select__2_IStream___0__System_String_Paillave_Etl_StreamNodes_ISelectProcessor___0___1__System_Boolean__examples">Examples</h5>
-  <p>This example returns a dataset by replacing null values with the latest not null value.</p>
-<pre><code>public class CrossApplyActionJobs2 : IStreamProcessDefinition&lt;object>
-{
-    public string Name => &quot;import file&quot;;
-    public void DefineProcess(IStream&lt;object> rootStream)
-    {
-        rootStream
-            .CrossApplyEnumerable(&quot;create some values&quot;, (input) => Enumerable.Range(0, 10).Select(i => new MyInputType { Id = i, Value = (i % 3 == 0) ? i : (int?)null }))
-            .Select(&quot;set null value to the previous not null value&quot;, new MySelectProcessor());
-    }
-    private class MyInputType
-    {
-        public int Id { get; set; }
-        public int? Value { get; set; }
-    }
-    private class MyOutputType
-    {
-        public int Id { get; set; }
-        public int Value { get; set; }
-    }
-    private class MySelectProcessor : ISelectProcessor&lt;MyInputType, MyOutputType>
-    {
-        private int _lastValue = 0;
-        public MyOutputType ProcessRow(MyInputType value)
-        {
-            if (value.Value != null) _lastValue = value.Value.Value;
-            return new MyOutputType
-            {
-                Id = value.Id,
-                Value = _lastValue
-            };
-        }
-    }
-}</code></pre>
-
   
   
   <a id="Paillave_Etl_Extensions_SelectEx_Select_" data-uid="Paillave.Etl.Extensions.SelectEx.Select*"></a>
@@ -683,20 +647,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Paillave_Etl_Extensions_SelectEx_Select__2_IStream___0__System_String_System_Func___0___1__System_Boolean__examples">Examples</h5>
-  <p>This example creates a file path from the input value and open it for writing.</p>
-<pre><code>public class MyJob : IStreamProcessDefinition&lt;string>
-{
-    public string Name => &quot;example select&quot;;
-    public void DefineProcess(IStream&lt;string> rootStream)
-    {
-        rootStream
-            .Select(&quot;get file path from its name&quot;, fileName => Path.Combine(&quot;C:\&quot;, fileName))
-            // Values issued by the following select will be automatically disposed once the process is completed.
-            .Select(&quot;open the file&quot;, path => File.OpenWrite(path)); 
-    }
-}</code></pre>
-
   
   
   <a id="Paillave_Etl_Extensions_SelectEx_Select_" data-uid="Paillave.Etl.Extensions.SelectEx.Select*"></a>
@@ -1216,24 +1166,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Paillave_Etl_Extensions_SelectEx_Select__3_IStream___0__System_String___2_System_Func___0___2_System_Action___2____1__System_Boolean__examples">Examples</h5>
-  <p>This example returns a dataset by replacing null values with the latest not null value.</p>
-<pre><code>public class CrossApplyActionJobs : IStreamProcessDefinition&lt;object>
-{
-    public string Name => &quot;import file&quot;;
-    public void DefineProcess(IStream&lt;object> rootStream)
-    {
-        rootStream
-            .CrossApplyEnumerable(&quot;create some values&quot;, (input) => Enumerable.Range(0, 10).Select(i => new { Id = i, Value = (i % 3 == 0) ? i : (int?)null }))
-            .Select(&quot;set null value to the previous not null value&quot;, 0, (i, ctx, setCtx) =>
-            {
-                var v = i.Value ?? ctx;
-                setCtx(v);
-                return new { i.Id, Value = v };
-            });
-    }
-}</code></pre>
-
   
   
   <a id="Paillave_Etl_Extensions_SelectEx_Select_" data-uid="Paillave.Etl.Extensions.SelectEx.Select*"></a>

@@ -33,16 +33,13 @@ namespace Paillave.Etl.Extensions
         /// <returns>Output stream</returns>
         public static IStream<TOut> CrossApplyEnumerable<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, IEnumerable<TOut>> values, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new ActionValuesProvider<TIn, TOut>(new ActionValuesProviderArgs<TIn, TOut>()
-            {
-                NoParallelisation = noParallelisation,
-                ProduceValues = (input, push) =>
+            return stream.CrossApply<TIn, TIn, TOut, TOut>(name, (input, push) =>
                 {
                     foreach (var value in values(input))
                         push(value);
-                }
-            }), i => i, (i, _) => i);
+                }, i => i, (i, _) => i, noParallelisation);
         }
+
         /// <summary>
         /// Produces a stream of rows based on a enumerable using input stream and resource stream
         /// </summary>
@@ -57,15 +54,11 @@ namespace Paillave.Etl.Extensions
         /// <returns>Output stream</returns>
         public static IStream<TOut> CrossApplyEnumerable<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, ISingleStream<TIn2> streamToApply, Func<TIn1, TIn2, IEnumerable<TOut>> values, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, streamToApply, new ActionResourceValuesProvider<TIn1, TIn2, TOut>(new ActionResourceValuesProviderArgs<TIn1, TIn2, TOut>()
-            {
-                NoParallelisation = noParallelisation,
-                ProduceValues = (input1, input2, push) =>
-                {
-                    foreach (var value in values(input1, input2))
-                        push(value);
-                }
-            }), (i, _) => i, (i, _, __) => i);
+            return stream.CrossApply<TIn1, TIn2, TIn1, TOut, TOut>(name, streamToApply, (input1, input2, push) =>
+                  {
+                      foreach (var value in values(input1, input2))
+                          push(value);
+                  }, (i, _) => i, (i, _, __) => i, noParallelisation);
         }
     }
 }

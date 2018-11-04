@@ -167,6 +167,81 @@
       </tr>
     </tbody>
   </table>
+  
+  
+  <a id="Paillave_Etl_Extensions_UnpivotEx_Unpivot_" data-uid="Paillave.Etl.Extensions.UnpivotEx.Unpivot*"></a>
+  <h4 id="Paillave_Etl_Extensions_UnpivotEx_Unpivot__3_IStream___0__System_String_System_Func___0___2____" data-uid="Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,System.Func{``0,``2}[])">Unpivot&lt;TIn, TUnpivoted, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, TOut&gt;[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Unpivot&lt;TIn, TUnpivoted, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, params Func&lt;TIn, TOut&gt;[] fieldsToUnpivot)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TIn&gt;</td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TIn, TOut&gt;[]</td>
+        <td><span class="parametername">fieldsToUnpivot</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TOut&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TUnpivoted</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TOut</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
 </article>
           </div>
           

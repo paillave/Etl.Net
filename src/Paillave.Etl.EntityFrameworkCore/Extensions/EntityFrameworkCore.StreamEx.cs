@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Paillave.Etl.Core.Streams;
 using Paillave.Etl.EntityFrameworkCore.StreamNodes;
-using Paillave.Etl.EntityFrameworkCore.ValuesProviders;
 using System;
 using System.Linq;
 using Paillave.Etl;
@@ -13,11 +12,11 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
     {
         public static IStream<TOut> CrossApplyEntityFrameworkCoreQuery<TIn, TResource, TOut>(this IStream<TIn> stream, string name, ISingleStream<TResource> resourceStream, Func<TIn, TResource, IQueryable<TOut>> getQuery, bool noParallelisation = false) where TResource : DbContext
         {
-            return stream.CrossApply(name, resourceStream, new EntityFrameworkCoreValueProvider<TIn, TResource, TOut>(new EntityFrameworkCoreValueProviderArgs<TIn, TResource, TOut>()
+            return stream.CrossApply(name, resourceStream, (TIn inputValue, TResource valueToApply, Action<TOut> push) =>
             {
-                GetQuery = getQuery,
-                NoParallelisation = noParallelisation
-            }));
+                foreach (var item in getQuery(inputValue, valueToApply).ToList())
+                    push(item);
+            }, noParallelisation);
         }
         public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, BulkLoadMode bulkLoadMode = BulkLoadMode.InsertOnly, int chunkSize = 1000)
             where TResource : DbContext

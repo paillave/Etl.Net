@@ -635,12 +635,12 @@
   
   
   <a id="Paillave_Etl_TextFile_Extensions_TextFileEx_CrossApplyTextFile_" data-uid="Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile*"></a>
-  <h4 id="Paillave_Etl_TextFile_Extensions_TextFileEx_CrossApplyTextFile__2_IStream___0__System_String_System_Func___0_System_String__System_Func___0_System_String___1__System_Boolean_" data-uid="Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String,``1},System.Boolean)">CrossApplyTextFile&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, String&gt;, Func&lt;TIn, String, TOut&gt;, Boolean)</h4>
+  <h4 id="Paillave_Etl_TextFile_Extensions_TextFileEx_CrossApplyTextFile__2_IStream___0__System_String_System_Func___0_System_String__System_Func_System_String___0___1__System_Boolean_" data-uid="Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{System.String,``0,``1},System.Boolean)">CrossApplyTextFile&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, String&gt;, Func&lt;String, TIn, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyTextFile&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, string&gt; filePathSelector, Func&lt;TIn, string, TOut&gt; resultSelector, bool noParallelisation = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; CrossApplyTextFile&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, string&gt; filePathSelector, Func&lt;string, TIn, TOut&gt; resultSelector, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -668,7 +668,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Func</span>&lt;TIn, <span class="xref">System.String</span>, TOut&gt;</td>
+        <td><span class="xref">System.Func</span>&lt;<span class="xref">System.String</span>, TIn, TOut&gt;</td>
         <td><span class="parametername">resultSelector</span></td>
         <td></td>
       </tr>

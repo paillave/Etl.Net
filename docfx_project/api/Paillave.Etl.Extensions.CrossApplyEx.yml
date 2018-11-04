@@ -5,10 +5,10 @@ items:
   id: CrossApplyEx
   parent: Paillave.Etl.Extensions
   children:
-  - Paillave.Etl.Extensions.CrossApplyEx.CrossApply``2(IStream{``0},System.String,IValuesProvider{``0,``1})
-  - Paillave.Etl.Extensions.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``0,``1,``2})
-  - Paillave.Etl.Extensions.CrossApplyEx.CrossApply``4(IStream{``0},System.String,IValuesProvider{``1,``2},System.Func{``0,``1},System.Func{``2,``0,``3})
-  - Paillave.Etl.Extensions.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
+  - Paillave.Etl.Extensions.CrossApplyEx.CrossApply``2(IStream{``0},System.String,System.Action{``0,System.Action{``1}},System.Boolean)
+  - Paillave.Etl.Extensions.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
+  - Paillave.Etl.Extensions.CrossApplyEx.CrossApply``4(IStream{``0},System.String,System.Action{``1,System.Action{``2}},System.Func{``0,``1},System.Func{``2,``0,``3},System.Boolean)
+  - Paillave.Etl.Extensions.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},System.Action{``2,``1,System.Action{``3}},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4},System.Boolean)
   langs:
   - csharp
   - vb
@@ -43,17 +43,17 @@ items:
   modifiers.vb:
   - Public
   - Module
-- uid: Paillave.Etl.Extensions.CrossApplyEx.CrossApply``4(IStream{``0},System.String,IValuesProvider{``1,``2},System.Func{``0,``1},System.Func{``2,``0,``3})
-  commentId: M:Paillave.Etl.Extensions.CrossApplyEx.CrossApply``4(IStream{``0},System.String,IValuesProvider{``1,``2},System.Func{``0,``1},System.Func{``2,``0,``3})
-  id: CrossApply``4(IStream{``0},System.String,IValuesProvider{``1,``2},System.Func{``0,``1},System.Func{``2,``0,``3})
+- uid: Paillave.Etl.Extensions.CrossApplyEx.CrossApply``4(IStream{``0},System.String,System.Action{``1,System.Action{``2}},System.Func{``0,``1},System.Func{``2,``0,``3},System.Boolean)
+  commentId: M:Paillave.Etl.Extensions.CrossApplyEx.CrossApply``4(IStream{``0},System.String,System.Action{``1,System.Action{``2}},System.Func{``0,``1},System.Func{``2,``0,``3},System.Boolean)
+  id: CrossApply``4(IStream{``0},System.String,System.Action{``1,System.Action{``2}},System.Func{``0,``1},System.Func{``2,``0,``3},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.Extensions.CrossApplyEx
   langs:
   - csharp
   - vb
-  name: CrossApply<TIn, TValueIn, TValueOut, TOut>(IStream<TIn>, String, IValuesProvider<TValueIn, TValueOut>, Func<TIn, TValueIn>, Func<TValueOut, TIn, TOut>)
-  nameWithType: CrossApplyEx.CrossApply<TIn, TValueIn, TValueOut, TOut>(IStream<TIn>, String, IValuesProvider<TValueIn, TValueOut>, Func<TIn, TValueIn>, Func<TValueOut, TIn, TOut>)
-  fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TValueIn, TValueOut, TOut>(IStream<TIn>, System.String, IValuesProvider<TValueIn, TValueOut>, System.Func<TIn, TValueIn>, System.Func<TValueOut, TIn, TOut>)
+  name: CrossApply<TIn, TValueIn, TValueOut, TOut>(IStream<TIn>, String, Action<TValueIn, Action<TValueOut>>, Func<TIn, TValueIn>, Func<TValueOut, TIn, TOut>, Boolean)
+  nameWithType: CrossApplyEx.CrossApply<TIn, TValueIn, TValueOut, TOut>(IStream<TIn>, String, Action<TValueIn, Action<TValueOut>>, Func<TIn, TValueIn>, Func<TValueOut, TIn, TOut>, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TValueIn, TValueOut, TOut>(IStream<TIn>, System.String, System.Action<TValueIn, System.Action<TValueOut>>, System.Func<TIn, TValueIn>, System.Func<TValueOut, TIn, TOut>, System.Boolean)
   type: Method
   source:
     id: CrossApply
@@ -63,18 +63,20 @@ items:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static IStream<TOut> CrossApply<TIn, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, IValuesProvider<TValueIn, TValueOut> valuesProvider, Func<TIn, TValueIn> inputValueSelector, Func<TValueOut, TIn, TOut> outputValueSelector)
+    content: public static IStream<TOut> CrossApply<TIn, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, Action<TValueIn, Action<TValueOut>> valuesProvider, Func<TIn, TValueIn> preProcessValue, Func<TValueOut, TIn, TOut> postProcessValue, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: valuesProvider
-      type: IValuesProvider{{TValueIn},{TValueOut}}
-    - id: inputValueSelector
+      type: System.Action{{TValueIn},System.Action{{TValueOut}}}
+    - id: preProcessValue
       type: System.Func{{TIn},{TValueIn}}
-    - id: outputValueSelector
+    - id: postProcessValue
       type: System.Func{{TValueOut},{TIn},{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
     typeParameters:
     - id: TIn
     - id: TValueIn
@@ -85,45 +87,47 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApply(Of TIn, TValueIn, TValueOut, TOut)(stream As IStream(Of TIn), name As String, valuesProvider As IValuesProvider(Of TValueIn, TValueOut), inputValueSelector As Func(Of TIn, TValueIn), outputValueSelector As Func(Of TValueOut, TIn, TOut)) As IStream(Of TOut)
+      Public Shared Function CrossApply(Of TIn, TValueIn, TValueOut, TOut)(stream As IStream(Of TIn), name As String, valuesProvider As Action(Of TValueIn, Action(Of TValueOut)), preProcessValue As Func(Of TIn, TValueIn), postProcessValue As Func(Of TValueOut, TIn, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.Extensions.CrossApplyEx.CrossApply*
-  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, IValuesProvider(Of TValueIn, TValueOut), Func(Of TIn, TValueIn), Func(Of TValueOut, TIn, TOut))
+  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, Action(Of TValueIn, Action(Of TValueOut)), Func(Of TIn, TValueIn), Func(Of TValueOut, TIn, TOut), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyEx.CrossApply(Of TIn, TValueIn, TValueOut, TOut)(IStream(Of TIn), System.String, IValuesProvider(Of TValueIn, TValueOut), System.Func(Of TIn, TValueIn), System.Func(Of TValueOut, TIn, TOut))
-  name.vb: CrossApply(Of TIn, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, IValuesProvider(Of TValueIn, TValueOut), Func(Of TIn, TValueIn), Func(Of TValueOut, TIn, TOut))
-- uid: Paillave.Etl.Extensions.CrossApplyEx.CrossApply``2(IStream{``0},System.String,IValuesProvider{``0,``1})
-  commentId: M:Paillave.Etl.Extensions.CrossApplyEx.CrossApply``2(IStream{``0},System.String,IValuesProvider{``0,``1})
-  id: CrossApply``2(IStream{``0},System.String,IValuesProvider{``0,``1})
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyEx.CrossApply(Of TIn, TValueIn, TValueOut, TOut)(IStream(Of TIn), System.String, System.Action(Of TValueIn, System.Action(Of TValueOut)), System.Func(Of TIn, TValueIn), System.Func(Of TValueOut, TIn, TOut), System.Boolean)
+  name.vb: CrossApply(Of TIn, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, Action(Of TValueIn, Action(Of TValueOut)), Func(Of TIn, TValueIn), Func(Of TValueOut, TIn, TOut), Boolean)
+- uid: Paillave.Etl.Extensions.CrossApplyEx.CrossApply``2(IStream{``0},System.String,System.Action{``0,System.Action{``1}},System.Boolean)
+  commentId: M:Paillave.Etl.Extensions.CrossApplyEx.CrossApply``2(IStream{``0},System.String,System.Action{``0,System.Action{``1}},System.Boolean)
+  id: CrossApply``2(IStream{``0},System.String,System.Action{``0,System.Action{``1}},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.Extensions.CrossApplyEx
   langs:
   - csharp
   - vb
-  name: CrossApply<TIn, TOut>(IStream<TIn>, String, IValuesProvider<TIn, TOut>)
-  nameWithType: CrossApplyEx.CrossApply<TIn, TOut>(IStream<TIn>, String, IValuesProvider<TIn, TOut>)
-  fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TOut>(IStream<TIn>, System.String, IValuesProvider<TIn, TOut>)
+  name: CrossApply<TIn, TOut>(IStream<TIn>, String, Action<TIn, Action<TOut>>, Boolean)
+  nameWithType: CrossApplyEx.CrossApply<TIn, TOut>(IStream<TIn>, String, Action<TIn, Action<TOut>>, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TOut>(IStream<TIn>, System.String, System.Action<TIn, System.Action<TOut>>, System.Boolean)
   type: Method
   source:
     id: CrossApply
     path: ''
-    startLine: 114
+    startLine: 115
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static IStream<TOut> CrossApply<TIn, TOut>(this IStream<TIn> stream, string name, IValuesProvider<TIn, TOut> valuesProvider)
+    content: public static IStream<TOut> CrossApply<TIn, TOut>(this IStream<TIn> stream, string name, Action<TIn, Action<TOut>> valuesProvider, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: valuesProvider
-      type: IValuesProvider{{TIn},{TOut}}
+      type: System.Action{{TIn},System.Action{{TOut}}}
+    - id: noParallelisation
+      type: System.Boolean
     typeParameters:
     - id: TIn
     - id: TOut
@@ -132,54 +136,56 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApply(Of TIn, TOut)(stream As IStream(Of TIn), name As String, valuesProvider As IValuesProvider(Of TIn, TOut)) As IStream(Of TOut)
+      Public Shared Function CrossApply(Of TIn, TOut)(stream As IStream(Of TIn), name As String, valuesProvider As Action(Of TIn, Action(Of TOut)), noParallelisation As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.Extensions.CrossApplyEx.CrossApply*
-  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TOut)(IStream(Of TIn), String, IValuesProvider(Of TIn, TOut))
+  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TOut)(IStream(Of TIn), String, Action(Of TIn, Action(Of TOut)), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyEx.CrossApply(Of TIn, TOut)(IStream(Of TIn), System.String, IValuesProvider(Of TIn, TOut))
-  name.vb: CrossApply(Of TIn, TOut)(IStream(Of TIn), String, IValuesProvider(Of TIn, TOut))
-- uid: Paillave.Etl.Extensions.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
-  commentId: M:Paillave.Etl.Extensions.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
-  id: CrossApply``5(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``2,``1,``3},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4})
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyEx.CrossApply(Of TIn, TOut)(IStream(Of TIn), System.String, System.Action(Of TIn, System.Action(Of TOut)), System.Boolean)
+  name.vb: CrossApply(Of TIn, TOut)(IStream(Of TIn), String, Action(Of TIn, Action(Of TOut)), Boolean)
+- uid: Paillave.Etl.Extensions.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},System.Action{``2,``1,System.Action{``3}},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4},System.Boolean)
+  commentId: M:Paillave.Etl.Extensions.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},System.Action{``2,``1,System.Action{``3}},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4},System.Boolean)
+  id: CrossApply``5(IStream{``0},System.String,ISingleStream{``1},System.Action{``2,``1,System.Action{``3}},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.Extensions.CrossApplyEx
   langs:
   - csharp
   - vb
-  name: CrossApply<TIn, TResource, TValueIn, TValueOut, TOut>(IStream<TIn>, String, ISingleStream<TResource>, IValuesProvider<TValueIn, TResource, TValueOut>, Func<TIn, TResource, TValueIn>, Func<TValueOut, TIn, TResource, TOut>)
-  nameWithType: CrossApplyEx.CrossApply<TIn, TResource, TValueIn, TValueOut, TOut>(IStream<TIn>, String, ISingleStream<TResource>, IValuesProvider<TValueIn, TResource, TValueOut>, Func<TIn, TResource, TValueIn>, Func<TValueOut, TIn, TResource, TOut>)
-  fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TResource, TValueIn, TValueOut, TOut>(IStream<TIn>, System.String, ISingleStream<TResource>, IValuesProvider<TValueIn, TResource, TValueOut>, System.Func<TIn, TResource, TValueIn>, System.Func<TValueOut, TIn, TResource, TOut>)
+  name: CrossApply<TIn, TInToApply, TValueIn, TValueOut, TOut>(IStream<TIn>, String, ISingleStream<TInToApply>, Action<TValueIn, TInToApply, Action<TValueOut>>, Func<TIn, TInToApply, TValueIn>, Func<TValueOut, TIn, TInToApply, TOut>, Boolean)
+  nameWithType: CrossApplyEx.CrossApply<TIn, TInToApply, TValueIn, TValueOut, TOut>(IStream<TIn>, String, ISingleStream<TInToApply>, Action<TValueIn, TInToApply, Action<TValueOut>>, Func<TIn, TInToApply, TValueIn>, Func<TValueOut, TIn, TInToApply, TOut>, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TInToApply, TValueIn, TValueOut, TOut>(IStream<TIn>, System.String, ISingleStream<TInToApply>, System.Action<TValueIn, TInToApply, System.Action<TValueOut>>, System.Func<TIn, TInToApply, TValueIn>, System.Func<TValueOut, TIn, TInToApply, TOut>, System.Boolean)
   type: Method
   source:
     id: CrossApply
     path: ''
-    startLine: 124
+    startLine: 126
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static IStream<TOut> CrossApply<TIn, TResource, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, ISingleStream<TResource> resourceStream, IValuesProvider<TValueIn, TResource, TValueOut> valuesProvider, Func<TIn, TResource, TValueIn> inputValueSelector, Func<TValueOut, TIn, TResource, TOut> outputValueSelector)
+    content: public static IStream<TOut> CrossApply<TIn, TInToApply, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, ISingleStream<TInToApply> resourceStream, Action<TValueIn, TInToApply, Action<TValueOut>> valuesProvider, Func<TIn, TInToApply, TValueIn> preProcessValue, Func<TValueOut, TIn, TInToApply, TOut> postProcessValue, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: ISingleStream{{TResource}}
+      type: ISingleStream{{TInToApply}}
     - id: valuesProvider
-      type: IValuesProvider{{TValueIn},{TResource},{TValueOut}}
-    - id: inputValueSelector
-      type: System.Func{{TIn},{TResource},{TValueIn}}
-    - id: outputValueSelector
-      type: System.Func{{TValueOut},{TIn},{TResource},{TOut}}
+      type: System.Action{{TValueIn},{TInToApply},System.Action{{TValueOut}}}
+    - id: preProcessValue
+      type: System.Func{{TIn},{TInToApply},{TValueIn}}
+    - id: postProcessValue
+      type: System.Func{{TValueOut},{TIn},{TInToApply},{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
     typeParameters:
     - id: TIn
-    - id: TResource
+    - id: TInToApply
     - id: TValueIn
     - id: TValueOut
     - id: TOut
@@ -188,67 +194,69 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApply(Of TIn, TResource, TValueIn, TValueOut, TOut)(stream As IStream(Of TIn), name As String, resourceStream As ISingleStream(Of TResource), valuesProvider As IValuesProvider(Of TValueIn, TResource, TValueOut), inputValueSelector As Func(Of TIn, TResource, TValueIn), outputValueSelector As Func(Of TValueOut, TIn, TResource, TOut)) As IStream(Of TOut)
+      Public Shared Function CrossApply(Of TIn, TInToApply, TValueIn, TValueOut, TOut)(stream As IStream(Of TIn), name As String, resourceStream As ISingleStream(Of TInToApply), valuesProvider As Action(Of TValueIn, TInToApply, Action(Of TValueOut)), preProcessValue As Func(Of TIn, TInToApply, TValueIn), postProcessValue As Func(Of TValueOut, TIn, TInToApply, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.Extensions.CrossApplyEx.CrossApply*
-  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TResource, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, ISingleStream(Of TResource), IValuesProvider(Of TValueIn, TResource, TValueOut), Func(Of TIn, TResource, TValueIn), Func(Of TValueOut, TIn, TResource, TOut))
+  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TInToApply, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, ISingleStream(Of TInToApply), Action(Of TValueIn, TInToApply, Action(Of TValueOut)), Func(Of TIn, TInToApply, TValueIn), Func(Of TValueOut, TIn, TInToApply, TOut), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyEx.CrossApply(Of TIn, TResource, TValueIn, TValueOut, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TResource), IValuesProvider(Of TValueIn, TResource, TValueOut), System.Func(Of TIn, TResource, TValueIn), System.Func(Of TValueOut, TIn, TResource, TOut))
-  name.vb: CrossApply(Of TIn, TResource, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, ISingleStream(Of TResource), IValuesProvider(Of TValueIn, TResource, TValueOut), Func(Of TIn, TResource, TValueIn), Func(Of TValueOut, TIn, TResource, TOut))
-- uid: Paillave.Etl.Extensions.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``0,``1,``2})
-  commentId: M:Paillave.Etl.Extensions.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``0,``1,``2})
-  id: CrossApply``3(IStream{``0},System.String,ISingleStream{``1},IValuesProvider{``0,``1,``2})
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyEx.CrossApply(Of TIn, TInToApply, TValueIn, TValueOut, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TInToApply), System.Action(Of TValueIn, TInToApply, System.Action(Of TValueOut)), System.Func(Of TIn, TInToApply, TValueIn), System.Func(Of TValueOut, TIn, TInToApply, TOut), System.Boolean)
+  name.vb: CrossApply(Of TIn, TInToApply, TValueIn, TValueOut, TOut)(IStream(Of TIn), String, ISingleStream(Of TInToApply), Action(Of TValueIn, TInToApply, Action(Of TValueOut)), Func(Of TIn, TInToApply, TValueIn), Func(Of TValueOut, TIn, TInToApply, TOut), Boolean)
+- uid: Paillave.Etl.Extensions.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
+  commentId: M:Paillave.Etl.Extensions.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
+  id: CrossApply``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.Extensions.CrossApplyEx
   langs:
   - csharp
   - vb
-  name: CrossApply<TIn, TResource, TOut>(IStream<TIn>, String, ISingleStream<TResource>, IValuesProvider<TIn, TResource, TOut>)
-  nameWithType: CrossApplyEx.CrossApply<TIn, TResource, TOut>(IStream<TIn>, String, ISingleStream<TResource>, IValuesProvider<TIn, TResource, TOut>)
-  fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TResource, TOut>(IStream<TIn>, System.String, ISingleStream<TResource>, IValuesProvider<TIn, TResource, TOut>)
+  name: CrossApply<TIn, TInToApply, TOut>(IStream<TIn>, String, ISingleStream<TInToApply>, Action<TIn, TInToApply, Action<TOut>>, Boolean)
+  nameWithType: CrossApplyEx.CrossApply<TIn, TInToApply, TOut>(IStream<TIn>, String, ISingleStream<TInToApply>, Action<TIn, TInToApply, Action<TOut>>, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TInToApply, TOut>(IStream<TIn>, System.String, ISingleStream<TInToApply>, System.Action<TIn, TInToApply, System.Action<TOut>>, System.Boolean)
   type: Method
   source:
     id: CrossApply
     path: ''
-    startLine: 135
+    startLine: 138
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static IStream<TOut> CrossApply<TIn, TResource, TOut>(this IStream<TIn> stream, string name, ISingleStream<TResource> resourceStream, IValuesProvider<TIn, TResource, TOut> valuesProvider)
+    content: public static IStream<TOut> CrossApply<TIn, TInToApply, TOut>(this IStream<TIn> stream, string name, ISingleStream<TInToApply> resourceStream, Action<TIn, TInToApply, Action<TOut>> valuesProvider, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: resourceStream
-      type: ISingleStream{{TResource}}
+      type: ISingleStream{{TInToApply}}
     - id: valuesProvider
-      type: IValuesProvider{{TIn},{TResource},{TOut}}
+      type: System.Action{{TIn},{TInToApply},System.Action{{TOut}}}
+    - id: noParallelisation
+      type: System.Boolean
     typeParameters:
     - id: TIn
-    - id: TResource
+    - id: TInToApply
     - id: TOut
     return:
       type: IStream{{TOut}}
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApply(Of TIn, TResource, TOut)(stream As IStream(Of TIn), name As String, resourceStream As ISingleStream(Of TResource), valuesProvider As IValuesProvider(Of TIn, TResource, TOut)) As IStream(Of TOut)
+      Public Shared Function CrossApply(Of TIn, TInToApply, TOut)(stream As IStream(Of TIn), name As String, resourceStream As ISingleStream(Of TInToApply), valuesProvider As Action(Of TIn, TInToApply, Action(Of TOut)), noParallelisation As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.Extensions.CrossApplyEx.CrossApply*
-  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TResource, TOut)(IStream(Of TIn), String, ISingleStream(Of TResource), IValuesProvider(Of TIn, TResource, TOut))
+  nameWithType.vb: CrossApplyEx.CrossApply(Of TIn, TInToApply, TOut)(IStream(Of TIn), String, ISingleStream(Of TInToApply), Action(Of TIn, TInToApply, Action(Of TOut)), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyEx.CrossApply(Of TIn, TResource, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TResource), IValuesProvider(Of TIn, TResource, TOut))
-  name.vb: CrossApply(Of TIn, TResource, TOut)(IStream(Of TIn), String, ISingleStream(Of TResource), IValuesProvider(Of TIn, TResource, TOut))
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyEx.CrossApply(Of TIn, TInToApply, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TInToApply), System.Action(Of TIn, TInToApply, System.Action(Of TOut)), System.Boolean)
+  name.vb: CrossApply(Of TIn, TInToApply, TOut)(IStream(Of TIn), String, ISingleStream(Of TInToApply), Action(Of TIn, TInToApply, Action(Of TOut)), Boolean)
 references:
 - uid: Paillave.Etl.Extensions
   commentId: N:Paillave.Etl.Extensions
@@ -598,20 +606,21 @@ references:
   name: String
   nameWithType: String
   fullName: System.String
-- uid: IValuesProvider{{TValueIn},{TValueOut}}
-  commentId: '!:IValuesProvider{``1,``2}'
-  definition: IValuesProvider`2
-  name: IValuesProvider<TValueIn, TValueOut>
-  nameWithType: IValuesProvider<TValueIn, TValueOut>
-  fullName: IValuesProvider<TValueIn, TValueOut>
-  nameWithType.vb: IValuesProvider(Of TValueIn, TValueOut)
-  fullName.vb: IValuesProvider(Of TValueIn, TValueOut)
-  name.vb: IValuesProvider(Of TValueIn, TValueOut)
+- uid: System.Action{{TValueIn},System.Action{{TValueOut}}}
+  commentId: T:System.Action{``1,System.Action{``2}}
+  parent: System
+  definition: System.Action`2
+  name: Action<TValueIn, Action<TValueOut>>
+  nameWithType: Action<TValueIn, Action<TValueOut>>
+  fullName: System.Action<TValueIn, System.Action<TValueOut>>
+  nameWithType.vb: Action(Of TValueIn, Action(Of TValueOut))
+  fullName.vb: System.Action(Of TValueIn, System.Action(Of TValueOut))
+  name.vb: Action(Of TValueIn, Action(Of TValueOut))
   spec.csharp:
-  - uid: IValuesProvider`2
-    name: IValuesProvider
-    nameWithType: IValuesProvider
-    fullName: IValuesProvider
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
     isExternal: true
   - name: <
     nameWithType: <
@@ -622,17 +631,28 @@ references:
   - name: ', '
     nameWithType: ', '
     fullName: ', '
+  - uid: System.Action`1
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
   - name: TValueOut
     nameWithType: TValueOut
     fullName: TValueOut
   - name: '>'
     nameWithType: '>'
     fullName: '>'
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
   spec.vb:
-  - uid: IValuesProvider`2
-    name: IValuesProvider
-    nameWithType: IValuesProvider
-    fullName: IValuesProvider
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
@@ -643,9 +663,20 @@ references:
   - name: ', '
     nameWithType: ', '
     fullName: ', '
+  - uid: System.Action`1
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
   - name: TValueOut
     nameWithType: TValueOut
     fullName: TValueOut
+  - name: )
+    nameWithType: )
+    fullName: )
   - name: )
     nameWithType: )
     fullName: )
@@ -765,6 +796,13 @@ references:
   - name: )
     nameWithType: )
     fullName: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
 - uid: IStream{{TOut}}
   commentId: '!:IStream{``3}'
   definition: IStream`1
@@ -842,53 +880,54 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: IValuesProvider`2
+- uid: System.Action`2
+  commentId: T:System.Action`2
   isExternal: true
-  name: IValuesProvider<, >
-  nameWithType: IValuesProvider<, >
-  fullName: IValuesProvider<, >
-  nameWithType.vb: IValuesProvider(Of , )
-  fullName.vb: IValuesProvider(Of , )
-  name.vb: IValuesProvider(Of , )
+  name: Action<T1, T2>
+  nameWithType: Action<T1, T2>
+  fullName: System.Action<T1, T2>
+  nameWithType.vb: Action(Of T1, T2)
+  fullName.vb: System.Action(Of T1, T2)
+  name.vb: Action(Of T1, T2)
   spec.csharp:
-  - uid: IValuesProvider`2
-    name: IValuesProvider
-    nameWithType: IValuesProvider
-    fullName: IValuesProvider
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
     isExternal: true
   - name: <
     nameWithType: <
     fullName: <
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: T1
+    nameWithType: T1
+    fullName: T1
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: T2
+    nameWithType: T2
+    fullName: T2
   - name: '>'
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: IValuesProvider`2
-    name: IValuesProvider
-    nameWithType: IValuesProvider
-    fullName: IValuesProvider
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
     fullName: '(Of '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: T1
+    nameWithType: T1
+    fullName: T1
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: T2
+    nameWithType: T2
+    fullName: T2
   - name: )
     nameWithType: )
     fullName: )
@@ -1006,20 +1045,21 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: IValuesProvider{{TIn},{TOut}}
-  commentId: '!:IValuesProvider{``0,``1}'
-  definition: IValuesProvider`2
-  name: IValuesProvider<TIn, TOut>
-  nameWithType: IValuesProvider<TIn, TOut>
-  fullName: IValuesProvider<TIn, TOut>
-  nameWithType.vb: IValuesProvider(Of TIn, TOut)
-  fullName.vb: IValuesProvider(Of TIn, TOut)
-  name.vb: IValuesProvider(Of TIn, TOut)
+- uid: System.Action{{TIn},System.Action{{TOut}}}
+  commentId: T:System.Action{``0,System.Action{``1}}
+  parent: System
+  definition: System.Action`2
+  name: Action<TIn, Action<TOut>>
+  nameWithType: Action<TIn, Action<TOut>>
+  fullName: System.Action<TIn, System.Action<TOut>>
+  nameWithType.vb: Action(Of TIn, Action(Of TOut))
+  fullName.vb: System.Action(Of TIn, System.Action(Of TOut))
+  name.vb: Action(Of TIn, Action(Of TOut))
   spec.csharp:
-  - uid: IValuesProvider`2
-    name: IValuesProvider
-    nameWithType: IValuesProvider
-    fullName: IValuesProvider
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
     isExternal: true
   - name: <
     nameWithType: <
@@ -1030,17 +1070,28 @@ references:
   - name: ', '
     nameWithType: ', '
     fullName: ', '
+  - uid: System.Action`1
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
   - name: TOut
     nameWithType: TOut
     fullName: TOut
   - name: '>'
     nameWithType: '>'
     fullName: '>'
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
   spec.vb:
-  - uid: IValuesProvider`2
-    name: IValuesProvider
-    nameWithType: IValuesProvider
-    fullName: IValuesProvider
+  - uid: System.Action`2
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
@@ -1051,21 +1102,32 @@ references:
   - name: ', '
     nameWithType: ', '
     fullName: ', '
+  - uid: System.Action`1
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
   - name: TOut
     nameWithType: TOut
     fullName: TOut
   - name: )
     nameWithType: )
     fullName: )
-- uid: ISingleStream{{TResource}}
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream{{TInToApply}}
   commentId: '!:ISingleStream{``1}'
   definition: ISingleStream`1
-  name: ISingleStream<TResource>
-  nameWithType: ISingleStream<TResource>
-  fullName: ISingleStream<TResource>
-  nameWithType.vb: ISingleStream(Of TResource)
-  fullName.vb: ISingleStream(Of TResource)
-  name.vb: ISingleStream(Of TResource)
+  name: ISingleStream<TInToApply>
+  nameWithType: ISingleStream<TInToApply>
+  fullName: ISingleStream<TInToApply>
+  nameWithType.vb: ISingleStream(Of TInToApply)
+  fullName.vb: ISingleStream(Of TInToApply)
+  name.vb: ISingleStream(Of TInToApply)
   spec.csharp:
   - uid: ISingleStream`1
     name: ISingleStream
@@ -1075,9 +1137,9 @@ references:
   - name: <
     nameWithType: <
     fullName: <
-  - name: TResource
-    nameWithType: TResource
-    fullName: TResource
+  - name: TInToApply
+    nameWithType: TInToApply
+    fullName: TInToApply
   - name: '>'
     nameWithType: '>'
     fullName: '>'
@@ -1090,26 +1152,27 @@ references:
   - name: '(Of '
     nameWithType: '(Of '
     fullName: '(Of '
-  - name: TResource
-    nameWithType: TResource
-    fullName: TResource
+  - name: TInToApply
+    nameWithType: TInToApply
+    fullName: TInToApply
   - name: )
     nameWithType: )
     fullName: )
-- uid: IValuesProvider{{TValueIn},{TResource},{TValueOut}}
-  commentId: '!:IValuesProvider{``2,``1,``3}'
-  definition: IValuesProvider`3
-  name: IValuesProvider<TValueIn, TResource, TValueOut>
-  nameWithType: IValuesProvider<TValueIn, TResource, TValueOut>
-  fullName: IValuesProvider<TValueIn, TResource, TValueOut>
-  nameWithType.vb: IValuesProvider(Of TValueIn, TResource, TValueOut)
-  fullName.vb: IValuesProvider(Of TValueIn, TResource, TValueOut)
-  name.vb: IValuesProvider(Of TValueIn, TResource, TValueOut)
+- uid: System.Action{{TValueIn},{TInToApply},System.Action{{TValueOut}}}
+  commentId: T:System.Action{``2,``1,System.Action{``3}}
+  parent: System
+  definition: System.Action`3
+  name: Action<TValueIn, TInToApply, Action<TValueOut>>
+  nameWithType: Action<TValueIn, TInToApply, Action<TValueOut>>
+  fullName: System.Action<TValueIn, TInToApply, System.Action<TValueOut>>
+  nameWithType.vb: Action(Of TValueIn, TInToApply, Action(Of TValueOut))
+  fullName.vb: System.Action(Of TValueIn, TInToApply, System.Action(Of TValueOut))
+  name.vb: Action(Of TValueIn, TInToApply, Action(Of TValueOut))
   spec.csharp:
-  - uid: IValuesProvider`3
-    name: IValuesProvider
-    nameWithType: IValuesProvider
-    fullName: IValuesProvider
+  - uid: System.Action`3
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
     isExternal: true
   - name: <
     nameWithType: <
@@ -1120,23 +1183,34 @@ references:
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: TResource
-    nameWithType: TResource
-    fullName: TResource
+  - name: TInToApply
+    nameWithType: TInToApply
+    fullName: TInToApply
   - name: ', '
     nameWithType: ', '
     fullName: ', '
+  - uid: System.Action`1
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
   - name: TValueOut
     nameWithType: TValueOut
     fullName: TValueOut
   - name: '>'
     nameWithType: '>'
     fullName: '>'
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
   spec.vb:
-  - uid: IValuesProvider`3
-    name: IValuesProvider
-    nameWithType: IValuesProvider
-    fullName: IValuesProvider
+  - uid: System.Action`3
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
@@ -1147,28 +1221,39 @@ references:
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: TResource
-    nameWithType: TResource
-    fullName: TResource
+  - name: TInToApply
+    nameWithType: TInToApply
+    fullName: TInToApply
   - name: ', '
     nameWithType: ', '
     fullName: ', '
+  - uid: System.Action`1
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
   - name: TValueOut
     nameWithType: TValueOut
     fullName: TValueOut
   - name: )
     nameWithType: )
     fullName: )
-- uid: System.Func{{TIn},{TResource},{TValueIn}}
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TIn},{TInToApply},{TValueIn}}
   commentId: T:System.Func{``0,``1,``2}
   parent: System
   definition: System.Func`3
-  name: Func<TIn, TResource, TValueIn>
-  nameWithType: Func<TIn, TResource, TValueIn>
-  fullName: System.Func<TIn, TResource, TValueIn>
-  nameWithType.vb: Func(Of TIn, TResource, TValueIn)
-  fullName.vb: System.Func(Of TIn, TResource, TValueIn)
-  name.vb: Func(Of TIn, TResource, TValueIn)
+  name: Func<TIn, TInToApply, TValueIn>
+  nameWithType: Func<TIn, TInToApply, TValueIn>
+  fullName: System.Func<TIn, TInToApply, TValueIn>
+  nameWithType.vb: Func(Of TIn, TInToApply, TValueIn)
+  fullName.vb: System.Func(Of TIn, TInToApply, TValueIn)
+  name.vb: Func(Of TIn, TInToApply, TValueIn)
   spec.csharp:
   - uid: System.Func`3
     name: Func
@@ -1184,9 +1269,9 @@ references:
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: TResource
-    nameWithType: TResource
-    fullName: TResource
+  - name: TInToApply
+    nameWithType: TInToApply
+    fullName: TInToApply
   - name: ', '
     nameWithType: ', '
     fullName: ', '
@@ -1211,9 +1296,9 @@ references:
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: TResource
-    nameWithType: TResource
-    fullName: TResource
+  - name: TInToApply
+    nameWithType: TInToApply
+    fullName: TInToApply
   - name: ', '
     nameWithType: ', '
     fullName: ', '
@@ -1223,16 +1308,16 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: System.Func{{TValueOut},{TIn},{TResource},{TOut}}
+- uid: System.Func{{TValueOut},{TIn},{TInToApply},{TOut}}
   commentId: T:System.Func{``3,``0,``1,``4}
   parent: System
   definition: System.Func`4
-  name: Func<TValueOut, TIn, TResource, TOut>
-  nameWithType: Func<TValueOut, TIn, TResource, TOut>
-  fullName: System.Func<TValueOut, TIn, TResource, TOut>
-  nameWithType.vb: Func(Of TValueOut, TIn, TResource, TOut)
-  fullName.vb: System.Func(Of TValueOut, TIn, TResource, TOut)
-  name.vb: Func(Of TValueOut, TIn, TResource, TOut)
+  name: Func<TValueOut, TIn, TInToApply, TOut>
+  nameWithType: Func<TValueOut, TIn, TInToApply, TOut>
+  fullName: System.Func<TValueOut, TIn, TInToApply, TOut>
+  nameWithType.vb: Func(Of TValueOut, TIn, TInToApply, TOut)
+  fullName.vb: System.Func(Of TValueOut, TIn, TInToApply, TOut)
+  name.vb: Func(Of TValueOut, TIn, TInToApply, TOut)
   spec.csharp:
   - uid: System.Func`4
     name: Func
@@ -1254,9 +1339,9 @@ references:
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: TResource
-    nameWithType: TResource
-    fullName: TResource
+  - name: TInToApply
+    nameWithType: TInToApply
+    fullName: TInToApply
   - name: ', '
     nameWithType: ', '
     fullName: ', '
@@ -1287,9 +1372,9 @@ references:
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: TResource
-    nameWithType: TResource
-    fullName: TResource
+  - name: TInToApply
+    nameWithType: TInToApply
+    fullName: TInToApply
   - name: ', '
     nameWithType: ', '
     fullName: ', '
@@ -1337,65 +1422,66 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: IValuesProvider`3
+- uid: System.Action`3
+  commentId: T:System.Action`3
   isExternal: true
-  name: IValuesProvider<, , >
-  nameWithType: IValuesProvider<, , >
-  fullName: IValuesProvider<, , >
-  nameWithType.vb: IValuesProvider(Of , , )
-  fullName.vb: IValuesProvider(Of , , )
-  name.vb: IValuesProvider(Of , , )
+  name: Action<T1, T2, T3>
+  nameWithType: Action<T1, T2, T3>
+  fullName: System.Action<T1, T2, T3>
+  nameWithType.vb: Action(Of T1, T2, T3)
+  fullName.vb: System.Action(Of T1, T2, T3)
+  name.vb: Action(Of T1, T2, T3)
   spec.csharp:
-  - uid: IValuesProvider`3
-    name: IValuesProvider
-    nameWithType: IValuesProvider
-    fullName: IValuesProvider
+  - uid: System.Action`3
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
     isExternal: true
   - name: <
     nameWithType: <
     fullName: <
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: T1
+    nameWithType: T1
+    fullName: T1
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: T2
+    nameWithType: T2
+    fullName: T2
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: T3
+    nameWithType: T3
+    fullName: T3
   - name: '>'
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: IValuesProvider`3
-    name: IValuesProvider
-    nameWithType: IValuesProvider
-    fullName: IValuesProvider
+  - uid: System.Action`3
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
     fullName: '(Of '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: T1
+    nameWithType: T1
+    fullName: T1
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: T2
+    nameWithType: T2
+    fullName: T2
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: T3
+    nameWithType: T3
+    fullName: T3
   - name: )
     nameWithType: )
     fullName: )
@@ -1474,20 +1560,21 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: IValuesProvider{{TIn},{TResource},{TOut}}
-  commentId: '!:IValuesProvider{``0,``1,``2}'
-  definition: IValuesProvider`3
-  name: IValuesProvider<TIn, TResource, TOut>
-  nameWithType: IValuesProvider<TIn, TResource, TOut>
-  fullName: IValuesProvider<TIn, TResource, TOut>
-  nameWithType.vb: IValuesProvider(Of TIn, TResource, TOut)
-  fullName.vb: IValuesProvider(Of TIn, TResource, TOut)
-  name.vb: IValuesProvider(Of TIn, TResource, TOut)
+- uid: System.Action{{TIn},{TInToApply},System.Action{{TOut}}}
+  commentId: T:System.Action{``0,``1,System.Action{``2}}
+  parent: System
+  definition: System.Action`3
+  name: Action<TIn, TInToApply, Action<TOut>>
+  nameWithType: Action<TIn, TInToApply, Action<TOut>>
+  fullName: System.Action<TIn, TInToApply, System.Action<TOut>>
+  nameWithType.vb: Action(Of TIn, TInToApply, Action(Of TOut))
+  fullName.vb: System.Action(Of TIn, TInToApply, System.Action(Of TOut))
+  name.vb: Action(Of TIn, TInToApply, Action(Of TOut))
   spec.csharp:
-  - uid: IValuesProvider`3
-    name: IValuesProvider
-    nameWithType: IValuesProvider
-    fullName: IValuesProvider
+  - uid: System.Action`3
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
     isExternal: true
   - name: <
     nameWithType: <
@@ -1498,23 +1585,34 @@ references:
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: TResource
-    nameWithType: TResource
-    fullName: TResource
+  - name: TInToApply
+    nameWithType: TInToApply
+    fullName: TInToApply
   - name: ', '
     nameWithType: ', '
     fullName: ', '
+  - uid: System.Action`1
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
   - name: TOut
     nameWithType: TOut
     fullName: TOut
   - name: '>'
     nameWithType: '>'
     fullName: '>'
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
   spec.vb:
-  - uid: IValuesProvider`3
-    name: IValuesProvider
-    nameWithType: IValuesProvider
-    fullName: IValuesProvider
+  - uid: System.Action`3
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
@@ -1525,15 +1623,26 @@ references:
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: TResource
-    nameWithType: TResource
-    fullName: TResource
+  - name: TInToApply
+    nameWithType: TInToApply
+    fullName: TInToApply
   - name: ', '
     nameWithType: ', '
     fullName: ', '
+  - uid: System.Action`1
+    name: Action
+    nameWithType: Action
+    fullName: System.Action
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
   - name: TOut
     nameWithType: TOut
     fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
   - name: )
     nameWithType: )
     fullName: )

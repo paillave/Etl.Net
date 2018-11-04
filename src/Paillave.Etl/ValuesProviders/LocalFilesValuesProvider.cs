@@ -22,31 +22,20 @@ namespace Paillave.Etl.ValuesProviders
             return File.OpenRead(this.Name);
         }
     }
-
     public class LocalFilesValuesProviderArgs
     {
         public string SearchPattern { get; set; } = "*";
         public bool Recursive { get; set; } = false;
         public string RootFolder { get; set; }
     }
-
-    public class LocalFilesValuesProvider : ValuesProviderBase<LocalFilesValuesProviderArgs, LocalFilesValue>
+    public class LocalFilesValuesProvider
     {
-        public LocalFilesValuesProvider() : base(false)
-        {
-        }
-
-        public void Dispose() { }
-
-        protected override void PushValues(LocalFilesValuesProviderArgs args, Action<LocalFilesValue> pushValue)
+        public void PushValues(Action<LocalFilesValue> pushValue, LocalFilesValuesProviderArgs args)
         {
             Directory
                 .GetFiles(args.RootFolder, args.SearchPattern, args.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
                 .ToList()
                 .ForEach(name => pushValue(new LocalFilesValue(name)));
         }
-    }
-    public static partial class StreamEx
-    {
     }
 }

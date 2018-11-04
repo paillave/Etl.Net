@@ -8,14 +8,20 @@ namespace Paillave.Etl.Reactive.Core
     {
         private Action _start;
         private IPushObservable<T> _observable;
-        public DeferredWrapperPushObservable(IPushObservable<T> observable, Action start)
+        private Synchronizer _synchronizer = null;
+        public DeferredWrapperPushObservable(IPushObservable<T> observable, Action start, Synchronizer synchronizer = null)
         {
             _observable = observable;
             _start = start;
+            _synchronizer = synchronizer;
         }
         public void Start()
         {
-            _start();
+            if (_synchronizer == null)
+                _start();
+            else
+                using (_synchronizer.WaitBeforeProcess())
+                    _start();
         }
 
         public IDisposable Subscribe(Action<T> onPush)

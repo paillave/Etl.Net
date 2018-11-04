@@ -12,6 +12,19 @@ namespace Paillave.EtlTests.Reactive.Operators
     {
         [TestCategory(nameof(MapSubjectTests))]
         [TestMethod]
+        public void MapValuesWithIndex()
+        {
+            var input = Enumerable.Range(0, 10);
+            var inputObservable = PushObservable.FromEnumerable(input);
+            var outputTask = inputObservable.Map((i, idx) => new { Value = i, Index = idx }).ToListAsync();
+            inputObservable.Start();
+            outputTask.Wait();
+            var output = outputTask.Result;
+            Assert.IsTrue(output.All(i => i.Index == i.Value));
+        }
+
+        [TestCategory(nameof(MapSubjectTests))]
+        [TestMethod]
         public void MapValues()
         {
             var inputValues = new[] { true, false, true, false, false };

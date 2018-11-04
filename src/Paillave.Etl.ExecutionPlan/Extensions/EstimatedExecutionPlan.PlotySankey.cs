@@ -44,7 +44,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
 
             var assembly = typeof(JobDefinitionStructureEx).Assembly;
 
-            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.ExecutionPlan.EstimatedExecutionPlan.Resources.PlotySankey.html"))
+            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.ExecutionPlan.Resources.EstimatedExecutionPlan.PlotySankey.html"))
             using (var reader = new StreamReader(stream))
                 file = reader.ReadToEnd();
 

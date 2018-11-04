@@ -52,7 +52,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
 
             var assembly = typeof(ExecutionStatusEx).Assembly;
 
-            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.ExecutionPlan.ActualExecutionPlan.Resources.PlotySankey.html"))
+            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.ExecutionPlan.Resources.ActualExecutionPlan.PlotySankey.html"))
             using (var reader = new StreamReader(stream))
                 file = reader.ReadToEnd();
 

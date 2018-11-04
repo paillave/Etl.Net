@@ -13,7 +13,7 @@ items:
   - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{System.String},System.String,FlatFileDefinition{``0},System.Boolean)
   - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{System.String},System.String,System.Func{System.String,System.String,``0},System.Boolean)
   - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,FlatFileDefinition{``1},System.Func{``0,System.String},System.Boolean)
-  - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String,``1},System.Boolean)
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{System.String,``0,``1},System.Boolean)
   - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{Stream},System.String,FlatFileDefinition{``0},System.Func{``0,``1},System.Boolean)
   - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{System.String},System.String,FlatFileDefinition{``0},System.Func{System.String,``0,``1},System.Boolean)
   - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``3(IStream{``0},System.String,FlatFileDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},System.Boolean)
@@ -31,7 +31,7 @@ items:
   source:
     id: TextFileEx
     path: ''
-    startLine: 318
+    startLine: 296
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -70,7 +70,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 321
+    startLine: 299
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -118,7 +118,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 331
+    startLine: 309
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -166,7 +166,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 341
+    startLine: 319
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -217,7 +217,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 351
+    startLine: 329
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -271,7 +271,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 361
+    startLine: 339
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -322,7 +322,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 371
+    startLine: 349
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -373,7 +373,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 382
+    startLine: 360
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -417,7 +417,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 391
+    startLine: 365
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -461,7 +461,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 400
+    startLine: 370
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -494,27 +494,27 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Boolean)
   name.vb: CrossApplyTextFile(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), Boolean)
-- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String,``1},System.Boolean)
-  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String,``1},System.Boolean)
-  id: CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String,``1},System.Boolean)
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{System.String,``0,``1},System.Boolean)
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{System.String,``0,``1},System.Boolean)
+  id: CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{System.String,``0,``1},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.TextFile.Extensions.TextFileEx
   langs:
   - csharp
   - vb
-  name: CrossApplyTextFile<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String, TOut>, Boolean)
-  nameWithType: TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String, TOut>, Boolean)
-  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<TIn, System.String, TOut>, System.Boolean)
+  name: CrossApplyTextFile<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<String, TIn, TOut>, Boolean)
+  nameWithType: TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<String, TIn, TOut>, Boolean)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<System.String, TIn, TOut>, System.Boolean)
   type: Method
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 409
+    startLine: 375
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
   syntax:
-    content: public static IStream<TOut> CrossApplyTextFile<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, string> filePathSelector, Func<TIn, string, TOut> resultSelector, bool noParallelisation = false)
+    content: public static IStream<TOut> CrossApplyTextFile<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, string> filePathSelector, Func<string, TIn, TOut> resultSelector, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{{TIn}}
@@ -523,7 +523,7 @@ items:
     - id: filePathSelector
       type: System.Func{{TIn},System.String}
     - id: resultSelector
-      type: System.Func{{TIn},System.String,{TOut}}
+      type: System.Func{System.String,{TIn},{TOut}}
     - id: noParallelisation
       type: System.Boolean
     typeParameters:
@@ -534,17 +534,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyTextFile(Of TIn, TOut)(stream As IStream(Of TIn), name As String, filePathSelector As Func(Of TIn, String), resultSelector As Func(Of TIn, String, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
+      Public Shared Function CrossApplyTextFile(Of TIn, TOut)(stream As IStream(Of TIn), name As String, filePathSelector As Func(Of TIn, String), resultSelector As Func(Of String, TIn, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile*
-  nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String, TOut), Boolean)
+  nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of String, TIn, TOut), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of TIn, System.String, TOut), System.Boolean)
-  name.vb: CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String, TOut), Boolean)
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of System.String, TIn, TOut), System.Boolean)
+  name.vb: CrossApplyTextFile(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of String, TIn, TOut), Boolean)
 - uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{System.String},System.String,System.Func{System.String,System.String,``0},System.Boolean)
   commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{System.String},System.String,System.Func{System.String,System.String,``0},System.Boolean)
   id: CrossApplyTextFile``1(IStream{System.String},System.String,System.Func{System.String,System.String,``0},System.Boolean)
@@ -560,7 +560,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 418
+    startLine: 380
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -608,7 +608,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 427
+    startLine: 385
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -656,7 +656,7 @@ items:
   source:
     id: ThroughTextFile
     path: ''
-    startLine: 439
+    startLine: 393
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -704,7 +704,7 @@ items:
   source:
     id: ThroughTextFile
     path: ''
-    startLine: 448
+    startLine: 402
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -753,7 +753,7 @@ items:
   source:
     id: ThroughTextFile
     path: ''
-    startLine: 457
+    startLine: 411
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -802,7 +802,7 @@ items:
   source:
     id: ToTextFile
     path: ''
-    startLine: 469
+    startLine: 423
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -1822,16 +1822,16 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: System.Func{{TIn},System.String,{TOut}}
-  commentId: T:System.Func{``0,System.String,``1}
+- uid: System.Func{System.String,{TIn},{TOut}}
+  commentId: T:System.Func{System.String,``0,``1}
   parent: System
   definition: System.Func`3
-  name: Func<TIn, String, TOut>
-  nameWithType: Func<TIn, String, TOut>
-  fullName: System.Func<TIn, System.String, TOut>
-  nameWithType.vb: Func(Of TIn, String, TOut)
-  fullName.vb: System.Func(Of TIn, System.String, TOut)
-  name.vb: Func(Of TIn, String, TOut)
+  name: Func<String, TIn, TOut>
+  nameWithType: Func<String, TIn, TOut>
+  fullName: System.Func<System.String, TIn, TOut>
+  nameWithType.vb: Func(Of String, TIn, TOut)
+  fullName.vb: System.Func(Of System.String, TIn, TOut)
+  name.vb: Func(Of String, TIn, TOut)
   spec.csharp:
   - uid: System.Func`3
     name: Func
@@ -1841,17 +1841,17 @@ references:
   - name: <
     nameWithType: <
     fullName: <
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
-  - name: ', '
-    nameWithType: ', '
-    fullName: ', '
   - uid: System.String
     name: String
     nameWithType: String
     fullName: System.String
     isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
   - name: ', '
     nameWithType: ', '
     fullName: ', '
@@ -1870,17 +1870,17 @@ references:
   - name: '(Of '
     nameWithType: '(Of '
     fullName: '(Of '
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
-  - name: ', '
-    nameWithType: ', '
-    fullName: ', '
   - uid: System.String
     name: String
     nameWithType: String
     fullName: System.String
     isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
   - name: ', '
     nameWithType: ', '
     fullName: ', '

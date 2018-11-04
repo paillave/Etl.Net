@@ -4,8 +4,6 @@
   items:
   - uid: Paillave.Etl.Extensions.AggregateEx
     name: AggregateEx
-  - uid: Paillave.Etl.Extensions.CrossApplyActionEx
-    name: CrossApplyActionEx
   - uid: Paillave.Etl.Extensions.CrossApplyEnumerableEx
     name: CrossApplyEnumerableEx
   - uid: Paillave.Etl.Extensions.CrossApplyEx

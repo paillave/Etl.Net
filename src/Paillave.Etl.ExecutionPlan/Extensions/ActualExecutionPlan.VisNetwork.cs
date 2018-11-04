@@ -85,7 +85,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
 
             var assembly = typeof(ExecutionStatusEx).Assembly;
 
-            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.ExecutionPlan.ActualExecutionPlan.Resources.VisNetwork.html"))
+            using (var stream = assembly.GetManifestResourceStream("Paillave.Etl.ExecutionPlan.Resources.ActualExecutionPlan.VisNetwork.html"))
             using (var reader = new StreamReader(stream))
                 file = reader.ReadToEnd();
 

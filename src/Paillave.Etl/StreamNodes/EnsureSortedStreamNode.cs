@@ -22,7 +22,7 @@ namespace Paillave.Etl.StreamNodes
 
         protected override ISortedStream<TOut, TKey> CreateOutputStream(EnsureSortedArgs<TOut, TKey> args)
         {
-            return base.CreateSortedStream(args.Input.Observable.ExceptionOnUnsorted(args.SortDefinition, true), args.SortDefinition);
+            return base.CreateSortedStream(args.Input.Observable.ExceptionOnUnsorted(args.SortDefinition, false), args.SortDefinition);
         }
     }
 }

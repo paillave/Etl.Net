@@ -6,6 +6,8 @@ using Paillave.Etl.Reactive.Disposables;
 using Paillave.Etl.Reactive.Operators;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +17,8 @@ namespace Paillave.Etl
     public class StreamProcessRunner
     {
         public static StreamProcessRunner<TConfig> Create<TConfig>(Action<ISingleStream<TConfig>> jobDefinition, string jobName = "NoName") => new StreamProcessRunner<TConfig>(jobDefinition, jobName);
+        public static Task<ExecutionStatus> CreateAndExecuteAsync<TConfig>(TConfig config, Action<ISingleStream<TConfig>> jobDefinition, Action<IStream<TraceEvent>> traceProcessDefinition = null, string jobName = "NoName") => new StreamProcessRunner<TConfig>(jobDefinition, jobName).ExecuteAsync(config, traceProcessDefinition);
+        public static Task<ExecutionStatus> CreateAndExecuteWithNoFaultAsync<TConfig>(TConfig config, Action<ISingleStream<TConfig>> jobDefinition, Action<IStream<TraceEvent>> traceProcessDefinition = null, string jobName = "NoName") => new StreamProcessRunner<TConfig>(jobDefinition, jobName).ExecuteWithNoFaultAsync(config, traceProcessDefinition);
     }
 
     public class StreamProcessRunner<TConfig>
@@ -26,7 +30,11 @@ namespace Paillave.Etl
             _jobDefinition = jobDefinition ?? (_jobDefinition => { });
             _jobName = jobName;
         }
-        public Task<ExecutionStatus> ExecuteAsync(TConfig config, Action<IStream<TraceEvent>> traceProcessDefinition = null)
+        public Task<ExecutionStatus> ExecuteWithNoFaultAsync(TConfig config, Action<IStream<TraceEvent>> traceProcessDefinition = null)
+        {
+            return ExecuteAsync(config, traceProcessDefinition, true);
+        }
+        public Task<ExecutionStatus> ExecuteAsync(TConfig config, Action<IStream<TraceEvent>> traceProcessDefinition = null, bool noExceptionOnError = false)
         {
             Guid executionId = Guid.NewGuid();
             EventWaitHandle startSynchronizer = new EventWaitHandle(false, EventResetMode.ManualReset);
@@ -40,7 +48,7 @@ namespace Paillave.Etl
             if (traceProcessDefinition != null) traceProcessDefinition(traceStream);
             _jobDefinition(startupStream);
 
-            Task<StreamStatistics> jobExecutionStatus = traceStream.GetStreamStatisticsAsync();
+            Task<StreamStatistics> jobExecutionStatusTask = traceStream.GetStreamStatisticsAsync();
 
             startSynchronizer.Set();
             startupSubject.PushValue(config);
@@ -51,7 +59,12 @@ namespace Paillave.Etl
                     .GetCompletionTask()
                     .ContinueWith(_ => traceSubject.Complete()),
                 traceExecutionContext.GetCompletionTask())
-                .ContinueWith(t => new ExecutionStatus(jobExecutionContext.GetDefinitionStructure(), jobExecutionStatus.Result));
+                .ContinueWith(t =>
+                {
+                    if (jobExecutionContext.ErrorTraceEvents.Count > 0 && !noExceptionOnError)
+                        throw new JobExecutionException(jobExecutionContext.ErrorTraceEvents.First());
+                    return new ExecutionStatus(jobExecutionContext.GetDefinitionStructure(), jobExecutionStatusTask.Result, jobExecutionContext.ErrorTraceEvents);
+                });
         }
         public JobDefinitionStructure GetDefinitionStructure()
         {
@@ -97,6 +110,7 @@ namespace Paillave.Etl
         }
         private class JobExecutionContext : IExecutionContext
         {
+            public List<TraceEvent> ErrorTraceEvents { get; } = new List<TraceEvent>();
             private readonly IPushSubject<TraceEvent> _traceSubject;
             private List<StreamToNodeLink> _streamToNodeLinks = new List<StreamToNodeLink>();
             private List<string> _nodeNamesToWait = new List<string>();
@@ -112,6 +126,7 @@ namespace Paillave.Etl
                 this.ExecutionId = executionId;
                 this.JobName = jobName;
                 this._traceSubject = traceSubject;
+                this._traceSubject.Filter(i => i.Content.Level == TraceLevel.Error).Do(ErrorTraceEvents.Add);
                 this.StartSynchronizer = startSynchronizer;
             }
             public Guid ExecutionId { get; }
@@ -125,7 +140,9 @@ namespace Paillave.Etl
                 _nodeNamesToWait.Add(sourceNodeName);
                 _tasksToWait.Add(stream.ToTaskAsync());
             }
-            public Task GetCompletionTask() => Task.WhenAll(_tasksToWait.ToArray()).ContinueWith(_ => _disposables.Dispose());
+            public Task GetCompletionTask() => Task
+                .WhenAll(_tasksToWait.ToArray())
+                .ContinueWith(_ => _disposables.Dispose());
             public void AddDisposable(IDisposable disposable) => _disposables.Set(disposable);
             public void AddStreamToNodeLink(StreamToNodeLink link) => _streamToNodeLinks.Add(link);
         }

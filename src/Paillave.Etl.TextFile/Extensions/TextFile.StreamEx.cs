@@ -16,118 +16,94 @@ namespace Paillave.Etl.TextFile.Extensions
         #region CrossApplyTextFile
         public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<string> stream, string name, FlatFileDefinition<TOut> args, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new FlatFileValuesProvider<string, TOut, TOut>(new FlatFileValuesProviderArgs<string, TOut, TOut>()
+            var valuesProvider = new FlatFileValuesProvider<string, TOut, TOut>(new FlatFileValuesProviderArgs<string, TOut, TOut>()
             {
                 DataStreamSelector = i => File.OpenRead(i),
                 Mapping = args,
-                NoParallelisation = noParallelisation,
                 ResultSelector = (i, o) => o
-            }), i => i, (i, _) => i);
+            });
+            return stream.CrossApply<string, TOut>(name, valuesProvider.PushValues, noParallelisation);
         }
         public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<Stream> stream, string name, FlatFileDefinition<TOut> args, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new FlatFileValuesProvider<Stream, TOut, TOut>(new FlatFileValuesProviderArgs<Stream, TOut, TOut>()
+            var valuesProvider = new FlatFileValuesProvider<Stream, TOut, TOut>(new FlatFileValuesProviderArgs<Stream, TOut, TOut>()
             {
                 DataStreamSelector = i => i,
                 Mapping = args,
-                NoParallelisation = noParallelisation,
                 ResultSelector = (i, o) => o
-            }), i => i, (i, _) => i);
+            });
+            return stream.CrossApply<Stream, TOut>(name, valuesProvider.PushValues, noParallelisation);
         }
         public static IStream<TOut> CrossApplyTextFile<TIn, TOut>(this IStream<TIn> stream, string name, FlatFileDefinition<TOut> args, Func<TIn, string> filePathSelector, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new FlatFileValuesProvider<TIn, TOut, TOut>(new FlatFileValuesProviderArgs<TIn, TOut, TOut>()
+            var valuesProvider = new FlatFileValuesProvider<TIn, TOut, TOut>(new FlatFileValuesProviderArgs<TIn, TOut, TOut>()
             {
                 DataStreamSelector = i => File.OpenRead(filePathSelector(i)),
                 Mapping = args,
-                NoParallelisation = noParallelisation,
                 ResultSelector = (i, o) => o
-            }), i => i, (i, _) => i);
+            });
+            return stream.CrossApply<TIn, TOut>(name, valuesProvider.PushValues, noParallelisation);
         }
         public static IStream<TOut> CrossApplyTextFile<TIn, TParsed, TOut>(this IStream<TIn> stream, string name, FlatFileDefinition<TParsed> args, Func<TIn, string> filePathSelector, Func<TIn, TParsed, TOut> resultSelector, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new FlatFileValuesProvider<TIn, TParsed, TOut>(new FlatFileValuesProviderArgs<TIn, TParsed, TOut>()
+            var valuesProvider = new FlatFileValuesProvider<TIn, TParsed, TOut>(new FlatFileValuesProviderArgs<TIn, TParsed, TOut>()
             {
                 DataStreamSelector = i => File.OpenRead(filePathSelector(i)),
                 Mapping = args,
-                NoParallelisation = noParallelisation,
                 ResultSelector = resultSelector
-            }), i => i, (i, _) => i);
+            });
+            return stream.CrossApply<TIn, TOut>(name, valuesProvider.PushValues, noParallelisation);
         }
         public static IStream<TOut> CrossApplyTextFile<TParsed, TOut>(this IStream<string> stream, string name, FlatFileDefinition<TParsed> args, Func<string, TParsed, TOut> resultSelector, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new FlatFileValuesProvider<string, TParsed, TOut>(new FlatFileValuesProviderArgs<string, TParsed, TOut>()
+            var valuesProvider = new FlatFileValuesProvider<string, TParsed, TOut>(new FlatFileValuesProviderArgs<string, TParsed, TOut>()
             {
                 DataStreamSelector = i => File.OpenRead(i),
                 Mapping = args,
-                NoParallelisation = noParallelisation,
                 ResultSelector = resultSelector
-            }), i => i, (i, _) => i);
+            });
+            return stream.CrossApply<string, TOut>(name, valuesProvider.PushValues, noParallelisation);
         }
         public static IStream<TOut> CrossApplyTextFile<TParsed, TOut>(this IStream<Stream> stream, string name, FlatFileDefinition<TParsed> args, Func<TParsed, TOut> resultSelector, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new FlatFileValuesProvider<Stream, TParsed, TOut>(new FlatFileValuesProviderArgs<Stream, TParsed, TOut>()
+            var valuesProvider = new FlatFileValuesProvider<Stream, TParsed, TOut>(new FlatFileValuesProviderArgs<Stream, TParsed, TOut>()
             {
                 DataStreamSelector = i => i,
                 Mapping = args,
-                NoParallelisation = noParallelisation,
                 ResultSelector = (s, o) => resultSelector(o)
-            }), i => i, (i, _) => i);
+            });
+            return stream.CrossApply<Stream, TOut>(name, valuesProvider.PushValues, noParallelisation);
         }
 
         public static IStream<string> CrossApplyTextFile(this IStream<string> stream, string name, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new TextFileValuesProvider<string, string>(new TextFileValuesProviderArgs<string, string>()
-            {
-                DataStreamSelector = i => File.OpenRead(i),
-                NoParallelisation = noParallelisation,
-                ResultSelector = (i, o) => o
-            }), i => i, (i, _) => i);
+            var valuesProvider = new TextFileValuesProvider();
+            return stream.CrossApply<string, Stream, string, string>(name, valuesProvider.PushValues, i => File.OpenRead(i), (i, _) => i, noParallelisation);
         }
         public static IStream<string> CrossApplyTextFile(this IStream<Stream> stream, string name, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new TextFileValuesProvider<Stream, string>(new TextFileValuesProviderArgs<Stream, string>()
-            {
-                DataStreamSelector = i => i,
-                NoParallelisation = noParallelisation,
-                ResultSelector = (i, o) => o
-            }), i => i, (i, _) => i);
+            var valuesProvider = new TextFileValuesProvider();
+            return stream.CrossApply<Stream, string>(name, valuesProvider.PushValues, noParallelisation);
         }
         public static IStream<string> CrossApplyTextFile<TIn>(this IStream<TIn> stream, string name, Func<TIn, string> filePathSelector, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new TextFileValuesProvider<TIn, string>(new TextFileValuesProviderArgs<TIn, string>()
-            {
-                DataStreamSelector = i => File.OpenRead(filePathSelector(i)),
-                NoParallelisation = noParallelisation,
-                ResultSelector = (i, o) => o
-            }), i => i, (i, _) => i);
+            var valuesProvider = new TextFileValuesProvider();
+            return stream.CrossApply<TIn, Stream, string, string>(name, valuesProvider.PushValues, i => File.OpenRead(filePathSelector(i)), (i, _) => i, noParallelisation);
         }
-        public static IStream<TOut> CrossApplyTextFile<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, string> filePathSelector, Func<TIn, string, TOut> resultSelector, bool noParallelisation = false)
+        public static IStream<TOut> CrossApplyTextFile<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, string> filePathSelector, Func<string, TIn, TOut> resultSelector, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new TextFileValuesProvider<TIn, TOut>(new TextFileValuesProviderArgs<TIn, TOut>()
-            {
-                DataStreamSelector = i => File.OpenRead(filePathSelector(i)),
-                NoParallelisation = noParallelisation,
-                ResultSelector = resultSelector
-            }), i => i, (i, _) => i);
+            var valuesProvider = new TextFileValuesProvider();
+            return stream.CrossApply<TIn, Stream, string, TOut>(name, valuesProvider.PushValues, i => File.OpenRead(filePathSelector(i)), resultSelector, noParallelisation);
         }
         public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<string> stream, string name, Func<string, string, TOut> resultSelector, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new TextFileValuesProvider<string, TOut>(new TextFileValuesProviderArgs<string, TOut>()
-            {
-                DataStreamSelector = i => File.OpenRead(i),
-                NoParallelisation = noParallelisation,
-                ResultSelector = resultSelector
-            }), i => i, (i, _) => i);
+            var valuesProvider = new TextFileValuesProvider();
+            return stream.CrossApply<string, Stream, string, TOut>(name, valuesProvider.PushValues, i => File.OpenRead(i), resultSelector, noParallelisation);
         }
         public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<Stream> stream, string name, Func<string, TOut> resultSelector, bool noParallelisation = false)
         {
-            return stream.CrossApply(name, new TextFileValuesProvider<Stream, TOut>(new TextFileValuesProviderArgs<Stream, TOut>()
-            {
-                DataStreamSelector = i => i,
-                NoParallelisation = noParallelisation,
-                ResultSelector = (s, o) => resultSelector(o)
-            }), i => i, (i, _) => i);
+            var valuesProvider = new TextFileValuesProvider();
+            return stream.CrossApply<Stream, Stream, string, TOut>(name, valuesProvider.PushValues, i => i, (i, _) => resultSelector(i), noParallelisation);
         }
         #endregion
 

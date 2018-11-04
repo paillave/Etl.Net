@@ -53,20 +53,13 @@ namespace Paillave.Etl.Ftp.ValuesProviders
         public string Path { get; set; }
     }
 
-    public class FtpFilesValuesProvider : ValuesProviderBase<FtpFilesValuesProviderArgs, FtpConnectionInfo, FtpFilesValue>
+    public class FtpFilesValuesProvider
     {
-        public FtpFilesValuesProvider() : base(false)
-        {
-        }
-
-        public void Dispose() { }
-        protected override void PushValues(FtpConnectionInfo connectionInfo, FtpFilesValuesProviderArgs args, Action<FtpFilesValue> pushValue)
+        public void PushValues(FtpFilesValuesProviderArgs args, FtpConnectionInfo connectionInfo, Action<FtpFilesValue> pushValue)
         {
             GetFiles(connectionInfo, args.Path).ToList().ForEach(pushValue);
         }
-        //protected override void PushValues(FtpFilesValuesProviderArgs args, Action<FtpConnectionInfo, FtpFilesValue> pushValue)
-        //{
-        //}
+
         private IEnumerable<FtpFilesValue> GetFiles(FtpConnectionInfo connectionInfo, string path)
         {
             UriBuilder uriBuilder = new UriBuilder("ftp", connectionInfo.Server, connectionInfo.PortNumber, path);

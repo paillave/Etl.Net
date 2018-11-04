@@ -17,18 +17,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Paillave.Etl.Extensions.CrossApplyActionEx.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Paillave.Etl.Extensions.CrossApplyActionEx.html",
-          "hash": "SJr4ruCfwGnjMBDrzRtnjw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Paillave.Etl.Extensions.CrossApplyEnumerableEx.yml",
       "output": {
         ".html": {
@@ -45,7 +33,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.CrossApplyEx.html",
-          "hash": "eb/sFfaW2MC/11wcFr/xOw=="
+          "hash": "/vdShmm7EOGgQPm7BOT77g=="
         }
       },
       "is_incremental": false,
@@ -57,7 +45,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html",
-          "hash": "qrnd4SV2wNb7Gb49eycN1g=="
+          "hash": "j6WdF5SGjOkTQX6aTvM9pw=="
         }
       },
       "is_incremental": false,
@@ -165,7 +153,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.SelectEx.html",
-          "hash": "sbwZPfkt4S56ybmFw6y5cA=="
+          "hash": "UBOwVxysIabFQWV9tKbEZQ=="
         }
       },
       "is_incremental": false,
@@ -177,7 +165,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.SelectSectionEx.html",
-          "hash": "il7MMtFDuiUHytIr5uFzQw=="
+          "hash": "mCUQBs3RzIXBiATnhTeg+A=="
         }
       },
       "is_incremental": false,
@@ -297,7 +285,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.UnpivotEx.html",
-          "hash": "c6CGXp8BlbV0SmEKiT0fkA=="
+          "hash": "9FwyK7JJfHJRyvB0kwtmYw=="
         }
       },
       "is_incremental": false,
@@ -321,7 +309,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.html",
-          "hash": "ZpnzFtfKgLjfpa1wyJc4hA=="
+          "hash": "j81ePzUPWjT6OOolj9gcew=="
         }
       },
       "is_incremental": false,
@@ -429,7 +417,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "fJo79fHdDCISUQhk1IULXA=="
+          "hash": "ZhZlE2fLCowldWUkadmt/A=="
         }
       },
       "is_incremental": false,
@@ -465,7 +453,7 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html",
-          "hash": "4CprQaXpUtk9aotrB8ZWZQ=="
+          "hash": "YjNolRhtJJ/MxhIJgJVOhQ=="
         }
       },
       "is_incremental": false,
@@ -489,7 +477,7 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.Ftp.Extensions.FtpEx.html",
-          "hash": "vKs3gg28a+tNfCbDR16lQg=="
+          "hash": "yLKnbEgyTfLyV6RoiBGWIQ=="
         }
       },
       "is_incremental": false,
@@ -537,7 +525,7 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.TextFile.Extensions.TextFileEx.html",
-          "hash": "j2zY8a/yA19PjVsUfRBF7A=="
+          "hash": "9ElNCNVq+Wgb1fX3O668WA=="
         }
       },
       "is_incremental": false,
@@ -611,7 +599,7 @@
           "hash": "Bi8/PdcUVzZymeeRfGHkWw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {

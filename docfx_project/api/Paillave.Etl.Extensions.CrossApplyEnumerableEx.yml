@@ -17,7 +17,7 @@ items:
   source:
     id: CrossApplyEnumerableEx
     path: ''
-    startLine: 209
+    startLine: 174
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -58,7 +58,7 @@ items:
   source:
     id: CrossApplyEnumerable
     path: ''
-    startLine: 221
+    startLine: 186
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -116,7 +116,7 @@ items:
   source:
     id: CrossApplyEnumerable
     path: ''
-    startLine: 245
+    startLine: 207
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

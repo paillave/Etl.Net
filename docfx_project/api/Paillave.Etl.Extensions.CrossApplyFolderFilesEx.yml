@@ -5,12 +5,12 @@ items:
   id: CrossApplyFolderFilesEx
   parent: Paillave.Etl.Extensions
   children:
-  - Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream{System.String},System.String,System.String,System.IO.SearchOption)
-  - Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.IO.SearchOption)
-  - Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.String,System.IO.SearchOption)
-  - Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{System.String},System.String,System.Func{LocalFilesValue,System.String,``0},System.String,System.IO.SearchOption)
-  - Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.IO.SearchOption)
-  - Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.String,System.IO.SearchOption)
+  - Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream{System.String},System.String,System.String,System.Boolean,System.Boolean)
+  - Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Boolean,System.Boolean)
+  - Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.String,System.Boolean,System.Boolean)
+  - Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{System.String},System.String,System.Func{LocalFilesValue,System.String,``0},System.String,System.Boolean,System.Boolean)
+  - Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.Boolean,System.Boolean)
+  - Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.String,System.Boolean,System.Boolean)
   langs:
   - csharp
   - vb
@@ -21,7 +21,7 @@ items:
   source:
     id: CrossApplyFolderFilesEx
     path: ''
-    startLine: 270
+    startLine: 228
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -45,17 +45,169 @@ items:
   modifiers.vb:
   - Public
   - Module
-- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.String,System.IO.SearchOption)
-  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.String,System.IO.SearchOption)
-  id: CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.String,System.IO.SearchOption)
+- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.String,System.Boolean,System.Boolean)
+  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.String,System.Boolean,System.Boolean)
+  id: CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.String,System.Boolean,System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.Extensions.CrossApplyFolderFilesEx
   langs:
   - csharp
   - vb
-  name: CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, String, SearchOption)
-  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, String, SearchOption)
-  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.String, System.IO.SearchOption)
+  name: CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, String, Boolean, Boolean)
+  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, String, Boolean, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.String, System.Boolean, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyFolderFiles
+    path: ''
+    startLine: 230
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Extensions
+  syntax:
+    content: public static IStream<LocalFilesValue> CrossApplyFolderFiles<TIn>(this IStream<TIn> stream, string name, Func<TIn, string> getFolderPath, string pattern = "*", bool recursive = false, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: getFolderPath
+      type: System.Func{{TIn},System.String}
+    - id: pattern
+      type: System.String
+    - id: recursive
+      type: System.Boolean
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TIn
+    return:
+      type: IStream{LocalFilesValue}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyFolderFiles(Of TIn)(stream As IStream(Of TIn), name As String, getFolderPath As Func(Of TIn, String), pattern As String = "*", recursive As Boolean = False, noParallelisation As Boolean = False) As IStream(Of LocalFilesValue)
+  overload: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles*
+  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), String, Boolean, Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.String, System.Boolean, System.Boolean)
+  name.vb: CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), String, Boolean, Boolean)
+- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream{System.String},System.String,System.String,System.Boolean,System.Boolean)
+  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream{System.String},System.String,System.String,System.Boolean,System.Boolean)
+  id: CrossApplyFolderFiles(IStream{System.String},System.String,System.String,System.Boolean,System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.Extensions.CrossApplyFolderFilesEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyFolderFiles(IStream<String>, String, String, Boolean, Boolean)
+  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream<String>, String, String, Boolean, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream<System.String>, System.String, System.String, System.Boolean, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyFolderFiles
+    path: ''
+    startLine: 244
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Extensions
+  syntax:
+    content: public static IStream<LocalFilesValue> CrossApplyFolderFiles(this IStream<string> stream, string name, string pattern = "*", bool recursive = false, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{System.String}
+    - id: name
+      type: System.String
+    - id: pattern
+      type: System.String
+    - id: recursive
+      type: System.Boolean
+    - id: noParallelisation
+      type: System.Boolean
+    return:
+      type: IStream{LocalFilesValue}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyFolderFiles(stream As IStream(Of String), name As String, pattern As String = "*", recursive As Boolean = False, noParallelisation As Boolean = False) As IStream(Of LocalFilesValue)
+  overload: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles*
+  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream(Of String), String, String, Boolean, Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream(Of System.String), System.String, System.String, System.Boolean, System.Boolean)
+  name.vb: CrossApplyFolderFiles(IStream(Of String), String, String, Boolean, Boolean)
+- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Boolean,System.Boolean)
+  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Boolean,System.Boolean)
+  id: CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Boolean,System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.Extensions.CrossApplyFolderFilesEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, Boolean, Boolean)
+  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, Boolean, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<TIn, System.String>, System.Boolean, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyFolderFiles
+    path: ''
+    startLine: 258
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Extensions
+  syntax:
+    content: public static IStream<LocalFilesValue> CrossApplyFolderFiles<TIn>(this IStream<TIn> stream, string name, Func<TIn, string> getFolderPath, Func<TIn, string> getSearchPattern, bool recursive = false, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: getFolderPath
+      type: System.Func{{TIn},System.String}
+    - id: getSearchPattern
+      type: System.Func{{TIn},System.String}
+    - id: recursive
+      type: System.Boolean
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TIn
+    return:
+      type: IStream{LocalFilesValue}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyFolderFiles(Of TIn)(stream As IStream(Of TIn), name As String, getFolderPath As Func(Of TIn, String), getSearchPattern As Func(Of TIn, String), recursive As Boolean = False, noParallelisation As Boolean = False) As IStream(Of LocalFilesValue)
+  overload: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles*
+  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String), Boolean, Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of TIn, System.String), System.Boolean, System.Boolean)
+  name.vb: CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String), Boolean, Boolean)
+- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.String,System.Boolean,System.Boolean)
+  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.String,System.Boolean,System.Boolean)
+  id: CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.String,System.Boolean,System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.Extensions.CrossApplyFolderFilesEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, String, Boolean, Boolean)
+  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, String, Boolean, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<LocalFilesValue, TIn, TOut>, System.String, System.Boolean, System.Boolean)
   type: Method
   source:
     id: CrossApplyFolderFiles
@@ -65,153 +217,7 @@ items:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static IStream<LocalFilesValue> CrossApplyFolderFiles<TIn>(this IStream<TIn> stream, string name, Func<TIn, string> getFolderPath, string pattern = "*", SearchOption option = SearchOption.TopDirectoryOnly)
-    parameters:
-    - id: stream
-      type: IStream{{TIn}}
-    - id: name
-      type: System.String
-    - id: getFolderPath
-      type: System.Func{{TIn},System.String}
-    - id: pattern
-      type: System.String
-    - id: option
-      type: System.IO.SearchOption
-    typeParameters:
-    - id: TIn
-    return:
-      type: IStream{LocalFilesValue}
-    content.vb: >-
-      <ExtensionAttribute>
-
-      Public Shared Function CrossApplyFolderFiles(Of TIn)(stream As IStream(Of TIn), name As String, getFolderPath As Func(Of TIn, String), pattern As String = "*", option As SearchOption = SearchOption.TopDirectoryOnly) As IStream(Of LocalFilesValue)
-  overload: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles*
-  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), String, SearchOption)
-  modifiers.csharp:
-  - public
-  - static
-  modifiers.vb:
-  - Public
-  - Shared
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.String, System.IO.SearchOption)
-  name.vb: CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), String, SearchOption)
-- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream{System.String},System.String,System.String,System.IO.SearchOption)
-  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream{System.String},System.String,System.String,System.IO.SearchOption)
-  id: CrossApplyFolderFiles(IStream{System.String},System.String,System.String,System.IO.SearchOption)
-  isExtensionMethod: true
-  parent: Paillave.Etl.Extensions.CrossApplyFolderFilesEx
-  langs:
-  - csharp
-  - vb
-  name: CrossApplyFolderFiles(IStream<String>, String, String, SearchOption)
-  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream<String>, String, String, SearchOption)
-  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream<System.String>, System.String, System.String, System.IO.SearchOption)
-  type: Method
-  source:
-    id: CrossApplyFolderFiles
-    path: ''
-    startLine: 280
-  assemblies:
-  - cs.temp.dll
-  namespace: Paillave.Etl.Extensions
-  syntax:
-    content: public static IStream<LocalFilesValue> CrossApplyFolderFiles(this IStream<string> stream, string name, string pattern = "*", SearchOption option = SearchOption.TopDirectoryOnly)
-    parameters:
-    - id: stream
-      type: IStream{System.String}
-    - id: name
-      type: System.String
-    - id: pattern
-      type: System.String
-    - id: option
-      type: System.IO.SearchOption
-    return:
-      type: IStream{LocalFilesValue}
-    content.vb: >-
-      <ExtensionAttribute>
-
-      Public Shared Function CrossApplyFolderFiles(stream As IStream(Of String), name As String, pattern As String = "*", option As SearchOption = SearchOption.TopDirectoryOnly) As IStream(Of LocalFilesValue)
-  overload: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles*
-  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream(Of String), String, String, SearchOption)
-  modifiers.csharp:
-  - public
-  - static
-  modifiers.vb:
-  - Public
-  - Shared
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream(Of System.String), System.String, System.String, System.IO.SearchOption)
-  name.vb: CrossApplyFolderFiles(IStream(Of String), String, String, SearchOption)
-- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.IO.SearchOption)
-  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.IO.SearchOption)
-  id: CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.IO.SearchOption)
-  isExtensionMethod: true
-  parent: Paillave.Etl.Extensions.CrossApplyFolderFilesEx
-  langs:
-  - csharp
-  - vb
-  name: CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, SearchOption)
-  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, SearchOption)
-  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<TIn, System.String>, System.IO.SearchOption)
-  type: Method
-  source:
-    id: CrossApplyFolderFiles
-    path: ''
-    startLine: 288
-  assemblies:
-  - cs.temp.dll
-  namespace: Paillave.Etl.Extensions
-  syntax:
-    content: public static IStream<LocalFilesValue> CrossApplyFolderFiles<TIn>(this IStream<TIn> stream, string name, Func<TIn, string> getFolderPath, Func<TIn, string> getSearchPattern, SearchOption option = SearchOption.TopDirectoryOnly)
-    parameters:
-    - id: stream
-      type: IStream{{TIn}}
-    - id: name
-      type: System.String
-    - id: getFolderPath
-      type: System.Func{{TIn},System.String}
-    - id: getSearchPattern
-      type: System.Func{{TIn},System.String}
-    - id: option
-      type: System.IO.SearchOption
-    typeParameters:
-    - id: TIn
-    return:
-      type: IStream{LocalFilesValue}
-    content.vb: >-
-      <ExtensionAttribute>
-
-      Public Shared Function CrossApplyFolderFiles(Of TIn)(stream As IStream(Of TIn), name As String, getFolderPath As Func(Of TIn, String), getSearchPattern As Func(Of TIn, String), option As SearchOption = SearchOption.TopDirectoryOnly) As IStream(Of LocalFilesValue)
-  overload: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles*
-  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String), SearchOption)
-  modifiers.csharp:
-  - public
-  - static
-  modifiers.vb:
-  - Public
-  - Shared
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of TIn, System.String), System.IO.SearchOption)
-  name.vb: CrossApplyFolderFiles(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String), SearchOption)
-- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.String,System.IO.SearchOption)
-  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.String,System.IO.SearchOption)
-  id: CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.String,System.IO.SearchOption)
-  isExtensionMethod: true
-  parent: Paillave.Etl.Extensions.CrossApplyFolderFilesEx
-  langs:
-  - csharp
-  - vb
-  name: CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, String, SearchOption)
-  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, String, SearchOption)
-  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<LocalFilesValue, TIn, TOut>, System.String, System.IO.SearchOption)
-  type: Method
-  source:
-    id: CrossApplyFolderFiles
-    path: ''
-    startLine: 296
-  assemblies:
-  - cs.temp.dll
-  namespace: Paillave.Etl.Extensions
-  syntax:
-    content: public static IStream<TOut> CrossApplyFolderFiles<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, string> getFolderPath, Func<LocalFilesValue, TIn, TOut> selector, string pattern = "*", SearchOption option = SearchOption.TopDirectoryOnly)
+    content: public static IStream<TOut> CrossApplyFolderFiles<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, string> getFolderPath, Func<LocalFilesValue, TIn, TOut> selector, string pattern = "*", bool recursive = false, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{{TIn}}
@@ -223,8 +229,10 @@ items:
       type: System.Func{LocalFilesValue,{TIn},{TOut}}
     - id: pattern
       type: System.String
-    - id: option
-      type: System.IO.SearchOption
+    - id: recursive
+      type: System.Boolean
+    - id: noParallelisation
+      type: System.Boolean
     typeParameters:
     - id: TIn
     - id: TOut
@@ -233,38 +241,38 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyFolderFiles(Of TIn, TOut)(stream As IStream(Of TIn), name As String, getFolderPath As Func(Of TIn, String), selector As Func(Of LocalFilesValue, TIn, TOut), pattern As String = "*", option As SearchOption = SearchOption.TopDirectoryOnly) As IStream(Of TOut)
+      Public Shared Function CrossApplyFolderFiles(Of TIn, TOut)(stream As IStream(Of TIn), name As String, getFolderPath As Func(Of TIn, String), selector As Func(Of LocalFilesValue, TIn, TOut), pattern As String = "*", recursive As Boolean = False, noParallelisation As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles*
-  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of LocalFilesValue, TIn, TOut), String, SearchOption)
+  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of LocalFilesValue, TIn, TOut), String, Boolean, Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of LocalFilesValue, TIn, TOut), System.String, System.IO.SearchOption)
-  name.vb: CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of LocalFilesValue, TIn, TOut), String, SearchOption)
-- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{System.String},System.String,System.Func{LocalFilesValue,System.String,``0},System.String,System.IO.SearchOption)
-  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{System.String},System.String,System.Func{LocalFilesValue,System.String,``0},System.String,System.IO.SearchOption)
-  id: CrossApplyFolderFiles``1(IStream{System.String},System.String,System.Func{LocalFilesValue,System.String,``0},System.String,System.IO.SearchOption)
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of LocalFilesValue, TIn, TOut), System.String, System.Boolean, System.Boolean)
+  name.vb: CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of LocalFilesValue, TIn, TOut), String, Boolean, Boolean)
+- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{System.String},System.String,System.Func{LocalFilesValue,System.String,``0},System.String,System.Boolean,System.Boolean)
+  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{System.String},System.String,System.Func{LocalFilesValue,System.String,``0},System.String,System.Boolean,System.Boolean)
+  id: CrossApplyFolderFiles``1(IStream{System.String},System.String,System.Func{LocalFilesValue,System.String,``0},System.String,System.Boolean,System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.Extensions.CrossApplyFolderFilesEx
   langs:
   - csharp
   - vb
-  name: CrossApplyFolderFiles<TOut>(IStream<String>, String, Func<LocalFilesValue, String, TOut>, String, SearchOption)
-  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TOut>(IStream<String>, String, Func<LocalFilesValue, String, TOut>, String, SearchOption)
-  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TOut>(IStream<System.String>, System.String, System.Func<LocalFilesValue, System.String, TOut>, System.String, System.IO.SearchOption)
+  name: CrossApplyFolderFiles<TOut>(IStream<String>, String, Func<LocalFilesValue, String, TOut>, String, Boolean, Boolean)
+  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TOut>(IStream<String>, String, Func<LocalFilesValue, String, TOut>, String, Boolean, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TOut>(IStream<System.String>, System.String, System.Func<LocalFilesValue, System.String, TOut>, System.String, System.Boolean, System.Boolean)
   type: Method
   source:
     id: CrossApplyFolderFiles
     path: ''
-    startLine: 304
+    startLine: 286
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static IStream<TOut> CrossApplyFolderFiles<TOut>(this IStream<string> stream, string name, Func<LocalFilesValue, string, TOut> selector, string pattern = "*", SearchOption option = SearchOption.TopDirectoryOnly)
+    content: public static IStream<TOut> CrossApplyFolderFiles<TOut>(this IStream<string> stream, string name, Func<LocalFilesValue, string, TOut> selector, string pattern = "*", bool recursive = false, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{System.String}
@@ -274,8 +282,10 @@ items:
       type: System.Func{LocalFilesValue,System.String,{TOut}}
     - id: pattern
       type: System.String
-    - id: option
-      type: System.IO.SearchOption
+    - id: recursive
+      type: System.Boolean
+    - id: noParallelisation
+      type: System.Boolean
     typeParameters:
     - id: TOut
     return:
@@ -283,38 +293,38 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyFolderFiles(Of TOut)(stream As IStream(Of String), name As String, selector As Func(Of LocalFilesValue, String, TOut), pattern As String = "*", option As SearchOption = SearchOption.TopDirectoryOnly) As IStream(Of TOut)
+      Public Shared Function CrossApplyFolderFiles(Of TOut)(stream As IStream(Of String), name As String, selector As Func(Of LocalFilesValue, String, TOut), pattern As String = "*", recursive As Boolean = False, noParallelisation As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles*
-  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TOut)(IStream(Of String), String, Func(Of LocalFilesValue, String, TOut), String, SearchOption)
+  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TOut)(IStream(Of String), String, Func(Of LocalFilesValue, String, TOut), String, Boolean, Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TOut)(IStream(Of System.String), System.String, System.Func(Of LocalFilesValue, System.String, TOut), System.String, System.IO.SearchOption)
-  name.vb: CrossApplyFolderFiles(Of TOut)(IStream(Of String), String, Func(Of LocalFilesValue, String, TOut), String, SearchOption)
-- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.IO.SearchOption)
-  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.IO.SearchOption)
-  id: CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.IO.SearchOption)
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TOut)(IStream(Of System.String), System.String, System.Func(Of LocalFilesValue, System.String, TOut), System.String, System.Boolean, System.Boolean)
+  name.vb: CrossApplyFolderFiles(Of TOut)(IStream(Of String), String, Func(Of LocalFilesValue, String, TOut), String, Boolean, Boolean)
+- uid: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.Boolean,System.Boolean)
+  commentId: M:Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.Boolean,System.Boolean)
+  id: CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.Boolean,System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.Extensions.CrossApplyFolderFilesEx
   langs:
   - csharp
   - vb
-  name: CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, SearchOption)
-  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, SearchOption)
-  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<TIn, System.String>, System.Func<LocalFilesValue, TIn, TOut>, System.IO.SearchOption)
+  name: CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, Boolean, Boolean)
+  nameWithType: CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, Boolean, Boolean)
+  fullName: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<TIn, System.String>, System.Func<LocalFilesValue, TIn, TOut>, System.Boolean, System.Boolean)
   type: Method
   source:
     id: CrossApplyFolderFiles
     path: ''
-    startLine: 312
+    startLine: 300
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static IStream<TOut> CrossApplyFolderFiles<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, string> getFolderPath, Func<TIn, string> getSearchPattern, Func<LocalFilesValue, TIn, TOut> selector, SearchOption option = SearchOption.TopDirectoryOnly)
+    content: public static IStream<TOut> CrossApplyFolderFiles<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, string> getFolderPath, Func<TIn, string> getSearchPattern, Func<LocalFilesValue, TIn, TOut> selector, bool recursive = false, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{{TIn}}
@@ -326,8 +336,10 @@ items:
       type: System.Func{{TIn},System.String}
     - id: selector
       type: System.Func{LocalFilesValue,{TIn},{TOut}}
-    - id: option
-      type: System.IO.SearchOption
+    - id: recursive
+      type: System.Boolean
+    - id: noParallelisation
+      type: System.Boolean
     typeParameters:
     - id: TIn
     - id: TOut
@@ -336,17 +348,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function CrossApplyFolderFiles(Of TIn, TOut)(stream As IStream(Of TIn), name As String, getFolderPath As Func(Of TIn, String), getSearchPattern As Func(Of TIn, String), selector As Func(Of LocalFilesValue, TIn, TOut), option As SearchOption = SearchOption.TopDirectoryOnly) As IStream(Of TOut)
+      Public Shared Function CrossApplyFolderFiles(Of TIn, TOut)(stream As IStream(Of TIn), name As String, getFolderPath As Func(Of TIn, String), getSearchPattern As Func(Of TIn, String), selector As Func(Of LocalFilesValue, TIn, TOut), recursive As Boolean = False, noParallelisation As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles*
-  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String), Func(Of LocalFilesValue, TIn, TOut), SearchOption)
+  nameWithType.vb: CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String), Func(Of LocalFilesValue, TIn, TOut), Boolean, Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of TIn, System.String), System.Func(Of LocalFilesValue, TIn, TOut), System.IO.SearchOption)
-  name.vb: CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String), Func(Of LocalFilesValue, TIn, TOut), SearchOption)
+  fullName.vb: Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Func(Of TIn, System.String), System.Func(Of LocalFilesValue, TIn, TOut), System.Boolean, System.Boolean)
+  name.vb: CrossApplyFolderFiles(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, String), Func(Of TIn, String), Func(Of LocalFilesValue, TIn, TOut), Boolean, Boolean)
 references:
 - uid: Paillave.Etl.Extensions
   commentId: N:Paillave.Etl.Extensions
@@ -752,13 +764,13 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: System.IO.SearchOption
-  commentId: T:System.IO.SearchOption
-  parent: System.IO
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
   isExternal: true
-  name: SearchOption
-  nameWithType: SearchOption
-  fullName: System.IO.SearchOption
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
 - uid: IStream{LocalFilesValue}
   commentId: '!:IStream{LocalFilesValue}'
   definition: IStream`1
@@ -891,12 +903,6 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: System.IO
-  commentId: N:System.IO
-  isExternal: true
-  name: System.IO
-  nameWithType: System.IO
-  fullName: System.IO
 - uid: IStream{System.String}
   commentId: '!:IStream{System.String}'
   definition: IStream`1

@@ -27,5 +27,14 @@ namespace Paillave.Etl.Extensions
                 ResultSelector = resultSelector
             }).Output;
         }
+        public static IStream<TOut> Unpivot<TIn, TUnpivoted, TOut>(this IStream<TIn> stream, string name, params Func<TIn, TOut>[] fieldsToUnpivot)
+        {
+            return new UnpivotStreamNode<TIn, TOut, TOut>(name, new UnpivotArgs<TIn, TOut, TOut>
+            {
+                InputStream = stream,
+                FieldsToUnpivot = fieldsToUnpivot,
+                ResultSelector = (i, j) => j
+            }).Output;
+        }
     }
 }
