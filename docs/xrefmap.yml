@@ -831,6 +831,42 @@ references:
   fullName.vb: Paillave.Etl.Extensions.SelectSectionEx.SelectSection(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, SwitchBehavior), System.Func(Of TIn, SwitchBehavior))
   nameWithType: SelectSectionEx.SelectSection<TIn>(IStream<TIn>, String, Func<TIn, SwitchBehavior>, Func<TIn, SwitchBehavior>)
   nameWithType.vb: SelectSectionEx.SelectSection(Of TIn)(IStream(Of TIn), String, Func(Of TIn, SwitchBehavior), Func(Of TIn, SwitchBehavior))
+- uid: Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  name: SelectSection<TIn, TOut>(IStream<TIn>, String, KeepingState, Func<TIn, SwitchBehavior>, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)
+  href: api/Paillave.Etl.Extensions.SelectSectionEx.html#Paillave_Etl_Extensions_SelectSectionEx_SelectSection__2_IStream___0__System_String_KeepingState_System_Func___0_SwitchBehavior__System_Func___0_SwitchBehavior__System_Func___0_System_Int32___1__
+  commentId: M:Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  name.vb: SelectSection(Of TIn, TOut)(IStream(Of TIn), String, KeepingState, Func(Of TIn, SwitchBehavior), Func(Of TIn, SwitchBehavior), Func(Of TIn, Int32, TOut))
+  fullName: Paillave.Etl.Extensions.SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, System.String, KeepingState, System.Func<TIn, SwitchBehavior>, System.Func<TIn, SwitchBehavior>, System.Func<TIn, System.Int32, TOut>)
+  fullName.vb: Paillave.Etl.Extensions.SelectSectionEx.SelectSection(Of TIn, TOut)(IStream(Of TIn), System.String, KeepingState, System.Func(Of TIn, SwitchBehavior), System.Func(Of TIn, SwitchBehavior), System.Func(Of TIn, System.Int32, TOut))
+  nameWithType: SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, String, KeepingState, Func<TIn, SwitchBehavior>, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)
+  nameWithType.vb: SelectSectionEx.SelectSection(Of TIn, TOut)(IStream(Of TIn), String, KeepingState, Func(Of TIn, SwitchBehavior), Func(Of TIn, SwitchBehavior), Func(Of TIn, Int32, TOut))
+- uid: Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  name: SelectSection<TIn, TOut>(IStream<TIn>, String, KeepingState, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)
+  href: api/Paillave.Etl.Extensions.SelectSectionEx.html#Paillave_Etl_Extensions_SelectSectionEx_SelectSection__2_IStream___0__System_String_KeepingState_System_Func___0_SwitchBehavior__System_Func___0_System_Int32___1__
+  commentId: M:Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  name.vb: SelectSection(Of TIn, TOut)(IStream(Of TIn), String, KeepingState, Func(Of TIn, SwitchBehavior), Func(Of TIn, Int32, TOut))
+  fullName: Paillave.Etl.Extensions.SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, System.String, KeepingState, System.Func<TIn, SwitchBehavior>, System.Func<TIn, System.Int32, TOut>)
+  fullName.vb: Paillave.Etl.Extensions.SelectSectionEx.SelectSection(Of TIn, TOut)(IStream(Of TIn), System.String, KeepingState, System.Func(Of TIn, SwitchBehavior), System.Func(Of TIn, System.Int32, TOut))
+  nameWithType: SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, String, KeepingState, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)
+  nameWithType.vb: SelectSectionEx.SelectSection(Of TIn, TOut)(IStream(Of TIn), String, KeepingState, Func(Of TIn, SwitchBehavior), Func(Of TIn, Int32, TOut))
+- uid: Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  name: SelectSection<TIn, TOut>(IStream<TIn>, String, Func<TIn, SwitchBehavior>, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)
+  href: api/Paillave.Etl.Extensions.SelectSectionEx.html#Paillave_Etl_Extensions_SelectSectionEx_SelectSection__2_IStream___0__System_String_System_Func___0_SwitchBehavior__System_Func___0_SwitchBehavior__System_Func___0_System_Int32___1__
+  commentId: M:Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  name.vb: SelectSection(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, SwitchBehavior), Func(Of TIn, SwitchBehavior), Func(Of TIn, Int32, TOut))
+  fullName: Paillave.Etl.Extensions.SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, SwitchBehavior>, System.Func<TIn, SwitchBehavior>, System.Func<TIn, System.Int32, TOut>)
+  fullName.vb: Paillave.Etl.Extensions.SelectSectionEx.SelectSection(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, SwitchBehavior), System.Func(Of TIn, SwitchBehavior), System.Func(Of TIn, System.Int32, TOut))
+  nameWithType: SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, String, Func<TIn, SwitchBehavior>, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)
+  nameWithType.vb: SelectSectionEx.SelectSection(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, SwitchBehavior), Func(Of TIn, SwitchBehavior), Func(Of TIn, Int32, TOut))
+- uid: Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  name: SelectSection<TIn, TOut>(IStream<TIn>, String, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)
+  href: api/Paillave.Etl.Extensions.SelectSectionEx.html#Paillave_Etl_Extensions_SelectSectionEx_SelectSection__2_IStream___0__System_String_System_Func___0_SwitchBehavior__System_Func___0_System_Int32___1__
+  commentId: M:Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  name.vb: SelectSection(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, SwitchBehavior), Func(Of TIn, Int32, TOut))
+  fullName: Paillave.Etl.Extensions.SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, SwitchBehavior>, System.Func<TIn, System.Int32, TOut>)
+  fullName.vb: Paillave.Etl.Extensions.SelectSectionEx.SelectSection(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, SwitchBehavior), System.Func(Of TIn, System.Int32, TOut))
+  nameWithType: SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, String, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)
+  nameWithType.vb: SelectSectionEx.SelectSection(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, SwitchBehavior), Func(Of TIn, Int32, TOut))
 - uid: Paillave.Etl.Extensions.SkipEx
   name: SkipEx
   href: api/Paillave.Etl.Extensions.SkipEx.html
@@ -1276,6 +1312,15 @@ references:
   fullName.vb: Paillave.Etl.Extensions.UnpivotEx.Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), System.String, System.Collections.Generic.IEnumerable(Of System.Func(Of TIn, TUnpivoted)), System.Func(Of TIn, TUnpivoted, TOut))
   nameWithType: UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, String, IEnumerable<Func<TIn, TUnpivoted>>, Func<TIn, TUnpivoted, TOut>)
   nameWithType.vb: UnpivotEx.Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), String, IEnumerable(Of Func(Of TIn, TUnpivoted)), Func(Of TIn, TUnpivoted, TOut))
+- uid: Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,System.Func{``0,``2}[])
+  name: Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, String, Func<TIn, TOut>[])
+  href: api/Paillave.Etl.Extensions.UnpivotEx.html#Paillave_Etl_Extensions_UnpivotEx_Unpivot__3_IStream___0__System_String_System_Func___0___2____
+  commentId: M:Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,System.Func{``0,``2}[])
+  name.vb: Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), String, Func(Of TIn, TOut)())
+  fullName: Paillave.Etl.Extensions.UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, System.String, System.Func<TIn, TOut>[])
+  fullName.vb: Paillave.Etl.Extensions.UnpivotEx.Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, TOut)())
+  nameWithType: UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, String, Func<TIn, TOut>[])
+  nameWithType.vb: UnpivotEx.Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), String, Func(Of TIn, TOut)())
 - uid: Paillave.Etl.Extensions.WhereEx
   name: WhereEx
   href: api/Paillave.Etl.Extensions.WhereEx.html

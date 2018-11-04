@@ -6,6 +6,7 @@ items:
   parent: Paillave.Etl.Extensions
   children:
   - Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,System.Collections.Generic.IEnumerable{System.Func{``0,``1}},System.Func{``0,``1,``2})
+  - Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,System.Func{``0,``2}[])
   langs:
   - csharp
   - vb
@@ -16,7 +17,7 @@ items:
   source:
     id: UnpivotEx
     path: ''
-    startLine: 1540
+    startLine: 1518
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -55,7 +56,7 @@ items:
   source:
     id: Unpivot
     path: ''
-    startLine: 1542
+    startLine: 1520
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -90,6 +91,54 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.Extensions.UnpivotEx.Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), System.String, System.Collections.Generic.IEnumerable(Of System.Func(Of TIn, TUnpivoted)), System.Func(Of TIn, TUnpivoted, TOut))
   name.vb: Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), String, IEnumerable(Of Func(Of TIn, TUnpivoted)), Func(Of TIn, TUnpivoted, TOut))
+- uid: Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,System.Func{``0,``2}[])
+  commentId: M:Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,System.Func{``0,``2}[])
+  id: Unpivot``3(IStream{``0},System.String,System.Func{``0,``2}[])
+  isExtensionMethod: true
+  parent: Paillave.Etl.Extensions.UnpivotEx
+  langs:
+  - csharp
+  - vb
+  name: Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, String, Func<TIn, TOut>[])
+  nameWithType: UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, String, Func<TIn, TOut>[])
+  fullName: Paillave.Etl.Extensions.UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, System.String, System.Func<TIn, TOut>[])
+  type: Method
+  source:
+    id: Unpivot
+    path: ''
+    startLine: 1529
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Extensions
+  syntax:
+    content: public static IStream<TOut> Unpivot<TIn, TUnpivoted, TOut>(this IStream<TIn> stream, string name, params Func<TIn, TOut>[] fieldsToUnpivot)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: fieldsToUnpivot
+      type: System.Func{{TIn},{TOut}}[]
+    typeParameters:
+    - id: TIn
+    - id: TUnpivoted
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function Unpivot(Of TIn, TUnpivoted, TOut)(stream As IStream(Of TIn), name As String, ParamArray fieldsToUnpivot As Func(Of TIn, TOut)()) As IStream(Of TOut)
+  overload: Paillave.Etl.Extensions.UnpivotEx.Unpivot*
+  nameWithType.vb: UnpivotEx.Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), String, Func(Of TIn, TOut)())
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Extensions.UnpivotEx.Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, TOut)())
+  name.vb: Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), String, Func(Of TIn, TOut)())
 references:
 - uid: Paillave.Etl.Extensions
   commentId: N:Paillave.Etl.Extensions
@@ -762,3 +811,59 @@ references:
   - name: )
     nameWithType: )
     fullName: )
+- uid: System.Func{{TIn},{TOut}}[]
+  isExternal: true
+  name: Func<TIn, TOut>[]
+  nameWithType: Func<TIn, TOut>[]
+  fullName: System.Func<TIn, TOut>[]
+  nameWithType.vb: Func(Of TIn, TOut)()
+  fullName.vb: System.Func(Of TIn, TOut)()
+  name.vb: Func(Of TIn, TOut)()
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: '[]'
+    nameWithType: '[]'
+    fullName: '[]'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: ()
+    nameWithType: ()
+    fullName: ()

@@ -17,7 +17,7 @@ items:
   source:
     id: SortEx
     path: ''
-    startLine: 1084
+    startLine: 1062
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -56,7 +56,7 @@ items:
   source:
     id: Sort
     path: ''
-    startLine: 1086
+    startLine: 1064
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -105,7 +105,7 @@ items:
   source:
     id: Sort
     path: ''
-    startLine: 1094
+    startLine: 1072
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

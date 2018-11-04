@@ -73,13 +73,12 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 670
+    startLine: 654
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   summary: "\nTransform the input stream into a similar stream but with a different structure and calculation using a lambda expression\n"
-  example:
-  - "\nThis example creates a file path from the input value and open it for writing.\n<pre><code>public class MyJob : IStreamProcessDefinition&lt;string>\n{\n    public string Name => &quot;example select&quot;;\n    public void DefineProcess(IStream&lt;string> rootStream)\n    {\n        rootStream\n            .Select(&quot;get file path from its name&quot;, fileName => Path.Combine(&quot;C:\\&quot;, fileName))\n            // Values issued by the following select will be automatically disposed once the process is completed.\n            .Select(&quot;open the file&quot;, path => File.OpenWrite(path)); \n    }\n}</code></pre>\n"
+  example: []
   syntax:
     content: public static IStream<TOut> Select<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, TOut> resultSelector, bool excludeNull = false)
     parameters:
@@ -132,7 +131,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 679
+    startLine: 663
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -181,13 +180,12 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 721
+    startLine: 684
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   summary: "\nTransform the input stream into a similar stream but with a different structure and calculation using a lambda expression that works with a context\n"
-  example:
-  - "\nThis example returns a dataset by replacing null values with the latest not null value.\n<pre><code>public class CrossApplyActionJobs : IStreamProcessDefinition&lt;object>\n{\n    public string Name => &quot;import file&quot;;\n    public void DefineProcess(IStream&lt;object> rootStream)\n    {\n        rootStream\n            .CrossApplyEnumerable(&quot;create some values&quot;, (input) => Enumerable.Range(0, 10).Select(i => new { Id = i, Value = (i % 3 == 0) ? i : (int?)null }))\n            .Select(&quot;set null value to the previous not null value&quot;, 0, (i, ctx, setCtx) =>\n            {\n                var v = i.Value ?? ctx;\n                setCtx(v);\n                return new { i.Id, Value = v };\n            });\n    }\n}</code></pre>\n"
+  example: []
   syntax:
     content: public static IStream<TOut> Select<TIn, TOut, TCtx>(this IStream<TIn> stream, string name, TCtx initialContext, Func<TIn, TCtx, Action<TCtx>, TOut> resultSelector, bool excludeNull = false)
     parameters:
@@ -245,7 +243,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 730
+    startLine: 693
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -297,13 +295,12 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 787
+    startLine: 712
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   summary: "\nTransform the input stream into a similar stream but with a different structure and calculation using a processor\n"
-  example:
-  - "\nThis example returns a dataset by replacing null values with the latest not null value.\n<pre><code>public class CrossApplyActionJobs2 : IStreamProcessDefinition&lt;object>\n{\n    public string Name => &quot;import file&quot;;\n    public void DefineProcess(IStream&lt;object> rootStream)\n    {\n        rootStream\n            .CrossApplyEnumerable(&quot;create some values&quot;, (input) => Enumerable.Range(0, 10).Select(i => new MyInputType { Id = i, Value = (i % 3 == 0) ? i : (int?)null }))\n            .Select(&quot;set null value to the previous not null value&quot;, new MySelectProcessor());\n    }\n    private class MyInputType\n    {\n        public int Id { get; set; }\n        public int? Value { get; set; }\n    }\n    private class MyOutputType\n    {\n        public int Id { get; set; }\n        public int Value { get; set; }\n    }\n    private class MySelectProcessor : ISelectProcessor&lt;MyInputType, MyOutputType>\n    {\n        private int _lastValue = 0;\n        public MyOutputType ProcessRow(MyInputType value)\n        {\n            if (value.Value != null) _lastValue = value.Value.Value;\n            return new MyOutputType\n            {\n                Id = value.Id,\n                Value = _lastValue\n            };\n        }\n    }\n}</code></pre>\n"
+  example: []
   syntax:
     content: public static IStream<TOut> Select<TIn, TOut>(this IStream<TIn> stream, string name, ISelectProcessor<TIn, TOut> processor, bool excludeNull = false)
     parameters:
@@ -356,7 +353,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 796
+    startLine: 721
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -405,7 +402,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 815
+    startLine: 740
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -463,7 +460,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 824
+    startLine: 749
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -512,7 +509,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 843
+    startLine: 768
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -570,7 +567,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 852
+    startLine: 777
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -619,7 +616,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 873
+    startLine: 798
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -682,7 +679,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 882
+    startLine: 807
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -734,7 +731,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 904
+    startLine: 829
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -797,7 +794,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 914
+    startLine: 839
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -849,7 +846,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 937
+    startLine: 862
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -912,7 +909,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 947
+    startLine: 872
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

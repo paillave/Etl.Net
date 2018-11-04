@@ -9,6 +9,10 @@ items:
   - Paillave.Etl.Extensions.SelectSectionEx.SelectSection``1(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior})
   - Paillave.Etl.Extensions.SelectSectionEx.SelectSection``1(IStream{``0},System.String,System.Func{``0,SwitchBehavior})
   - Paillave.Etl.Extensions.SelectSectionEx.SelectSection``1(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior})
+  - Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  - Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  - Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  - Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
   langs:
   - csharp
   - vb
@@ -19,7 +23,7 @@ items:
   source:
     id: SelectSectionEx
     path: ''
-    startLine: 978
+    startLine: 903
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -58,7 +62,7 @@ items:
   source:
     id: SelectSection
     path: ''
-    startLine: 980
+    startLine: 905
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -106,7 +110,7 @@ items:
   source:
     id: SelectSection
     path: ''
-    startLine: 989
+    startLine: 914
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -152,7 +156,7 @@ items:
   source:
     id: SelectSection
     path: ''
-    startLine: 997
+    startLine: 922
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -202,7 +206,7 @@ items:
   source:
     id: SelectSection
     path: ''
-    startLine: 1007
+    startLine: 932
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -235,6 +239,210 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.Extensions.SelectSectionEx.SelectSection(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, SwitchBehavior), System.Func(Of TIn, SwitchBehavior))
   name.vb: SelectSection(Of TIn)(IStream(Of TIn), String, Func(Of TIn, SwitchBehavior), Func(Of TIn, SwitchBehavior))
+- uid: Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  commentId: M:Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  id: SelectSection``2(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  isExtensionMethod: true
+  parent: Paillave.Etl.Extensions.SelectSectionEx
+  langs:
+  - csharp
+  - vb
+  name: SelectSection<TIn, TOut>(IStream<TIn>, String, KeepingState, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)
+  nameWithType: SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, String, KeepingState, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)
+  fullName: Paillave.Etl.Extensions.SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, System.String, KeepingState, System.Func<TIn, SwitchBehavior>, System.Func<TIn, System.Int32, TOut>)
+  type: Method
+  source:
+    id: SelectSection
+    path: ''
+    startLine: 954
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Extensions
+  syntax:
+    content: public static IStream<TOut> SelectSection<TIn, TOut>(this IStream<TIn> stream, string name, KeepingState initialState, Func<TIn, SwitchBehavior> switcher, Func<TIn, int, TOut> resultSelector)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: initialState
+      type: KeepingState
+    - id: switcher
+      type: System.Func{{TIn},SwitchBehavior}
+    - id: resultSelector
+      type: System.Func{{TIn},System.Int32,{TOut}}
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function SelectSection(Of TIn, TOut)(stream As IStream(Of TIn), name As String, initialState As KeepingState, switcher As Func(Of TIn, SwitchBehavior), resultSelector As Func(Of TIn, Integer, TOut)) As IStream(Of TOut)
+  overload: Paillave.Etl.Extensions.SelectSectionEx.SelectSection*
+  nameWithType.vb: SelectSectionEx.SelectSection(Of TIn, TOut)(IStream(Of TIn), String, KeepingState, Func(Of TIn, SwitchBehavior), Func(Of TIn, Int32, TOut))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Extensions.SelectSectionEx.SelectSection(Of TIn, TOut)(IStream(Of TIn), System.String, KeepingState, System.Func(Of TIn, SwitchBehavior), System.Func(Of TIn, System.Int32, TOut))
+  name.vb: SelectSection(Of TIn, TOut)(IStream(Of TIn), String, KeepingState, Func(Of TIn, SwitchBehavior), Func(Of TIn, Int32, TOut))
+- uid: Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  commentId: M:Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  id: SelectSection``2(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  isExtensionMethod: true
+  parent: Paillave.Etl.Extensions.SelectSectionEx
+  langs:
+  - csharp
+  - vb
+  name: SelectSection<TIn, TOut>(IStream<TIn>, String, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)
+  nameWithType: SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, String, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)
+  fullName: Paillave.Etl.Extensions.SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, SwitchBehavior>, System.Func<TIn, System.Int32, TOut>)
+  type: Method
+  source:
+    id: SelectSection
+    path: ''
+    startLine: 964
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Extensions
+  syntax:
+    content: public static IStream<TOut> SelectSection<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, SwitchBehavior> switcher, Func<TIn, int, TOut> resultSelector)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: switcher
+      type: System.Func{{TIn},SwitchBehavior}
+    - id: resultSelector
+      type: System.Func{{TIn},System.Int32,{TOut}}
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function SelectSection(Of TIn, TOut)(stream As IStream(Of TIn), name As String, switcher As Func(Of TIn, SwitchBehavior), resultSelector As Func(Of TIn, Integer, TOut)) As IStream(Of TOut)
+  overload: Paillave.Etl.Extensions.SelectSectionEx.SelectSection*
+  nameWithType.vb: SelectSectionEx.SelectSection(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, SwitchBehavior), Func(Of TIn, Int32, TOut))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Extensions.SelectSectionEx.SelectSection(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, SwitchBehavior), System.Func(Of TIn, System.Int32, TOut))
+  name.vb: SelectSection(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, SwitchBehavior), Func(Of TIn, Int32, TOut))
+- uid: Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  commentId: M:Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  id: SelectSection``2(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  isExtensionMethod: true
+  parent: Paillave.Etl.Extensions.SelectSectionEx
+  langs:
+  - csharp
+  - vb
+  name: SelectSection<TIn, TOut>(IStream<TIn>, String, KeepingState, Func<TIn, SwitchBehavior>, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)
+  nameWithType: SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, String, KeepingState, Func<TIn, SwitchBehavior>, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)
+  fullName: Paillave.Etl.Extensions.SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, System.String, KeepingState, System.Func<TIn, SwitchBehavior>, System.Func<TIn, SwitchBehavior>, System.Func<TIn, System.Int32, TOut>)
+  type: Method
+  source:
+    id: SelectSection
+    path: ''
+    startLine: 973
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Extensions
+  syntax:
+    content: public static IStream<TOut> SelectSection<TIn, TOut>(this IStream<TIn> stream, string name, KeepingState initialState, Func<TIn, SwitchBehavior> switchToKeep, Func<TIn, SwitchBehavior> switchToIgnore, Func<TIn, int, TOut> resultSelector)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: initialState
+      type: KeepingState
+    - id: switchToKeep
+      type: System.Func{{TIn},SwitchBehavior}
+    - id: switchToIgnore
+      type: System.Func{{TIn},SwitchBehavior}
+    - id: resultSelector
+      type: System.Func{{TIn},System.Int32,{TOut}}
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function SelectSection(Of TIn, TOut)(stream As IStream(Of TIn), name As String, initialState As KeepingState, switchToKeep As Func(Of TIn, SwitchBehavior), switchToIgnore As Func(Of TIn, SwitchBehavior), resultSelector As Func(Of TIn, Integer, TOut)) As IStream(Of TOut)
+  overload: Paillave.Etl.Extensions.SelectSectionEx.SelectSection*
+  nameWithType.vb: SelectSectionEx.SelectSection(Of TIn, TOut)(IStream(Of TIn), String, KeepingState, Func(Of TIn, SwitchBehavior), Func(Of TIn, SwitchBehavior), Func(Of TIn, Int32, TOut))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Extensions.SelectSectionEx.SelectSection(Of TIn, TOut)(IStream(Of TIn), System.String, KeepingState, System.Func(Of TIn, SwitchBehavior), System.Func(Of TIn, SwitchBehavior), System.Func(Of TIn, System.Int32, TOut))
+  name.vb: SelectSection(Of TIn, TOut)(IStream(Of TIn), String, KeepingState, Func(Of TIn, SwitchBehavior), Func(Of TIn, SwitchBehavior), Func(Of TIn, Int32, TOut))
+- uid: Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  commentId: M:Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  id: SelectSection``2(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})
+  isExtensionMethod: true
+  parent: Paillave.Etl.Extensions.SelectSectionEx
+  langs:
+  - csharp
+  - vb
+  name: SelectSection<TIn, TOut>(IStream<TIn>, String, Func<TIn, SwitchBehavior>, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)
+  nameWithType: SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, String, Func<TIn, SwitchBehavior>, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)
+  fullName: Paillave.Etl.Extensions.SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, SwitchBehavior>, System.Func<TIn, SwitchBehavior>, System.Func<TIn, System.Int32, TOut>)
+  type: Method
+  source:
+    id: SelectSection
+    path: ''
+    startLine: 984
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Extensions
+  syntax:
+    content: public static IStream<TOut> SelectSection<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, SwitchBehavior> switchToKeep, Func<TIn, SwitchBehavior> switchToIgnore, Func<TIn, int, TOut> resultSelector)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: switchToKeep
+      type: System.Func{{TIn},SwitchBehavior}
+    - id: switchToIgnore
+      type: System.Func{{TIn},SwitchBehavior}
+    - id: resultSelector
+      type: System.Func{{TIn},System.Int32,{TOut}}
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function SelectSection(Of TIn, TOut)(stream As IStream(Of TIn), name As String, switchToKeep As Func(Of TIn, SwitchBehavior), switchToIgnore As Func(Of TIn, SwitchBehavior), resultSelector As Func(Of TIn, Integer, TOut)) As IStream(Of TOut)
+  overload: Paillave.Etl.Extensions.SelectSectionEx.SelectSection*
+  nameWithType.vb: SelectSectionEx.SelectSection(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, SwitchBehavior), Func(Of TIn, SwitchBehavior), Func(Of TIn, Int32, TOut))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Extensions.SelectSectionEx.SelectSection(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, SwitchBehavior), System.Func(Of TIn, SwitchBehavior), System.Func(Of TIn, System.Int32, TOut))
+  name.vb: SelectSection(Of TIn, TOut)(IStream(Of TIn), String, Func(Of TIn, SwitchBehavior), Func(Of TIn, SwitchBehavior), Func(Of TIn, Int32, TOut))
 references:
 - uid: Paillave.Etl.Extensions
   commentId: N:Paillave.Etl.Extensions
@@ -725,6 +933,176 @@ references:
   - name: T
     nameWithType: T
     fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TIn},System.Int32,{TOut}}
+  commentId: T:System.Func{``0,System.Int32,``1}
+  parent: System
+  definition: System.Func`3
+  name: Func<TIn, Int32, TOut>
+  nameWithType: Func<TIn, Int32, TOut>
+  fullName: System.Func<TIn, System.Int32, TOut>
+  nameWithType.vb: Func(Of TIn, Int32, TOut)
+  fullName.vb: System.Func(Of TIn, System.Int32, TOut)
+  name.vb: Func(Of TIn, Int32, TOut)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Int32
+    name: Int32
+    nameWithType: Int32
+    fullName: System.Int32
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{{TOut}}
+  commentId: '!:IStream{``3}'
+  definition: IStream`1
+  name: IStream<TOut>
+  nameWithType: IStream<TOut>
+  fullName: IStream<TOut>
+  nameWithType.vb: IStream(Of TOut)
+  fullName.vb: IStream(Of TOut)
+  name.vb: IStream(Of TOut)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func`3
+  commentId: T:System.Func`3
+  isExternal: true
+  name: Func<T1, T2, TResult>
+  nameWithType: Func<T1, T2, TResult>
+  fullName: System.Func<T1, T2, TResult>
+  nameWithType.vb: Func(Of T1, T2, TResult)
+  fullName.vb: System.Func(Of T1, T2, TResult)
+  name.vb: Func(Of T1, T2, TResult)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
   - name: ', '
     nameWithType: ', '
     fullName: ', '
