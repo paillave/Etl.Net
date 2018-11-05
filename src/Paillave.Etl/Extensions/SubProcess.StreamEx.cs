@@ -18,7 +18,7 @@ namespace Paillave.Etl.Extensions
 {
     public static partial class ToSubProcessEx
     {
-        public static IStream<TOut> ToSubProcess<TIn, TOut>(this IStream<TIn> stream, string name, Func<IStream<TIn>, IStream<TOut>> subProcess, bool noParallelisation = false)
+        public static IStream<TOut> ToSubProcess<TIn, TOut>(this IStream<TIn> stream, string name, Func<ISingleStream<TIn>, IStream<TOut>> subProcess, bool noParallelisation = false)
         {
             return new ToSubProcessStreamNode<TIn, TOut>(name, new ToSubProcessArgs<TIn, TOut>
             {
