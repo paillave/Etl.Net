@@ -15,6 +15,8 @@ namespace Paillave.Etl.StreamNodes
         public Func<ISingleStream<TIn>, IStream<TOut>> SubProcess { get; set; }
         public bool NoParallelisation { get; set; }
     }
+    //TODO:what it the difference between SubProcessesUnionStreamNode and ToSubProcessStreamNode?
+    //TODO: rename to Through...?
     public class ToSubProcessStreamNode<TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, ToSubProcessArgs<TIn, TOut>>
     {
         public override bool IsAwaitable => true;
@@ -24,6 +26,7 @@ namespace Paillave.Etl.StreamNodes
 
         protected override IStream<TOut> CreateOutputStream(ToSubProcessArgs<TIn, TOut> args)
         {
+            //TODO:replace with suitable api if necessary
             Semaphore semaphore = args.NoParallelisation ? new Semaphore(1, 1) : new Semaphore(10, 10);
             var outputObservable = args.Stream.Observable.FlatMap(i =>
                 {

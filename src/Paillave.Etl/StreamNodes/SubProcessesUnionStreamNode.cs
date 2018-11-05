@@ -16,6 +16,8 @@ namespace Paillave.Etl.StreamNodes
         public IEnumerable<Func<ISingleStream<TIn>, IStream<TOut>>> SubProcesses { get; set; }
         public bool NoParallelisation { get; set; }
     }
+
+    //TODO:what it the difference between SubProcessesUnionStreamNode and ToSubProcessStreamNode?
     public class SubProcessesUnionStreamNode<TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, SubProcessesUnionArgs<TIn, TOut>>
     {
         public SubProcessesUnionStreamNode(string name, SubProcessesUnionArgs<TIn, TOut> args) : base(name, args)
@@ -24,9 +26,10 @@ namespace Paillave.Etl.StreamNodes
 
         protected override IStream<TOut> CreateOutputStream(SubProcessesUnionArgs<TIn, TOut> args)
         {
+            //TODO:replace with suitable api if necessary
             Semaphore semaphore = args.NoParallelisation ? new Semaphore(1, 1) : new Semaphore(10, 10);
             var outputObservable = args.Stream.Observable
-                .First()
+                .First() //TODO: why is the first only taken?
                 .FlatMap(i => PushObservable.FromEnumerable(args.SubProcesses.Select(sp => new
                 {
                     cnfg = i,
