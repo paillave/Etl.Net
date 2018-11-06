@@ -18,7 +18,7 @@ namespace Paillave.Etl.Extensions
 {
     public static partial class ToGroupEx
     {
-        public static IStream<TOut> ToGroup<TIn, TKey, TOut>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, Func<IStream<TIn>, IStream<TOut>> subProcess)
+        public static IStream<TOut> ToGroups<TIn, TKey, TOut>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, Func<IStream<TIn>, IStream<TOut>> subProcess)
         {
             return new ToGroupsStreamNode<TIn, TKey, TOut>(name, new ToGroupsArgs<TIn, TKey, TOut>
             {

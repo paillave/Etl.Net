@@ -124,10 +124,11 @@ namespace Paillave.Etl.StreamNodes
         }
         protected override TStream CreateOutputStream(ThroughActionArgs<TIn, TStream, TResource> args)
         {
-            var firstStreamWriter = args.ResourceStream.Observable.First();
+            var firstStreamWriter = args.ResourceStream.Observable;
             //if (args.PreProcess != null)
-            firstStreamWriter = firstStreamWriter.Do(i => args.Processor.PreProcess(i));
-            firstStreamWriter = firstStreamWriter.DelayTillEndOfStream();
+            firstStreamWriter = firstStreamWriter
+                .Do(i => args.Processor.PreProcess(i))
+                .DelayTillEndOfStream();
             var obs = args.Stream.Observable
                 .CombineWithLatest(firstStreamWriter, (i, r) => { args.Processor.ProcessRow(i, r); return i; }, true);
             return CreateMatchingStream(obs, args.Stream);

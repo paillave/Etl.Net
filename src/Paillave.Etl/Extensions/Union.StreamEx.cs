@@ -28,7 +28,7 @@ namespace Paillave.Etl.Extensions
         }
         public static IStream<TOut> Union<TIn, TOut>(this IStream<TIn> stream, string name, params Func<ISingleStream<TIn>, IStream<TOut>>[] subProcesses)
         {
-            return new SubProcessesUnionStreamNode<TIn, TOut>(name, new SubProcessesUnionArgs<TIn, TOut>
+            return new ToSubProcessesStreamNode<TIn, TOut>(name, new ToSubProcessesArgs<TIn, TOut>
             {
                 Stream = stream,
                 NoParallelisation = false,

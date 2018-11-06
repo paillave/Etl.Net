@@ -8,20 +8,20 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl.Extensions
 {
-    public static class ToLocalFileEx
+    public static class ThroughLocalFileEx
     {
-        public static IStream<Stream> ToLocalFile(this IStream<Stream> stream, string name, IStream<string> outputFilePathStream)
+        public static IStream<Stream> ThroughLocalFile(this IStream<Stream> stream, string name, IStream<string> outputFilePathStream)
         {
-            return new ToLocalFileStreamNode<string>(name, new ToLocalFileArgs<string>
+            return new ThroughLocalFileStreamNode<string>(name, new ThroughLocalFileArgs<string>
             {
                 GetOutputFilePath = i => i,
                 ParamStream = outputFilePathStream,
                 Stream = stream
             }).Output;
         }
-        public static IStream<Stream> ToLocalFile<TParam>(this IStream<Stream> stream, string name, IStream<TParam> outputFilePathStream, Func<TParam, string> getOutputFilePath)
+        public static IStream<Stream> ThroughLocalFile<TParam>(this IStream<Stream> stream, string name, IStream<TParam> outputFilePathStream, Func<TParam, string> getOutputFilePath)
         {
-            return new ToLocalFileStreamNode<TParam>(name, new ToLocalFileArgs<TParam>
+            return new ThroughLocalFileStreamNode<TParam>(name, new ThroughLocalFileArgs<TParam>
             {
                 GetOutputFilePath = getOutputFilePath,
                 ParamStream = outputFilePathStream,
