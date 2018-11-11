@@ -71,8 +71,8 @@ namespace Paillave.Etl.TextFile.Core
             {
                 var indexToPropertySerializerDictionary = _fieldDefinitions.Join(
                     columnNames.Select((ColumnName, Position) => new { ColumnName, Position }),
-                    i => i.ColumnName.Trim(),
-                    i => i.ColumnName.Trim(),
+                    i => i.ColumnName.ToLowerInvariant().Trim(),
+                    i => i.ColumnName.ToLowerInvariant().Trim(),
                     (fd, po) => new
                     {
                         Position = po.Position,
