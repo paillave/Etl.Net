@@ -1113,59 +1113,59 @@ references:
   fullName.vb: Paillave.Etl.Extensions.ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(ISortedStream(Of TIn, TKey), System.String, ISingleStream(Of TResource), System.Action(Of TIn, TResource, TCtx, System.Action(Of TCtx)), System.Action(Of TResource, System.Action(Of TCtx)))
   nameWithType: ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)
   nameWithType.vb: ThroughActionEx.ThroughAction(Of TIn, TResource, TCtx, TKey)(ISortedStream(Of TIn, TKey), String, ISingleStream(Of TResource), Action(Of TIn, TResource, TCtx, Action(Of TCtx)), Action(Of TResource, Action(Of TCtx)))
+- uid: Paillave.Etl.Extensions.ThroughLocalFileEx
+  name: ThroughLocalFileEx
+  href: api/Paillave.Etl.Extensions.ThroughLocalFileEx.html
+  commentId: T:Paillave.Etl.Extensions.ThroughLocalFileEx
+  fullName: Paillave.Etl.Extensions.ThroughLocalFileEx
+  nameWithType: ThroughLocalFileEx
+- uid: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile(IStream{System.IO.Stream},System.String,IStream{System.String})
+  name: ThroughLocalFile(IStream<Stream>, String, IStream<String>)
+  href: api/Paillave.Etl.Extensions.ThroughLocalFileEx.html#Paillave_Etl_Extensions_ThroughLocalFileEx_ThroughLocalFile_IStream_System_IO_Stream__System_String_IStream_System_String__
+  commentId: M:Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile(IStream{System.IO.Stream},System.String,IStream{System.String})
+  name.vb: ThroughLocalFile(IStream(Of Stream), String, IStream(Of String))
+  fullName: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile(IStream<System.IO.Stream>, System.String, IStream<System.String>)
+  fullName.vb: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile(IStream(Of System.IO.Stream), System.String, IStream(Of System.String))
+  nameWithType: ThroughLocalFileEx.ThroughLocalFile(IStream<Stream>, String, IStream<String>)
+  nameWithType.vb: ThroughLocalFileEx.ThroughLocalFile(IStream(Of Stream), String, IStream(Of String))
+- uid: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile*
+  name: ThroughLocalFile
+  href: api/Paillave.Etl.Extensions.ThroughLocalFileEx.html#Paillave_Etl_Extensions_ThroughLocalFileEx_ThroughLocalFile_
+  commentId: Overload:Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile
+  isSpec: "True"
+  fullName: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile
+  nameWithType: ThroughLocalFileEx.ThroughLocalFile
+- uid: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile``1(IStream{System.IO.Stream},System.String,IStream{``0},System.Func{``0,System.String})
+  name: ThroughLocalFile<TParam>(IStream<Stream>, String, IStream<TParam>, Func<TParam, String>)
+  href: api/Paillave.Etl.Extensions.ThroughLocalFileEx.html#Paillave_Etl_Extensions_ThroughLocalFileEx_ThroughLocalFile__1_IStream_System_IO_Stream__System_String_IStream___0__System_Func___0_System_String__
+  commentId: M:Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile``1(IStream{System.IO.Stream},System.String,IStream{``0},System.Func{``0,System.String})
+  name.vb: ThroughLocalFile(Of TParam)(IStream(Of Stream), String, IStream(Of TParam), Func(Of TParam, String))
+  fullName: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile<TParam>(IStream<System.IO.Stream>, System.String, IStream<TParam>, System.Func<TParam, System.String>)
+  fullName.vb: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile(Of TParam)(IStream(Of System.IO.Stream), System.String, IStream(Of TParam), System.Func(Of TParam, System.String))
+  nameWithType: ThroughLocalFileEx.ThroughLocalFile<TParam>(IStream<Stream>, String, IStream<TParam>, Func<TParam, String>)
+  nameWithType.vb: ThroughLocalFileEx.ThroughLocalFile(Of TParam)(IStream(Of Stream), String, IStream(Of TParam), Func(Of TParam, String))
 - uid: Paillave.Etl.Extensions.ToGroupEx
   name: ToGroupEx
   href: api/Paillave.Etl.Extensions.ToGroupEx.html
   commentId: T:Paillave.Etl.Extensions.ToGroupEx
   fullName: Paillave.Etl.Extensions.ToGroupEx
   nameWithType: ToGroupEx
-- uid: Paillave.Etl.Extensions.ToGroupEx.ToGroup*
-  name: ToGroup
-  href: api/Paillave.Etl.Extensions.ToGroupEx.html#Paillave_Etl_Extensions_ToGroupEx_ToGroup_
-  commentId: Overload:Paillave.Etl.Extensions.ToGroupEx.ToGroup
+- uid: Paillave.Etl.Extensions.ToGroupEx.ToGroups*
+  name: ToGroups
+  href: api/Paillave.Etl.Extensions.ToGroupEx.html#Paillave_Etl_Extensions_ToGroupEx_ToGroups_
+  commentId: Overload:Paillave.Etl.Extensions.ToGroupEx.ToGroups
   isSpec: "True"
-  fullName: Paillave.Etl.Extensions.ToGroupEx.ToGroup
-  nameWithType: ToGroupEx.ToGroup
-- uid: Paillave.Etl.Extensions.ToGroupEx.ToGroup``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})
-  name: ToGroup<TIn, TKey, TOut>(IStream<TIn>, String, Func<TIn, TKey>, Func<IStream<TIn>, IStream<TOut>>)
-  href: api/Paillave.Etl.Extensions.ToGroupEx.html#Paillave_Etl_Extensions_ToGroupEx_ToGroup__3_IStream___0__System_String_System_Func___0___1__System_Func_IStream___0__IStream___2___
-  commentId: M:Paillave.Etl.Extensions.ToGroupEx.ToGroup``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})
-  name.vb: ToGroup(Of TIn, TKey, TOut)(IStream(Of TIn), String, Func(Of TIn, TKey), Func(Of IStream(Of TIn), IStream(Of TOut)))
-  fullName: Paillave.Etl.Extensions.ToGroupEx.ToGroup<TIn, TKey, TOut>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Func<IStream<TIn>, IStream<TOut>>)
-  fullName.vb: Paillave.Etl.Extensions.ToGroupEx.ToGroup(Of TIn, TKey, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, TKey), System.Func(Of IStream(Of TIn), IStream(Of TOut)))
-  nameWithType: ToGroupEx.ToGroup<TIn, TKey, TOut>(IStream<TIn>, String, Func<TIn, TKey>, Func<IStream<TIn>, IStream<TOut>>)
-  nameWithType.vb: ToGroupEx.ToGroup(Of TIn, TKey, TOut)(IStream(Of TIn), String, Func(Of TIn, TKey), Func(Of IStream(Of TIn), IStream(Of TOut)))
-- uid: Paillave.Etl.Extensions.ToLocalFileEx
-  name: ToLocalFileEx
-  href: api/Paillave.Etl.Extensions.ToLocalFileEx.html
-  commentId: T:Paillave.Etl.Extensions.ToLocalFileEx
-  fullName: Paillave.Etl.Extensions.ToLocalFileEx
-  nameWithType: ToLocalFileEx
-- uid: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile(IStream{System.IO.Stream},System.String,IStream{System.String})
-  name: ToLocalFile(IStream<Stream>, String, IStream<String>)
-  href: api/Paillave.Etl.Extensions.ToLocalFileEx.html#Paillave_Etl_Extensions_ToLocalFileEx_ToLocalFile_IStream_System_IO_Stream__System_String_IStream_System_String__
-  commentId: M:Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile(IStream{System.IO.Stream},System.String,IStream{System.String})
-  name.vb: ToLocalFile(IStream(Of Stream), String, IStream(Of String))
-  fullName: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile(IStream<System.IO.Stream>, System.String, IStream<System.String>)
-  fullName.vb: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile(IStream(Of System.IO.Stream), System.String, IStream(Of System.String))
-  nameWithType: ToLocalFileEx.ToLocalFile(IStream<Stream>, String, IStream<String>)
-  nameWithType.vb: ToLocalFileEx.ToLocalFile(IStream(Of Stream), String, IStream(Of String))
-- uid: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile*
-  name: ToLocalFile
-  href: api/Paillave.Etl.Extensions.ToLocalFileEx.html#Paillave_Etl_Extensions_ToLocalFileEx_ToLocalFile_
-  commentId: Overload:Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile
-  isSpec: "True"
-  fullName: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile
-  nameWithType: ToLocalFileEx.ToLocalFile
-- uid: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile``1(IStream{System.IO.Stream},System.String,IStream{``0},System.Func{``0,System.String})
-  name: ToLocalFile<TParam>(IStream<Stream>, String, IStream<TParam>, Func<TParam, String>)
-  href: api/Paillave.Etl.Extensions.ToLocalFileEx.html#Paillave_Etl_Extensions_ToLocalFileEx_ToLocalFile__1_IStream_System_IO_Stream__System_String_IStream___0__System_Func___0_System_String__
-  commentId: M:Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile``1(IStream{System.IO.Stream},System.String,IStream{``0},System.Func{``0,System.String})
-  name.vb: ToLocalFile(Of TParam)(IStream(Of Stream), String, IStream(Of TParam), Func(Of TParam, String))
-  fullName: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile<TParam>(IStream<System.IO.Stream>, System.String, IStream<TParam>, System.Func<TParam, System.String>)
-  fullName.vb: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile(Of TParam)(IStream(Of System.IO.Stream), System.String, IStream(Of TParam), System.Func(Of TParam, System.String))
-  nameWithType: ToLocalFileEx.ToLocalFile<TParam>(IStream<Stream>, String, IStream<TParam>, Func<TParam, String>)
-  nameWithType.vb: ToLocalFileEx.ToLocalFile(Of TParam)(IStream(Of Stream), String, IStream(Of TParam), Func(Of TParam, String))
+  fullName: Paillave.Etl.Extensions.ToGroupEx.ToGroups
+  nameWithType: ToGroupEx.ToGroups
+- uid: Paillave.Etl.Extensions.ToGroupEx.ToGroups``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})
+  name: ToGroups<TIn, TKey, TOut>(IStream<TIn>, String, Func<TIn, TKey>, Func<IStream<TIn>, IStream<TOut>>)
+  href: api/Paillave.Etl.Extensions.ToGroupEx.html#Paillave_Etl_Extensions_ToGroupEx_ToGroups__3_IStream___0__System_String_System_Func___0___1__System_Func_IStream___0__IStream___2___
+  commentId: M:Paillave.Etl.Extensions.ToGroupEx.ToGroups``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})
+  name.vb: ToGroups(Of TIn, TKey, TOut)(IStream(Of TIn), String, Func(Of TIn, TKey), Func(Of IStream(Of TIn), IStream(Of TOut)))
+  fullName: Paillave.Etl.Extensions.ToGroupEx.ToGroups<TIn, TKey, TOut>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Func<IStream<TIn>, IStream<TOut>>)
+  fullName.vb: Paillave.Etl.Extensions.ToGroupEx.ToGroups(Of TIn, TKey, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, TKey), System.Func(Of IStream(Of TIn), IStream(Of TOut)))
+  nameWithType: ToGroupEx.ToGroups<TIn, TKey, TOut>(IStream<TIn>, String, Func<TIn, TKey>, Func<IStream<TIn>, IStream<TOut>>)
+  nameWithType.vb: ToGroupEx.ToGroups(Of TIn, TKey, TOut)(IStream(Of TIn), String, Func(Of TIn, TKey), Func(Of IStream(Of TIn), IStream(Of TOut)))
 - uid: Paillave.Etl.Extensions.TopEx
   name: TopEx
   href: api/Paillave.Etl.Extensions.TopEx.html
@@ -1219,15 +1219,15 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess
   nameWithType: ToSubProcessEx.ToSubProcess
-- uid: Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess``2(IStream{``0},System.String,System.Func{IStream{``0},IStream{``1}},System.Boolean)
-  name: ToSubProcess<TIn, TOut>(IStream<TIn>, String, Func<IStream<TIn>, IStream<TOut>>, Boolean)
-  href: api/Paillave.Etl.Extensions.ToSubProcessEx.html#Paillave_Etl_Extensions_ToSubProcessEx_ToSubProcess__2_IStream___0__System_String_System_Func_IStream___0__IStream___1___System_Boolean_
-  commentId: M:Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess``2(IStream{``0},System.String,System.Func{IStream{``0},IStream{``1}},System.Boolean)
-  name.vb: ToSubProcess(Of TIn, TOut)(IStream(Of TIn), String, Func(Of IStream(Of TIn), IStream(Of TOut)), Boolean)
-  fullName: Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess<TIn, TOut>(IStream<TIn>, System.String, System.Func<IStream<TIn>, IStream<TOut>>, System.Boolean)
-  fullName.vb: Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of IStream(Of TIn), IStream(Of TOut)), System.Boolean)
-  nameWithType: ToSubProcessEx.ToSubProcess<TIn, TOut>(IStream<TIn>, String, Func<IStream<TIn>, IStream<TOut>>, Boolean)
-  nameWithType.vb: ToSubProcessEx.ToSubProcess(Of TIn, TOut)(IStream(Of TIn), String, Func(Of IStream(Of TIn), IStream(Of TOut)), Boolean)
+- uid: Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}},System.Boolean)
+  name: ToSubProcess<TIn, TOut>(IStream<TIn>, String, Func<ISingleStream<TIn>, IStream<TOut>>, Boolean)
+  href: api/Paillave.Etl.Extensions.ToSubProcessEx.html#Paillave_Etl_Extensions_ToSubProcessEx_ToSubProcess__2_IStream___0__System_String_System_Func_ISingleStream___0__IStream___1___System_Boolean_
+  commentId: M:Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}},System.Boolean)
+  name.vb: ToSubProcess(Of TIn, TOut)(IStream(Of TIn), String, Func(Of ISingleStream(Of TIn), IStream(Of TOut)), Boolean)
+  fullName: Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess<TIn, TOut>(IStream<TIn>, System.String, System.Func<ISingleStream<TIn>, IStream<TOut>>, System.Boolean)
+  fullName.vb: Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of ISingleStream(Of TIn), IStream(Of TOut)), System.Boolean)
+  nameWithType: ToSubProcessEx.ToSubProcess<TIn, TOut>(IStream<TIn>, String, Func<ISingleStream<TIn>, IStream<TOut>>, Boolean)
+  nameWithType.vb: ToSubProcessEx.ToSubProcess(Of TIn, TOut)(IStream(Of TIn), String, Func(Of ISingleStream(Of TIn), IStream(Of TOut)), Boolean)
 - uid: Paillave.Etl.Extensions.UnionAllEx
   name: UnionAllEx
   href: api/Paillave.Etl.Extensions.UnionAllEx.html
@@ -1250,15 +1250,15 @@ references:
   fullName.vb: Paillave.Etl.Extensions.UnionAllEx.UnionAll(Of I)(IStream(Of I), System.String, IStream(Of I))
   nameWithType: UnionAllEx.UnionAll<I>(IStream<I>, String, IStream<I>)
   nameWithType.vb: UnionAllEx.UnionAll(Of I)(IStream(Of I), String, IStream(Of I))
-- uid: Paillave.Etl.Extensions.UnionAllEx.UnionAll``2(IStream{``0},System.String,System.Func{IStream{``0},IStream{``1}}[])
-  name: UnionAll<TIn, TOut>(IStream<TIn>, String, Func<IStream<TIn>, IStream<TOut>>[])
-  href: api/Paillave.Etl.Extensions.UnionAllEx.html#Paillave_Etl_Extensions_UnionAllEx_UnionAll__2_IStream___0__System_String_System_Func_IStream___0__IStream___1_____
-  commentId: M:Paillave.Etl.Extensions.UnionAllEx.UnionAll``2(IStream{``0},System.String,System.Func{IStream{``0},IStream{``1}}[])
-  name.vb: UnionAll(Of TIn, TOut)(IStream(Of TIn), String, Func(Of IStream(Of TIn), IStream(Of TOut))())
-  fullName: Paillave.Etl.Extensions.UnionAllEx.UnionAll<TIn, TOut>(IStream<TIn>, System.String, System.Func<IStream<TIn>, IStream<TOut>>[])
-  fullName.vb: Paillave.Etl.Extensions.UnionAllEx.UnionAll(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of IStream(Of TIn), IStream(Of TOut))())
-  nameWithType: UnionAllEx.UnionAll<TIn, TOut>(IStream<TIn>, String, Func<IStream<TIn>, IStream<TOut>>[])
-  nameWithType.vb: UnionAllEx.UnionAll(Of TIn, TOut)(IStream(Of TIn), String, Func(Of IStream(Of TIn), IStream(Of TOut))())
+- uid: Paillave.Etl.Extensions.UnionAllEx.UnionAll``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}}[])
+  name: UnionAll<TIn, TOut>(IStream<TIn>, String, Func<ISingleStream<TIn>, IStream<TOut>>[])
+  href: api/Paillave.Etl.Extensions.UnionAllEx.html#Paillave_Etl_Extensions_UnionAllEx_UnionAll__2_IStream___0__System_String_System_Func_ISingleStream___0__IStream___1_____
+  commentId: M:Paillave.Etl.Extensions.UnionAllEx.UnionAll``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}}[])
+  name.vb: UnionAll(Of TIn, TOut)(IStream(Of TIn), String, Func(Of ISingleStream(Of TIn), IStream(Of TOut))())
+  fullName: Paillave.Etl.Extensions.UnionAllEx.UnionAll<TIn, TOut>(IStream<TIn>, System.String, System.Func<ISingleStream<TIn>, IStream<TOut>>[])
+  fullName.vb: Paillave.Etl.Extensions.UnionAllEx.UnionAll(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of ISingleStream(Of TIn), IStream(Of TOut))())
+  nameWithType: UnionAllEx.UnionAll<TIn, TOut>(IStream<TIn>, String, Func<ISingleStream<TIn>, IStream<TOut>>[])
+  nameWithType.vb: UnionAllEx.UnionAll(Of TIn, TOut)(IStream(Of TIn), String, Func(Of ISingleStream(Of TIn), IStream(Of TOut))())
 - uid: Paillave.Etl.Extensions.UnionEx
   name: UnionEx
   href: api/Paillave.Etl.Extensions.UnionEx.html
@@ -1281,15 +1281,15 @@ references:
   fullName.vb: Paillave.Etl.Extensions.UnionEx.Union(Of I)(IStream(Of I), System.String, IStream(Of I))
   nameWithType: UnionEx.Union<I>(IStream<I>, String, IStream<I>)
   nameWithType.vb: UnionEx.Union(Of I)(IStream(Of I), String, IStream(Of I))
-- uid: Paillave.Etl.Extensions.UnionEx.Union``2(IStream{``0},System.String,System.Func{IStream{``0},IStream{``1}}[])
-  name: Union<TIn, TOut>(IStream<TIn>, String, Func<IStream<TIn>, IStream<TOut>>[])
-  href: api/Paillave.Etl.Extensions.UnionEx.html#Paillave_Etl_Extensions_UnionEx_Union__2_IStream___0__System_String_System_Func_IStream___0__IStream___1_____
-  commentId: M:Paillave.Etl.Extensions.UnionEx.Union``2(IStream{``0},System.String,System.Func{IStream{``0},IStream{``1}}[])
-  name.vb: Union(Of TIn, TOut)(IStream(Of TIn), String, Func(Of IStream(Of TIn), IStream(Of TOut))())
-  fullName: Paillave.Etl.Extensions.UnionEx.Union<TIn, TOut>(IStream<TIn>, System.String, System.Func<IStream<TIn>, IStream<TOut>>[])
-  fullName.vb: Paillave.Etl.Extensions.UnionEx.Union(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of IStream(Of TIn), IStream(Of TOut))())
-  nameWithType: UnionEx.Union<TIn, TOut>(IStream<TIn>, String, Func<IStream<TIn>, IStream<TOut>>[])
-  nameWithType.vb: UnionEx.Union(Of TIn, TOut)(IStream(Of TIn), String, Func(Of IStream(Of TIn), IStream(Of TOut))())
+- uid: Paillave.Etl.Extensions.UnionEx.Union``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}}[])
+  name: Union<TIn, TOut>(IStream<TIn>, String, Func<ISingleStream<TIn>, IStream<TOut>>[])
+  href: api/Paillave.Etl.Extensions.UnionEx.html#Paillave_Etl_Extensions_UnionEx_Union__2_IStream___0__System_String_System_Func_ISingleStream___0__IStream___1_____
+  commentId: M:Paillave.Etl.Extensions.UnionEx.Union``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}}[])
+  name.vb: Union(Of TIn, TOut)(IStream(Of TIn), String, Func(Of ISingleStream(Of TIn), IStream(Of TOut))())
+  fullName: Paillave.Etl.Extensions.UnionEx.Union<TIn, TOut>(IStream<TIn>, System.String, System.Func<ISingleStream<TIn>, IStream<TOut>>[])
+  fullName.vb: Paillave.Etl.Extensions.UnionEx.Union(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of ISingleStream(Of TIn), IStream(Of TOut))())
+  nameWithType: UnionEx.Union<TIn, TOut>(IStream<TIn>, String, Func<ISingleStream<TIn>, IStream<TOut>>[])
+  nameWithType.vb: UnionEx.Union(Of TIn, TOut)(IStream(Of TIn), String, Func(Of ISingleStream(Of TIn), IStream(Of TOut))())
 - uid: Paillave.Etl.Extensions.UnpivotEx
   name: UnpivotEx
   href: api/Paillave.Etl.Extensions.UnpivotEx.html

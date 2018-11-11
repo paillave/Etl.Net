@@ -5,7 +5,7 @@ items:
   id: ToSubProcessEx
   parent: Paillave.Etl.Extensions
   children:
-  - Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess``2(IStream{``0},System.String,System.Func{IStream{``0},IStream{``1}},System.Boolean)
+  - Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}},System.Boolean)
   langs:
   - csharp
   - vb
@@ -16,7 +16,7 @@ items:
   source:
     id: ToSubProcessEx
     path: ''
-    startLine: 1101
+    startLine: 1387
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -40,34 +40,34 @@ items:
   modifiers.vb:
   - Public
   - Module
-- uid: Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess``2(IStream{``0},System.String,System.Func{IStream{``0},IStream{``1}},System.Boolean)
-  commentId: M:Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess``2(IStream{``0},System.String,System.Func{IStream{``0},IStream{``1}},System.Boolean)
-  id: ToSubProcess``2(IStream{``0},System.String,System.Func{IStream{``0},IStream{``1}},System.Boolean)
+- uid: Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}},System.Boolean)
+  commentId: M:Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}},System.Boolean)
+  id: ToSubProcess``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.Extensions.ToSubProcessEx
   langs:
   - csharp
   - vb
-  name: ToSubProcess<TIn, TOut>(IStream<TIn>, String, Func<IStream<TIn>, IStream<TOut>>, Boolean)
-  nameWithType: ToSubProcessEx.ToSubProcess<TIn, TOut>(IStream<TIn>, String, Func<IStream<TIn>, IStream<TOut>>, Boolean)
-  fullName: Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess<TIn, TOut>(IStream<TIn>, System.String, System.Func<IStream<TIn>, IStream<TOut>>, System.Boolean)
+  name: ToSubProcess<TIn, TOut>(IStream<TIn>, String, Func<ISingleStream<TIn>, IStream<TOut>>, Boolean)
+  nameWithType: ToSubProcessEx.ToSubProcess<TIn, TOut>(IStream<TIn>, String, Func<ISingleStream<TIn>, IStream<TOut>>, Boolean)
+  fullName: Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess<TIn, TOut>(IStream<TIn>, System.String, System.Func<ISingleStream<TIn>, IStream<TOut>>, System.Boolean)
   type: Method
   source:
     id: ToSubProcess
     path: ''
-    startLine: 1103
+    startLine: 1389
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static IStream<TOut> ToSubProcess<TIn, TOut>(this IStream<TIn> stream, string name, Func<IStream<TIn>, IStream<TOut>> subProcess, bool noParallelisation = false)
+    content: public static IStream<TOut> ToSubProcess<TIn, TOut>(this IStream<TIn> stream, string name, Func<ISingleStream<TIn>, IStream<TOut>> subProcess, bool noParallelisation = false)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: subProcess
-      type: System.Func{IStream{{TIn}},IStream{{TOut}}}
+      type: System.Func{ISingleStream{{TIn}},IStream{{TOut}}}
     - id: noParallelisation
       type: System.Boolean
     typeParameters:
@@ -78,17 +78,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ToSubProcess(Of TIn, TOut)(stream As IStream(Of TIn), name As String, subProcess As Func(Of IStream(Of TIn), IStream(Of TOut)), noParallelisation As Boolean = False) As IStream(Of TOut)
+      Public Shared Function ToSubProcess(Of TIn, TOut)(stream As IStream(Of TIn), name As String, subProcess As Func(Of ISingleStream(Of TIn), IStream(Of TOut)), noParallelisation As Boolean = False) As IStream(Of TOut)
   overload: Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess*
-  nameWithType.vb: ToSubProcessEx.ToSubProcess(Of TIn, TOut)(IStream(Of TIn), String, Func(Of IStream(Of TIn), IStream(Of TOut)), Boolean)
+  nameWithType.vb: ToSubProcessEx.ToSubProcess(Of TIn, TOut)(IStream(Of TIn), String, Func(Of ISingleStream(Of TIn), IStream(Of TOut)), Boolean)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of IStream(Of TIn), IStream(Of TOut)), System.Boolean)
-  name.vb: ToSubProcess(Of TIn, TOut)(IStream(Of TIn), String, Func(Of IStream(Of TIn), IStream(Of TOut)), Boolean)
+  fullName.vb: Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of ISingleStream(Of TIn), IStream(Of TOut)), System.Boolean)
+  name.vb: ToSubProcess(Of TIn, TOut)(IStream(Of TIn), String, Func(Of ISingleStream(Of TIn), IStream(Of TOut)), Boolean)
 references:
 - uid: Paillave.Etl.Extensions
   commentId: N:Paillave.Etl.Extensions
@@ -438,16 +438,16 @@ references:
   name: String
   nameWithType: String
   fullName: System.String
-- uid: System.Func{IStream{{TIn}},IStream{{TOut}}}
-  commentId: T:System.Func{IStream{``0},IStream{``1}}
+- uid: System.Func{ISingleStream{{TIn}},IStream{{TOut}}}
+  commentId: T:System.Func{ISingleStream{``0},IStream{``1}}
   parent: System
   definition: System.Func`2
-  name: Func<IStream<TIn>, IStream<TOut>>
-  nameWithType: Func<IStream<TIn>, IStream<TOut>>
-  fullName: System.Func<IStream<TIn>, IStream<TOut>>
-  nameWithType.vb: Func(Of IStream(Of TIn), IStream(Of TOut))
-  fullName.vb: System.Func(Of IStream(Of TIn), IStream(Of TOut))
-  name.vb: Func(Of IStream(Of TIn), IStream(Of TOut))
+  name: Func<ISingleStream<TIn>, IStream<TOut>>
+  nameWithType: Func<ISingleStream<TIn>, IStream<TOut>>
+  fullName: System.Func<ISingleStream<TIn>, IStream<TOut>>
+  nameWithType.vb: Func(Of ISingleStream(Of TIn), IStream(Of TOut))
+  fullName.vb: System.Func(Of ISingleStream(Of TIn), IStream(Of TOut))
+  name.vb: Func(Of ISingleStream(Of TIn), IStream(Of TOut))
   spec.csharp:
   - uid: System.Func`2
     name: Func
@@ -457,10 +457,10 @@ references:
   - name: <
     nameWithType: <
     fullName: <
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: <
     nameWithType: <
@@ -500,10 +500,10 @@ references:
   - name: '(Of '
     nameWithType: '(Of '
     fullName: '(Of '
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '

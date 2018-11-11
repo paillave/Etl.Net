@@ -16,7 +16,7 @@ items:
   source:
     id: EnsureSingleEx
     path: ''
-    startLine: 412
+    startLine: 393
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -55,7 +55,7 @@ items:
   source:
     id: EnsureSingle
     path: ''
-    startLine: 414
+    startLine: 395
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

@@ -155,41 +155,6 @@ dotnet add package Etl.Net --version 1.0.124-alpha
 dotnet add package Etl.Net.TextFile --version 1.0.124-alpha
 </code></pre>
 <h3 id="implement-the-process">Implement the process</h3>
-<div class="tabGroup" id="tabgroup_CeZOj-G++Q-1">
-<ul role="tablist">
-<li role="presentation">
-<a href="#tabpanel_CeZOj-G++Q-1_SimpleConfig" role="tab" aria-controls="tabpanel_CeZOj-G++Q-1_SimpleConfig" data-tab="SimpleConfig" tabindex="0" aria-selected="true">SimpleConfig.cs</a>
-</li>
-<li role="presentation">
-<a href="#tabpanel_CeZOj-G++Q-1_SimpleQuickstartJob" role="tab" aria-controls="tabpanel_CeZOj-G++Q-1_SimpleQuickstartJob" data-tab="SimpleQuickstartJob" tabindex="-1">SimpleQuickstartJob.cs</a>
-</li>
-<li role="presentation">
-<a href="#tabpanel_CeZOj-G++Q-1_Program" role="tab" aria-controls="tabpanel_CeZOj-G++Q-1_Program" data-tab="Program" tabindex="-1">Program.cs</a>
-</li>
-</ul>
-<section id="tabpanel_CeZOj-G++Q-1_SimpleConfig" role="tabpanel" data-tab="SimpleConfig">
-
-<p>C# code:</p>
-<pre><code class="lang-csharp" name="Main">using Paillave.Etl;
-using System;
-using System.IO;
-using Paillave.Etl.Core;
-using Paillave.Etl.TextFile.Core;
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.TextFile;
-
-namespace SimpleQuickstart
-{
-    public class SimpleConfig
-    {
-        public string InputFilePath { get; set; }
-        public string OutputFilePath { get; set; }
-    }
-}
-</code></pre></section>
-<section id="tabpanel_CeZOj-G++Q-1_SimpleQuickstartJob" role="tabpanel" data-tab="SimpleQuickstartJob" aria-hidden="true" hidden="hidden">
-
-<p>C# code:</p>
 <pre><code class="lang-csharp" name="Main">using Paillave.Etl;
 using Paillave.Etl.Extensions;
 using System;
@@ -202,87 +167,65 @@ using Paillave.Etl.TextFile.Extensions;
 
 namespace SimpleQuickstart
 {
-    public class SimpleQuickstartJob
-    {
-        public static void DefineProcess(ISingleStream&lt;SimpleConfig&gt; rootStream)
-        {
-            var outputFileS = rootStream.Select(&quot;open output file&quot;, i =&gt; (Stream)File.OpenWrite(i.OutputFilePath));
-            rootStream
-                .CrossApplyTextFile(&quot;read input file&quot;,
-                    FlatFileDefinition.Create(i =&gt; new
-                    {
-                        Id = i.ToColumn&lt;int&gt;(&quot;#&quot;),
-                        Name = i.ToColumn&lt;string&gt;(&quot;Label&quot;),
-                        ValueType = i.ToColumn&lt;string&gt;(&quot;Value&quot;),
-                        CategoryCode = i.ToColumn&lt;string&gt;(&quot;Category&quot;)
-                    }).IsColumnSeparated('\t'),
-                    i =&gt; i.InputFilePath)
-                .ThroughAction(&quot;Write input file to console&quot;, 
-                    i =&gt; Console.WriteLine($&quot;{i.Id}-&gt;{i.Name}-&gt;{i.CategoryCode}-&gt;{i.ValueType}&quot;))
-                .Pivot(&quot;group and count&quot;, 
-                    i =&gt; i.CategoryCode, 
-                    i =&gt; new
-                    {
-                        Count = AggregationOperators.Count(),
-                        CountA = AggregationOperators.Count().For(i.ValueType == &quot;a&quot;),
-                        CountB = AggregationOperators.Count().For(i.ValueType == &quot;b&quot;),
-                    })
-                .Select(&quot;create output row&quot;,
-                    i =&gt; new
-                    {
-                        CategoryCode = i.Key,
-                        i.Aggregation.Count,
-                        i.Aggregation.CountA,
-                        i.Aggregation.CountB
-                    })
-                .Sort(&quot;sort output values&quot;, 
-                    i =&gt; new { i.CategoryCode })
-                .ThroughTextFile(&quot;write to text file&quot;,
-                    outputFileS,
-                    FlatFileDefinition.Create(i =&gt; new
-                    {
-                        CategoryCode = i.ToColumn&lt;string&gt;(&quot;MyCategoryCode&quot;),
-                        Count = i.ToColumn&lt;int&gt;(&quot;Count&quot;),
-                        CountA = i.ToColumn&lt;int&gt;(&quot;CountA&quot;),
-                        CountB = i.ToColumn&lt;int&gt;(&quot;CountB&quot;)
-                    }));
-        }
-    }
-}
-</code></pre></section>
-<section id="tabpanel_CeZOj-G++Q-1_Program" role="tabpanel" data-tab="Program" aria-hidden="true" hidden="hidden">
-
-<p>C# code:</p>
-<pre><code class="lang-csharp" name="Main">using Paillave.Etl;
-using System;
-using System.IO;
-using Paillave.Etl.Core;
-using Paillave.Etl.TextFile.Core;
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.TextFile;
-
-namespace SimpleQuickstart
-{
     class Program
     {
         static void Main(string[] args)
         {
-            var testFilesDirectory = args[0];
-
-            // new StreamProcessRunner&lt;SimpleQuickstartJob, SimpleConfig&gt;().ExecuteAsync(new SimpleConfig
-            StreamProcessRunner.Create&lt;SimpleConfig&gt;(SimpleQuickstartJob.DefineProcess).ExecuteAsync(new SimpleConfig
-            {
-                InputFilePath = Path.Combine(testFilesDirectory, &quot;simpleinputfile.csv&quot;),
-                OutputFilePath = Path.Combine(testFilesDirectory, &quot;simpleoutputfile.csv&quot;)
-            }, null).Wait();
+            StreamProcessRunner.CreateAndExecuteAsync(
+                new
+                {
+                    InputFilePath = Path.Combine(args[0], &quot;simpleinputfile.csv&quot;),
+                    OutputFilePath = Path.Combine(args[0], &quot;simpleoutputfile.csv&quot;)
+                },
+                rootStream =&gt;
+                {
+                    var outputFileS = rootStream.Select(&quot;open output file&quot;, i =&gt; (Stream)File.OpenWrite(i.OutputFilePath));
+                    rootStream
+                        .CrossApplyTextFile(&quot;read input file&quot;,
+                            FlatFileDefinition.Create(i =&gt; new
+                            {
+                                Id = i.ToColumn&lt;int&gt;(&quot;#&quot;),
+                                Name = i.ToColumn&lt;string&gt;(&quot;Label&quot;),
+                                ValueType = i.ToColumn&lt;string&gt;(&quot;Value&quot;),
+                                CategoryCode = i.ToColumn&lt;string&gt;(&quot;Category&quot;)
+                            }).IsColumnSeparated('\t'),
+                            i =&gt; i.InputFilePath)
+                        .ThroughAction(&quot;Write input file to console&quot;,
+                            i =&gt; Console.WriteLine($&quot;{i.Id}-&gt;{i.Name}-&gt;{i.CategoryCode}-&gt;{i.ValueType}&quot;))
+                        .Pivot(&quot;group and count&quot;,
+                            i =&gt; i.CategoryCode,
+                            i =&gt; new
+                            {
+                                Count = AggregationOperators.Count(),
+                                CountA = AggregationOperators.Count().For(i.ValueType == &quot;a&quot;),
+                                CountB = AggregationOperators.Count().For(i.ValueType == &quot;b&quot;),
+                            })
+                        .Select(&quot;create output row&quot;,
+                            i =&gt; new
+                            {
+                                CategoryCode = i.Key,
+                                i.Aggregation.Count,
+                                i.Aggregation.CountA,
+                                i.Aggregation.CountB
+                            })
+                        .Sort(&quot;sort output values&quot;,
+                            i =&gt; new { i.CategoryCode })
+                        .ThroughTextFile(&quot;write to text file&quot;,
+                            outputFileS,
+                            FlatFileDefinition.Create(i =&gt; new
+                            {
+                                CategoryCode = i.ToColumn&lt;string&gt;(&quot;MyCategoryCode&quot;),
+                                Count = i.ToColumn&lt;int&gt;(&quot;Count&quot;),
+                                CountA = i.ToColumn&lt;int&gt;(&quot;CountA&quot;),
+                                CountB = i.ToColumn&lt;int&gt;(&quot;CountB&quot;)
+                            }));
+                }).Wait();
             Console.WriteLine(&quot;Press a key...&quot;);
             Console.ReadKey();
         }
     }
 }
-</code></pre></section>
-</div>
-</article>
+</code></pre></article>
           </div>
           
           <div class="hidden-sm col-md-2" role="complementary">

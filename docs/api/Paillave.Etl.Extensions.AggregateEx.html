@@ -271,23 +271,6 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Paillave_Etl_Extensions_AggregateEx_Aggregate__3_IStream___0__System_String_System_Func___0___1__System_Func___0___2__System_Func___1___0___1___examples">Examples</h5>
-  <p>This example computes the average of every element grouped by their modulo 3.</p>
-<pre><code>public class ComputeAverageJob : IStreamProcessDefinition&lt;object>
-{
-    public string Name => &quot;import file&quot;;
-    public void DefineProcess(IStream&lt;object> rootStream)
-    {
-        rootStream
-            .CrossApplyEnumerable(&quot;create some values&quot;, (input) => Enumerable.Range(0, 10))
-            .Aggregate(&quot;aggregate values for average computation&quot;,
-                i => new { sum = 0, nb = 0 },
-                i => i % 3,
-                (previousAggr, value) => new { sum = previousAggr.sum + value, nb = previousAggr.nb + 1 })
-            .Select(&quot;compute average&quot;, i => new { i.Key, Avg = i.Aggregation.sum / i.Aggregation.nb });
-    }
-}</code></pre>
-
 </article>
           </div>
           

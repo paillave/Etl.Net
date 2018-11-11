@@ -5,7 +5,7 @@ items:
   id: ToGroupEx
   parent: Paillave.Etl.Extensions
   children:
-  - Paillave.Etl.Extensions.ToGroupEx.ToGroup``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})
+  - Paillave.Etl.Extensions.ToGroupEx.ToGroups``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})
   langs:
   - csharp
   - vb
@@ -16,7 +16,7 @@ items:
   source:
     id: ToGroupEx
     path: ''
-    startLine: 1326
+    startLine: 1308
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -40,27 +40,27 @@ items:
   modifiers.vb:
   - Public
   - Module
-- uid: Paillave.Etl.Extensions.ToGroupEx.ToGroup``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})
-  commentId: M:Paillave.Etl.Extensions.ToGroupEx.ToGroup``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})
-  id: ToGroup``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})
+- uid: Paillave.Etl.Extensions.ToGroupEx.ToGroups``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})
+  commentId: M:Paillave.Etl.Extensions.ToGroupEx.ToGroups``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})
+  id: ToGroups``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})
   isExtensionMethod: true
   parent: Paillave.Etl.Extensions.ToGroupEx
   langs:
   - csharp
   - vb
-  name: ToGroup<TIn, TKey, TOut>(IStream<TIn>, String, Func<TIn, TKey>, Func<IStream<TIn>, IStream<TOut>>)
-  nameWithType: ToGroupEx.ToGroup<TIn, TKey, TOut>(IStream<TIn>, String, Func<TIn, TKey>, Func<IStream<TIn>, IStream<TOut>>)
-  fullName: Paillave.Etl.Extensions.ToGroupEx.ToGroup<TIn, TKey, TOut>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Func<IStream<TIn>, IStream<TOut>>)
+  name: ToGroups<TIn, TKey, TOut>(IStream<TIn>, String, Func<TIn, TKey>, Func<IStream<TIn>, IStream<TOut>>)
+  nameWithType: ToGroupEx.ToGroups<TIn, TKey, TOut>(IStream<TIn>, String, Func<TIn, TKey>, Func<IStream<TIn>, IStream<TOut>>)
+  fullName: Paillave.Etl.Extensions.ToGroupEx.ToGroups<TIn, TKey, TOut>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Func<IStream<TIn>, IStream<TOut>>)
   type: Method
   source:
-    id: ToGroup
+    id: ToGroups
     path: ''
-    startLine: 1328
+    startLine: 1310
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static IStream<TOut> ToGroup<TIn, TKey, TOut>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, Func<IStream<TIn>, IStream<TOut>> subProcess)
+    content: public static IStream<TOut> ToGroups<TIn, TKey, TOut>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, Func<IStream<TIn>, IStream<TOut>> subProcess)
     parameters:
     - id: stream
       type: IStream{{TIn}}
@@ -79,17 +79,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ToGroup(Of TIn, TKey, TOut)(stream As IStream(Of TIn), name As String, getKey As Func(Of TIn, TKey), subProcess As Func(Of IStream(Of TIn), IStream(Of TOut))) As IStream(Of TOut)
-  overload: Paillave.Etl.Extensions.ToGroupEx.ToGroup*
-  nameWithType.vb: ToGroupEx.ToGroup(Of TIn, TKey, TOut)(IStream(Of TIn), String, Func(Of TIn, TKey), Func(Of IStream(Of TIn), IStream(Of TOut)))
+      Public Shared Function ToGroups(Of TIn, TKey, TOut)(stream As IStream(Of TIn), name As String, getKey As Func(Of TIn, TKey), subProcess As Func(Of IStream(Of TIn), IStream(Of TOut))) As IStream(Of TOut)
+  overload: Paillave.Etl.Extensions.ToGroupEx.ToGroups*
+  nameWithType.vb: ToGroupEx.ToGroups(Of TIn, TKey, TOut)(IStream(Of TIn), String, Func(Of TIn, TKey), Func(Of IStream(Of TIn), IStream(Of TOut)))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.ToGroupEx.ToGroup(Of TIn, TKey, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, TKey), System.Func(Of IStream(Of TIn), IStream(Of TOut)))
-  name.vb: ToGroup(Of TIn, TKey, TOut)(IStream(Of TIn), String, Func(Of TIn, TKey), Func(Of IStream(Of TIn), IStream(Of TOut)))
+  fullName.vb: Paillave.Etl.Extensions.ToGroupEx.ToGroups(Of TIn, TKey, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, TKey), System.Func(Of IStream(Of TIn), IStream(Of TOut)))
+  name.vb: ToGroups(Of TIn, TKey, TOut)(IStream(Of TIn), String, Func(Of TIn, TKey), Func(Of IStream(Of TIn), IStream(Of TOut)))
 references:
 - uid: Paillave.Etl.Extensions
   commentId: N:Paillave.Etl.Extensions
@@ -388,11 +388,11 @@ references:
   name: System
   nameWithType: System
   fullName: System
-- uid: Paillave.Etl.Extensions.ToGroupEx.ToGroup*
-  commentId: Overload:Paillave.Etl.Extensions.ToGroupEx.ToGroup
-  name: ToGroup
-  nameWithType: ToGroupEx.ToGroup
-  fullName: Paillave.Etl.Extensions.ToGroupEx.ToGroup
+- uid: Paillave.Etl.Extensions.ToGroupEx.ToGroups*
+  commentId: Overload:Paillave.Etl.Extensions.ToGroupEx.ToGroups
+  name: ToGroups
+  nameWithType: ToGroupEx.ToGroups
+  fullName: Paillave.Etl.Extensions.ToGroupEx.ToGroups
 - uid: IStream{{TIn}}
   commentId: '!:IStream{``0}'
   definition: IStream`1
@@ -492,7 +492,7 @@ references:
     nameWithType: )
     fullName: )
 - uid: System.Func{IStream{{TIn}},IStream{{TOut}}}
-  commentId: T:System.Func{IStream{``0},IStream{``1}}
+  commentId: T:System.Func{IStream{``0},IStream{``2}}
   parent: System
   definition: System.Func`2
   name: Func<IStream<TIn>, IStream<TOut>>

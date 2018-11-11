@@ -21,8 +21,8 @@ items:
   - Paillave.Etl.Extensions.SkipEx
   - Paillave.Etl.Extensions.SortEx
   - Paillave.Etl.Extensions.ThroughActionEx
+  - Paillave.Etl.Extensions.ThroughLocalFileEx
   - Paillave.Etl.Extensions.ToGroupEx
-  - Paillave.Etl.Extensions.ToLocalFileEx
   - Paillave.Etl.Extensions.TopEx
   - Paillave.Etl.Extensions.ToSubProcessEx
   - Paillave.Etl.Extensions.UnionAllEx
@@ -119,31 +119,31 @@ references:
   name: SortEx
   nameWithType: SortEx
   fullName: Paillave.Etl.Extensions.SortEx
-- uid: Paillave.Etl.Extensions.ToSubProcessEx
-  commentId: T:Paillave.Etl.Extensions.ToSubProcessEx
-  name: ToSubProcessEx
-  nameWithType: ToSubProcessEx
-  fullName: Paillave.Etl.Extensions.ToSubProcessEx
 - uid: Paillave.Etl.Extensions.ThroughActionEx
   commentId: T:Paillave.Etl.Extensions.ThroughActionEx
   name: ThroughActionEx
   nameWithType: ThroughActionEx
   fullName: Paillave.Etl.Extensions.ThroughActionEx
+- uid: Paillave.Etl.Extensions.ThroughLocalFileEx
+  commentId: T:Paillave.Etl.Extensions.ThroughLocalFileEx
+  name: ThroughLocalFileEx
+  nameWithType: ThroughLocalFileEx
+  fullName: Paillave.Etl.Extensions.ThroughLocalFileEx
 - uid: Paillave.Etl.Extensions.ToGroupEx
   commentId: T:Paillave.Etl.Extensions.ToGroupEx
   name: ToGroupEx
   nameWithType: ToGroupEx
   fullName: Paillave.Etl.Extensions.ToGroupEx
-- uid: Paillave.Etl.Extensions.ToLocalFileEx
-  commentId: T:Paillave.Etl.Extensions.ToLocalFileEx
-  name: ToLocalFileEx
-  nameWithType: ToLocalFileEx
-  fullName: Paillave.Etl.Extensions.ToLocalFileEx
 - uid: Paillave.Etl.Extensions.TopEx
   commentId: T:Paillave.Etl.Extensions.TopEx
   name: TopEx
   nameWithType: TopEx
   fullName: Paillave.Etl.Extensions.TopEx
+- uid: Paillave.Etl.Extensions.ToSubProcessEx
+  commentId: T:Paillave.Etl.Extensions.ToSubProcessEx
+  name: ToSubProcessEx
+  nameWithType: ToSubProcessEx
+  fullName: Paillave.Etl.Extensions.ToSubProcessEx
 - uid: Paillave.Etl.Extensions.UnionEx
   commentId: T:Paillave.Etl.Extensions.UnionEx
   name: UnionEx

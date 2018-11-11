@@ -18,7 +18,7 @@ items:
   source:
     id: SkipEx
     path: ''
-    startLine: 1015
+    startLine: 996
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -57,7 +57,7 @@ items:
   source:
     id: Skip
     path: ''
-    startLine: 1017
+    startLine: 998
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -104,7 +104,7 @@ items:
   source:
     id: Skip
     path: ''
-    startLine: 1025
+    startLine: 1006
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -151,7 +151,7 @@ items:
   source:
     id: Skip
     path: ''
-    startLine: 1033
+    startLine: 1014
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

@@ -6,7 +6,7 @@ items:
   parent: Paillave.Etl.Extensions
   children:
   - Paillave.Etl.Extensions.UnionAllEx.UnionAll``1(IStream{``0},System.String,IStream{``0})
-  - Paillave.Etl.Extensions.UnionAllEx.UnionAll``2(IStream{``0},System.String,System.Func{IStream{``0},IStream{``1}}[])
+  - Paillave.Etl.Extensions.UnionAllEx.UnionAll``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}}[])
   langs:
   - csharp
   - vb
@@ -17,7 +17,7 @@ items:
   source:
     id: UnionAllEx
     path: ''
-    startLine: 1478
+    startLine: 1459
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -56,7 +56,7 @@ items:
   source:
     id: UnionAll
     path: ''
-    startLine: 1480
+    startLine: 1461
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -87,34 +87,34 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.Extensions.UnionAllEx.UnionAll(Of I)(IStream(Of I), System.String, IStream(Of I))
   name.vb: UnionAll(Of I)(IStream(Of I), String, IStream(Of I))
-- uid: Paillave.Etl.Extensions.UnionAllEx.UnionAll``2(IStream{``0},System.String,System.Func{IStream{``0},IStream{``1}}[])
-  commentId: M:Paillave.Etl.Extensions.UnionAllEx.UnionAll``2(IStream{``0},System.String,System.Func{IStream{``0},IStream{``1}}[])
-  id: UnionAll``2(IStream{``0},System.String,System.Func{IStream{``0},IStream{``1}}[])
+- uid: Paillave.Etl.Extensions.UnionAllEx.UnionAll``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}}[])
+  commentId: M:Paillave.Etl.Extensions.UnionAllEx.UnionAll``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}}[])
+  id: UnionAll``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}}[])
   isExtensionMethod: true
   parent: Paillave.Etl.Extensions.UnionAllEx
   langs:
   - csharp
   - vb
-  name: UnionAll<TIn, TOut>(IStream<TIn>, String, Func<IStream<TIn>, IStream<TOut>>[])
-  nameWithType: UnionAllEx.UnionAll<TIn, TOut>(IStream<TIn>, String, Func<IStream<TIn>, IStream<TOut>>[])
-  fullName: Paillave.Etl.Extensions.UnionAllEx.UnionAll<TIn, TOut>(IStream<TIn>, System.String, System.Func<IStream<TIn>, IStream<TOut>>[])
+  name: UnionAll<TIn, TOut>(IStream<TIn>, String, Func<ISingleStream<TIn>, IStream<TOut>>[])
+  nameWithType: UnionAllEx.UnionAll<TIn, TOut>(IStream<TIn>, String, Func<ISingleStream<TIn>, IStream<TOut>>[])
+  fullName: Paillave.Etl.Extensions.UnionAllEx.UnionAll<TIn, TOut>(IStream<TIn>, System.String, System.Func<ISingleStream<TIn>, IStream<TOut>>[])
   type: Method
   source:
     id: UnionAll
     path: ''
-    startLine: 1488
+    startLine: 1469
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static IStream<TOut> UnionAll<TIn, TOut>(this IStream<TIn> stream, string name, params Func<IStream<TIn>, IStream<TOut>>[] subProcesses)
+    content: public static IStream<TOut> UnionAll<TIn, TOut>(this IStream<TIn> stream, string name, params Func<ISingleStream<TIn>, IStream<TOut>>[] subProcesses)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: subProcesses
-      type: System.Func{IStream{{TIn}},IStream{{TOut}}}[]
+      type: System.Func{ISingleStream{{TIn}},IStream{{TOut}}}[]
     typeParameters:
     - id: TIn
     - id: TOut
@@ -123,17 +123,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function UnionAll(Of TIn, TOut)(stream As IStream(Of TIn), name As String, ParamArray subProcesses As Func(Of IStream(Of TIn), IStream(Of TOut))()) As IStream(Of TOut)
+      Public Shared Function UnionAll(Of TIn, TOut)(stream As IStream(Of TIn), name As String, ParamArray subProcesses As Func(Of ISingleStream(Of TIn), IStream(Of TOut))()) As IStream(Of TOut)
   overload: Paillave.Etl.Extensions.UnionAllEx.UnionAll*
-  nameWithType.vb: UnionAllEx.UnionAll(Of TIn, TOut)(IStream(Of TIn), String, Func(Of IStream(Of TIn), IStream(Of TOut))())
+  nameWithType.vb: UnionAllEx.UnionAll(Of TIn, TOut)(IStream(Of TIn), String, Func(Of ISingleStream(Of TIn), IStream(Of TOut))())
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.UnionAllEx.UnionAll(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of IStream(Of TIn), IStream(Of TOut))())
-  name.vb: UnionAll(Of TIn, TOut)(IStream(Of TIn), String, Func(Of IStream(Of TIn), IStream(Of TOut))())
+  fullName.vb: Paillave.Etl.Extensions.UnionAllEx.UnionAll(Of TIn, TOut)(IStream(Of TIn), System.String, System.Func(Of ISingleStream(Of TIn), IStream(Of TOut))())
+  name.vb: UnionAll(Of TIn, TOut)(IStream(Of TIn), String, Func(Of ISingleStream(Of TIn), IStream(Of TOut))())
 references:
 - uid: Paillave.Etl.Extensions
   commentId: N:Paillave.Etl.Extensions
@@ -560,14 +560,14 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: System.Func{IStream{{TIn}},IStream{{TOut}}}[]
+- uid: System.Func{ISingleStream{{TIn}},IStream{{TOut}}}[]
   isExternal: true
-  name: Func<IStream<TIn>, IStream<TOut>>[]
-  nameWithType: Func<IStream<TIn>, IStream<TOut>>[]
-  fullName: System.Func<IStream<TIn>, IStream<TOut>>[]
-  nameWithType.vb: Func(Of IStream(Of TIn), IStream(Of TOut))()
-  fullName.vb: System.Func(Of IStream(Of TIn), IStream(Of TOut))()
-  name.vb: Func(Of IStream(Of TIn), IStream(Of TOut))()
+  name: Func<ISingleStream<TIn>, IStream<TOut>>[]
+  nameWithType: Func<ISingleStream<TIn>, IStream<TOut>>[]
+  fullName: System.Func<ISingleStream<TIn>, IStream<TOut>>[]
+  nameWithType.vb: Func(Of ISingleStream(Of TIn), IStream(Of TOut))()
+  fullName.vb: System.Func(Of ISingleStream(Of TIn), IStream(Of TOut))()
+  name.vb: Func(Of ISingleStream(Of TIn), IStream(Of TOut))()
   spec.csharp:
   - uid: System.Func`2
     name: Func
@@ -577,10 +577,10 @@ references:
   - name: <
     nameWithType: <
     fullName: <
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: <
     nameWithType: <
@@ -623,10 +623,10 @@ references:
   - name: '(Of '
     nameWithType: '(Of '
     fullName: '(Of '
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
