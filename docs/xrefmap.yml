@@ -1756,6 +1756,15 @@ references:
   fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TIn)(IStream(Of TIn), System.String, System.Func(Of TIn, System.String), System.Boolean)
   nameWithType: TextFileEx.CrossApplyTextFile<TIn>(IStream<TIn>, String, Func<TIn, String>, Boolean)
   nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TIn)(IStream(Of TIn), String, Func(Of TIn, String), Boolean)
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{LocalFilesValue},System.String,FlatFileDefinition{``0},System.Boolean)
+  name: CrossApplyTextFile<TOut>(IStream<LocalFilesValue>, String, FlatFileDefinition<TOut>, Boolean)
+  href: apiext/Paillave.Etl.TextFile.Extensions.TextFileEx.html#Paillave_Etl_TextFile_Extensions_TextFileEx_CrossApplyTextFile__1_IStream_LocalFilesValue__System_String_FlatFileDefinition___0__System_Boolean_
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{LocalFilesValue},System.String,FlatFileDefinition{``0},System.Boolean)
+  name.vb: CrossApplyTextFile(Of TOut)(IStream(Of LocalFilesValue), String, FlatFileDefinition(Of TOut), Boolean)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TOut>(IStream<LocalFilesValue>, System.String, FlatFileDefinition<TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TOut)(IStream(Of LocalFilesValue), System.String, FlatFileDefinition(Of TOut), System.Boolean)
+  nameWithType: TextFileEx.CrossApplyTextFile<TOut>(IStream<LocalFilesValue>, String, FlatFileDefinition<TOut>, Boolean)
+  nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TOut)(IStream(Of LocalFilesValue), String, FlatFileDefinition(Of TOut), Boolean)
 - uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{Stream},System.String,FlatFileDefinition{``0},System.Boolean)
   name: CrossApplyTextFile<TOut>(IStream<Stream>, String, FlatFileDefinition<TOut>, Boolean)
   href: apiext/Paillave.Etl.TextFile.Extensions.TextFileEx.html#Paillave_Etl_TextFile_Extensions_TextFileEx_CrossApplyTextFile__1_IStream_Stream__System_String_FlatFileDefinition___0__System_Boolean_

@@ -8,6 +8,7 @@ items:
   - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream{Stream},System.String,System.Boolean)
   - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream{System.String},System.String,System.Boolean)
   - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{``0},System.String,System.Func{``0,System.String},System.Boolean)
+  - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{LocalFilesValue},System.String,FlatFileDefinition{``0},System.Boolean)
   - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{Stream},System.String,FlatFileDefinition{``0},System.Boolean)
   - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{Stream},System.String,System.Func{System.String,``0},System.Boolean)
   - Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{System.String},System.String,FlatFileDefinition{``0},System.Boolean)
@@ -31,7 +32,7 @@ items:
   source:
     id: TextFileEx
     path: ''
-    startLine: 296
+    startLine: 297
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -70,7 +71,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 299
+    startLine: 300
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -103,6 +104,54 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TOut)(IStream(Of System.String), System.String, FlatFileDefinition(Of TOut), System.Boolean)
   name.vb: CrossApplyTextFile(Of TOut)(IStream(Of String), String, FlatFileDefinition(Of TOut), Boolean)
+- uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{LocalFilesValue},System.String,FlatFileDefinition{``0},System.Boolean)
+  commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{LocalFilesValue},System.String,FlatFileDefinition{``0},System.Boolean)
+  id: CrossApplyTextFile``1(IStream{LocalFilesValue},System.String,FlatFileDefinition{``0},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.TextFile.Extensions.TextFileEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplyTextFile<TOut>(IStream<LocalFilesValue>, String, FlatFileDefinition<TOut>, Boolean)
+  nameWithType: TextFileEx.CrossApplyTextFile<TOut>(IStream<LocalFilesValue>, String, FlatFileDefinition<TOut>, Boolean)
+  fullName: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TOut>(IStream<LocalFilesValue>, System.String, FlatFileDefinition<TOut>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplyTextFile
+    path: ''
+    startLine: 310
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.TextFile.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<LocalFilesValue> stream, string name, FlatFileDefinition<TOut> args, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{LocalFilesValue}
+    - id: name
+      type: System.String
+    - id: args
+      type: FlatFileDefinition{{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplyTextFile(Of TOut)(stream As IStream(Of LocalFilesValue), name As String, args As FlatFileDefinition(Of TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile*
+  nameWithType.vb: TextFileEx.CrossApplyTextFile(Of TOut)(IStream(Of LocalFilesValue), String, FlatFileDefinition(Of TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(Of TOut)(IStream(Of LocalFilesValue), System.String, FlatFileDefinition(Of TOut), System.Boolean)
+  name.vb: CrossApplyTextFile(Of TOut)(IStream(Of LocalFilesValue), String, FlatFileDefinition(Of TOut), Boolean)
 - uid: Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{Stream},System.String,FlatFileDefinition{``0},System.Boolean)
   commentId: M:Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{Stream},System.String,FlatFileDefinition{``0},System.Boolean)
   id: CrossApplyTextFile``1(IStream{Stream},System.String,FlatFileDefinition{``0},System.Boolean)
@@ -118,7 +167,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 309
+    startLine: 320
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -166,7 +215,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 319
+    startLine: 330
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -217,7 +266,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 329
+    startLine: 340
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -271,7 +320,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 339
+    startLine: 350
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -322,7 +371,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 349
+    startLine: 360
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -373,7 +422,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 360
+    startLine: 371
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -417,7 +466,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 365
+    startLine: 376
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -461,7 +510,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 370
+    startLine: 381
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -509,7 +558,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 375
+    startLine: 386
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -560,7 +609,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 380
+    startLine: 391
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -608,7 +657,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 385
+    startLine: 396
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -656,7 +705,7 @@ items:
   source:
     id: ThroughTextFile
     path: ''
-    startLine: 393
+    startLine: 404
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -704,7 +753,7 @@ items:
   source:
     id: ThroughTextFile
     path: ''
-    startLine: 402
+    startLine: 413
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -753,7 +802,7 @@ items:
   source:
     id: ThroughTextFile
     path: ''
-    startLine: 411
+    startLine: 422
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -802,7 +851,7 @@ items:
   source:
     id: ToTextFile
     path: ''
-    startLine: 423
+    startLine: 434
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -1344,6 +1393,49 @@ references:
   - name: ''
     nameWithType: ''
     fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{LocalFilesValue}
+  commentId: '!:IStream{LocalFilesValue}'
+  definition: IStream`1
+  name: IStream<LocalFilesValue>
+  nameWithType: IStream<LocalFilesValue>
+  fullName: IStream<LocalFilesValue>
+  nameWithType.vb: IStream(Of LocalFilesValue)
+  fullName.vb: IStream(Of LocalFilesValue)
+  name.vb: IStream(Of LocalFilesValue)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: LocalFilesValue
+    name: LocalFilesValue
+    nameWithType: LocalFilesValue
+    fullName: LocalFilesValue
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: LocalFilesValue
+    name: LocalFilesValue
+    nameWithType: LocalFilesValue
+    fullName: LocalFilesValue
+    isExternal: true
   - name: )
     nameWithType: )
     fullName: )
