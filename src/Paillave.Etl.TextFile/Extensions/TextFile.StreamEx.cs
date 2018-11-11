@@ -8,6 +8,7 @@ using Paillave.Etl.TextFile.StreamNodes;
 using SystemIO = System.IO;
 using Paillave.Etl;
 using Paillave.Etl.Extensions;
+using Paillave.Etl.ValuesProviders;
 
 namespace Paillave.Etl.TextFile.Extensions
 {
@@ -23,6 +24,16 @@ namespace Paillave.Etl.TextFile.Extensions
                 ResultSelector = (i, o) => o
             });
             return stream.CrossApply<string, TOut>(name, valuesProvider.PushValues, noParallelisation);
+        }
+        public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<LocalFilesValue> stream, string name, FlatFileDefinition<TOut> args, bool noParallelisation = false)
+        {
+            var valuesProvider = new FlatFileValuesProvider<LocalFilesValue, TOut, TOut>(new FlatFileValuesProviderArgs<LocalFilesValue, TOut, TOut>()
+            {
+                DataStreamSelector = i => i.GetContent(),
+                Mapping = args,
+                ResultSelector = (i, o) => o
+            });
+            return stream.CrossApply<LocalFilesValue, TOut>(name, valuesProvider.PushValues, noParallelisation);
         }
         public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<Stream> stream, string name, FlatFileDefinition<TOut> args, bool noParallelisation = false)
         {

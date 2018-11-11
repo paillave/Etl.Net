@@ -1,29 +1,29 @@
 ### YamlMime:ManagedReference
 items:
-- uid: Paillave.Etl.Extensions.ToLocalFileEx
-  commentId: T:Paillave.Etl.Extensions.ToLocalFileEx
-  id: ToLocalFileEx
+- uid: Paillave.Etl.Extensions.ThroughLocalFileEx
+  commentId: T:Paillave.Etl.Extensions.ThroughLocalFileEx
+  id: ThroughLocalFileEx
   parent: Paillave.Etl.Extensions
   children:
-  - Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile(IStream{System.IO.Stream},System.String,IStream{System.String})
-  - Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile``1(IStream{System.IO.Stream},System.String,IStream{``0},System.Func{``0,System.String})
+  - Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile(IStream{System.IO.Stream},System.String,IStream{System.String})
+  - Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile``1(IStream{System.IO.Stream},System.String,IStream{``0},System.Func{``0,System.String})
   langs:
   - csharp
   - vb
-  name: ToLocalFileEx
-  nameWithType: ToLocalFileEx
-  fullName: Paillave.Etl.Extensions.ToLocalFileEx
+  name: ThroughLocalFileEx
+  nameWithType: ThroughLocalFileEx
+  fullName: Paillave.Etl.Extensions.ThroughLocalFileEx
   type: Class
   source:
-    id: ToLocalFileEx
+    id: ThroughLocalFileEx
     path: ''
-    startLine: 1350
+    startLine: 1267
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static class ToLocalFileEx
-    content.vb: Public Module ToLocalFileEx
+    content: public static class ThroughLocalFileEx
+    content.vb: Public Module ThroughLocalFileEx
   inheritance:
   - System.Object
   inheritedMembers:
@@ -41,27 +41,27 @@ items:
   modifiers.vb:
   - Public
   - Module
-- uid: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile(IStream{System.IO.Stream},System.String,IStream{System.String})
-  commentId: M:Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile(IStream{System.IO.Stream},System.String,IStream{System.String})
-  id: ToLocalFile(IStream{System.IO.Stream},System.String,IStream{System.String})
+- uid: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile(IStream{System.IO.Stream},System.String,IStream{System.String})
+  commentId: M:Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile(IStream{System.IO.Stream},System.String,IStream{System.String})
+  id: ThroughLocalFile(IStream{System.IO.Stream},System.String,IStream{System.String})
   isExtensionMethod: true
-  parent: Paillave.Etl.Extensions.ToLocalFileEx
+  parent: Paillave.Etl.Extensions.ThroughLocalFileEx
   langs:
   - csharp
   - vb
-  name: ToLocalFile(IStream<Stream>, String, IStream<String>)
-  nameWithType: ToLocalFileEx.ToLocalFile(IStream<Stream>, String, IStream<String>)
-  fullName: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile(IStream<System.IO.Stream>, System.String, IStream<System.String>)
+  name: ThroughLocalFile(IStream<Stream>, String, IStream<String>)
+  nameWithType: ThroughLocalFileEx.ThroughLocalFile(IStream<Stream>, String, IStream<String>)
+  fullName: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile(IStream<System.IO.Stream>, System.String, IStream<System.String>)
   type: Method
   source:
-    id: ToLocalFile
+    id: ThroughLocalFile
     path: ''
-    startLine: 1352
+    startLine: 1269
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static IStream<Stream> ToLocalFile(this IStream<Stream> stream, string name, IStream<string> outputFilePathStream)
+    content: public static IStream<Stream> ThroughLocalFile(this IStream<Stream> stream, string name, IStream<string> outputFilePathStream)
     parameters:
     - id: stream
       type: IStream{System.IO.Stream}
@@ -74,38 +74,38 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ToLocalFile(stream As IStream(Of Stream), name As String, outputFilePathStream As IStream(Of String)) As IStream(Of Stream)
-  overload: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile*
-  nameWithType.vb: ToLocalFileEx.ToLocalFile(IStream(Of Stream), String, IStream(Of String))
+      Public Shared Function ThroughLocalFile(stream As IStream(Of Stream), name As String, outputFilePathStream As IStream(Of String)) As IStream(Of Stream)
+  overload: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile*
+  nameWithType.vb: ThroughLocalFileEx.ThroughLocalFile(IStream(Of Stream), String, IStream(Of String))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile(IStream(Of System.IO.Stream), System.String, IStream(Of System.String))
-  name.vb: ToLocalFile(IStream(Of Stream), String, IStream(Of String))
-- uid: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile``1(IStream{System.IO.Stream},System.String,IStream{``0},System.Func{``0,System.String})
-  commentId: M:Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile``1(IStream{System.IO.Stream},System.String,IStream{``0},System.Func{``0,System.String})
-  id: ToLocalFile``1(IStream{System.IO.Stream},System.String,IStream{``0},System.Func{``0,System.String})
+  fullName.vb: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile(IStream(Of System.IO.Stream), System.String, IStream(Of System.String))
+  name.vb: ThroughLocalFile(IStream(Of Stream), String, IStream(Of String))
+- uid: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile``1(IStream{System.IO.Stream},System.String,IStream{``0},System.Func{``0,System.String})
+  commentId: M:Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile``1(IStream{System.IO.Stream},System.String,IStream{``0},System.Func{``0,System.String})
+  id: ThroughLocalFile``1(IStream{System.IO.Stream},System.String,IStream{``0},System.Func{``0,System.String})
   isExtensionMethod: true
-  parent: Paillave.Etl.Extensions.ToLocalFileEx
+  parent: Paillave.Etl.Extensions.ThroughLocalFileEx
   langs:
   - csharp
   - vb
-  name: ToLocalFile<TParam>(IStream<Stream>, String, IStream<TParam>, Func<TParam, String>)
-  nameWithType: ToLocalFileEx.ToLocalFile<TParam>(IStream<Stream>, String, IStream<TParam>, Func<TParam, String>)
-  fullName: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile<TParam>(IStream<System.IO.Stream>, System.String, IStream<TParam>, System.Func<TParam, System.String>)
+  name: ThroughLocalFile<TParam>(IStream<Stream>, String, IStream<TParam>, Func<TParam, String>)
+  nameWithType: ThroughLocalFileEx.ThroughLocalFile<TParam>(IStream<Stream>, String, IStream<TParam>, Func<TParam, String>)
+  fullName: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile<TParam>(IStream<System.IO.Stream>, System.String, IStream<TParam>, System.Func<TParam, System.String>)
   type: Method
   source:
-    id: ToLocalFile
+    id: ThroughLocalFile
     path: ''
-    startLine: 1361
+    startLine: 1278
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static IStream<Stream> ToLocalFile<TParam>(this IStream<Stream> stream, string name, IStream<TParam> outputFilePathStream, Func<TParam, string> getOutputFilePath)
+    content: public static IStream<Stream> ThroughLocalFile<TParam>(this IStream<Stream> stream, string name, IStream<TParam> outputFilePathStream, Func<TParam, string> getOutputFilePath)
     parameters:
     - id: stream
       type: IStream{System.IO.Stream}
@@ -122,17 +122,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ToLocalFile(Of TParam)(stream As IStream(Of Stream), name As String, outputFilePathStream As IStream(Of TParam), getOutputFilePath As Func(Of TParam, String)) As IStream(Of Stream)
-  overload: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile*
-  nameWithType.vb: ToLocalFileEx.ToLocalFile(Of TParam)(IStream(Of Stream), String, IStream(Of TParam), Func(Of TParam, String))
+      Public Shared Function ThroughLocalFile(Of TParam)(stream As IStream(Of Stream), name As String, outputFilePathStream As IStream(Of TParam), getOutputFilePath As Func(Of TParam, String)) As IStream(Of Stream)
+  overload: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile*
+  nameWithType.vb: ThroughLocalFileEx.ThroughLocalFile(Of TParam)(IStream(Of Stream), String, IStream(Of TParam), Func(Of TParam, String))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile(Of TParam)(IStream(Of System.IO.Stream), System.String, IStream(Of TParam), System.Func(Of TParam, System.String))
-  name.vb: ToLocalFile(Of TParam)(IStream(Of Stream), String, IStream(Of TParam), Func(Of TParam, String))
+  fullName.vb: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile(Of TParam)(IStream(Of System.IO.Stream), System.String, IStream(Of TParam), System.Func(Of TParam, System.String))
+  name.vb: ThroughLocalFile(Of TParam)(IStream(Of Stream), String, IStream(Of TParam), Func(Of TParam, String))
 references:
 - uid: Paillave.Etl.Extensions
   commentId: N:Paillave.Etl.Extensions
@@ -431,11 +431,11 @@ references:
   name: System
   nameWithType: System
   fullName: System
-- uid: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile*
-  commentId: Overload:Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile
-  name: ToLocalFile
-  nameWithType: ToLocalFileEx.ToLocalFile
-  fullName: Paillave.Etl.Extensions.ToLocalFileEx.ToLocalFile
+- uid: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile*
+  commentId: Overload:Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile
+  name: ThroughLocalFile
+  nameWithType: ThroughLocalFileEx.ThroughLocalFile
+  fullName: Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile
 - uid: IStream{System.IO.Stream}
   commentId: '!:IStream{System.IO.Stream}'
   definition: IStream`1

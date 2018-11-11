@@ -56,13 +56,12 @@ items:
   source:
     id: Aggregate
     path: ''
-    startLine: 51
+    startLine: 32
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   summary: "\nAggregate every element of a stream into a list of aggregations computed for each group by the key\n"
-  example:
-  - "\nThis example computes the average of every element grouped by their modulo 3.\n<pre><code>public class ComputeAverageJob : IStreamProcessDefinition&lt;object>\n{\n    public string Name => &quot;import file&quot;;\n    public void DefineProcess(IStream&lt;object> rootStream)\n    {\n        rootStream\n            .CrossApplyEnumerable(&quot;create some values&quot;, (input) => Enumerable.Range(0, 10))\n            .Aggregate(&quot;aggregate values for average computation&quot;,\n                i => new { sum = 0, nb = 0 },\n                i => i % 3,\n                (previousAggr, value) => new { sum = previousAggr.sum + value, nb = previousAggr.nb + 1 })\n            .Select(&quot;compute average&quot;, i => new { i.Key, Avg = i.Aggregation.sum / i.Aggregation.nb });\n    }\n}</code></pre>\n"
+  example: []
   syntax:
     content: public static IStream<AggregationResult<TIn, TKey, TAggr>> Aggregate<TIn, TAggr, TKey>(this IStream<TIn> stream, string name, Func<TIn, TAggr> emptyAggregation, Func<TIn, TKey> getKey, Func<TAggr, TIn, TAggr> aggregate)
     parameters:
@@ -120,7 +119,7 @@ items:
   source:
     id: Aggregate
     path: ''
-    startLine: 72
+    startLine: 53
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

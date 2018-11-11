@@ -90,12 +90,12 @@
   
   
   <a id="Paillave_Etl_Extensions_ToSubProcessEx_ToSubProcess_" data-uid="Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess*"></a>
-  <h4 id="Paillave_Etl_Extensions_ToSubProcessEx_ToSubProcess__2_IStream___0__System_String_System_Func_IStream___0__IStream___1___System_Boolean_" data-uid="Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess``2(IStream{``0},System.String,System.Func{IStream{``0},IStream{``1}},System.Boolean)">ToSubProcess&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;IStream&lt;TIn&gt;, IStream&lt;TOut&gt;&gt;, Boolean)</h4>
+  <h4 id="Paillave_Etl_Extensions_ToSubProcessEx_ToSubProcess__2_IStream___0__System_String_System_Func_ISingleStream___0__IStream___1___System_Boolean_" data-uid="Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}},System.Boolean)">ToSubProcess&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;ISingleStream&lt;TIn&gt;, IStream&lt;TOut&gt;&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; ToSubProcess&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;IStream&lt;TIn&gt;, IStream&lt;TOut&gt;&gt; subProcess, bool noParallelisation = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; ToSubProcess&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;ISingleStream&lt;TIn&gt;, IStream&lt;TOut&gt;&gt; subProcess, bool noParallelisation = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -118,7 +118,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Func</span>&lt;<span class="xref">IStream</span>&lt;TIn&gt;, <span class="xref">IStream</span>&lt;TOut&gt;&gt;</td>
+        <td><span class="xref">System.Func</span>&lt;<span class="xref">ISingleStream</span>&lt;TIn&gt;, <span class="xref">IStream</span>&lt;TOut&gt;&gt;</td>
         <td><span class="parametername">subProcess</span></td>
         <td></td>
       </tr>

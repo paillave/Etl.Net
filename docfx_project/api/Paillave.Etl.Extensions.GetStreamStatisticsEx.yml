@@ -16,7 +16,7 @@ items:
   source:
     id: GetStreamStatisticsEx
     path: ''
-    startLine: 481
+    startLine: 462
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -55,7 +55,7 @@ items:
   source:
     id: GetStreamStatisticsAsync
     path: ''
-    startLine: 483
+    startLine: 464
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

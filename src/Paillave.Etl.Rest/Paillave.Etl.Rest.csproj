@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Etl.Net.Rest</PackageId>
+    <Version>1.0.0-alpha</Version>
+    <Authors>Stéphane Royer</Authors>
+    <Company></Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseUrl>https://github.com/paillave/Etl.Net/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
+    <PackageTags>ETL .net core SSIS reactive REST</PackageTags>
+    <Product>ETL.net REST extensions</Product>
+    <Description>REST extensions for Etl.Net</Description>
+    <PackageReleaseNotes>
+extensions for Etl.Net to query against FTP
+    </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+  <PackageReference Include="Microsoft.AspNet.WebApi.Client" version="5.2.6" />
+  <PackageReference Include="Newtonsoft.Json" version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
+  </ItemGroup>
+
+</Project>

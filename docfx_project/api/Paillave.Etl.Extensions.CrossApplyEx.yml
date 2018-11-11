@@ -19,7 +19,7 @@ items:
   source:
     id: CrossApplyEx
     path: ''
-    startLine: 102
+    startLine: 83
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -58,7 +58,7 @@ items:
   source:
     id: CrossApply
     path: ''
-    startLine: 104
+    startLine: 85
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -113,7 +113,7 @@ items:
   source:
     id: CrossApply
     path: ''
-    startLine: 115
+    startLine: 96
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -162,7 +162,7 @@ items:
   source:
     id: CrossApply
     path: ''
-    startLine: 126
+    startLine: 107
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -220,7 +220,7 @@ items:
   source:
     id: CrossApply
     path: ''
-    startLine: 138
+    startLine: 119
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

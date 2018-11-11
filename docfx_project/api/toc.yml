@@ -36,10 +36,10 @@
     name: SortEx
   - uid: Paillave.Etl.Extensions.ThroughActionEx
     name: ThroughActionEx
+  - uid: Paillave.Etl.Extensions.ThroughLocalFileEx
+    name: ThroughLocalFileEx
   - uid: Paillave.Etl.Extensions.ToGroupEx
     name: ToGroupEx
-  - uid: Paillave.Etl.Extensions.ToLocalFileEx
-    name: ToLocalFileEx
   - uid: Paillave.Etl.Extensions.TopEx
     name: TopEx
   - uid: Paillave.Etl.Extensions.ToSubProcessEx

@@ -10,19 +10,19 @@ using System.Threading;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class ToLocalFileArgs<TParams>
+    public class ThroughLocalFileArgs<TParams>
     {
         public IStream<Stream> Stream { get; set; }
         public IStream<TParams> ParamStream { get; set; }
         public Func<TParams, string> GetOutputFilePath { get; set; }
     }
-    public class ToLocalFileStreamNode<TParams> : StreamNodeBase<Stream, IStream<Stream>, ToLocalFileArgs<TParams>>
+    public class ThroughLocalFileStreamNode<TParams> : StreamNodeBase<Stream, IStream<Stream>, ThroughLocalFileArgs<TParams>>
     {
         public override bool IsAwaitable => true;
-        public ToLocalFileStreamNode(string name, ToLocalFileArgs<TParams> args) : base(name, args)
+        public ThroughLocalFileStreamNode(string name, ThroughLocalFileArgs<TParams> args) : base(name, args)
         {
         }
-        protected override IStream<Stream> CreateOutputStream(ToLocalFileArgs<TParams> args)
+        protected override IStream<Stream> CreateOutputStream(ThroughLocalFileArgs<TParams> args)
         {
             var outputFilePath = args.ParamStream.Observable.Map(args.GetOutputFilePath);
             var outputObservable = args.Stream.Observable.CombineWithLatest(outputFilePath, (l, r) =>

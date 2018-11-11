@@ -37,6 +37,7 @@
   "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream{Stream},System.String,System.Boolean)": "Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
   "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream{System.String},System.String,System.Boolean)": "Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
   "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{``0},System.String,System.Func{``0,System.String},System.Boolean)": "Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+  "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{LocalFilesValue},System.String,FlatFileDefinition{``0},System.Boolean)": "Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
   "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{Stream},System.String,FlatFileDefinition{``0},System.Boolean)": "Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
   "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{Stream},System.String,System.Func{System.String,``0},System.Boolean)": "Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
   "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{System.String},System.String,FlatFileDefinition{``0},System.Boolean)": "Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
