@@ -26,13 +26,13 @@ namespace Paillave.Etl.Core.Mapping
                 if (DateFormat == null && CultureName == null) return null;
                 CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureName ?? "en-GB");
                 if (this.DateFormat == null) return ci;
-                ci.DateTimeFormat.FullDateTimePattern = "yyyy-MM-dd HH:mm:ss";
-                ci.DateTimeFormat.LongDatePattern = "yyyy-MM-dd";
-                ci.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
+                ci.DateTimeFormat.FullDateTimePattern = DateFormat;
+                ci.DateTimeFormat.LongDatePattern = DateFormat;
+                ci.DateTimeFormat.ShortDatePattern = DateFormat;
 
-                ci.DateTimeFormat.FullDateTimePattern = "yyyy-MM-dd HH:mm:ss";
-                ci.DateTimeFormat.LongDatePattern = "yyyy-MM-dd";
-                ci.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
+                ci.DateTimeFormat.FullDateTimePattern = DateFormat;
+                ci.DateTimeFormat.LongDatePattern = DateFormat;
+                ci.DateTimeFormat.ShortDatePattern = DateFormat;
                 return ci;
             }
             if (new[] {

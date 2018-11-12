@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
@@ -23,6 +24,16 @@ namespace Paillave.Etl.TextFile.Core
         }
         public object Deserialize(string text)
         {
+            //TODO: Handle deserialization pb
+            if (_propertyInfo.PropertyType == typeof(DateTime))
+            {
+                return DateTime.ParseExact(text.Trim(), _cultureInfo.DateTimeFormat.LongDatePattern, _cultureInfo);
+            }
+            if (_propertyInfo.PropertyType == typeof(DateTime?))
+            {
+                if (string.IsNullOrWhiteSpace(text)) return (DateTime?)null;
+                return DateTime.ParseExact(text.Trim(), _cultureInfo.DateTimeFormat.LongDatePattern, _cultureInfo);
+            }
             return _typeConverter.ConvertFromString(null, _cultureInfo, text.Trim());
         }
 
