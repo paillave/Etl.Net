@@ -18,6 +18,7 @@ namespace Paillave.Etl.ExcelFile.ValuesProviders
         }
         public void PushValues(ExcelSheetSelection input, Action<TParsed> pushValue)
         {
+            //TODO: better exception handling here
             var reader = _mapping.GetExcelReader(input.ExcelWorksheet);
             int i = 0;
             bool foundRow = false;
@@ -30,6 +31,7 @@ namespace Paillave.Etl.ExcelFile.ValuesProviders
         }
         private bool ReadRow(ExcelWorksheet excelWorksheet, ExcelFileReader reader, int lineIndex, IDictionary<string, object> row)
         {
+            //TODO: better exception handling here
             bool isEmptyRow = true;
             switch (reader.DatasetOrientation)
             {

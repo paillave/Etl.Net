@@ -25,6 +25,7 @@ namespace Paillave.Etl.ExcelFile.Core
         //}
         private object Deserialize(string text)
         {
+            //TODO: Better exception handleling here
             return _typeConverter.ConvertFromString(null, _cultureInfo, text.Trim());
         }
 
