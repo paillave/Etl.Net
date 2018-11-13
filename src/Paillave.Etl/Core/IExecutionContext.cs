@@ -11,7 +11,6 @@ namespace Paillave.Etl.Core
     public interface IExecutionContext
     {
         Guid ExecutionId { get; }
-        WaitHandle StartSynchronizer { get; }
         string JobName { get; }
         void Trace(TraceEvent traceEvent);
         IPushObservable<TraceEvent> TraceEvents { get; }

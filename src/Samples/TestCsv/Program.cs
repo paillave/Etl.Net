@@ -11,7 +11,8 @@ namespace TestCsv
         static void Main(string[] args)
         {
             var task = StreamProcessRunner.CreateAndExecuteAsync(
-                new ImportFilesConfig { InputFilesRootFolderPath = @"C:\Users\paill\Documents\GitHub\Etl.Net\src\Samples\TestFiles\RBC" },
+                new ImportFilesConfig { InputFilesRootFolderPath = @"C:\Users\sroyer\Downloads\RBC" },
+                // new ImportFilesConfig { InputFilesRootFolderPath = @"C:\Users\paill\Documents\GitHub\Etl.Net\src\Samples\TestFiles\RBC" },
                 ImportFiles.DefineProcess);
             try
             {
