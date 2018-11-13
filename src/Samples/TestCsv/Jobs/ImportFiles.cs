@@ -12,9 +12,14 @@ namespace TestCsv.Jobs
         public static void DefineProcess(ISingleStream<ImportFilesConfig> config)
         {
             config
-                .CrossApplyFolderFiles("get all NAVPUBLTEXTRACT", i => i.InputFilesRootFolderPath, "*NAVPUBLTEXTRACT*.csv", true)
-                .CrossApplyTextFile("parse NAVPUBLTEXTRACT", new RbcNavPublExtractDefinition(), i => i.Name)
-                .ThroughAction("write to output", i => Console.WriteLine(i.IsinCode));
+                .CrossApplyFolderFiles("get all Nav files", i => i.InputFilesRootFolderPath, "*NAVPUBLTEXTRACT*.csv", true)
+                .CrossApplyTextFile("parse nav file", new RbcNavFileDefinition())
+                .ThroughAction("write nav to output", i => Console.WriteLine(i.IsinCode));
+
+            config
+                .CrossApplyFolderFiles("get all position files", i => i.InputFilesRootFolderPath, "*PORTFVALEXTRACT*.csv", true)
+                .CrossApplyTextFile("parse position file", new RbcPositionFileDefinition(), i => i.Name)
+                .ThroughAction("write position to output", i => Console.WriteLine(i.FundName));
         }
     }
 }

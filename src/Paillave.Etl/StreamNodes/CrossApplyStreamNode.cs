@@ -77,13 +77,16 @@ namespace Paillave.Etl.StreamNodes
             else
             {
                 var synchronizer = new Synchronizer();
-                return base.CreateUnsortedStream(args.Stream.Observable.FlatMap(i => new DeferredPushObservable<TOut>(push =>
+                return base.CreateUnsortedStream(args.Stream.Observable.FlatMap(i =>
+                {
+                    return new DeferredPushObservable<TOut>(push =>
                     {
                         var inputValue = args.GetValueIn(i);
                         Action<TValueOut> newPush = (TValueOut e) => push(args.GetValueOut(e, i));
                         using (synchronizer.WaitBeforeProcess())
                             args.ValuesProvider(inputValue, newPush);
-                    })
+                    });
+                }
                 ));
             }
         }
