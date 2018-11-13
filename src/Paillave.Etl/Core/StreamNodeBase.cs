@@ -10,6 +10,7 @@ namespace Paillave.Etl.Core
     public abstract class StreamNodeBase<TOut, TOutStream, TArgs> : INodeContext
         where TOutStream : IStream<TOut>
     {
+        public Guid IdNode { get; } = Guid.NewGuid();
         protected IExecutionContext ExecutionContext { get; }
         protected ITracer Tracer { get; private set; }
         public string NodeName { get; private set; }

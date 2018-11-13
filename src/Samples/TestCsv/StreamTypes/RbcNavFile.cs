@@ -2,7 +2,7 @@ using System;
 
 namespace TestCsv.StreamTypes
 {
-    public class RbcNavPublExtract
+    public class RbcNavFile
     {
         public string FundCode { get; set; }
         public string FundName { get; set; }

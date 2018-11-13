@@ -10,9 +10,21 @@ namespace TestCsv
     {
         static void Main(string[] args)
         {
-            StreamProcessRunner.CreateAndExecuteAsync(
-                new ImportFilesConfig { InputFilesRootFolderPath = @"C:\Users\paill\source\repos\PMS\src\FundProcess.Pms.ImportsTests\TestFiles\RBC" },
-                ImportFiles.DefineProcess).Wait();
+            var task = StreamProcessRunner.CreateAndExecuteAsync(
+                new ImportFilesConfig { InputFilesRootFolderPath = @"C:\Users\paill\Documents\GitHub\Etl.Net\src\Samples\TestFiles\RBC" },
+                ImportFiles.DefineProcess);
+            try
+            {
+                task.Wait();
+            }
+            catch (Paillave.Etl.Core.JobExecutionException ex)
+            {
+            }
+            catch (Exception ex)
+            {
+                var jex = ex.InnerException as Paillave.Etl.Core.JobExecutionException;
+                var te = jex.TraceEvent;
+            }
         }
     }
 }

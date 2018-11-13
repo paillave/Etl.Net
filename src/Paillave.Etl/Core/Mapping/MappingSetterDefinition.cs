@@ -20,7 +20,8 @@ namespace Paillave.Etl.Core.Mapping
         public CultureInfo CreateCultureInfo()
         {
             if (new[] {
-                typeof(DateTime)
+                typeof(DateTime),
+                typeof(DateTime?),
             }.Contains(TargetPropertyInfo.PropertyType))
             {
                 if (DateFormat == null && CultureName == null) return null;
@@ -46,7 +47,18 @@ namespace Paillave.Etl.Core.Mapping
                 typeof(System.Int64),
                 typeof(System.UInt64),
                 typeof(System.Int16),
-                typeof(System.UInt16)
+                typeof(System.UInt16),
+                typeof(System.Byte?),
+                typeof(System.SByte?),
+                typeof(System.Decimal?),
+                typeof(System.Double?),
+                typeof(System.Single?),
+                typeof(System.Int32?),
+                typeof(System.UInt32?),
+                typeof(System.Int64?),
+                typeof(System.UInt64?),
+                typeof(System.Int16?),
+                typeof(System.UInt16?),
             }.Contains(TargetPropertyInfo.PropertyType))
             {
                 if (DecimalSeparator != null)

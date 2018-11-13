@@ -4,16 +4,16 @@ using Paillave.Etl.TextFile.Core;
 
 namespace TestCsv.FileDefinitions
 {
-    public class RbcNavPublExtractDefinition : FlatFileDefinition<RbcNavPublExtract>
+    public class RbcNavFileDefinition : FlatFileDefinition<RbcNavFile>
     {
-        public RbcNavPublExtractDefinition()
+        public RbcNavFileDefinition()
         {
             this.IsColumnSeparated(',');
-            this.WithMap(i => new RbcNavPublExtract
+            this.WithMap(i => new RbcNavFile
             {
-                Currency = i.ToColumn<string>("CURRENCY"),
                 AmountRedemption = i.ToNumberColumn<decimal>("AMOUNT REDEMPTION", "."),
                 AmountSubscription = i.ToNumberColumn<decimal>("AMOUNT SUBSCRIPTION", "."),
+                Currency = i.ToColumn<string>("CURRENCY"),
                 FundCode = i.ToColumn<string>("FUND CODE"),
                 FundName = i.ToColumn<string>("FUND NAME"),
                 FundTotalNetAsset = i.ToNumberColumn<decimal>("FUND TOTAL NET ASSET", "."),
