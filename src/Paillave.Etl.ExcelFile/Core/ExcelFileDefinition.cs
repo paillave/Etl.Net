@@ -121,6 +121,7 @@ namespace Paillave.Etl.ExcelFile.Core
         }
         private IEnumerable<string> GetColumnNames(ExcelWorksheet excelWorksheet)
         {
+            //TODO: better exception handleling here
             if (_columnHeaderRange == null) return new string[] { };
             if (_columnHeaderRange.Columns == 1)
             {

@@ -19,7 +19,7 @@ namespace Paillave.EtlTests
                     .CrossApplyEnumerable("lst1", config => new[] { 1 })
                     .Select("with error", i =>
                     {
-                        throw new Exception();
+                        // throw new Exception();
                         return i;
                     })
                     .ThroughAction("res1", Console.WriteLine);
@@ -27,11 +27,11 @@ namespace Paillave.EtlTests
                     .CrossApplyEnumerable("lst2", config => new[] { 1 })
                     .Select("with no error", i =>
                     {
-                        //  throw new Exception();
+                        throw new Exception();
                         return i;
                     })
                     .ThroughAction("res2", Console.WriteLine);
-            });
+            }, traceStream => traceStream.ThroughAction("trace", i => System.Diagnostics.Debug.WriteLine(i)));
             try
             {
                 System.Diagnostics.Debug.WriteLine("before");

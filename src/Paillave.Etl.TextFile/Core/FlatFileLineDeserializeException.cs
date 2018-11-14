@@ -5,7 +5,7 @@ namespace Paillave.Etl.TextFile.Core
     public class FlatFileLineDeserializeException : Exception
     {
         public int LineIndex { get; }
-        public FlatFileLineDeserializeException(int lineIndex, Exception innerException) : base($"could not deserialize line #{lineIndex}", innerException)
+        public FlatFileLineDeserializeException(int lineIndex, Exception innerException) : base($"could not deserialize line #{lineIndex}: {innerException.Message}", innerException)
         {
             this.LineIndex = lineIndex;
         }
