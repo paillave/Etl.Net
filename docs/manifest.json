@@ -1,6 +1,6 @@
 {
   "homepages": [],
-  "source_base_path": "C:/Users/paill/Documents/GitHub/Etl.Net/docfx_project",
+  "source_base_path": "C:/Users/sroyer/Source/Repos/Etl.Net/docfx_project",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -9,10 +9,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.AggregateEx.html",
-          "hash": "uzucxUCS90nROwSEI002pQ=="
+          "hash": "pWUKFXjOy00st5CjhUJ3ww=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -21,10 +21,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.CrossApplyEnumerableEx.html",
-          "hash": "6dcstuWjvphOExzJ1jAARA=="
+          "hash": "oVZvWZiKrgKV2yqOdIypcw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -33,10 +33,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.CrossApplyEx.html",
-          "hash": "/vdShmm7EOGgQPm7BOT77g=="
+          "hash": "/sMHezGdxGSwN/g78/JhtQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -45,10 +45,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.CrossApplyFolderFilesEx.html",
-          "hash": "j6WdF5SGjOkTQX6aTvM9pw=="
+          "hash": "it0eoLLLCepzwe3SfHahdw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -57,10 +57,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.DistinctEx.html",
-          "hash": "kDDR1t/9UrjZpGMH0wsHFQ=="
+          "hash": "hLWrbwgetN3N57KusqCS4A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -69,10 +69,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.EnsureKeyedEx.html",
-          "hash": "JowP5IvaKU8DUBN9tXIW+A=="
+          "hash": "AwEgHJnJZIx8x5Gw1k9JNA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -81,10 +81,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.EnsureSingleEx.html",
-          "hash": "beGG4PTjeA397i3bd9fAQw=="
+          "hash": "NFD9K69wKr0kd7ao5Z383A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -93,10 +93,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.EnsureSortedEx.html",
-          "hash": "Y4QliGVM9Dh7TjknpJcf/g=="
+          "hash": "PFVPveXe2w34VQ7RWHf2Kw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -105,10 +105,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.GetStreamStatisticsEx.html",
-          "hash": "OlZjUE+viYIBkcHuSn+ZFQ=="
+          "hash": "Py1uDPNydP5xyRUKsR8uzA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -117,10 +117,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.LeftJoinEx.html",
-          "hash": "FYO+lZ4nOZaThQUGEIqdxg=="
+          "hash": "9ywpWrYSW9lvKuGAvHzpGw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -129,10 +129,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.LookupEx.html",
-          "hash": "arHHTVRK641fRh8cUp0BRg=="
+          "hash": "jcwXg1WHtmljjEELrp1WrA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -141,10 +141,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.PivotEx.html",
-          "hash": "YATcc9xSkYKMj2e3RwrXhQ=="
+          "hash": "cDr5kJd0M8pHZ5IECPigsg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -153,10 +153,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.SelectEx.html",
-          "hash": "UBOwVxysIabFQWV9tKbEZQ=="
+          "hash": "/rHaMArYKOFRptppMvQMHw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -165,10 +165,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.SelectSectionEx.html",
-          "hash": "mCUQBs3RzIXBiATnhTeg+A=="
+          "hash": "sugIRjW0kb0+Ek+vBmlxuQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -177,10 +177,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.SkipEx.html",
-          "hash": "9BcS6QPHnkHXXYY6A8rHxQ=="
+          "hash": "Yo9po+xvaTCZo/scMmMCLg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -189,10 +189,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.SortEx.html",
-          "hash": "IgsyFoe9cvpCKILF5WHVjw=="
+          "hash": "JDiWbWnRMyBPZIygq79few=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -201,10 +201,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.ThroughActionEx.html",
-          "hash": "hhNRsi1CqiMd8IpGpmhopg=="
+          "hash": "1ZPILIqN4Pzxfeg/lo8A9w=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -213,10 +213,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.ThroughLocalFileEx.html",
-          "hash": "tBRt7T6QnRLTD27JRFp7cg=="
+          "hash": "IzwEBS0N83uUFpaMB9HLcg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -225,10 +225,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.ToGroupEx.html",
-          "hash": "K4/HWe+rHrZf3rRpvQNhcQ=="
+          "hash": "BbaoYyq4VUMO8KSGR/db0Q=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -237,10 +237,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.ToSubProcessEx.html",
-          "hash": "Pa4gnR9M0cLV9WlpGDTUJQ=="
+          "hash": "GJxI4BAybf9IuPilwkw1HA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -249,10 +249,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.TopEx.html",
-          "hash": "NifmGt1rf0Dio2ykVw9VNg=="
+          "hash": "xfHyjZTZvWjkTYgzF3kyGQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -261,10 +261,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.UnionAllEx.html",
-          "hash": "Ul+sh/3awsmmqaPjwMM0uw=="
+          "hash": "ZWm60Aj4rgCRslGGGJ+MXQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -273,10 +273,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.UnionEx.html",
-          "hash": "Vx6Asdmin6m3KBxwhT8o5Q=="
+          "hash": "bHg/roopV7cBGNugpC2GZQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -285,10 +285,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.UnpivotEx.html",
-          "hash": "9FwyK7JJfHJRyvB0kwtmYw=="
+          "hash": "SqarWg/pO4iAezA7PEwrVw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -297,10 +297,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.WhereEx.html",
-          "hash": "X4mYyXwppzIHjljR8RfTew=="
+          "hash": "fYP8+VmEO0M/FoSY+rwLqw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -309,10 +309,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.Extensions.html",
-          "hash": "98XcdMYnHmYdLWcnlHI8jA=="
+          "hash": "W9vzx9czixYBYYRFvbl0dA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -321,10 +321,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.StreamNodes.ContextSelectProcessor-3.html",
-          "hash": "RMBrEtHRc24LBnT49rYqsg=="
+          "hash": "9SB5kToIjs2gMsHB1vXmNw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -333,10 +333,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.StreamNodes.ContextSelectWithIndexProcessor-3.html",
-          "hash": "g0ac2Ox0b03IEGynPP9GWQ=="
+          "hash": "GKJeLTm7fpHC0KVmEtXbXw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -345,10 +345,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.StreamNodes.ISelectProcessor-2.html",
-          "hash": "mAz7syMSh8qOiTLV7Z8X1Q=="
+          "hash": "23jIK7iGtAqkv+GW3KWt1w=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -357,10 +357,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.StreamNodes.ISelectWithIndexProcessor-2.html",
-          "hash": "5qPchxOptEOmePMHgeSFkw=="
+          "hash": "x+nJrxfsaq0Y4/HkUWHFtg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -369,10 +369,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.StreamNodes.SimpleSelectProcessor-2.html",
-          "hash": "82NIUEjRmwXYIhLNZhVWsA=="
+          "hash": "tbwyROPnrlvnHHUttJ0khQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -381,10 +381,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor-2.html",
-          "hash": "jii0evDAG3uqWUu0+2+C6g=="
+          "hash": "6mRMIeEfrjuFrFzAva2qGg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -393,10 +393,10 @@
       "output": {
         ".html": {
           "relative_path": "api/Paillave.Etl.StreamNodes.html",
-          "hash": "2MHuSsvDLSgPWfcw3yYPTg=="
+          "hash": "JVCxhS/UWZYqfxV/DTqSdQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -405,10 +405,10 @@
       "output": {
         ".html": {
           "relative_path": "api/index.html",
-          "hash": "KE7ujaiOgrT4XMfeFJ1C0Q=="
+          "hash": "YMTFc3FC0CGbZT4CYj5NqA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -429,10 +429,10 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html",
-          "hash": "HeyOESrs9We/3T7Cn+WIow=="
+          "hash": "RysJSU7z7bSMbgENV2QxNw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -441,10 +441,10 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.EntityFrameworkCore.Extensions.html",
-          "hash": "Xns6rzTBiXO6Rmk6UEQVBA=="
+          "hash": "eO3EM+JF/fxwzNE5iRzypQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -453,10 +453,10 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.html",
-          "hash": "YjNolRhtJJ/MxhIJgJVOhQ=="
+          "hash": "IhCIbzz/dLQjqFM4JSOZtQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -465,10 +465,10 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.ExcelFile.Extensions.html",
-          "hash": "jvrE4Uv+iGGyx36XY/+WGg=="
+          "hash": "R+cetm4XIf5BFQO4sy70Yw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -477,10 +477,10 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.Ftp.Extensions.FtpEx.html",
-          "hash": "yLKnbEgyTfLyV6RoiBGWIQ=="
+          "hash": "dyX4UTeCOvwAFg8kvTNk+A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -489,10 +489,10 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.Ftp.Extensions.html",
-          "hash": "q7IvvlarHgXuKbpn4FXU6Q=="
+          "hash": "zQe8iQcBiRjMGFn5BJuVVw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -501,10 +501,10 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.SqlServer.Extensions.SqlServerEx.html",
-          "hash": "7qpi5oWY0E1g1ps4jnSkVQ=="
+          "hash": "YtrzCdATtx4JIRCZEmzvXA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -513,10 +513,10 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.SqlServer.Extensions.html",
-          "hash": "yaYGIkdkUp9PANGU49EWJA=="
+          "hash": "pyA2HZK+0lLZukplD0kUvg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -525,7 +525,7 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.TextFile.Extensions.TextFileEx.html",
-          "hash": "evQOspxxgjGqVJH8R9z7PA=="
+          "hash": "ZVomPVN0PiE5x9FGlm1KrA=="
         }
       },
       "is_incremental": false,
@@ -537,7 +537,7 @@
       "output": {
         ".html": {
           "relative_path": "apiext/Paillave.Etl.TextFile.Extensions.html",
-          "hash": "vI3RzXcgFiQ2qQHn9mipBg=="
+          "hash": "59guq95jzuw0RaM1109iyQ=="
         }
       },
       "is_incremental": false,
@@ -549,10 +549,10 @@
       "output": {
         ".html": {
           "relative_path": "apiext/index.html",
-          "hash": "o41La91+gb/BB9uqCYaLXA=="
+          "hash": "PHNkf2QtaRmxWs7M/BiOww=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -568,26 +568,15 @@
       "version": ""
     },
     {
-      "type": "Resource",
-      "source_relative_path": "images/full-black-logo.svg",
-      "output": {
-        "resource": {
-          "relative_path": "images/full-black-logo.svg"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
       "type": "Conceptual",
       "source_relative_path": "index.md",
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "gevbulfDspIq3e8exi9ZDA=="
+          "hash": "Qx7U6XD/aN1N/Kia3uTl7A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -596,10 +585,10 @@
       "output": {
         ".html": {
           "relative_path": "recipes/index.html",
-          "hash": "Bi8/PdcUVzZymeeRfGHkWw=="
+          "hash": "iFCp+sc7mfws6W/Hj1r65w=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -640,22 +629,17 @@
         "incrementalPhase": "build"
       },
       "processors": {
-        "ResourceDocumentProcessor": {
+        "TocDocumentProcessor": {
           "can_incremental": false,
-          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build"
-        },
-        "ManagedReferenceDocumentProcessor": {
-          "can_incremental": true,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build"
         },
         "ConceptualDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build"
         },
-        "TocDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
           "incrementalPhase": "build"
         }
       }
