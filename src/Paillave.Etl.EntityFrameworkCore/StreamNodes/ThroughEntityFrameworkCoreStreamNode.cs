@@ -19,13 +19,13 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         public TStream SourceStream { get; set; }
         public IStream<TCtx> DbContextStream { get; set; }
         public int BatchSize { get; set; } = 1000;
-        public BulkLoadMode BulkLoadMode { get; set; } = BulkLoadMode.InsertOnly;
+        public SaveMode BulkLoadMode { get; set; } = SaveMode.BulkInsert;
     }
-    public enum BulkLoadMode
+    public enum SaveMode
     {
-        None,
-        InsertOnly,
-        Upsert
+        StandardEfCoreUpsert,
+        BulkInsert,
+        BulkUpsert
     }
     public class ThroughEntityFrameworkCoreStreamNode<TIn, TCtx, TStream> : StreamNodeBase<TIn, TStream, ThroughEntityFrameworkCoreArgs<TIn, TCtx, TStream>>
         where TIn : class
@@ -47,23 +47,23 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
                 .FlatMap(i => PushObservable.FromEnumerable(i.Items));
             return base.CreateMatchingStream(ret, args.SourceStream);
         }
-        public void ProcessBatch(List<TIn> items, TCtx dbContext, BulkLoadMode bulkLoadMode)
+        public void ProcessBatch(List<TIn> items, TCtx dbContext, SaveMode bulkLoadMode)
         {
             switch (bulkLoadMode)
             {
-                case BulkLoadMode.None:
-                    items.ForEach(i => dbContext.Add(i));
-                    dbContext.SaveChanges(); //DO NOT SET IT ASYNC HERE. The point is to retrieve the Id in case of automatic key.
+                case SaveMode.StandardEfCoreUpsert:
+                    dbContext.UpdateRange(items);
                     break;
-                case BulkLoadMode.InsertOnly:
+                case SaveMode.BulkInsert:
                     dbContext.BulkInsert(items, new BulkConfig { PreserveInsertOrder = true, SetOutputIdentity = true, BatchSize = items.Count });
                     break;
-                case BulkLoadMode.Upsert:
+                case SaveMode.BulkUpsert:
                     dbContext.BulkInsertOrUpdate(items, new BulkConfig { PreserveInsertOrder = true, SetOutputIdentity = true, BatchSize = items.Count });
                     break;
                 default:
                     break;
             }
+            dbContext.SaveChanges(); //DO NOT SET IT ASYNC HERE. The point is to retrieve the Id in case of automatic key.
         }
     }
 }
