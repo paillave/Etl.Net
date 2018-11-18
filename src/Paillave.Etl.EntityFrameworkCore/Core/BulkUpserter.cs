@@ -32,10 +32,8 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
             {
                 var matchFromDb = r.FirstOrDefault();
                 if (matchFromDb != null)
-                {
                     foreach (var pk in primaryKeyParameters)
                         pk.SetValue(l, pk.GetValue(matchFromDb));
-                }
                 return l;
             });
             dbContext.UpdateRange(itemsReadyToUpdate);

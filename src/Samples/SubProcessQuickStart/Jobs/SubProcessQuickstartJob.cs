@@ -28,7 +28,7 @@ namespace SubProcessQuickStart.Jobs
             var joinedLineS = parsedLineS
                 .Lookup("join types to file", parsedTypeLineS, i => i.TypeId, i => i.Id, (l, r) => new { l.Id, r.Name, l.FileName, r.Category })
                 .Select("join config and data", rootStream, (l, r) => new { Data = l, Cfg = r })
-                .ToGroups("export data per category", i => i.Data.Category, groupedLines =>
+                .GroupBy("export data per category", i => i.Data.Category, groupedLines =>
                 {
                     var groupOutputFileS = groupedLines
                         .Top("Take first row", 1)
