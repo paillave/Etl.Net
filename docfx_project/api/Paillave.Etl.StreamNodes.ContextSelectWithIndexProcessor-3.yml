@@ -17,7 +17,7 @@ items:
   source:
     id: ContextSelectWithIndexProcessor
     path: ''
-    startLine: 1707
+    startLine: 1767
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.StreamNodes
@@ -70,7 +70,7 @@ items:
   source:
     id: .ctor
     path: ''
-    startLine: 1716
+    startLine: 1776
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.StreamNodes
@@ -108,7 +108,7 @@ items:
   source:
     id: ProcessRow
     path: ''
-    startLine: 1727
+    startLine: 1787
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.StreamNodes

@@ -18,10 +18,14 @@
     name: EnsureSingleEx
   - uid: Paillave.Etl.Extensions.EnsureSortedEx
     name: EnsureSortedEx
+  - uid: Paillave.Etl.Extensions.FirstEx
+    name: FirstEx
   - uid: Paillave.Etl.Extensions.GetStreamStatisticsEx
     name: GetStreamStatisticsEx
   - uid: Paillave.Etl.Extensions.GroupByEx
     name: GroupByEx
+  - uid: Paillave.Etl.Extensions.LastEx
+    name: LastEx
   - uid: Paillave.Etl.Extensions.LeftJoinEx
     name: LeftJoinEx
   - uid: Paillave.Etl.Extensions.LookupEx

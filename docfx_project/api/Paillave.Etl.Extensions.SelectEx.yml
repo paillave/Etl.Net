@@ -31,7 +31,7 @@ items:
   source:
     id: SelectEx
     path: ''
-    startLine: 655
+    startLine: 715
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -73,7 +73,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 667
+    startLine: 727
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -131,7 +131,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 676
+    startLine: 736
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -180,7 +180,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 697
+    startLine: 757
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -243,7 +243,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 706
+    startLine: 766
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -295,7 +295,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 725
+    startLine: 785
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -353,7 +353,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 734
+    startLine: 794
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -402,7 +402,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 753
+    startLine: 813
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -460,7 +460,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 762
+    startLine: 822
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -509,7 +509,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 781
+    startLine: 841
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -567,7 +567,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 790
+    startLine: 850
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -616,7 +616,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 811
+    startLine: 871
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -679,7 +679,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 820
+    startLine: 880
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -731,7 +731,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 842
+    startLine: 902
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -794,7 +794,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 852
+    startLine: 912
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -846,7 +846,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 875
+    startLine: 935
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -909,7 +909,7 @@ items:
   source:
     id: Select
     path: ''
-    startLine: 885
+    startLine: 945
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
