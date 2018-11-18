@@ -12,8 +12,10 @@ items:
   - Paillave.Etl.Extensions.EnsureKeyedEx
   - Paillave.Etl.Extensions.EnsureSingleEx
   - Paillave.Etl.Extensions.EnsureSortedEx
+  - Paillave.Etl.Extensions.FirstEx
   - Paillave.Etl.Extensions.GetStreamStatisticsEx
   - Paillave.Etl.Extensions.GroupByEx
+  - Paillave.Etl.Extensions.LastEx
   - Paillave.Etl.Extensions.LeftJoinEx
   - Paillave.Etl.Extensions.LookupEx
   - Paillave.Etl.Extensions.PivotEx
@@ -79,6 +81,11 @@ references:
   name: EnsureSortedEx
   nameWithType: EnsureSortedEx
   fullName: Paillave.Etl.Extensions.EnsureSortedEx
+- uid: Paillave.Etl.Extensions.FirstEx
+  commentId: T:Paillave.Etl.Extensions.FirstEx
+  name: FirstEx
+  nameWithType: FirstEx
+  fullName: Paillave.Etl.Extensions.FirstEx
 - uid: Paillave.Etl.Extensions.GetStreamStatisticsEx
   commentId: T:Paillave.Etl.Extensions.GetStreamStatisticsEx
   name: GetStreamStatisticsEx
@@ -89,6 +96,11 @@ references:
   name: GroupByEx
   nameWithType: GroupByEx
   fullName: Paillave.Etl.Extensions.GroupByEx
+- uid: Paillave.Etl.Extensions.LastEx
+  commentId: T:Paillave.Etl.Extensions.LastEx
+  name: LastEx
+  nameWithType: LastEx
+  fullName: Paillave.Etl.Extensions.LastEx
 - uid: Paillave.Etl.Extensions.LeftJoinEx
   commentId: T:Paillave.Etl.Extensions.LeftJoinEx
   name: LeftJoinEx

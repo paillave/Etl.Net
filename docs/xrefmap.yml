@@ -553,6 +553,28 @@ references:
   fullName.vb: Paillave.Etl.Extensions.EnsureSortedEx.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), System.String, System.Func(Of TIn, TKey), System.Object)
   nameWithType: EnsureSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)
   nameWithType.vb: EnsureSortedEx.EnsureSorted(Of TIn, TKey)(IStream(Of TIn), String, Func(Of TIn, TKey), Object)
+- uid: Paillave.Etl.Extensions.FirstEx
+  name: FirstEx
+  href: api/Paillave.Etl.Extensions.FirstEx.html
+  commentId: T:Paillave.Etl.Extensions.FirstEx
+  fullName: Paillave.Etl.Extensions.FirstEx
+  nameWithType: FirstEx
+- uid: Paillave.Etl.Extensions.FirstEx.First*
+  name: First
+  href: api/Paillave.Etl.Extensions.FirstEx.html#Paillave_Etl_Extensions_FirstEx_First_
+  commentId: Overload:Paillave.Etl.Extensions.FirstEx.First
+  isSpec: "True"
+  fullName: Paillave.Etl.Extensions.FirstEx.First
+  nameWithType: FirstEx.First
+- uid: Paillave.Etl.Extensions.FirstEx.First``1(IStream{``0},System.String)
+  name: First<TIn>(IStream<TIn>, String)
+  href: api/Paillave.Etl.Extensions.FirstEx.html#Paillave_Etl_Extensions_FirstEx_First__1_IStream___0__System_String_
+  commentId: M:Paillave.Etl.Extensions.FirstEx.First``1(IStream{``0},System.String)
+  name.vb: First(Of TIn)(IStream(Of TIn), String)
+  fullName: Paillave.Etl.Extensions.FirstEx.First<TIn>(IStream<TIn>, System.String)
+  fullName.vb: Paillave.Etl.Extensions.FirstEx.First(Of TIn)(IStream(Of TIn), System.String)
+  nameWithType: FirstEx.First<TIn>(IStream<TIn>, String)
+  nameWithType.vb: FirstEx.First(Of TIn)(IStream(Of TIn), String)
 - uid: Paillave.Etl.Extensions.GetStreamStatisticsEx
   name: GetStreamStatisticsEx
   href: api/Paillave.Etl.Extensions.GetStreamStatisticsEx.html
@@ -597,6 +619,28 @@ references:
   fullName.vb: Paillave.Etl.Extensions.GroupByEx.GroupBy(Of TIn, TKey, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, TKey), System.Func(Of IStream(Of TIn), IStream(Of TOut)))
   nameWithType: GroupByEx.GroupBy<TIn, TKey, TOut>(IStream<TIn>, String, Func<TIn, TKey>, Func<IStream<TIn>, IStream<TOut>>)
   nameWithType.vb: GroupByEx.GroupBy(Of TIn, TKey, TOut)(IStream(Of TIn), String, Func(Of TIn, TKey), Func(Of IStream(Of TIn), IStream(Of TOut)))
+- uid: Paillave.Etl.Extensions.LastEx
+  name: LastEx
+  href: api/Paillave.Etl.Extensions.LastEx.html
+  commentId: T:Paillave.Etl.Extensions.LastEx
+  fullName: Paillave.Etl.Extensions.LastEx
+  nameWithType: LastEx
+- uid: Paillave.Etl.Extensions.LastEx.Last*
+  name: Last
+  href: api/Paillave.Etl.Extensions.LastEx.html#Paillave_Etl_Extensions_LastEx_Last_
+  commentId: Overload:Paillave.Etl.Extensions.LastEx.Last
+  isSpec: "True"
+  fullName: Paillave.Etl.Extensions.LastEx.Last
+  nameWithType: LastEx.Last
+- uid: Paillave.Etl.Extensions.LastEx.Last``1(IStream{``0},System.String)
+  name: Last<TIn>(IStream<TIn>, String)
+  href: api/Paillave.Etl.Extensions.LastEx.html#Paillave_Etl_Extensions_LastEx_Last__1_IStream___0__System_String_
+  commentId: M:Paillave.Etl.Extensions.LastEx.Last``1(IStream{``0},System.String)
+  name.vb: Last(Of TIn)(IStream(Of TIn), String)
+  fullName: Paillave.Etl.Extensions.LastEx.Last<TIn>(IStream<TIn>, System.String)
+  fullName.vb: Paillave.Etl.Extensions.LastEx.Last(Of TIn)(IStream(Of TIn), System.String)
+  nameWithType: LastEx.Last<TIn>(IStream<TIn>, String)
+  nameWithType.vb: LastEx.Last(Of TIn)(IStream(Of TIn), String)
 - uid: Paillave.Etl.Extensions.LeftJoinEx
   name: LeftJoinEx
   href: api/Paillave.Etl.Extensions.LeftJoinEx.html
