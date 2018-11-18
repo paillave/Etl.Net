@@ -9,22 +9,21 @@ using System.Threading;
 
 namespace Paillave.Etl.StreamNodes
 {
-    public class ToSubProcessArgs<TIn, TOut>
+    public class SubProcessArgs<TIn, TOut>
     {
         public IStream<TIn> Stream { get; set; }
         public Func<ISingleStream<TIn>, IStream<TOut>> SubProcess { get; set; }
         public bool NoParallelisation { get; set; }
     }
-    public class ToSubProcessStreamNode<TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, ToSubProcessArgs<TIn, TOut>>
+    public class SubProcessStreamNode<TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, SubProcessArgs<TIn, TOut>>
     {
         public override bool IsAwaitable => true;
-        public ToSubProcessStreamNode(string name, ToSubProcessArgs<TIn, TOut> args) : base(name, args)
+        public SubProcessStreamNode(string name, SubProcessArgs<TIn, TOut> args) : base(name, args)
         {
         }
 
-        protected override IStream<TOut> CreateOutputStream(ToSubProcessArgs<TIn, TOut> args)
+        protected override IStream<TOut> CreateOutputStream(SubProcessArgs<TIn, TOut> args)
         {
-            // Semaphore semaphore = args.NoParallelisation ? new Semaphore(1, 1) : new Semaphore(10, 10);
             Synchronizer synchronizer = new Synchronizer(args.NoParallelisation);
             var outputObservable = args.Stream.Observable
                 .FlatMap(i =>
@@ -40,12 +39,6 @@ namespace Paillave.Etl.StreamNodes
                         awaiter = synchronizer.WaitBeforeProcess();
                         waitHandle.Set();
                     });
-                    // outputStream.Observable.Subscribe(j => { }, () => semaphore.Release());
-                    // return new DeferredWrapperPushObservable<TOut>(outputStream.Observable, () =>
-                    // {
-                    //     semaphore.WaitOne();
-                    //     waitHandle.Set();
-                    // });
                 });
             return base.CreateUnsortedStream(outputObservable);
         }

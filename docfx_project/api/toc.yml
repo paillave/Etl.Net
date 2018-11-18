@@ -20,6 +20,8 @@
     name: EnsureSortedEx
   - uid: Paillave.Etl.Extensions.GetStreamStatisticsEx
     name: GetStreamStatisticsEx
+  - uid: Paillave.Etl.Extensions.GroupByEx
+    name: GroupByEx
   - uid: Paillave.Etl.Extensions.LeftJoinEx
     name: LeftJoinEx
   - uid: Paillave.Etl.Extensions.LookupEx
@@ -34,16 +36,14 @@
     name: SkipEx
   - uid: Paillave.Etl.Extensions.SortEx
     name: SortEx
+  - uid: Paillave.Etl.Extensions.SubProcessEx
+    name: SubProcessEx
   - uid: Paillave.Etl.Extensions.ThroughActionEx
     name: ThroughActionEx
   - uid: Paillave.Etl.Extensions.ThroughLocalFileEx
     name: ThroughLocalFileEx
-  - uid: Paillave.Etl.Extensions.ToGroupEx
-    name: ToGroupEx
   - uid: Paillave.Etl.Extensions.TopEx
     name: TopEx
-  - uid: Paillave.Etl.Extensions.ToSubProcessEx
-    name: ToSubProcessEx
   - uid: Paillave.Etl.Extensions.UnionAllEx
     name: UnionAllEx
   - uid: Paillave.Etl.Extensions.UnionEx

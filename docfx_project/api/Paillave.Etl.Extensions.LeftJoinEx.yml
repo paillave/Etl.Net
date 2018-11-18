@@ -16,7 +16,7 @@ items:
   source:
     id: LeftJoinEx
     path: ''
-    startLine: 510
+    startLine: 542
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -55,7 +55,7 @@ items:
   source:
     id: LeftJoin
     path: ''
-    startLine: 512
+    startLine: 544
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

@@ -6,6 +6,7 @@ items:
   parent: Paillave.Etl.EntityFrameworkCore.Extensions
   children:
   - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,IQueryable{``2}},System.Boolean)
+  - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.Lookup``4(IStream{``0},System.String,ISingleStream{``2},Expression{System.Func{``0,``1,System.Boolean}},System.Func{``0,``1,``3},System.Int32)
   - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,IStream{``1},SaveMode,System.Int32)
   - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IStream{``0},System.String,IStream{``1},Expression{System.Func{``0,``2}},System.Int32)
   - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,IStream{``1},System.Func{``0,``3},System.Func{``0,``3,``2},SaveMode,System.Int32)
@@ -324,6 +325,63 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey, TOut, TInEf)(IStream(Of TIn), System.String, IStream(Of TResource), Expression(Of System.Func(Of TInEf, TEntityKey)), System.Func(Of TIn, TInEf), System.Func(Of TIn, TInEf, TOut), System.Int32)
   name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey, TOut, TInEf)(IStream(Of TIn), String, IStream(Of TResource), Expression(Of Func(Of TInEf, TEntityKey)), Func(Of TIn, TInEf), Func(Of TIn, TInEf, TOut), Int32)
+- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.Lookup``4(IStream{``0},System.String,ISingleStream{``2},Expression{System.Func{``0,``1,System.Boolean}},System.Func{``0,``1,``3},System.Int32)
+  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.Lookup``4(IStream{``0},System.String,ISingleStream{``2},Expression{System.Func{``0,``1,System.Boolean}},System.Func{``0,``1,``3},System.Int32)
+  id: Lookup``4(IStream{``0},System.String,ISingleStream{``2},Expression{System.Func{``0,``1,System.Boolean}},System.Func{``0,``1,``3},System.Int32)
+  isExtensionMethod: true
+  parent: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx
+  langs:
+  - csharp
+  - vb
+  name: Lookup<TIn, TEntity, TCtx, TOut>(IStream<TIn>, String, ISingleStream<TCtx>, Expression<Func<TIn, TEntity, Boolean>>, Func<TIn, TEntity, TOut>, Int32)
+  nameWithType: EntityFrameworkCoreEx.Lookup<TIn, TEntity, TCtx, TOut>(IStream<TIn>, String, ISingleStream<TCtx>, Expression<Func<TIn, TEntity, Boolean>>, Func<TIn, TEntity, TOut>, Int32)
+  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.Lookup<TIn, TEntity, TCtx, TOut>(IStream<TIn>, System.String, ISingleStream<TCtx>, Expression<System.Func<TIn, TEntity, System.Boolean>>, System.Func<TIn, TEntity, TOut>, System.Int32)
+  type: Method
+  source:
+    id: Lookup
+    path: ''
+    startLine: 80
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.EntityFrameworkCore.Extensions
+  syntax:
+    content: >-
+      public static IStream<TOut> Lookup<TIn, TEntity, TCtx, TOut>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TEntity, bool>> match, Func<TIn, TEntity, TOut> resultSelector, int cacheSize = 1000)
+          where TEntity : class where TCtx : DbContext
+    parameters:
+    - id: inputStream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: dbContextStream
+      type: ISingleStream{{TCtx}}
+    - id: match
+      type: Expression{System.Func{{TIn},{TEntity},System.Boolean}}
+    - id: resultSelector
+      type: System.Func{{TIn},{TEntity},{TOut}}
+    - id: cacheSize
+      type: System.Int32
+    typeParameters:
+    - id: TIn
+    - id: TEntity
+    - id: TCtx
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function Lookup(Of TIn, TEntity As Class, TCtx As DbContext, TOut)(inputStream As IStream(Of TIn), name As String, dbContextStream As ISingleStream(Of TCtx), match As Expression(Of Func(Of TIn, TEntity, Boolean)), resultSelector As Func(Of TIn, TEntity, TOut), cacheSize As Integer = 1000) As IStream(Of TOut)
+  overload: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.Lookup*
+  nameWithType.vb: EntityFrameworkCoreEx.Lookup(Of TIn, TEntity, TCtx, TOut)(IStream(Of TIn), String, ISingleStream(Of TCtx), Expression(Of Func(Of TIn, TEntity, Boolean)), Func(Of TIn, TEntity, TOut), Int32)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.Lookup(Of TIn, TEntity, TCtx, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TCtx), Expression(Of System.Func(Of TIn, TEntity, System.Boolean)), System.Func(Of TIn, TEntity, TOut), System.Int32)
+  name.vb: Lookup(Of TIn, TEntity, TCtx, TOut)(IStream(Of TIn), String, ISingleStream(Of TCtx), Expression(Of Func(Of TIn, TEntity, Boolean)), Func(Of TIn, TEntity, TOut), Int32)
 references:
 - uid: Paillave.Etl.EntityFrameworkCore.Extensions
   commentId: N:Paillave.Etl.EntityFrameworkCore.Extensions
@@ -1387,6 +1445,203 @@ references:
   - name: )
     nameWithType: )
     fullName: )
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.Lookup*
+  commentId: Overload:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.Lookup
+  name: Lookup
+  nameWithType: EntityFrameworkCoreEx.Lookup
+  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.Lookup
+- uid: ISingleStream{{TCtx}}
+  commentId: '!:ISingleStream{``2}'
+  definition: ISingleStream`1
+  name: ISingleStream<TCtx>
+  nameWithType: ISingleStream<TCtx>
+  fullName: ISingleStream<TCtx>
+  nameWithType.vb: ISingleStream(Of TCtx)
+  fullName.vb: ISingleStream(Of TCtx)
+  name.vb: ISingleStream(Of TCtx)
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TCtx
+    nameWithType: TCtx
+    fullName: TCtx
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TCtx
+    nameWithType: TCtx
+    fullName: TCtx
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Expression{System.Func{{TIn},{TEntity},System.Boolean}}
+  commentId: '!:Expression{System.Func{``0,``1,System.Boolean}}'
+  definition: Expression`1
+  name: Expression<Func<TIn, TEntity, Boolean>>
+  nameWithType: Expression<Func<TIn, TEntity, Boolean>>
+  fullName: Expression<System.Func<TIn, TEntity, System.Boolean>>
+  nameWithType.vb: Expression(Of Func(Of TIn, TEntity, Boolean))
+  fullName.vb: Expression(Of System.Func(Of TIn, TEntity, System.Boolean))
+  name.vb: Expression(Of Func(Of TIn, TEntity, Boolean))
+  spec.csharp:
+  - uid: Expression`1
+    name: Expression
+    nameWithType: Expression
+    fullName: Expression
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TEntity
+    nameWithType: TEntity
+    fullName: TEntity
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: Expression`1
+    name: Expression
+    nameWithType: Expression
+    fullName: Expression
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TEntity
+    nameWithType: TEntity
+    fullName: TEntity
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Boolean
+    name: Boolean
+    nameWithType: Boolean
+    fullName: System.Boolean
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TIn},{TEntity},{TOut}}
+  commentId: T:System.Func{``0,``1,``3}
+  parent: System
+  definition: System.Func`3
+  name: Func<TIn, TEntity, TOut>
+  nameWithType: Func<TIn, TEntity, TOut>
+  fullName: System.Func<TIn, TEntity, TOut>
+  nameWithType.vb: Func(Of TIn, TEntity, TOut)
+  fullName.vb: System.Func(Of TIn, TEntity, TOut)
+  name.vb: Func(Of TIn, TEntity, TOut)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TEntity
+    nameWithType: TEntity
+    fullName: TEntity
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TEntity
+    nameWithType: TEntity
+    fullName: TEntity
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
   - name: )
     nameWithType: )
     fullName: )

@@ -16,15 +16,15 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl.Extensions
 {
-    public static partial class ToSubProcessEx
+    public static partial class GroupByEx
     {
-        public static IStream<TOut> ToSubProcess<TIn, TOut>(this IStream<TIn> stream, string name, Func<ISingleStream<TIn>, IStream<TOut>> subProcess, bool noParallelisation = false)
+        public static IStream<TOut> GroupBy<TIn, TKey, TOut>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, Func<IStream<TIn>, IStream<TOut>> subProcess)
         {
-            return new ToSubProcessStreamNode<TIn, TOut>(name, new ToSubProcessArgs<TIn, TOut>
+            return new GroupByStreamNode<TIn, TKey, TOut>(name, new GroupArgs<TIn, TKey, TOut>
             {
-                NoParallelisation = noParallelisation,
                 SubProcess = subProcess,
-                Stream = stream
+                Stream = stream,
+                GetKey = getKey
             }).Output;
         }
     }
