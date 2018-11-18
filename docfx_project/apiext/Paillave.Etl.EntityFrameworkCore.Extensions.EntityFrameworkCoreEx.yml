@@ -6,14 +6,10 @@ items:
   parent: Paillave.Etl.EntityFrameworkCore.Extensions
   children:
   - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,IQueryable{``2}},System.Boolean)
-  - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(ISingleStream{``0},System.String,IStream{``1},SaveMode,System.Int32)
   - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,IStream{``1},SaveMode,System.Int32)
-  - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IKeyedStream{``0,``2},System.String,IStream{``1},SaveMode,System.Int32)
-  - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(ISingleStream{``0},System.String,IStream{``1},Expression{System.Func{``0,``2}},System.Int32)
-  - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(ISortedStream{``0,``2},System.String,IStream{``1},SaveMode,System.Int32)
   - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IStream{``0},System.String,IStream{``1},Expression{System.Func{``0,``2}},System.Int32)
-  - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IKeyedStream{``0,``2},System.String,IStream{``1},Expression{System.Func{``0,``3}},System.Int32)
-  - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(ISortedStream{``0,``2},System.String,IStream{``1},Expression{System.Func{``0,``3}},System.Int32)
+  - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,IStream{``1},System.Func{``0,``3},System.Func{``0,``3,``2},SaveMode,System.Int32)
+  - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``5(IStream{``0},System.String,IStream{``1},Expression{System.Func{``4,``2}},System.Func{``0,``4},System.Func{``0,``4,``3},System.Int32)
   langs:
   - csharp
   - vb
@@ -155,167 +151,6 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource)(IStream(Of TIn), System.String, IStream(Of TResource), SaveMode, System.Int32)
   name.vb: ThroughEntityFrameworkCore(Of TIn, TResource)(IStream(Of TIn), String, IStream(Of TResource), SaveMode, Int32)
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(ISortedStream{``0,``2},System.String,IStream{``1},SaveMode,System.Int32)
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(ISortedStream{``0,``2},System.String,IStream{``1},SaveMode,System.Int32)
-  id: ThroughEntityFrameworkCore``3(ISortedStream{``0,``2},System.String,IStream{``1},SaveMode,System.Int32)
-  isExtensionMethod: true
-  parent: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx
-  langs:
-  - csharp
-  - vb
-  name: ThroughEntityFrameworkCore<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, SaveMode, Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, SaveMode, Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, System.String, IStream<TResource>, SaveMode, System.Int32)
-  type: Method
-  source:
-    id: ThroughEntityFrameworkCore
-    path: ''
-    startLine: 33
-  assemblies:
-  - cs.temp.dll
-  namespace: Paillave.Etl.EntityFrameworkCore.Extensions
-  syntax:
-    content: >-
-      public static ISortedStream<TIn, TKey> ThroughEntityFrameworkCore<TIn, TResource, TKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, SaveMode bulkLoadMode = null, int chunkSize = 1000)
-          where TIn : class where TResource : DbContext
-    parameters:
-    - id: stream
-      type: ISortedStream{{TIn},{TKey}}
-    - id: name
-      type: System.String
-    - id: resourceStream
-      type: IStream{{TResource}}
-    - id: bulkLoadMode
-      type: SaveMode
-    - id: chunkSize
-      type: System.Int32
-    typeParameters:
-    - id: TIn
-    - id: TResource
-    - id: TKey
-    return:
-      type: ISortedStream{{TIn},{TKey}}
-    content.vb: >-
-      <ExtensionAttribute>
-
-      Public Shared Function ThroughEntityFrameworkCore(Of TIn As Class, TResource As DbContext, TKey)(stream As ISortedStream(Of TIn, TKey), name As String, resourceStream As IStream(Of TResource), bulkLoadMode As SaveMode = Nothing, chunkSize As Integer = 1000) As ISortedStream(Of TIn, TKey)
-  overload: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), SaveMode, Int32)
-  modifiers.csharp:
-  - public
-  - static
-  modifiers.vb:
-  - Public
-  - Shared
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), System.String, IStream(Of TResource), SaveMode, System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), SaveMode, Int32)
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IKeyedStream{``0,``2},System.String,IStream{``1},SaveMode,System.Int32)
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IKeyedStream{``0,``2},System.String,IStream{``1},SaveMode,System.Int32)
-  id: ThroughEntityFrameworkCore``3(IKeyedStream{``0,``2},System.String,IStream{``1},SaveMode,System.Int32)
-  isExtensionMethod: true
-  parent: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx
-  langs:
-  - csharp
-  - vb
-  name: ThroughEntityFrameworkCore<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, SaveMode, Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, SaveMode, Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, System.String, IStream<TResource>, SaveMode, System.Int32)
-  type: Method
-  source:
-    id: ThroughEntityFrameworkCore
-    path: ''
-    startLine: 45
-  assemblies:
-  - cs.temp.dll
-  namespace: Paillave.Etl.EntityFrameworkCore.Extensions
-  syntax:
-    content: >-
-      public static IKeyedStream<TIn, TKey> ThroughEntityFrameworkCore<TIn, TResource, TKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, SaveMode bulkLoadMode = null, int chunkSize = 1000)
-          where TIn : class where TResource : DbContext
-    parameters:
-    - id: stream
-      type: IKeyedStream{{TIn},{TKey}}
-    - id: name
-      type: System.String
-    - id: resourceStream
-      type: IStream{{TResource}}
-    - id: bulkLoadMode
-      type: SaveMode
-    - id: chunkSize
-      type: System.Int32
-    typeParameters:
-    - id: TIn
-    - id: TResource
-    - id: TKey
-    return:
-      type: IKeyedStream{{TIn},{TKey}}
-    content.vb: >-
-      <ExtensionAttribute>
-
-      Public Shared Function ThroughEntityFrameworkCore(Of TIn As Class, TResource As DbContext, TKey)(stream As IKeyedStream(Of TIn, TKey), name As String, resourceStream As IStream(Of TResource), bulkLoadMode As SaveMode = Nothing, chunkSize As Integer = 1000) As IKeyedStream(Of TIn, TKey)
-  overload: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), SaveMode, Int32)
-  modifiers.csharp:
-  - public
-  - static
-  modifiers.vb:
-  - Public
-  - Shared
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), System.String, IStream(Of TResource), SaveMode, System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), SaveMode, Int32)
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(ISingleStream{``0},System.String,IStream{``1},SaveMode,System.Int32)
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(ISingleStream{``0},System.String,IStream{``1},SaveMode,System.Int32)
-  id: ThroughEntityFrameworkCore``2(ISingleStream{``0},System.String,IStream{``1},SaveMode,System.Int32)
-  isExtensionMethod: true
-  parent: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx
-  langs:
-  - csharp
-  - vb
-  name: ThroughEntityFrameworkCore<TIn, TResource>(ISingleStream<TIn>, String, IStream<TResource>, SaveMode, Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource>(ISingleStream<TIn>, String, IStream<TResource>, SaveMode, Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource>(ISingleStream<TIn>, System.String, IStream<TResource>, SaveMode, System.Int32)
-  type: Method
-  source:
-    id: ThroughEntityFrameworkCore
-    path: ''
-    startLine: 57
-  assemblies:
-  - cs.temp.dll
-  namespace: Paillave.Etl.EntityFrameworkCore.Extensions
-  syntax:
-    content: >-
-      public static ISingleStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this ISingleStream<TIn> stream, string name, IStream<TResource> resourceStream, SaveMode bulkLoadMode = null, int chunkSize = 1000)
-          where TIn : class where TResource : DbContext
-    parameters:
-    - id: stream
-      type: ISingleStream{{TIn}}
-    - id: name
-      type: System.String
-    - id: resourceStream
-      type: IStream{{TResource}}
-    - id: bulkLoadMode
-      type: SaveMode
-    - id: chunkSize
-      type: System.Int32
-    typeParameters:
-    - id: TIn
-    - id: TResource
-    return:
-      type: ISingleStream{{TIn}}
-    content.vb: >-
-      <ExtensionAttribute>
-
-      Public Shared Function ThroughEntityFrameworkCore(Of TIn As Class, TResource As DbContext)(stream As ISingleStream(Of TIn), name As String, resourceStream As IStream(Of TResource), bulkLoadMode As SaveMode = Nothing, chunkSize As Integer = 1000) As ISingleStream(Of TIn)
-  overload: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource)(ISingleStream(Of TIn), String, IStream(Of TResource), SaveMode, Int32)
-  modifiers.csharp:
-  - public
-  - static
-  modifiers.vb:
-  - Public
-  - Shared
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource)(ISingleStream(Of TIn), System.String, IStream(Of TResource), SaveMode, System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource)(ISingleStream(Of TIn), String, IStream(Of TResource), SaveMode, Int32)
 - uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IStream{``0},System.String,IStream{``1},Expression{System.Func{``0,``2}},System.Int32)
   commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IStream{``0},System.String,IStream{``1},Expression{System.Func{``0,``2}},System.Int32)
   id: ThroughEntityFrameworkCore``3(IStream{``0},System.String,IStream{``1},Expression{System.Func{``0,``2}},System.Int32)
@@ -331,7 +166,7 @@ items:
   source:
     id: ThroughEntityFrameworkCore
     path: ''
-    startLine: 70
+    startLine: 36
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
@@ -370,170 +205,125 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey)(IStream(Of TIn), System.String, IStream(Of TResource), Expression(Of System.Func(Of TIn, TEntityKey)), System.Int32)
   name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey)(IStream(Of TIn), String, IStream(Of TResource), Expression(Of Func(Of TIn, TEntityKey)), Int32)
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(ISortedStream{``0,``2},System.String,IStream{``1},Expression{System.Func{``0,``3}},System.Int32)
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(ISortedStream{``0,``2},System.String,IStream{``1},Expression{System.Func{``0,``3}},System.Int32)
-  id: ThroughEntityFrameworkCore``4(ISortedStream{``0,``2},System.String,IStream{``1},Expression{System.Func{``0,``3}},System.Int32)
+- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,IStream{``1},System.Func{``0,``3},System.Func{``0,``3,``2},SaveMode,System.Int32)
+  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,IStream{``1},System.Func{``0,``3},System.Func{``0,``3,``2},SaveMode,System.Int32)
+  id: ThroughEntityFrameworkCore``4(IStream{``0},System.String,IStream{``1},System.Func{``0,``3},System.Func{``0,``3,``2},SaveMode,System.Int32)
   isExtensionMethod: true
   parent: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx
   langs:
   - csharp
   - vb
-  name: ThroughEntityFrameworkCore<TIn, TResource, TKey, TEntityKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, Expression<Func<TIn, TEntityKey>>, Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TKey, TEntityKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, Expression<Func<TIn, TEntityKey>>, Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TKey, TEntityKey>(ISortedStream<TIn, TKey>, System.String, IStream<TResource>, Expression<System.Func<TIn, TEntityKey>>, System.Int32)
+  name: ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, String, IStream<TResource>, Func<TIn, TInEf>, Func<TIn, TInEf, TOut>, SaveMode, Int32)
+  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, String, IStream<TResource>, Func<TIn, TInEf>, Func<TIn, TInEf, TOut>, SaveMode, Int32)
+  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, System.String, IStream<TResource>, System.Func<TIn, TInEf>, System.Func<TIn, TInEf, TOut>, SaveMode, System.Int32)
   type: Method
   source:
     id: ThroughEntityFrameworkCore
     path: ''
-    startLine: 82
+    startLine: 51
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
   syntax:
     content: >-
-      public static ISortedStream<TIn, TKey> ThroughEntityFrameworkCore<TIn, TResource, TKey, TEntityKey>(this ISortedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, Expression<Func<TIn, TEntityKey>> getBusinessKey, int chunkSize = 100)
-          where TIn : class where TResource : DbContext
+      public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, Func<TIn, TInEf> getEntity, Func<TIn, TInEf, TOut> getResult, SaveMode bulkLoadMode = null, int chunkSize = 1000)
+          where TResource : DbContext where TInEf : class
     parameters:
     - id: stream
-      type: ISortedStream{{TIn},{TKey}}
+      type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: resourceStream
       type: IStream{{TResource}}
-    - id: getBusinessKey
-      type: Expression{System.Func{{TIn},{TEntityKey}}}
+    - id: getEntity
+      type: System.Func{{TIn},{TInEf}}
+    - id: getResult
+      type: System.Func{{TIn},{TInEf},{TOut}}
+    - id: bulkLoadMode
+      type: SaveMode
     - id: chunkSize
       type: System.Int32
     typeParameters:
     - id: TIn
     - id: TResource
-    - id: TKey
-    - id: TEntityKey
+    - id: TOut
+    - id: TInEf
     return:
-      type: ISortedStream{{TIn},{TKey}}
+      type: IStream{{TOut}}
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughEntityFrameworkCore(Of TIn As Class, TResource As DbContext, TKey, TEntityKey)(stream As ISortedStream(Of TIn, TKey), name As String, resourceStream As IStream(Of TResource), getBusinessKey As Expression(Of Func(Of TIn, TEntityKey)), chunkSize As Integer = 100) As ISortedStream(Of TIn, TKey)
+      Public Shared Function ThroughEntityFrameworkCore(Of TIn, TResource As DbContext, TOut, TInEf As Class)(stream As IStream(Of TIn), name As String, resourceStream As IStream(Of TResource), getEntity As Func(Of TIn, TInEf), getResult As Func(Of TIn, TInEf, TOut), bulkLoadMode As SaveMode = Nothing, chunkSize As Integer = 1000) As IStream(Of TOut)
   overload: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TKey, TEntityKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), Expression(Of Func(Of TIn, TEntityKey)), Int32)
+  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), String, IStream(Of TResource), Func(Of TIn, TInEf), Func(Of TIn, TInEf, TOut), SaveMode, Int32)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TKey, TEntityKey)(ISortedStream(Of TIn, TKey), System.String, IStream(Of TResource), Expression(Of System.Func(Of TIn, TEntityKey)), System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TKey, TEntityKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), Expression(Of Func(Of TIn, TEntityKey)), Int32)
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IKeyedStream{``0,``2},System.String,IStream{``1},Expression{System.Func{``0,``3}},System.Int32)
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IKeyedStream{``0,``2},System.String,IStream{``1},Expression{System.Func{``0,``3}},System.Int32)
-  id: ThroughEntityFrameworkCore``4(IKeyedStream{``0,``2},System.String,IStream{``1},Expression{System.Func{``0,``3}},System.Int32)
+  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), System.String, IStream(Of TResource), System.Func(Of TIn, TInEf), System.Func(Of TIn, TInEf, TOut), SaveMode, System.Int32)
+  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), String, IStream(Of TResource), Func(Of TIn, TInEf), Func(Of TIn, TInEf, TOut), SaveMode, Int32)
+- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``5(IStream{``0},System.String,IStream{``1},Expression{System.Func{``4,``2}},System.Func{``0,``4},System.Func{``0,``4,``3},System.Int32)
+  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``5(IStream{``0},System.String,IStream{``1},Expression{System.Func{``4,``2}},System.Func{``0,``4},System.Func{``0,``4,``3},System.Int32)
+  id: ThroughEntityFrameworkCore``5(IStream{``0},System.String,IStream{``1},Expression{System.Func{``4,``2}},System.Func{``0,``4},System.Func{``0,``4,``3},System.Int32)
   isExtensionMethod: true
   parent: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx
   langs:
   - csharp
   - vb
-  name: ThroughEntityFrameworkCore<TIn, TResource, TKey, TEntityKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, Expression<Func<TIn, TEntityKey>>, Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TKey, TEntityKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, Expression<Func<TIn, TEntityKey>>, Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TKey, TEntityKey>(IKeyedStream<TIn, TKey>, System.String, IStream<TResource>, Expression<System.Func<TIn, TEntityKey>>, System.Int32)
+  name: ThroughEntityFrameworkCore<TIn, TResource, TEntityKey, TOut, TInEf>(IStream<TIn>, String, IStream<TResource>, Expression<Func<TInEf, TEntityKey>>, Func<TIn, TInEf>, Func<TIn, TInEf, TOut>, Int32)
+  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TEntityKey, TOut, TInEf>(IStream<TIn>, String, IStream<TResource>, Expression<Func<TInEf, TEntityKey>>, Func<TIn, TInEf>, Func<TIn, TInEf, TOut>, Int32)
+  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TEntityKey, TOut, TInEf>(IStream<TIn>, System.String, IStream<TResource>, Expression<System.Func<TInEf, TEntityKey>>, System.Func<TIn, TInEf>, System.Func<TIn, TInEf, TOut>, System.Int32)
   type: Method
   source:
     id: ThroughEntityFrameworkCore
     path: ''
-    startLine: 94
+    startLine: 66
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
   syntax:
     content: >-
-      public static IKeyedStream<TIn, TKey> ThroughEntityFrameworkCore<TIn, TResource, TKey, TEntityKey>(this IKeyedStream<TIn, TKey> stream, string name, IStream<TResource> resourceStream, Expression<Func<TIn, TEntityKey>> getBusinessKey, int chunkSize = 100)
-          where TIn : class where TResource : DbContext
+      public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TEntityKey, TOut, TInEf>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, Expression<Func<TInEf, TEntityKey>> getBusinessKey, Func<TIn, TInEf> getEntity, Func<TIn, TInEf, TOut> getResult, int chunkSize = 100)
+          where TResource : DbContext where TInEf : class
     parameters:
     - id: stream
-      type: IKeyedStream{{TIn},{TKey}}
+      type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: resourceStream
       type: IStream{{TResource}}
     - id: getBusinessKey
-      type: Expression{System.Func{{TIn},{TEntityKey}}}
-    - id: chunkSize
-      type: System.Int32
-    typeParameters:
-    - id: TIn
-    - id: TResource
-    - id: TKey
-    - id: TEntityKey
-    return:
-      type: IKeyedStream{{TIn},{TKey}}
-    content.vb: >-
-      <ExtensionAttribute>
-
-      Public Shared Function ThroughEntityFrameworkCore(Of TIn As Class, TResource As DbContext, TKey, TEntityKey)(stream As IKeyedStream(Of TIn, TKey), name As String, resourceStream As IStream(Of TResource), getBusinessKey As Expression(Of Func(Of TIn, TEntityKey)), chunkSize As Integer = 100) As IKeyedStream(Of TIn, TKey)
-  overload: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TKey, TEntityKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), Expression(Of Func(Of TIn, TEntityKey)), Int32)
-  modifiers.csharp:
-  - public
-  - static
-  modifiers.vb:
-  - Public
-  - Shared
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TKey, TEntityKey)(IKeyedStream(Of TIn, TKey), System.String, IStream(Of TResource), Expression(Of System.Func(Of TIn, TEntityKey)), System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TKey, TEntityKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), Expression(Of Func(Of TIn, TEntityKey)), Int32)
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(ISingleStream{``0},System.String,IStream{``1},Expression{System.Func{``0,``2}},System.Int32)
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(ISingleStream{``0},System.String,IStream{``1},Expression{System.Func{``0,``2}},System.Int32)
-  id: ThroughEntityFrameworkCore``3(ISingleStream{``0},System.String,IStream{``1},Expression{System.Func{``0,``2}},System.Int32)
-  isExtensionMethod: true
-  parent: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx
-  langs:
-  - csharp
-  - vb
-  name: ThroughEntityFrameworkCore<TIn, TResource, TEntityKey>(ISingleStream<TIn>, String, IStream<TResource>, Expression<Func<TIn, TEntityKey>>, Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TEntityKey>(ISingleStream<TIn>, String, IStream<TResource>, Expression<Func<TIn, TEntityKey>>, Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TEntityKey>(ISingleStream<TIn>, System.String, IStream<TResource>, Expression<System.Func<TIn, TEntityKey>>, System.Int32)
-  type: Method
-  source:
-    id: ThroughEntityFrameworkCore
-    path: ''
-    startLine: 106
-  assemblies:
-  - cs.temp.dll
-  namespace: Paillave.Etl.EntityFrameworkCore.Extensions
-  syntax:
-    content: >-
-      public static ISingleStream<TIn> ThroughEntityFrameworkCore<TIn, TResource, TEntityKey>(this ISingleStream<TIn> stream, string name, IStream<TResource> resourceStream, Expression<Func<TIn, TEntityKey>> getBusinessKey, int chunkSize = 100)
-          where TIn : class where TResource : DbContext
-    parameters:
-    - id: stream
-      type: ISingleStream{{TIn}}
-    - id: name
-      type: System.String
-    - id: resourceStream
-      type: IStream{{TResource}}
-    - id: getBusinessKey
-      type: Expression{System.Func{{TIn},{TEntityKey}}}
+      type: Expression{System.Func{{TInEf},{TEntityKey}}}
+    - id: getEntity
+      type: System.Func{{TIn},{TInEf}}
+    - id: getResult
+      type: System.Func{{TIn},{TInEf},{TOut}}
     - id: chunkSize
       type: System.Int32
     typeParameters:
     - id: TIn
     - id: TResource
     - id: TEntityKey
+    - id: TOut
+    - id: TInEf
     return:
-      type: ISingleStream{{TIn}}
+      type: IStream{{TOut}}
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughEntityFrameworkCore(Of TIn As Class, TResource As DbContext, TEntityKey)(stream As ISingleStream(Of TIn), name As String, resourceStream As IStream(Of TResource), getBusinessKey As Expression(Of Func(Of TIn, TEntityKey)), chunkSize As Integer = 100) As ISingleStream(Of TIn)
+      Public Shared Function ThroughEntityFrameworkCore(Of TIn, TResource As DbContext, TEntityKey, TOut, TInEf As Class)(stream As IStream(Of TIn), name As String, resourceStream As IStream(Of TResource), getBusinessKey As Expression(Of Func(Of TInEf, TEntityKey)), getEntity As Func(Of TIn, TInEf), getResult As Func(Of TIn, TInEf, TOut), chunkSize As Integer = 100) As IStream(Of TOut)
   overload: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey)(ISingleStream(Of TIn), String, IStream(Of TResource), Expression(Of Func(Of TIn, TEntityKey)), Int32)
+  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey, TOut, TInEf)(IStream(Of TIn), String, IStream(Of TResource), Expression(Of Func(Of TInEf, TEntityKey)), Func(Of TIn, TInEf), Func(Of TIn, TInEf, TOut), Int32)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey)(ISingleStream(Of TIn), System.String, IStream(Of TResource), Expression(Of System.Func(Of TIn, TEntityKey)), System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey)(ISingleStream(Of TIn), String, IStream(Of TResource), Expression(Of Func(Of TIn, TEntityKey)), Int32)
+  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey, TOut, TInEf)(IStream(Of TIn), System.String, IStream(Of TResource), Expression(Of System.Func(Of TInEf, TEntityKey)), System.Func(Of TIn, TInEf), System.Func(Of TIn, TInEf, TOut), System.Int32)
+  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey, TOut, TInEf)(IStream(Of TIn), String, IStream(Of TResource), Expression(Of Func(Of TInEf, TEntityKey)), Func(Of TIn, TInEf), Func(Of TIn, TInEf, TOut), Int32)
 references:
 - uid: Paillave.Etl.EntityFrameworkCore.Extensions
   commentId: N:Paillave.Etl.EntityFrameworkCore.Extensions
@@ -1249,247 +1039,6 @@ references:
   name: Int32
   nameWithType: Int32
   fullName: System.Int32
-- uid: ISortedStream{{TIn},{TKey}}
-  commentId: '!:ISortedStream{``0,``2}'
-  definition: ISortedStream`2
-  name: ISortedStream<TIn, TKey>
-  nameWithType: ISortedStream<TIn, TKey>
-  fullName: ISortedStream<TIn, TKey>
-  nameWithType.vb: ISortedStream(Of TIn, TKey)
-  fullName.vb: ISortedStream(Of TIn, TKey)
-  name.vb: ISortedStream(Of TIn, TKey)
-  spec.csharp:
-  - uid: ISortedStream`2
-    name: ISortedStream
-    nameWithType: ISortedStream
-    fullName: ISortedStream
-    isExternal: true
-  - name: <
-    nameWithType: <
-    fullName: <
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
-  - name: ', '
-    nameWithType: ', '
-    fullName: ', '
-  - name: TKey
-    nameWithType: TKey
-    fullName: TKey
-  - name: '>'
-    nameWithType: '>'
-    fullName: '>'
-  spec.vb:
-  - uid: ISortedStream`2
-    name: ISortedStream
-    nameWithType: ISortedStream
-    fullName: ISortedStream
-    isExternal: true
-  - name: '(Of '
-    nameWithType: '(Of '
-    fullName: '(Of '
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
-  - name: ', '
-    nameWithType: ', '
-    fullName: ', '
-  - name: TKey
-    nameWithType: TKey
-    fullName: TKey
-  - name: )
-    nameWithType: )
-    fullName: )
-- uid: ISortedStream`2
-  isExternal: true
-  name: ISortedStream<, >
-  nameWithType: ISortedStream<, >
-  fullName: ISortedStream<, >
-  nameWithType.vb: ISortedStream(Of , )
-  fullName.vb: ISortedStream(Of , )
-  name.vb: ISortedStream(Of , )
-  spec.csharp:
-  - uid: ISortedStream`2
-    name: ISortedStream
-    nameWithType: ISortedStream
-    fullName: ISortedStream
-    isExternal: true
-  - name: <
-    nameWithType: <
-    fullName: <
-  - name: ''
-    nameWithType: ''
-    fullName: ''
-  - name: ', '
-    nameWithType: ', '
-    fullName: ', '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
-  - name: '>'
-    nameWithType: '>'
-    fullName: '>'
-  spec.vb:
-  - uid: ISortedStream`2
-    name: ISortedStream
-    nameWithType: ISortedStream
-    fullName: ISortedStream
-    isExternal: true
-  - name: '(Of '
-    nameWithType: '(Of '
-    fullName: '(Of '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
-  - name: ', '
-    nameWithType: ', '
-    fullName: ', '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
-  - name: )
-    nameWithType: )
-    fullName: )
-- uid: IKeyedStream{{TIn},{TKey}}
-  commentId: '!:IKeyedStream{``0,``2}'
-  definition: IKeyedStream`2
-  name: IKeyedStream<TIn, TKey>
-  nameWithType: IKeyedStream<TIn, TKey>
-  fullName: IKeyedStream<TIn, TKey>
-  nameWithType.vb: IKeyedStream(Of TIn, TKey)
-  fullName.vb: IKeyedStream(Of TIn, TKey)
-  name.vb: IKeyedStream(Of TIn, TKey)
-  spec.csharp:
-  - uid: IKeyedStream`2
-    name: IKeyedStream
-    nameWithType: IKeyedStream
-    fullName: IKeyedStream
-    isExternal: true
-  - name: <
-    nameWithType: <
-    fullName: <
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
-  - name: ', '
-    nameWithType: ', '
-    fullName: ', '
-  - name: TKey
-    nameWithType: TKey
-    fullName: TKey
-  - name: '>'
-    nameWithType: '>'
-    fullName: '>'
-  spec.vb:
-  - uid: IKeyedStream`2
-    name: IKeyedStream
-    nameWithType: IKeyedStream
-    fullName: IKeyedStream
-    isExternal: true
-  - name: '(Of '
-    nameWithType: '(Of '
-    fullName: '(Of '
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
-  - name: ', '
-    nameWithType: ', '
-    fullName: ', '
-  - name: TKey
-    nameWithType: TKey
-    fullName: TKey
-  - name: )
-    nameWithType: )
-    fullName: )
-- uid: IKeyedStream`2
-  isExternal: true
-  name: IKeyedStream<, >
-  nameWithType: IKeyedStream<, >
-  fullName: IKeyedStream<, >
-  nameWithType.vb: IKeyedStream(Of , )
-  fullName.vb: IKeyedStream(Of , )
-  name.vb: IKeyedStream(Of , )
-  spec.csharp:
-  - uid: IKeyedStream`2
-    name: IKeyedStream
-    nameWithType: IKeyedStream
-    fullName: IKeyedStream
-    isExternal: true
-  - name: <
-    nameWithType: <
-    fullName: <
-  - name: ''
-    nameWithType: ''
-    fullName: ''
-  - name: ', '
-    nameWithType: ', '
-    fullName: ', '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
-  - name: '>'
-    nameWithType: '>'
-    fullName: '>'
-  spec.vb:
-  - uid: IKeyedStream`2
-    name: IKeyedStream
-    nameWithType: IKeyedStream
-    fullName: IKeyedStream
-    isExternal: true
-  - name: '(Of '
-    nameWithType: '(Of '
-    fullName: '(Of '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
-  - name: ', '
-    nameWithType: ', '
-    fullName: ', '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
-  - name: )
-    nameWithType: )
-    fullName: )
-- uid: ISingleStream{{TIn}}
-  commentId: '!:ISingleStream{``0}'
-  definition: ISingleStream`1
-  name: ISingleStream<TIn>
-  nameWithType: ISingleStream<TIn>
-  fullName: ISingleStream<TIn>
-  nameWithType.vb: ISingleStream(Of TIn)
-  fullName.vb: ISingleStream(Of TIn)
-  name.vb: ISingleStream(Of TIn)
-  spec.csharp:
-  - uid: ISingleStream`1
-    name: ISingleStream
-    nameWithType: ISingleStream
-    fullName: ISingleStream
-    isExternal: true
-  - name: <
-    nameWithType: <
-    fullName: <
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
-  - name: '>'
-    nameWithType: '>'
-    fullName: '>'
-  spec.vb:
-  - uid: ISingleStream`1
-    name: ISingleStream
-    nameWithType: ISingleStream
-    fullName: ISingleStream
-    isExternal: true
-  - name: '(Of '
-    nameWithType: '(Of '
-    fullName: '(Of '
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
-  - name: )
-    nameWithType: )
-    fullName: )
 - uid: Expression{System.Func{{TIn},{TEntityKey}}}
   commentId: '!:Expression{System.Func{``0,``2}}'
   definition: Expression`1
@@ -1598,6 +1147,246 @@ references:
   - name: ''
     nameWithType: ''
     fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TIn},{TInEf}}
+  commentId: T:System.Func{``0,``3}
+  parent: System
+  definition: System.Func`2
+  name: Func<TIn, TInEf>
+  nameWithType: Func<TIn, TInEf>
+  fullName: System.Func<TIn, TInEf>
+  nameWithType.vb: Func(Of TIn, TInEf)
+  fullName.vb: System.Func(Of TIn, TInEf)
+  name.vb: Func(Of TIn, TInEf)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TInEf
+    nameWithType: TInEf
+    fullName: TInEf
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TInEf
+    nameWithType: TInEf
+    fullName: TInEf
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TIn},{TInEf},{TOut}}
+  commentId: T:System.Func{``0,``3,``2}
+  parent: System
+  definition: System.Func`3
+  name: Func<TIn, TInEf, TOut>
+  nameWithType: Func<TIn, TInEf, TOut>
+  fullName: System.Func<TIn, TInEf, TOut>
+  nameWithType.vb: Func(Of TIn, TInEf, TOut)
+  fullName.vb: System.Func(Of TIn, TInEf, TOut)
+  name.vb: Func(Of TIn, TInEf, TOut)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TInEf
+    nameWithType: TInEf
+    fullName: TInEf
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TInEf
+    nameWithType: TInEf
+    fullName: TInEf
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func`2
+  commentId: T:System.Func`2
+  isExternal: true
+  name: Func<T, TResult>
+  nameWithType: Func<T, TResult>
+  fullName: System.Func<T, TResult>
+  nameWithType.vb: Func(Of T, TResult)
+  fullName.vb: System.Func(Of T, TResult)
+  name.vb: Func(Of T, TResult)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Expression{System.Func{{TInEf},{TEntityKey}}}
+  commentId: '!:Expression{System.Func{``4,``2}}'
+  definition: Expression`1
+  name: Expression<Func<TInEf, TEntityKey>>
+  nameWithType: Expression<Func<TInEf, TEntityKey>>
+  fullName: Expression<System.Func<TInEf, TEntityKey>>
+  nameWithType.vb: Expression(Of Func(Of TInEf, TEntityKey))
+  fullName.vb: Expression(Of System.Func(Of TInEf, TEntityKey))
+  name.vb: Expression(Of Func(Of TInEf, TEntityKey))
+  spec.csharp:
+  - uid: Expression`1
+    name: Expression
+    nameWithType: Expression
+    fullName: Expression
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TInEf
+    nameWithType: TInEf
+    fullName: TInEf
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TEntityKey
+    nameWithType: TEntityKey
+    fullName: TEntityKey
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: Expression`1
+    name: Expression
+    nameWithType: Expression
+    fullName: Expression
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TInEf
+    nameWithType: TInEf
+    fullName: TInEf
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TEntityKey
+    nameWithType: TEntityKey
+    fullName: TEntityKey
+  - name: )
+    nameWithType: )
+    fullName: )
   - name: )
     nameWithType: )
     fullName: )
