@@ -36,15 +36,6 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore
   nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(ISingleStream{``0},System.String,IStream{``1},SaveMode,System.Int32)
-  name: ThroughEntityFrameworkCore<TIn, TResource>(ISingleStream<TIn>, String, IStream<TResource>, SaveMode, Int32)
-  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__2_ISingleStream___0__System_String_IStream___1__SaveMode_System_Int32_
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(ISingleStream{``0},System.String,IStream{``1},SaveMode,System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource)(ISingleStream(Of TIn), String, IStream(Of TResource), SaveMode, Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource>(ISingleStream<TIn>, System.String, IStream<TResource>, SaveMode, System.Int32)
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource)(ISingleStream(Of TIn), System.String, IStream(Of TResource), SaveMode, System.Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource>(ISingleStream<TIn>, String, IStream<TResource>, SaveMode, Int32)
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource)(ISingleStream(Of TIn), String, IStream(Of TResource), SaveMode, Int32)
 - uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,IStream{``1},SaveMode,System.Int32)
   name: ThroughEntityFrameworkCore<TIn, TResource>(IStream<TIn>, String, IStream<TResource>, SaveMode, Int32)
   href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__2_IStream___0__System_String_IStream___1__SaveMode_System_Int32_
@@ -54,33 +45,6 @@ references:
   fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource)(IStream(Of TIn), System.String, IStream(Of TResource), SaveMode, System.Int32)
   nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource>(IStream<TIn>, String, IStream<TResource>, SaveMode, Int32)
   nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource)(IStream(Of TIn), String, IStream(Of TResource), SaveMode, Int32)
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IKeyedStream{``0,``2},System.String,IStream{``1},SaveMode,System.Int32)
-  name: ThroughEntityFrameworkCore<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, SaveMode, Int32)
-  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__3_IKeyedStream___0___2__System_String_IStream___1__SaveMode_System_Int32_
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IKeyedStream{``0,``2},System.String,IStream{``1},SaveMode,System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), SaveMode, Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, System.String, IStream<TResource>, SaveMode, System.Int32)
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), System.String, IStream(Of TResource), SaveMode, System.Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, SaveMode, Int32)
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), SaveMode, Int32)
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(ISingleStream{``0},System.String,IStream{``1},Expression{System.Func{``0,``2}},System.Int32)
-  name: ThroughEntityFrameworkCore<TIn, TResource, TEntityKey>(ISingleStream<TIn>, String, IStream<TResource>, Expression<Func<TIn, TEntityKey>>, Int32)
-  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__3_ISingleStream___0__System_String_IStream___1__Expression_System_Func___0___2___System_Int32_
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(ISingleStream{``0},System.String,IStream{``1},Expression{System.Func{``0,``2}},System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey)(ISingleStream(Of TIn), String, IStream(Of TResource), Expression(Of Func(Of TIn, TEntityKey)), Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TEntityKey>(ISingleStream<TIn>, System.String, IStream<TResource>, Expression<System.Func<TIn, TEntityKey>>, System.Int32)
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey)(ISingleStream(Of TIn), System.String, IStream(Of TResource), Expression(Of System.Func(Of TIn, TEntityKey)), System.Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TEntityKey>(ISingleStream<TIn>, String, IStream<TResource>, Expression<Func<TIn, TEntityKey>>, Int32)
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey)(ISingleStream(Of TIn), String, IStream(Of TResource), Expression(Of Func(Of TIn, TEntityKey)), Int32)
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(ISortedStream{``0,``2},System.String,IStream{``1},SaveMode,System.Int32)
-  name: ThroughEntityFrameworkCore<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, SaveMode, Int32)
-  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__3_ISortedStream___0___2__System_String_IStream___1__SaveMode_System_Int32_
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(ISortedStream{``0,``2},System.String,IStream{``1},SaveMode,System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), SaveMode, Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, System.String, IStream<TResource>, SaveMode, System.Int32)
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), System.String, IStream(Of TResource), SaveMode, System.Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, SaveMode, Int32)
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), SaveMode, Int32)
 - uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IStream{``0},System.String,IStream{``1},Expression{System.Func{``0,``2}},System.Int32)
   name: ThroughEntityFrameworkCore<TIn, TResource, TEntityKey>(IStream<TIn>, String, IStream<TResource>, Expression<Func<TIn, TEntityKey>>, Int32)
   href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__3_IStream___0__System_String_IStream___1__Expression_System_Func___0___2___System_Int32_
@@ -90,24 +54,24 @@ references:
   fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey)(IStream(Of TIn), System.String, IStream(Of TResource), Expression(Of System.Func(Of TIn, TEntityKey)), System.Int32)
   nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TEntityKey>(IStream<TIn>, String, IStream<TResource>, Expression<Func<TIn, TEntityKey>>, Int32)
   nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey)(IStream(Of TIn), String, IStream(Of TResource), Expression(Of Func(Of TIn, TEntityKey)), Int32)
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IKeyedStream{``0,``2},System.String,IStream{``1},Expression{System.Func{``0,``3}},System.Int32)
-  name: ThroughEntityFrameworkCore<TIn, TResource, TKey, TEntityKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, Expression<Func<TIn, TEntityKey>>, Int32)
-  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__4_IKeyedStream___0___2__System_String_IStream___1__Expression_System_Func___0___3___System_Int32_
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IKeyedStream{``0,``2},System.String,IStream{``1},Expression{System.Func{``0,``3}},System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TKey, TEntityKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), Expression(Of Func(Of TIn, TEntityKey)), Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TKey, TEntityKey>(IKeyedStream<TIn, TKey>, System.String, IStream<TResource>, Expression<System.Func<TIn, TEntityKey>>, System.Int32)
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TKey, TEntityKey)(IKeyedStream(Of TIn, TKey), System.String, IStream(Of TResource), Expression(Of System.Func(Of TIn, TEntityKey)), System.Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TKey, TEntityKey>(IKeyedStream<TIn, TKey>, String, IStream<TResource>, Expression<Func<TIn, TEntityKey>>, Int32)
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TKey, TEntityKey)(IKeyedStream(Of TIn, TKey), String, IStream(Of TResource), Expression(Of Func(Of TIn, TEntityKey)), Int32)
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(ISortedStream{``0,``2},System.String,IStream{``1},Expression{System.Func{``0,``3}},System.Int32)
-  name: ThroughEntityFrameworkCore<TIn, TResource, TKey, TEntityKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, Expression<Func<TIn, TEntityKey>>, Int32)
-  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__4_ISortedStream___0___2__System_String_IStream___1__Expression_System_Func___0___3___System_Int32_
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(ISortedStream{``0,``2},System.String,IStream{``1},Expression{System.Func{``0,``3}},System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TKey, TEntityKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), Expression(Of Func(Of TIn, TEntityKey)), Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TKey, TEntityKey>(ISortedStream<TIn, TKey>, System.String, IStream<TResource>, Expression<System.Func<TIn, TEntityKey>>, System.Int32)
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TKey, TEntityKey)(ISortedStream(Of TIn, TKey), System.String, IStream(Of TResource), Expression(Of System.Func(Of TIn, TEntityKey)), System.Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TKey, TEntityKey>(ISortedStream<TIn, TKey>, String, IStream<TResource>, Expression<Func<TIn, TEntityKey>>, Int32)
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TKey, TEntityKey)(ISortedStream(Of TIn, TKey), String, IStream(Of TResource), Expression(Of Func(Of TIn, TEntityKey)), Int32)
+- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,IStream{``1},System.Func{``0,``3},System.Func{``0,``3,``2},SaveMode,System.Int32)
+  name: ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, String, IStream<TResource>, Func<TIn, TInEf>, Func<TIn, TInEf, TOut>, SaveMode, Int32)
+  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__4_IStream___0__System_String_IStream___1__System_Func___0___3__System_Func___0___3___2__SaveMode_System_Int32_
+  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,IStream{``1},System.Func{``0,``3},System.Func{``0,``3,``2},SaveMode,System.Int32)
+  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), String, IStream(Of TResource), Func(Of TIn, TInEf), Func(Of TIn, TInEf, TOut), SaveMode, Int32)
+  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, System.String, IStream<TResource>, System.Func<TIn, TInEf>, System.Func<TIn, TInEf, TOut>, SaveMode, System.Int32)
+  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), System.String, IStream(Of TResource), System.Func(Of TIn, TInEf), System.Func(Of TIn, TInEf, TOut), SaveMode, System.Int32)
+  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, String, IStream<TResource>, Func<TIn, TInEf>, Func<TIn, TInEf, TOut>, SaveMode, Int32)
+  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), String, IStream(Of TResource), Func(Of TIn, TInEf), Func(Of TIn, TInEf, TOut), SaveMode, Int32)
+- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``5(IStream{``0},System.String,IStream{``1},Expression{System.Func{``4,``2}},System.Func{``0,``4},System.Func{``0,``4,``3},System.Int32)
+  name: ThroughEntityFrameworkCore<TIn, TResource, TEntityKey, TOut, TInEf>(IStream<TIn>, String, IStream<TResource>, Expression<Func<TInEf, TEntityKey>>, Func<TIn, TInEf>, Func<TIn, TInEf, TOut>, Int32)
+  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__5_IStream___0__System_String_IStream___1__Expression_System_Func___4___2___System_Func___0___4__System_Func___0___4___3__System_Int32_
+  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``5(IStream{``0},System.String,IStream{``1},Expression{System.Func{``4,``2}},System.Func{``0,``4},System.Func{``0,``4,``3},System.Int32)
+  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey, TOut, TInEf)(IStream(Of TIn), String, IStream(Of TResource), Expression(Of Func(Of TInEf, TEntityKey)), Func(Of TIn, TInEf), Func(Of TIn, TInEf, TOut), Int32)
+  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TEntityKey, TOut, TInEf>(IStream<TIn>, System.String, IStream<TResource>, Expression<System.Func<TInEf, TEntityKey>>, System.Func<TIn, TInEf>, System.Func<TIn, TInEf, TOut>, System.Int32)
+  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey, TOut, TInEf)(IStream(Of TIn), System.String, IStream(Of TResource), Expression(Of System.Func(Of TInEf, TEntityKey)), System.Func(Of TIn, TInEf), System.Func(Of TIn, TInEf, TOut), System.Int32)
+  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TEntityKey, TOut, TInEf>(IStream<TIn>, String, IStream<TResource>, Expression<Func<TInEf, TEntityKey>>, Func<TIn, TInEf>, Func<TIn, TInEf, TOut>, Int32)
+  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey, TOut, TInEf)(IStream(Of TIn), String, IStream(Of TResource), Expression(Of Func(Of TInEf, TEntityKey)), Func(Of TIn, TInEf), Func(Of TIn, TInEf, TOut), Int32)
 - uid: Paillave.Etl.ExcelFile.Extensions
   name: Paillave.Etl.ExcelFile.Extensions
   href: apiext/Paillave.Etl.ExcelFile.Extensions.html
