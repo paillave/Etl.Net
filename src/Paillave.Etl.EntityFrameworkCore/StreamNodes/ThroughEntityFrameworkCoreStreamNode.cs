@@ -8,6 +8,10 @@ using System.Text;
 using Paillave.Etl.Reactive.Operators;
 using System.Linq;
 using EFCore.BulkExtensions;
+using System.Linq.Expressions;
+using System.Reflection;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Paillave.Etl.EntityFrameworkCore.Core;
 
 namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
 {
@@ -20,6 +24,16 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         public IStream<TCtx> DbContextStream { get; set; }
         public int BatchSize { get; set; } = 1000;
         public SaveMode BulkLoadMode { get; set; } = SaveMode.BulkInsert;
+    }
+    public class ThroughEntityFrameworkCoreArgs<TIn, TCtx, TStream, TKey>
+        where TIn : class
+        where TStream : IStream<TIn>
+        where TCtx : DbContext
+    {
+        public TStream SourceStream { get; set; }
+        public IStream<TCtx> DbContextStream { get; set; }
+        public int BatchSize { get; set; } = 1000;
+        public Expression<Func<TIn, TKey>> GetKey { get; set; }
     }
     public enum SaveMode
     {
@@ -64,6 +78,33 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
                     break;
             }
             dbContext.SaveChanges(); //DO NOT SET IT ASYNC HERE. The point is to retrieve the Id in case of automatic key.
+        }
+    }
+    public class ThroughEntityFrameworkCoreStreamNode<TIn, TCtx, TStream, TKey> : StreamNodeBase<TIn, TStream, ThroughEntityFrameworkCoreArgs<TIn, TCtx, TStream, TKey>>
+        where TIn : class
+        where TStream : IStream<TIn>
+        where TCtx : DbContext
+    {
+        public override bool IsAwaitable => true;
+        private BulkUpserter<TIn, TCtx, TKey> _bulkUpserter;
+        public ThroughEntityFrameworkCoreStreamNode(string name, ThroughEntityFrameworkCoreArgs<TIn, TCtx, TStream, TKey> args) : base(name, args)
+        {
+            _bulkUpserter = new BulkUpserter<TIn, TCtx, TKey>(args.GetKey);
+        }
+
+        protected override TStream CreateOutputStream(ThroughEntityFrameworkCoreArgs<TIn, TCtx, TStream, TKey> args)
+        {
+            var dbContextStream = args.DbContextStream.Observable.First();
+            var ret = args.SourceStream.Observable
+                .Chunk(args.BatchSize)
+                .CombineWithLatest(dbContextStream, (i, c) => new { Context = c, Items = i }, true)
+                .Do(i => ProcessBatch(i.Items.ToList(), i.Context))
+                .FlatMap(i => PushObservable.FromEnumerable(i.Items));
+            return base.CreateMatchingStream(ret, args.SourceStream);
+        }
+        public void ProcessBatch(List<TIn> items, TCtx dbContext)
+        {
+            _bulkUpserter.ProcessBatch(items, dbContext);
         }
     }
 }
