@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class EntityFrameworkCoreEx
    ">
-    <meta name="generator" content="docfx 2.39.2.0">
+    <meta name="generator" content="docfx 2.40.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -37,7 +37,7 @@
               </button>
               
               <a class="navbar-brand" href="../index.html">
-                <img id="logo" class="svg" src="../logo.svg" alt="">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
               </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar">
@@ -46,6 +46,9 @@
                   <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
                 </div>
               </form>
+              <a class="navbar-brand" href="https://github.com/paillave/Etl.Net" style="float:right">
+                <img id="logo" class="svg" src="../images/github.svg" style="height:52px">
+              </a>
             </div>
           </div>
         </nav>
@@ -176,12 +179,94 @@
   
   
   <a id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*"></a>
-  <h4 id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__2_IStream___0__System_String_IStream___1__BulkLoadMode_System_Int32_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,IStream{``1},BulkLoadMode,System.Int32)">ThroughEntityFrameworkCore&lt;TIn, TResource&gt;(IStream&lt;TIn&gt;, String, IStream&lt;TResource&gt;, BulkLoadMode, Int32)</h4>
+  <h4 id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__2_ISingleStream___0__System_String_IStream___1__SaveMode_System_Int32_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(ISingleStream{``0},System.String,IStream{``1},SaveMode,System.Int32)">ThroughEntityFrameworkCore&lt;TIn, TResource&gt;(ISingleStream&lt;TIn&gt;, String, IStream&lt;TResource&gt;, SaveMode, Int32)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TIn&gt; ThroughEntityFrameworkCore&lt;TIn, TResource&gt;(this IStream&lt;TIn&gt; stream, string name, IStream&lt;TResource&gt; resourceStream, BulkLoadMode bulkLoadMode = null, int chunkSize = 1000)
+    <pre><code class="lang-csharp hljs">public static ISingleStream&lt;TIn&gt; ThroughEntityFrameworkCore&lt;TIn, TResource&gt;(this ISingleStream&lt;TIn&gt; stream, string name, IStream&lt;TResource&gt; resourceStream, SaveMode bulkLoadMode = null, int chunkSize = 1000)
+    where TIn : class where TResource : DbContext</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISingleStream</span>&lt;TIn&gt;</td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TResource&gt;</td>
+        <td><span class="parametername">resourceStream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">SaveMode</span></td>
+        <td><span class="parametername">bulkLoadMode</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">chunkSize</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISingleStream</span>&lt;TIn&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TResource</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*"></a>
+  <h4 id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__2_IStream___0__System_String_IStream___1__SaveMode_System_Int32_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,IStream{``1},SaveMode,System.Int32)">ThroughEntityFrameworkCore&lt;TIn, TResource&gt;(IStream&lt;TIn&gt;, String, IStream&lt;TResource&gt;, SaveMode, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TIn&gt; ThroughEntityFrameworkCore&lt;TIn, TResource&gt;(this IStream&lt;TIn&gt; stream, string name, IStream&lt;TResource&gt; resourceStream, SaveMode bulkLoadMode = null, int chunkSize = 1000)
     where TIn : class where TResource : DbContext</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -210,7 +295,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">BulkLoadMode</span></td>
+        <td><span class="xref">SaveMode</span></td>
         <td><span class="parametername">bulkLoadMode</span></td>
         <td></td>
       </tr>
@@ -258,12 +343,12 @@
   
   
   <a id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*"></a>
-  <h4 id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__3_IKeyedStream___0___2__System_String_IStream___1__BulkLoadMode_System_Int32_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IKeyedStream{``0,``2},System.String,IStream{``1},BulkLoadMode,System.Int32)">ThroughEntityFrameworkCore&lt;TIn, TResource, TKey&gt;(IKeyedStream&lt;TIn, TKey&gt;, String, IStream&lt;TResource&gt;, BulkLoadMode, Int32)</h4>
+  <h4 id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__3_IKeyedStream___0___2__System_String_IStream___1__SaveMode_System_Int32_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IKeyedStream{``0,``2},System.String,IStream{``1},SaveMode,System.Int32)">ThroughEntityFrameworkCore&lt;TIn, TResource, TKey&gt;(IKeyedStream&lt;TIn, TKey&gt;, String, IStream&lt;TResource&gt;, SaveMode, Int32)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IKeyedStream&lt;TIn, TKey&gt; ThroughEntityFrameworkCore&lt;TIn, TResource, TKey&gt;(this IKeyedStream&lt;TIn, TKey&gt; stream, string name, IStream&lt;TResource&gt; resourceStream, BulkLoadMode bulkLoadMode = null, int chunkSize = 1000)
+    <pre><code class="lang-csharp hljs">public static IKeyedStream&lt;TIn, TKey&gt; ThroughEntityFrameworkCore&lt;TIn, TResource, TKey&gt;(this IKeyedStream&lt;TIn, TKey&gt; stream, string name, IStream&lt;TResource&gt; resourceStream, SaveMode bulkLoadMode = null, int chunkSize = 1000)
     where TIn : class where TResource : DbContext</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -292,7 +377,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">BulkLoadMode</span></td>
+        <td><span class="xref">SaveMode</span></td>
         <td><span class="parametername">bulkLoadMode</span></td>
         <td></td>
       </tr>
@@ -344,12 +429,98 @@
   
   
   <a id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*"></a>
-  <h4 id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__3_ISortedStream___0___2__System_String_IStream___1__BulkLoadMode_System_Int32_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(ISortedStream{``0,``2},System.String,IStream{``1},BulkLoadMode,System.Int32)">ThroughEntityFrameworkCore&lt;TIn, TResource, TKey&gt;(ISortedStream&lt;TIn, TKey&gt;, String, IStream&lt;TResource&gt;, BulkLoadMode, Int32)</h4>
+  <h4 id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__3_ISingleStream___0__System_String_IStream___1__Expression_System_Func___0___2___System_Int32_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(ISingleStream{``0},System.String,IStream{``1},Expression{System.Func{``0,``2}},System.Int32)">ThroughEntityFrameworkCore&lt;TIn, TResource, TEntityKey&gt;(ISingleStream&lt;TIn&gt;, String, IStream&lt;TResource&gt;, Expression&lt;Func&lt;TIn, TEntityKey&gt;&gt;, Int32)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ISortedStream&lt;TIn, TKey&gt; ThroughEntityFrameworkCore&lt;TIn, TResource, TKey&gt;(this ISortedStream&lt;TIn, TKey&gt; stream, string name, IStream&lt;TResource&gt; resourceStream, BulkLoadMode bulkLoadMode = null, int chunkSize = 1000)
+    <pre><code class="lang-csharp hljs">public static ISingleStream&lt;TIn&gt; ThroughEntityFrameworkCore&lt;TIn, TResource, TEntityKey&gt;(this ISingleStream&lt;TIn&gt; stream, string name, IStream&lt;TResource&gt; resourceStream, Expression&lt;Func&lt;TIn, TEntityKey&gt;&gt; getBusinessKey, int chunkSize = 100)
+    where TIn : class where TResource : DbContext</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISingleStream</span>&lt;TIn&gt;</td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TResource&gt;</td>
+        <td><span class="parametername">resourceStream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Expression</span>&lt;<span class="xref">System.Func</span>&lt;TIn, TEntityKey&gt;&gt;</td>
+        <td><span class="parametername">getBusinessKey</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">chunkSize</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISingleStream</span>&lt;TIn&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TResource</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TEntityKey</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*"></a>
+  <h4 id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__3_ISortedStream___0___2__System_String_IStream___1__SaveMode_System_Int32_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(ISortedStream{``0,``2},System.String,IStream{``1},SaveMode,System.Int32)">ThroughEntityFrameworkCore&lt;TIn, TResource, TKey&gt;(ISortedStream&lt;TIn, TKey&gt;, String, IStream&lt;TResource&gt;, SaveMode, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ISortedStream&lt;TIn, TKey&gt; ThroughEntityFrameworkCore&lt;TIn, TResource, TKey&gt;(this ISortedStream&lt;TIn, TKey&gt; stream, string name, IStream&lt;TResource&gt; resourceStream, SaveMode bulkLoadMode = null, int chunkSize = 1000)
     where TIn : class where TResource : DbContext</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -378,7 +549,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">BulkLoadMode</span></td>
+        <td><span class="xref">SaveMode</span></td>
         <td><span class="parametername">bulkLoadMode</span></td>
         <td></td>
       </tr>
@@ -423,6 +594,272 @@
       </tr>
       <tr>
         <td><span class="parametername">TKey</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*"></a>
+  <h4 id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__3_IStream___0__System_String_IStream___1__Expression_System_Func___0___2___System_Int32_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IStream{``0},System.String,IStream{``1},Expression{System.Func{``0,``2}},System.Int32)">ThroughEntityFrameworkCore&lt;TIn, TResource, TEntityKey&gt;(IStream&lt;TIn&gt;, String, IStream&lt;TResource&gt;, Expression&lt;Func&lt;TIn, TEntityKey&gt;&gt;, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TIn&gt; ThroughEntityFrameworkCore&lt;TIn, TResource, TEntityKey&gt;(this IStream&lt;TIn&gt; stream, string name, IStream&lt;TResource&gt; resourceStream, Expression&lt;Func&lt;TIn, TEntityKey&gt;&gt; getBusinessKey, int chunkSize = 100)
+    where TIn : class where TResource : DbContext</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TIn&gt;</td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TResource&gt;</td>
+        <td><span class="parametername">resourceStream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Expression</span>&lt;<span class="xref">System.Func</span>&lt;TIn, TEntityKey&gt;&gt;</td>
+        <td><span class="parametername">getBusinessKey</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">chunkSize</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TIn&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TResource</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TEntityKey</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*"></a>
+  <h4 id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__4_IKeyedStream___0___2__System_String_IStream___1__Expression_System_Func___0___3___System_Int32_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IKeyedStream{``0,``2},System.String,IStream{``1},Expression{System.Func{``0,``3}},System.Int32)">ThroughEntityFrameworkCore&lt;TIn, TResource, TKey, TEntityKey&gt;(IKeyedStream&lt;TIn, TKey&gt;, String, IStream&lt;TResource&gt;, Expression&lt;Func&lt;TIn, TEntityKey&gt;&gt;, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IKeyedStream&lt;TIn, TKey&gt; ThroughEntityFrameworkCore&lt;TIn, TResource, TKey, TEntityKey&gt;(this IKeyedStream&lt;TIn, TKey&gt; stream, string name, IStream&lt;TResource&gt; resourceStream, Expression&lt;Func&lt;TIn, TEntityKey&gt;&gt; getBusinessKey, int chunkSize = 100)
+    where TIn : class where TResource : DbContext</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IKeyedStream</span>&lt;TIn, TKey&gt;</td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TResource&gt;</td>
+        <td><span class="parametername">resourceStream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Expression</span>&lt;<span class="xref">System.Func</span>&lt;TIn, TEntityKey&gt;&gt;</td>
+        <td><span class="parametername">getBusinessKey</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">chunkSize</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IKeyedStream</span>&lt;TIn, TKey&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TResource</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TKey</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TEntityKey</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*"></a>
+  <h4 id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__4_ISortedStream___0___2__System_String_IStream___1__Expression_System_Func___0___3___System_Int32_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(ISortedStream{``0,``2},System.String,IStream{``1},Expression{System.Func{``0,``3}},System.Int32)">ThroughEntityFrameworkCore&lt;TIn, TResource, TKey, TEntityKey&gt;(ISortedStream&lt;TIn, TKey&gt;, String, IStream&lt;TResource&gt;, Expression&lt;Func&lt;TIn, TEntityKey&gt;&gt;, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ISortedStream&lt;TIn, TKey&gt; ThroughEntityFrameworkCore&lt;TIn, TResource, TKey, TEntityKey&gt;(this ISortedStream&lt;TIn, TKey&gt; stream, string name, IStream&lt;TResource&gt; resourceStream, Expression&lt;Func&lt;TIn, TEntityKey&gt;&gt; getBusinessKey, int chunkSize = 100)
+    where TIn : class where TResource : DbContext</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISortedStream</span>&lt;TIn, TKey&gt;</td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TResource&gt;</td>
+        <td><span class="parametername">resourceStream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Expression</span>&lt;<span class="xref">System.Func</span>&lt;TIn, TEntityKey&gt;&gt;</td>
+        <td><span class="parametername">getBusinessKey</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">chunkSize</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ISortedStream</span>&lt;TIn, TKey&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TResource</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TKey</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TEntityKey</span></td>
         <td></td>
       </tr>
     </tbody>

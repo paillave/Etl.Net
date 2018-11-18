@@ -1,0 +1,3 @@
+<a class="navbar-brand" href="https://github.com/paillave/Etl.Net" style="float:right">
+  <img id="logo" class="svg" src="{{_rel}}images/github.svg"  style="height:52px">
+</a>

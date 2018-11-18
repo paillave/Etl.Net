@@ -8,7 +8,7 @@
     <title>Etl.Net </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Etl.Net ">
-    <meta name="generator" content="docfx 2.39.2.0">
+    <meta name="generator" content="docfx 2.40.1.0">
     
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="styles/docfx.vendor.css">
@@ -35,7 +35,7 @@
               </button>
               
               <a class="navbar-brand" href="index.html">
-                <img id="logo" class="svg" src="logo.svg" alt="">
+                <img id="logo" class="svg" src="images/logo.svg" alt="">
               </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar">
@@ -44,6 +44,9 @@
                   <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
                 </div>
               </form>
+              <a class="navbar-brand" href="https://github.com/paillave/Etl.Net" style="float:right">
+                <img id="logo" class="svg" src="images/github.svg" style="height:52px">
+              </a>
             </div>
           </div>
         </nav>
@@ -62,21 +65,21 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="etlnet">Etl.Net</h1>
 
-<h2 id="what-it-is">What it is</h2>
+<h2 id="what-is-it">What is it?</h2>
 <p>Etl.Net is a complete ETL for .net developers who need to embed SSIS-like features into their applications.</p>
-<p>It contains every transformation and capabilities of SSIS:</p>
+<p>It contains every transformation and capability of SSIS:</p>
 <ul>
 <li>Data stream transformations like <code>derived column</code>, <code>convert</code>, <code>union</code>, <code>join</code>, <code>lookup</code>, <code>pivot</code>, <code>unpivot</code>, <code>aggregate</code>...</li>
 <li>Data sources like Excel, flat files such as csv, SQL Server, Entity framework...</li>
 <li>Tracing the complete activity with automatic filtering and saving capability</li>
 <li>Parameterization of a process</li>
 </ul>
-<h2 id="why-it-was-made">Why it was made</h2>
+<h2 id="why-was-it-made">Why was it made?</h2>
 <h3 id="the-etl-reference-for-microsoft-developers-ssis">The ETL reference for Microsoft developers: SSIS</h3>
 <blockquote>
 <p>SSIS is a fantastic tool.</p>
 </blockquote>
-<p>SSIS is a great straight forward tool to process big chunks of data. It supports out of the box a lot of formats, protocols, and databases. It contains a quiet exhaustive mass processing operators. It is very fast. It exposes a very well done server for scheduling, parameterization, tracing, and activity reporting. Its development tool is very clear. Deployments are very simple and straight forward procedures...</p>
+<p>SSIS is a great straight forward tool to process big chunks of data. It supports a lot of formats, protocols, and databases out of the box. It contains a quiet exhaustive set of mass processing operators. It is very fast. It exposes a very well done server for scheduling, parameterization, tracing, and activity reporting. Its development tool is very clear. Deployments are very simple and straight forward procedures...</p>
 <blockquote>
 <p>So... Why Etl.net?</p>
 </blockquote>
@@ -84,12 +87,12 @@
 <blockquote>
 <p>Nothing to pay.</p>
 </blockquote>
-<p>SSIS makes part of SQL server. SQL Server, even if it makes part of the less expensive database engine, is not free of charges.</p>
+<p>SSIS makes part of SQL server. SQL Server, even if it makes part of the less expensive database engines, it is not free of charges.</p>
 <h3 id="it-is-multiplatform">It is multiplatform</h3>
 <blockquote>
-<p>Can be run on nearly any kind of computer or even portable device.</p>
+<p>Can be run on nearly any kind of computer or even portable devices.</p>
 </blockquote>
-<p>Development are made on .Net Standard 2.0. This permits Etl.Net to be used on any platform that supports .net: Windows, Linux or mac with .net core or even mobile devices with application that are implement with xamarin.</p>
+<p>Developments are made on .Net Standard 2.0. This permits Etl.Net to be used on any platform that supports .net: Windows, Linux or mac with .net core or even mobile devices with applications that are implemented with xamarin.</p>
 <h3 id="it-is-open-source">It is open source</h3>
 <blockquote>
 <p>Get advantages of the open source community.</p>
@@ -99,11 +102,11 @@
 <blockquote>
 <p>Out of a business intelligence context, SSIS can be very cumbersome.</p>
 </blockquote>
-<p>When it is about including ETL process in an applications, many developers don't even consider using business intelligence tools such as SSIS. This is fairly understandable given the big commitment it involves:</p>
+<p>When it is about including ETL process in an application, many developers don't even consider using business intelligence tools such as SSIS. This is fairly understandable given the big commitment it involves:</p>
 <ul>
-<li>SSIS packages are in a different location than the application it self. It is not within the application sources, and it won't be deployed in the same way and at the same place</li>
-<li>Executing the full solution on a development computer for debug or even simple development purpose is complex. Usually, once source of an application are retrieved from source control, a hit on F5 should be sufficient to successfully execute the application. With an SSIS process, developing the solution needs an SSIS deployment somewhere prior to execute the application, with all the necessary setups. During debug of the application it self, it won't be possible to enter into debug of the ETL process if it is hosted in SSIS.</li>
-<li>SSIS needs to be installed on development computers. This makes the solution more complex to apprehend where normal application simply need dotnet core + visual studio code or visual studio community to be executed with a simple F5. Moreover, depending on the context, installing SSIS on a development computer is not always easy or possible (security policies).</li>
+<li>SSIS packages are in a different location than the application it self. It is not within the application sources, it won't be deployed in the same way, it won't be deployed at the same place.</li>
+<li>Executing the full solution on a development computer for debug or even simple development purpose is complex. Usually, in the world of development, once sources of an application are retrieved from source control, a hit on F5 should be sufficient to successfully execute and debug the application. With an SSIS process making part of the solution, executing and debugging the application needs an SSIS deployment with all its setups prior to run it. During debug of the application it self, it won't be possible to debug the ETL process as it is hosted in SSIS server.</li>
+<li>SSIS needs to be installed on development computers. This makes the solution more complex to apprehend where normal application simply need dotnet core + visual studio code or visual studio community to be executed with a simple F5. Furthermore, depending on the context, installing SSIS on a development computer is not always easy or possible (security policies in companies).</li>
 </ul>
 <blockquote>
 <p>A regular developer needs to download his sources, hit F5, and debug.</p>
@@ -112,18 +115,18 @@
 <blockquote>
 <p>Simply add references to Nuget</p>
 </blockquote>
-<p>Just add a reference to the core package (Etl.Net) and some of its extensions depending on the need (Etl.Net.TextFile, Etl.Net.EntityFrameworkCore...) from Nuget and you can develop and execute on the go. The rest is a very simple development extremely close to Linq.</p>
+<p>Just add a reference from Nuget to the core package (Etl.Net) and to some of its extensions depending on the need (Etl.Net.TextFile, Etl.Net.EntityFrameworkCore...) and you can develop and execute on the go. It is a very simple development extremely close to Linq.</p>
 <h3 id="it-is-designed-to-be-very-simple-to-extend">It is designed to be very simple to extend</h3>
 <blockquote>
 <p>SSIS extension is a horribly complex process compared to usual .net tool kits and frameworks.</p>
 </blockquote>
-<p>When it is about SSIS extensibility , you have to swim quiet deep in the abyss of hell: after dealing with the very complex SDK to extend it and the big amount of lines of codes to implement your extension, you will have to ensure it is well deployed in the GAC of your development computer, but also on the GAC of every SSIS server where it will be deployed. To use it for development, you must also install it correctly on your development computer so that Sql Server Data Tools for BI recognizes it and makes it available in your visual studio toolbox.</p>
+<p>When it is about SSIS extensibility, you have to swim quiet deep in the abyss of hell: after dealing with the very complex SDK to extend it and the big amount of lines of codes to implement your extension, you will have to ensure it is well deployed in the GAC of your development computer, on the GAC of every SSIS server where it will be deployed. Finally, for it to be used in developments, it must also be installed correctly on your development computer so that Sql Server Data Tools for BI recognizes it and makes it available in the visual studio toolbox.</p>
 <blockquote>
 <p>An Etl.Net extension can be developed, debugged and used within in 5mn... literally.</p>
 </blockquote>
 <p>Etl.net extensibility is based on a simple development wether it is embedded within the application, in another shared assembly or a Nuget package. It is as simple as a couple of lines of code since a set of base classes permits extensions to be easily implemented for most of typical use cases.</p>
-<h2 id="installation">Installation</h2>
-<p>No installation is necessary. Simple reference to a nuget packages are enough.</p>
+<h2 id="how-to-install-it">How to install it?</h2>
+<p>No installation is necessary. Simple references to a nuget packages are enough.</p>
 <div class="tabGroup" id="tabgroup_CeZOj-G++Q">
 <ul role="tablist">
 <li role="presentation">
@@ -146,7 +149,7 @@
 </code></pre>
 </section>
 </div>
-<h2 id="quickstart">Quickstart</h2>
+<h2 id="how-do-i-start">How do I start?</h2>
 <h3 id="prepare-the-application">Prepare the application</h3>
 <p>Command line:</p>
 <pre><code class="lang-powershell">dotnet new console -n SimpleQuickstart
