@@ -32,7 +32,7 @@ items:
   source:
     id: TextFileEx
     path: ''
-    startLine: 297
+    startLine: 367
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -71,7 +71,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 300
+    startLine: 370
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -119,7 +119,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 310
+    startLine: 380
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -167,7 +167,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 320
+    startLine: 390
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -215,7 +215,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 330
+    startLine: 400
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -266,7 +266,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 340
+    startLine: 410
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -320,7 +320,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 350
+    startLine: 420
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -371,7 +371,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 360
+    startLine: 430
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -422,7 +422,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 371
+    startLine: 441
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -466,7 +466,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 376
+    startLine: 446
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -510,7 +510,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 381
+    startLine: 451
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -558,7 +558,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 386
+    startLine: 456
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -609,7 +609,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 391
+    startLine: 461
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -657,7 +657,7 @@ items:
   source:
     id: CrossApplyTextFile
     path: ''
-    startLine: 396
+    startLine: 466
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -705,7 +705,7 @@ items:
   source:
     id: ThroughTextFile
     path: ''
-    startLine: 404
+    startLine: 474
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -753,7 +753,7 @@ items:
   source:
     id: ThroughTextFile
     path: ''
-    startLine: 413
+    startLine: 483
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -802,7 +802,7 @@ items:
   source:
     id: ThroughTextFile
     path: ''
-    startLine: 422
+    startLine: 492
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
@@ -851,7 +851,7 @@ items:
   source:
     id: ToTextFile
     path: ''
-    startLine: 434
+    startLine: 504
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.TextFile.Extensions
