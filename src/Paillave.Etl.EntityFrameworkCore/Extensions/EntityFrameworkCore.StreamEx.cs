@@ -65,7 +65,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
             }).Output;
         }
 
-        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TEntityKey, TOut, TInEf>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, Expression<Func<TInEf, TEntityKey>> getBusinessKey, Func<TIn, TInEf> getEntity, Func<TIn, TInEf, TOut> getResult, SaveByKeyMode bulkInsertMode = SaveByKeyMode.BulkUpsert, int chunkSize = 100)
+        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TEntityKey, TOut, TInEf>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, Func<TIn, TInEf> getEntity, Expression<Func<TInEf, TEntityKey>> getBusinessKey, Func<TIn, TInEf, TOut> getResult, SaveByKeyMode bulkInsertMode = SaveByKeyMode.BulkUpsert, int chunkSize = 100)
             where TResource : DbContext
             where TInEf : class
         {
