@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Paillave.Etl.EntityFrameworkCore.Core
 {
-    public class BulkUpserter<TIn, TCtx, TKey>
+    public class SingleKeyBulkUpserter<TIn, TCtx, TKey>
         where TIn : class
         where TCtx : DbContext
     {
@@ -16,7 +16,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
         private Func<TIn, TKey> _getKey;
         private Expression<Func<TIn, TKey>> _getKeyExpr;
 
-        public BulkUpserter(Expression<Func<TIn, TKey>> getKeyExpr)
+        public SingleKeyBulkUpserter(Expression<Func<TIn, TKey>> getKeyExpr)
         {
             _containsMethodInfo = GetContainsMethodInfo();
             _getKey = getKeyExpr.Compile();

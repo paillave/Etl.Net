@@ -22,8 +22,8 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         public IStream<TIn> SourceStream { get; set; }
         public IStream<TCtx> DbContextStream { get; set; }
         public int BatchSize { get; set; } = 1000;
-        public SaveMode BulkLoadMode { get; set; } = SaveMode.BulkInsert;
-        public Func<TIn, TInEf> GetEntity { get; set;}
+        public SaveMode BulkLoadMode { get; set; } = SaveMode.BulkUpsert;
+        public Func<TIn, TInEf> GetEntity { get; set; }
         public Func<TIn, TInEf, TOut> GetOutput { get; set; }
     }
     public class ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TKey, TIn, TOut>
@@ -36,10 +36,16 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         public Expression<Func<TInEf, TKey>> GetKey { get; set; }
         public Func<TIn, TInEf> GetEntity { get; set; }
         public Func<TIn, TInEf, TOut> GetOutput { get; set; }
+        public SaveByKeyMode BulkLoadMode { get; set; } = SaveByKeyMode.BulkUpsert;
     }
     public enum SaveMode
     {
         StandardEfCoreUpsert,
+        BulkInsert,
+        BulkUpsert
+    }
+    public enum SaveByKeyMode
+    {
         BulkInsert,
         BulkUpsert
     }
@@ -88,10 +94,13 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         where TCtx : DbContext
     {
         public override bool IsAwaitable => true;
-        private BulkUpserter<TInEf, TCtx, TKey> _bulkUpserter;
+        private List<string> _keyProperties = new List<string>();
+
+        // private SingleKeyBulkUpserter<TInEf, TCtx, TKey> _bulkUpserter;
         public ThroughEntityFrameworkCoreStreamNode(string name, ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TKey, TIn, TOut> args) : base(name, args)
         {
-            _bulkUpserter = new BulkUpserter<TInEf, TCtx, TKey>(args.GetKey);
+            // _bulkUpserter = new SingleKeyBulkUpserter<TInEf, TCtx, TKey>(args.GetKey);
+            _keyProperties = new KeyDefinitionExtractor().GetKeys(args.GetKey).Select(i => i.Name).ToList();
         }
 
         protected override IStream<TOut> CreateOutputStream(ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TKey, TIn, TOut> args)
@@ -100,14 +109,26 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
             var ret = args.SourceStream.Observable
                 .Chunk(args.BatchSize)
                 .CombineWithLatest(dbContextStream, (i, c) => new { Context = c, Items = i.Select(j => new Tuple<TIn, TInEf>(j, args.GetEntity(j))).ToList() }, true)
-                .Do(i => ProcessBatch(i.Items, i.Context))
+                .Do(i => ProcessBatch(i.Items, i.Context, args.BulkLoadMode))
                 .FlatMap(i => PushObservable.FromEnumerable(i.Items))
                 .Map(i => args.GetOutput(i.Item1, i.Item2));
             return base.CreateUnsortedStream(ret);
         }
-        public void ProcessBatch(List<Tuple<TIn, TInEf>> items, TCtx dbContext)
+        public void ProcessBatch(List<Tuple<TIn, TInEf>> items, TCtx dbContext, SaveByKeyMode bulkLoadMode)
         {
-            _bulkUpserter.ProcessBatch(items.Select(i => i.Item2).ToList(), dbContext);
+            var bulkConfig = new BulkConfig { PreserveInsertOrder = true, SetOutputIdentity = true, BatchSize = items.Count, UpdateByProperties = _keyProperties };
+            switch (bulkLoadMode)
+            {
+                case SaveByKeyMode.BulkInsert:
+                    dbContext.BulkInsert(items.Select(i => i.Item2).ToList(), bulkConfig);
+                    break;
+                case SaveByKeyMode.BulkUpsert:
+                    dbContext.BulkInsertOrUpdate(items.Select(i => i.Item2).ToList(), bulkConfig);
+                    break;
+                default:
+                    break;
+            }
+            dbContext.SaveChanges(); //DO NOT SET IT ASYNC HERE. The point is to retrieve the Id in case of automatic key.
         }
     }
 }
