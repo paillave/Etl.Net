@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.StaticFiles.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Paillave.Etl.Debugger.Hubs;
 
 namespace Paillave.Etl.Debugger
 {
@@ -25,6 +26,7 @@ namespace Paillave.Etl.Debugger
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSignalR();
             services.AddTransient<ISpaStaticFileProvider, ResourceSpaStaticFileProvider>();
             services.AddTransient(i => new ResourceSpaStaticFileProviderOptions
             {
@@ -45,6 +47,10 @@ namespace Paillave.Etl.Debugger
 
             // app.UseHttpsRedirection();
 
+            app.UseSignalR(routes =>
+                        {
+                            routes.MapHub<EtlProcessDebugHub>("/EtlProcessDebug");
+                        });
             app.UseMvc();
 
             if (env.IsDevelopment())
