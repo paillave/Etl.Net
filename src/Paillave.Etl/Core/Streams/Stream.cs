@@ -21,7 +21,7 @@ namespace Paillave.Etl.Core.Streams
 
             this.Observable = observable
                 .CompletesOnException(e => tracer.Trace(new UnhandledExceptionStreamTraceContent(e)))
-                .TakeUntil(executionContext.TraceEvents.Filter(i => i.Content.Level == TraceLevel.Error));
+                .TakeUntil(executionContext.StopProcessEvents);
 
             if (tracer != null)
             {
