@@ -13,5 +13,7 @@ export const reducer = (state, action) => produce(state || initialState, draft =
     case addEtlTraceType:
       draft.traces.push(action.payload);
       break;
+    default:
+      break;
   }
 });

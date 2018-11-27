@@ -16,5 +16,7 @@ export const reducer = (state, action) => produce(state || initialState, draft =
     case decrementCountType:
       draft.count--;
       break;
+    default:
+      break;
   }
 })

@@ -4,9 +4,9 @@
 import { ofType } from 'redux-observable';
 // import 'jquery';
 import { from } from 'rxjs';
-import { map, switchMap, filter } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { Subject, merge } from 'rxjs/index';
-import { actionCreators, addEtlTraceType, startEtlTraceType } from '../store/EtlProcessTraces'
+import { actionCreators, startEtlTraceType } from '../store/EtlProcessTraces'
 // https://github.com/aspnet/SignalR/
 import * as signalR from '@aspnet/signalr'
 
