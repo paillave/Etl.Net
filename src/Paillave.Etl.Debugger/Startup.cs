@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.AspNetCore.SpaServices.StaticFiles;
 using Microsoft.AspNetCore.StaticFiles.Infrastructure;
@@ -28,6 +29,7 @@ namespace Paillave.Etl.Debugger
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSignalR();
             services.AddTransient<ISpaStaticFileProvider, ResourceSpaStaticFileProvider>();
+            services.AddSingleton<EtlTraceDispatcher>();
             services.AddTransient(i => new ResourceSpaStaticFileProviderOptions
             {
                 DevelopmentRootPath = "ClientApp/build",

@@ -43,7 +43,7 @@ namespace Paillave.Etl.Debugger
         private void TimerElapsed(object sender, ElapsedEventArgs e)
         {
             foreach (var item in _listeners)
-                item($"counter: {_counter}s");
+                item($"counter: {_counter++}s");
         }
         public IDisposable Listen(Action<string> listener)
         {

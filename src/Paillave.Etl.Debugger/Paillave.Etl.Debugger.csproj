@@ -7,7 +7,7 @@
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
-<GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+<GenerateEmbeddedFilesManifest Condition="'$(Configuration)' != 'Debug'">true</GenerateEmbeddedFilesManifest>
   </PropertyGroup>
 
   <ItemGroup>

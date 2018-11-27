@@ -1,9 +1,11 @@
 ﻿import produce from 'immer';
-const addEtlTraceType = 'ADD_ETL_TRACE';
+export const addEtlTraceType = 'ADD_ETL_TRACE';
+export const startEtlTraceType = 'START_ETL_TRACE';
 const initialState = { traces: [] };
 
 export const actionCreators = {
-  addEtlTrace: trace => ({ type: addEtlTraceType, payload: trace })
+  addEtlTrace: trace => ({ type: addEtlTraceType, payload: trace }),
+  startEtlTrace: () => ({ type: startEtlTraceType }),
 };
 
 export const reducer = (state, action) => produce(state || initialState, draft => {

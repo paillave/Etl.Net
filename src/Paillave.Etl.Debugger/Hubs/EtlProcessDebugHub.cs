@@ -1,21 +1,20 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Paillave.Etl.Debugger.Hubs
 {
     public class EtlProcessDebugHub : Hub<IEtlProcessDebugHubClient>
     {
-        private IDisposable _listen;
-        public EtlProcessDebugHub(NewClass cls)
+        private readonly EtlTraceDispatcher _dispatcher;
+
+        public EtlProcessDebugHub(EtlTraceDispatcher dispatcher)
         {
-            _listen = cls.Listen(i => this.Clients.Caller.PushTrace(i));
+            this._dispatcher = dispatcher;
         }
-        protected override void Dispose(bool disposing)
+        public async Task Start()
         {
-            _listen.Dispose();
+            await _dispatcher.Start();
         }
-        // public EtlProcessDebugHub()
-        // {
-        // }
     }
 }

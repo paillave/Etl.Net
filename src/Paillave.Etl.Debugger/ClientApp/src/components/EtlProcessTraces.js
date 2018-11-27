@@ -22,6 +22,7 @@ export default (props) => (
   <div>
     <h1>Traces</h1>
     <p>Traces from Etl.</p>
+    <button onClick={props.startEtlTrace.bind(null)}>Start</button>
     <ForecastsTable {...props} />
   </div>
 )
