@@ -1,9 +1,10 @@
 using System.Threading.Tasks;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Debugger.Hubs
 {
     public interface IEtlProcessDebugHubClient
     {
-        Task PushTrace(string trace);
+        Task PushTrace(TraceEvent trace);
     }
 }

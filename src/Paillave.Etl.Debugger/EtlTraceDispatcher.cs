@@ -7,9 +7,9 @@ namespace Paillave.Etl.Debugger
     public class EtlTraceDispatcher
     {
         private readonly IHubContext<EtlProcessDebugHub, IEtlProcessDebugHubClient> _chatHubContext;
-        private readonly NewClass _cls;
+        private readonly IEtlTraceEventPusher _cls;
 
-        public EtlTraceDispatcher(IHubContext<EtlProcessDebugHub, IEtlProcessDebugHubClient> chatHubContext, NewClass cls)
+        public EtlTraceDispatcher(IHubContext<EtlProcessDebugHub, IEtlProcessDebugHubClient> chatHubContext, IEtlTraceEventPusher cls)
         {
             this._chatHubContext = chatHubContext;
             this._cls = cls;

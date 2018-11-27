@@ -15,12 +15,12 @@ namespace Paillave.Etl.Debugger
     {
         public static void Main(string[] args)
         {
-            var cls = new NewClass();
-            // cls.Start();
-            WebHost.CreateDefaultBuilder(args).ConfigureServices(services =>
-            {
-                services.AddTransient(i => cls);
-            }).UseStartup<Startup>().Build().Run();
+            // var cls = new EtlTraceEventPusher();
+            // // cls.Start();
+            // WebHost.CreateDefaultBuilder(args).ConfigureServices(services =>
+            // {
+            //     services.AddTransient(i => cls);
+            // }).UseStartup<Startup>().Build().Run();
         }
     }
 }
