@@ -1,13 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
+    <PackageId>Etl.Net.Debugger</PackageId>
+    <Version>1.0.0-alpha</Version>
+    <Authors>Stéphane Royer</Authors>
+    <Company></Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseUrl>https://github.com/paillave/Etl.Net/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
+    <PackageTags>ETL .net core SSIS reactive debugger trace viewer</PackageTags>
+    <Product>ETL.net debugger extensions</Product>
+    <Description>Debugging extensions for Etl.Net</Description>
+    <PackageReleaseNotes>
+Debugging extensions for Etl.Net
+    </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
-<GenerateEmbeddedFilesManifest Condition="'$(Configuration)' != 'Debug'">true</GenerateEmbeddedFilesManifest>
+    <GenerateEmbeddedFilesManifest Condition="'$(Configuration)' != 'Debug'">true</GenerateEmbeddedFilesManifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,5 +50,8 @@
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
   </Target>
+  <ItemGroup>
+    <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
+  </ItemGroup>
 
 </Project>
