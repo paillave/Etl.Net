@@ -12,6 +12,6 @@ namespace Paillave.Etl.Core.TraceContents
         }
         public override TraceLevel Level => TraceLevel.Warning;
 
-        protected override string GetMessage() => $"lots of rows are sorted and therefore set in memory";
+        public override string Message => $"lots of rows are sorted and therefore set in memory";
     }
 }

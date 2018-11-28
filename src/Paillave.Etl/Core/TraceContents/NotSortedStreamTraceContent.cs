@@ -18,6 +18,6 @@ namespace Paillave.Etl.Core.TraceContents
 
         public override TraceLevel Level => TraceLevel.Error;
 
-        protected override string GetMessage() => $"The stream is not sorted at line {LineNumber} whereas it should be";
+        public override string Message => $"The stream is not sorted at line {LineNumber} whereas it should be";
     }
 }

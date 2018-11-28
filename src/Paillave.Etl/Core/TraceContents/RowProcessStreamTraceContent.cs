@@ -17,6 +17,6 @@ namespace Paillave.Etl.Core.TraceContents
         public int Position { get; }
         public object Row { get; }
 
-        protected override string GetMessage() => $"{Row} row(s) processing";
+        public override string Message => $"row {Position} processing";
     }
 }

@@ -15,6 +15,6 @@ namespace Paillave.Etl.Core.TraceContents
 
         public int Counter { get; }
 
-        protected override string GetMessage() => $"{this.Counter} row(s) issued";
+        public override string Message => $"{this.Counter} row(s) issued";
     }
 }

@@ -7,6 +7,8 @@ namespace Paillave.Etl.Core.TraceContents
 {
     public interface ITraceContent
     {
+        string Type { get; }
         TraceLevel Level { get; }
+        string Message { get; }
     }
 }

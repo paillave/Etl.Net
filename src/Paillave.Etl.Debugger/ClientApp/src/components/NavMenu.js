@@ -8,7 +8,7 @@ export default props => (
   <Navbar inverse fixedTop fluid collapseOnSelect>
     <Navbar.Header>
       <Navbar.Brand>
-        <Link to={'/'}>Paillave.Etl.Debugger</Link>
+        <Link to={'/'}>Etl.Net Debugger</Link>
       </Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>
