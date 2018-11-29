@@ -15,11 +15,11 @@ namespace Paillave.Etl.Debugger
     {
         public static void Main(string[] args)
         {
-            // var cls = new EtlTraceEventPusher();
-            // // cls.Start();
+            new Coordinator.Inspector().GetEtlList(@"C:\Users\sroyer\Source\Repos\Etl.Net\src\Samples\ComplexQuickstart\bin\Debug\netcoreapp2.1\ComplexQuickstart.dll");
+            // // var cls = new EtlTraceEventPusher();
             // WebHost.CreateDefaultBuilder(args).ConfigureServices(services =>
             // {
-            //     services.AddTransient(i => cls);
+            //     // services.AddTransient(i => cls);
             // }).UseStartup<Startup>().Build().Run();
         }
     }

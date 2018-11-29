@@ -21,7 +21,7 @@ Debugging extensions for Etl.Net
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
-    <GenerateEmbeddedFilesManifest Condition="'$(Configuration)' != 'TDebug'">true</GenerateEmbeddedFilesManifest>
+    <GenerateEmbeddedFilesManifest Condition="'$(Configuration)' != 'Debug'">true</GenerateEmbeddedFilesManifest>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.6" />
@@ -32,7 +32,7 @@ Debugging extensions for Etl.Net
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="2.1.1" />
   </ItemGroup>
   <Target Name="IncludeSpaAsResources" BeforeTargets="BeforeBuild">
-    <ItemGroup Condition="'$(Configuration)' != 'TDebug'">
+    <ItemGroup Condition="'$(Configuration)' != 'Debug'">
         <EmbeddedResource Include="ClientApp\build\**\*" />
     </ItemGroup>
   </Target>
@@ -40,7 +40,7 @@ Debugging extensions for Etl.Net
     <Content Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
-  <Target Name="PublishRunWebpack" BeforeTargets="IncludeSpaAsResources" Condition="'$(Configuration)' != 'TDebug'">
+  <Target Name="PublishRunWebpack" BeforeTargets="IncludeSpaAsResources" Condition="'$(Configuration)' != 'Debug'">
     <Exec Command="node --version" ContinueOnError="true">
       <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
     </Exec>
