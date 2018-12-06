@@ -1,19 +1,14 @@
+using ElectronNET.API;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
-using Microsoft.AspNetCore.SpaServices.StaticFiles;
-using Microsoft.AspNetCore.StaticFiles.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
-using Paillave.Etl.Debugger.Hubs;
 
 namespace Paillave.Etl.Debugger
 {
-    // https://github.com/aspnet/JavaScriptServices/blob/master/src/Microsoft.AspNetCore.SpaServices.Extensions/StaticFiles/SpaStaticFilesExtensions.cs
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -27,40 +22,52 @@ namespace Paillave.Etl.Debugger
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSignalR();
-            services.AddTransient<ISpaStaticFileProvider, ResourceSpaStaticFileProvider>();
-            services.AddSingleton<EtlTraceDispatcher>();
-            services.AddTransient(i => new ResourceSpaStaticFileProviderOptions
+
+            // In production, the React files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
             {
-                DevelopmentRootPath = "ClientApp/build",
-                ReleaseRootPath = "ClientApp/build"
+                configuration.RootPath = "ClientApp/build";
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ISpaStaticFileProvider spaProvider)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            DefaultFilesOptions options = new DefaultFilesOptions();
-            options.DefaultFileNames.Clear();
-            options.DefaultFileNames.Add("index.html");
-            options.FileProvider = spaProvider.FileProvider;
-            app.UseDefaultFiles(options);
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            // app.UseHttpsRedirection();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action=Index}/{id?}");
+            });
 
-            app.UseSignalR(routes =>
-                        {
-                            routes.MapHub<EtlProcessDebugHub>("/EtlProcessDebug");
-                        });
-            app.UseMvc();
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
 
-            if (env.IsDevelopment())
-                app.UseSpa(spa =>
+                if (env.IsDevelopment())
                 {
-                    spa.Options.SourcePath = "ClientApp";
                     spa.UseReactDevelopmentServer(npmScript: "start");
-                });
+                }
+            });
+            Bootstrap();
+        }
+        public async void Bootstrap()
+        {
+            await Electron.WindowManager.CreateWindowAsync();
         }
     }
 }

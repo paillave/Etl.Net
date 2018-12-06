@@ -8,7 +8,7 @@ export default props => (
   <Navbar inverse fixedTop fluid collapseOnSelect>
     <Navbar.Header>
       <Navbar.Brand>
-        <Link to={'/'}>Paillave.Etl.Debugger</Link>
+        <Link to={'/'}>Etl.Net Debugger</Link>
       </Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>
@@ -24,7 +24,7 @@ export default props => (
             <Glyphicon glyph='education' /> Counter
           </NavItem>
         </LinkContainer>
-        <LinkContainer to={'/fetchdata'}>
+        <LinkContainer to={'/etlTraces'}>
           <NavItem>
             <Glyphicon glyph='th-list' /> Fetch data
           </NavItem>
