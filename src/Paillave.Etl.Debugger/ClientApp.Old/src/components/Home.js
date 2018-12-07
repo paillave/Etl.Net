@@ -1,8 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-export default (props) => (
+const Home = props => (
   <div>
-    <h1>Etl.Net</h1>
+    <h1>Hello, world!</h1>
     <p>Welcome to your new single-page application, built with:</p>
     <ul>
       <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
@@ -18,3 +19,5 @@ export default (props) => (
     <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
   </div>
 );
+
+export default connect()(Home);

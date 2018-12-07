@@ -1,4 +1,5 @@
-﻿const incrementCountType = 'INCREMENT_COUNT';
+﻿import produce from 'immer';
+const incrementCountType = 'INCREMENT_COUNT';
 const decrementCountType = 'DECREMENT_COUNT';
 const initialState = { count: 0 };
 
@@ -7,16 +8,15 @@ export const actionCreators = {
   decrement: () => ({ type: decrementCountType })
 };
 
-export const reducer = (state, action) => {
-  state = state || initialState;
-
-  if (action.type === incrementCountType) {
-    return { ...state, count: state.count + 1 };
+export const reducer = (state, action) => produce(state || initialState, draft => {
+  switch (action.type) {
+    case incrementCountType:
+      draft.count++;
+      break;
+    case decrementCountType:
+      draft.count--;
+      break;
+    default:
+      break;
   }
-
-  if (action.type === decrementCountType) {
-    return { ...state, count: state.count - 1 };
-  }
-
-  return state;
-};
+})

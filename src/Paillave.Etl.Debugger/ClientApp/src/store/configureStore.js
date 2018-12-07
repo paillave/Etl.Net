@@ -1,35 +1,40 @@
-﻿import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import thunk from 'redux-thunk';
-import { routerReducer, routerMiddleware } from 'react-router-redux';
+﻿import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { combineEpics } from 'redux-observable';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { connectRouter, routerMiddleware } from 'connected-react-router'
 import * as Counter from './Counter';
-import * as WeatherForecasts from './WeatherForecasts';
+import * as EtlProcessTraces from './EtlProcessTraces';
+import * as EtlProcessTracesEpic from '../epics/EtlProcessTraces';
+import { createEpicMiddleware } from 'redux-observable';
+import logger from 'redux-logger'
 
 export default function configureStore(history, initialState) {
   const reducers = {
     counter: Counter.reducer,
-    weatherForecasts: WeatherForecasts.reducer
+    etlTraces: EtlProcessTraces.reducer
   };
 
+  const createRootReducer = (history) => combineReducers({
+    router: connectRouter(history),
+    ...reducers
+  })
+
+  const rootEpic = combineEpics(EtlProcessTracesEpic.receiveEtlTracesEpic);
+
+  const epicMiddleware = createEpicMiddleware();
   const middleware = [
-    thunk,
-    routerMiddleware(history)
+    routerMiddleware(history),
+    epicMiddleware,
+    logger
   ];
 
-  // In development, use the browser's Redux dev tools extension if installed
-  const enhancers = [];
-  const isDevelopment = process.env.NODE_ENV === 'development';
-  if (isDevelopment && typeof window !== 'undefined' && window.devToolsExtension) {
-    enhancers.push(window.devToolsExtension());
-  }
-
-  const rootReducer = combineReducers({
-    ...reducers,
-    routing: routerReducer
-  });
-
-  return createStore(
-    rootReducer,
+  const store = createStore(
+    createRootReducer(history),
     initialState,
-    compose(applyMiddleware(...middleware), ...enhancers)
+    composeWithDevTools(applyMiddleware(...middleware))
   );
+
+  epicMiddleware.run(rootEpic);
+
+  return store;
 }
