@@ -33,6 +33,7 @@ namespace Paillave.Etl.Debugger.Coordinator
                             StreamTransformationName = methodInfo.Name,
                             ClassName = methodInfo.DeclaringType.Name,
                             Namespace = methodInfo.DeclaringType.Namespace,
+                            Parameters = configType.GetProperties().Select(i => i.Name).ToList()
                         },
                         ClassType = methodInfo.DeclaringType,
                         StreamConfigType = configType,

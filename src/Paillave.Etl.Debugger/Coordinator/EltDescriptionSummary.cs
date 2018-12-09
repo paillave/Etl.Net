@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace Paillave.Etl.Debugger.Coordinator
@@ -6,8 +7,9 @@ namespace Paillave.Etl.Debugger.Coordinator
     public class EltDescriptionSummary
     {
         public string AssemblyFilePath { get; set; }
-        public string StreamTransformationName { get; internal set; }
-        public string ClassName { get; internal set; }
-        public string Namespace { get; internal set; }
+        public string StreamTransformationName { get; set; }
+        public string ClassName { get; set; }
+        public string Namespace { get; set; }
+        public List<string> Parameters { get; set; }
     }
 }
