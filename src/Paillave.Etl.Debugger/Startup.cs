@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Paillave.Etl.Debugger.Coordinator;
+using Paillave.Etl.Debugger.Hubs;
 
 namespace Paillave.Etl.Debugger
 {
@@ -21,7 +23,9 @@ namespace Paillave.Etl.Debugger
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            // services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSignalR();
+            services.AddSingleton<ApplicationCoordinator>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -47,12 +51,11 @@ namespace Paillave.Etl.Debugger
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
-            });
+            app.UseSignalR(routes =>
+                        {
+                            routes.MapHub<ApplicationHub>("/application");
+                        });
+            // app.UseMvc();
 
             app.UseSpa(spa =>
             {
@@ -63,7 +66,7 @@ namespace Paillave.Etl.Debugger
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
-            Bootstrap();
+            // Bootstrap();
         }
         public async void Bootstrap()
         {

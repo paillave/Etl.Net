@@ -1,16 +1,13 @@
 import React from 'react';
-import { Col, Grid, Row } from 'react-bootstrap';
 import NavMenu from './NavMenu';
+import 'office-ui-fabric-react/dist/css/fabric.css';
 
 export default props => (
-  <Grid fluid>
-    <Row>
-      <Col sm={3}>
-        <NavMenu />
-      </Col>
-      <Col sm={9}>
-        {props.children}
-      </Col>
-    </Row>
-  </Grid>
+  <div class="ms-Grid" dir="ltr">
+    <div class="ms-Grid-row">
+      <div class="ms-Grid-col ms-sm6 ms-md4 ms-lg2"><NavMenu /></div>
+      <div class="ms-Grid-col ms-sm6 ms-md8 ms-lg10">        {props.children}
+      </div>
+    </div>
+  </div>
 );

@@ -11,13 +11,13 @@ import { actionCreators, startEtlTraceType } from '../store/EtlProcessTraces'
 import * as signalR from '@aspnet/signalr'
 
 export const receiveEtlTracesEpic = action$ => {
-    //let connection = new signalR.HubConnectionBuilder().withUrl("/EtlProcessDebug").build();
+    let connection = new signalR.HubConnectionBuilder().withUrl("/application").build();
 
     const ws$ = new Subject();
     // connection.on("PushTrace", i => {
     //     ws$.next(i);
     // });
-    // connection.start().then(i => console.info("CONNECTED!!!")).catch(i => console.error("NOT CONNECTED!!!"));
+    connection.start().then(i => console.info("CONNECTED!!!")).catch(i => console.error("NOT CONNECTED!!!"));
     return merge(
         // action$.pipe(ofType(startEtlTraceType), map(action => action))
 
