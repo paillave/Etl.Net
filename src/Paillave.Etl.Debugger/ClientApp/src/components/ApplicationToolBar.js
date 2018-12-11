@@ -34,9 +34,9 @@ class ApplicationToolBar extends React.Component {
           Etl.Net debugger
         </Typography>
         <div className={classes.grow} />
-        <Button className={classes.button} color="inherit" className={classNames(classes.menuButton)}>
+        <Button className={classes.button} color="inherit"  onClick={this.props.showSelectProcessDialog} className={classNames(classes.menuButton)}>
           <FolderOpenIcon className={classes.leftIcon} />
-          Open Process...
+          Select Process...
         </Button>
       </Toolbar>
     );

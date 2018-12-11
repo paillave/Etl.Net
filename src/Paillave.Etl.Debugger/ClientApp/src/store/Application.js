@@ -1,22 +1,24 @@
 ﻿import produce from 'immer';
-export const switchSelectAssemblyDialogType = 'SWITCH_SELECT_ASSEMBLY_DIALOG';
-export const hideSelectAssemblyDialogType = 'HIDE_SELECT_ASSEMBLY_DIALOG';
+export const switchSelectProcessDialogType = 'SWITCH_SELECT_PROCESS_DIALOG';
 export const selectAssemblyType = 'SELECT_ASSEMBLY';
-export const receiveProcessesListType = 'PROCESSES_LIST';
+export const receiveProcessListType = 'RECEIVE_PROCESS_LIST';
 export const selectProcessType = 'SELECT_PROCESS';
+export const loadProcessType = 'LOAD_PROCESS';
 export const addTraceType = 'ADD_TRACE';
 export const hideTraceDetailsType = 'HIDE_TRACE_DETAILS';
+export const showTraceDetailsType = 'SHOW_TRACE_DETAILS';
 
 const initialState = {
   processSelectionDialog: {
     show: false,
     processes: [],
+    selectedProcess: undefined,
     assemblyPath: undefined,
     loadingProcesses: false,
   },
   traceDetails: {
-    show: true,
-    selectedTrace: { blabla: "coucou" },
+    show: false,
+    selectedTrace: undefined,
   },
   loadingProcessDefinition: false,
   traces: [],
@@ -30,31 +32,37 @@ const initialState = {
 export const actionCreators = {
   // addEtlTrace: trace => ({ type: addEtlTraceType, payload: trace }),
   // startEtlTrace: () => ({ type: startEtlTraceType }),
-  showSelectAssemblyDialog: () => ({ type: switchSelectAssemblyDialogType, payload: { show: true } }),
-  hideSelectAssemblyDialog: () => ({ type: switchSelectAssemblyDialogType, payload: { show: false } }),
+  showSelectProcessDialog: () => ({ type: switchSelectProcessDialogType, payload: { show: true } }),
+  hideSelectProcessDialog: () => ({ type: switchSelectProcessDialogType, payload: { show: false } }),
   selectAssembly: (assemblyPath) => ({ type: selectAssemblyType, payload: { assemblyPath } }),
-  receiveProcessesList: (processes) => ({ type: receiveProcessesListType, payload: { processes } }),
+  receiveProcessList: (processes) => ({ type: receiveProcessListType, payload: { processes } }),
   selectProcess: (process) => ({ type: selectProcessType, payload: { process } }),
+  loadProcess: () => ({ type: loadProcessType }),
   addTrace: (trace) => ({ type: addTraceType, payload: { trace } }),
-  hideTraceDetails: () => ({ type: hideTraceDetailsType })
+  hideTraceDetails: () => ({ type: hideTraceDetailsType }),
+  showTraceDetails: (trace) => ({ type: showTraceDetailsType, payload: { trace } })
 };
 
 export const reducer = (state, action) => produce(state || initialState, draft => {
   switch (action.type) {
-    case switchSelectAssemblyDialogType:
+    case switchSelectProcessDialogType:
       draft.processSelectionDialog.show = action.payload.show;
       break;
     case selectAssemblyType:
       draft.processSelectionDialog.assemblyPath = action.payload.assemblyPath;
       draft.processSelectionDialog.loadingProcesses = true;
       break;
-    case receiveProcessesListType:
+    case receiveProcessListType:
       draft.processSelectionDialog.processes = action.payload.processes;
       draft.processSelectionDialog.loadingProcesses = false;
       break;
     case selectProcessType:
-      draft.process = action.payload.process;
-      draft.assemblyPath = draft.processSelectionDialog.payload.assemblyPath;
+      draft.processSelectionDialog.selectedProcess = action.payload.process;
+      break;
+    case loadProcessType:
+      draft.process = draft.processSelectionDialog.selectedProcess;
+      draft.assemblyPath = draft.processSelectionDialog.assemblyPath;
+      draft.processSelectionDialog.show = false;
       draft.loadingProcessDefinition = true;
       break;
     case addTraceType:
@@ -62,6 +70,10 @@ export const reducer = (state, action) => produce(state || initialState, draft =
       break;
     case hideTraceDetailsType:
       draft.traceDetails.show = false;
+      break;
+    case showTraceDetailsType:
+      draft.traceDetails.show = true;
+      draft.traceDetails.selectedTrace = action.payload.trace;
       break;
     default:
       break;

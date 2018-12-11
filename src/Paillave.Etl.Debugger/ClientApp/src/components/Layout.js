@@ -9,9 +9,10 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ApplicationToolBar from "./ApplicationToolBar";
+import ApplicationToolBar from "../containers/ApplicationToolBar";
 import TraceDetails from "../containers/TraceDetails";
 import Divider from "@material-ui/core/Divider";
+import OpenProcessDialog from "../containers/OpenProcessDialog";
 
 const drawerWidth = 400;
 
@@ -73,6 +74,7 @@ class PersistentDrawerRight extends React.Component {
     return (
       <div className={classes.root}>
         <CssBaseline />
+        <OpenProcessDialog/>
         <AppBar position="fixed" className={classNames(classes.appBar, { [classes.appBarShift]: show })}>
           <ApplicationToolBar />
         </AppBar>
