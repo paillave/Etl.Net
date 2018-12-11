@@ -1,14 +1,12 @@
 ﻿import React from 'react';
 import { Route } from 'react-router';
-import Layout from './components/Layout';
-import Home from './containers/Home';
-import Counter from './containers/Counter';
-import EtlProcessTraces from './containers/EtlProcessTraces';
+import Layout from './containers/Layout';
+import Appli from './containers/Application';
 
 export default () => (
   <Layout>
-    <Route exact path='/' component={Home} />
-    <Route path='/counter' component={Counter} />
-    <Route path='/etlTraces/:startDateIndex?' component={EtlProcessTraces} />
+    <Route exact path='/' component={Appli} />
   </Layout>
 );
+    // <Route path='/counter' component={Counter} />
+    // <Route path='/etlTraces/:startDateIndex?' component={EtlProcessTraces} />

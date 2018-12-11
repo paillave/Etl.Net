@@ -6,7 +6,7 @@ import { ofType } from 'redux-observable';
 import { from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Subject, merge } from 'rxjs/index';
-import { actionCreators, startEtlTraceType } from '../store/EtlProcessTraces'
+import { actionCreators } from '../store/Application'
 // https://github.com/aspnet/SignalR/
 import * as signalR from '@aspnet/signalr'
 
@@ -21,13 +21,14 @@ export const receiveEtlTracesEpic = action$ => {
     return merge(
         // action$.pipe(ofType(startEtlTraceType), map(action => action))
 
-        action$.pipe(
-            ofType(startEtlTraceType),
-            switchMap(action => from(connection.invoke("Start")).pipe(map(() => ({ type: "etlStarted", }))))),
-        ws$.pipe(map(i => actionCreators.addEtlTrace(i)))
+        // action$.pipe(
+        //     ofType(startEtlTraceType),
+        //     switchMap(action => from(connection.invoke("Start")).pipe(map(() => ({ type: "etlStarted", }))))),
+        ws$.pipe(map(i => actionCreators.addTrace(i)))
     );
 }
 
     // let ws$ = new WebSocketSubject({ url: "http://localhost:5000/EtlProcessDebug" });
 //     return ws$.pipe(map(actionCreators.addEtlTrace));
 // };
+
