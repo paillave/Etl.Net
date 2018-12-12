@@ -10,21 +10,19 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import SelectAssembly from "../forms/SelectAssembly";
+import { List, ListItem, ListItemText } from "@material-ui/core";
 
 const styles = theme => ({
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  }
 });
 class OpenProcessDialog extends React.Component {
   submitAssembly(values) {
     this.props.selectAssembly(values.assemblyPath);
   }
   render() {
-    const { classes, theme, processSelectionDialog: { show }, processSelectionDialog: { assemblyPath } } = this.props;
+    const { classes, theme, processSelectionDialog: { show, assemblyPath, processes } } = this.props;
     return (<Dialog
+      fullWidth={true}
+      maxWidth="sm"
       scroll="paper"
       open={show}
       onClose={this.props.hideSelectProcessDialog}
@@ -34,14 +32,16 @@ class OpenProcessDialog extends React.Component {
       <DialogContent>
         <DialogContentText>
         </DialogContentText>
-        <SelectAssembly onSubmit={this.submitAssembly.bind(this)} />
+        <SelectAssembly initialValues={{ assemblyPath }} onSubmit={this.submitAssembly.bind(this)} />
+        <List component="nav">
+          {processes.map((i, idx) => <ListItem key={idx} button>
+            <ListItemText onClick={this.props.loadProcess.bind(this, i)} primary={`${i.className}.${i.streamTransformationName}`} secondary={i.namespace} />
+          </ListItem>)}
+        </List>
       </DialogContent>
       <DialogActions>
         <Button onClick={this.props.hideSelectProcessDialog} color="primary">
           Cancel
-        </Button>
-        <Button onClick={this.props.loadProcess} color="primary">
-          OK
         </Button>
       </DialogActions>
     </Dialog>);

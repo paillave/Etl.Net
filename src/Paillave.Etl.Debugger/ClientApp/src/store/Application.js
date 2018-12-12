@@ -2,7 +2,6 @@
 export const switchSelectProcessDialogType = 'SWITCH_SELECT_PROCESS_DIALOG';
 export const selectAssemblyType = 'SELECT_ASSEMBLY';
 export const receiveProcessListType = 'RECEIVE_PROCESS_LIST';
-export const selectProcessType = 'SELECT_PROCESS';
 export const loadProcessType = 'LOAD_PROCESS';
 export const addTraceType = 'ADD_TRACE';
 export const hideTraceDetailsType = 'HIDE_TRACE_DETAILS';
@@ -12,7 +11,6 @@ const initialState = {
   processSelectionDialog: {
     show: false,
     processes: [],
-    selectedProcess: undefined,
     assemblyPath: undefined,
     loadingProcesses: false,
   },
@@ -23,7 +21,6 @@ const initialState = {
   loadingProcessDefinition: false,
   traces: [],
   tracesToShow: [],
-  assemblyPath: undefined,
   process: undefined,
   processDefinition: undefined,
   selectedNode: undefined
@@ -36,8 +33,7 @@ export const actionCreators = {
   hideSelectProcessDialog: () => ({ type: switchSelectProcessDialogType, payload: { show: false } }),
   selectAssembly: (assemblyPath) => ({ type: selectAssemblyType, payload: { assemblyPath } }),
   receiveProcessList: (processes) => ({ type: receiveProcessListType, payload: { processes } }),
-  selectProcess: (process) => ({ type: selectProcessType, payload: { process } }),
-  loadProcess: () => ({ type: loadProcessType }),
+  loadProcess: (process) => ({ type: loadProcessType, payload: { process } }),
   addTrace: (trace) => ({ type: addTraceType, payload: { trace } }),
   hideTraceDetails: () => ({ type: hideTraceDetailsType }),
   showTraceDetails: (trace) => ({ type: showTraceDetailsType, payload: { trace } })
@@ -56,12 +52,8 @@ export const reducer = (state, action) => produce(state || initialState, draft =
       draft.processSelectionDialog.processes = action.payload.processes;
       draft.processSelectionDialog.loadingProcesses = false;
       break;
-    case selectProcessType:
-      draft.processSelectionDialog.selectedProcess = action.payload.process;
-      break;
     case loadProcessType:
-      draft.process = draft.processSelectionDialog.selectedProcess;
-      draft.assemblyPath = draft.processSelectionDialog.assemblyPath;
+      draft.process = action.payload.process;
       draft.processSelectionDialog.show = false;
       draft.loadingProcessDefinition = true;
       break;

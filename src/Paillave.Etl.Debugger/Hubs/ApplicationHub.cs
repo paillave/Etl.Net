@@ -14,6 +14,11 @@ namespace Paillave.Etl.Debugger.Hubs
             this._coordinator = coordinator;
         }
 
+        public async Task SetAssemblyPath(string assemblyPath)
+        {
+            await Task.Run(() => _coordinator.SetAssembly(assemblyPath));
+        }
+
         public override async Task OnConnectedAsync()
         {
             _coordinator.SetHubClientProxy(this.Clients.All);

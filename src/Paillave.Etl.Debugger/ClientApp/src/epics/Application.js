@@ -6,25 +6,30 @@ import { ofType } from 'redux-observable';
 import { from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Subject, merge } from 'rxjs/index';
-import { actionCreators } from '../store/Application'
+import { actionCreators, selectAssemblyType } from '../store/Application'
 // https://github.com/aspnet/SignalR/
 import * as signalR from '@aspnet/signalr'
 
 export const receiveEtlTracesEpic = action$ => {
     let connection = new signalR.HubConnectionBuilder().withUrl("/application").build();
 
-    const ws$ = new Subject();
-    // connection.on("PushTrace", i => {
-    //     ws$.next(i);
-    // });
+    const trace$ = new Subject();
+    connection.on("PushTrace", i => {
+        trace$.next(i);
+    });
+    const processList$ = new Subject();
+    connection.on("OnProcessList", i => {
+        processList$.next(i);
+    });
     connection.start().then(i => console.info("CONNECTED!!!")).catch(i => console.error("NOT CONNECTED!!!"));
     return merge(
         // action$.pipe(ofType(startEtlTraceType), map(action => action))
 
-        // action$.pipe(
-        //     ofType(startEtlTraceType),
-        //     switchMap(action => from(connection.invoke("Start")).pipe(map(() => ({ type: "etlStarted", }))))),
-        ws$.pipe(map(i => actionCreators.addTrace(i)))
+        action$.pipe(
+            ofType(selectAssemblyType),
+            switchMap(action => from(connection.invoke("SetAssemblyPath",action.payload.assemblyPath)).pipe(map(() => ({ type: "_", }))))),
+        trace$.pipe(map(i => actionCreators.addTrace(i))),
+        processList$.pipe(map(i => actionCreators.receiveProcessList(i))),
     );
 }
 

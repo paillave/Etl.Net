@@ -14,7 +14,7 @@ namespace Paillave.Etl.Debugger.Coordinator
         public void SetAssembly(string assemblyPath)
         {
             var etls = new Inspector().GetEtlList(assemblyPath);
-            _hubClientProxy.OnNewEtlList(etls.Select(i => i.Summary).ToList());
+            _hubClientProxy.OnProcessList(etls.Select(i => i.Summary).ToList());
         }
     }
 }

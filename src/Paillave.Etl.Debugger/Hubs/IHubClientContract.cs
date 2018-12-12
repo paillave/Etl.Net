@@ -8,6 +8,6 @@ namespace Paillave.Etl.Debugger.Hubs
     public interface IHubClientContract
     {
         Task PushTrace(TraceEvent trace);
-        Task OnNewEtlList(IEnumerable<EltDescriptionSummary> enumerable);
+        Task OnProcessList(IEnumerable<EltDescriptionSummary> enumerable);
     }
 }

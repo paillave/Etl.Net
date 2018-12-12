@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -34,7 +33,7 @@ class ApplicationToolBar extends React.Component {
           Etl.Net debugger
         </Typography>
         <div className={classes.grow} />
-        <Button className={classes.button} color="inherit"  onClick={this.props.showSelectProcessDialog} className={classNames(classes.menuButton)}>
+        <Button color="inherit" onClick={this.props.showSelectProcessDialog} className={classNames(classes.menuButton, classes.button)}>
           <FolderOpenIcon className={classes.leftIcon} />
           Select Process...
         </Button>
