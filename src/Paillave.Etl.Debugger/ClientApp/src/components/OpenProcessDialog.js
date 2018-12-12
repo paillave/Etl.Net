@@ -4,25 +4,28 @@ import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 // import FolderOpenIcon from "@material-ui/icons/FolderOpen";
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { DropzoneArea } from 'material-ui-dropzone';
+import SelectAssembly from "../forms/SelectAssembly";
 
 const styles = theme => ({
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+  }
 });
-
 class OpenProcessDialog extends React.Component {
-  handleDropFile(files) {
-    this.props.selectAssembly(files.name);
+  submitAssembly(values) {
+    this.props.selectAssembly(values.assemblyPath);
   }
   render() {
-    const { classes, theme, processSelectionDialog: { show } } = this.props;
-
+    const { classes, theme, processSelectionDialog: { show }, processSelectionDialog: { assemblyPath } } = this.props;
     return (<Dialog
+      scroll="paper"
       open={show}
       onClose={this.props.hideSelectProcessDialog}
       aria-labelledby="form-dialog-title"
@@ -30,23 +33,8 @@ class OpenProcessDialog extends React.Component {
       <DialogTitle id="form-dialog-title">Select Process</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <DropzoneArea
-            acceptedFiles={["application/x-msdownload", "application/octet-stream", "application/x-msdos-program"]}
-            filesLimit={1}
-            showPreviewsInDropzone={false}
-            showPreviews={false}
-            showAlerts={false}
-            onDrop={this.handleDropFile.bind(this)}
-          />
         </DialogContentText>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="name"
-          label="Email Address"
-          type="email"
-          fullWidth
-        />
+        <SelectAssembly onSubmit={this.submitAssembly.bind(this)} />
       </DialogContent>
       <DialogActions>
         <Button onClick={this.props.hideSelectProcessDialog} color="primary">

@@ -6,6 +6,7 @@ import * as App from './Application';
 import { receiveEtlTracesEpic } from '../epics/Application';
 import { createEpicMiddleware } from 'redux-observable';
 import logger from 'redux-logger'
+import { reducer as formReducer } from 'redux-form';
 
 export default function configureStore(history, initialState) {
   const reducers = {
@@ -14,7 +15,8 @@ export default function configureStore(history, initialState) {
 
   const createRootReducer = (history) => combineReducers({
     router: connectRouter(history),
-    ...reducers
+    ...reducers,
+    form: formReducer
   })
 
   const rootEpic = combineEpics(receiveEtlTracesEpic);
