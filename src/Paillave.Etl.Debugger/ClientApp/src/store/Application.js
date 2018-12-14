@@ -3,6 +3,7 @@ export const switchSelectProcessDialogType = 'SWITCH_SELECT_PROCESS_DIALOG';
 export const selectAssemblyType = 'SELECT_ASSEMBLY';
 export const receiveProcessListType = 'RECEIVE_PROCESS_LIST';
 export const loadProcessType = 'LOAD_PROCESS';
+export const receiveProcessDefinitionType = 'RECEIVE_PROCESS_DEFINITION';
 export const addTraceType = 'ADD_TRACE';
 export const hideTraceDetailsType = 'HIDE_TRACE_DETAILS';
 export const showTraceDetailsType = 'SHOW_TRACE_DETAILS';
@@ -36,7 +37,8 @@ export const actionCreators = {
   loadProcess: (process) => ({ type: loadProcessType, payload: { process } }),
   addTrace: (trace) => ({ type: addTraceType, payload: { trace } }),
   hideTraceDetails: () => ({ type: hideTraceDetailsType }),
-  showTraceDetails: (trace) => ({ type: showTraceDetailsType, payload: { trace } })
+  showTraceDetails: (trace) => ({ type: showTraceDetailsType, payload: { trace } }),
+  receiveProcessDefinition: (processDefinition) => ({ type: receiveProcessDefinitionType, payload: { processDefinition } }),
 };
 
 export const reducer = (state, action) => produce(state || initialState, draft => {
@@ -66,6 +68,10 @@ export const reducer = (state, action) => produce(state || initialState, draft =
     case showTraceDetailsType:
       draft.traceDetails.show = true;
       draft.traceDetails.selectedTrace = action.payload.trace;
+      break;
+    case receiveProcessDefinitionType:
+      draft.loadingProcessDefinition = false;
+      draft.processDefinition = action.payload.processDefinition;
       break;
     default:
       break;

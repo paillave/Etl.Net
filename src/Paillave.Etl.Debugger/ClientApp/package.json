@@ -20,7 +20,9 @@
     "redux-logger": "^3.0.6",
     "redux-observable": "^1.0.0",
     "rimraf": "^2.6.2",
-    "rxjs": "^6.3.3"
+    "rxjs": "^6.3.3",
+    "d3-sankey": "^0.7.1",
+    "d3-tip": "^0.9.1"
   },
   "scripts": {
     "start": "rimraf ./build && react-scripts start",

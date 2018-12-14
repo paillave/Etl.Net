@@ -104,7 +104,7 @@ namespace Paillave.Etl
             public WaitHandle StartSynchronizer => throw new NotImplementedException();
             public string JobName { get; }
             public bool IsTracingContext => false;
-            public IPushObservable<TraceEvent> StopProcessEvents => throw new NotImplementedException();
+            public IPushObservable<TraceEvent> StopProcessEvents => PushObservable.Empty<TraceEvent>();
             public void AddDisposable(IDisposable disposable) => throw new NotImplementedException();
             public void AddToWaitForCompletion<T>(string sourceNodeName, IPushObservable<T> stream) => _nodeNamesToWait.Add(sourceNodeName);
             public Task GetCompletionTask() => throw new NotImplementedException();

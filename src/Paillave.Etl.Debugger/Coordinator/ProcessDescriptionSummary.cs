@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Paillave.Etl.Debugger.Coordinator
 {
-    public class EltDescriptionSummary
+    public class ProcessDescriptionSummary
     {
         public string AssemblyFilePath { get; set; }
         public string StreamTransformationName { get; set; }

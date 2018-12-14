@@ -23,9 +23,8 @@ namespace Paillave.Etl.Debugger
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSignalR();
-            services.AddSingleton<ApplicationCoordinator>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -55,7 +54,7 @@ namespace Paillave.Etl.Debugger
                         {
                             routes.MapHub<ApplicationHub>("/application");
                         });
-            // app.UseMvc();
+            app.UseMvc();
 
             app.UseSpa(spa =>
             {

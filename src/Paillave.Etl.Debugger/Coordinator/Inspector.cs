@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using Paillave.Etl.Core.Streams;
 
@@ -8,12 +9,28 @@ namespace Paillave.Etl.Debugger.Coordinator
 {
     public class Inspector
     {
-        public List<EltDescription> GetEtlList(string assemblyPath)
+        public Inspector(string assemblyPath)
         {
             var assembly = Assembly.LoadFrom(assemblyPath);
-            return GetEtlList(assembly, assemblyPath);
+            this.Processes = GetEtlList(assembly, assemblyPath);
         }
-        public List<EltDescription> GetEtlList(Assembly assembly, string assemblyPath = null) => assembly.DefinedTypes
+        public List<ProcessDescription> Processes { get; }
+        public JobDefinitionStructure GetJobDefinitionStructure(string className, string @namespace, string streamTransformationName)
+        {
+            var process = Processes
+                            .First(i =>
+                                i.Summary.ClassName == className &&
+                                i.Summary.Namespace == @namespace &&
+                                i.Summary.StreamTransformationName == streamTransformationName);
+
+
+            var action = process.StreamTransformationMethodInfo.CreateDelegate(typeof(Action<>).MakeGenericType(typeof(ISingleStream<>).MakeGenericType(process.StreamConfigType)));
+
+            var processRunner = Activator.CreateInstance(typeof(StreamProcessRunner<>).MakeGenericType(process.StreamConfigType), action, process.Summary.StreamTransformationName);
+
+            return processRunner.GetType().GetMethod(nameof(StreamProcessRunner<int>.GetDefinitionStructure)).Invoke(processRunner, new object[] { }) as JobDefinitionStructure;
+        }
+        public static List<ProcessDescription> GetEtlList(Assembly assembly, string assemblyPath = null) => assembly.DefinedTypes
                 .SelectMany(i => i.DeclaredMethods)
                 .Select(methodInfo =>
                 {
@@ -25,9 +42,9 @@ namespace Paillave.Etl.Debugger.Coordinator
                     var configType = parameterType.GenericTypeArguments[0];
                     var genericType = typeof(ISingleStream<>).MakeGenericType(configType);
                     if (parameterType != genericType) return null;
-                    return new EltDescription
+                    return new ProcessDescription
                     {
-                        Summary = new EltDescriptionSummary
+                        Summary = new ProcessDescriptionSummary
                         {
                             AssemblyFilePath = assemblyPath,
                             StreamTransformationName = methodInfo.Name,
