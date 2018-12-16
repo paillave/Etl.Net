@@ -17,15 +17,19 @@ namespace ComplexQuickstart
     {
         static void Main(string[] args)
         {
-            var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\Samples\TestFiles";
-            // StreamProcessDebugger.OpenInDebugger(ComplexQuickstartJob.DefineProcess, new MyConfig
-            // {
-            //     InputFolderPath = Path.Combine(testFilesDirectory, @"."),
-            //     InputFilesSearchPattern = "testin.*.csv",
-            //     TypeFilePath = Path.Combine(testFilesDirectory, @"ref - Copy.csv"),
-            //     DestinationFilePath = Path.Combine(testFilesDirectory, @"outfile.csv"),
-            //     CategoryDestinationFilePath = Path.Combine(testFilesDirectory, @"categoryStats.csv")
-            // }).Wait();
+            var runner = StreamProcessRunner.Create<MyConfig>(ComplexQuickstartJob.DefineProcess);
+            runner.GetDefinitionStructure().OpenEstimatedExecutionPlanD3Sankey();
+            Action<IStream<TraceEvent>> traceStreamProcessDefinition = traceStream => traceStream.ThroughAction("logs to console", Console.WriteLine);
+            var testFilesDirectory = @"C:\Users\paill\Documents\GitHub\Etl.Net\src\Samples\TestFiles";
+            var task = runner.ExecuteAsync(new MyConfig
+            {
+                InputFolderPath = Path.Combine(testFilesDirectory, @"."),
+                InputFilesSearchPattern = "testin.*.csv",
+                TypeFilePath = Path.Combine(testFilesDirectory, @"ref - Copy.csv"),
+                DestinationFilePath = Path.Combine(testFilesDirectory, @"outfile.csv"),
+                CategoryDestinationFilePath = Path.Combine(testFilesDirectory, @"categoryStats.csv")
+            }, traceStreamProcessDefinition);
+            task.Result.OpenActualExecutionPlanD3Sankey();
 
             Console.WriteLine("Done");
             Console.WriteLine("Press a key...");

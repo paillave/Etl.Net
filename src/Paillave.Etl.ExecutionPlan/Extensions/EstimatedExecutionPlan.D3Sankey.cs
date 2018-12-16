@@ -30,7 +30,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
                 {
                     id = nameToIdDictionary[i.Name],
                     name = i.Name,
-                    color = null
+                    color = "blue"
                 }).ToList()
             };
         }
