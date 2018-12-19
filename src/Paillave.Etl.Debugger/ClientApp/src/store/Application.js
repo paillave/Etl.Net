@@ -7,6 +7,12 @@ export const receiveProcessDefinitionType = 'RECEIVE_PROCESS_DEFINITION';
 export const addTraceType = 'ADD_TRACE';
 export const hideTraceDetailsType = 'HIDE_TRACE_DETAILS';
 export const showTraceDetailsType = 'SHOW_TRACE_DETAILS';
+export const switchProcessParametersDialogType = 'SWITCH_PROCESS_PARAMETERS_DIALOG';
+export const executeProcessType = 'EXECUTE_PROCESS';
+export const keepParametersType = 'KEEP_PARAMETERS';
+export const executionCompletedType = 'EXECUTION_COMPLETED';
+export const selectJobNodeType = 'SELECT_JOB_NODE';
+
 
 const initialState = {
   processSelectionDialog: {
@@ -15,15 +21,21 @@ const initialState = {
     assemblyPath: undefined,
     loadingProcesses: false,
   },
+  processParametersDialog: {
+    show: false,
+    parameters: {}
+  },
   traceDetails: {
     show: false,
     selectedTrace: undefined,
   },
   loadingProcessDefinition: false,
-  traces: [],
-  tracesToShow: [],
+  traces: {}, //{[nodename:string]:{}}
   process: undefined,
-  processDefinition: undefined,
+  processDefinition: {
+    streamToNodeLinks: [],
+    nodes: []
+  },
   selectedNode: undefined
 };
 
@@ -39,12 +51,30 @@ export const actionCreators = {
   hideTraceDetails: () => ({ type: hideTraceDetailsType }),
   showTraceDetails: (trace) => ({ type: showTraceDetailsType, payload: { trace } }),
   receiveProcessDefinition: (processDefinition) => ({ type: receiveProcessDefinitionType, payload: { processDefinition } }),
+  showProcessParametersDialog: () => ({ type: switchProcessParametersDialogType, payload: { show: true } }),
+  hideProcessParametersDialog: () => ({ type: switchProcessParametersDialogType, payload: { show: false } }),
+  executeProcess: () => ({ type: executeProcessType }),
+  executionCompleted: () => ({ type: executionCompletedType }),
+  keepParameters: (parameters) => ({ type: keepParametersType, payload: { parameters } }),
+  selectJobNode: (selectedNode) => ({ type: selectJobNodeType, payload: { selectedNode } }),
 };
 
 export const reducer = (state, action) => produce(state || initialState, draft => {
   switch (action.type) {
+    case selectJobNodeType:
+      draft.selectedNode = action.payload.selectedNode;
+      break;
+    case keepParametersType:
+      draft.processParametersDialog.show = false;
+      draft.traces = [];
+      draft.tracesToShow = [];
+      draft.processParametersDialog.parameters = action.payload.parameters;
+      break;
     case switchSelectProcessDialogType:
       draft.processSelectionDialog.show = action.payload.show;
+      break;
+    case switchProcessParametersDialogType:
+      draft.processParametersDialog.show = action.payload.show;
       break;
     case selectAssemblyType:
       draft.processSelectionDialog.assemblyPath = action.payload.assemblyPath;
@@ -55,12 +85,18 @@ export const reducer = (state, action) => produce(state || initialState, draft =
       draft.processSelectionDialog.loadingProcesses = false;
       break;
     case loadProcessType:
+      let parameters = {};
+      action.payload.process.parameters.forEach(key => parameters[key] = null);
+      draft.processParametersDialog.parameters = parameters;
       draft.process = action.payload.process;
       draft.processSelectionDialog.show = false;
       draft.loadingProcessDefinition = true;
       break;
     case addTraceType:
-      draft.traces.push(action.payload.trace);
+      if (!draft.traces[action.payload.trace.nodeName])
+        draft.traces[action.payload.trace.nodeName] = [action.payload.trace];
+      else
+        draft.traces[action.payload.trace.nodeName].push(action.payload.trace);
       break;
     case hideTraceDetailsType:
       draft.traceDetails.show = false;

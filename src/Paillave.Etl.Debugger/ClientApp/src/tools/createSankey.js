@@ -337,8 +337,9 @@ function createSankey(containerNode, configSankey, dataSankey) {
 
     //Update value of links, for call the function '_updateLinksValues' transition values (old to new)
     //This function only update values from links
-    function updateData(dataUpdated) {
-        dataUpdated.links.forEach(link => {
+    
+    function updateLinks(links) {
+        links.forEach(link => {
             let sourceId = nodesKeyToIdDictionary[configSankey.getLinkSourceKey(link)];
             let targetId = nodesKeyToIdDictionary[configSankey.getLinkTargetKey(link)];
             let idLinkUpdate = `${sourceId} -> ${targetId}`;
@@ -356,6 +357,6 @@ function createSankey(containerNode, configSankey, dataSankey) {
         container.select("svg").remove();
     };
 
-    return { updateData, destroy };
+    return { updateLinks, destroy };
 }
 export default createSankey;

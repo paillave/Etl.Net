@@ -12,12 +12,12 @@
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
             // "program": "${workspaceFolder}/src/Samples/TestCsv/bin/Debug/netcoreapp2.1/TestCsv.dll",
-            "program": "${workspaceFolder}/src/Samples/ComplexQuickstart/bin/Debug/netcoreapp2.1/ComplexQuickstart.dll",
-            //"program": "${workspaceFolder}/src/Paillave.Etl.Debugger/bin/Debug/netcoreapp2.1/Paillave.Etl.Debugger.dll",
+            // "program": "${workspaceFolder}/src/Samples/ComplexQuickstart/bin/Debug/netcoreapp2.1/ComplexQuickstart.dll",
+            "program": "${workspaceFolder}/src/Paillave.Etl.Debugger/bin/Debug/netcoreapp2.1/Paillave.Etl.Debugger.dll",
             "args": [],
             // "cwd": "${workspaceFolder}/src/Samples/TestCsv",
-            "cwd": "${workspaceFolder}/src/Samples/ComplexQuickstart",
-            // "cwd": "${workspaceFolder}/src/Paillave.Etl.Debugger",
+            // "cwd": "${workspaceFolder}/src/Samples/ComplexQuickstart",
+            "cwd": "${workspaceFolder}/src/Paillave.Etl.Debugger",
             // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window
             "console": "integratedTerminal",
             "stopAtEntry": false,

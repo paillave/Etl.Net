@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Paillave.Etl.Core.Streams;
@@ -33,32 +34,16 @@ namespace Paillave.Etl.Debugger.Controllers
 
         [HttpGet("[action]")]
         [ProducesResponseType(200)]
-        public ActionResult<D3SankeyDescription> GetEstimatedExecutionPlan(string assemblyFilePath, string className, string @namespace, string streamTransformationName)
+        public ActionResult<JobDefinitionStructure> GetEstimatedExecutionPlan(string assemblyFilePath, string className, string @namespace, string streamTransformationName)
         {
-            var jobDefinitionStructure = new Inspector(assemblyFilePath).GetJobDefinitionStructure(className, @namespace, streamTransformationName);
-            return GetEstimatedExecutionPlanD3Sankey(jobDefinitionStructure);
+            return new Inspector(assemblyFilePath).GetJobDefinitionStructure(className, @namespace, streamTransformationName);
         }
 
-        private D3SankeyDescription GetEstimatedExecutionPlanD3Sankey(JobDefinitionStructure jobDefinitionStructure)
+        [HttpPost("[action]")]
+        [ProducesResponseType(200)]
+        public async Task<ActionResult<ExecutionStatus>> ExecuteProcess([FromQuery]string assemblyFilePath, [FromQuery]string className, [FromQuery]string @namespace, [FromQuery]string streamTransformationName, [FromBody]Dictionary<string, string> parameters)
         {
-            var nameToIdDictionary = jobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.Name, Idx }).ToDictionary(i => i.Name, i => i.Idx);
-            return new D3SankeyDescription
-            {
-                links = jobDefinitionStructure.StreamToNodeLinks.Select(link => new D3SankeyStatisticsLink
-                {
-                    source = nameToIdDictionary[link.SourceNodeName],
-                    target = nameToIdDictionary[link.TargetNodeName],
-                    value = 1
-                }
-                ).ToList(),
-                nodes = jobDefinitionStructure.Nodes.Select(i => new D3SankeyStatisticsNode
-                {
-                    id = nameToIdDictionary[i.Name],
-                    name = i.Name,
-                    color = null
-                }).ToList()
-            };
+            return await new Inspector(assemblyFilePath).ExecuteAsync(className, @namespace, streamTransformationName, parameters, te => this._applicationHubContext.Clients.All.PushTrace(te));
         }
-
     }
 }

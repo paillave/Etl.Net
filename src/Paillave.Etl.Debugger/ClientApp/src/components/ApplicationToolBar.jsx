@@ -6,6 +6,9 @@ import Typography from "@material-ui/core/Typography";
 // import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import FolderOpenIcon from "@material-ui/icons/FolderOpen";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
   button: {
@@ -25,7 +28,7 @@ const styles = theme => ({
 
 class ApplicationToolBar extends React.Component {
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, showSelectProcessDialog, showProcessParametersDialog, process } = this.props;
 
     return (
       <Toolbar>
@@ -33,10 +36,20 @@ class ApplicationToolBar extends React.Component {
           Etl.Net debugger
         </Typography>
         <div className={classes.grow} />
-        <Button color="inherit" onClick={this.props.showSelectProcessDialog} className={classNames(classes.menuButton, classes.button)}>
-          <FolderOpenIcon className={classes.leftIcon} />
-          Select Process...
+        <Tooltip title="Open an assembly and select the process to execute">
+          <Button color="inherit" onClick={showSelectProcessDialog} className={classNames(classes.menuButton, classes.button)}>
+            <FolderOpenIcon className={classes.leftIcon} />
+            Select Process...
         </Button>
+        </Tooltip>
+        {process &&
+          <Tooltip title="Execute the selected process by providing its parameter values">
+            <IconButton
+              onClick={showProcessParametersDialog}
+              color="inherit">
+              <PlayArrowIcon />
+            </IconButton>
+          </Tooltip>}
       </Toolbar>
     );
   }

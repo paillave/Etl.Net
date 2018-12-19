@@ -21,7 +21,7 @@ namespace Paillave.Etl
         public static Task<ExecutionStatus> CreateAndExecuteWithNoFaultAsync<TConfig>(TConfig config, Action<ISingleStream<TConfig>> jobDefinition, Action<IStream<TraceEvent>> traceProcessDefinition = null, string jobName = "NoName") => new StreamProcessRunner<TConfig>(jobDefinition, jobName).ExecuteWithNoFaultAsync(config, traceProcessDefinition);
     }
 
-    public class StreamProcessRunner<TConfig>
+    public class StreamProcessRunner<TConfig> : IStreamProcessRunner
     {
         private Action<ISingleStream<TConfig>> _jobDefinition;
         private string _jobName;
@@ -31,6 +31,10 @@ namespace Paillave.Etl
         {
             _jobDefinition = jobDefinition ?? (_jobDefinition => { });
             _jobName = jobName;
+        }
+        Task<ExecutionStatus> IStreamProcessRunner.ExecuteWithNoFaultAsync(object config, Action<IStream<TraceEvent>> traceProcessDefinition = null)
+        {
+            return ExecuteWithNoFaultAsync((TConfig)config, traceProcessDefinition);
         }
         public Task<ExecutionStatus> ExecuteWithNoFaultAsync(TConfig config, Action<IStream<TraceEvent>> traceProcessDefinition = null)
         {

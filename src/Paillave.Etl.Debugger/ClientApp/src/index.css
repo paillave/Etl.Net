@@ -10,3 +10,8 @@ body{
     padding-left: 0;
     padding-right: 0;
 }
+
+.full-screen {
+    height: 600px;
+    width: 100%;
+}

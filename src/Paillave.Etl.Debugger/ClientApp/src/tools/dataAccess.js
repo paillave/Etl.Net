@@ -26,9 +26,9 @@ export function fetchData(restApi) {
 }
 
 function fetchDataApi(restApi, restParameters) {
-    const headers = new Headers({
+    const headers = {
         "Accept": "application/json",
-    });
+    };
 
     const apiDescription = getApiDescription(restApi);
 
@@ -42,7 +42,7 @@ function fetchDataApi(restApi, restParameters) {
             requestInit.body = restParameters.data;
         }
         else if (requestInit.headers) {
-            requestInit.headers['content-type'] = 'application/json';
+            requestInit.headers['Content-Type'] = 'application/json';
             requestInit.body = JSON.stringify(restParameters.data);
         }
     }
@@ -51,6 +51,9 @@ function fetchDataApi(restApi, restParameters) {
         path: apiDescription.path,
         queryParams: restParameters && restParameters.queryParams
     });
+
+    console.log("=======================================================");
+    console.log(requestInit);
 
     return from(fetch(url, requestInit));
 }

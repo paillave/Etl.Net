@@ -13,13 +13,30 @@ class Sankey extends React.Component {
                 ...this.props.config,
                 onNodeClick: this.handleNodeClick.bind(this),
                 onLinkClick: this.handleLinkClick.bind(this),
-            },
-            this.props.data
+            }, {
+                links: this.props.links,
+                nodes: this.props.nodes
+            }
         );
     }
 
-    componentDidUpdate() {
-        this._chart.updateData(this.props.data);
+    componentDidUpdate(previousProps) {
+        if (previousProps.nodes !== this.props.nodes) {
+            this._chart = createSankey(
+                this._rootNode,
+                {
+                    ...this.props.config,
+                    onNodeClick: this.handleNodeClick.bind(this),
+                    onLinkClick: this.handleLinkClick.bind(this),
+                }, {
+                    links: this.props.links,
+                    nodes: this.props.nodes
+                }
+            );
+        }
+        else {
+            this._chart.updateLinks(this.props.links);
+        }
     }
 
     componentWillUnmount() {

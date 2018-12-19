@@ -13,6 +13,7 @@ import ApplicationToolBar from "../containers/ApplicationToolBar";
 import TraceDetails from "../containers/TraceDetails";
 import Divider from "@material-ui/core/Divider";
 import OpenProcessDialog from "../containers/OpenProcessDialog";
+import ProcessParametersDialog from "../containers/ProcessParametersDialog";
 
 const drawerWidth = 400;
 
@@ -69,18 +70,19 @@ const styles = theme => ({
 class PersistentDrawerRight extends React.Component {
   render() {
     const { classes, theme } = this.props;
-    let { traceDetails:{show} } = this.props;
+    let { traceDetails: { show } } = this.props;
 
     return (
       <div className={classes.root}>
         <CssBaseline />
-        <OpenProcessDialog/>
+        <OpenProcessDialog />
+        <ProcessParametersDialog />
         <AppBar position="fixed" className={classNames(classes.appBar, { [classes.appBarShift]: show })}>
           <ApplicationToolBar />
         </AppBar>
         <main className={classNames(classes.content, { [classes.contentShift]: show })}        >
           <div className={classes.drawerHeader} />
-            {this.props.children}
+          {this.props.children}
         </main>
         <Drawer
           className={classes.drawer}
