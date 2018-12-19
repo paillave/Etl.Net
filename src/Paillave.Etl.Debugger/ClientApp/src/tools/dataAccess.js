@@ -52,8 +52,5 @@ function fetchDataApi(restApi, restParameters) {
         queryParams: restParameters && restParameters.queryParams
     });
 
-    console.log("=======================================================");
-    console.log(requestInit);
-
     return from(fetch(url, requestInit));
 }

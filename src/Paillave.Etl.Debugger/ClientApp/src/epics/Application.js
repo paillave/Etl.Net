@@ -4,7 +4,7 @@
 import { combineEpics } from 'redux-observable';
 import { ofType } from 'redux-observable';
 // import 'jquery';
-import { map, withLatestFrom } from 'rxjs/operators';
+import { map, withLatestFrom, filter, bufferTime } from 'rxjs/operators';
 import { Subject } from 'rxjs/index';
 import { actionCreators, selectAssemblyType, loadProcessType, executeProcessType, keepParametersType } from '../store/Application'
 // https://github.com/aspnet/SignalR/
@@ -20,7 +20,10 @@ const receiveEtlTracesEpic = (action$, state$) => {
     });
     connection.start().then(i => console.info("CONNECTED!!!")).catch(i => console.error("NOT CONNECTED!!!"));
 
-    return trace$.pipe(map(i => actionCreators.addTrace(i)));
+    return trace$.pipe(
+        filter(i => i.content.type === "RowProcessStreamTraceContent"),
+        bufferTime(200),
+        map(i => actionCreators.addTraces(i)));
 }
 
 const getAssemblyProcesses = (action$, state$) => action$.pipe(
@@ -44,7 +47,7 @@ const executeProcess = (action$, state$) => action$.pipe(
 
 const keepParameters = (action$, state$) => action$.pipe(
     ofType(executeProcessType),
-    withLatestFrom(state$), 
+    withLatestFrom(state$),
     map(([, state]) => actionCreators.keepParameters(state.form.processParameters.values))
 );
 

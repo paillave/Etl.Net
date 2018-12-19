@@ -4,7 +4,7 @@ export const selectAssemblyType = 'SELECT_ASSEMBLY';
 export const receiveProcessListType = 'RECEIVE_PROCESS_LIST';
 export const loadProcessType = 'LOAD_PROCESS';
 export const receiveProcessDefinitionType = 'RECEIVE_PROCESS_DEFINITION';
-export const addTraceType = 'ADD_TRACE';
+export const addTracesType = 'ADD_TRACES';
 export const hideTraceDetailsType = 'HIDE_TRACE_DETAILS';
 export const showTraceDetailsType = 'SHOW_TRACE_DETAILS';
 export const switchProcessParametersDialogType = 'SWITCH_PROCESS_PARAMETERS_DIALOG';
@@ -47,7 +47,7 @@ export const actionCreators = {
   selectAssembly: (assemblyPath) => ({ type: selectAssemblyType, payload: { assemblyPath } }),
   receiveProcessList: (processes) => ({ type: receiveProcessListType, payload: { processes } }),
   loadProcess: (process) => ({ type: loadProcessType, payload: { process } }),
-  addTrace: (trace) => ({ type: addTraceType, payload: { trace } }),
+  addTraces: (traces) => ({ type: addTracesType, payload: { traces } }),
   hideTraceDetails: () => ({ type: hideTraceDetailsType }),
   showTraceDetails: (trace) => ({ type: showTraceDetailsType, payload: { trace } }),
   receiveProcessDefinition: (processDefinition) => ({ type: receiveProcessDefinitionType, payload: { processDefinition } }),
@@ -66,8 +66,7 @@ export const reducer = (state, action) => produce(state || initialState, draft =
       break;
     case keepParametersType:
       draft.processParametersDialog.show = false;
-      draft.traces = [];
-      draft.tracesToShow = [];
+      draft.traces = {};
       draft.processParametersDialog.parameters = action.payload.parameters;
       break;
     case switchSelectProcessDialogType:
@@ -92,11 +91,16 @@ export const reducer = (state, action) => produce(state || initialState, draft =
       draft.processSelectionDialog.show = false;
       draft.loadingProcessDefinition = true;
       break;
-    case addTraceType:
-      if (!draft.traces[action.payload.trace.nodeName])
-        draft.traces[action.payload.trace.nodeName] = [action.payload.trace];
-      else
-        draft.traces[action.payload.trace.nodeName].push(action.payload.trace);
+    case addTracesType:
+      action.payload.traces.forEach(trace => {
+        trace.position = trace.content.position;
+        if (!draft.traces[trace.nodeName])
+          draft.traces[trace.nodeName] = [trace];
+        else
+          draft.traces[trace.nodeName].push(trace);
+        let counter = draft.traces[trace.nodeName].length;
+        draft.processDefinition.streamToNodeLinks.filter(i => i.sourceNodeName === trace.nodeName).forEach(i => i.value = counter);
+      });
       break;
     case hideTraceDetailsType:
       draft.traceDetails.show = false;

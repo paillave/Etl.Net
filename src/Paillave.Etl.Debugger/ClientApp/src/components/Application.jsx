@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Sankey from './Sankey';
-import RowTraceGrid from './RowTraceGrid';
+import RowTraceGrid from '../containers/RowTraceGrid';
 
 const styles = theme => ({
 });
@@ -33,7 +33,7 @@ class Application extends React.Component {
     } = this.props;
 
     var config = {
-      transitionDuration: 100,
+      // transitionDuration: 100,
       getNodeKey: e => e.name,
       getNodeName: e => e.name,
       getLinkSourceKey: e => e.sourceNodeName,

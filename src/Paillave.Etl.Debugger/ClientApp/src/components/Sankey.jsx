@@ -1,7 +1,8 @@
 import React from "react";
 import createSankey from "../tools/createSankey";
+import { of } from "rxjs";
 
-class Sankey extends React.Component {
+class Sankey extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {};
@@ -34,7 +35,7 @@ class Sankey extends React.Component {
                 }
             );
         }
-        else {
+        else if (previousProps.links !== this.props.links) {
             this._chart.updateLinks(this.props.links);
         }
     }
