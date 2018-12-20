@@ -33,7 +33,7 @@ class Application extends React.Component {
     } = this.props;
 
     var config = {
-      // transitionDuration: 100,
+      transitionDuration: 200,
       getNodeKey: e => e.name,
       getNodeName: e => e.name,
       getLinkSourceKey: e => e.sourceNodeName,

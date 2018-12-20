@@ -93,13 +93,15 @@ export const reducer = (state, action) => produce(state || initialState, draft =
       break;
     case addTracesType:
       action.payload.traces.forEach(trace => {
-        trace.position = trace.content.position;
         if (!draft.traces[trace.nodeName])
           draft.traces[trace.nodeName] = [trace];
         else
           draft.traces[trace.nodeName].push(trace);
         let counter = draft.traces[trace.nodeName].length;
-        draft.processDefinition.streamToNodeLinks.filter(i => i.sourceNodeName === trace.nodeName).forEach(i => i.value = counter);
+        if (trace.content.type === "RowProcessStreamTraceContent") {
+          trace.position = trace.content.position;
+          draft.processDefinition.streamToNodeLinks.filter(i => i.sourceNodeName === trace.nodeName).forEach(i => i.value = (i.value || 0) + 1);
+        }
       });
       break;
     case hideTraceDetailsType:

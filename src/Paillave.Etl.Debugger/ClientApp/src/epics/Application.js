@@ -4,8 +4,8 @@
 import { combineEpics } from 'redux-observable';
 import { ofType } from 'redux-observable';
 // import 'jquery';
-import { map, withLatestFrom, filter, bufferTime } from 'rxjs/operators';
-import { Subject } from 'rxjs/index';
+import { map, withLatestFrom, filter, bufferTime, flatMap } from 'rxjs/operators';
+import { Subject, from, of, merge } from 'rxjs/index';
 import { actionCreators, selectAssemblyType, loadProcessType, executeProcessType, keepParametersType } from '../store/Application'
 // https://github.com/aspnet/SignalR/
 import * as signalR from '@aspnet/signalr'
@@ -21,8 +21,8 @@ const receiveEtlTracesEpic = (action$, state$) => {
     connection.start().then(i => console.info("CONNECTED!!!")).catch(i => console.error("NOT CONNECTED!!!"));
 
     return trace$.pipe(
-        filter(i => i.content.type === "RowProcessStreamTraceContent"),
         bufferTime(200),
+        filter(i => i.length > 0),
         map(i => actionCreators.addTraces(i)));
 }
 
@@ -34,16 +34,37 @@ const getAssemblyProcesses = (action$, state$) => action$.pipe(
 );
 
 
-const executeProcess = (action$, state$) => action$.pipe(
-    ofType(executeProcessType),
-    withLatestFrom(state$),
-    map(([, state]) => ({
-        queryParams: state.app.process,
-        data: state.form.processParameters.values
-    })),
-    fetchData({ path: "Application/ExecuteProcess", method: "POST" }),
-    map(i => actionCreators.executionCompleted())
-);
+const executeProcess = (action$, state$) => {
+    return action$.pipe(
+        ofType(executeProcessType),
+        withLatestFrom(state$),
+        flatMap(([, state]) => {
+            let processDefinitionAction$ = of({
+                queryParams: state.app.process,
+            }).pipe(
+                fetchData("Application/GetEstimatedExecutionPlan"),
+                map(i => actionCreators.receiveProcessDefinition(i))
+            );
+            return merge(processDefinitionAction$,
+                processDefinitionAction$.pipe(
+                    map(() => ({
+                        queryParams: state.app.process,
+                        data: state.form.processParameters.values
+                    })),
+                    fetchData({ path: "Application/ExecuteProcess", method: "POST" }),
+                    map(i => actionCreators.executionCompleted()))
+            );
+        })
+        // flatMap
+
+        // map(([, state]) => ({
+        //     queryParams: state.app.process,
+        //     data: state.form.processParameters.values
+        // })),
+        // fetchData({ path: "Application/ExecuteProcess", method: "POST" }),
+        // map(i => actionCreators.executionCompleted())
+    );
+}
 
 const keepParameters = (action$, state$) => action$.pipe(
     ofType(executeProcessType),
@@ -65,7 +86,3 @@ export default combineEpics(
     keepParameters,
     executeProcess,
 );
-    // let ws$ = new WebSocketSubject({ url: "http://localhost:5000/EtlProcessDebug" });
-//     return ws$.pipe(map(actionCreators.addEtlTrace));
-// };
-

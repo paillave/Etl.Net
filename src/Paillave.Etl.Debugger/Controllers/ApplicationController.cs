@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -43,7 +44,12 @@ namespace Paillave.Etl.Debugger.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult<ExecutionStatus>> ExecuteProcess([FromQuery]string assemblyFilePath, [FromQuery]string className, [FromQuery]string @namespace, [FromQuery]string streamTransformationName, [FromBody]Dictionary<string, string> parameters)
         {
-            return await new Inspector(assemblyFilePath).ExecuteAsync(className, @namespace, streamTransformationName, parameters, te => this._applicationHubContext.Clients.All.PushTrace(te));
+            return await new Inspector(assemblyFilePath).ExecuteAsync(className, @namespace, streamTransformationName, parameters, te =>
+            {
+                if (te.Content.Level == TraceLevel.Error)
+                    Console.WriteLine(te.Content);
+                this._applicationHubContext.Clients.All.PushTrace(te);
+            });
         }
     }
 }
