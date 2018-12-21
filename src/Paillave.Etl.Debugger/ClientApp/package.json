@@ -6,6 +6,8 @@
     "@aspnet/signalr": "^1.0.4",
     "@material-ui/core": "^3.6.2",
     "@material-ui/icons": "^3.0.1",
+    "@types/socket.io": "^2.1.2",
+    "@types/socket.io-client": "^1.4.32",
     "connected-react-router": "^5.0.1",
     "d3": "^5.7.0",
     "d3-sankey": "^0.7.1",
