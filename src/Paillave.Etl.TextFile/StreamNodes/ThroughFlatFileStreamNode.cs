@@ -39,6 +39,7 @@ namespace Paillave.Etl.TextFile.StreamNodes
         private void PreProcess(SystemIO.Stream stream, FlatFileDefinition<TIn> mapping)
         {
             _streamWriter = new StreamWriter(stream, Encoding.Default, 1024, true);
+            this.ExecutionContext.AddDisposable(_streamWriter);
             _streamWriter.WriteLine(mapping.GenerateDefaultHeaderLine());
         }
         protected void ProcessValueToOutput(SystemIO.Stream stream, FlatFileDefinition<TIn> mapping, TIn value)
@@ -48,8 +49,8 @@ namespace Paillave.Etl.TextFile.StreamNodes
 
         protected override void PostProcess()
         {
-            if (_streamWriter != null)
-                _streamWriter.Dispose();
+            // if (_streamWriter != null)
+            //     _streamWriter.Dispose();
         }
     }
 }

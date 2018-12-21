@@ -16,7 +16,11 @@ namespace Paillave.Etl.Reactive.Disposables
             lock (syncLock)
             {
                 foreach (var item in _disposables)
-                    item.Dispose();
+                    try
+                    {
+                        item.Dispose();
+                    }
+                    catch { }
                 _disposables.Clear();
             }
         }
