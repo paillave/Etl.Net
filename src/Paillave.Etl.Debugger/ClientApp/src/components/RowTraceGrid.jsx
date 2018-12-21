@@ -162,7 +162,7 @@ class ReactVirtualizedTable extends React.PureComponent {
         if (!this.props.selectedNode || !this.props.traces[this.props.selectedNode.name]) return 0;
         return this.props.traces[this.props.selectedNode.name].length;
     }
-    getRowData(index) {
+    getRowData({ index }) {
         if (!this.props.selectedNode || !this.props.traces[this.props.selectedNode.name]) return {};
         return this.props.traces[this.props.selectedNode.name][index];
     }
