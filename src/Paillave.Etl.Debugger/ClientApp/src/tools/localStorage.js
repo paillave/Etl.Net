@@ -1,10 +1,14 @@
+import { convertToDate } from "./dataAccess";
+
 export const loadState = () => {
     try {
         const serializedState = localStorage.getItem('state');
         if (serializedState === null) {
             return;
         }
-        return JSON.parse(serializedState);
+        let state = JSON.parse(serializedState);
+        convertToDate(state);
+        return state;
     }
     catch (err) {
         return;

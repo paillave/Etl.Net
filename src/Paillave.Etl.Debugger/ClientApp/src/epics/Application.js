@@ -5,7 +5,7 @@ import { combineEpics } from 'redux-observable';
 import { ofType } from 'redux-observable';
 // import 'jquery';
 import { map, withLatestFrom, filter, bufferTime, flatMap } from 'rxjs/operators';
-import { Subject, from, of, merge } from 'rxjs/index';
+import { Subject, of, merge } from 'rxjs/index';
 import { actionCreators, selectAssemblyType, loadProcessType, executeProcessType, keepParametersType } from '../store/Application'
 // https://github.com/aspnet/SignalR/
 import * as signalR from '@aspnet/signalr'
@@ -55,14 +55,6 @@ const executeProcess = (action$, state$) => {
                     map(i => actionCreators.executionCompleted()))
             );
         })
-        // flatMap
-
-        // map(([, state]) => ({
-        //     queryParams: state.app.process,
-        //     data: state.form.processParameters.values
-        // })),
-        // fetchData({ path: "Application/ExecuteProcess", method: "POST" }),
-        // map(i => actionCreators.executionCompleted())
     );
 }
 

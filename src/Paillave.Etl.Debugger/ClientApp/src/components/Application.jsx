@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Sankey from './Sankey';
 import RowTraceGrid from '../containers/RowTraceGrid';
+import NodeTracesHeaders from "../containers/NodeTracesHeaders";
 
 const styles = theme => ({
 });
@@ -59,6 +60,7 @@ class Application extends React.Component {
 
     return (<React.Fragment>
       <Sankey config={config} nodes={nodes} links={links} className={"full-screen"} onNodeClick={this.handleNodeClick.bind(this)} onLinkClick={this.handleLinkClick.bind(this)} />
+      <NodeTracesHeaders/>
       <RowTraceGrid />
     </React.Fragment>);
   }

@@ -1,4 +1,5 @@
 ﻿import produce from 'immer';
+import { convertToDate } from '../tools/dataAccess';
 export const switchSelectProcessDialogType = 'SWITCH_SELECT_PROCESS_DIALOG';
 export const selectAssemblyType = 'SELECT_ASSEMBLY';
 export const receiveProcessListType = 'RECEIVE_PROCESS_LIST';
@@ -93,13 +94,13 @@ export const reducer = (state, action) => produce(state || initialState, draft =
       break;
     case addTracesType:
       action.payload.traces.forEach(trace => {
+        convertToDate(trace);
         if (!draft.traces[trace.nodeName])
           draft.traces[trace.nodeName] = [trace];
         else
-          draft.traces[trace.nodeName].push(trace);
+          draft.traces[trace.nodeName].unshift(trace);
         let counter = draft.traces[trace.nodeName].length;
         if (trace.content.type === "RowProcessStreamTraceContent") {
-          trace.position = trace.content.position;
           draft.processDefinition.streamToNodeLinks.filter(i => i.sourceNodeName === trace.nodeName).forEach(i => i.value = (i.value || 0) + 1);
         }
       });

@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 import { AutoSizer, Column, SortDirection, Table } from 'react-virtualized';
+import { formatDate } from '../tools/dataAccess';
 
 const styles = theme => ({
     table: {
@@ -18,6 +19,7 @@ const styles = theme => ({
     },
     tableRow: {
         cursor: 'pointer',
+        // height: 30
     },
     tableRowHover: {
         '&:hover': {
@@ -26,6 +28,9 @@ const styles = theme => ({
     },
     tableCell: {
         flex: 1,
+        // height: 30
+        // marginTop:5,
+        // marginBottom:5,
     },
     noClick: {
         cursor: 'initial',
@@ -151,8 +156,8 @@ MuiVirtualizedTable.propTypes = {
 };
 
 MuiVirtualizedTable.defaultProps = {
-    headerHeight: 56,
-    rowHeight: 56,
+    headerHeight: 40,
+    rowHeight: 35,
 };
 
 const WrappedVirtualizedTable = withStyles(styles)(MuiVirtualizedTable);
@@ -180,12 +185,14 @@ class ReactVirtualizedTable extends React.PureComponent {
                         width: 120,
                         label: 'Row #',
                         dataKey: 'position',
-                        numeric: true,
+                        cellDataGetter: ({ rowData }) => rowData.content.position,
+                        style: { textAlign: 'right' },
                     },
                     {
                         width: 200,
                         flexGrow: 1.0,
                         label: 'Date Time',
+                        cellDataGetter: ({ rowData }) => formatDate(rowData.dateTime),
                         dataKey: 'dateTime',
                     },
                 ]}
