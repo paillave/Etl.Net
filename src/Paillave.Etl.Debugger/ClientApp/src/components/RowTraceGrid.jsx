@@ -7,6 +7,8 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 import { AutoSizer, Column, SortDirection, Table } from 'react-virtualized';
 import { formatDate } from '../tools/dataAccess';
+import DoneOutlinedIcon from '@material-ui/icons/DoneOutlined';
+import DoneAllOutlinedIcon from '@material-ui/icons/DoneAllOutlined';
 
 const styles = theme => ({
     table: {
@@ -35,6 +37,10 @@ const styles = theme => ({
     noClick: {
         cursor: 'initial',
     },
+    rowIcon: {
+        marginLeft: 20,
+        marginRight: 20,
+    }
 });
 
 class MuiVirtualizedTable extends React.PureComponent {
@@ -56,7 +62,7 @@ class MuiVirtualizedTable extends React.PureComponent {
                 })}
                 variant="body"
                 style={{ height: rowHeight }}
-                numeric={(columnIndex != null && columns[columnIndex].numeric) || false}
+                align={(columnIndex != null && columns[columnIndex].align) || 'left'}
             >
                 {cellData}
             </TableCell>
@@ -85,7 +91,7 @@ class MuiVirtualizedTable extends React.PureComponent {
                 className={classNames(classes.tableCell, classes.flexContainer, classes.noClick)}
                 variant="head"
                 style={{ height: headerHeight }}
-                numeric={columns[columnIndex].numeric || false}
+                align={columns[columnIndex].align || "left"}
             >
                 {inner}
             </TableCell>
@@ -175,18 +181,30 @@ class ReactVirtualizedTable extends React.PureComponent {
         this.props.showTraceDetails(event.rowData);
     }
     render() {
-        return <Paper style={{ height: 400, width: '100%' }}>
+        const { classes } = this.props;
+        return <Paper style={{ height: 600, width: '100%' }}>
             <WrappedVirtualizedTable
                 rowCount={this.getRowCount.bind(this)()}
                 rowGetter={this.getRowData.bind(this)}
                 onRowClick={this.handleRowClick.bind(this)}
                 columns={[
                     {
-                        width: 120,
+                        width: 50,
+                        label: "",
+                        dataKey: 'traceIcon',
+                        cellRenderer: ({ rowData }) => {
+                            switch (rowData.content.type) {
+                                case "RowProcessStreamTraceContent": return (<DoneOutlinedIcon className={classes.rowIcon} />);
+                                case "CounterSummaryStreamTraceContent": return (<DoneAllOutlinedIcon className={classes.rowIcon} />);
+                            }
+                        }
+                    },
+                    {
+                        width: 90,
                         label: 'Row #',
                         dataKey: 'position',
                         cellDataGetter: ({ rowData }) => rowData.content.position,
-                        style: { textAlign: 'right' },
+                        align: 'right',
                     },
                     {
                         width: 200,
@@ -201,4 +219,4 @@ class ReactVirtualizedTable extends React.PureComponent {
     }
 }
 
-export default ReactVirtualizedTable;
+export default withStyles(styles)(ReactVirtualizedTable);
