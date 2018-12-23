@@ -6,7 +6,8 @@ namespace Paillave.Etl.Core
 {
     public interface INodeContext
     {
-        string NodeName{ get; }
+        string NodeName { get; }
         string TypeName { get; }
+        bool IsAwaitable { get; }
     }
 }

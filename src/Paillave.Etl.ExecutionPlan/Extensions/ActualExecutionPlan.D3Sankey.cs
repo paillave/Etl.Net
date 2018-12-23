@@ -16,7 +16,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
     {
         public static D3SankeyDescription GetActualExecutionPlanD3Sankey(this ExecutionStatus executionStatus)
         {
-            var nameToIdDictionary = executionStatus.JobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.Name, Idx }).ToDictionary(i => i.Name, i => i.Idx);
+            var nameToIdDictionary = executionStatus.JobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.NodeName, Idx }).ToDictionary(i => i.NodeName, i => i.Idx);
             return new D3SankeyDescription
             {
                 links = executionStatus.JobDefinitionStructure.StreamToNodeLinks.GroupJoin(
@@ -33,11 +33,11 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
                 nodes = executionStatus.JobDefinitionStructure.Nodes.Select(i =>
                {
                    string color = "blue";
-                   if (executionStatus.StreamStatisticErrors.Any(e => e.NodeName == i.Name)) color = "red";
+                   if (executionStatus.StreamStatisticErrors.Any(e => e.NodeName == i.NodeName)) color = "red";
                    return new D3SankeyStatisticsNode
                    {
-                       id = nameToIdDictionary[i.Name],
-                       name = i.Name,
+                       id = nameToIdDictionary[i.NodeName],
+                       name = i.NodeName,
                        color = color
                    };
                }).ToList()

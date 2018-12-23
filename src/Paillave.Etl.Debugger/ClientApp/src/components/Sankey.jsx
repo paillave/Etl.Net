@@ -1,5 +1,13 @@
 import React from "react";
 import createSankey from "../tools/createSankey";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = theme => ({
+    fullScreen: {
+        height: 600,
+        width: "100%"
+    }
+});
 
 class Sankey extends React.PureComponent {
     constructor(props) {
@@ -58,7 +66,12 @@ class Sankey extends React.PureComponent {
     }
 
     render() {
-        return <div ref={this._setRef.bind(this)} className="full-screen" />;
+        const {
+            classes,
+          } = this.props;
+      
+        return <div ref={this._setRef.bind(this)} className={classes.fullScreen} />;
     }
 }
-export default Sankey;
+
+export default withStyles(styles, { withTheme: true })(Sankey);

@@ -20,29 +20,30 @@ const styles = theme => ({
         alignItems: 'baseline'
     }
 });
+const renderTextField = ({
+    label,
+    input,
+    meta: { touched, invalid, error },
+    classes,
+    ...custom
+}) => (
+        <TextField
+            label={label}
+            className={classes.textField}
+            error={touched && invalid}
+            helperText={touched && error}
+            margin="normal"
+            {...input}
+            {...custom}
+        />)
+const renderTextFieldWithStyle = withStyles(styles, { withTheme: true })(renderTextField);
 
 let SelectAssembly = props => {
     const { handleSubmit, classes } = props
-    const renderTextField = ({
-        label,
-        input,
-        meta: { touched, invalid, error },
-        ...custom
-    }) => (
-            <TextField
-                label={label}
-
-                className={classes.textField}
-                error={touched && invalid}
-                helperText={touched && error}
-                margin="normal"
-                {...input}
-                {...custom}
-            />)
 
     return <form onSubmit={handleSubmit} className={classes.form} noValidate>
         <div className={classes.filePath}>
-            <Field name="assemblyPath" component={renderTextField} label="Path to Assembly" />
+            <Field name="assemblyPath" component={renderTextFieldWithStyle} label="Path to Assembly" />
             <Button type="submit">Load</Button>
         </div>
     </form>

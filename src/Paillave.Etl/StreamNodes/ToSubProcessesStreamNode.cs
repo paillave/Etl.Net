@@ -37,7 +37,7 @@ namespace Paillave.Etl.StreamNodes
                 .FlatMap(i =>
                 {
                     EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-                    var inputStream = new SingleStream<TIn>(this.Tracer, this.ExecutionContext, this.NodeName, PushObservable.FromSingle(i.config, waitHandle));
+                    var inputStream = new SingleStream<TIn>(this.Tracer.GetSubTracer(this), this.ExecutionContext, this.NodeName, PushObservable.FromSingle(i.config, waitHandle));
                     var outputStream = i.subProc(inputStream);
                     IDisposable awaiter = null;
                     outputStream.Observable.Subscribe(j => { }, () => awaiter?.Dispose());

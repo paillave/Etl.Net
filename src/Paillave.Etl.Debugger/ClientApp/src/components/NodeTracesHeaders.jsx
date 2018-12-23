@@ -6,6 +6,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import RestorePageIcon from '@material-ui/icons/RestorePageOutlined';
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplicationsOutlined';
+import SettingsIcon from '@material-ui/icons/SettingsOutlined';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const styles = theme => ({
     root: {
@@ -22,8 +24,8 @@ const styles = theme => ({
     menuTitle: {
         display: "flex",
         flexDirection: "column",
-        marginRight:20,
-        marginLeft:10,
+        marginRight: 20,
+        marginLeft: 10,
     },
     menuTitlePrimary: {
         ...theme.typography.h6
@@ -33,30 +35,42 @@ const styles = theme => ({
     }
 });
 
-function NodeTracesHeaders(props) {
-    const { classes, process, selectedNode } = props;
+// getRowCount() {
+//     if (!this.props.selectedNode || !this.props.traces[this.props.selectedNode.nodeName]) return 0;
+//     return this.props.traces[this.props.selectedNode.nodeName].length;
+// }
 
-    return (
-        <div className={classes.root}>
-            <AppBar position="static" color="default">
-                <Toolbar>
-                    <RestorePageIcon/>
-                    <div className={classes.menuTitle}>
-                        <Typography variant="h6" color="inherit" className={classes.grow}>{process.className}</Typography>
-                        <Typography variant="body1" color="inherit" className={classes.grow}>{process.namespace}</Typography>
-                    </div>
-                    <SettingsApplicationsIcon/>
-                    <div className={classes.menuTitle}>
-                        <Typography variant="h6" color="inherit" className={classes.grow}>{process.streamTransformationName}</Typography>
-                        <Typography variant="body1" color="inherit" className={classes.grow}>{selectedNode.name}</Typography>
-                    </div>
-                    {/* <Typography variant="h6" color="inherit" className={classes.grow}>
-                        {process.namespace}/{process.className}/{process.streamTransformationName}/{selectedNode.name}
-                    </Typography> */}
-                </Toolbar>
-            </AppBar>
-        </div>
-    );
+class NodeTracesHeaders extends React.PureComponent {
+
+    render() {
+        const { classes, process, selectedNode, executingProcess } = this.props;
+        return (
+            <div className={classes.root}>
+                <AppBar position="static" color="default">
+                    {process && <Toolbar>
+                        <RestorePageIcon />
+                        <div className={classes.menuTitle}>
+                            <Typography variant="h6" color="inherit" className={classes.grow}>{process.className}</Typography>
+                            <Typography variant="body1" color="inherit" className={classes.grow}>{process.namespace}</Typography>
+                        </div>
+                        <SettingsApplicationsIcon />
+                        <div className={classes.menuTitle}>
+                            <Typography variant="h6" color="inherit" className={classes.grow}>{process.streamTransformationName}</Typography>
+                            {selectedNode && <Typography variant="body1" color="inherit" className={classes.grow}>{selectedNode.nodeName}</Typography>}
+                        </div>
+                        {selectedNode && <React.Fragment>
+                            <SettingsIcon />
+                            <div className={classes.menuTitle}>
+                                <Typography variant="h6" color="inherit" className={classes.grow}>{selectedNode.typeName}</Typography>
+                                {selectedNode.rowCount && <Typography variant="body1" color="inherit" className={classes.grow}>{selectedNode.rowCount} row(s)</Typography>}
+                            </div>
+                        </React.Fragment>}
+                    </Toolbar>}
+                    {executingProcess && <LinearProgress />}
+                </AppBar>
+            </div>
+        );
+    }
 }
 
 NodeTracesHeaders.propTypes = {

@@ -16,7 +16,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
     {
         public static PlotlySankeyDescription GetActualExecutionPlanPlotlySankey(this ExecutionStatus executionStatus)
         {
-            var nameToIdDictionary = executionStatus.JobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.Name, Idx }).ToDictionary(i => i.Name, i => i.Idx);
+            var nameToIdDictionary = executionStatus.JobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.NodeName, Idx }).ToDictionary(i => i.NodeName, i => i.Idx);
             var links = executionStatus.JobDefinitionStructure.StreamToNodeLinks.GroupJoin(
                     executionStatus.StreamStatisticCounters,
                     i => i.SourceNodeName,
@@ -30,12 +30,12 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
                 ).ToList();
             return new PlotlySankeyDescription
             {
-                NodeColors = executionStatus.JobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.Name]).Select(i =>
+                NodeColors = executionStatus.JobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.NodeName]).Select(i =>
                 {
-                    if (executionStatus.StreamStatisticErrors.Any(e => e.NodeName == i.Name)) return "red";
+                    if (executionStatus.StreamStatisticErrors.Any(e => e.NodeName == i.NodeName)) return "red";
                     return "blue";
                 }).ToList(),
-                NodeNames = executionStatus.JobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.Name]).Select(i => i.Name).ToList(),
+                NodeNames = executionStatus.JobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.NodeName]).Select(i => i.NodeName).ToList(),
                 LinkSources = links.Select(i => i.source).ToList(),
                 LinkTargets = links.Select(i => i.target).ToList(),
                 LinkValues = links.Select(i => i.value).ToList()

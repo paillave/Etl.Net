@@ -170,12 +170,12 @@ const WrappedVirtualizedTable = withStyles(styles)(MuiVirtualizedTable);
 
 class ReactVirtualizedTable extends React.PureComponent {
     getRowCount() {
-        if (!this.props.selectedNode || !this.props.traces[this.props.selectedNode.name]) return 0;
-        return this.props.traces[this.props.selectedNode.name].length;
+        if (!this.props.selectedNode || !this.props.traces[this.props.selectedNode.nodeName]) return 0;
+        return this.props.traces[this.props.selectedNode.nodeName].length;
     }
     getRowData({ index }) {
-        if (!this.props.selectedNode || !this.props.traces[this.props.selectedNode.name]) return {};
-        return this.props.traces[this.props.selectedNode.name][index];
+        if (!this.props.selectedNode || !this.props.traces[this.props.selectedNode.nodeName]) return {};
+        return this.props.traces[this.props.selectedNode.nodeName][index];
     }
     handleRowClick(event) {
         this.props.showTraceDetails(event.rowData);

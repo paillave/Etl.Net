@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Paillave.Etl;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.ExecutionPlan.Extensions
 {
@@ -13,7 +14,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
     {
         public static VisNetworkDescription GetEstimatedExecutionPlanVisNetwork(this JobDefinitionStructure jobDefinitionStructure)
         {
-            var nameToIdDictionary = jobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.Name, Idx }).ToDictionary(i => i.Name, i => i.Idx);
+            var nameToIdDictionary = jobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.NodeName, Idx }).ToDictionary(i => i.NodeName, i => i.Idx);
             return new VisNetworkDescription
             {
                 edges = jobDefinitionStructure.StreamToNodeLinks.Select(link => new VisNetworkStatisticEdge
@@ -30,8 +31,8 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
                     return new VisNetworkStatisticNode
                     {
                         borderWidth = GetNodeBorderWidth(i),
-                        id = nameToIdDictionary[i.Name],
-                        label = i.Name,
+                        id = nameToIdDictionary[i.NodeName],
+                        label = i.NodeName,
                         shape = icon != null ? "icon" : null,
                         icon = icon,
                         color = GetNodeColor(i)
@@ -39,19 +40,19 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
                 }).ToList()
             };
         }
-        private static int GetNodeBorderWidth(NodeDescription node)
+        private static int GetNodeBorderWidth(INodeContext node)
         {
-            if (node.IsSource) return 8;
-            if (node.IsTarget) return 8;
+            // if (node.IsSource) return 8;
+            // if (node.IsTarget) return 8;
             return 2;
         }
-        private static VisNetworkStatisticColorNode GetNodeColor(NodeDescription node)
+        private static VisNetworkStatisticColorNode GetNodeColor(INodeContext node)
         {
-            if (node.IsSource) return new VisNetworkStatisticColorNode { background = "lightgrey", border = "#2B7CE9" };
-            if (node.IsTarget) return new VisNetworkStatisticColorNode { background = "blue", border = "#2B7CE9" };
+            // if (node.IsSource) return new VisNetworkStatisticColorNode { background = "lightgrey", border = "#2B7CE9" };
+            // if (node.IsTarget) return new VisNetworkStatisticColorNode { background = "blue", border = "#2B7CE9" };
             return new VisNetworkStatisticColorNode { background = "#D2E5FF", border = "#2B7CE9" };
         }
-        private static VisNetworkStatisticIconNode GetIcon(NodeDescription node)
+        private static VisNetworkStatisticIconNode GetIcon(INodeContext node)
         {
             //if (node.IsSource) return new VisNetworkStatisticIconNode { face = "FontAwesome", size = 50, code = @"\uf2f6" };
             //if (node.IsTarget) return new VisNetworkStatisticIconNode { face = "FontAwesome", size = 50, code = @"\uf2f5" };

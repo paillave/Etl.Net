@@ -31,6 +31,7 @@ const initialState = {
     selectedTrace: undefined,
   },
   loadingProcessDefinition: false,
+  executingProcess: false,
   traces: {}, //{[nodename:string]:{}}
   process: undefined,
   processDefinition: {
@@ -62,7 +63,14 @@ export const actionCreators = {
 
 export const reducer = (state, action) => produce(state || initialState, draft => {
   switch (action.type) {
+    case executeProcessType:
+      draft.executingProcess = true;
+      break;
+    case executionCompletedType:
+      draft.executingProcess = false;
+      break;
     case selectJobNodeType:
+      draft.traceDetails.show = false;
       draft.selectedNode = action.payload.selectedNode;
       break;
     case keepParametersType:
@@ -91,6 +99,9 @@ export const reducer = (state, action) => produce(state || initialState, draft =
       draft.process = action.payload.process;
       draft.processSelectionDialog.show = false;
       draft.loadingProcessDefinition = true;
+      draft.traces= {};
+      draft.traceDetails.show = false;
+      draft.selectedNode = undefined;
       break;
     case addTracesType:
       action.payload.traces.forEach(trace => {
@@ -101,6 +112,7 @@ export const reducer = (state, action) => produce(state || initialState, draft =
           draft.traces[trace.nodeName].unshift(trace);
         let counter = draft.traces[trace.nodeName].length;
         if (trace.content.type === "RowProcessStreamTraceContent") {
+          draft.processDefinition.nodes.filter(i => i.nodeName === trace.nodeName).forEach(i => i.rowCount = (i.rowCount || 0) + 1);
           draft.processDefinition.streamToNodeLinks.filter(i => i.sourceNodeName === trace.nodeName).forEach(i => i.value = (i.value || 0) + 1);
         }
       });

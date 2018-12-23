@@ -16,7 +16,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
     {
         public static PlotlySankeyDescription GetEstimatedExecutionPlanPlotlySankey(this JobDefinitionStructure jobDefinitionStructure)
         {
-            var nameToIdDictionary = jobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.Name, Idx }).ToDictionary(i => i.Name, i => i.Idx);
+            var nameToIdDictionary = jobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.NodeName, Idx }).ToDictionary(i => i.NodeName, i => i.Idx);
             var links = jobDefinitionStructure.StreamToNodeLinks.Select(link => new
             {
                 source = nameToIdDictionary[link.SourceNodeName],
@@ -26,8 +26,8 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
                 ).ToList();
             return new PlotlySankeyDescription
             {
-                NodeColors = jobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.Name]).Select(i => "blue").ToList(),
-                NodeNames = jobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.Name]).Select(i => i.Name).ToList(),
+                NodeColors = jobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.NodeName]).Select(i => "blue").ToList(),
+                NodeNames = jobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.NodeName]).Select(i => i.NodeName).ToList(),
                 LinkSources = links.Select(i => i.source).ToList(),
                 LinkTargets = links.Select(i => i.target).ToList(),
                 LinkValues = links.Select(i => i.value).ToList()
