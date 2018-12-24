@@ -4,8 +4,8 @@
 import { combineEpics } from 'redux-observable';
 import { ofType } from 'redux-observable';
 // import 'jquery';
-import { map, withLatestFrom, filter, bufferTime, flatMap } from 'rxjs/operators';
-import { Subject, of, merge } from 'rxjs/index';
+import { map, withLatestFrom, filter, bufferTime, flatMap, debounceTime } from 'rxjs/operators';
+import { Subject, of, merge, fromEvent } from 'rxjs/index';
 import { actionCreators, selectAssemblyType, loadProcessType, executeProcessType, keepParametersType } from '../store/Application'
 // https://github.com/aspnet/SignalR/
 import * as signalR from '@aspnet/signalr'
@@ -71,10 +71,16 @@ const getEstimatedExecutionPlan = (action$, state$) => action$.pipe(
     map(i => actionCreators.receiveProcessDefinition(i))
 );
 
+const manageResize = (action$) => fromEvent(window, "resize")
+    .pipe(
+        debounceTime(500),
+        map(i => actionCreators.windowResize()));
+
 export default combineEpics(
     receiveEtlTracesEpic,
     getAssemblyProcesses,
     getEstimatedExecutionPlan,
     keepParameters,
     executeProcess,
+    manageResize
 );

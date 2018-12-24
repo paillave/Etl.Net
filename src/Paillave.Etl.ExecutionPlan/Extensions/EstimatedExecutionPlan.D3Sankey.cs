@@ -14,6 +14,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
 {
     public static partial class JobDefinitionStructureEx
     {
+        [Obsolete("Use the debugger instead")]
         public static D3SankeyDescription GetEstimatedExecutionPlanD3Sankey(this JobDefinitionStructure jobDefinitionStructure)
         {
             var nameToIdDictionary = jobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.NodeName, Idx }).ToDictionary(i => i.NodeName, i => i.Idx);
@@ -34,10 +35,12 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
                 }).ToList()
             };
         }
+        [Obsolete("Use the debugger instead")]
         public static string GetEstimatedExecutionPlanJsonD3Sankey(this JobDefinitionStructure jobDefinitionStructure)
         {
             return JsonConvert.SerializeObject(jobDefinitionStructure.GetEstimatedExecutionPlanD3Sankey());
         }
+        [Obsolete("Use the debugger instead")]
         public static string GetEstimatedExecutionPlanHtmlD3Sankey(this JobDefinitionStructure jobDefinitionStructure)
         {
             var json = jobDefinitionStructure.GetEstimatedExecutionPlanJsonD3Sankey();
@@ -52,6 +55,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
             string html = file.Replace("'<<SANKEY_STATISTICS>>'", json);
             return html;
         }
+        [Obsolete("Use the debugger instead")]
         public static void OpenEstimatedExecutionPlanD3Sankey(this JobDefinitionStructure jobDefinitionStructure)
         {
             Tools.OpenFile(jobDefinitionStructure.GetEstimatedExecutionPlanHtmlD3Sankey(), "html");

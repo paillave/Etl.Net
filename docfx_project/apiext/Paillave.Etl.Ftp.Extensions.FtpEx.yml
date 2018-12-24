@@ -20,7 +20,7 @@ items:
   source:
     id: FtpEx
     path: ''
-    startLine: 249
+    startLine: 251
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Ftp.Extensions
@@ -59,7 +59,7 @@ items:
   source:
     id: CrossApplyFtpFiles
     path: ''
-    startLine: 252
+    startLine: 254
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Ftp.Extensions
@@ -109,7 +109,7 @@ items:
   source:
     id: CrossApplyFtpFiles
     path: ''
-    startLine: 257
+    startLine: 259
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Ftp.Extensions
@@ -155,7 +155,7 @@ items:
   source:
     id: CrossApplyFtpFiles
     path: ''
-    startLine: 262
+    startLine: 264
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Ftp.Extensions
@@ -208,7 +208,7 @@ items:
   source:
     id: CrossApplyFtpFiles
     path: ''
-    startLine: 267
+    startLine: 269
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Ftp.Extensions
@@ -258,7 +258,7 @@ items:
   source:
     id: ToFtpFile
     path: ''
-    startLine: 275
+    startLine: 277
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Ftp.Extensions

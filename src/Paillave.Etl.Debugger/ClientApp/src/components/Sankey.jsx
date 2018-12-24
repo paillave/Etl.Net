@@ -26,10 +26,13 @@ class Sankey extends React.PureComponent {
                 nodes: this.props.nodes
             }
         );
+        // window.addEventListener("resize", this.handleUpdateDimensions);
     }
-
+    // componentWillUnmount() {
+    //     window.removeEventListener("resize", this.handleUpdateDimensions);
+    // }
     componentDidUpdate(previousProps) {
-        if (previousProps.nodes !== this.props.nodes) {
+        if (previousProps.nodes !== this.props.nodes || previousProps.sizeGuid !== this.props.sizeGuid) {
             this._chart = createSankey(
                 this._rootNode,
                 {
@@ -68,8 +71,8 @@ class Sankey extends React.PureComponent {
     render() {
         const {
             classes,
-          } = this.props;
-      
+        } = this.props;
+
         return <div ref={this._setRef.bind(this)} className={classes.fullScreen} />;
     }
 }

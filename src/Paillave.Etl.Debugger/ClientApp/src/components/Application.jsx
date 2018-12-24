@@ -117,7 +117,7 @@ class Application extends React.Component {
     };
 
     return (<React.Fragment>
-      <Sankey config={config} nodes={nodes} links={links} onNodeClick={this.handleNodeClick.bind(this)} onLinkClick={this.handleLinkClick.bind(this)} />
+      <Sankey config={config} nodes={nodes} links={links} onNodeClick={this.handleNodeClick.bind(this)} onLinkClick={this.handleLinkClick.bind(this)} sizeGuid={this.props.sizeGuid} />
       <NodeTracesHeaders />
       <div className={classes.root}>
         <div className={classNames(classes.content, { [classes.contentShift]: showDrawer })}>

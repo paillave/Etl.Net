@@ -356,12 +356,12 @@
   
   
   <a id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*"></a>
-  <h4 id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__3_IStream___0__System_String_IStream___1__Expression_System_Func___0___2___System_Int32_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IStream{``0},System.String,IStream{``1},Expression{System.Func{``0,``2}},System.Int32)">ThroughEntityFrameworkCore&lt;TIn, TResource, TEntityKey&gt;(IStream&lt;TIn&gt;, String, IStream&lt;TResource&gt;, Expression&lt;Func&lt;TIn, TEntityKey&gt;&gt;, Int32)</h4>
+  <h4 id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__3_IStream___0__System_String_IStream___1__Expression_System_Func___0___2___SaveByKeyMode_System_Int32_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IStream{``0},System.String,IStream{``1},Expression{System.Func{``0,``2}},SaveByKeyMode,System.Int32)">ThroughEntityFrameworkCore&lt;TIn, TResource, TEntityKey&gt;(IStream&lt;TIn&gt;, String, IStream&lt;TResource&gt;, Expression&lt;Func&lt;TIn, TEntityKey&gt;&gt;, SaveByKeyMode, Int32)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TIn&gt; ThroughEntityFrameworkCore&lt;TIn, TResource, TEntityKey&gt;(this IStream&lt;TIn&gt; stream, string name, IStream&lt;TResource&gt; resourceStream, Expression&lt;Func&lt;TIn, TEntityKey&gt;&gt; getBusinessKey, int chunkSize = 100)
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TIn&gt; ThroughEntityFrameworkCore&lt;TIn, TResource, TEntityKey&gt;(this IStream&lt;TIn&gt; stream, string name, IStream&lt;TResource&gt; resourceStream, Expression&lt;Func&lt;TIn, TEntityKey&gt;&gt; getBusinessKey, SaveByKeyMode bulkInsertMode = null, int chunkSize = 100)
     where TIn : class where TResource : DbContext</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -392,6 +392,11 @@
       <tr>
         <td><span class="xref">Expression</span>&lt;<span class="xref">System.Func</span>&lt;TIn, TEntityKey&gt;&gt;</td>
         <td><span class="parametername">getBusinessKey</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">SaveByKeyMode</span></td>
+        <td><span class="parametername">bulkInsertMode</span></td>
         <td></td>
       </tr>
       <tr>
@@ -542,12 +547,12 @@
   
   
   <a id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*"></a>
-  <h4 id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__5_IStream___0__System_String_IStream___1__Expression_System_Func___4___2___System_Func___0___4__System_Func___0___4___3__System_Int32_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``5(IStream{``0},System.String,IStream{``1},Expression{System.Func{``4,``2}},System.Func{``0,``4},System.Func{``0,``4,``3},System.Int32)">ThroughEntityFrameworkCore&lt;TIn, TResource, TEntityKey, TOut, TInEf&gt;(IStream&lt;TIn&gt;, String, IStream&lt;TResource&gt;, Expression&lt;Func&lt;TInEf, TEntityKey&gt;&gt;, Func&lt;TIn, TInEf&gt;, Func&lt;TIn, TInEf, TOut&gt;, Int32)</h4>
+  <h4 id="Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__5_IStream___0__System_String_IStream___1__System_Func___0___4__Expression_System_Func___4___2___System_Func___0___4___3__SaveByKeyMode_System_Int32_" data-uid="Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``5(IStream{``0},System.String,IStream{``1},System.Func{``0,``4},Expression{System.Func{``4,``2}},System.Func{``0,``4,``3},SaveByKeyMode,System.Int32)">ThroughEntityFrameworkCore&lt;TIn, TResource, TEntityKey, TOut, TInEf&gt;(IStream&lt;TIn&gt;, String, IStream&lt;TResource&gt;, Func&lt;TIn, TInEf&gt;, Expression&lt;Func&lt;TInEf, TEntityKey&gt;&gt;, Func&lt;TIn, TInEf, TOut&gt;, SaveByKeyMode, Int32)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; ThroughEntityFrameworkCore&lt;TIn, TResource, TEntityKey, TOut, TInEf&gt;(this IStream&lt;TIn&gt; stream, string name, IStream&lt;TResource&gt; resourceStream, Expression&lt;Func&lt;TInEf, TEntityKey&gt;&gt; getBusinessKey, Func&lt;TIn, TInEf&gt; getEntity, Func&lt;TIn, TInEf, TOut&gt; getResult, int chunkSize = 100)
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; ThroughEntityFrameworkCore&lt;TIn, TResource, TEntityKey, TOut, TInEf&gt;(this IStream&lt;TIn&gt; stream, string name, IStream&lt;TResource&gt; resourceStream, Func&lt;TIn, TInEf&gt; getEntity, Expression&lt;Func&lt;TInEf, TEntityKey&gt;&gt; getBusinessKey, Func&lt;TIn, TInEf, TOut&gt; getResult, SaveByKeyMode bulkInsertMode = null, int chunkSize = 100)
     where TResource : DbContext where TInEf : class</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -576,18 +581,23 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Expression</span>&lt;<span class="xref">System.Func</span>&lt;TInEf, TEntityKey&gt;&gt;</td>
-        <td><span class="parametername">getBusinessKey</span></td>
-        <td></td>
-      </tr>
-      <tr>
         <td><span class="xref">System.Func</span>&lt;TIn, TInEf&gt;</td>
         <td><span class="parametername">getEntity</span></td>
         <td></td>
       </tr>
       <tr>
+        <td><span class="xref">Expression</span>&lt;<span class="xref">System.Func</span>&lt;TInEf, TEntityKey&gt;&gt;</td>
+        <td><span class="parametername">getBusinessKey</span></td>
+        <td></td>
+      </tr>
+      <tr>
         <td><span class="xref">System.Func</span>&lt;TIn, TInEf, TOut&gt;</td>
         <td><span class="parametername">getResult</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">SaveByKeyMode</span></td>
+        <td><span class="parametername">bulkInsertMode</span></td>
         <td></td>
       </tr>
       <tr>

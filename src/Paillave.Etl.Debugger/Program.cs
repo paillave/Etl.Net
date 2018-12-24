@@ -20,7 +20,7 @@ namespace Paillave.Etl.Debugger
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                // .UseElectron(args)
+                .UseElectron(args)
                 .UseStartup<Startup>();
     }
 }

@@ -1,4 +1,5 @@
 using ElectronNET.API;
+using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -65,11 +66,20 @@ namespace Paillave.Etl.Debugger
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
-            // Bootstrap();
+            Bootstrap();
         }
         public async void Bootstrap()
         {
-            await Electron.WindowManager.CreateWindowAsync();
+            var options = new BrowserWindowOptions
+            {
+                Show = false
+            };
+            var mainWindow = await Electron.WindowManager.CreateWindowAsync(options);
+            mainWindow.SetMenuBarVisibility(false);
+            mainWindow.OnReadyToShow += () =>
+            {
+                mainWindow.Show();
+            };
         }
     }
 }

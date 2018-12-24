@@ -10,7 +10,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import SelectAssembly from "../forms/SelectAssembly";
-import { List, ListItem, ListItemText } from "@material-ui/core";
+import { List, ListItem, ListItemText, Typography } from "@material-ui/core";
+import DropzoneArea from '../materialuidropzone/DropzoneArea';
+import isElectron from 'is-electron';
 
 const styles = theme => ({
 });
@@ -18,11 +20,15 @@ class OpenProcessDialog extends React.Component {
   submitAssembly(values) {
     this.props.selectAssembly(values.assemblyPath);
   }
+  handleDroppedFile(file) {
+    console.log(file);
+    // this.props.selectAssembly(file[0].path);
+  }
   render() {
     const { classes, theme, processSelectionDialog: { show, assemblyPath, processes } } = this.props;
     return (<Dialog
       fullWidth={true}
-      maxWidth="sm"
+      maxWidth="md"
       scroll="paper"
       open={show}
       onClose={this.props.hideSelectProcessDialog}
@@ -32,7 +38,22 @@ class OpenProcessDialog extends React.Component {
       <DialogContent>
         <DialogContentText>
         </DialogContentText>
-        <SelectAssembly initialValues={{ assemblyPath }} onSubmit={this.submitAssembly.bind(this)} />
+        {(!isElectron()) && <SelectAssembly initialValues={{ assemblyPath }} onSubmit={this.submitAssembly.bind(this)} />}
+        {isElectron() && <React.Fragment><DropzoneArea
+          acceptedFiles={['application/octet-stream', 'application/x-msdownload', 'application/x-msdos-program']}
+          filesLimit={1}
+          showPreviews={false}
+          showPreviewsInDropzone={false}
+          showAlerts={false}
+          onChange={this.handleDroppedFile.bind(this)}>
+          <Typography noWrap={true}>
+            Drop the assembly here or click to browse
+          </Typography>
+        </DropzoneArea>
+          <Typography>
+            {assemblyPath}
+          </Typography>
+        </React.Fragment>}
         <List component="nav">
           {processes.map((i, idx) => <ListItem key={idx} button>
             <ListItemText onClick={this.props.loadProcess.bind(this, i)} primary={`${i.className}.${i.streamTransformationName}`} secondary={i.namespace} />

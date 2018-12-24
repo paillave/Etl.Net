@@ -1,5 +1,6 @@
 ﻿import produce from 'immer';
 import { convertToDate } from '../tools/dataAccess';
+import { v1 } from 'uuid';
 export const switchSelectProcessDialogType = 'SWITCH_SELECT_PROCESS_DIALOG';
 export const selectAssemblyType = 'SELECT_ASSEMBLY';
 export const receiveProcessListType = 'RECEIVE_PROCESS_LIST';
@@ -13,6 +14,7 @@ export const executeProcessType = 'EXECUTE_PROCESS';
 export const keepParametersType = 'KEEP_PARAMETERS';
 export const executionCompletedType = 'EXECUTION_COMPLETED';
 export const selectJobNodeType = 'SELECT_JOB_NODE';
+export const windowResizeType = 'WINDOW_RESIZE';
 
 
 const initialState = {
@@ -38,7 +40,8 @@ const initialState = {
     streamToNodeLinks: [],
     nodes: []
   },
-  selectedNode: undefined
+  selectedNode: undefined,
+  sizeGuid: v1()
 };
 
 export const actionCreators = {
@@ -59,10 +62,14 @@ export const actionCreators = {
   executionCompleted: () => ({ type: executionCompletedType }),
   keepParameters: (parameters) => ({ type: keepParametersType, payload: { parameters } }),
   selectJobNode: (selectedNode) => ({ type: selectJobNodeType, payload: { selectedNode } }),
+  windowResize: () => ({ type: windowResizeType, payload: { sizeGuid: v1() } })
 };
 
 export const reducer = (state, action) => produce(state || initialState, draft => {
   switch (action.type) {
+    case windowResizeType:
+      draft.sizeGuid = action.payload.sizeGuid;
+      break;
     case executeProcessType:
       draft.executingProcess = true;
       break;
@@ -99,7 +106,7 @@ export const reducer = (state, action) => produce(state || initialState, draft =
       draft.process = action.payload.process;
       draft.processSelectionDialog.show = false;
       draft.loadingProcessDefinition = true;
-      draft.traces= {};
+      draft.traces = {};
       draft.traceDetails.show = false;
       draft.selectedNode = undefined;
       break;

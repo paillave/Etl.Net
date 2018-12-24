@@ -14,6 +14,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
 {
     public static partial class ExecutionStatusEx
     {
+        [Obsolete("Use the debugger instead")]
         public static PlotlySankeyDescription GetActualExecutionPlanPlotlySankey(this ExecutionStatus executionStatus)
         {
             var nameToIdDictionary = executionStatus.JobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.NodeName, Idx }).ToDictionary(i => i.NodeName, i => i.Idx);
@@ -45,6 +46,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
         //{
         //    return JsonConvert.SerializeObject(await executionStatus.GetActualExecutionPlanPlotlySankeyAsync());
         //}
+        [Obsolete("Use the debugger instead")]
         public static string GetActualExecutionPlanHtmlPlotlySankey(this ExecutionStatus executionStatus)
         {
             var stats = executionStatus.GetActualExecutionPlanPlotlySankey();
@@ -63,6 +65,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
             html = html.Replace("'<<LINK_VALUES>>'", JsonConvert.SerializeObject(stats.LinkValues));
             return html;
         }
+        [Obsolete("Use the debugger instead")]
         public static void OpenActualExecutionPlanPlotlySankey(this ExecutionStatus executionStatus)
         {
             Tools.OpenFile(executionStatus.GetActualExecutionPlanHtmlPlotlySankey(), "html");
