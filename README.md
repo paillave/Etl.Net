@@ -56,6 +56,8 @@ Trace time that is spent in each node at the end of the process, Publish a Job a
 
 The debugger show the process as a sankey graph to visually represent what it makes. This debugger will permit to run a process and see in detail data went through process nodes.
 
+[Download the debugger](https://github.com/paillave/Etl.Net/releases)
+
 ![Debugger](./README/Debugger.PNG "Debugger")
 
 ## Simple Quickstart :suspect:
