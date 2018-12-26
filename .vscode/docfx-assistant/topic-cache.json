@@ -2637,6 +2637,42 @@
         "detailedType": 2
     },
     {
+        "uid": "Paillave.Etl.Extensions.ToGroupEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.ToGroupEx",
+        "title": "ToGroupEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ToGroupEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ToGroupEx.ToGroups``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ToGroupEx.ToGroups<TIn, TKey, TOut>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Func<IStream<TIn>, IStream<TOut>>)",
+        "title": "ToGroupEx.ToGroups<TIn, TKey, TOut>(IStream<TIn>, String, Func<TIn, TKey>, Func<IStream<TIn>, IStream<TOut>>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ToGroupEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ToSubProcessEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.ToSubProcessEx",
+        "title": "ToSubProcessEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ToSubProcessEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess<TIn, TOut>(IStream<TIn>, System.String, System.Func<ISingleStream<TIn>, IStream<TOut>>, System.Boolean)",
+        "title": "ToSubProcessEx.ToSubProcess<TIn, TOut>(IStream<TIn>, String, Func<ISingleStream<TIn>, IStream<TOut>>, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ToSubProcessEx.yml",
+        "detailedType": 5
+    },
+    {
         "uid": "Paillave.Etl.Extensions.AggregateEx",
         "type": "Reference.Managed",
         "memberType": "Class",
@@ -2898,6 +2934,24 @@
         "detailedType": 5
     },
     {
+        "uid": "Paillave.Etl.Extensions.FirstEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.FirstEx",
+        "title": "FirstEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.FirstEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.FirstEx.First``1(IStream{``0},System.String)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.FirstEx.First<TIn>(IStream<TIn>, System.String)",
+        "title": "FirstEx.First<TIn>(IStream<TIn>, String)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.FirstEx.yml",
+        "detailedType": 5
+    },
+    {
         "uid": "Paillave.Etl.Extensions.GetStreamStatisticsEx",
         "type": "Reference.Managed",
         "memberType": "Class",
@@ -2913,6 +2967,42 @@
         "name": "Paillave.Etl.Extensions.GetStreamStatisticsEx.GetStreamStatisticsAsync(IStream<TraceEvent>)",
         "title": "GetStreamStatisticsEx.GetStreamStatisticsAsync(IStream<TraceEvent>)",
         "sourceFile": "api\\Paillave.Etl.Extensions.GetStreamStatisticsEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.GroupByEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.GroupByEx",
+        "title": "GroupByEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.GroupByEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.GroupByEx.GroupBy``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.GroupByEx.GroupBy<TIn, TKey, TOut>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Func<IStream<TIn>, IStream<TOut>>)",
+        "title": "GroupByEx.GroupBy<TIn, TKey, TOut>(IStream<TIn>, String, Func<TIn, TKey>, Func<IStream<TIn>, IStream<TOut>>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.GroupByEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.LastEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.LastEx",
+        "title": "LastEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.LastEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.LastEx.Last``1(IStream{``0},System.String)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.LastEx.Last<TIn>(IStream<TIn>, System.String)",
+        "title": "LastEx.Last<TIn>(IStream<TIn>, String)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.LastEx.yml",
         "detailedType": 5
     },
     {
@@ -3276,6 +3366,24 @@
         "detailedType": 5
     },
     {
+        "uid": "Paillave.Etl.Extensions.SubProcessEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.SubProcessEx",
+        "title": "SubProcessEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SubProcessEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SubProcessEx.SubProcess``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SubProcessEx.SubProcess<TIn, TOut>(IStream<TIn>, System.String, System.Func<ISingleStream<TIn>, IStream<TOut>>, System.Boolean)",
+        "title": "SubProcessEx.SubProcess<TIn, TOut>(IStream<TIn>, String, Func<ISingleStream<TIn>, IStream<TOut>>, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SubProcessEx.yml",
+        "detailedType": 5
+    },
+    {
         "uid": "Paillave.Etl.Extensions.ThroughActionEx",
         "type": "Reference.Managed",
         "memberType": "Class",
@@ -3474,24 +3582,6 @@
         "detailedType": 5
     },
     {
-        "uid": "Paillave.Etl.Extensions.ToGroupEx",
-        "type": "Reference.Managed",
-        "memberType": "Class",
-        "name": "Paillave.Etl.Extensions.ToGroupEx",
-        "title": "ToGroupEx",
-        "sourceFile": "api\\Paillave.Etl.Extensions.ToGroupEx.yml",
-        "detailedType": 3
-    },
-    {
-        "uid": "Paillave.Etl.Extensions.ToGroupEx.ToGroups``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})",
-        "type": "Reference.Managed",
-        "memberType": "Method",
-        "name": "Paillave.Etl.Extensions.ToGroupEx.ToGroups<TIn, TKey, TOut>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Func<IStream<TIn>, IStream<TOut>>)",
-        "title": "ToGroupEx.ToGroups<TIn, TKey, TOut>(IStream<TIn>, String, Func<TIn, TKey>, Func<IStream<TIn>, IStream<TOut>>)",
-        "sourceFile": "api\\Paillave.Etl.Extensions.ToGroupEx.yml",
-        "detailedType": 5
-    },
-    {
         "uid": "Paillave.Etl.Extensions.TopEx",
         "type": "Reference.Managed",
         "memberType": "Class",
@@ -3525,24 +3615,6 @@
         "name": "Paillave.Etl.Extensions.TopEx.Top<TIn>(IStream<TIn>, System.String, System.Int32)",
         "title": "TopEx.Top<TIn>(IStream<TIn>, String, Int32)",
         "sourceFile": "api\\Paillave.Etl.Extensions.TopEx.yml",
-        "detailedType": 5
-    },
-    {
-        "uid": "Paillave.Etl.Extensions.ToSubProcessEx",
-        "type": "Reference.Managed",
-        "memberType": "Class",
-        "name": "Paillave.Etl.Extensions.ToSubProcessEx",
-        "title": "ToSubProcessEx",
-        "sourceFile": "api\\Paillave.Etl.Extensions.ToSubProcessEx.yml",
-        "detailedType": 3
-    },
-    {
-        "uid": "Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}},System.Boolean)",
-        "type": "Reference.Managed",
-        "memberType": "Method",
-        "name": "Paillave.Etl.Extensions.ToSubProcessEx.ToSubProcess<TIn, TOut>(IStream<TIn>, System.String, System.Func<ISingleStream<TIn>, IStream<TOut>>, System.Boolean)",
-        "title": "ToSubProcessEx.ToSubProcess<TIn, TOut>(IStream<TIn>, String, Func<ISingleStream<TIn>, IStream<TOut>>, Boolean)",
-        "sourceFile": "api\\Paillave.Etl.Extensions.ToSubProcessEx.yml",
         "detailedType": 5
     },
     {
@@ -3879,12 +3951,21 @@
         "detailedType": 5
     },
     {
-        "uid": "Paillave.Etl.ExcelFile.Extensions",
+        "uid": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.Lookup``4(IStream{``0},System.String,ISingleStream{``2},Expression{System.Func{``0,``1,System.Boolean}},System.Func{``0,``1,``3},System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.Lookup<TIn, TEntity, TCtx, TOut>(IStream<TIn>, System.String, ISingleStream<TCtx>, Expression<System.Func<TIn, TEntity, System.Boolean>>, System.Func<TIn, TEntity, TOut>, System.Int32)",
+        "title": "EntityFrameworkCoreEx.Lookup<TIn, TEntity, TCtx, TOut>(IStream<TIn>, String, ISingleStream<TCtx>, Expression<Func<TIn, TEntity, Boolean>>, Func<TIn, TEntity, TOut>, Int32)",
+        "sourceFile": "apiext\\Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.EntityFrameworkCore.Extensions",
         "type": "Reference.Managed",
         "memberType": "Namespace",
-        "name": "Paillave.Etl.ExcelFile.Extensions",
-        "title": "Paillave.Etl.ExcelFile.Extensions",
-        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.yml",
+        "name": "Paillave.Etl.EntityFrameworkCore.Extensions",
+        "title": "Paillave.Etl.EntityFrameworkCore.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.EntityFrameworkCore.Extensions.yml",
         "detailedType": 2
     },
     {
@@ -4023,12 +4104,12 @@
         "detailedType": 5
     },
     {
-        "uid": "Paillave.Etl.Ftp.Extensions",
+        "uid": "Paillave.Etl.ExcelFile.Extensions",
         "type": "Reference.Managed",
         "memberType": "Namespace",
-        "name": "Paillave.Etl.Ftp.Extensions",
-        "title": "Paillave.Etl.Ftp.Extensions",
-        "sourceFile": "apiext\\Paillave.Etl.Ftp.Extensions.yml",
+        "name": "Paillave.Etl.ExcelFile.Extensions",
+        "title": "Paillave.Etl.ExcelFile.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.yml",
         "detailedType": 2
     },
     {
@@ -4086,12 +4167,12 @@
         "detailedType": 5
     },
     {
-        "uid": "Paillave.Etl.SqlServer.Extensions",
+        "uid": "Paillave.Etl.Ftp.Extensions",
         "type": "Reference.Managed",
         "memberType": "Namespace",
-        "name": "Paillave.Etl.SqlServer.Extensions",
-        "title": "Paillave.Etl.SqlServer.Extensions",
-        "sourceFile": "apiext\\Paillave.Etl.SqlServer.Extensions.yml",
+        "name": "Paillave.Etl.Ftp.Extensions",
+        "title": "Paillave.Etl.Ftp.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.Ftp.Extensions.yml",
         "detailedType": 2
     },
     {
@@ -4122,12 +4203,12 @@
         "detailedType": 5
     },
     {
-        "uid": "Paillave.Etl.TextFile.Extensions",
+        "uid": "Paillave.Etl.SqlServer.Extensions",
         "type": "Reference.Managed",
         "memberType": "Namespace",
-        "name": "Paillave.Etl.TextFile.Extensions",
-        "title": "Paillave.Etl.TextFile.Extensions",
-        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.yml",
+        "name": "Paillave.Etl.SqlServer.Extensions",
+        "title": "Paillave.Etl.SqlServer.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.SqlServer.Extensions.yml",
         "detailedType": 2
     },
     {
@@ -4293,12 +4374,12 @@
         "detailedType": 5
     },
     {
-        "uid": "Paillave.Etl.EntityFrameworkCore.Extensions",
+        "uid": "Paillave.Etl.TextFile.Extensions",
         "type": "Reference.Managed",
         "memberType": "Namespace",
-        "name": "Paillave.Etl.EntityFrameworkCore.Extensions",
-        "title": "Paillave.Etl.EntityFrameworkCore.Extensions",
-        "sourceFile": "apiext\\Paillave.Etl.EntityFrameworkCore.Extensions.yml",
+        "name": "Paillave.Etl.TextFile.Extensions",
+        "title": "Paillave.Etl.TextFile.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.yml",
         "detailedType": 2
     }
 ]

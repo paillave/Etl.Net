@@ -2,24 +2,24 @@
 import { combineEpics } from 'redux-observable';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { connectRouter, routerMiddleware } from 'connected-react-router'
-import * as Counter from './Counter';
-import * as EtlProcessTraces from './EtlProcessTraces';
-import * as EtlProcessTracesEpic from '../epics/EtlProcessTraces';
+import * as App from './Application';
+import rootEpic from '../epics/Application';
 import { createEpicMiddleware } from 'redux-observable';
 import logger from 'redux-logger'
+import { reducer as formReducer } from 'redux-form';
 
 export default function configureStore(history, initialState) {
   const reducers = {
-    counter: Counter.reducer,
-    etlTraces: EtlProcessTraces.reducer
+    app: App.reducer,
   };
 
   const createRootReducer = (history) => combineReducers({
     router: connectRouter(history),
-    ...reducers
+    ...reducers,
+    form: formReducer
   })
 
-  const rootEpic = combineEpics(EtlProcessTracesEpic.receiveEtlTracesEpic);
+  // const rootEpic = combineEpics(epics);
 
   const epicMiddleware = createEpicMiddleware();
   const middleware = [

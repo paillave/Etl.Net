@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using ElectronNET.API;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Paillave.Etl.Debugger
@@ -15,12 +15,12 @@ namespace Paillave.Etl.Debugger
     {
         public static void Main(string[] args)
         {
-            // var cls = new EtlTraceEventPusher();
-            // // cls.Start();
-            // WebHost.CreateDefaultBuilder(args).ConfigureServices(services =>
-            // {
-            //     services.AddTransient(i => cls);
-            // }).UseStartup<Startup>().Build().Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
+
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseElectron(args)
+                .UseStartup<Startup>();
     }
 }

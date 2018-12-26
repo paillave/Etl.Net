@@ -29,9 +29,9 @@ namespace Paillave.Etl.StreamNodes
                 .FlatMap(i =>
                 {
                     EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-                    var inputStream = new SingleStream<TIn>(this.Tracer, this.ExecutionContext, this.NodeName, PushObservable.FromSingle(i, waitHandle));
+                    var inputStream = new SingleStream<TIn>(this.Tracer.GetSubTracer(this), this.ExecutionContext, this.NodeName, PushObservable.FromSingle(i, waitHandle));
                     var outputStream = args.SubProcess(inputStream);
-                    this.ExecutionContext.AddToWaitForCompletion(this.NodeName, outputStream.Observable);
+                    this.ExecutionContext.AddNode(this, outputStream.Observable);
                     IDisposable awaiter = null;
                     outputStream.Observable.Subscribe(j => { }, () => awaiter?.Dispose());
                     return new DeferredWrapperPushObservable<TOut>(outputStream.Observable, () =>

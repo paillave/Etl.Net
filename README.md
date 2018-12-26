@@ -28,55 +28,13 @@ The first alpha release is expected once it starts to be a decent candidate to r
 
 ## ETL features
 
-| Name | Type | Done | Issue |
-| ----- | ----- | ----- | ----- |
-| Select | Transformation | :heavy_check_mark: | #26 |
-| Where | Transformation | :heavy_check_mark: |  |
-| Sort | Transformation | :heavy_check_mark: | #30 |
-| Left Join | Transformation | :heavy_check_mark: |  |
-| Lookup | Transformation | :heavy_check_mark: | #23 |
-| Union | Transformation | :heavy_check_mark: | #34 |
-| Union All | Transformation | :heavy_check_mark: | #94 |
-| Skip | Transformation | :heavy_check_mark: |  |
-| Top | Transformation | :heavy_check_mark: |  |
-| Distinct | Transformation | :heavy_check_mark: | #15 |
-| Pivot | Transformation | :heavy_check_mark: | #41 |
-| Unpivot | Transformation | :heavy_check_mark: | #42 |
-| Aggregate | Transformation | :heavy_check_mark: | #19 |
-| Cross Apply | Transformation | :heavy_check_mark: | #25 |
-| Ensure Sorted | Transformation | :heavy_check_mark: |  |
-| Ensure Keyed | Transformation | :heavy_check_mark: |  |
-| Script | Transformation | :heavy_check_mark: |  |
-| Run subprocess | Transformation | :heavy_check_mark: | #70 |
-| List folder files | Data source | :heavy_check_mark: |  |
-| Read csv file | Data source | :heavy_check_mark: | #31 |
-| Keep section | Transformation | :heavy_check_mark: | #58 |
-| Ignore section | Transformation | :heavy_check_mark: | #59 |
-| Read very large xml file | Data source | :construction: | #65 |
-| Read very large json file | Data source | :construction: | #79 |
-| Read excel file | Data source | :heavy_check_mark: | #18 |
-| Write csv file | Data destination | :heavy_check_mark: | #28 |
-| Write excel file | Data destinaton | :heavy_check_mark: | #17 |
-| Read from Entity framework core | Data source | :heavy_check_mark: | #13 |
-| Write to Entity framework core | Data destination | :heavy_check_mark: | #14 |
-| Read from Entity framework | Data source | :construction: | #50 |
-| Write to Entity framework | Data destination | :construction: | #51 |
-| Read from MongoDb | Data source | :construction: |  |
-| Write to MongoDb | Data destination | :construction: |  |
-| MongoDb upsert | Data destination | :construction: |  |
-| Entity framework core upsert | Data destination | :heavy_check_mark: | #49 |
-| Entity framework upsert | Data destination | :construction: | #53 |
-| SQL Server bulk load | Data destination | :heavy_check_mark: | #20 |
-| Read from sql server command | Data source | :heavy_check_mark: | #55 |
-| Write to sql server command | Data destination | :heavy_check_mark: | #54 |
-| List files from FTP | Data source | :heavy_check_mark: | #11 |
-| List file from SFTP | Data source | :construction: | #10 |
-| Read file from FTP | Data source | :heavy_check_mark: | #11 |
-| Read file from SFTP | Data source | :construction: | #10 |
-| Write file to FTP | Data destination | :heavy_check_mark: | #6 |
-| Write file to SFTP | Data destination | :construction: | #5 |
-| Read data from REST service | Data source | :construction: | #9 |
-| Write data to REST service | Data destination | :construction: | #8 |
+Select, Where, Sort, Left Join, Lookup, Union, Union All, Skip, Top, Distinct, Pivot, Unpivot, Aggregate, Cross Apply, Ensure Sorted, Ensure Keyed, Script, Run subprocess, Keep section, Ignore section, List folder files, Read csv file, Read excel file, Write csv file, Write excel file, Read from Entity framework core, Write to Entity framework core, Entity framework core upsert, SQL Server bulk load, Read from sql server command, Write to sql server command, List files from FTP, Read file from FTP, Write file to FTP...
+
+Check evolution of developments in [the projects section](https://github.com/paillave/Etl.Net/projects)
+
+To be coming:
+
+Read very large xml file, Read very large json file, Read from Entity framework, Write to Entity framework, Read from MongoDb, Write to MongoDb, MongoDb upsert, Entity framework upsert, List file from SFTP, Read file from SFTP, Write file to SFTP, Read data from REST service, Write data to REST service...
 
 > [!NOTE]
 > Follow the status in the issue section
@@ -85,27 +43,22 @@ The first alpha release is expected once it starts to be a decent candidate to r
 
 ## Runtime features
 
-| Name | Done | Issue |
-| ----- | ----- | ----- |
-| Trace issued data by each node | :heavy_check_mark: |  |
-| Trace any error | :heavy_check_mark: |  |
-| Stop the entire process whenever an error is raised | :heavy_check_mark: |  |
-| Trace statistic result of each node at the end of the process | :heavy_check_mark: |  |
-| Trace time that is spent in each node at the end of the process | :construction: |  |
-| Publish a Job as a REST web service in web api core | :construction: |  |
-| Execute a job using reference to native .net core configuration | :construction: |  |
-| Execute any ETL process on traces to filter and save them | :heavy_check_mark: |  |
-| Show graphic to represent the process | :heavy_check_mark: |  |
-| Show graphic to represent process execution statistics | :heavy_check_mark: | #27 |
-| Show realtime process execution statistics | :construction: | #36 |
-| Web portal to host job definitions and manage their executions | :construction: | #80 |
-| Power shell command tool to execute a job | :construction: | #83 |
-| Visual studio code addon to view the process whenever the job definition class file is saved | :construction: | #82 |
-| Raise a warning on the risky node when a performance issue or a bad practice is detected given statistics | :construction: | #81 |
-| Interprets a T-SQL-like language script to build a job definition on the fly and run it | :construction: | #44 |
+Trace issued data by each node, Trace any error, Stop the entire process whenever an error is raised, Trace statistic result of each node at the end of the process, Execute any ETL process on traces to filter and save them, Show realtime process execution statistics...
+
+To be coming:
+
+Trace time that is spent in each node at the end of the process, Publish a Job as a REST web service in web api core, Execute a job using reference to native .net core configuration, Web portal to host job definitions and manage their executions, Power shell command tool to execute a job, Visual studio code addon to view the process whenever the job definition class file is saved, Raise a warning on the risky node when a performance issue or a bad practice is detected given statistics, Interprets a T-SQL-like language script to build a job definition on the fly and run it...
 
 > [!NOTE]
 > New requests are very welcome in the [issue section](https://github.com/paillave/Etl.Net/issues)
+
+## Debugger
+
+The debugger show the process as a sankey graph to visually represent what it makes. This debugger will permit to run a process and see in detail data went through process nodes.
+
+[Download the debugger](https://github.com/paillave/Etl.Net/releases)
+
+![Debugger](./README/Debugger.PNG "Debugger")
 
 ## Simple Quickstart :suspect:
 
@@ -395,7 +348,6 @@ namespace ComplexQuickstart
         static void Main(string[] args)
         {
             var runner = StreamProcessRunner.Create<MyConfig>(ComplexQuickstartJob.DefineProcess);
-            runner.GetDefinitionStructure().OpenEstimatedExecutionPlanVisNetwork();
             Action<IStream<TraceEvent>> traceStreamProcessDefinition = traceStream => traceStream.ThroughAction("logs to console", Console.WriteLine);
             var testFilesDirectory = @"XXXXXXXXXXXXXXXX\Etl.Net\src\TestFiles";
             var task = runner.ExecuteAsync(new MyConfig
@@ -406,7 +358,6 @@ namespace ComplexQuickstart
                 DestinationFilePath = Path.Combine(testFilesDirectory, @"outfile.csv"),
                 CategoryDestinationFilePath = Path.Combine(testFilesDirectory, @"categoryStats.csv")
             }, traceStreamProcessDefinition);
-            task.Result.OpenActualExecutionPlanD3Sankey();
 
             Console.WriteLine("Done");
             Console.WriteLine("Press a key...");
@@ -415,13 +366,6 @@ namespace ComplexQuickstart
     }
 }
 ```
-
-This program first shows the estimated execution plan:
-
-![Estimated execution plan](./README/EstimatedExecutionPlan.PNG "Estimated execution plan")
-
-Then it shows the actual execution with statistics when hovering streams, and input and outputs when hovering nodes:
-![Actual execution plan](./README/ActualExecutionPlan.PNG "Actual execution plan")
 
 ## Documentation :construction:
 

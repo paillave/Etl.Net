@@ -14,9 +14,10 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
 {
     public static partial class ExecutionStatusEx
     {
+        [Obsolete("Use the debugger instead")]
         public static PlotlySankeyDescription GetActualExecutionPlanPlotlySankey(this ExecutionStatus executionStatus)
         {
-            var nameToIdDictionary = executionStatus.JobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.Name, Idx }).ToDictionary(i => i.Name, i => i.Idx);
+            var nameToIdDictionary = executionStatus.JobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.NodeName, Idx }).ToDictionary(i => i.NodeName, i => i.Idx);
             var links = executionStatus.JobDefinitionStructure.StreamToNodeLinks.GroupJoin(
                     executionStatus.StreamStatisticCounters,
                     i => i.SourceNodeName,
@@ -30,12 +31,12 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
                 ).ToList();
             return new PlotlySankeyDescription
             {
-                NodeColors = executionStatus.JobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.Name]).Select(i =>
+                NodeColors = executionStatus.JobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.NodeName]).Select(i =>
                 {
-                    if (executionStatus.StreamStatisticErrors.Any(e => e.NodeName == i.Name)) return "red";
+                    if (executionStatus.StreamStatisticErrors.Any(e => e.NodeName == i.NodeName)) return "red";
                     return "blue";
                 }).ToList(),
-                NodeNames = executionStatus.JobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.Name]).Select(i => i.Name).ToList(),
+                NodeNames = executionStatus.JobDefinitionStructure.Nodes.OrderBy(i => nameToIdDictionary[i.NodeName]).Select(i => i.NodeName).ToList(),
                 LinkSources = links.Select(i => i.source).ToList(),
                 LinkTargets = links.Select(i => i.target).ToList(),
                 LinkValues = links.Select(i => i.value).ToList()
@@ -45,6 +46,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
         //{
         //    return JsonConvert.SerializeObject(await executionStatus.GetActualExecutionPlanPlotlySankeyAsync());
         //}
+        [Obsolete("Use the debugger instead")]
         public static string GetActualExecutionPlanHtmlPlotlySankey(this ExecutionStatus executionStatus)
         {
             var stats = executionStatus.GetActualExecutionPlanPlotlySankey();
@@ -63,6 +65,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
             html = html.Replace("'<<LINK_VALUES>>'", JsonConvert.SerializeObject(stats.LinkValues));
             return html;
         }
+        [Obsolete("Use the debugger instead")]
         public static void OpenActualExecutionPlanPlotlySankey(this ExecutionStatus executionStatus)
         {
             Tools.OpenFile(executionStatus.GetActualExecutionPlanHtmlPlotlySankey(), "html");

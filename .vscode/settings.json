@@ -2,6 +2,7 @@
     "dotnet-test-explorer.testProjectPath": "**/*Tests.csproj",
     "cSpell.words": [
         "Paillave",
+        "Sankey",
         "Upsert"
     ],
     "todo.embedded.exclude": [

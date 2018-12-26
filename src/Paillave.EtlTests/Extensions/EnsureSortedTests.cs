@@ -68,7 +68,7 @@ namespace Paillave.EtlTests.Extensions
             task.Wait();
 
             Assert.IsTrue(task.Result.Failed);
-            Assert.IsNotNull(task.Result.ErrorTraceEvents.FirstOrDefault(i => i.NodeName == "ensure sorted"));
+            Assert.IsNotNull(task.Result.EndOfProcessTraceEvent.NodeName == "ensure sorted");
             Assert.IsNotNull(task.Result.StreamStatisticErrors.FirstOrDefault(i => i.NodeName == "ensure sorted"));
             CollectionAssert.AreEquivalent(new[] { 2 }.ToList(), outputList);
             #endregion

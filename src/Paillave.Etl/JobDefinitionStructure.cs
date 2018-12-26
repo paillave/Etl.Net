@@ -8,12 +8,27 @@ namespace Paillave.Etl
 {
     public class JobDefinitionStructure
     {
-        public JobDefinitionStructure(List<StreamToNodeLink> streamToNodeLinks, List<string> targetNodeNames, string sourceNodeName)
+        private class NodeContext : INodeContext
+        {
+            public NodeContext(INodeContext nodeContext)
+            {
+                this.NodeName = nodeContext.NodeName;
+                this.TypeName = nodeContext.TypeName;
+                this.IsAwaitable = nodeContext.IsAwaitable;
+            }
+
+            public string NodeName { get; }
+
+            public string TypeName { get; }
+
+            public bool IsAwaitable { get; }
+        }
+        public JobDefinitionStructure(List<StreamToNodeLink> streamToNodeLinks, List<INodeContext> nodes, string sourceNodeName)
         {
             this.StreamToNodeLinks = streamToNodeLinks;
-            this.Nodes = streamToNodeLinks.Select(i => i.SourceNodeName).Union(streamToNodeLinks.Select(i => i.TargetNodeName)).Distinct().Select(i => new NodeDescription(i, targetNodeNames.Contains(i), i == sourceNodeName)).ToList();
+            this.Nodes = nodes.Select(i => (INodeContext)new NodeContext(i)).ToList();
         }
         public List<StreamToNodeLink> StreamToNodeLinks { get; }
-        public List<NodeDescription> Nodes { get; }
+        public List<INodeContext> Nodes { get; }
     }
 }
