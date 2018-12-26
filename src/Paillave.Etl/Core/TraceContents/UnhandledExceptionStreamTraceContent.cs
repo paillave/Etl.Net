@@ -16,6 +16,6 @@ namespace Paillave.Etl.Core.TraceContents
 
         public Exception Exception { get; }
 
-        protected override string GetMessage() => $"Unhandled exception: {this.Exception.Message}";
+        public override string Message => $"Unhandled exception: {this.Exception.Message}";
     }
 }

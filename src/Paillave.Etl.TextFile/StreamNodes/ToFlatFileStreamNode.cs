@@ -26,6 +26,7 @@ namespace Paillave.Etl.TextFile.StreamNodes
         {
             _stream = new MemoryStream();
             _streamWriter = new StreamWriter(_stream, Encoding.Default, 1024, true);
+            this.ExecutionContext.AddDisposable(_streamWriter);
             _streamWriter.WriteLine(args.Mapping.GenerateDefaultHeaderLine());
             _serialize = args.Mapping.GetSerializer();
         }
@@ -34,7 +35,7 @@ namespace Paillave.Etl.TextFile.StreamNodes
         {
             var obs = args.MainStream.Observable.Do(ProcessValueToOutput).Last().Map(i =>
             {
-                _streamWriter.Dispose();
+                // _streamWriter.Dispose();
                 return _stream;
             });
             return CreateUnsortedStream(obs);

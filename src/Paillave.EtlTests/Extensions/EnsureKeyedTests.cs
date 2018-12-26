@@ -49,7 +49,7 @@ namespace Paillave.EtlTests.Extensions
             task.Wait();
 
             Assert.IsTrue(task.Result.Failed);
-            Assert.IsNotNull(task.Result.ErrorTraceEvents.FirstOrDefault(i => i.NodeName == "ensure keyed"));
+            Assert.IsNotNull(task.Result.EndOfProcessTraceEvent.NodeName == "ensure keyed");
             Assert.IsNotNull(task.Result.StreamStatisticErrors.FirstOrDefault(i => i.NodeName == "ensure keyed"));
             CollectionAssert.AreEquivalent(new[] { 1, 2 }.ToList(), outputList);
             #endregion
@@ -72,7 +72,7 @@ namespace Paillave.EtlTests.Extensions
             task.Wait();
 
             Assert.IsTrue(task.Result.Failed);
-            Assert.IsNotNull(task.Result.ErrorTraceEvents.FirstOrDefault(i => i.NodeName == "ensure keyed"));
+            Assert.IsNotNull(task.Result.EndOfProcessTraceEvent.NodeName == "ensure keyed");
             Assert.IsNotNull(task.Result.StreamStatisticErrors.FirstOrDefault(i => i.NodeName == "ensure keyed"));
             CollectionAssert.AreEquivalent(new[] { 2 }.ToList(), outputList);
             #endregion

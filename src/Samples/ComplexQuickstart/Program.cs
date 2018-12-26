@@ -9,6 +9,7 @@ using ComplexQuickstart.StreamTypes;
 using Paillave.Etl.Core;
 using Paillave.Etl.ExecutionPlan;
 using Paillave.Etl.ExecutionPlan.Extensions;
+// using Paillave.Etl.Debugger.Extensions;
 
 namespace ComplexQuickstart
 {
@@ -17,10 +18,9 @@ namespace ComplexQuickstart
         static void Main(string[] args)
         {
             var runner = StreamProcessRunner.Create<MyConfig>(ComplexQuickstartJob.DefineProcess);
-            runner.GetDefinitionStructure().OpenEstimatedExecutionPlanVisNetwork();
+            runner.GetDefinitionStructure().OpenEstimatedExecutionPlanD3Sankey();
             Action<IStream<TraceEvent>> traceStreamProcessDefinition = traceStream => traceStream.ThroughAction("logs to console", Console.WriteLine);
-            var testFilesDirectory = @"C:\Users\sroyer\Source\Repos\Etl.Net\src\Samples\TestFiles";
-            // var testFilesDirectory = @"C:\Users\paill\source\repos\Etl.Net\src\Samples\TestFiles";
+            var testFilesDirectory = @"C:\Users\paill\Documents\GitHub\Etl.Net\src\Samples\TestFiles";
             var task = runner.ExecuteAsync(new MyConfig
             {
                 InputFolderPath = Path.Combine(testFilesDirectory, @"."),

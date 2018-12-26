@@ -49,7 +49,7 @@ namespace Paillave.EtlTests.Extensions
             task.Wait();
 
             Assert.IsTrue(task.Result.Failed);
-            Assert.IsNotNull(task.Result.ErrorTraceEvents.FirstOrDefault(i => i.NodeName == "ensure single"));
+            Assert.IsNotNull(task.Result.EndOfProcessTraceEvent.NodeName == "ensure single");
             Assert.IsNotNull(task.Result.StreamStatisticErrors.FirstOrDefault(i => i.NodeName == "ensure single"));
             CollectionAssert.AreEquivalent(new[] { 1 }.ToList(), outputList);
             #endregion
