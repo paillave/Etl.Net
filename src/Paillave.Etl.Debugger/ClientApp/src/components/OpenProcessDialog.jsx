@@ -11,7 +11,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import SelectAssembly from "../forms/SelectAssembly";
 import { List, ListItem, ListItemText, Typography } from "@material-ui/core";
-import DropzoneArea from '../materialuidropzone/DropzoneArea';
+import DropzoneFileArea from '../materialuidropzone/DropzoneFileArea';
 import isElectron from 'is-electron';
 
 const styles = theme => ({
@@ -21,8 +21,8 @@ class OpenProcessDialog extends React.Component {
     this.props.selectAssembly(values.assemblyPath);
   }
   handleDroppedFile(file) {
-    console.log(file);
-    // this.props.selectAssembly(file[0].path);
+    // console.log(file);
+    this.props.selectAssembly(file.path);
   }
   render() {
     const { classes, theme, processSelectionDialog: { show, assemblyPath, processes } } = this.props;
@@ -39,17 +39,13 @@ class OpenProcessDialog extends React.Component {
         <DialogContentText>
         </DialogContentText>
         {(!isElectron()) && <SelectAssembly initialValues={{ assemblyPath }} onSubmit={this.submitAssembly.bind(this)} />}
-        {isElectron() && <React.Fragment><DropzoneArea
+        {isElectron() && <React.Fragment><DropzoneFileArea
           acceptedFiles={['application/octet-stream', 'application/x-msdownload', 'application/x-msdos-program']}
-          filesLimit={1}
-          showPreviews={false}
-          showPreviewsInDropzone={false}
-          showAlerts={false}
           onChange={this.handleDroppedFile.bind(this)}>
           <Typography noWrap={true}>
             Drop the assembly here or click to browse
           </Typography>
-        </DropzoneArea>
+        </DropzoneFileArea>
           <Typography>
             {assemblyPath}
           </Typography>

@@ -7,9 +7,21 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/src/Paillave.Etl.sln"
+        "Paillave.Etl.sln"
       ],
-      "problemMatcher": "$msCompile"
+      "problemMatcher": "$msCompile",
+      "options": {
+        "cwd": "${workspaceFolder}/src"
+      }
+    },
+    {
+      "label": "build debugger",
+      "command": "buildElectron.cmd",
+      "type": "shell",
+      "problemMatcher": [],
+      "options": {
+        "cwd": "${workspaceFolder}/src/Paillave.Etl.Debugger"
+      }
     },
     {
       "label": "clean",
@@ -17,9 +29,12 @@
       "type": "process",
       "args": [
         "clean",
-        "${workspaceFolder}/src/Paillave.Etl.sln"
+        "Paillave.Etl.sln"
       ],
-      "problemMatcher": "$msCompile"
+      "problemMatcher": "$msCompile",
+      "options": {
+        "cwd": "${workspaceFolder}/src"
+      }
     },
     {
       "label": "build documentation",
