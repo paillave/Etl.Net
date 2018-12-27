@@ -58,6 +58,8 @@ The debugger show the process as a sankey graph to visually represent what it ma
 
 [Download the debugger](https://github.com/paillave/Etl.Net-Debugger/releases)
 
+[Learn how to use the debugger](https://github.com/paillave/Etl.Net-Debugger)
+
 ![Debugger](./README/Debugger.PNG "Debugger")
 
 ## Simple Quickstart :suspect:
