@@ -41,8 +41,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamplesQuickStart", "Sampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCsv", "Samples\TestCsv\TestCsv.csproj", "{71385EE6-5877-4BE5-AE99-553BEEDD9C55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Debugger", "Paillave.Etl.Debugger\Paillave.Etl.Debugger.csproj", "{B127960E-B9C1-4240-822E-FE4523CE3FD8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,10 +115,6 @@ Global
 		{71385EE6-5877-4BE5-AE99-553BEEDD9C55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71385EE6-5877-4BE5-AE99-553BEEDD9C55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71385EE6-5877-4BE5-AE99-553BEEDD9C55}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B127960E-B9C1-4240-822E-FE4523CE3FD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B127960E-B9C1-4240-822E-FE4523CE3FD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B127960E-B9C1-4240-822E-FE4523CE3FD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B127960E-B9C1-4240-822E-FE4523CE3FD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
