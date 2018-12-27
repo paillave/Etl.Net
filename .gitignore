@@ -54,6 +54,8 @@ project.fragment.lock.json
 artifacts/
 **/Properties/launchSettings.json
 
+!Paillave.Etl.Debugger/**/*
+
 # StyleCop
 StyleCopReport.xml
 
