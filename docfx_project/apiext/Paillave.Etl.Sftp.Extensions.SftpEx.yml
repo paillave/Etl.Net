@@ -1,0 +1,1448 @@
+### YamlMime:ManagedReference
+items:
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx
+  commentId: T:Paillave.Etl.Sftp.Extensions.SftpEx
+  id: SftpEx
+  parent: Paillave.Etl.Sftp.Extensions
+  children:
+  - Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Boolean)
+  - Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``1(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Boolean)
+  - Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``1(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Func{SftpFilesValue,System.String,SftpConnectionInfo,``0},System.Boolean)
+  - Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``2(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Func{SftpFilesValue,``0,SftpConnectionInfo,``1},System.Boolean)
+  - Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,SftpConnectionInfo})
+  langs:
+  - csharp
+  - vb
+  name: SftpEx
+  nameWithType: SftpEx
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx
+  type: Class
+  source:
+    id: SftpEx
+    path: ''
+    startLine: 304
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Sftp.Extensions
+  syntax:
+    content: public static class SftpEx
+    content.vb: Public Module SftpEx
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.ToString
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  modifiers.csharp:
+  - public
+  - static
+  - class
+  modifiers.vb:
+  - Public
+  - Module
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``1(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Boolean)
+  commentId: M:Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``1(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Boolean)
+  id: CrossApplySftpFiles``1(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.Sftp.Extensions.SftpEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplySftpFiles<TIn>(IStream<TIn>, String, ISingleStream<SftpConnectionInfo>, Func<TIn, String>, Boolean)
+  nameWithType: SftpEx.CrossApplySftpFiles<TIn>(IStream<TIn>, String, ISingleStream<SftpConnectionInfo>, Func<TIn, String>, Boolean)
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles<TIn>(IStream<TIn>, System.String, ISingleStream<SftpConnectionInfo>, System.Func<TIn, System.String>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplySftpFiles
+    path: ''
+    startLine: 307
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Sftp.Extensions
+  syntax:
+    content: public static IStream<SftpFilesValue> CrossApplySftpFiles<TIn>(this IStream<TIn> stream, string name, ISingleStream<SftpConnectionInfo> connectionInfoS, Func<TIn, string> getFolderPath, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: connectionInfoS
+      type: ISingleStream{SftpConnectionInfo}
+    - id: getFolderPath
+      type: System.Func{{TIn},System.String}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TIn
+    return:
+      type: IStream{SftpFilesValue}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplySftpFiles(Of TIn)(stream As IStream(Of TIn), name As String, connectionInfoS As ISingleStream(Of SftpConnectionInfo), getFolderPath As Func(Of TIn, String), noParallelisation As Boolean = False) As IStream(Of SftpFilesValue)
+  overload: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles*
+  nameWithType.vb: SftpEx.CrossApplySftpFiles(Of TIn)(IStream(Of TIn), String, ISingleStream(Of SftpConnectionInfo), Func(Of TIn, String), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(Of TIn)(IStream(Of TIn), System.String, ISingleStream(Of SftpConnectionInfo), System.Func(Of TIn, System.String), System.Boolean)
+  name.vb: CrossApplySftpFiles(Of TIn)(IStream(Of TIn), String, ISingleStream(Of SftpConnectionInfo), Func(Of TIn, String), Boolean)
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Boolean)
+  commentId: M:Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Boolean)
+  id: CrossApplySftpFiles(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.Sftp.Extensions.SftpEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplySftpFiles(IStream<String>, String, ISingleStream<SftpConnectionInfo>, Boolean)
+  nameWithType: SftpEx.CrossApplySftpFiles(IStream<String>, String, ISingleStream<SftpConnectionInfo>, Boolean)
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(IStream<System.String>, System.String, ISingleStream<SftpConnectionInfo>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplySftpFiles
+    path: ''
+    startLine: 312
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Sftp.Extensions
+  syntax:
+    content: public static IStream<SftpFilesValue> CrossApplySftpFiles(this IStream<string> stream, string name, ISingleStream<SftpConnectionInfo> connectionInfoS, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{System.String}
+    - id: name
+      type: System.String
+    - id: connectionInfoS
+      type: ISingleStream{SftpConnectionInfo}
+    - id: noParallelisation
+      type: System.Boolean
+    return:
+      type: IStream{SftpFilesValue}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplySftpFiles(stream As IStream(Of String), name As String, connectionInfoS As ISingleStream(Of SftpConnectionInfo), noParallelisation As Boolean = False) As IStream(Of SftpFilesValue)
+  overload: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles*
+  nameWithType.vb: SftpEx.CrossApplySftpFiles(IStream(Of String), String, ISingleStream(Of SftpConnectionInfo), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(IStream(Of System.String), System.String, ISingleStream(Of SftpConnectionInfo), System.Boolean)
+  name.vb: CrossApplySftpFiles(IStream(Of String), String, ISingleStream(Of SftpConnectionInfo), Boolean)
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``2(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Func{SftpFilesValue,``0,SftpConnectionInfo,``1},System.Boolean)
+  commentId: M:Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``2(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Func{SftpFilesValue,``0,SftpConnectionInfo,``1},System.Boolean)
+  id: CrossApplySftpFiles``2(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Func{SftpFilesValue,``0,SftpConnectionInfo,``1},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.Sftp.Extensions.SftpEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplySftpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<SftpConnectionInfo>, Func<TIn, String>, Func<SftpFilesValue, TIn, SftpConnectionInfo, TOut>, Boolean)
+  nameWithType: SftpEx.CrossApplySftpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<SftpConnectionInfo>, Func<TIn, String>, Func<SftpFilesValue, TIn, SftpConnectionInfo, TOut>, Boolean)
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles<TIn, TOut>(IStream<TIn>, System.String, ISingleStream<SftpConnectionInfo>, System.Func<TIn, System.String>, System.Func<SftpFilesValue, TIn, SftpConnectionInfo, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplySftpFiles
+    path: ''
+    startLine: 317
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Sftp.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplySftpFiles<TIn, TOut>(this IStream<TIn> stream, string name, ISingleStream<SftpConnectionInfo> connectionInfoS, Func<TIn, string> getFolderPath, Func<SftpFilesValue, TIn, SftpConnectionInfo, TOut> selector, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: connectionInfoS
+      type: ISingleStream{SftpConnectionInfo}
+    - id: getFolderPath
+      type: System.Func{{TIn},System.String}
+    - id: selector
+      type: System.Func{SftpFilesValue,{TIn},SftpConnectionInfo,{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TIn
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplySftpFiles(Of TIn, TOut)(stream As IStream(Of TIn), name As String, connectionInfoS As ISingleStream(Of SftpConnectionInfo), getFolderPath As Func(Of TIn, String), selector As Func(Of SftpFilesValue, TIn, SftpConnectionInfo, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles*
+  nameWithType.vb: SftpEx.CrossApplySftpFiles(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of SftpConnectionInfo), Func(Of TIn, String), Func(Of SftpFilesValue, TIn, SftpConnectionInfo, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(Of TIn, TOut)(IStream(Of TIn), System.String, ISingleStream(Of SftpConnectionInfo), System.Func(Of TIn, System.String), System.Func(Of SftpFilesValue, TIn, SftpConnectionInfo, TOut), System.Boolean)
+  name.vb: CrossApplySftpFiles(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of SftpConnectionInfo), Func(Of TIn, String), Func(Of SftpFilesValue, TIn, SftpConnectionInfo, TOut), Boolean)
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``1(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Func{SftpFilesValue,System.String,SftpConnectionInfo,``0},System.Boolean)
+  commentId: M:Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``1(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Func{SftpFilesValue,System.String,SftpConnectionInfo,``0},System.Boolean)
+  id: CrossApplySftpFiles``1(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Func{SftpFilesValue,System.String,SftpConnectionInfo,``0},System.Boolean)
+  isExtensionMethod: true
+  parent: Paillave.Etl.Sftp.Extensions.SftpEx
+  langs:
+  - csharp
+  - vb
+  name: CrossApplySftpFiles<TOut>(IStream<String>, String, ISingleStream<SftpConnectionInfo>, Func<SftpFilesValue, String, SftpConnectionInfo, TOut>, Boolean)
+  nameWithType: SftpEx.CrossApplySftpFiles<TOut>(IStream<String>, String, ISingleStream<SftpConnectionInfo>, Func<SftpFilesValue, String, SftpConnectionInfo, TOut>, Boolean)
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles<TOut>(IStream<System.String>, System.String, ISingleStream<SftpConnectionInfo>, System.Func<SftpFilesValue, System.String, SftpConnectionInfo, TOut>, System.Boolean)
+  type: Method
+  source:
+    id: CrossApplySftpFiles
+    path: ''
+    startLine: 322
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Sftp.Extensions
+  syntax:
+    content: public static IStream<TOut> CrossApplySftpFiles<TOut>(this IStream<string> stream, string name, ISingleStream<SftpConnectionInfo> connectionInfoS, Func<SftpFilesValue, string, SftpConnectionInfo, TOut> selector, bool noParallelisation = false)
+    parameters:
+    - id: stream
+      type: IStream{System.String}
+    - id: name
+      type: System.String
+    - id: connectionInfoS
+      type: ISingleStream{SftpConnectionInfo}
+    - id: selector
+      type: System.Func{SftpFilesValue,System.String,SftpConnectionInfo,{TOut}}
+    - id: noParallelisation
+      type: System.Boolean
+    typeParameters:
+    - id: TOut
+    return:
+      type: IStream{{TOut}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function CrossApplySftpFiles(Of TOut)(stream As IStream(Of String), name As String, connectionInfoS As ISingleStream(Of SftpConnectionInfo), selector As Func(Of SftpFilesValue, String, SftpConnectionInfo, TOut), noParallelisation As Boolean = False) As IStream(Of TOut)
+  overload: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles*
+  nameWithType.vb: SftpEx.CrossApplySftpFiles(Of TOut)(IStream(Of String), String, ISingleStream(Of SftpConnectionInfo), Func(Of SftpFilesValue, String, SftpConnectionInfo, TOut), Boolean)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(Of TOut)(IStream(Of System.String), System.String, ISingleStream(Of SftpConnectionInfo), System.Func(Of SftpFilesValue, System.String, SftpConnectionInfo, TOut), System.Boolean)
+  name.vb: CrossApplySftpFiles(Of TOut)(IStream(Of String), String, ISingleStream(Of SftpConnectionInfo), Func(Of SftpFilesValue, String, SftpConnectionInfo, TOut), Boolean)
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,SftpConnectionInfo})
+  commentId: M:Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,SftpConnectionInfo})
+  id: ToSftpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,SftpConnectionInfo})
+  isExtensionMethod: true
+  parent: Paillave.Etl.Sftp.Extensions.SftpEx
+  langs:
+  - csharp
+  - vb
+  name: ToSftpFile<TParams>(IStream<Stream>, String, IStream<TParams>, Func<TParams, String>, Func<TParams, SftpConnectionInfo>)
+  nameWithType: SftpEx.ToSftpFile<TParams>(IStream<Stream>, String, IStream<TParams>, Func<TParams, String>, Func<TParams, SftpConnectionInfo>)
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile<TParams>(IStream<Stream>, System.String, IStream<TParams>, System.Func<TParams, System.String>, System.Func<TParams, SftpConnectionInfo>)
+  type: Method
+  source:
+    id: ToSftpFile
+    path: ''
+    startLine: 330
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.Sftp.Extensions
+  syntax:
+    content: public static IStream<Stream> ToSftpFile<TParams>(this IStream<Stream> stream, string name, IStream<TParams> paramsStream, Func<TParams, string> getOutputFilePath, Func<TParams, SftpConnectionInfo> getConnectionInfo)
+    parameters:
+    - id: stream
+      type: IStream{Stream}
+    - id: name
+      type: System.String
+    - id: paramsStream
+      type: IStream{{TParams}}
+    - id: getOutputFilePath
+      type: System.Func{{TParams},System.String}
+    - id: getConnectionInfo
+      type: System.Func{{TParams},SftpConnectionInfo}
+    typeParameters:
+    - id: TParams
+    return:
+      type: IStream{Stream}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function ToSftpFile(Of TParams)(stream As IStream(Of Stream), name As String, paramsStream As IStream(Of TParams), getOutputFilePath As Func(Of TParams, String), getConnectionInfo As Func(Of TParams, SftpConnectionInfo)) As IStream(Of Stream)
+  overload: Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile*
+  nameWithType.vb: SftpEx.ToSftpFile(Of TParams)(IStream(Of Stream), String, IStream(Of TParams), Func(Of TParams, String), Func(Of TParams, SftpConnectionInfo))
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile(Of TParams)(IStream(Of Stream), System.String, IStream(Of TParams), System.Func(Of TParams, System.String), System.Func(Of TParams, SftpConnectionInfo))
+  name.vb: ToSftpFile(Of TParams)(IStream(Of Stream), String, IStream(Of TParams), Func(Of TParams, String), Func(Of TParams, SftpConnectionInfo))
+references:
+- uid: Paillave.Etl.Sftp.Extensions
+  commentId: N:Paillave.Etl.Sftp.Extensions
+  name: Paillave.Etl.Sftp.Extensions
+  nameWithType: Paillave.Etl.Sftp.Extensions
+  fullName: Paillave.Etl.Sftp.Extensions
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles*
+  commentId: Overload:Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles
+  name: CrossApplySftpFiles
+  nameWithType: SftpEx.CrossApplySftpFiles
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles
+- uid: IStream{{TIn}}
+  commentId: '!:IStream{``0}'
+  definition: IStream`1
+  name: IStream<TIn>
+  nameWithType: IStream<TIn>
+  fullName: IStream<TIn>
+  nameWithType.vb: IStream(Of TIn)
+  fullName.vb: IStream(Of TIn)
+  name.vb: IStream(Of TIn)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: ISingleStream{SftpConnectionInfo}
+  commentId: '!:ISingleStream{SftpConnectionInfo}'
+  definition: ISingleStream`1
+  name: ISingleStream<SftpConnectionInfo>
+  nameWithType: ISingleStream<SftpConnectionInfo>
+  fullName: ISingleStream<SftpConnectionInfo>
+  nameWithType.vb: ISingleStream(Of SftpConnectionInfo)
+  fullName.vb: ISingleStream(Of SftpConnectionInfo)
+  name.vb: ISingleStream(Of SftpConnectionInfo)
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: SftpConnectionInfo
+    name: SftpConnectionInfo
+    nameWithType: SftpConnectionInfo
+    fullName: SftpConnectionInfo
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: SftpConnectionInfo
+    name: SftpConnectionInfo
+    nameWithType: SftpConnectionInfo
+    fullName: SftpConnectionInfo
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TIn},System.String}
+  commentId: T:System.Func{``0,System.String}
+  parent: System
+  definition: System.Func`2
+  name: Func<TIn, String>
+  nameWithType: Func<TIn, String>
+  fullName: System.Func<TIn, System.String>
+  nameWithType.vb: Func(Of TIn, String)
+  fullName.vb: System.Func(Of TIn, System.String)
+  name.vb: Func(Of TIn, String)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: Boolean
+  nameWithType: Boolean
+  fullName: System.Boolean
+- uid: IStream{SftpFilesValue}
+  commentId: '!:IStream{SftpFilesValue}'
+  definition: IStream`1
+  name: IStream<SftpFilesValue>
+  nameWithType: IStream<SftpFilesValue>
+  fullName: IStream<SftpFilesValue>
+  nameWithType.vb: IStream(Of SftpFilesValue)
+  fullName.vb: IStream(Of SftpFilesValue)
+  name.vb: IStream(Of SftpFilesValue)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: SftpFilesValue
+    name: SftpFilesValue
+    nameWithType: SftpFilesValue
+    fullName: SftpFilesValue
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: SftpFilesValue
+    name: SftpFilesValue
+    nameWithType: SftpFilesValue
+    fullName: SftpFilesValue
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream`1
+  isExternal: true
+  name: IStream<>
+  nameWithType: IStream<>
+  fullName: IStream<>
+  nameWithType.vb: IStream(Of )
+  fullName.vb: IStream(Of )
+  name.vb: IStream(Of )
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: ISingleStream`1
+  isExternal: true
+  name: ISingleStream<>
+  nameWithType: ISingleStream<>
+  fullName: ISingleStream<>
+  nameWithType.vb: ISingleStream(Of )
+  fullName.vb: ISingleStream(Of )
+  name.vb: ISingleStream(Of )
+  spec.csharp:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func`2
+  commentId: T:System.Func`2
+  isExternal: true
+  name: Func<T, TResult>
+  nameWithType: Func<T, TResult>
+  fullName: System.Func<T, TResult>
+  nameWithType.vb: Func(Of T, TResult)
+  fullName.vb: System.Func(Of T, TResult)
+  name.vb: Func(Of T, TResult)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{System.String}
+  commentId: '!:IStream{System.String}'
+  definition: IStream`1
+  name: IStream<String>
+  nameWithType: IStream<String>
+  fullName: IStream<System.String>
+  nameWithType.vb: IStream(Of String)
+  fullName.vb: IStream(Of System.String)
+  name.vb: IStream(Of String)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{SftpFilesValue,{TIn},SftpConnectionInfo,{TOut}}
+  commentId: T:System.Func{SftpFilesValue,``0,SftpConnectionInfo,``1}
+  parent: System
+  definition: System.Func`4
+  name: Func<SftpFilesValue, TIn, SftpConnectionInfo, TOut>
+  nameWithType: Func<SftpFilesValue, TIn, SftpConnectionInfo, TOut>
+  fullName: System.Func<SftpFilesValue, TIn, SftpConnectionInfo, TOut>
+  nameWithType.vb: Func(Of SftpFilesValue, TIn, SftpConnectionInfo, TOut)
+  fullName.vb: System.Func(Of SftpFilesValue, TIn, SftpConnectionInfo, TOut)
+  name.vb: Func(Of SftpFilesValue, TIn, SftpConnectionInfo, TOut)
+  spec.csharp:
+  - uid: System.Func`4
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: SftpFilesValue
+    name: SftpFilesValue
+    nameWithType: SftpFilesValue
+    fullName: SftpFilesValue
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: SftpConnectionInfo
+    name: SftpConnectionInfo
+    nameWithType: SftpConnectionInfo
+    fullName: SftpConnectionInfo
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`4
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: SftpFilesValue
+    name: SftpFilesValue
+    nameWithType: SftpFilesValue
+    fullName: SftpFilesValue
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: SftpConnectionInfo
+    name: SftpConnectionInfo
+    nameWithType: SftpConnectionInfo
+    fullName: SftpConnectionInfo
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{{TOut}}
+  commentId: '!:IStream{``2}'
+  definition: IStream`1
+  name: IStream<TOut>
+  nameWithType: IStream<TOut>
+  fullName: IStream<TOut>
+  nameWithType.vb: IStream(Of TOut)
+  fullName.vb: IStream(Of TOut)
+  name.vb: IStream(Of TOut)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func`4
+  commentId: T:System.Func`4
+  isExternal: true
+  name: Func<T1, T2, T3, TResult>
+  nameWithType: Func<T1, T2, T3, TResult>
+  fullName: System.Func<T1, T2, T3, TResult>
+  nameWithType.vb: Func(Of T1, T2, T3, TResult)
+  fullName.vb: System.Func(Of T1, T2, T3, TResult)
+  name.vb: Func(Of T1, T2, T3, TResult)
+  spec.csharp:
+  - uid: System.Func`4
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T3
+    nameWithType: T3
+    fullName: T3
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`4
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T1
+    nameWithType: T1
+    fullName: T1
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T2
+    nameWithType: T2
+    fullName: T2
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: T3
+    nameWithType: T3
+    fullName: T3
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{SftpFilesValue,System.String,SftpConnectionInfo,{TOut}}
+  commentId: T:System.Func{SftpFilesValue,System.String,SftpConnectionInfo,``0}
+  parent: System
+  definition: System.Func`4
+  name: Func<SftpFilesValue, String, SftpConnectionInfo, TOut>
+  nameWithType: Func<SftpFilesValue, String, SftpConnectionInfo, TOut>
+  fullName: System.Func<SftpFilesValue, System.String, SftpConnectionInfo, TOut>
+  nameWithType.vb: Func(Of SftpFilesValue, String, SftpConnectionInfo, TOut)
+  fullName.vb: System.Func(Of SftpFilesValue, System.String, SftpConnectionInfo, TOut)
+  name.vb: Func(Of SftpFilesValue, String, SftpConnectionInfo, TOut)
+  spec.csharp:
+  - uid: System.Func`4
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: SftpFilesValue
+    name: SftpFilesValue
+    nameWithType: SftpFilesValue
+    fullName: SftpFilesValue
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: SftpConnectionInfo
+    name: SftpConnectionInfo
+    nameWithType: SftpConnectionInfo
+    fullName: SftpConnectionInfo
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`4
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: SftpFilesValue
+    name: SftpFilesValue
+    nameWithType: SftpFilesValue
+    fullName: SftpFilesValue
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: SftpConnectionInfo
+    name: SftpConnectionInfo
+    nameWithType: SftpConnectionInfo
+    fullName: SftpConnectionInfo
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TOut
+    nameWithType: TOut
+    fullName: TOut
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile*
+  commentId: Overload:Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile
+  name: ToSftpFile
+  nameWithType: SftpEx.ToSftpFile
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile
+- uid: IStream{Stream}
+  commentId: '!:IStream{Stream}'
+  definition: IStream`1
+  name: IStream<Stream>
+  nameWithType: IStream<Stream>
+  fullName: IStream<Stream>
+  nameWithType.vb: IStream(Of Stream)
+  fullName.vb: IStream(Of Stream)
+  name.vb: IStream(Of Stream)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Stream
+    name: Stream
+    nameWithType: Stream
+    fullName: Stream
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Stream
+    name: Stream
+    nameWithType: Stream
+    fullName: Stream
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: IStream{{TParams}}
+  commentId: '!:IStream{``0}'
+  definition: IStream`1
+  name: IStream<TParams>
+  nameWithType: IStream<TParams>
+  fullName: IStream<TParams>
+  nameWithType.vb: IStream(Of TParams)
+  fullName.vb: IStream(Of TParams)
+  name.vb: IStream(Of TParams)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TParams
+    nameWithType: TParams
+    fullName: TParams
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TParams
+    nameWithType: TParams
+    fullName: TParams
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TParams},System.String}
+  commentId: T:System.Func{``0,System.String}
+  parent: System
+  definition: System.Func`2
+  name: Func<TParams, String>
+  nameWithType: Func<TParams, String>
+  fullName: System.Func<TParams, System.String>
+  nameWithType.vb: Func(Of TParams, String)
+  fullName.vb: System.Func(Of TParams, System.String)
+  name.vb: Func(Of TParams, String)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TParams
+    nameWithType: TParams
+    fullName: TParams
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TParams
+    nameWithType: TParams
+    fullName: TParams
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TParams},SftpConnectionInfo}
+  commentId: T:System.Func{``0,SftpConnectionInfo}
+  parent: System
+  definition: System.Func`2
+  name: Func<TParams, SftpConnectionInfo>
+  nameWithType: Func<TParams, SftpConnectionInfo>
+  fullName: System.Func<TParams, SftpConnectionInfo>
+  nameWithType.vb: Func(Of TParams, SftpConnectionInfo)
+  fullName.vb: System.Func(Of TParams, SftpConnectionInfo)
+  name.vb: Func(Of TParams, SftpConnectionInfo)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TParams
+    nameWithType: TParams
+    fullName: TParams
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: SftpConnectionInfo
+    name: SftpConnectionInfo
+    nameWithType: SftpConnectionInfo
+    fullName: SftpConnectionInfo
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TParams
+    nameWithType: TParams
+    fullName: TParams
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: SftpConnectionInfo
+    name: SftpConnectionInfo
+    nameWithType: SftpConnectionInfo
+    fullName: SftpConnectionInfo
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )

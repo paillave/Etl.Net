@@ -14,6 +14,11 @@
   items:
   - uid: Paillave.Etl.Ftp.Extensions.FtpEx
     name: FtpEx
+- uid: Paillave.Etl.Sftp.Extensions
+  name: Paillave.Etl.Sftp.Extensions
+  items:
+  - uid: Paillave.Etl.Sftp.Extensions.SftpEx
+    name: SftpEx
 - uid: Paillave.Etl.SqlServer.Extensions
   name: Paillave.Etl.SqlServer.Extensions
   items:

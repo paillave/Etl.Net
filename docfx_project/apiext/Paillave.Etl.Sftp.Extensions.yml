@@ -1,0 +1,22 @@
+### YamlMime:ManagedReference
+items:
+- uid: Paillave.Etl.Sftp.Extensions
+  commentId: N:Paillave.Etl.Sftp.Extensions
+  id: Paillave.Etl.Sftp.Extensions
+  children:
+  - Paillave.Etl.Sftp.Extensions.SftpEx
+  langs:
+  - csharp
+  - vb
+  name: Paillave.Etl.Sftp.Extensions
+  nameWithType: Paillave.Etl.Sftp.Extensions
+  fullName: Paillave.Etl.Sftp.Extensions
+  type: Namespace
+  assemblies:
+  - cs.temp.dll
+references:
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx
+  commentId: T:Paillave.Etl.Sftp.Extensions.SftpEx
+  name: SftpEx
+  nameWithType: SftpEx
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx
