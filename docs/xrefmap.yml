@@ -1501,6 +1501,77 @@ references:
   fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile(Of TParams)(IStream(Of Stream), System.String, IStream(Of TParams), System.Func(Of TParams, System.String), System.Func(Of TParams, FtpConnectionInfo))
   nameWithType: FtpEx.ToFtpFile<TParams>(IStream<Stream>, String, IStream<TParams>, Func<TParams, String>, Func<TParams, FtpConnectionInfo>)
   nameWithType.vb: FtpEx.ToFtpFile(Of TParams)(IStream(Of Stream), String, IStream(Of TParams), Func(Of TParams, String), Func(Of TParams, FtpConnectionInfo))
+- uid: Paillave.Etl.Sftp.Extensions
+  name: Paillave.Etl.Sftp.Extensions
+  href: apiext/Paillave.Etl.Sftp.Extensions.html
+  commentId: N:Paillave.Etl.Sftp.Extensions
+  fullName: Paillave.Etl.Sftp.Extensions
+  nameWithType: Paillave.Etl.Sftp.Extensions
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx
+  name: SftpEx
+  href: apiext/Paillave.Etl.Sftp.Extensions.SftpEx.html
+  commentId: T:Paillave.Etl.Sftp.Extensions.SftpEx
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx
+  nameWithType: SftpEx
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Boolean)
+  name: CrossApplySftpFiles(IStream<String>, String, ISingleStream<SftpConnectionInfo>, Boolean)
+  href: apiext/Paillave.Etl.Sftp.Extensions.SftpEx.html#Paillave_Etl_Sftp_Extensions_SftpEx_CrossApplySftpFiles_IStream_System_String__System_String_ISingleStream_SftpConnectionInfo__System_Boolean_
+  commentId: M:Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Boolean)
+  name.vb: CrossApplySftpFiles(IStream(Of String), String, ISingleStream(Of SftpConnectionInfo), Boolean)
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(IStream<System.String>, System.String, ISingleStream<SftpConnectionInfo>, System.Boolean)
+  fullName.vb: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(IStream(Of System.String), System.String, ISingleStream(Of SftpConnectionInfo), System.Boolean)
+  nameWithType: SftpEx.CrossApplySftpFiles(IStream<String>, String, ISingleStream<SftpConnectionInfo>, Boolean)
+  nameWithType.vb: SftpEx.CrossApplySftpFiles(IStream(Of String), String, ISingleStream(Of SftpConnectionInfo), Boolean)
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles*
+  name: CrossApplySftpFiles
+  href: apiext/Paillave.Etl.Sftp.Extensions.SftpEx.html#Paillave_Etl_Sftp_Extensions_SftpEx_CrossApplySftpFiles_
+  commentId: Overload:Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles
+  isSpec: "True"
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles
+  nameWithType: SftpEx.CrossApplySftpFiles
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``1(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Boolean)
+  name: CrossApplySftpFiles<TIn>(IStream<TIn>, String, ISingleStream<SftpConnectionInfo>, Func<TIn, String>, Boolean)
+  href: apiext/Paillave.Etl.Sftp.Extensions.SftpEx.html#Paillave_Etl_Sftp_Extensions_SftpEx_CrossApplySftpFiles__1_IStream___0__System_String_ISingleStream_SftpConnectionInfo__System_Func___0_System_String__System_Boolean_
+  commentId: M:Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``1(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Boolean)
+  name.vb: CrossApplySftpFiles(Of TIn)(IStream(Of TIn), String, ISingleStream(Of SftpConnectionInfo), Func(Of TIn, String), Boolean)
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles<TIn>(IStream<TIn>, System.String, ISingleStream<SftpConnectionInfo>, System.Func<TIn, System.String>, System.Boolean)
+  fullName.vb: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(Of TIn)(IStream(Of TIn), System.String, ISingleStream(Of SftpConnectionInfo), System.Func(Of TIn, System.String), System.Boolean)
+  nameWithType: SftpEx.CrossApplySftpFiles<TIn>(IStream<TIn>, String, ISingleStream<SftpConnectionInfo>, Func<TIn, String>, Boolean)
+  nameWithType.vb: SftpEx.CrossApplySftpFiles(Of TIn)(IStream(Of TIn), String, ISingleStream(Of SftpConnectionInfo), Func(Of TIn, String), Boolean)
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``1(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Func{SftpFilesValue,System.String,SftpConnectionInfo,``0},System.Boolean)
+  name: CrossApplySftpFiles<TOut>(IStream<String>, String, ISingleStream<SftpConnectionInfo>, Func<SftpFilesValue, String, SftpConnectionInfo, TOut>, Boolean)
+  href: apiext/Paillave.Etl.Sftp.Extensions.SftpEx.html#Paillave_Etl_Sftp_Extensions_SftpEx_CrossApplySftpFiles__1_IStream_System_String__System_String_ISingleStream_SftpConnectionInfo__System_Func_SftpFilesValue_System_String_SftpConnectionInfo___0__System_Boolean_
+  commentId: M:Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``1(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Func{SftpFilesValue,System.String,SftpConnectionInfo,``0},System.Boolean)
+  name.vb: CrossApplySftpFiles(Of TOut)(IStream(Of String), String, ISingleStream(Of SftpConnectionInfo), Func(Of SftpFilesValue, String, SftpConnectionInfo, TOut), Boolean)
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles<TOut>(IStream<System.String>, System.String, ISingleStream<SftpConnectionInfo>, System.Func<SftpFilesValue, System.String, SftpConnectionInfo, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(Of TOut)(IStream(Of System.String), System.String, ISingleStream(Of SftpConnectionInfo), System.Func(Of SftpFilesValue, System.String, SftpConnectionInfo, TOut), System.Boolean)
+  nameWithType: SftpEx.CrossApplySftpFiles<TOut>(IStream<String>, String, ISingleStream<SftpConnectionInfo>, Func<SftpFilesValue, String, SftpConnectionInfo, TOut>, Boolean)
+  nameWithType.vb: SftpEx.CrossApplySftpFiles(Of TOut)(IStream(Of String), String, ISingleStream(Of SftpConnectionInfo), Func(Of SftpFilesValue, String, SftpConnectionInfo, TOut), Boolean)
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``2(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Func{SftpFilesValue,``0,SftpConnectionInfo,``1},System.Boolean)
+  name: CrossApplySftpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<SftpConnectionInfo>, Func<TIn, String>, Func<SftpFilesValue, TIn, SftpConnectionInfo, TOut>, Boolean)
+  href: apiext/Paillave.Etl.Sftp.Extensions.SftpEx.html#Paillave_Etl_Sftp_Extensions_SftpEx_CrossApplySftpFiles__2_IStream___0__System_String_ISingleStream_SftpConnectionInfo__System_Func___0_System_String__System_Func_SftpFilesValue___0_SftpConnectionInfo___1__System_Boolean_
+  commentId: M:Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``2(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Func{SftpFilesValue,``0,SftpConnectionInfo,``1},System.Boolean)
+  name.vb: CrossApplySftpFiles(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of SftpConnectionInfo), Func(Of TIn, String), Func(Of SftpFilesValue, TIn, SftpConnectionInfo, TOut), Boolean)
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles<TIn, TOut>(IStream<TIn>, System.String, ISingleStream<SftpConnectionInfo>, System.Func<TIn, System.String>, System.Func<SftpFilesValue, TIn, SftpConnectionInfo, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(Of TIn, TOut)(IStream(Of TIn), System.String, ISingleStream(Of SftpConnectionInfo), System.Func(Of TIn, System.String), System.Func(Of SftpFilesValue, TIn, SftpConnectionInfo, TOut), System.Boolean)
+  nameWithType: SftpEx.CrossApplySftpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<SftpConnectionInfo>, Func<TIn, String>, Func<SftpFilesValue, TIn, SftpConnectionInfo, TOut>, Boolean)
+  nameWithType.vb: SftpEx.CrossApplySftpFiles(Of TIn, TOut)(IStream(Of TIn), String, ISingleStream(Of SftpConnectionInfo), Func(Of TIn, String), Func(Of SftpFilesValue, TIn, SftpConnectionInfo, TOut), Boolean)
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile*
+  name: ToSftpFile
+  href: apiext/Paillave.Etl.Sftp.Extensions.SftpEx.html#Paillave_Etl_Sftp_Extensions_SftpEx_ToSftpFile_
+  commentId: Overload:Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile
+  isSpec: "True"
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile
+  nameWithType: SftpEx.ToSftpFile
+- uid: Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,SftpConnectionInfo})
+  name: ToSftpFile<TParams>(IStream<Stream>, String, IStream<TParams>, Func<TParams, String>, Func<TParams, SftpConnectionInfo>)
+  href: apiext/Paillave.Etl.Sftp.Extensions.SftpEx.html#Paillave_Etl_Sftp_Extensions_SftpEx_ToSftpFile__1_IStream_Stream__System_String_IStream___0__System_Func___0_System_String__System_Func___0_SftpConnectionInfo__
+  commentId: M:Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,SftpConnectionInfo})
+  name.vb: ToSftpFile(Of TParams)(IStream(Of Stream), String, IStream(Of TParams), Func(Of TParams, String), Func(Of TParams, SftpConnectionInfo))
+  fullName: Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile<TParams>(IStream<Stream>, System.String, IStream<TParams>, System.Func<TParams, System.String>, System.Func<TParams, SftpConnectionInfo>)
+  fullName.vb: Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile(Of TParams)(IStream(Of Stream), System.String, IStream(Of TParams), System.Func(Of TParams, System.String), System.Func(Of TParams, SftpConnectionInfo))
+  nameWithType: SftpEx.ToSftpFile<TParams>(IStream<Stream>, String, IStream<TParams>, Func<TParams, String>, Func<TParams, SftpConnectionInfo>)
+  nameWithType.vb: SftpEx.ToSftpFile(Of TParams)(IStream(Of Stream), String, IStream(Of TParams), Func(Of TParams, String), Func(Of TParams, SftpConnectionInfo))
 - uid: Paillave.Etl.SqlServer.Extensions
   name: Paillave.Etl.SqlServer.Extensions
   href: apiext/Paillave.Etl.SqlServer.Extensions.html

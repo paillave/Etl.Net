@@ -521,6 +521,30 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "apiext/Paillave.Etl.Sftp.Extensions.SftpEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "apiext/Paillave.Etl.Sftp.Extensions.SftpEx.html",
+          "hash": "EORszzTRQOiC1FfZZtmaYw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "apiext/Paillave.Etl.Sftp.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "apiext/Paillave.Etl.Sftp.Extensions.html",
+          "hash": "MI504nsK7TJRC/2Q4wzinw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "apiext/Paillave.Etl.SqlServer.Extensions.SqlServerEx.yml",
       "output": {
         ".html": {
@@ -576,7 +600,7 @@
           "hash": "lIQan2ZvhZlTSm7Kam6iZA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -585,7 +609,7 @@
       "output": {
         ".html": {
           "relative_path": "apiext/toc.html",
-          "hash": "t6rgF4QFSwyp/1yqSzWDZw=="
+          "hash": "+vfFUJLbUGp8Cl8apCQU9w=="
         }
       },
       "is_incremental": false,
@@ -658,11 +682,11 @@
           "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build"
         },
-        "ConceptualDocumentProcessor": {
+        "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build"
         },
-        "ManagedReferenceDocumentProcessor": {
+        "ConceptualDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build"
         }
