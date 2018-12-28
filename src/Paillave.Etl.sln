@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamplesQuickStart", "Sampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCsv", "Samples\TestCsv\TestCsv.csproj", "{71385EE6-5877-4BE5-AE99-553BEEDD9C55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Sftp", "Paillave.Etl.Sftp\Paillave.Etl.Sftp.csproj", "{DFDB85B2-D4B2-4C52-93DA-7B576035E76C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +117,10 @@ Global
 		{71385EE6-5877-4BE5-AE99-553BEEDD9C55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71385EE6-5877-4BE5-AE99-553BEEDD9C55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71385EE6-5877-4BE5-AE99-553BEEDD9C55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFDB85B2-D4B2-4C52-93DA-7B576035E76C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFDB85B2-D4B2-4C52-93DA-7B576035E76C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFDB85B2-D4B2-4C52-93DA-7B576035E76C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFDB85B2-D4B2-4C52-93DA-7B576035E76C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
