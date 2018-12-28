@@ -14,7 +14,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
 {
     public static partial class ExecutionStatusEx
     {
-        [Obsolete("Use the debugger instead")]
+        [Obsolete("Use the debugger instead (https://github.com/paillave/Etl.Net-Debugger)")]
         public static D3SankeyDescription GetActualExecutionPlanD3Sankey(this ExecutionStatus executionStatus)
         {
             var nameToIdDictionary = executionStatus.JobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.NodeName, Idx }).ToDictionary(i => i.NodeName, i => i.Idx);
@@ -44,12 +44,12 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
                }).ToList()
             };
         }
-        [Obsolete("Use the debugger instead")]
+        [Obsolete("Use the debugger instead (https://github.com/paillave/Etl.Net-Debugger)")]
         public static string GetActualExecutionPlanJsonD3Sankey(this ExecutionStatus executionStatus)
         {
             return JsonConvert.SerializeObject(executionStatus.GetActualExecutionPlanD3Sankey());
         }
-        [Obsolete("Use the debugger instead")]
+        [Obsolete("Use the debugger instead (https://github.com/paillave/Etl.Net-Debugger)")]
         public static string GetActualExecutionPlanHtmlD3Sankey(this ExecutionStatus executionStatus)
         {
             var json = executionStatus.GetActualExecutionPlanJsonD3Sankey();
@@ -64,7 +64,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
             string html = file.Replace("'<<SANKEY_STATISTICS>>'", json);
             return html;
         }
-        [Obsolete("Use the debugger instead")]
+        [Obsolete("Use the debugger instead (https://github.com/paillave/Etl.Net-Debugger)")]
         public static void OpenActualExecutionPlanD3Sankey(this ExecutionStatus executionStatus)
         {
             Tools.OpenFile(executionStatus.GetActualExecutionPlanHtmlD3Sankey(), "html");

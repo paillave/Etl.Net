@@ -18,7 +18,6 @@ namespace ComplexQuickstart
         static void Main(string[] args)
         {
             var runner = StreamProcessRunner.Create<MyConfig>(ComplexQuickstartJob.DefineProcess);
-            runner.GetDefinitionStructure().OpenEstimatedExecutionPlanD3Sankey();
             Action<IStream<TraceEvent>> traceStreamProcessDefinition = traceStream => traceStream.ThroughAction("logs to console", Console.WriteLine);
             var testFilesDirectory = @"C:\Users\paill\Documents\GitHub\Etl.Net\src\Samples\TestFiles";
             var task = runner.ExecuteAsync(new MyConfig
@@ -28,9 +27,8 @@ namespace ComplexQuickstart
                 TypeFilePath = Path.Combine(testFilesDirectory, @"ref - Copy.csv"),
                 DestinationFilePath = Path.Combine(testFilesDirectory, @"outfile.csv"),
                 CategoryDestinationFilePath = Path.Combine(testFilesDirectory, @"categoryStats.csv")
-            }, traceStreamProcessDefinition);
-            task.Result.OpenActualExecutionPlanD3Sankey();
-
+            }, traceStreamProcessDefinition, true);
+            task.Wait();
             Console.WriteLine("Done");
             Console.WriteLine("Press a key...");
             Console.ReadKey();

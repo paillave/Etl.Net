@@ -14,7 +14,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
 {
     public static partial class JobDefinitionStructureEx
     {
-        [Obsolete("Use the debugger instead")]
+        [Obsolete("Use the debugger instead (https://github.com/paillave/Etl.Net-Debugger)")]
         public static PlotlySankeyDescription GetEstimatedExecutionPlanPlotlySankey(this JobDefinitionStructure jobDefinitionStructure)
         {
             var nameToIdDictionary = jobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.NodeName, Idx }).ToDictionary(i => i.NodeName, i => i.Idx);
@@ -38,7 +38,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
         //{
         //    return JsonConvert.SerializeObject(await executionStatus.GetPlotlySankeyStatisticsAsync());
         //}
-        [Obsolete("Use the debugger instead")]
+        [Obsolete("Use the debugger instead (https://github.com/paillave/Etl.Net-Debugger)")]
         public static string GetEstimatedExecutionPlanHtmlPlotlySankey(this JobDefinitionStructure jobDefinitionStructure)
         {
             var stats = jobDefinitionStructure.GetEstimatedExecutionPlanPlotlySankey();
@@ -57,7 +57,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
             html = html.Replace("'<<LINK_VALUES>>'", JsonConvert.SerializeObject(stats.LinkValues));
             return html;
         }
-        [Obsolete("Use the debugger instead")]
+        [Obsolete("Use the debugger instead (https://github.com/paillave/Etl.Net-Debugger)")]
         public static void OpenEstimatedExecutionPlanPlotlySankey(this JobDefinitionStructure jobDefinitionStructure)
         {
             Tools.OpenFile(jobDefinitionStructure.GetEstimatedExecutionPlanHtmlPlotlySankey(), "html");
