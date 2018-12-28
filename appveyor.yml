@@ -41,6 +41,8 @@ artifacts:
   name: Paillave.Etl.SqlServer
 - path: src\Paillave.Etl.Ftp\bin\$(configuration)\*.nupkg
   name: Paillave.Etl.Ftp
+- path: src\Paillave.Etl.Sftp\bin\$(configuration)\*.nupkg
+  name: Paillave.Etl.Sftp
 deploy:
 - provider: NuGet
   api_key:
@@ -70,6 +72,10 @@ deploy:
   api_key:
     secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
   artifact: Paillave.Etl.Ftp
+- provider: NuGet
+  api_key:
+    secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
+  artifact: Paillave.Etl.Sftp
 notifications:
 - provider: Webhook
   url: https://webhooks.gitter.im/e/24499395a6cd92120c65
