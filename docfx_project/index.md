@@ -67,7 +67,7 @@ When it is about SSIS extensibility, you have to swim quiet deep in the abyss of
 
 Etl.net extensibility is based on a simple development wether it is embedded within the application, in another shared assembly or a Nuget package. It is as simple as a couple of lines of code since a set of base classes permits extensions to be easily implemented for most of typical use cases.
 
-### The debugging tool permits it to troubleshoot issues in an eyesight
+### The debugging tool permits to troubleshoot issues in an eyesight
 
 The debugger ([Download here](https://github.com/paillave/Etl.Net-Debugger/releases)) permits to run Etl.Net jobs out of their application during their development phase to troubleshoot issues in a second.
 
