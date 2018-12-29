@@ -3897,15 +3897,6 @@
         "detailedType": 2
     },
     {
-        "uid": "Paillave.Etl.EntityFrameworkCore.Extensions",
-        "type": "Reference.Managed",
-        "memberType": "Namespace",
-        "name": "Paillave.Etl.EntityFrameworkCore.Extensions",
-        "title": "Paillave.Etl.EntityFrameworkCore.Extensions",
-        "sourceFile": "apiext\\Paillave.Etl.EntityFrameworkCore.Extensions.yml",
-        "detailedType": 2
-    },
-    {
         "uid": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx",
         "type": "Reference.Managed",
         "memberType": "Class",
@@ -3969,12 +3960,12 @@
         "detailedType": 5
     },
     {
-        "uid": "Paillave.Etl.ExcelFile.Extensions",
+        "uid": "Paillave.Etl.EntityFrameworkCore.Extensions",
         "type": "Reference.Managed",
         "memberType": "Namespace",
-        "name": "Paillave.Etl.ExcelFile.Extensions",
-        "title": "Paillave.Etl.ExcelFile.Extensions",
-        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.yml",
+        "name": "Paillave.Etl.EntityFrameworkCore.Extensions",
+        "title": "Paillave.Etl.EntityFrameworkCore.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.EntityFrameworkCore.Extensions.yml",
         "detailedType": 2
     },
     {
@@ -4113,12 +4104,12 @@
         "detailedType": 5
     },
     {
-        "uid": "Paillave.Etl.Ftp.Extensions",
+        "uid": "Paillave.Etl.ExcelFile.Extensions",
         "type": "Reference.Managed",
         "memberType": "Namespace",
-        "name": "Paillave.Etl.Ftp.Extensions",
-        "title": "Paillave.Etl.Ftp.Extensions",
-        "sourceFile": "apiext\\Paillave.Etl.Ftp.Extensions.yml",
+        "name": "Paillave.Etl.ExcelFile.Extensions",
+        "title": "Paillave.Etl.ExcelFile.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.yml",
         "detailedType": 2
     },
     {
@@ -4176,12 +4167,75 @@
         "detailedType": 5
     },
     {
-        "uid": "Paillave.Etl.SqlServer.Extensions",
+        "uid": "Paillave.Etl.Ftp.Extensions",
         "type": "Reference.Managed",
         "memberType": "Namespace",
-        "name": "Paillave.Etl.SqlServer.Extensions",
-        "title": "Paillave.Etl.SqlServer.Extensions",
-        "sourceFile": "apiext\\Paillave.Etl.SqlServer.Extensions.yml",
+        "name": "Paillave.Etl.Ftp.Extensions",
+        "title": "Paillave.Etl.Ftp.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.Ftp.Extensions.yml",
+        "detailedType": 2
+    },
+    {
+        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Sftp.Extensions.SftpEx",
+        "title": "SftpEx",
+        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``1(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles<TIn>(IStream<TIn>, System.String, ISingleStream<SftpConnectionInfo>, System.Func<TIn, System.String>, System.Boolean)",
+        "title": "SftpEx.CrossApplySftpFiles<TIn>(IStream<TIn>, String, ISingleStream<SftpConnectionInfo>, Func<TIn, String>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(IStream<System.String>, System.String, ISingleStream<SftpConnectionInfo>, System.Boolean)",
+        "title": "SftpEx.CrossApplySftpFiles(IStream<String>, String, ISingleStream<SftpConnectionInfo>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``2(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Func{SftpFilesValue,``0,SftpConnectionInfo,``1},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles<TIn, TOut>(IStream<TIn>, System.String, ISingleStream<SftpConnectionInfo>, System.Func<TIn, System.String>, System.Func<SftpFilesValue, TIn, SftpConnectionInfo, TOut>, System.Boolean)",
+        "title": "SftpEx.CrossApplySftpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<SftpConnectionInfo>, Func<TIn, String>, Func<SftpFilesValue, TIn, SftpConnectionInfo, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``1(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Func{SftpFilesValue,System.String,SftpConnectionInfo,``0},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles<TOut>(IStream<System.String>, System.String, ISingleStream<SftpConnectionInfo>, System.Func<SftpFilesValue, System.String, SftpConnectionInfo, TOut>, System.Boolean)",
+        "title": "SftpEx.CrossApplySftpFiles<TOut>(IStream<String>, String, ISingleStream<SftpConnectionInfo>, Func<SftpFilesValue, String, SftpConnectionInfo, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,SftpConnectionInfo})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile<TParams>(IStream<Stream>, System.String, IStream<TParams>, System.Func<TParams, System.String>, System.Func<TParams, SftpConnectionInfo>)",
+        "title": "SftpEx.ToSftpFile<TParams>(IStream<Stream>, String, IStream<TParams>, Func<TParams, String>, Func<TParams, SftpConnectionInfo>)",
+        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Sftp.Extensions",
+        "type": "Reference.Managed",
+        "memberType": "Namespace",
+        "name": "Paillave.Etl.Sftp.Extensions",
+        "title": "Paillave.Etl.Sftp.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.yml",
         "detailedType": 2
     },
     {
@@ -4212,12 +4266,12 @@
         "detailedType": 5
     },
     {
-        "uid": "Paillave.Etl.TextFile.Extensions",
+        "uid": "Paillave.Etl.SqlServer.Extensions",
         "type": "Reference.Managed",
         "memberType": "Namespace",
-        "name": "Paillave.Etl.TextFile.Extensions",
-        "title": "Paillave.Etl.TextFile.Extensions",
-        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.yml",
+        "name": "Paillave.Etl.SqlServer.Extensions",
+        "title": "Paillave.Etl.SqlServer.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.SqlServer.Extensions.yml",
         "detailedType": 2
     },
     {
@@ -4383,66 +4437,12 @@
         "detailedType": 5
     },
     {
-        "uid": "Paillave.Etl.Sftp.Extensions",
+        "uid": "Paillave.Etl.TextFile.Extensions",
         "type": "Reference.Managed",
         "memberType": "Namespace",
-        "name": "Paillave.Etl.Sftp.Extensions",
-        "title": "Paillave.Etl.Sftp.Extensions",
-        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.yml",
+        "name": "Paillave.Etl.TextFile.Extensions",
+        "title": "Paillave.Etl.TextFile.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.yml",
         "detailedType": 2
-    },
-    {
-        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx",
-        "type": "Reference.Managed",
-        "memberType": "Class",
-        "name": "Paillave.Etl.Sftp.Extensions.SftpEx",
-        "title": "SftpEx",
-        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
-        "detailedType": 3
-    },
-    {
-        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``1(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Boolean)",
-        "type": "Reference.Managed",
-        "memberType": "Method",
-        "name": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles<TIn>(IStream<TIn>, System.String, ISingleStream<SftpConnectionInfo>, System.Func<TIn, System.String>, System.Boolean)",
-        "title": "SftpEx.CrossApplySftpFiles<TIn>(IStream<TIn>, String, ISingleStream<SftpConnectionInfo>, Func<TIn, String>, Boolean)",
-        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
-        "detailedType": 5
-    },
-    {
-        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Boolean)",
-        "type": "Reference.Managed",
-        "memberType": "Method",
-        "name": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(IStream<System.String>, System.String, ISingleStream<SftpConnectionInfo>, System.Boolean)",
-        "title": "SftpEx.CrossApplySftpFiles(IStream<String>, String, ISingleStream<SftpConnectionInfo>, Boolean)",
-        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
-        "detailedType": 5
-    },
-    {
-        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``2(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Func{SftpFilesValue,``0,SftpConnectionInfo,``1},System.Boolean)",
-        "type": "Reference.Managed",
-        "memberType": "Method",
-        "name": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles<TIn, TOut>(IStream<TIn>, System.String, ISingleStream<SftpConnectionInfo>, System.Func<TIn, System.String>, System.Func<SftpFilesValue, TIn, SftpConnectionInfo, TOut>, System.Boolean)",
-        "title": "SftpEx.CrossApplySftpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<SftpConnectionInfo>, Func<TIn, String>, Func<SftpFilesValue, TIn, SftpConnectionInfo, TOut>, Boolean)",
-        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
-        "detailedType": 5
-    },
-    {
-        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``1(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Func{SftpFilesValue,System.String,SftpConnectionInfo,``0},System.Boolean)",
-        "type": "Reference.Managed",
-        "memberType": "Method",
-        "name": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles<TOut>(IStream<System.String>, System.String, ISingleStream<SftpConnectionInfo>, System.Func<SftpFilesValue, System.String, SftpConnectionInfo, TOut>, System.Boolean)",
-        "title": "SftpEx.CrossApplySftpFiles<TOut>(IStream<String>, String, ISingleStream<SftpConnectionInfo>, Func<SftpFilesValue, String, SftpConnectionInfo, TOut>, Boolean)",
-        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
-        "detailedType": 5
-    },
-    {
-        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,SftpConnectionInfo})",
-        "type": "Reference.Managed",
-        "memberType": "Method",
-        "name": "Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile<TParams>(IStream<Stream>, System.String, IStream<TParams>, System.Func<TParams, System.String>, System.Func<TParams, SftpConnectionInfo>)",
-        "title": "SftpEx.ToSftpFile<TParams>(IStream<Stream>, String, IStream<TParams>, Func<TParams, String>, Func<TParams, SftpConnectionInfo>)",
-        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
-        "detailedType": 5
     }
 ]

@@ -15,7 +15,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
     //http://resources.jointjs.com/demos/layout
     public static partial class ExecutionStatusEx
     {
-        [Obsolete("Use the debugger instead")]
+        [Obsolete("Use the debugger instead (https://github.com/paillave/Etl.Net-Debugger)")]
         public static VisNetworkDescription GetActualExecutionPlan(this ExecutionStatus executionStatus)
         {
             var nameToIdDictionary = executionStatus.JobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.NodeName, Idx }).ToDictionary(i => i.NodeName, i => i.Idx);
@@ -53,7 +53,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
                     }).ToList()
             };
         }
-        [Obsolete("Use the debugger instead")]
+        [Obsolete("Use the debugger instead (https://github.com/paillave/Etl.Net-Debugger)")]
         private static int GetNodeBorderWidth(INodeContext node, bool onError)
         {
             if (onError) return 8;
@@ -61,7 +61,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
             // if (node.IsTarget) return 8;
             return 2;
         }
-        [Obsolete("Use the debugger instead")]
+        [Obsolete("Use the debugger instead (https://github.com/paillave/Etl.Net-Debugger)")]
         private static VisNetworkStatisticColorNode GetNodeColor(INodeContext node, bool onError)
         {
             if (onError) return new VisNetworkStatisticColorNode { background = "salmon", border = "red" };
@@ -69,7 +69,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
             // if (node.IsTarget) return new VisNetworkStatisticColorNode { background = "blue", border = "#2B7CE9" };
             return new VisNetworkStatisticColorNode { background = "#D2E5FF", border = "#2B7CE9" };
         }
-        [Obsolete("Use the debugger instead")]
+        [Obsolete("Use the debugger instead (https://github.com/paillave/Etl.Net-Debugger)")]
         private static VisNetworkStatisticIconNode GetNodeIcon(INodeContext node)
         {
             //if (node.IsSource) return new VisNetworkStatisticIconNode { face = "FontAwesome", size = 50, code = @"\uf2f6" };
@@ -78,12 +78,12 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
             //if (node.IsTarget) return new VisNetworkStatisticIconNode { face = "Ionicons", size = 50, code = @"\uf1b2" };
             return null;
         }
-        [Obsolete("Use the debugger instead")]
+        [Obsolete("Use the debugger instead (https://github.com/paillave/Etl.Net-Debugger)")]
         public static string GetActualExecutionPlanJsonVisNetwork(this ExecutionStatus executionStatus)
         {
             return JsonConvert.SerializeObject(executionStatus.GetActualExecutionPlan()).Replace(@"""\\u", @"""\u");
         }
-        [Obsolete("Use the debugger instead")]
+        [Obsolete("Use the debugger instead (https://github.com/paillave/Etl.Net-Debugger)")]
         public static string GetActualExecutionPlanHtmlVisNetwork(this ExecutionStatus executionStatus)
         {
             var json = executionStatus.GetActualExecutionPlanJsonVisNetwork();
@@ -98,7 +98,7 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
             string html = file.Replace("'<<STATISTICS>>'", json);
             return html;
         }
-        [Obsolete("Use the debugger instead")]
+        [Obsolete("Use the debugger instead (https://github.com/paillave/Etl.Net-Debugger)")]
         public static void OpenActualExecutionPlanVisNetwork(this ExecutionStatus executionStatus)
         {
             Tools.OpenFile(executionStatus.GetActualExecutionPlanHtmlVisNetwork(), "html");

@@ -29,11 +29,13 @@ The first alpha release is expected once it starts to be a decent candidate to r
 
 ## ETL features
 
+### Implemented
+
 Select, Where, Sort, Left Join, Lookup, Union, Union All, Skip, Top, Distinct, Pivot, Unpivot, Aggregate, Cross Apply, Ensure Sorted, Ensure Keyed, Script, Run subprocess, Keep section, Ignore section, List folder files, Read csv file, Read excel file, Write csv file, Write excel file, Read from Entity framework core, Write to Entity framework core, Entity framework core upsert, SQL Server bulk load, Read from sql server command, Write to sql server command, List files from FTP, Read file from FTP, Write file to FTP...
 
 Check evolution of developments in [the projects section](https://github.com/paillave/Etl.Net/projects)
 
-To be coming:
+### To be coming
 
 Read very large xml file, Read very large json file, Read from Entity framework, Write to Entity framework, Read from MongoDb, Write to MongoDb, MongoDb upsert, Entity framework upsert, List file from SFTP, Read file from SFTP, Write file to SFTP, Read data from REST service, Write data to REST service...
 
@@ -44,9 +46,11 @@ Read very large xml file, Read very large json file, Read from Entity framework,
 
 ## Runtime features
 
+### Implemented
+
 Trace issued data by each node, Trace any error, Stop the entire process whenever an error is raised, Trace statistic result of each node at the end of the process, Execute any ETL process on traces to filter and save them, Show realtime process execution statistics...
 
-To be coming:
+### To be coming
 
 Trace time that is spent in each node at the end of the process, Publish a Job as a REST web service in web api core, Execute a job using reference to native .net core configuration, Web portal to host job definitions and manage their executions, Power shell command tool to execute a job, Visual studio code addon to view the process whenever the job definition class file is saved, Raise a warning on the risky node when a performance issue or a bad practice is detected given statistics, Interprets a T-SQL-like language script to build a job definition on the fly and run it...
 

@@ -1,3 +1,7 @@
+- uid: Debugger
+  name: Debugger
+  href: debugger/
+  homepage: debugger/index.md
 - uid: RecipesPatterns 
   name: Recipes & Patterns
   href: recipes/
