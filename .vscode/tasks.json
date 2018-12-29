@@ -15,15 +15,6 @@
       }
     },
     {
-      "label": "build debugger",
-      "command": "buildElectron.cmd",
-      "type": "shell",
-      "problemMatcher": [],
-      "options": {
-        "cwd": "${workspaceFolder}/src/Paillave.Etl.Debugger"
-      }
-    },
-    {
       "label": "clean",
       "command": "dotnet",
       "type": "process",

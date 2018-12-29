@@ -31,7 +31,7 @@
         "files": ["api/**.yml", "api/index.md"]
       },
       {
-        "files": ["recipes/**.md", "recipes/**/toc.yml", "toc.yml", "*.md"]
+        "files": ["debugger/**.md", "debugger/**/toc.yml", "recipes/**.md", "recipes/**/toc.yml", "toc.yml", "*.md"]
       },
       {
         "files": ["apiext/**.yml", "apiext/index.md"]
@@ -39,7 +39,7 @@
     ],
     "resource": [
       {
-        "files": ["images/**"]
+        "files": ["images/**", "**.PNG"]
       }
     ],
     "overwrite": [
