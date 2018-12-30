@@ -24,9 +24,10 @@ namespace Paillave.Etl.Reactive.Core
         {
             lock (lockObject)
             {
+                if (this._isComplete) return;
+                this._isComplete = true;
                 foreach (var item in base.Subscriptions.ToList())
                     item.OnComplete();
-                this._isComplete = true;
             }
         }
 
