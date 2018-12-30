@@ -18,7 +18,6 @@ namespace Paillave.Etl.Reactive.Disposables
                 foreach (var item in _disposables)
                     try
                     {
-                        Console.WriteLine($"disposing {item}");
                         item.Dispose();
                     }
                     catch { }
