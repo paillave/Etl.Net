@@ -6,6 +6,7 @@ using Paillave.Etl.TextFile;
 using Paillave.Etl.TextFile.Extensions;
 using Paillave.Etl.Core.Streams;
 using System;
+using System.Linq;
 
 namespace ComplexQuickstart.Jobs
 {
@@ -35,6 +36,36 @@ namespace ComplexQuickstart.Jobs
             joinedLineS.Select("create output data", i => new OutputFileRow { Id = i.Id, Name = i.Name, FileName = i.FileName })
                 .ThroughTextFile("write to output file", outputFileResourceS, new OutputFileRowMapper())
                 .ThroughAction("write to console", i => Console.WriteLine($"{i.FileName}:{i.Id}-{i.Name}"));
+        }
+        public static void DefineSimpleProcess(ISingleStream<MySimpleConfig> rootStream)
+        {
+            var parsedLineS = rootStream
+                .CrossApplyTextFile("parse input file", new InputFileRowMapper(), i => i.InputFilesPath);
+
+            var parsedTypeLineS = rootStream
+                .CrossApplyTextFile("parse type input file", new TypeFileRowMapper(), i => i.TypeFilePath);
+
+            var joinedLineS = parsedLineS
+                .Lookup("join types to file", parsedTypeLineS, i => i.TypeId, i => i.Id, (l, r) => new { l.Id, r.Name, l.FileName, r.Category });
+        }
+        public static void DefineProcessWithError(ISingleStream<MySimpleConfig> rootStream)
+        {
+            var parsedLineS = rootStream
+                .CrossApplyEnumerable("input file", c =>
+                {
+                    var lst = Enumerable.Range(1, 100).Select(i => new InputFileRow { Id = i }).ToList();
+                    return lst;
+                });
+
+            var parsedTypeLineS = rootStream
+                .CrossApply<MySimpleConfig, TypeFileRow>("type file", (c, push) =>
+                {
+                    Console.WriteLine($"raising exception {Guid.NewGuid()}");
+                    throw new Exception();
+                }, true);
+
+            parsedLineS
+                .Lookup("join types to file", parsedTypeLineS, i => i.TypeId, i => i.Id, (l, r) => new { l.Id, r.Name, l.FileName, r.Category });
         }
     }
 }
