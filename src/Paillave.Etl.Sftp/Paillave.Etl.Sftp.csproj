@@ -9,6 +9,7 @@
     <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive SFTP</PackageTags>
     <Product>ETL.net SFTP extensions</Product>
+    <PackageIconUrl>https://paillave.github.io/Etl.Net/images/NugetIcon.png</PackageIconUrl>
     <Description>SFTP extensions for Etl.Net</Description>
     <PackageReleaseNotes>
 extensions for Etl.Net to query against SFTP

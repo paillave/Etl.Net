@@ -9,6 +9,7 @@
     <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive text file xml</PackageTags>
     <Product>ETL.net XML files extensions</Product>
+    <PackageIconUrl>https://paillave.github.io/Etl.Net/images/NugetIcon.png</PackageIconUrl>
     <Description>XML files extensions for Etl.Net</Description>
     <PackageReleaseNotes>
 extensions for Etl.Net to read large XML files using 

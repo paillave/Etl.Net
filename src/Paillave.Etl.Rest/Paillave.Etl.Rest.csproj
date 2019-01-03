@@ -9,6 +9,7 @@
     <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive REST</PackageTags>
     <Product>ETL.net REST extensions</Product>
+    <PackageIconUrl>https://paillave.github.io/Etl.Net/images/NugetIcon.png</PackageIconUrl>
     <Description>REST extensions for Etl.Net</Description>
     <PackageReleaseNotes>
 extensions for Etl.Net to query against FTP
