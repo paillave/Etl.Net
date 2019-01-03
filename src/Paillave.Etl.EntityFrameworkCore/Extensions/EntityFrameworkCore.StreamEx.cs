@@ -80,7 +80,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
                 GetOutput = getResult,
             }).Output;
         }
-        public static IStream<TOut> Lookup<TIn, TEntity, TCtx, TOut>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TEntity, bool>> match, Func<TIn, TEntity, TOut> resultSelector, int cacheSize = 1000)
+        public static IStream<TOut> EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TEntity, bool>> match, Func<TIn, TEntity, TOut> resultSelector, int cacheSize = 1000)
             where TCtx : DbContext
             where TEntity : class
         {
@@ -91,6 +91,17 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
                 InputStream = inputStream,
                 Match = match,
                 ResultSelector = resultSelector
+            }).Output;
+        }
+        public static IStream<TIn> EntityFrameworkCoreDelete<TIn, TEntity, TCtx>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TEntity, bool>> match)
+            where TCtx : DbContext
+            where TEntity : class
+        {
+            return new DeleteEntityFrameworkCoreStreamNode<TIn, TEntity, TCtx>(name, new DeleteEntityFrameworkCoreArgs<TIn, TEntity, TCtx>
+            {
+                DbContextStream = dbContextStream,
+                InputStream = inputStream,
+                Match = match,
             }).Output;
         }
     }

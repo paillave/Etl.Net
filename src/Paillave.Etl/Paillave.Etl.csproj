@@ -39,28 +39,28 @@ ETL Operators:
 * Lookup keeping sorted	Transformation
 * List folder files	Data source
 * Read csv file	Data source
-* Read excel file	Data source (to be done)
+* Read excel file	Data source
 * Write csv file	Data destination
 * Write excel file	Data destinaton (to be done)
 * Read from Entity framework core	Data source
 * Write to Entity framework core	Data destination
 * Read from Entity framework	Data source (to be done)
 * Write to Entity framework	Data destination (to be done)
-* Entity framework core upsert	Data destination (to be done)
+* Entity framework core upsert	Data destination
 * Entity framework upsert	Data destination (to be done)
 * SQL Server bulk load	Data destination (to be done)
-* Read from sql server command	Data source (to be done)
-* Write to sql server command	Data destination (to be done)
-* List files from FTP	Data source (to be done)
-* List file from SFTP	Data source (to be done)
-* Read files from FTP	Data source (to be done)
-* Read file from SFTP	Data source (to be done)
-* Write files from FTP	Data destination (to be done)
-* Write file from SFTP	Data destination (to be done)
+* Read from sql server command	Data source
+* Write to sql server command	Data destination
+* List files from FTP	Data source
+* List file from SFTP	Data source
+* Read files from FTP	Data source
+* Read file from SFTP	Data source
+* Write files from FTP	Data destination
+* Write file from SFTP	Data destination
 * Read data from REST service	Data source (to be done)
 * Write data to REST service	Data destination (to be done)
-* Keep section	Transformation (to be done)
-* Ignore section	Transformation (to be done)
+* Keep section	Transformation
+* Ignore section	Transformation
 
 Runtime features:
 * Trace issued data of each node
@@ -70,15 +70,9 @@ Runtime features:
 * Trace time that is spent in each node at the end of the process (to be done)
 * Publish a Job as a REST web service in web api core (to be done)
 * Run any ETL operation on traces to permit to filter and save
-* Show graphic to represent the process as a directed graph
-* Show graphic to represent the process as a sankey graph
-* Show graphic to represent process execution statistics as a directed graph
-* Show graphic to represent process execution statistics as a sankey graph
-* Show realtime process execution statistics as a directed graph (to be done)
-* Show realtime process execution statistics as a sankey graph (to be done)
+* Show realtime process execution statistics as a sankey graph
 * Web portal to host job definitions manage their executions (to be done)
 * Power shell command tool to execute a job (to be done)
-* Visual studio code addon to view the process as a directed graph whenever the job definition class file is saved (to be done)
 * Visual studio code addon to view the process as a sankey graph whenever the job definition class file is saved (to be done)
 * Raise a warning on the risky node when a performance issue or a bad practice is detected given statistics (to be done)
 * Interprets a T-SQL-like language script to build a job definition on the fly and run it (to be done)
