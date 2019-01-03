@@ -9,6 +9,7 @@
     <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive SQL server</PackageTags>
     <Product>ETL.net sql server extensions</Product>
+    <PackageIconUrl>https://paillave.github.io/Etl.Net/images/NugetIcon.png</PackageIconUrl>
     <Description>Sql Server extensions for Etl.Net</Description>
     <PackageReleaseNotes>
 extensions for Etl.Net to query against Sql Server
