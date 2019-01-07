@@ -23,6 +23,7 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         public IStream<TCtx> DbContextStream { get; set; }
         public int BatchSize { get; set; } = 1000;
         public SaveMode BulkLoadMode { get; set; } = SaveMode.BulkUpsert;
+        public Expression<Func<TInEf, TInEf, bool>> Compare { get; set; }
         public Func<TIn, TInEf> GetEntity { get; set; }
         public Func<TIn, TInEf, TOut> GetOutput { get; set; }
     }
@@ -53,9 +54,10 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         where TInEf : class
         where TCtx : DbContext
     {
-        public override bool IsAwaitable => true;
         public ThroughEntityFrameworkCoreStreamNode(string name, ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TIn, TOut> args) : base(name, args)
         {
+            if (args.Compare != null)
+                args.BulkLoadMode = SaveMode.StandardEfCoreUpsert;
         }
 
         protected override IStream<TOut> CreateOutputStream(ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TIn, TOut> args)
@@ -75,6 +77,24 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
             switch (bulkLoadMode)
             {
                 case SaveMode.StandardEfCoreUpsert:
+                    if (Args.Compare != null)
+                    {
+                        var entityType = dbContext.Model.GetEntityTypes().FirstOrDefault(i => string.Equals(i.Name.Split('.').Last(), typeof(TInEf).Name, StringComparison.InvariantCultureIgnoreCase));
+                        var keyPropertyInfos = entityType.GetProperties().Where(i => !i.IsShadowProperty).Where(i => i.IsPrimaryKey()).Select(i => i.PropertyInfo).ToList();
+                        foreach (var entity in entities)
+                        {
+                            var expr = Args.Compare.ApplyPartialLeft(entity);
+                            TInEf elt = dbContext.Set<TInEf>().AsNoTracking().FirstOrDefault(expr);
+                            if (elt != null)
+                            {
+                                foreach (var keyPropertyInfo in keyPropertyInfos)
+                                {
+                                    object val = keyPropertyInfo.GetValue(elt);
+                                    keyPropertyInfo.SetValue(entity, val);
+                                }
+                            }
+                        }
+                    }
                     dbContext.UpdateRange(entities);
                     break;
                 case SaveMode.BulkInsert:
@@ -93,14 +113,13 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         where TInEf : class
         where TCtx : DbContext
     {
-        public override bool IsAwaitable => true;
         private List<string> _keyProperties = new List<string>();
 
         // private SingleKeyBulkUpserter<TInEf, TCtx, TKey> _bulkUpserter;
         public ThroughEntityFrameworkCoreStreamNode(string name, ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TKey, TIn, TOut> args) : base(name, args)
         {
-            // _bulkUpserter = new SingleKeyBulkUpserter<TInEf, TCtx, TKey>(args.GetKey);
             _keyProperties = new KeyDefinitionExtractor().GetKeys(args.GetKey).Select(i => i.Name).ToList();
+            // _bulkUpserter = new SingleKeyBulkUpserter<TInEf, TCtx, TKey>(args.GetKey);
         }
 
         protected override IStream<TOut> CreateOutputStream(ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TKey, TIn, TOut> args)

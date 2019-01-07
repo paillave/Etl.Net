@@ -7,7 +7,6 @@ using Paillave.Etl.Core.Streams;
 using Paillave.Etl.Reactive.Operators;
 using Paillave.Etl.EntityFrameworkCore.Core;
 using Microsoft.EntityFrameworkCore;
-using Paillave.Etl.EntityFrameworkCore.Core;
 
 namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
 {

@@ -15,6 +15,7 @@ namespace Paillave.Etl.StreamNodes
         public Func<TInMain, TInToApply, TOut> Selector { get; set; }
         public Func<TInMain, TInToApply, int, TOut> IndexSelector { get; set; }
         public bool ExcludeNull { get; set; }
+        public bool WithNoDispose { get; set; }
     }
     public class ApplySingleArgs<TInMain, TInToApply, TOut>
     {
@@ -23,6 +24,7 @@ namespace Paillave.Etl.StreamNodes
         public Func<TInMain, TInToApply, TOut> Selector { get; set; }
         public Func<TInMain, TInToApply, int, TOut> IndexSelector { get; set; }
         public bool ExcludeNull { get; set; }
+        public bool WithNoDispose { get; set; }
     }
     public class ApplySingleStreamNode<TInMain, TInToApply, TOut> : StreamNodeBase<TOut, ISingleStream<TOut>, ApplySingleArgs<TInMain, TInToApply, TOut>>
     {
@@ -34,9 +36,9 @@ namespace Paillave.Etl.StreamNodes
         {
             IPushObservable<TOut> obs;
             if (args.IndexSelector == null)
-                obs = args.MainStream.Observable.CombineWithLatest(args.StreamToApply.Observable.First(), WrapSelectForDisposal(args.Selector), true);
+                obs = args.MainStream.Observable.CombineWithLatest(args.StreamToApply.Observable.First(), WrapSelectForDisposal(args.Selector, args.WithNoDispose), true);
             else
-                obs = args.MainStream.Observable.Map((e, i) => new IndexedObject<TInMain>(i, e)).CombineWithLatest(args.StreamToApply.Observable.First(), WrapSelectIndexObjectForDisposal(args.IndexSelector), true);
+                obs = args.MainStream.Observable.Map((e, i) => new IndexedObject<TInMain>(i, e)).CombineWithLatest(args.StreamToApply.Observable.First(), WrapSelectIndexObjectForDisposal(args.IndexSelector, args.WithNoDispose), true);
             if (args.ExcludeNull)
                 obs = obs.Filter(i => i != null);
             return base.CreateSingleStream(obs);
@@ -53,9 +55,9 @@ namespace Paillave.Etl.StreamNodes
         {
             IPushObservable<TOut> obs;
             if (args.IndexSelector == null)
-                obs = args.MainStream.Observable.CombineWithLatest(args.StreamToApply.Observable.First(), WrapSelectForDisposal(args.Selector), true);
+                obs = args.MainStream.Observable.CombineWithLatest(args.StreamToApply.Observable.First(), WrapSelectForDisposal(args.Selector, args.WithNoDispose), true);
             else
-                obs = args.MainStream.Observable.Map((e, i) => new IndexedObject<TInMain>(i, e)).CombineWithLatest(args.StreamToApply.Observable.First(), WrapSelectIndexObjectForDisposal(args.IndexSelector), true);
+                obs = args.MainStream.Observable.Map((e, i) => new IndexedObject<TInMain>(i, e)).CombineWithLatest(args.StreamToApply.Observable.First(), WrapSelectIndexObjectForDisposal(args.IndexSelector, args.WithNoDispose), true);
             if (args.ExcludeNull)
                 obs = obs.Filter(i => i != null);
             return base.CreateUnsortedStream(obs);

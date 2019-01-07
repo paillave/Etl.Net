@@ -20,9 +20,9 @@ namespace Paillave.Etl.Reactive.Core
         {
             lock (lockObject)
             {
+                this._isComplete = true;
                 foreach (var item in base.Subscriptions.ToList())
                     item.OnComplete();
-                this._isComplete = true;
             }
         }
 
@@ -56,17 +56,20 @@ namespace Paillave.Etl.Reactive.Core
         }
         private void InternStart()
         {
-            try
+            lock (lockObject)
             {
-                _valuesFactory(PushValue);
-            }
-            catch (Exception ex)
-            {
-                PushException(ex);
-            }
-            finally
-            {
-                Complete();
+                try
+                {
+                    _valuesFactory(PushValue);
+                }
+                catch (Exception ex)
+                {
+                    PushException(ex);
+                }
+                finally
+                {
+                    Complete();
+                }
             }
         }
 

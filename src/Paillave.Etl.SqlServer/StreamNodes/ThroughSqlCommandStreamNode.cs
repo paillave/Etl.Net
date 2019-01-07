@@ -25,7 +25,6 @@ namespace Paillave.Etl.SqlServer.StreamNodes
         where TStream : IStream<TIn>
     {
         private static IDictionary<string, PropertyInfo> _inPropertyInfos = typeof(TIn).GetProperties().ToDictionary(i => i.Name, StringComparer.InvariantCultureIgnoreCase);
-        public override bool IsAwaitable => true;
         public ThroughSqlCommandStreamNode(string name, ThroughSqlCommandArgs<TIn, TStream> args) : base(name, args)
         {
         }

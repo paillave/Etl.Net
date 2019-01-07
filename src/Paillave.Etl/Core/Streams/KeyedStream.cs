@@ -12,12 +12,12 @@ namespace Paillave.Etl.Core.Streams
 {
     public class KeyedStream<T, TKey> : Stream<T>, IKeyedStream<T, TKey>
     {
-        public KeyedStream(ITracer tracer, IExecutionContext executionContext, string sourceNodeName, IPushObservable<T> observable, SortDefinition<T, TKey> sortDefinition) : base(tracer, executionContext, sourceNodeName, observable)
+        public KeyedStream(ITraceMapper tracer, IExecutionContext executionContext, string sourceNodeName, IPushObservable<T> observable, SortDefinition<T, TKey> sortDefinition) : base(tracer, executionContext, sourceNodeName, observable)
         {
             this.SortDefinition = sortDefinition ?? throw new ArgumentOutOfRangeException(nameof(sortDefinition), "key criteria list cannot be empty");
         }
         public SortDefinition<T, TKey> SortDefinition { get; }
-        public override object GetMatchingStream(ITracer tracer, IExecutionContext executionContext, string name, object observable)
+        public override object GetMatchingStream(ITraceMapper tracer, IExecutionContext executionContext, string name, object observable)
         {
             return new KeyedStream<T, TKey>(tracer, executionContext, name, (IPushObservable<T>)observable, this.SortDefinition);
         }

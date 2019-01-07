@@ -28,6 +28,16 @@ namespace Paillave.Etl.StreamNodes
             // Semaphore semaphore = args.NoParallelisation ? new Semaphore(1, 1) : new Semaphore(10, 10);
             Synchronizer synchronizer = new Synchronizer(args.NoParallelisation);
 
+            if (this.ExecutionContext is GetDefinitionExecutionContext)
+            {
+                var inputStream = new SingleStream<TIn>(this.Tracer.GetSubTraceMapper(this), this.ExecutionContext, this.NodeName, PushObservable.FromSingle(default(TIn)));
+                foreach (var subProcess in args.SubProcesses)
+                {
+                    var outputStream = subProcess(inputStream);
+                    this.ExecutionContext.AddNode(this, outputStream.Observable, outputStream.TraceObservable);
+                }
+            }
+
             var outputObservable = args.Stream.Observable
                 .FlatMap(i => PushObservable.FromEnumerable(args.SubProcesses.Select(sp => new
                 {
@@ -37,7 +47,7 @@ namespace Paillave.Etl.StreamNodes
                 .FlatMap(i =>
                 {
                     EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-                    var inputStream = new SingleStream<TIn>(this.Tracer.GetSubTracer(this), this.ExecutionContext, this.NodeName, PushObservable.FromSingle(i.config, waitHandle));
+                    var inputStream = new SingleStream<TIn>(this.Tracer.GetSubTraceMapper(this), this.ExecutionContext, this.NodeName, PushObservable.FromSingle(i.config, waitHandle));
                     var outputStream = i.subProc(inputStream);
                     IDisposable awaiter = null;
                     outputStream.Observable.Subscribe(j => { }, () => awaiter?.Dispose());
@@ -46,12 +56,6 @@ namespace Paillave.Etl.StreamNodes
                         awaiter = synchronizer.WaitBeforeProcess();
                         waitHandle.Set();
                     });
-                    // outputStream.Observable.Subscribe(j => { }, () => semaphore.Release());
-                    // return new DeferredWrapperPushObservable<TOut>(outputStream.Observable, () =>
-                    // {
-                    //     semaphore.WaitOne();
-                    //     waitHandle.Set();
-                    // });
                 });
             return base.CreateUnsortedStream(outputObservable);
         }

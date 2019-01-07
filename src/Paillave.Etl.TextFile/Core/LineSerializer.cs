@@ -40,7 +40,8 @@ namespace Paillave.Etl.TextFile.Core
                     throw new FlatFileFieldDeserializeException(i.Key, i.Value.PropertyName, valueToParse, ex);
                 }
             });
-            return ObjectBuilder<T>.CreateInstance(values);
+            var obj = ObjectBuilder<T>.CreateInstance(values);
+            return obj;
         }
         public string Serialize(T value)
         {

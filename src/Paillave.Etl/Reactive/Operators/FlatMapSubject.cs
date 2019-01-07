@@ -21,6 +21,8 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public abstract class FlatMapSubjectBase<TIn, TOut> : PushSubject<TOut>
     {
+        private Guid _guid = Guid.NewGuid();
+
         private IDisposable _sourceSubscription;
         private IDisposableManager _outSubscriptions;
         private Func<TIn, IPushObservable<TOut>> _observableFactory;
@@ -65,8 +67,12 @@ namespace Paillave.Etl.Reactive.Operators
 
         private void TryComplete()
         {
+            System.Diagnostics.Debug.WriteLine($"{_guid} this._sourceSubscription null: {this._sourceSubscription == null} this._outSubscriptions.IsDisposed:{this._outSubscriptions.IsDisposed}");
             if (this._sourceSubscription == null && this._outSubscriptions.IsDisposed)
+            {
+                System.Diagnostics.Debug.WriteLine($"{_guid} triggers complete");
                 base.Complete();
+            }
         }
 
         private void OnSourceComplete()

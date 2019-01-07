@@ -20,7 +20,6 @@ namespace Paillave.Etl.TextFile.StreamNodes
         private readonly LineSerializer<TIn> _serialize;
         private StreamWriter _streamWriter;
         private Stream _stream;
-        public override bool IsAwaitable => true;
 
         public ToFlatFileStreamNode(string name, ToFlatFileArgs<TIn> args) : base(name, args)
         {

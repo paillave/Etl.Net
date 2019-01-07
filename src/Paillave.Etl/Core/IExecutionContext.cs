@@ -13,8 +13,8 @@ namespace Paillave.Etl.Core
         Guid ExecutionId { get; }
         string JobName { get; }
         void Trace(TraceEvent traceEvent);
-        IPushObservable<TraceEvent> StopProcessEvents { get; }
-        void AddNode<T>(INodeContext nodeContext, IPushObservable<T> stream);
+        IPushObservable<TraceEvent> StopProcessEvent { get; }
+        void AddNode<T>(INodeContext nodeContext, IPushObservable<T> observable, IPushObservable<TraceEvent> traceObservable);
         void AddDisposable(IDisposable disposable);
         Task GetCompletionTask();
         void AddStreamToNodeLink(StreamToNodeLink link);

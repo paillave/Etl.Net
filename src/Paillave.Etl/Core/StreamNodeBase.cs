@@ -13,7 +13,7 @@ namespace Paillave.Etl.Core
     {
         public Guid IdNode { get; } = Guid.NewGuid();
         protected IExecutionContext ExecutionContext { get; }
-        protected ITracer Tracer { get; private set; }
+        protected ITraceMapper Tracer { get; private set; }
         public string NodeName { get; private set; }
         public virtual string TypeName
         {
@@ -23,7 +23,6 @@ namespace Paillave.Etl.Core
                 return Regex.Replace(this.GetType().Name, "StreamNode.*", "");
             }
         }
-        public virtual bool IsAwaitable { get; } = false;
         public TOutStream Output { get; }
         protected TArgs Args { get; }
         public StreamNodeBase(string name, TArgs args)
@@ -31,10 +30,10 @@ namespace Paillave.Etl.Core
             this.Args = args;
             this.NodeName = name;
             this.ExecutionContext = this.GetExecutionContext(args);
-            this.Tracer = new Tracer(this.ExecutionContext, this);
+            this.Tracer = new TraceMapper(this.ExecutionContext, this);
             this.Output = CreateOutputStream(args);
             this.Output.Observable.Subscribe(i => { }, PostProcess);
-            this.ExecutionContext.AddNode(this, this.Output.Observable);
+            this.ExecutionContext.AddNode(this, this.Output.Observable, this.Output.TraceObservable);
             foreach (var item in this.GetInputStreams(args))
                 this.ExecutionContext.AddStreamToNodeLink(new StreamToNodeLink(item.SourceNodeName, item.InputName, this.NodeName));
         }
@@ -94,10 +93,10 @@ namespace Paillave.Etl.Core
         {
             return (TOutStream)matchingSourceStream.GetMatchingStream(Tracer, ExecutionContext, NodeName, observable);
         }
-        protected Func<T1, T2> WrapSelectForDisposal<T1, T2>(Func<T1, T2> creator)
+        protected Func<T1, T2> WrapSelectForDisposal<T1, T2>(Func<T1, T2> creator, bool withNoDispose)
         {
             bool isDisposable = typeof(IDisposable).IsAssignableFrom(typeof(T2));
-            if (isDisposable)
+            if (isDisposable && !withNoDispose)
                 return (T1 inp) =>
                 {
                     T2 disposable = creator(inp);
@@ -107,10 +106,10 @@ namespace Paillave.Etl.Core
             else
                 return creator;
         }
-        protected Func<T1, int, T2> WrapSelectIndexForDisposal<T1, T2>(Func<T1, int, T2> creator)
+        protected Func<T1, int, T2> WrapSelectIndexForDisposal<T1, T2>(Func<T1, int, T2> creator, bool withNoDispose)
         {
             bool isDisposable = typeof(IDisposable).IsAssignableFrom(typeof(T2));
-            if (isDisposable)
+            if (isDisposable && !withNoDispose)
                 return (T1 inp, int index) =>
                 {
                     T2 disposable = creator(inp, index);
@@ -120,10 +119,10 @@ namespace Paillave.Etl.Core
             else
                 return creator;
         }
-        protected Func<T1, T2, T3> WrapSelectForDisposal<T1, T2, T3>(Func<T1, T2, T3> creator)
+        protected Func<T1, T2, T3> WrapSelectForDisposal<T1, T2, T3>(Func<T1, T2, T3> creator, bool withNoDispose)
         {
             bool isDisposable = typeof(IDisposable).IsAssignableFrom(typeof(T3));
-            if (isDisposable)
+            if (isDisposable && !withNoDispose)
                 return (T1 inp, T2 inp2) =>
                 {
                     T3 disposable = creator(inp, inp2);
@@ -143,10 +142,10 @@ namespace Paillave.Etl.Core
                 this.Item = item;
             }
         }
-        protected Func<IndexedObject<T1>, T2, T3> WrapSelectIndexObjectForDisposal<T1, T2, T3>(Func<T1, T2, int, T3> creator)
+        protected Func<IndexedObject<T1>, T2, T3> WrapSelectIndexObjectForDisposal<T1, T2, T3>(Func<T1, T2, int, T3> creator, bool withNoDispose)
         {
             bool isDisposable = typeof(IDisposable).IsAssignableFrom(typeof(T3));
-            if (isDisposable)
+            if (isDisposable && !withNoDispose)
                 return (IndexedObject<T1> inp, T2 inp2) =>
                 {
                     T3 disposable = creator(inp.Item, inp2, inp.Index);
@@ -156,10 +155,10 @@ namespace Paillave.Etl.Core
             else
                 return (IndexedObject<T1> inp, T2 inp2) => creator(inp.Item, inp2, inp.Index);
         }
-        protected Func<T1, T2, int, T3> WrapSelectIndexForDisposal<T1, T2, T3>(Func<T1, T2, int, T3> creator)
+        protected Func<T1, T2, int, T3> WrapSelectIndexForDisposal<T1, T2, T3>(Func<T1, T2, int, T3> creator, bool withNoDispose)
         {
             bool isDisposable = typeof(IDisposable).IsAssignableFrom(typeof(T3));
-            if (isDisposable)
+            if (isDisposable && !withNoDispose)
                 return (T1 inp, T2 inp2, int index) =>
                 {
                     T3 disposable = creator(inp, inp2, index);

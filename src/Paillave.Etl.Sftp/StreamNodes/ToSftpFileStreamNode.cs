@@ -21,7 +21,6 @@ namespace Paillave.Etl.Sftp.StreamNodes
     }
     public class ToSftpFileStreamNode<TParams> : StreamNodeBase<Stream, IStream<Stream>, ToSftpFileArgs<TParams>>
     {
-        public override bool IsAwaitable => true;
         public ToSftpFileStreamNode(string name, ToSftpFileArgs<TParams> args) : base(name, args)
         {
         }

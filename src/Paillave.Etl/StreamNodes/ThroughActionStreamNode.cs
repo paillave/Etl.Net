@@ -49,7 +49,6 @@ namespace Paillave.Etl.StreamNodes
     }
     public class ThroughActionStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ThroughActionArgs<TIn, TStream>> where TStream : IStream<TIn>
     {
-        public override bool IsAwaitable => true;
         public ThroughActionStreamNode(string name, ThroughActionArgs<TIn, TStream> args) : base(name, args)
         {
         }
@@ -118,7 +117,6 @@ namespace Paillave.Etl.StreamNodes
     }
     public class ThroughActionStreamNode<TIn, TStream, TResource> : StreamNodeBase<TIn, TStream, ThroughActionArgs<TIn, TStream, TResource>> where TStream : IStream<TIn>
     {
-        public override bool IsAwaitable => true;
         public ThroughActionStreamNode(string name, ThroughActionArgs<TIn, TStream, TResource> args) : base(name, args)
         {
         }

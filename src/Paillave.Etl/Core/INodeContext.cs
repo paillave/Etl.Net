@@ -8,6 +8,5 @@ namespace Paillave.Etl.Core
     {
         string NodeName { get; }
         string TypeName { get; }
-        bool IsAwaitable { get; }
     }
 }
