@@ -96,7 +96,6 @@ namespace Paillave.Etl.Reactive.Operators
         {
             lock (_lockObject)
             {
-                System.Diagnostics.Debug.WriteLine("complete1");
                 _obsel1.IsComplete = true;
                 TryComplete();
             }
@@ -105,7 +104,6 @@ namespace Paillave.Etl.Reactive.Operators
         {
             lock (_lockObject)
             {
-                System.Diagnostics.Debug.WriteLine("complete2");
                 if (_obsel2 != null)
                     _obsel2.IsComplete = true;
                 TryComplete();

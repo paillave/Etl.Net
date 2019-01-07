@@ -139,21 +139,20 @@ namespace Paillave.EtlTests.Reactive.Operators
 
         [TestCategory(nameof(FlatMapSubjectTests))]
         [TestMethod]
-        public void Test3()
+        public void BigLoad()
         {
-            for (int counter = 0; counter < 5000; counter++)
-            {
-                Stopwatch stopwatch = new Stopwatch();
-                Debug.WriteLine($"START {counter}: {DateTime.Now}");
-                stopwatch.Start();
-                var initObs = PushObservable.FromSingle("aze");
-                var task = initObs.FlatMap(i => new DeferredPushObservable<string>(push => push(i))).ToTaskAsync();
-                initObs.Start();
-                task.Wait(5000);
-                Assert.IsTrue(task.IsCompletedSuccessfully);
-                stopwatch.Stop();
-                Debug.WriteLine($"STOP {counter}: {stopwatch.Elapsed}");
-            }
+            int nb = 5000;
+            string example = "abcdefghijklmnopqrstuvwxyz";
+            var examples = Enumerable.Range(0, nb).Select(i => example).ToList();
+            var initObs = PushObservable.FromSingle(examples);
+            var task = initObs
+                .FlatMap(i => new DeferredPushObservable<string>(push => i.ForEach(push)))
+                .FlatMap(i => new DeferredPushObservable<char>(push => i.ToList().ForEach(push)))
+                .ToListAsync();
+            initObs.Start();
+            task.Wait(5000);
+            Assert.AreEqual(example.Count() * nb, task.Result.Count);
+            Assert.IsTrue(task.IsCompletedSuccessfully);
         }
     }
 }

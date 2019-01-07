@@ -47,7 +47,6 @@ namespace FundProcess.Pms.ImportsTests
         [Fact]
         public void Test1()
         {
-            Debug.WriteLine("START!!!");
             StreamProcessRunner.CreateAndExecuteAsync(
                 new ImportFilesConfig
                 {
@@ -60,7 +59,6 @@ namespace FundProcess.Pms.ImportsTests
             //.ThroughAction("trace", i => Debug.WriteLine(i))
             ).Wait();
             var subFunds = _databaseContext.Set<SubFund>().ToListAsync().Result;
-            Debug.WriteLine("STOP!!!");
         }
     }
 }
