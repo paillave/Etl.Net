@@ -97,41 +97,38 @@ namespace FundProcess.Pms.Imports.Jobs
                         j.Value,
                     })
             .Where("Exclude empty values from sub fund hv", i => i.Value != null)
-            .Lookup("get hv related sub fund", subFundStream, i => i.FundInternalCode, i => i.InternalCode, (l, r) => new { FromFile = l, FromDb = r });
-            //.Select("count", (i, idx) => idx).ThroughAction("debug", i => System.Diagnostics.Debug.WriteLine(i));
-            //.Select("create sub fund hv", i => new HistoricalValue
-            //{
-            //    SecurityId = i.FromDb.Id,
-            //    Date = i.FromFile.Date,
-            //    Type = i.FromFile.Type,
-            //    Value = i.FromFile.Value.Value
-            //})
-            //.ThroughEntityFrameworkCore("save sub fund hv", dbCnxStream);
+            .Lookup("get hv related sub fund", subFundStream, i => i.FundInternalCode, i => i.InternalCode, (l, r) => new { FromFile = l, FromDb = r })
+            .Select("create sub fund hv", dbCnxStream, (i, dbCnx) => dbCnx.UpdateForMultiTenancy(new HistoricalValue
+            {
+                SecurityId = i.FromDb.Id,
+                Date = i.FromFile.Date,
+                Type = i.FromFile.Type,
+                Value = i.FromFile.Value.Value
+            }))
+            .ThroughEntityFrameworkCore("save sub fund hv", dbCnxStream);
 
 
-            //navFileStream
-            //    .Unpivot("unpivot share class historical values",
-            //        new Func<RbcNavFile, Tuple<HistoricalValueType, decimal?>>[]{
-            //             i => new Tuple<HistoricalValueType, decimal?>(HistoricalValueType.TNA, i.TotalNetAsset),
-            //             i => new Tuple<HistoricalValueType, decimal?>(HistoricalValueType.MKT, i.NavPerShare)
-            //        },
-            //        (i, j) => new
-            //        {
-            //            Date = i.NavDate,
-            //            Type = j.Item1,
-            //            ShareClassInternalCode = $"{i.FundCode}_{i.IsinCode}",
-            //            Value = j.Item2,
-            //        })
-            //    .Where("Exclude empty values from share class hv", i => i.Value != null)
-            //    .Lookup("get hv related share class", shareClassStream, i => i.ShareClassInternalCode, i => i.InternalCode, (l, r) => new { FromFile = l, FromDb = r })
-            //    .Select("create share class hv", i => new HistoricalValue
-            //    {
-            //        SecurityId = i.FromDb.Id,
-            //        Date = i.FromFile.Date,
-            //        Type = i.FromFile.Type,
-            //        Value = i.FromFile.Value.Value
-            //    })
-            //    .ThroughEntityFrameworkCore("save share class hv", dbCnxStream);
+            navFileStream
+                .Unpivot("unpivot share class historical values", FieldsToUnpivot.Create(
+                         (RbcNavFile i) => new { Type = HistoricalValueType.TNA, Value = i.TotalNetAsset },
+                         (RbcNavFile i) => new { Type = HistoricalValueType.MKT, Value = i.NavPerShare }
+                    ),
+                    (i, j) => new
+                    {
+                        Date = i.NavDate,
+                        j.Type,
+                        ShareClassInternalCode = $"{i.FundCode}_{i.IsinCode}",
+                        j.Value,
+                    })
+                .Lookup("get hv related share class", shareClassStream, i => i.ShareClassInternalCode, i => i.InternalCode, (l, r) => new { FromFile = l, FromDb = r })
+                .Select("create share class hv", dbCnxStream, (i, dbCnx) => dbCnx.UpdateForMultiTenancy(new HistoricalValue
+                {
+                    SecurityId = i.FromDb.Id,
+                    Date = i.FromFile.Date,
+                    Type = i.FromFile.Type,
+                    Value = i.FromFile.Value
+                }))
+                .ThroughEntityFrameworkCore("save share class hv", dbCnxStream);
 
             ////var posFileStream = configStream
             ////    .CrossApplyFolderFiles("get all position files", i => i.InputFilesRootFolderPath, "*PORTFVALEXTRACT*.csv", true)

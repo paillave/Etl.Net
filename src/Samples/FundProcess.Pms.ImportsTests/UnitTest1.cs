@@ -56,7 +56,7 @@ namespace FundProcess.Pms.ImportsTests
                 ImportFiles.DefineRbcImportProcess,
                 traceStream => traceStream
                     .Where("remove verbose", i => i.Content.Level != TraceLevel.Verbose)
-            //.ThroughAction("trace", i => Debug.WriteLine(i))
+                    .ThroughAction("trace", i => Debug.WriteLine(i))
             ).Wait();
             var subFunds = _databaseContext.Set<SubFund>().ToListAsync().Result;
         }

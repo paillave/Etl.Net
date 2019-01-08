@@ -9,6 +9,7 @@ namespace FundProcess.Pms.DataAccess
 {
     public class DatabaseContext : DbContext
     {
+        private object _sync = new object();
         private TenantContext _tenantContext;
         public DatabaseContext(DbContextOptions<DatabaseContext> options, TenantContext tenantContext) : base(options)
         {
@@ -32,17 +33,35 @@ namespace FundProcess.Pms.DataAccess
         }
         public override int SaveChanges()
         {
-            ChangeTracker.DetectChanges();
-            foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Added).Select(i => i.Entity))
+            lock (_sync)
             {
-                IBelongsToEntity entity = item as IBelongsToEntity;
-                if (entity != null && entity.BelongsToEntityId == null)
-                    entity.BelongsToEntityId = _tenantContext.EntityId;
-                IBelongsToEntityGroup entityGroup = item as IBelongsToEntityGroup;
-                if (entityGroup != null && entityGroup.BelongsToEntityGroupId == null)
-                    entityGroup.BelongsToEntityGroupId = _tenantContext.EntityGroupId;
+                ChangeTracker.DetectChanges();
+                foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Added).Select(i => i.Entity).ToList())
+                {
+                    UpdateForMultiTenancy(item);
+                }
+                return base.SaveChanges();
             }
-            return base.SaveChanges();
+        }
+
+        //public void UpdateForMultiTenancy(object item)
+        //{
+        //    IBelongsToEntity entity = item as IBelongsToEntity;
+        //    if (entity != null && entity.BelongsToEntityId == null && _tenantContext.EntityId != 0)
+        //        entity.BelongsToEntityId = _tenantContext.EntityId;
+        //    IBelongsToEntityGroup entityGroup = item as IBelongsToEntityGroup;
+        //    if (entityGroup != null && entityGroup.BelongsToEntityGroupId == null && _tenantContext.EntityGroupId != 0)
+        //        entityGroup.BelongsToEntityGroupId = _tenantContext.EntityGroupId;
+        //}
+        public T UpdateForMultiTenancy<T>(T item)
+        {
+            IBelongsToEntity entity = item as IBelongsToEntity;
+            if (entity != null && entity.BelongsToEntityId == null && _tenantContext.EntityId != 0)
+                entity.BelongsToEntityId = _tenantContext.EntityId;
+            IBelongsToEntityGroup entityGroup = item as IBelongsToEntityGroup;
+            if (entityGroup != null && entityGroup.BelongsToEntityGroupId == null && _tenantContext.EntityGroupId != 0)
+                entityGroup.BelongsToEntityGroupId = _tenantContext.EntityGroupId;
+            return item;
         }
     }
 }

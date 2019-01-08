@@ -19,7 +19,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
                     push(item);
             }, noParallelisation);
         }
-        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, SaveMode bulkLoadMode = SaveMode.BulkInsert, int chunkSize = 1000)
+        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, SaveMode bulkLoadMode = SaveMode.BulkUpsert, int chunkSize = 1000)
             where TResource : DbContext
             where TIn : class
         {
@@ -66,7 +66,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
             }).Output;
         }
 
-        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, Func<TIn, TInEf> getEntity, Func<TIn, TInEf, TOut> getResult, SaveMode bulkLoadMode = SaveMode.BulkInsert, int chunkSize = 1000)
+        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, IStream<TResource> resourceStream, Func<TIn, TInEf> getEntity, Func<TIn, TInEf, TOut> getResult, SaveMode bulkLoadMode = SaveMode.BulkUpsert, int chunkSize = 1000)
             where TResource : DbContext
             where TInEf : class
         {
