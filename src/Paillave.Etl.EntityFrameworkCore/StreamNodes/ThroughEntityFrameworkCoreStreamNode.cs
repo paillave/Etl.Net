@@ -22,7 +22,7 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         public IStream<TIn> SourceStream { get; set; }
         public IStream<TCtx> DbContextStream { get; set; }
         public int BatchSize { get; set; } = 1000;
-        public SaveMode BulkLoadMode { get; set; } = SaveMode.BulkUpsert;
+        public SaveMode BulkLoadMode { get; set; } = SaveMode.StandardEfCoreUpsert;
         public Expression<Func<TInEf, TInEf, bool>> Compare { get; set; }
         public Func<TIn, TInEf> GetEntity { get; set; }
         public Func<TIn, TInEf, TOut> GetOutput { get; set; }

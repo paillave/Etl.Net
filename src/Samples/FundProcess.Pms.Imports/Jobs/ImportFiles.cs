@@ -140,11 +140,9 @@ namespace FundProcess.Pms.Imports.Jobs
             ////     .Select("get manco id", dbCnxStream, (l, r) => new { l.FromFile, l.FromDb, ManCoId = r.ManCoId })
             ////     .ThroughEntityFrameworkCore("Save security that composes other security", dbCnxStream, i => i.FromFile., i => new PortfolioComposition { }, i => i);
 
-
             //// posFileStream
             ////     .Distinct("distinct positions", i => new { i.FundCode, i.IsinCode, i.NavDate })
             ////     .Lookup("get ")
-
         }
         private static Security CreateSecurityFromInstrumentType(string rbcType, string currencyIso, string isin, string name, DateTime? nextCouponDate)
         {
