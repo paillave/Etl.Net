@@ -32,7 +32,12 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         {
             var matcher = new EfMatcher<TIn, TEntity, TCtx>(args.Match, args.CacheSize);
             var matchingS = args.InputStream.Observable.CombineWithLatest(args.DbContextStream.Observable, (elt, ctx) => new { Element = elt, DbContext = ctx }, true)
-            .Map(i => args.ResultSelector(i.Element, matcher.GetMatch(i.DbContext, i.Element)));
+            .Map(i =>
+            {
+                TEntity entity = default(TEntity);
+                this.ExecutionContext.InvokeInDedicatedThread(i.DbContext, () => entity = matcher.GetMatch(i.DbContext, i.Element));
+                return args.ResultSelector(i.Element, entity);
+            });
             return base.CreateUnsortedStream(matchingS);
         }
     }

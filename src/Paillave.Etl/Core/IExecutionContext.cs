@@ -19,5 +19,6 @@ namespace Paillave.Etl.Core
         Task GetCompletionTask();
         void AddStreamToNodeLink(StreamToNodeLink link);
         bool IsTracingContext { get; }
+        void InvokeInDedicatedThread(object threadOwner, Action action);
     }
 }

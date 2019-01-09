@@ -32,6 +32,7 @@ namespace Paillave.Etl
         public IPushObservable<TraceEvent> StopProcessEvent => PushObservable.Empty<TraceEvent>();
         public Task GetCompletionTask() => throw new NotImplementedException();
         public void Trace(TraceEvent traceEvent) { }
+        public void InvokeInDedicatedThread(object threadOwner, Action action) => throw new NotImplementedException();
         //public void Trace(TraceEvent traceEvent) => throw new NotImplementedException();
     }
 }

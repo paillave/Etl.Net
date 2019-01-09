@@ -32,8 +32,11 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
                 .CombineWithLatest(args.DbContextStream.Observable, (elt, ctx) => new { Element = elt, DbContext = ctx }, true)
                 .Map(i =>
                 {
-                    i.DbContext.DeleteWhere<TEntity>(args.Match.ApplyPartialLeft<TIn, TEntity, bool>(i.Element));
-                    i.DbContext.SaveChanges();
+                    this.ExecutionContext.InvokeInDedicatedThread(i.DbContext, () =>
+                    {
+                        i.DbContext.DeleteWhere<TEntity>(args.Match.ApplyPartialLeft<TIn, TEntity, bool>(i.Element));
+                        i.DbContext.SaveChanges();
+                    });
                     return i.Element;
                 });
             return base.CreateUnsortedStream(matchingS);

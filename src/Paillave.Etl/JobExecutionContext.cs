@@ -15,6 +15,7 @@ namespace Paillave.Etl
         public TraceEvent EndOfProcessTraceEvent { get; private set; } = null;
         private readonly IPushSubject<TraceEvent> _traceSubject;
         private List<StreamToNodeLink> _streamToNodeLinks = new List<StreamToNodeLink>();
+        private readonly JobPoolDispatcher _jobPoolDispatcher;
         private List<INodeContext> _nodes = new List<INodeContext>();
         public JobDefinitionStructure GetDefinitionStructure()
         {
@@ -24,10 +25,11 @@ namespace Paillave.Etl
         //private readonly List<Task> _tracesToWait = new List<Task>();
         private readonly CollectionDisposableManager _disposables = new CollectionDisposableManager();
         public IPushObservable<TraceEvent> StopProcessEvent { get; }
-        public JobExecutionContext(string jobName, Guid executionId, IPushSubject<TraceEvent> traceSubject, Func<IPushObservable<TraceEvent>, IPushObservable<TraceEvent>> stopEventFilter)
+        public JobExecutionContext(string jobName, Guid executionId, IPushSubject<TraceEvent> traceSubject, Func<IPushObservable<TraceEvent>, IPushObservable<TraceEvent>> stopEventFilter, JobPoolDispatcher jobPoolDispatcher)
         {
             this.ExecutionId = executionId;
             this.JobName = jobName;
+            this._jobPoolDispatcher = jobPoolDispatcher;
             this._traceSubject = traceSubject;
             this.StopProcessEvent = stopEventFilter(traceSubject).Do(traceEvent => this.EndOfProcessTraceEvent = traceEvent);
         }
@@ -52,18 +54,15 @@ namespace Paillave.Etl
                 .WhenAll(_tasksToWait.ToArray());
             return task;
         }
-        //public Task GetTraceCompletionTask()
-        //{
-        //    var task = Task
-        //        .WhenAll(_tracesToWait.ToArray());
-        //    return task;
-        //}
         public void AddDisposable(IDisposable disposable) => _disposables.Set(disposable);
         public void AddStreamToNodeLink(StreamToNodeLink link) => _streamToNodeLinks.Add(link);
-
         public void Trace(TraceEvent traceEvent)
         {
             throw new NotImplementedException();
+        }
+        public void InvokeInDedicatedThread(object threadOwner, Action action)
+        {
+            this._jobPoolDispatcher.Invoke(threadOwner, action);
         }
     }
 }

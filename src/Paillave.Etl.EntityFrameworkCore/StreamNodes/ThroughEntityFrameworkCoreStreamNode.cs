@@ -66,7 +66,7 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
             var ret = args.SourceStream.Observable
                 .Chunk(args.BatchSize)
                 .CombineWithLatest(dbContextStream, (i, c) => new { Context = c, Items = i.Select(j => new Tuple<TIn, TInEf>(j, args.GetEntity(j))).ToList() }, true)
-                .Do(i => ProcessBatch(i.Items, i.Context, args.BulkLoadMode))
+                .Do(i => this.ExecutionContext.InvokeInDedicatedThread(i.Context, () => ProcessBatch(i.Items, i.Context, args.BulkLoadMode)))
                 .FlatMap(i => PushObservable.FromEnumerable(i.Items))
                 .Map(i => args.GetOutput(i.Item1, i.Item2));
             return base.CreateUnsortedStream(ret);
@@ -114,21 +114,17 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         where TCtx : DbContext
     {
         private List<string> _keyProperties = new List<string>();
-
-        // private SingleKeyBulkUpserter<TInEf, TCtx, TKey> _bulkUpserter;
         public ThroughEntityFrameworkCoreStreamNode(string name, ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TKey, TIn, TOut> args) : base(name, args)
         {
             _keyProperties = new KeyDefinitionExtractor().GetKeys(args.GetKey).Select(i => i.Name).ToList();
-            // _bulkUpserter = new SingleKeyBulkUpserter<TInEf, TCtx, TKey>(args.GetKey);
         }
-
         protected override IStream<TOut> CreateOutputStream(ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TKey, TIn, TOut> args)
         {
             var dbContextStream = args.DbContextStream.Observable.First();
             var ret = args.SourceStream.Observable
                 .Chunk(args.BatchSize)
                 .CombineWithLatest(dbContextStream, (i, c) => new { Context = c, Items = i.Select(j => new Tuple<TIn, TInEf>(j, args.GetEntity(j))).ToList() }, true)
-                .Do(i => ProcessBatch(i.Items, i.Context, args.BulkLoadMode))
+                .Do(i => this.ExecutionContext.InvokeInDedicatedThread(i.Context, () => ProcessBatch(i.Items, i.Context, args.BulkLoadMode)))
                 .FlatMap(i => PushObservable.FromEnumerable(i.Items))
                 .Map(i => args.GetOutput(i.Item1, i.Item2));
             return base.CreateUnsortedStream(ret);

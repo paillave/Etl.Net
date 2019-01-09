@@ -16,13 +16,17 @@ namespace Paillave.Etl
         private readonly List<Task> _tasksToWait = new List<Task>();
         private readonly CollectionDisposableManager _disposables = new CollectionDisposableManager();
         private WaitHandle _startSynchronizer { get; }
-        public TraceExecutionContext(WaitHandle startSynchronizer, Guid executionId)
+        public TraceExecutionContext(WaitHandle startSynchronizer, Guid executionId, JobPoolDispatcher jobPoolDispatcher)
         {
+            this._jobPoolDispatcher = jobPoolDispatcher;
             this.ExecutionId = executionId;
             this.JobName = null;
             this._startSynchronizer = startSynchronizer;
             this._traceSubject = PushObservable.Empty<TraceEvent>(this._startSynchronizer);
         }
+
+        private readonly JobPoolDispatcher _jobPoolDispatcher;
+
         public Guid ExecutionId { get; }
         public string JobName { get; }
         public bool IsTracingContext => true;
@@ -36,5 +40,9 @@ namespace Paillave.Etl
         public void AddDisposable(IDisposable disposable) => _disposables.Set(disposable);
         public void AddStreamToNodeLink(StreamToNodeLink link) { }
         public void Trace(TraceEvent traceEvent) { }
+        public void InvokeInDedicatedThread(object threadOwner, Action action)
+        {
+            this._jobPoolDispatcher.Invoke(threadOwner, action);
+        }
     }
 }
