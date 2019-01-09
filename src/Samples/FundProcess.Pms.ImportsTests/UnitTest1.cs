@@ -24,22 +24,22 @@ namespace FundProcess.Pms.ImportsTests
 
         private int CreateTestManCo(DbContextOptions<DataAccess.DatabaseContext> options)
         {
-            return 12;
-            //using (var ctx = new DataAccess.DatabaseContext(options, TenantContext.Empty))
-            //{
-            //    var manCo = new ManCo
-            //    {
-            //        Name = "my manco"
-            //    };
-            //    ctx.Add(manCo);
-            //    ctx.SaveChanges();
-            //    return manCo.Id;
-            //}
+            // return 12;
+            using (var ctx = new DataAccess.DatabaseContext(options, TenantContext.Empty))
+            {
+               var manCo = new ManCo
+               {
+                   Name = "my manco"
+               };
+               ctx.Add(manCo);
+               ctx.SaveChanges();
+               return manCo.Id;
+            }
         }
         public UnitTest1()
         {
             var options = new DbContextOptionsBuilder<DataAccess.DatabaseContext>()
-                .UseSqlServer("Server=localhost;Database=FundProcess;Trusted_Connection=True;MultipleActiveResultSets=True").Options;
+                .UseSqlServer("Server=(localdb)\\ProjectsV13;Database=FundProcess;Trusted_Connection=True;MultipleActiveResultSets=True").Options;
             //.UseInMemoryDatabase("inmemorydb").Options;
             var tenantContext = new TenantContext(this.CreateTestManCo(options), 0);
             _databaseContext = new DataAccess.DatabaseContext(options, tenantContext);
@@ -50,7 +50,8 @@ namespace FundProcess.Pms.ImportsTests
             StreamProcessRunner.CreateAndExecuteAsync(
                 new ImportFilesConfig
                 {
-                    InputFilesRootFolderPath = @"C:\Users\paill\Desktop\rbc",
+                    // InputFilesRootFolderPath = @"C:\Users\paill\Desktop\rbc",
+                    InputFilesRootFolderPath = @"C:\Users\sroyer\Downloads\OneDrive_2019-01-09\1- RBC",
                     DbCtx = _databaseContext
                 },
                 ImportFiles.DefineRbcImportProcess,

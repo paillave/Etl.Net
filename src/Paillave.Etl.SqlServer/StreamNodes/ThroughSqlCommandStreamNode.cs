@@ -18,7 +18,7 @@ namespace Paillave.Etl.SqlServer.StreamNodes
     {
         public string SqlQuery { get; set; }
         public TStream SourceStream { get; set; }
-        public IStream<SqlConnection> SqlConnectionStream { get; set; }
+        public ISingleStream<SqlConnection> SqlConnectionStream { get; set; }
     }
     public class ThroughSqlCommandStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ThroughSqlCommandArgs<TIn, TStream>>
         where TIn : class

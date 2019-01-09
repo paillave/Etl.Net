@@ -37,7 +37,7 @@ namespace Paillave.Etl.Sftp.Extensions
         #endregion
 
         #region ToSftpFile
-        public static IStream<Stream> ToSftpFile<TParams>(this IStream<Stream> stream, string name, IStream<TParams> paramsStream, Func<TParams, string> getOutputFilePath, Func<TParams, SftpConnectionInfo> getConnectionInfo)
+        public static IStream<Stream> ToSftpFile<TParams>(this IStream<Stream> stream, string name, ISingleStream<TParams> paramsStream, Func<TParams, string> getOutputFilePath, Func<TParams, SftpConnectionInfo> getConnectionInfo)
         {
             return new ToSftpFileStreamNode<TParams>(name, new ToSftpFileArgs<TParams>
             {

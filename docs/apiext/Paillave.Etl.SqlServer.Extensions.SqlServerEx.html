@@ -179,7 +179,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TIn&gt; ThroughSqlServer&lt;TIn&gt;(this IStream&lt;TIn&gt; stream, string name, ISingleStream&lt;SqlConnection&gt; sqlConnection, string sqlQuery)
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TIn&gt; ThroughSqlServer&lt;TIn&gt;(this IStream&lt;TIn&gt; stream, string name, ISingleStream&lt;SqlConnection&gt; sqlConnectionStream, string sqlQuery)
     where TIn : class</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -204,7 +204,7 @@
       </tr>
       <tr>
         <td><span class="xref">ISingleStream</span>&lt;<span class="xref">SqlConnection</span>&gt;</td>
-        <td><span class="parametername">sqlConnection</span></td>
+        <td><span class="parametername">sqlConnectionStream</span></td>
         <td></td>
       </tr>
       <tr>

@@ -20,7 +20,7 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         where TCtx : DbContext
     {
         public IStream<TIn> SourceStream { get; set; }
-        public IStream<TCtx> DbContextStream { get; set; }
+        public ISingleStream<TCtx> DbContextStream { get; set; }
         public int BatchSize { get; set; } = 1000;
         public SaveMode BulkLoadMode { get; set; } = SaveMode.StandardEfCoreUpsert;
         public Expression<Func<TInEf, TInEf, bool>> Compare { get; set; }
@@ -32,7 +32,7 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         where TCtx : DbContext
     {
         public IStream<TIn> SourceStream { get; set; }
-        public IStream<TCtx> DbContextStream { get; set; }
+        public ISingleStream<TCtx> DbContextStream { get; set; }
         public int BatchSize { get; set; } = 1000;
         public Expression<Func<TInEf, TKey>> GetKey { get; set; }
         public Func<TIn, TInEf> GetEntity { get; set; }

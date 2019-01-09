@@ -93,12 +93,12 @@
   
   
   <a id="Paillave_Etl_Extensions_UnpivotEx_Unpivot_" data-uid="Paillave.Etl.Extensions.UnpivotEx.Unpivot*"></a>
-  <h4 id="Paillave_Etl_Extensions_UnpivotEx_Unpivot__3_IStream___0__System_String_System_Collections_Generic_IEnumerable_System_Func___0___1___System_Func___0___1___2__" data-uid="Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,System.Collections.Generic.IEnumerable{System.Func{``0,``1}},System.Func{``0,``1,``2})">Unpivot&lt;TIn, TUnpivoted, TOut&gt;(IStream&lt;TIn&gt;, String, IEnumerable&lt;Func&lt;TIn, TUnpivoted&gt;&gt;, Func&lt;TIn, TUnpivoted, TOut&gt;)</h4>
+  <h4 id="Paillave_Etl_Extensions_UnpivotEx_Unpivot__3_IStream___0__System_String_FieldsToUnpivot___0___1__System_Func___0___1___2__" data-uid="Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,FieldsToUnpivot{``0,``1},System.Func{``0,``1,``2})">Unpivot&lt;TIn, TUnpivoted, TOut&gt;(IStream&lt;TIn&gt;, String, FieldsToUnpivot&lt;TIn, TUnpivoted&gt;, Func&lt;TIn, TUnpivoted, TOut&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Unpivot&lt;TIn, TUnpivoted, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, IEnumerable&lt;Func&lt;TIn, TUnpivoted&gt;&gt; fieldsToUnpivot, Func&lt;TIn, TUnpivoted, TOut&gt; resultSelector)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Unpivot&lt;TIn, TUnpivoted, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, FieldsToUnpivot&lt;TIn, TUnpivoted&gt; fieldsToUnpivot, Func&lt;TIn, TUnpivoted, TOut&gt; resultSelector)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -121,7 +121,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Func</span>&lt;TIn, TUnpivoted&gt;&gt;</td>
+        <td><span class="xref">FieldsToUnpivot</span>&lt;TIn, TUnpivoted&gt;</td>
         <td><span class="parametername">fieldsToUnpivot</span></td>
         <td></td>
       </tr>
@@ -173,12 +173,12 @@
   
   
   <a id="Paillave_Etl_Extensions_UnpivotEx_Unpivot_" data-uid="Paillave.Etl.Extensions.UnpivotEx.Unpivot*"></a>
-  <h4 id="Paillave_Etl_Extensions_UnpivotEx_Unpivot__3_IStream___0__System_String_System_Func___0___2____" data-uid="Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,System.Func{``0,``2}[])">Unpivot&lt;TIn, TUnpivoted, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, TOut&gt;[])</h4>
+  <h4 id="Paillave_Etl_Extensions_UnpivotEx_Unpivot__3_IStream___0__System_String_FieldsToUnpivot___0___2__" data-uid="Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,FieldsToUnpivot{``0,``2})">Unpivot&lt;TIn, TUnpivoted, TOut&gt;(IStream&lt;TIn&gt;, String, FieldsToUnpivot&lt;TIn, TOut&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Unpivot&lt;TIn, TUnpivoted, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, params Func&lt;TIn, TOut&gt;[] fieldsToUnpivot)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Unpivot&lt;TIn, TUnpivoted, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, FieldsToUnpivot&lt;TIn, TOut&gt; fieldsToUnpivot)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -201,7 +201,7 @@
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">System.Func</span>&lt;TIn, TOut&gt;[]</td>
+        <td><span class="xref">FieldsToUnpivot</span>&lt;TIn, TOut&gt;</td>
         <td><span class="parametername">fieldsToUnpivot</span></td>
         <td></td>
       </tr>

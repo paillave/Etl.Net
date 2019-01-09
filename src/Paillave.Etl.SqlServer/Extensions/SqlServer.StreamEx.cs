@@ -16,13 +16,13 @@ namespace Paillave.Etl.SqlServer.Extensions
             var valuesProvider = new SqlCommandValueProvider<TIn, TOut>(sqlQuery);
             return stream.CrossApply<TIn, SqlConnection, TOut>(name, sqlConnection, valuesProvider.PushValues, noParallelisation);
         }
-        public static IStream<TIn> ThroughSqlServer<TIn>(this IStream<TIn> stream, string name, ISingleStream<SqlConnection> sqlConnection, string sqlQuery)
+        public static IStream<TIn> ThroughSqlServer<TIn>(this IStream<TIn> stream, string name, ISingleStream<SqlConnection> sqlConnectionStream, string sqlQuery)
             where TIn : class
         {
             return new ThroughSqlCommandStreamNode<TIn, IStream<TIn>>(name, new ThroughSqlCommandArgs<TIn, IStream<TIn>>
             {
                 SourceStream = stream,
-                SqlConnectionStream = sqlConnection,
+                SqlConnectionStream = sqlConnectionStream,
                 SqlQuery = sqlQuery
             }).Output;
         }

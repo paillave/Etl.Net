@@ -17,11 +17,11 @@ namespace FundProcess.Pms.Imports.Jobs
 {
     public class ImportFiles
     {
-        private class RbcNavFileContext
-        {
-            public RbcNavFile FileInput { get; set; }
-            public DatabaseContext DbContext { get; set; }
-        }
+        // private class RbcNavFileContext
+        // {
+        //     public RbcNavFile FileInput { get; set; }
+        //     public DatabaseContext DbContext { get; set; }
+        // }
         // private static IStream<RbcNavFileContext> ProcessSubfund(IStream<RbcNavFileContext> inputStream)
         // {
         //     return inputStream;
@@ -47,7 +47,7 @@ namespace FundProcess.Pms.Imports.Jobs
         public static void DefineRbcImportProcess(ISingleStream<ImportFilesConfig> configStream)
         {
             var navFileStream = configStream
-                .CrossApplyFolderFiles("get all Nav files", i => i.InputFilesRootFolderPath, "*NAVPUBLTEXTRACT*.csv", true)
+                .CrossApplyFolderFiles("get all Nav files", i => i.InputFilesRootFolderPath, i => i.NavFileFileNamePattern, true)
                 .CrossApplyTextFile("parse nav file", new RbcNavFileDefinition());
             //.ThroughAction("console", i => Console.WriteLine(i.FundName));
 
@@ -131,7 +131,7 @@ namespace FundProcess.Pms.Imports.Jobs
                 .ThroughEntityFrameworkCore("save share class hv", dbCnxStream);
 
             ////var posFileStream = configStream
-            ////    .CrossApplyFolderFiles("get all position files", i => i.InputFilesRootFolderPath, "*PORTFVALEXTRACT*.csv", true)
+            ////    .CrossApplyFolderFiles("get all position files", i => i.InputFilesRootFolderPath, i=>i.PositionFileFileNamePattern, true)
             ////    .CrossApplyTextFile("parse position file", new RbcPositionFileDefinition(), i => i.Name);
 
             //// posFileStream

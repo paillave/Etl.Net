@@ -9,7 +9,7 @@ items:
   - Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Boolean)
   - Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0},System.Boolean)
   - Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1},System.Boolean)
-  - Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})
+  - Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile``1(IStream{Stream},System.String,ISingleStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})
   langs:
   - csharp
   - vb
@@ -20,7 +20,7 @@ items:
   source:
     id: FtpEx
     path: ''
-    startLine: 251
+    startLine: 294
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Ftp.Extensions
@@ -59,7 +59,7 @@ items:
   source:
     id: CrossApplyFtpFiles
     path: ''
-    startLine: 254
+    startLine: 297
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Ftp.Extensions
@@ -109,7 +109,7 @@ items:
   source:
     id: CrossApplyFtpFiles
     path: ''
-    startLine: 259
+    startLine: 302
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Ftp.Extensions
@@ -155,7 +155,7 @@ items:
   source:
     id: CrossApplyFtpFiles
     path: ''
-    startLine: 264
+    startLine: 307
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Ftp.Extensions
@@ -208,7 +208,7 @@ items:
   source:
     id: CrossApplyFtpFiles
     path: ''
-    startLine: 269
+    startLine: 312
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Ftp.Extensions
@@ -243,34 +243,34 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(Of TOut)(IStream(Of System.String), System.String, ISingleStream(Of FtpConnectionInfo), System.Func(Of FtpFilesValue, System.String, FtpConnectionInfo, TOut), System.Boolean)
   name.vb: CrossApplyFtpFiles(Of TOut)(IStream(Of String), String, ISingleStream(Of FtpConnectionInfo), Func(Of FtpFilesValue, String, FtpConnectionInfo, TOut), Boolean)
-- uid: Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})
-  commentId: M:Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})
-  id: ToFtpFile``1(IStream{Stream},System.String,IStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})
+- uid: Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile``1(IStream{Stream},System.String,ISingleStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})
+  commentId: M:Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile``1(IStream{Stream},System.String,ISingleStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})
+  id: ToFtpFile``1(IStream{Stream},System.String,ISingleStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})
   isExtensionMethod: true
   parent: Paillave.Etl.Ftp.Extensions.FtpEx
   langs:
   - csharp
   - vb
-  name: ToFtpFile<TParams>(IStream<Stream>, String, IStream<TParams>, Func<TParams, String>, Func<TParams, FtpConnectionInfo>)
-  nameWithType: FtpEx.ToFtpFile<TParams>(IStream<Stream>, String, IStream<TParams>, Func<TParams, String>, Func<TParams, FtpConnectionInfo>)
-  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile<TParams>(IStream<Stream>, System.String, IStream<TParams>, System.Func<TParams, System.String>, System.Func<TParams, FtpConnectionInfo>)
+  name: ToFtpFile<TParams>(IStream<Stream>, String, ISingleStream<TParams>, Func<TParams, String>, Func<TParams, FtpConnectionInfo>)
+  nameWithType: FtpEx.ToFtpFile<TParams>(IStream<Stream>, String, ISingleStream<TParams>, Func<TParams, String>, Func<TParams, FtpConnectionInfo>)
+  fullName: Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile<TParams>(IStream<Stream>, System.String, ISingleStream<TParams>, System.Func<TParams, System.String>, System.Func<TParams, FtpConnectionInfo>)
   type: Method
   source:
     id: ToFtpFile
     path: ''
-    startLine: 277
+    startLine: 320
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Ftp.Extensions
   syntax:
-    content: public static IStream<Stream> ToFtpFile<TParams>(this IStream<Stream> stream, string name, IStream<TParams> paramsStream, Func<TParams, string> getOutputFilePath, Func<TParams, FtpConnectionInfo> getConnectionInfo)
+    content: public static IStream<Stream> ToFtpFile<TParams>(this IStream<Stream> stream, string name, ISingleStream<TParams> paramsStream, Func<TParams, string> getOutputFilePath, Func<TParams, FtpConnectionInfo> getConnectionInfo)
     parameters:
     - id: stream
       type: IStream{Stream}
     - id: name
       type: System.String
     - id: paramsStream
-      type: IStream{{TParams}}
+      type: ISingleStream{{TParams}}
     - id: getOutputFilePath
       type: System.Func{{TParams},System.String}
     - id: getConnectionInfo
@@ -282,17 +282,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ToFtpFile(Of TParams)(stream As IStream(Of Stream), name As String, paramsStream As IStream(Of TParams), getOutputFilePath As Func(Of TParams, String), getConnectionInfo As Func(Of TParams, FtpConnectionInfo)) As IStream(Of Stream)
+      Public Shared Function ToFtpFile(Of TParams)(stream As IStream(Of Stream), name As String, paramsStream As ISingleStream(Of TParams), getOutputFilePath As Func(Of TParams, String), getConnectionInfo As Func(Of TParams, FtpConnectionInfo)) As IStream(Of Stream)
   overload: Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile*
-  nameWithType.vb: FtpEx.ToFtpFile(Of TParams)(IStream(Of Stream), String, IStream(Of TParams), Func(Of TParams, String), Func(Of TParams, FtpConnectionInfo))
+  nameWithType.vb: FtpEx.ToFtpFile(Of TParams)(IStream(Of Stream), String, ISingleStream(Of TParams), Func(Of TParams, String), Func(Of TParams, FtpConnectionInfo))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile(Of TParams)(IStream(Of Stream), System.String, IStream(Of TParams), System.Func(Of TParams, System.String), System.Func(Of TParams, FtpConnectionInfo))
-  name.vb: ToFtpFile(Of TParams)(IStream(Of Stream), String, IStream(Of TParams), Func(Of TParams, String), Func(Of TParams, FtpConnectionInfo))
+  fullName.vb: Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile(Of TParams)(IStream(Of Stream), System.String, ISingleStream(Of TParams), System.Func(Of TParams, System.String), System.Func(Of TParams, FtpConnectionInfo))
+  name.vb: ToFtpFile(Of TParams)(IStream(Of Stream), String, ISingleStream(Of TParams), Func(Of TParams, String), Func(Of TParams, FtpConnectionInfo))
 references:
 - uid: Paillave.Etl.Ftp.Extensions
   commentId: N:Paillave.Etl.Ftp.Extensions
@@ -1295,20 +1295,20 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: IStream{{TParams}}
-  commentId: '!:IStream{``0}'
-  definition: IStream`1
-  name: IStream<TParams>
-  nameWithType: IStream<TParams>
-  fullName: IStream<TParams>
-  nameWithType.vb: IStream(Of TParams)
-  fullName.vb: IStream(Of TParams)
-  name.vb: IStream(Of TParams)
+- uid: ISingleStream{{TParams}}
+  commentId: '!:ISingleStream{``0}'
+  definition: ISingleStream`1
+  name: ISingleStream<TParams>
+  nameWithType: ISingleStream<TParams>
+  fullName: ISingleStream<TParams>
+  nameWithType.vb: ISingleStream(Of TParams)
+  fullName.vb: ISingleStream(Of TParams)
+  name.vb: ISingleStream(Of TParams)
   spec.csharp:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: <
     nameWithType: <
@@ -1320,10 +1320,10 @@ references:
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISingleStream`1
+    name: ISingleStream
+    nameWithType: ISingleStream
+    fullName: ISingleStream
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
