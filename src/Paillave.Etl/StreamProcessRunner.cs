@@ -46,9 +46,10 @@ namespace Paillave.Etl
             EventWaitHandle startSynchronizer = new EventWaitHandle(false, EventResetMode.ManualReset);
             IPushSubject<TraceEvent> traceSubject = new PushSubject<TraceEvent>();
             IPushSubject<TConfig> startupSubject = new PushSubject<TConfig>();
-            IExecutionContext traceExecutionContext = new TraceExecutionContext(startSynchronizer, executionId, new JobPoolDispatcher());
+            var jobPoolDispatcher = new JobPoolDispatcher();
+            IExecutionContext traceExecutionContext = new TraceExecutionContext(startSynchronizer, executionId, jobPoolDispatcher);
             var traceStream = new Stream<TraceEvent>(null, traceExecutionContext, null, traceSubject);
-            JobExecutionContext jobExecutionContext = new JobExecutionContext(_rootNode.NodeName, executionId, traceSubject, this.StopCondition ?? _defaultStopCondition, new JobPoolDispatcher());
+            JobExecutionContext jobExecutionContext = new JobExecutionContext(_rootNode.NodeName, executionId, traceSubject, this.StopCondition ?? _defaultStopCondition, jobPoolDispatcher);
             var startupStream = new SingleStream<TConfig>(new TraceMapper(jobExecutionContext, _rootNode), jobExecutionContext, _rootNode.NodeName, startupSubject.First());
             traceProcessDefinition?.Invoke(traceStream);
             _jobDefinition(startupStream);
@@ -69,6 +70,7 @@ namespace Paillave.Etl
                     if (jobExecutionContext.EndOfProcessTraceEvent != null && !noExceptionOnError)
                         throw new JobExecutionException(jobExecutionContext.EndOfProcessTraceEvent);
                     jobExecutionStatusTask.Wait();
+                    jobPoolDispatcher.Dispose();
                     return new ExecutionStatus(jobExecutionContext.GetDefinitionStructure(), jobExecutionStatusTask.Result, jobExecutionContext.EndOfProcessTraceEvent);
                 });
             startSynchronizer.Set();

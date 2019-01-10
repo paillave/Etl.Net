@@ -49,12 +49,6 @@ namespace FundProcess.Pms.Imports.Jobs
             var navFileStream = configStream
                 .CrossApplyFolderFiles("get all Nav files", i => i.InputFilesRootFolderPath, i => i.NavFileFileNamePattern, true)
                 .CrossApplyTextFile("parse nav file", new RbcNavFileDefinition());
-            //.ThroughAction("console", i => Console.WriteLine(i.FundName));
-
-            // // navFileStream
-            // //     .Select("apply dbcontext", dbCnxStream, (f, c) => new RbcNavFileContext { DbContext = c, FileInput = f })
-            // //     .GroupBy("group nav file per sub fund", i => i.FileInput.FundCode, ProcessSubfund);
-
 
             var dbCnxStream = configStream
                 .Select("get dbcnx", i => i.DbCtx, true);
@@ -130,21 +124,61 @@ namespace FundProcess.Pms.Imports.Jobs
                 }))
                 .ThroughEntityFrameworkCore("save share class hv", dbCnxStream);
 
-            ////var posFileStream = configStream
-            ////    .CrossApplyFolderFiles("get all position files", i => i.InputFilesRootFolderPath, i=>i.PositionFileFileNamePattern, true)
-            ////    .CrossApplyTextFile("parse position file", new RbcPositionFileDefinition(), i => i.Name);
+            var posFileStream = configStream
+                .CrossApplyFolderFiles("get all position files", i => i.InputFilesRootFolderPath, i => i.PositionFileFileNamePattern, true)
+                .CrossApplyTextFile("parse position file", new RbcPositionFileDefinition(), i => i.Name);
 
-            //// posFileStream
-            ////     .Distinct("distinct positions", i => new { i.FundCode, i.IsinCode, i.NavDate })
-            ////     .Lookup("get position related sub fund", subFundStream, i => i.FundCode, i => i.InternalCode, (l, r) => new { FromFile = l, FromDb = r })
-            ////     .Select("get manco id", dbCnxStream, (l, r) => new { l.FromFile, l.FromDb, ManCoId = r.ManCoId })
-            ////     .ThroughEntityFrameworkCore("Save security that composes other security", dbCnxStream, i => i.FromFile., i => new PortfolioComposition { }, i => i);
+            var compositionStream = posFileStream
+                .Distinct("distinct composition for a date", i => new { i.FundCode, i.NavDate })
+                .Lookup("get composition sub fund", subFundStream, i => i.FundCode, i => i.InternalCode, (l, r) => new { FromFile = l, SubFund = r })
+                .ThroughEntityFrameworkCore("save composition", dbCnxStream, i => new PortfolioComposition
+                {
+                    Date = i.FromFile.NavDate,
+                    PortfolioId = i.SubFund.Id
+                },
+                (i, j) => i.PortfolioId == j.PortfolioId && i.Date == j.Date,
+                (i, j) => new
+                {
+                    i.FromFile,
+                    Composition = j
+                });
 
-            //// posFileStream
-            ////     .Distinct("distinct positions", i => new { i.FundCode, i.IsinCode, i.NavDate })
-            ////     .Lookup("get ")
+            var composingSecurityStream = posFileStream
+                .Distinct("distinct positions", i => new { i.FundCode, i.InternalNumber, i.NavDate })
+                .Select("create security for composition", i => new
+                {
+                    FromFile = i,
+                    Security = CreateSecurityFromInstrumentType(i.InvestmentType, i.Currency, i.IsinCode, i.InstrumentName, i.InternalNumber, i.NextCouponDate),
+                })
+                .Where("exclude entries that don't match with a security", i => i.Security != null)
+                .ThroughEntityFrameworkCore("save security for composition", dbCnxStream,
+                    i => i.Security,
+                    (l, r) => l.InternalCode == r.InternalCode,
+                    (i, j) => i)
+                .Lookup("get related composition", compositionStream,
+                    i => new { i.FromFile.InternalNumber, i.FromFile.FundCode, i.FromFile.NavDate },
+                    i => new { i.FromFile.InternalNumber, i.FromFile.FundCode, i.FromFile.NavDate },
+                    (l, r) => new
+                    {
+                        l.FromFile.Quantity,
+                        l.FromFile.MarketValueInFdCcy,
+                        l.FromFile.MarketValueInSecCcy,
+                        l.FromFile.PercNav,
+                        r.Composition,
+                        l.Security
+                    })
+                .Select("create position", i => new Position
+                {
+                    SecurityId = i.Security.Id,
+                    MarketValueInPortfolioCcy = i.MarketValueInFdCcy,
+                    MarketValueInSecurityCcy = i.MarketValueInSecCcy,
+                    PortfolioCompositionId = i.Composition.Id,
+                    Value = i.Quantity,
+                    Weight = i.PercNav
+                })
+                .ThroughEntityFrameworkCore("save position", dbCnxStream, (i, j) => i.SecurityId == j.SecurityId && i.PortfolioCompositionId == j.PortfolioCompositionId);
         }
-        private static Security CreateSecurityFromInstrumentType(string rbcType, string currencyIso, string isin, string name, DateTime? nextCouponDate)
+        private static Security CreateSecurityFromInstrumentType(string rbcType, string currencyIso, string isin, string name, string internalCode, DateTime? nextCouponDate)
         {
             var rbcCode = rbcType.Split(':')[0].Trim();
 
@@ -157,20 +191,21 @@ namespace FundProcess.Pms.Imports.Jobs
                 case "117": // REITS
                 case "118": // NON G.T. REITS
                 case "411": // SICAF
-                    return new Equity { CurrencyIso = currencyIso, Isin = isin, Name = name };
+                    return new Equity { InternalCode = internalCode, CurrencyIso = currencyIso, Isin = isin, Name = name };
                 case "484":
                 case "485":
-                    return new SubFund { CurrencyIso = currencyIso, Isin = isin, Name = name };
+                    return new SubFund { InternalCode = internalCode, CurrencyIso = currencyIso, Isin = isin, Name = name };
                 case "200":
                 case "201":
                 case "270": // Commercial paper
                 case "271": // Certificate of Deposit
                 case "202": // "202 : ZERO COUPON BONDS"
-                    return new Bond { CurrencyIso = currencyIso, Isin = isin, Name = name, NextCouponDate = nextCouponDate };
+                    return new Bond { InternalCode = internalCode, CurrencyIso = currencyIso, Isin = isin, Name = name, NextCouponDate = nextCouponDate };
                 case "603": // Call/Put
-                    return new Derivative { CurrencyIso = currencyIso, Isin = isin, Name = name };
+                    return new Derivative { InternalCode = internalCode, CurrencyIso = currencyIso, Isin = isin, Name = name };
             }
-            throw new Exception("Unrecognized code: " + rbcType);
+            return null;
+            //throw new Exception("Unrecognized code: " + rbcType);
             //100 : SHARES
             //484 : Investment Funds - UCITS- French
             //117 : G.T. REITS
