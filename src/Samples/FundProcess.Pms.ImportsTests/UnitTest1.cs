@@ -45,7 +45,7 @@ namespace FundProcess.Pms.ImportsTests
             var tenantContext = new TenantContext(this.CreateTestManCo(options), 0);
             _databaseContext = new DataAccess.DatabaseContext(options, tenantContext);
         }
-        [Fact]
+        // [Fact]
         public void Test1()
         {
             StreamProcessRunner.CreateAndExecuteAsync(
