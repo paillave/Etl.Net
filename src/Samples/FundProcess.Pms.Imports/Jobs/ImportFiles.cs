@@ -12,6 +12,7 @@ using FundProcess.Pms.DataAccess.Schemas.Pms.Tables;
 using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
 using Paillave.Etl.StreamNodes;
+using System.Linq;
 
 namespace FundProcess.Pms.Imports.Jobs
 {
@@ -26,6 +27,25 @@ namespace FundProcess.Pms.Imports.Jobs
         // {
         //     return inputStream;
         // }
+        //public static void Tmp(DatabaseContext dbContext)
+        //{
+        //    dbContext.Set<PortfolioComposition>()
+        //        .AsNoTracking()
+        //        .Where(i => i.PortfolioId == 12 && i.Date == DateTime.Today)
+        //        .Select(i => i.Positions.Sum(j => j.MarketValueInPortfolioCcy));
+
+
+        //    dbContext.Set<PortfolioComposition>()
+        //        .AsNoTracking()
+        //        .Where(i => i.PortfolioId == 12 && i.Date == DateTime.Today)
+        //        .Select(i => new
+        //        {
+        //            i.PortfolioId,
+        //            TotalMarketValueInPortfolioCCy = i.Positions.Sum(j => j.MarketValueInPortfolioCcy)
+        //        })
+        //        .GroupBy(i=>i.PortfolioId);
+        //}
+
         public static void DefineRbcImportProcessWithNoCtx(ISingleStream<ImportFilesConfigNoCtx> configStream)
         {
             DefineRbcImportProcess(configStream.Select("create config with Ctx", c =>
@@ -61,7 +81,7 @@ namespace FundProcess.Pms.Imports.Jobs
                     Name = i.FundName,
                     CurrencyIso = i.FundCurrency,
                 })
-                .ThroughEntityFrameworkCore("save sub funds", dbCnxStream, (SubFund sf1, SubFund sf2) => sf1.InternalCode == sf2.InternalCode);
+                .ThroughEntityFrameworkCore("save sub funds", dbCnxStream, i => new { i.InternalCode });
 
             var shareClassStream = navFileStream
                 .Distinct("distinct share classes", i => $"{i.FundCode}_{i.IsinCode}")
@@ -74,7 +94,7 @@ namespace FundProcess.Pms.Imports.Jobs
                     SubFundId = i.FromDb.Id,
                     Isin = i.FromFile.IsinCode
                 })
-                .ThroughEntityFrameworkCore("save share classes", dbCnxStream, (ShareClass sc1, ShareClass sc2) => sc1.InternalCode == sc2.InternalCode);
+                .ThroughEntityFrameworkCore("save share classes", dbCnxStream, i => i.InternalCode);
 
             navFileStream
                 .Distinct("distinct sub funds and date", i => new { i.FundCode, i.NavDate })
@@ -131,17 +151,17 @@ namespace FundProcess.Pms.Imports.Jobs
             var compositionStream = posFileStream
                 .Distinct("distinct composition for a date", i => new { i.FundCode, i.NavDate })
                 .Lookup("get composition sub fund", subFundStream, i => i.FundCode, i => i.InternalCode, (l, r) => new { FromFile = l, SubFund = r })
-                .ThroughEntityFrameworkCore("save composition", dbCnxStream, i => new PortfolioComposition
+                .ThroughEntityFrameworkCore("save composition", dbCnxStream, (i, ctx) => ctx.UpdateForMultiTenancy(new PortfolioComposition
                 {
                     Date = i.FromFile.NavDate,
                     PortfolioId = i.SubFund.Id
-                },
-                (i, j) => i.PortfolioId == j.PortfolioId && i.Date == j.Date,
-                (i, j) => new
-                {
-                    i.FromFile,
-                    Composition = j
-                });
+                }),
+                    i => new { i.PortfolioId, i.Date },
+                    (i, j) => new
+                    {
+                        i.FromFile,
+                        Composition = j
+                    });
 
             var composingSecurityStream = posFileStream
                 .Distinct("distinct positions", i => new { i.FundCode, i.InternalNumber, i.NavDate })
@@ -152,8 +172,8 @@ namespace FundProcess.Pms.Imports.Jobs
                 })
                 .Where("exclude entries that don't match with a security", i => i.Security != null)
                 .ThroughEntityFrameworkCore("save security for composition", dbCnxStream,
-                    i => i.Security,
-                    (l, r) => l.InternalCode == r.InternalCode,
+                    (i, c) => i.Security,
+                    l => l.InternalCode,
                     (i, j) => i)
                 .Lookup("get related composition", compositionStream,
                     i => new { i.FromFile.InternalNumber, i.FromFile.FundCode, i.FromFile.NavDate },
@@ -176,7 +196,7 @@ namespace FundProcess.Pms.Imports.Jobs
                     Value = i.Quantity,
                     Weight = i.PercNav
                 })
-                .ThroughEntityFrameworkCore("save position", dbCnxStream, (i, j) => i.SecurityId == j.SecurityId && i.PortfolioCompositionId == j.PortfolioCompositionId);
+                .ThroughEntityFrameworkCore("save position", dbCnxStream, i => new { i.SecurityId, i.PortfolioCompositionId });
         }
         private static Security CreateSecurityFromInstrumentType(string rbcType, string currencyIso, string isin, string name, string internalCode, DateTime? nextCouponDate)
         {

@@ -29,7 +29,7 @@ EntityFrameworkCore extensions for Etl.Net
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EFCore.BulkExtensions" Version="2.3.7" />
+    <PackageReference Include="FastMember" Version="1.4.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
   </ItemGroup>

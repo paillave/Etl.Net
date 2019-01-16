@@ -1,12 +1,20 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Paillave.Etl.EntityFrameworkCore.Core
 {
     public static class EfExtensions
     {
+        public static EntityEntry<TEntity> EntryWithoutDetectChanges<TEntity>(this DbContext context, TEntity entity)
+                    where TEntity : class
+        {
+            var entryWithoutDetectChangesMethodInfo = context.GetType().GetMethod("EntryWithoutDetectChanges", BindingFlags.Instance | BindingFlags.NonPublic, null, new[] { typeof(TEntity) }, null);
+            return (EntityEntry<TEntity>)entryWithoutDetectChangesMethodInfo.Invoke(context, new object[] { entity });
+        }
         public static void DeleteWhere<T>(this DbContext db, Expression<Func<T, bool>> filter) where T : class
         {
             string selectSql = db.Set<T>().Where(filter).ToString();

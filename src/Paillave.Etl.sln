@@ -33,21 +33,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubProcessQuickStart", "Sam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.Ftp", "Paillave.Etl.Ftp\Paillave.Etl.Ftp.csproj", "{AFC25C60-C649-4217-B1A5-F9745DDED431}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FtpQuickstart", "Samples\FtpQuickstart\FtpQuickstart.csproj", "{D3D88D91-F2F7-4693-AE9E-354450554813}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FtpQuickstart", "Samples\FtpQuickstart\FtpQuickstart.csproj", "{D3D88D91-F2F7-4693-AE9E-354450554813}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{8AF3C413-468E-421F-A681-FFDA84D2CAD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamplesQuickStart", "Samples\ExamplesQuickStart\ExamplesQuickStart.csproj", "{39E2D1F0-7D09-4A7B-AEBA-B570F5E32900}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExamplesQuickStart", "Samples\ExamplesQuickStart\ExamplesQuickStart.csproj", "{39E2D1F0-7D09-4A7B-AEBA-B570F5E32900}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCsv", "Samples\TestCsv\TestCsv.csproj", "{71385EE6-5877-4BE5-AE99-553BEEDD9C55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCsv", "Samples\TestCsv\TestCsv.csproj", "{71385EE6-5877-4BE5-AE99-553BEEDD9C55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Sftp", "Paillave.Etl.Sftp\Paillave.Etl.Sftp.csproj", "{DFDB85B2-D4B2-4C52-93DA-7B576035E76C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.Sftp", "Paillave.Etl.Sftp\Paillave.Etl.Sftp.csproj", "{DFDB85B2-D4B2-4C52-93DA-7B576035E76C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundProcess.Pms.DataAccess", "Samples\FundProcess.Pms.DataAccess\FundProcess.Pms.DataAccess.csproj", "{42D621BC-671C-4264-BB21-6844DB7FAEB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundProcess.Pms.DataAccess", "Samples\FundProcess.Pms.DataAccess\FundProcess.Pms.DataAccess.csproj", "{42D621BC-671C-4264-BB21-6844DB7FAEB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundProcess.Pms.Imports", "Samples\FundProcess.Pms.Imports\FundProcess.Pms.Imports.csproj", "{DB4C1AAA-5E8C-4DBF-8A37-02F36E10F100}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundProcess.Pms.Imports", "Samples\FundProcess.Pms.Imports\FundProcess.Pms.Imports.csproj", "{DB4C1AAA-5E8C-4DBF-8A37-02F36E10F100}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundProcess.Pms.ImportsTests", "Samples\FundProcess.Pms.ImportsTests\FundProcess.Pms.ImportsTests.csproj", "{0BBEAE24-1F01-488C-B6CD-1FDF1B892887}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundProcess.Pms.ImportsTests", "Samples\FundProcess.Pms.ImportsTests\FundProcess.Pms.ImportsTests.csproj", "{0BBEAE24-1F01-488C-B6CD-1FDF1B892887}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

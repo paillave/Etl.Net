@@ -7,8 +7,8 @@ namespace Paillave.Etl.Core
 {
     public class JobPool : IDisposable
     {
+        private object _lock = new object();
         private bool _isStopped = false;
-
 
         private Queue<Action> _actionQueue = new Queue<Action>();
 
@@ -22,8 +22,11 @@ namespace Paillave.Etl.Core
         {
             while (!_isStopped)
             {
-                while (_actionQueue.Count > 0)
-                    _actionQueue.Dequeue()();
+                lock (_lock)
+                {
+                    while (_actionQueue.Count > 0)
+                        _actionQueue.Dequeue()();
+                }
                 _mtxWaitNewProcess.WaitOne();
             }
         }
@@ -31,11 +34,14 @@ namespace Paillave.Etl.Core
         public void Execute(Action action)
         {
             var mtxInit = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
-            _actionQueue.Enqueue(() =>
+            lock (_lock)
             {
-                action();
-                mtxInit.Set();
-            });
+                _actionQueue.Enqueue(() =>
+                {
+                    action();
+                    mtxInit.Set();
+                });
+            }
             _mtxWaitNewProcess.Set();
             mtxInit.WaitOne();
         }
@@ -49,8 +55,8 @@ namespace Paillave.Etl.Core
             {
                 if (disposing)
                 {
-                    _mtxWaitNewProcess.Set();
                     _isStopped = true;
+                    _mtxWaitNewProcess.Set();
                 }
                 disposedValue = true;
             }

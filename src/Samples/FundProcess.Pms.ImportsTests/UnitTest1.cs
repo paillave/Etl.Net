@@ -15,6 +15,7 @@ using Paillave.Etl.StreamNodes;
 using System.Linq;
 using Paillave.Etl.Reactive.Operators;
 using Paillave.Etl.Reactive.Core;
+using System.Reflection;
 
 namespace FundProcess.Pms.ImportsTests
 {
@@ -27,13 +28,13 @@ namespace FundProcess.Pms.ImportsTests
             // return 12;
             using (var ctx = new DataAccess.DatabaseContext(options, TenantContext.Empty))
             {
-               var manCo = new ManCo
-               {
-                   Name = "my manco"
-               };
-               ctx.Add(manCo);
-               ctx.SaveChanges();
-               return manCo.Id;
+                var manCo = new ManCo
+                {
+                    Name = "my manco"
+                };
+                ctx.Add(manCo);
+                ctx.SaveChanges();
+                return manCo.Id;
             }
         }
         public UnitTest1()
