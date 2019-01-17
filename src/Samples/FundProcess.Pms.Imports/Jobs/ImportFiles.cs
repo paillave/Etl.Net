@@ -163,18 +163,13 @@ namespace FundProcess.Pms.Imports.Jobs
                         Composition = j
                     });
 
+            var securitiesPositionStream = posFileStream
+                .Distinct("distinct positions", i => i.InternalNumber)
+                .Select("create security for composition", i => CreateSecurityFromInstrumentType(i.InvestmentType, i.Currency, i.IsinCode, i.InstrumentName, i.InternalNumber, i.NextCouponDate), false, true)
+                .ThroughEntityFrameworkCore("save security for composition", dbCnxStream, l => l.InternalCode);
+
             var composingSecurityStream = posFileStream
-                .Distinct("distinct positions", i => new { i.FundCode, i.InternalNumber, i.NavDate })
-                .Select("create security for composition", i => new
-                {
-                    FromFile = i,
-                    Security = CreateSecurityFromInstrumentType(i.InvestmentType, i.Currency, i.IsinCode, i.InstrumentName, i.InternalNumber, i.NextCouponDate),
-                })
-                .Where("exclude entries that don't match with a security", i => i.Security != null)
-                .ThroughEntityFrameworkCore("save security for composition", dbCnxStream,
-                    (i, c) => i.Security,
-                    l => l.InternalCode,
-                    (i, j) => i)
+                .Lookup("lookup for composition security", securitiesPositionStream,i=>i.InternalNumber, i=>i.InternalCode, (l,r)=> new {FromFile=l, Security=r})
                 .Lookup("get related composition", compositionStream,
                     i => new { i.FromFile.InternalNumber, i.FromFile.FundCode, i.FromFile.NavDate },
                     i => new { i.FromFile.InternalNumber, i.FromFile.FundCode, i.FromFile.NavDate },

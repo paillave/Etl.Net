@@ -41,12 +41,13 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
     public enum SaveMode
     {
         //StandardEfCoreUpsert,
-        BulkInsert,
+        // BulkInsert,
+        EntityFrameworkCoreUpsert,
         BulkUpsert
     }
     public enum SaveByKeyMode
     {
-        BulkInsert,
+        EntityFrameworkCoreUpsert,
         BulkUpsert
     }
     public class ThroughEntityFrameworkCoreStreamNode<TInEf, TCtx, TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TIn, TOut>>
@@ -75,7 +76,6 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
             var entities = items.Select(i => i.Item2).ToArray();
             var bulkConfig = new BulkConfig
             {
-                PreserveInsertOrder = true,
                 SetOutputIdentity = true,
                 BatchSize = items.Count,
                 TrackingEntities = false
@@ -103,13 +103,9 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
                 //    }
                 //    dbContext.UpdateRange(entities);
                 //    break;
-                case SaveMode.BulkInsert:
-                    dbContext.AttachForBulkInsert(entities);
-                    dbContext.BulkInsert(entities, bulkConfig);
-                    break;
                 case SaveMode.BulkUpsert:
                     dbContext.AttachForBulkInsert(entities);
-                    dbContext.BulkInsertOrUpdate(entities, bulkConfig);
+                    dbContext.BulkSave(entities, bulkConfig);
                     break;
                 default:
                     break;
@@ -153,7 +149,6 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         {
             var bulkConfig = new BulkConfig
             {
-                PreserveInsertOrder = true,
                 SetOutputIdentity = true,
                 BatchSize = items.Count,
                 UpdateByProperties = _keyProperties,
@@ -163,15 +158,10 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
             List<TInEf> toSave;
             switch (bulkLoadMode)
             {
-                case SaveByKeyMode.BulkInsert:
-                    toSave = items.Select(i => i.Item2).ToList();
-                    dbContext.AttachForBulkInsert(toSave, _keyProperties);
-                    dbContext.BulkInsert(toSave, bulkConfig);
-                    break;
                 case SaveByKeyMode.BulkUpsert:
                     toSave = items.Select(i => i.Item2).ToList();
                     dbContext.AttachForBulkInsert(toSave, _keyProperties);
-                    dbContext.BulkInsertOrUpdate(toSave, bulkConfig);
+                    dbContext.BulkSave(toSave, bulkConfig);
                     break;
                 default:
                     break;

@@ -21,7 +21,7 @@ namespace EFCore.BulkExtensions
         private readonly FieldInfo currentFieldInfo;
         public Dictionary<string, int> counters = new Dictionary<string, int>();
         private MethodInfo entryWithoutDetectChangesMethodInfo;
-        private EntityEntry<T> EntryWithoutDetectChanges(T entity) => (EntityEntry<T>)entryWithoutDetectChangesMethodInfo.Invoke(context, new object[] { entity });
+        // private EntityEntry<T> EntryWithoutDetectChanges(T entity) => (EntityEntry<T>)entryWithoutDetectChangesMethodInfo.Invoke(context, new object[] { entity });
         public ObjectReaderEx(Type type, IEnumerable source, HashSet<string> shadowProperties, Dictionary<string, ValueConverter> convertibleProperties, DbContext context, params string[] members) : base(type, source, members)
         {
             this.shadowProperties = shadowProperties;

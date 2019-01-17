@@ -12,47 +12,28 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EFCore.BulkExtensions
 {
-    public enum OperationType
-    {
-        Insert,
-        InsertOrUpdate,
-        InsertOrUpdateDelete,
-        Update,
-        Delete,
-        Read
-    }
-
     internal static class SqlBulkOperation
     {
         internal static string ColumnMappingExceptionMessage => "The given ColumnMapping does not match up with any column in the source or destination";
 
         #region MainOps
-        public static void Insert<T>(DbContext context, IList<T> entities, TableInfo tableInfo, Action<decimal> progress) where T : class
+        public static void Insert<T>(DbContext context, IList<T> entities, TableInfo tableInfo) where T : class
         {
-            var sqlConnection = OpenAndGetSqlConnection(context, tableInfo.BulkConfig);
+            var sqlConnection = OpenAndGetSqlConnection(context);
             var transaction = context.Database.CurrentTransaction;
             try
             {
                 using (var sqlBulkCopy = GetSqlBulkCopy(sqlConnection, transaction, tableInfo.BulkConfig))
                 {
-                    bool setColumnMapping = !tableInfo.HasOwnedTypes;
-                    tableInfo.SetSqlBulkCopyConfig(sqlBulkCopy, entities, setColumnMapping, progress);
+                    tableInfo.SetSqlBulkCopyConfig(sqlBulkCopy, entities);
                     try
                     {
-                        if (!tableInfo.HasOwnedTypes)
+                        using (var reader = ObjectReaderEx<T>.Create(entities, tableInfo.ShadowProperties, tableInfo.ConvertibleProperties, context, tableInfo.PropertyColumnNamesDict.Keys.ToArray()))
                         {
-                            using (var reader = ObjectReaderEx<T>.Create(entities, tableInfo.ShadowProperties, tableInfo.ConvertibleProperties, context, tableInfo.PropertyColumnNamesDict.Keys.ToArray()))
-                            {
-                                var previousAutoDetect = context.ChangeTracker.AutoDetectChangesEnabled;
-                                context.ChangeTracker.AutoDetectChangesEnabled = false;
-                                sqlBulkCopy.WriteToServer(reader);
-                                context.ChangeTracker.AutoDetectChangesEnabled = previousAutoDetect;
-                            }
-                        }
-                        else // With OwnedTypes DataTable is used since library FastMember can not (https://github.com/mgravell/fast-member/issues/21)
-                        {
-                            var dataTable = GetDataTable<T>(context, entities, sqlBulkCopy);
-                            sqlBulkCopy.WriteToServer(dataTable);
+                            var previousAutoDetect = context.ChangeTracker.AutoDetectChangesEnabled;
+                            context.ChangeTracker.AutoDetectChangesEnabled = false;
+                            sqlBulkCopy.WriteToServer(reader);
+                            context.ChangeTracker.AutoDetectChangesEnabled = previousAutoDetect;
                         }
                     }
                     catch (InvalidOperationException ex)
@@ -78,52 +59,24 @@ namespace EFCore.BulkExtensions
             }
         }
 
-        private static long Iterate(IDataReader reader)
+        public static async Task InsertAsync<T>(DbContext context, IList<T> entities, TableInfo tableInfo) where T : class
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            var cnt = reader.FieldCount;
-            List<Dictionary<int, object>> lst = new List<Dictionary<int, object>>();
-            while (reader.Read())
-            {
-                Dictionary<int, object> dic = new Dictionary<int, object>();
-                for (int i = 0; i < cnt; i++)
-                {
-                    dic[i] = reader.GetValue(i);
-                }
-                lst.Add(dic);
-            }
-            sw.Stop();
-            return sw.ElapsedMilliseconds;
-        }
-
-        public static async Task InsertAsync<T>(DbContext context, IList<T> entities, TableInfo tableInfo, Action<decimal> progress) where T : class
-        {
-            var sqlConnection = await OpenAndGetSqlConnectionAsync(context, tableInfo.BulkConfig);
+            var sqlConnection = await OpenAndGetSqlConnectionAsync(context);
             var transaction = context.Database.CurrentTransaction;
             try
             {
                 using (var sqlBulkCopy = GetSqlBulkCopy(sqlConnection, transaction, tableInfo.BulkConfig))
                 {
-                    bool setColumnMapping = !tableInfo.HasOwnedTypes;
-                    tableInfo.SetSqlBulkCopyConfig(sqlBulkCopy, entities, setColumnMapping, progress);
+                    tableInfo.SetSqlBulkCopyConfig(sqlBulkCopy, entities);
                     try
                     {
-                        if (!tableInfo.HasOwnedTypes)
+                        using (var reader = ObjectReaderEx<T>.Create(entities, tableInfo.ShadowProperties, tableInfo.ConvertibleProperties, context, tableInfo.PropertyColumnNamesDict.Keys.ToArray()))
                         {
-                            using (var reader = ObjectReaderEx<T>.Create(entities, tableInfo.ShadowProperties, tableInfo.ConvertibleProperties, context, tableInfo.PropertyColumnNamesDict.Keys.ToArray()))
-                            {
-                                var currentAutoDetectChangesEnabled = context.ChangeTracker.AutoDetectChangesEnabled;
-                                context.ChangeTracker.AutoDetectChangesEnabled = false;
-                                await sqlBulkCopy.WriteToServerAsync(reader)
-                                    .ContinueWith(t => context.ChangeTracker.AutoDetectChangesEnabled = currentAutoDetectChangesEnabled)
-                                    .ConfigureAwait(false);
-                            }
-                        }
-                        else
-                        {
-                            var dataTable = GetDataTable<T>(context, entities, sqlBulkCopy);
-                            await sqlBulkCopy.WriteToServerAsync(dataTable);
+                            var currentAutoDetectChangesEnabled = context.ChangeTracker.AutoDetectChangesEnabled;
+                            context.ChangeTracker.AutoDetectChangesEnabled = false;
+                            await sqlBulkCopy.WriteToServerAsync(reader)
+                                .ContinueWith(t => context.ChangeTracker.AutoDetectChangesEnabled = currentAutoDetectChangesEnabled)
+                                .ConfigureAwait(false);
                         }
                     }
                     catch (InvalidOperationException ex)
@@ -149,31 +102,16 @@ namespace EFCore.BulkExtensions
             }
         }
 
-        public static void Merge<T>(DbContext context, IList<T> entities, TableInfo tableInfo, OperationType operationType, Action<decimal> progress) where T : class
+        public static void Merge<T>(DbContext context, IList<T> entities, TableInfo tableInfo) where T : class
         {
             tableInfo.InsertToTempTable = true;
 
             context.Database.ExecuteSqlCommand(SqlQueryBuilder.CreateTableCopy(tableInfo.FullTableName, tableInfo.FullTempTableName, tableInfo));
-            //if (tableInfo.CreatedOutputTable)
-            //{
-            //    context.Database.ExecuteSqlCommand(SqlQueryBuilder.CreateTableCopy(tableInfo.FullTableName, tableInfo.FullTempOutputTableName, tableInfo, true));
-            //    if (tableInfo.TimeStampColumnName != null)
-            //    {
-            //        context.Database.ExecuteSqlCommand(SqlQueryBuilder.AddColumn(tableInfo.FullTempOutputTableName, tableInfo.TimeStampColumnName, tableInfo.TimeStampOutColumnType));
-            //    }
-            //}
 
             bool keepIdentity = tableInfo.BulkConfig.SqlBulkCopyOptions.HasFlag(SqlBulkCopyOptions.KeepIdentity);
             try
             {
-                //if (!keepIdentity && tableInfo.HasIdentityColumn)
-                //{
-                //    var accessor = TypeAccessor.Create(typeof(T), true);
-                //    foreach (var item in entities)
-                //        accessor[item, tableInfo.IdentityColumn] = 0;
-                //}
-
-                Insert(context, entities, tableInfo, progress);
+                Insert(context, entities, tableInfo);
 
                 if (keepIdentity && tableInfo.HasIdentityColumn)
                 {
@@ -182,7 +120,7 @@ namespace EFCore.BulkExtensions
                 }
                 //TODO:index source table on pivot key
                 //context.Database.ExecuteSqlCommand(SqlQueryBuilder.MergeTable(tableInfo, operationType));
-                string query = SqlQueryBuilder.MergeTable(tableInfo, operationType);
+                string query = SqlQueryBuilder.MergeTable(tableInfo);
                 if (typeof(T).Name == "PortfolioComposition")
                 {
                     //var tst2 = tableInfo.ExecuteQuery<T>(context, query).ToList();
@@ -190,18 +128,6 @@ namespace EFCore.BulkExtensions
 
                 var tst = tableInfo.QueryOutputTable<T>(context, query).ToList();
                 tableInfo.UpdateEntitiesIdentityIfNeeded<T>(entities, tst);
-                //if (tableInfo.CreatedOutputTable)
-                //{
-                //    try
-                //    {
-                //        tableInfo.LoadOutputData(context, entities);
-                //    }
-                //    finally
-                //    {
-                //        if (!tableInfo.BulkConfig.UseTempDB)
-                //            context.Database.ExecuteSqlCommand(SqlQueryBuilder.DropTable(tableInfo.FullTempOutputTableName));
-                //    }
-                //}
             }
             finally
             {
@@ -216,31 +142,16 @@ namespace EFCore.BulkExtensions
             }
         }
 
-        public static async Task MergeAsync<T>(DbContext context, IList<T> entities, TableInfo tableInfo, OperationType operationType, Action<decimal> progress) where T : class
+        public static async Task MergeAsync<T>(DbContext context, IList<T> entities, TableInfo tableInfo) where T : class
         {
             tableInfo.InsertToTempTable = true;
 
             await context.Database.ExecuteSqlCommandAsync(SqlQueryBuilder.CreateTableCopy(tableInfo.FullTableName, tableInfo.FullTempTableName, tableInfo)).ConfigureAwait(false);
-            //if (tableInfo.CreatedOutputTable)
-            //{
-            //    await context.Database.ExecuteSqlCommandAsync(SqlQueryBuilder.CreateTableCopy(tableInfo.FullTableName, tableInfo.FullTempOutputTableName, tableInfo, true)).ConfigureAwait(false);
-            //    if (tableInfo.TimeStampColumnName != null)
-            //    {
-            //        context.Database.ExecuteSqlCommand(SqlQueryBuilder.AddColumn(tableInfo.FullTempOutputTableName, tableInfo.TimeStampColumnName, tableInfo.TimeStampOutColumnType));
-            //    }
-            //}
 
             bool keepIdentity = tableInfo.BulkConfig.SqlBulkCopyOptions.HasFlag(SqlBulkCopyOptions.KeepIdentity);
             try
             {
-                //if (!keepIdentity && tableInfo.HasIdentityColumn)
-                //{
-                //    var accessor = TypeAccessor.Create(typeof(T), true);
-                //    foreach (var item in entities)
-                //        accessor[item, tableInfo.IdentityColumn] = 0;
-                //}
-
-                await InsertAsync(context, entities, tableInfo, progress).ConfigureAwait(false);
+                await InsertAsync(context, entities, tableInfo).ConfigureAwait(false);
 
                 if (keepIdentity && tableInfo.HasIdentityColumn)
                 {
@@ -248,25 +159,8 @@ namespace EFCore.BulkExtensions
                     context.Database.ExecuteSqlCommand(SqlQueryBuilder.SetIdentityInsert(tableInfo.FullTableName, true));
                 }
 
-                //TODO:index source table on pivot key
-
-                var tst = tableInfo.QueryOutputTable<T>(context, SqlQueryBuilder.MergeTable(tableInfo, operationType)).ToList();
+                var tst = tableInfo.QueryOutputTable<T>(context, SqlQueryBuilder.MergeTable(tableInfo)).ToList();
                 tableInfo.UpdateEntitiesIdentityIfNeeded<T>(entities, tst);
-
-                //await context.Database.ExecuteSqlCommandAsync(SqlQueryBuilder.MergeTable(tableInfo, operationType)).ConfigureAwait(false);
-
-                //if (tableInfo.CreatedOutputTable)
-                //{
-                //    try
-                //    {
-                //        await tableInfo.LoadOutputDataAsync(context, entities).ConfigureAwait(false);
-                //    }
-                //    finally
-                //    {
-                //        if (!tableInfo.BulkConfig.UseTempDB)
-                //            await context.Database.ExecuteSqlCommandAsync(SqlQueryBuilder.DropTable(tableInfo.FullTempOutputTableName)).ConfigureAwait(false);
-                //    }
-                //}
             }
             finally
             {
@@ -278,79 +172,6 @@ namespace EFCore.BulkExtensions
                     context.Database.ExecuteSqlCommand(SqlQueryBuilder.SetIdentityInsert(tableInfo.FullTableName, false));
                     context.Database.CloseConnection();
                 }
-            }
-        }
-
-        public static void Read<T>(DbContext context, IList<T> entities, TableInfo tableInfo, Action<decimal> progress) where T : class
-        {
-            Dictionary<string, string> previousPropertyColumnNamesDict = tableInfo.ConfigureBulkReadTableInfo(context);
-
-            context.Database.ExecuteSqlCommand(SqlQueryBuilder.CreateTableCopy(tableInfo.FullTableName, tableInfo.FullTempTableName, tableInfo));
-
-            try
-            {
-                Insert(context, entities, tableInfo, progress);
-
-                tableInfo.PropertyColumnNamesDict = previousPropertyColumnNamesDict;
-
-                var sqlQuery = SqlQueryBuilder.SelectJoinTable(tableInfo);
-
-                //var existingEntities = context.Set<T>().FromSql(q).AsNoTracking().ToList(); // Not used because of EF Memory leak bug
-                Expression<Func<DbContext, IQueryable<T>>> expression = null;
-                if (tableInfo.BulkConfig.TrackingEntities)
-                {
-                    expression = (ctx) => ctx.Set<T>().FromSql(sqlQuery);
-                }
-                else
-                {
-                    expression = (ctx) => ctx.Set<T>().FromSql(sqlQuery).AsNoTracking();
-                }
-
-                var compiled = EF.CompileQuery(expression); // instead using Compiled queries
-                var existingEntities = compiled(context).ToList();
-
-                tableInfo.UpdateReadEntities(entities, existingEntities);
-            }
-            finally
-            {
-                if (!tableInfo.BulkConfig.UseTempDB)
-                    context.Database.ExecuteSqlCommand(SqlQueryBuilder.DropTable(tableInfo.FullTempTableName));
-            }
-        }
-
-        public static async Task ReadAsync<T>(DbContext context, IList<T> entities, TableInfo tableInfo, Action<decimal> progress) where T : class
-        {
-            Dictionary<string, string> previousPropertyColumnNamesDict = tableInfo.ConfigureBulkReadTableInfo(context);
-
-            await context.Database.ExecuteSqlCommandAsync(SqlQueryBuilder.CreateTableCopy(tableInfo.FullTableName, tableInfo.FullTempTableName, tableInfo));
-
-            try
-            {
-                await InsertAsync(context, entities, tableInfo, progress);
-
-                tableInfo.PropertyColumnNamesDict = previousPropertyColumnNamesDict;
-
-                var sqlQuery = SqlQueryBuilder.SelectJoinTable(tableInfo);
-
-                //var existingEntities = await context.Set<T>().FromSql(sqlQuery).ToListAsync();
-                Expression<Func<DbContext, IQueryable<T>>> expression = null;
-                if (tableInfo.BulkConfig.TrackingEntities)
-                {
-                    expression = (ctx) => ctx.Set<T>().FromSql(sqlQuery);
-                }
-                else
-                {
-                    expression = (ctx) => ctx.Set<T>().FromSql(sqlQuery).AsNoTracking();
-                }
-                var compiled = EF.CompileAsyncQuery(expression);
-                var existingEntities = (await compiled(context).ToListAsync().ConfigureAwait(false));
-
-                tableInfo.UpdateReadEntities(entities, existingEntities);
-            }
-            finally
-            {
-                if (!tableInfo.BulkConfig.UseTempDB)
-                    await context.Database.ExecuteSqlCommandAsync(SqlQueryBuilder.DropTable(tableInfo.FullTempTableName));
             }
         }
         #endregion
@@ -443,9 +264,9 @@ namespace EFCore.BulkExtensions
         #endregion
 
         #region Connection
-        internal static SqlConnection OpenAndGetSqlConnection(DbContext context, BulkConfig config)
+        internal static SqlConnection OpenAndGetSqlConnection(DbContext context)
         {
-            var connection = context.GetUnderlyingConnection(config);
+            var connection = context.Database.GetDbConnection();
             if (connection.State != ConnectionState.Open)
             {
                 connection.Open();
@@ -453,9 +274,9 @@ namespace EFCore.BulkExtensions
             return (SqlConnection)connection;
         }
 
-        internal static async Task<SqlConnection> OpenAndGetSqlConnectionAsync(DbContext context, BulkConfig config)
+        internal static async Task<SqlConnection> OpenAndGetSqlConnectionAsync(DbContext context)
         {
-            var connection = context.GetUnderlyingConnection(config);
+            var connection = context.Database.GetDbConnection();
             if (connection.State != ConnectionState.Open)
             {
                 await connection.OpenAsync().ConfigureAwait(false);
@@ -472,7 +293,7 @@ namespace EFCore.BulkExtensions
             }
             else
             {
-                var sqlTransaction = (SqlTransaction)transaction.GetUnderlyingTransaction(config);
+                var sqlTransaction = (SqlTransaction)transaction.GetDbTransaction();
                 return new SqlBulkCopy(sqlConnection, sqlBulkCopyOptions, sqlTransaction);
             }
         }

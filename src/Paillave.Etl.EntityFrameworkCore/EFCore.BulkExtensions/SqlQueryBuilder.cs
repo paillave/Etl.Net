@@ -15,9 +15,8 @@ namespace EFCore.BulkExtensions
             {
                 columnsNames.Remove(tableInfo.TimeStampColumnName);
             }
-            string isUpdateStatsColumn = (tableInfo.BulkConfig.CalculateStats && isOutputTable) ? ",[IsUpdate] = CAST(0 AS bit)" : "";
 
-            var q = $"SELECT TOP 0 {GetCommaSeparatedColumns(columnsNames, "T")} " + isUpdateStatsColumn +
+            var q = $"SELECT TOP 0 {GetCommaSeparatedColumns(columnsNames, "T")} " +
                     $"INTO {newTableName} FROM {existingTableName} AS T " +
                     $"LEFT JOIN {existingTableName} AS Source ON 1 = 0;"; // removes Identity constrain
             return q;
@@ -69,7 +68,7 @@ namespace EFCore.BulkExtensions
             return q;
         }
 
-        public static string MergeTable(TableInfo tableInfo, OperationType operationType)
+        public static string MergeTable(TableInfo tableInfo)
         {
             string targetTable = tableInfo.FullTableName;
             string sourceTable = tableInfo.FullTempTableName;
@@ -78,15 +77,10 @@ namespace EFCore.BulkExtensions
             List<string> columnsNames = tableInfo.PropertyColumnNamesDict.Values.ToList();
             List<string> outputColumnsNames = tableInfo.OutputPropertyColumnNamesDict.Values.ToList();
             List<string> nonPivotColumnsNames = columnsNames.Where(a => !primaryKeys.Contains(a)).ToList();
-            List<string> nonPivotAndNotIdendityColumnsNames = nonPivotColumnsNames.Where(a => tableInfo.IdentityColumn != a).ToList();
+            List<string> nonPivotAndNotIdentityColumnsNames = nonPivotColumnsNames.Where(a => tableInfo.IdentityColumn != a).ToList();
             List<string> nonIdentityColumnsNames = columnsNames.Where(a => tableInfo.IdentityColumn != a).ToList();
             List<string> insertColumnsNames = (tableInfo.HasIdentityColumn && !keepIdentity) ? nonIdentityColumnsNames : columnsNames;
-            List<string> updateColumnsNames = (tableInfo.HasIdentityColumn && !keepIdentity) ? nonPivotAndNotIdendityColumnsNames : nonPivotColumnsNames;
-
-            string isUpdateStatsValue = (tableInfo.BulkConfig.CalculateStats) ? ",(CASE $action WHEN 'UPDATE' THEN 1 Else 0 END)" : "";
-
-            if (tableInfo.BulkConfig.PreserveInsertOrder)
-                sourceTable = $"(SELECT TOP {tableInfo.NumberOfEntities} * FROM {sourceTable} ORDER BY {GetCommaSeparatedColumns(primaryKeys)})";
+            List<string> updateColumnsNames = (tableInfo.HasIdentityColumn && !keepIdentity) ? nonPivotAndNotIdentityColumnsNames : nonPivotColumnsNames;
 
             string textWITH_HOLDLOCK = tableInfo.BulkConfig.WithHoldlock ? " WITH (HOLDLOCK)" : "";
 
@@ -94,29 +88,10 @@ namespace EFCore.BulkExtensions
                     $"USING {sourceTable} AS S " +
                     $"ON {GetANDSeparatedColumns(primaryKeys, "T", "S", tableInfo.UpdateByPropertiesAreNullable)}";
 
-            if (operationType == OperationType.Insert || operationType == OperationType.InsertOrUpdate || operationType == OperationType.InsertOrUpdateDelete)
-            {
-                q += $" WHEN NOT MATCHED BY TARGET THEN INSERT ({GetCommaSeparatedColumns(insertColumnsNames)})" +
-                     $" VALUES ({GetCommaSeparatedColumns(insertColumnsNames, "S")})";
-            }
-            if ((operationType == OperationType.Update || operationType == OperationType.InsertOrUpdate || operationType == OperationType.InsertOrUpdateDelete) & updateColumnsNames.Count() > 0)
-            {
-                q += $" WHEN MATCHED THEN UPDATE SET {GetCommaSeparatedColumns(updateColumnsNames, "T", "S")}";
-            }
-            if (operationType == OperationType.InsertOrUpdateDelete)
-            {
-                q += $" WHEN NOT MATCHED BY SOURCE THEN DELETE";
-            }
-            if (operationType == OperationType.Delete)
-            {
-                q += " WHEN MATCHED THEN DELETE";
-            }
-            q += $" OUTPUT {GetCommaSeparatedColumns(outputColumnsNames, "INSERTED")}" + isUpdateStatsValue;
-            //if (tableInfo.CreatedOutputTable)
-            //{
-            //    q += $" OUTPUT {GetCommaSeparatedColumns(outputColumnsNames, "INSERTED")}" + isUpdateStatsValue +
-            //         $" INTO {tableInfo.FullTempOutputTableName}";
-            //}
+            q += $" WHEN NOT MATCHED BY TARGET THEN INSERT ({GetCommaSeparatedColumns(insertColumnsNames)})" +
+                 $" VALUES ({GetCommaSeparatedColumns(insertColumnsNames, "S")})";
+            q += $" WHEN MATCHED THEN UPDATE SET {GetCommaSeparatedColumns(updateColumnsNames, "T", "S")}";
+            q += $" OUTPUT {GetCommaSeparatedColumns(outputColumnsNames, "INSERTED")}";
             q += ";";
             return q;
         }

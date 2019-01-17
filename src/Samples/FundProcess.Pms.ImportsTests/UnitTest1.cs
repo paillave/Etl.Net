@@ -40,19 +40,23 @@ namespace FundProcess.Pms.ImportsTests
         public UnitTest1()
         {
             var options = new DbContextOptionsBuilder<DataAccess.DatabaseContext>()
-                .UseSqlServer("Server=localhost;Database=FundProcess;Trusted_Connection=True;MultipleActiveResultSets=True").Options;
+                .UseSqlServer("Server=(localdb)\\ProjectsV13;Database=FundProcess;Trusted_Connection=True;MultipleActiveResultSets=True").Options;
             //.UseInMemoryDatabase("inmemorydb").Options;
             var tenantContext = new TenantContext(this.CreateTestManCo(options), 0);
             _databaseContext = new DataAccess.DatabaseContext(options, tenantContext);
         }
-        // [Fact]
+
+        public void Tempo()
+        {
+        }
+        [Fact]
         public void Test1()
         {
             StreamProcessRunner.CreateAndExecuteAsync(
                 new ImportFilesConfig
                 {
+                    InputFilesRootFolderPath = @"C:\Users\sroyer\Downloads\RBC",
                     // InputFilesRootFolderPath = @"C:\Users\paill\Desktop\rbc",
-                    InputFilesRootFolderPath = @"C:\Users\paill\Desktop\rbc",
                     DbCtx = _databaseContext
                 },
                 ImportFiles.DefineRbcImportProcess,
