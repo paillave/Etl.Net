@@ -29,7 +29,6 @@ namespace EFCore.BulkExtensions
         public string TempTableSuffix { get; set; }
         public string TempTableName => $"{TableName}{TempTableSuffix}";
         public string FullTempTableName => $"{SchemaFormated}[{TempDBPrefix}{TempTableName}]";
-        public string FullTempOutputTableName => $"{SchemaFormated}[{TempDBPrefix}{TempTableName}Output]";
         public string IdentityColumn = null;
         public bool HasIdentityColumn => !string.IsNullOrWhiteSpace(IdentityColumn);
         public bool InsertToTempTable { get; set; }
@@ -59,14 +58,12 @@ namespace EFCore.BulkExtensions
             return tableInfo;
         }
 
-        private IEnumerable<IEntityType> GetSubEntityTypes(IEntityType et)
+        private IEnumerable<IEntityType> GetAllRelatedEntityTypes(IEntityType et)
         {
+            yield return et;
             foreach (var item in et.GetDerivedTypes())
-            {
-                yield return item;
-                foreach (var i in GetSubEntityTypes(item))
+                foreach (var i in GetAllRelatedEntityTypes(item))
                     yield return i;
-            }
         }
 
         #region Main
@@ -75,6 +72,9 @@ namespace EFCore.BulkExtensions
             var entityType = context.Model.FindEntityType(typeof(T));
             if (entityType == null)
                 throw new InvalidOperationException("DbContext does not contain EntitySet for Type: " + typeof(T).Name);
+
+
+
 
             var relationalData = entityType.Relational();
             Schema = relationalData.Schema ?? "dbo";
@@ -87,14 +87,11 @@ namespace EFCore.BulkExtensions
 
             IdentityColumn = entityType.GetProperties().FirstOrDefault(i => i.SqlServer().ValueGenerationStrategy == SqlServerValueGenerationStrategy.IdentityColumn)?.Name;
 
-
-            var subClassProperties = GetSubEntityTypes(entityType).Distinct().SelectMany(dt => dt.GetProperties()).Distinct(new LambdaEqualityComparer<IProperty, string>(i => i.Relational().ColumnName)).AsEnumerable();
-            var allProperties = subClassProperties; // entityType.GetProperties().AsEnumerable();
-
-            var subClasses = GetSubEntityTypes(entityType).Distinct();
+            var subClasses = GetAllRelatedEntityTypes(entityType).Distinct();
+            var allProperties = subClasses.SelectMany(dt => dt.GetProperties()).Distinct(new LambdaEqualityComparer<IProperty, string>(i => i.Relational().ColumnName)).AsEnumerable();
+            // var allProperties = subClassProperties; // entityType.GetProperties().AsEnumerable();
 
             //var allNavigationProperties = entityType.GetNavigations().Where(a => a.GetTargetType().IsOwned());
-            var allNavigationProperties = subClasses.SelectMany(et => et.GetNavigations()).Where(a => a.GetTargetType().IsOwned()).Distinct();
 
             // timestamp/row version properties are only set by the Db, the property has a [Timestamp] Attribute or is configured in in FluentAPI with .IsRowVersion()
             // They can be identified by the column type "timestamp" or .IsConcurrencyToken in combination with .ValueGenerated == ValueGenerated.OnAddOrUpdate
@@ -107,42 +104,16 @@ namespace EFCore.BulkExtensions
             // TimeStamp prop. is last column in OutputTable since it is added later with varbinary(8) type in which Output can be inserted
             OutputPropertyColumnNamesDict = allPropertiesExceptTimeStamp.Concat(timeStampProperties).ToDictionary(a => a.Name, b => b.Relational().ColumnName);
 
-            UpdateByPropertiesAreNullable = properties.Any(a => PivotKeys.Contains(a.Name) && a.IsNullable);
+            UpdateByPropertiesAreNullable = properties.Any(a => PivotKeys.Contains(a.Name) && a.IsColumnNullable());
 
             PropertyColumnNamesDict = properties.ToDictionary(a => a.Name, b => b.Relational().ColumnName);
             ShadowProperties = new HashSet<string>(properties.Where(p => p.IsShadowProperty).Select(p => p.Relational().ColumnName));
 
-
-
-
             ConvertibleProperties = properties
-                .Where(p => p.GetValueConverter() != null)
-                .ToDictionary(property => property.Relational().ColumnName, property => property.GetValueConverter());
+                .Select(property => new { property.Relational().ColumnName, ValueConverter = property.GetValueConverter() })
+                .Where(p => p.ValueConverter != null)
+                .ToDictionary(property => property.ColumnName, property => property.ValueConverter);
 
-            foreach (var navigationProperty in allNavigationProperties)
-            {
-                var property = navigationProperty.PropertyInfo;
-                var ownedEntityType = context.Model.FindEntityType(property.PropertyType);
-
-                if (ownedEntityType == null) // when entity has more then one ownedType (e.g. Address HomeAddress, Address WorkAddress) or one ownedType is in multiple Entities like Audit is usually.
-                    ownedEntityType = context.Model.GetEntityTypes().SingleOrDefault(a => a.DefiningNavigationName == property.Name && a.DefiningEntityType.Name == entityType.Name);
-
-
-                var ownedEntityPropertyNameColumnNameDict = ownedEntityType.GetProperties()
-                    .Where(ownedEntityProperty => !ownedEntityProperty.IsPrimaryKey())
-                    .ToDictionary(ownedEntityProperty => ownedEntityProperty.Name, ownedEntityProperty => ownedEntityProperty.Relational().ColumnName);
-
-                foreach (var ownedProperty in property.PropertyType.GetProperties())
-                {
-                    if (ownedEntityPropertyNameColumnNameDict.ContainsKey(ownedProperty.Name))
-                    {
-                        string columnName = ownedEntityPropertyNameColumnNameDict[ownedProperty.Name];
-                        var ownedPropertyType = Nullable.GetUnderlyingType(ownedProperty.PropertyType) ?? ownedProperty.PropertyType;
-                        PropertyColumnNamesDict.Add(property.Name + "." + ownedProperty.Name, columnName);
-                        OutputPropertyColumnNamesDict.Add(property.Name + "." + ownedProperty.Name, columnName);
-                    }
-                }
-            }
         }
         public void SetSqlBulkCopyConfig<T>(SqlBulkCopy sqlBulkCopy, IList<T> entities)
         {

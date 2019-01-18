@@ -38,8 +38,6 @@ namespace EFCore.BulkExtensions
                     }
                     catch (InvalidOperationException ex)
                     {
-                        if (!tableInfo.BulkConfig.UseTempDB)
-                            context.Database.ExecuteSqlCommand(SqlQueryBuilder.DropTable(tableInfo.FullTempOutputTableName));
                         if (ex.Message.Contains(ColumnMappingExceptionMessage))
                             context.Database.ExecuteSqlCommand(SqlQueryBuilder.CreateTableCopy(tableInfo.FullTableName, tableInfo.FullTempTableName, tableInfo)); // Will throw Exception specify missing db column: Invalid column name ''
                         throw ex;
@@ -77,10 +75,6 @@ namespace EFCore.BulkExtensions
                     }
                     catch (InvalidOperationException ex)
                     {
-                        if (!tableInfo.BulkConfig.UseTempDB)
-                        {
-                            await context.Database.ExecuteSqlCommandAsync(SqlQueryBuilder.DropTable(tableInfo.FullTempOutputTableName));
-                        }
                         if (ex.Message.Contains(ColumnMappingExceptionMessage))
                         {
                             await context.Database.ExecuteSqlCommandAsync(SqlQueryBuilder.CreateTableCopy(tableInfo.FullTableName, tableInfo.FullTempTableName, tableInfo));

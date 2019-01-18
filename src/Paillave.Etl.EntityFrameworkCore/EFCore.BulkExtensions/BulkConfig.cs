@@ -14,7 +14,6 @@ namespace EFCore.BulkExtensions
         public bool EnableStreaming { get; set; }
         public bool UseTempDB { get; set; } = false;
         public bool TrackingEntities { get; set; }
-        public bool WithHoldlock { get; set; } = true;
         public List<string> UpdateByProperties { get; set; }
         public SqlBulkCopyOptions SqlBulkCopyOptions { get; set; }
     }

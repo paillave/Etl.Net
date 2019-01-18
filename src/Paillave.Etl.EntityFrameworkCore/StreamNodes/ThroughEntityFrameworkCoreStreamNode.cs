@@ -132,7 +132,7 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         private List<string> _keyProperties = new List<string>();
         public ThroughEntityFrameworkCoreStreamNode(string name, ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TKey, TIn, TOut> args) : base(name, args)
         {
-            _keyProperties = new KeyDefinitionExtractor().GetKeys(args.GetKey).Select(i => i.Name).ToList();
+            _keyProperties = KeyDefinitionExtractor.GetKeys(args.GetKey).Select(i => i.Name).ToList();
         }
         protected override IStream<TOut> CreateOutputStream(ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TKey, TIn, TOut> args)
         {

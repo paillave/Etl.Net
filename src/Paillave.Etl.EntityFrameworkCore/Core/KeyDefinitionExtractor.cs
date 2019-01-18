@@ -7,7 +7,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
 {
     public class KeyDefinitionExtractor
     {
-        public List<PropertyInfo> GetKeys<T, R>(Expression<Func<T, R>> getKey)
+        public static List<PropertyInfo> GetKeys<T, R>(Expression<Func<T, R>> getKey)
         {
             var vis = new KeyVisitor();
             vis.Visit(getKey);

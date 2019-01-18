@@ -7,57 +7,24 @@ namespace EFCore.BulkExtensions
 {
     public static class SqlQueryBuilder
     {
-        public static string CreateTableCopy(string existingTableName, string newTableName, TableInfo tableInfo, bool isOutputTable = false)
+        public static string CreateTableCopy(string existingTableName, string newTableName, TableInfo tableInfo)
         {
             // TODO: (optionaly) if CalculateStats = True but SetOutputIdentity = False then Columns could be ommited from Create and from MergeOutput
-            List<string> columnsNames = (isOutputTable ? tableInfo.OutputPropertyColumnNamesDict : tableInfo.PropertyColumnNamesDict).Values.ToList();
+            List<string> columnsNames = tableInfo.PropertyColumnNamesDict.Values.ToList();
             if (tableInfo.TimeStampColumnName != null)
             {
                 columnsNames.Remove(tableInfo.TimeStampColumnName);
             }
 
-            var q = $"SELECT TOP 0 {GetCommaSeparatedColumns(columnsNames, "T")} " +
-                    $"INTO {newTableName} FROM {existingTableName} AS T " +
-                    $"LEFT JOIN {existingTableName} AS Source ON 1 = 0;"; // removes Identity constrain
-            return q;
-        }
-
-        public static string AddColumn(string fullTableName, string columnName, string columnType)
-        {
-            var q = $"ALTER TABLE {fullTableName} ADD [{columnName}] {columnType};";
-            return q;
-        }
-
-        public static string SelectFromOutputTable(TableInfo tableInfo)
-        {
-            List<string> columnsNames = tableInfo.OutputPropertyColumnNamesDict.Values.ToList();
-            var q = $"SELECT {GetCommaSeparatedColumns(columnsNames)} FROM {tableInfo.FullTempOutputTableName}";
-            return q;
-        }
-
-        public static string SelectCountIsUpdateFromOutputTable(TableInfo tableInfo)
-        {
-            var q = $"SELECT COUNT(*) FROM {tableInfo.FullTempOutputTableName} WHERE [IsUpdate] = 1";
+            var q = $@"SELECT TOP 0 {GetCommaSeparatedColumns(columnsNames, "T")}, 0 as TempColumnNumOrder
+                    INTO {newTableName} FROM {existingTableName} AS T 
+                    LEFT JOIN {existingTableName} AS Source ON 1 = 0;"; // removes Identity constrain
             return q;
         }
 
         public static string DropTable(string tableName)
         {
             var q = $"IF OBJECT_ID('{tableName}', 'U') IS NOT NULL DROP TABLE {tableName}";
-            return q;
-        }
-
-        public static string SelectJoinTable(TableInfo tableInfo)
-        {
-            string sourceTable = tableInfo.FullTableName;
-            string joinTable = tableInfo.FullTempTableName;
-            List<string> columnsNames = tableInfo.PropertyColumnNamesDict.Values.ToList();
-            List<string> selectByPropertyNames = tableInfo.PropertyColumnNamesDict.Where(a => tableInfo.PivotKeys.Contains(a.Key)).Select(a => a.Value).ToList();
-
-            var q = $"SELECT {GetCommaSeparatedColumns(columnsNames, "S")} FROM {sourceTable} AS S " +
-                    $"JOIN {joinTable} AS J " +
-                    $"ON {GetANDSeparatedColumns(selectByPropertyNames, "S", "J", tableInfo.UpdateByPropertiesAreNullable)}" +
-                    $";";
             return q;
         }
 
@@ -72,6 +39,7 @@ namespace EFCore.BulkExtensions
         {
             string targetTable = tableInfo.FullTableName;
             string sourceTable = tableInfo.FullTempTableName;
+            string outputTable = $"{tableInfo.FullTempTableName}Output";
             bool keepIdentity = tableInfo.BulkConfig.SqlBulkCopyOptions.HasFlag(SqlBulkCopyOptions.KeepIdentity);
             List<string> primaryKeys = tableInfo.PivotKeys.Select(k => tableInfo.PropertyColumnNamesDict[k]).ToList();
             List<string> columnsNames = tableInfo.PropertyColumnNamesDict.Values.ToList();
@@ -82,17 +50,14 @@ namespace EFCore.BulkExtensions
             List<string> insertColumnsNames = (tableInfo.HasIdentityColumn && !keepIdentity) ? nonIdentityColumnsNames : columnsNames;
             List<string> updateColumnsNames = (tableInfo.HasIdentityColumn && !keepIdentity) ? nonPivotAndNotIdentityColumnsNames : nonPivotColumnsNames;
 
-            string textWITH_HOLDLOCK = tableInfo.BulkConfig.WithHoldlock ? " WITH (HOLDLOCK)" : "";
-
-            var q = $"MERGE {targetTable}{textWITH_HOLDLOCK} AS T " +
-                    $"USING {sourceTable} AS S " +
-                    $"ON {GetANDSeparatedColumns(primaryKeys, "T", "S", tableInfo.UpdateByPropertiesAreNullable)}";
-
-            q += $" WHEN NOT MATCHED BY TARGET THEN INSERT ({GetCommaSeparatedColumns(insertColumnsNames)})" +
-                 $" VALUES ({GetCommaSeparatedColumns(insertColumnsNames, "S")})";
-            q += $" WHEN MATCHED THEN UPDATE SET {GetCommaSeparatedColumns(updateColumnsNames, "T", "S")}";
-            q += $" OUTPUT {GetCommaSeparatedColumns(outputColumnsNames, "INSERTED")}";
-            q += ";";
+            var q = $@"MERGE {targetTable} WITH (HOLDLOCK) AS T 
+                    USING {sourceTable} AS S 
+                    ON {GetANDSeparatedColumns(primaryKeys, "T", "S", tableInfo.UpdateByPropertiesAreNullable)}
+                    WHEN NOT MATCHED BY TARGET THEN INSERT ({GetCommaSeparatedColumns(insertColumnsNames)})
+                    VALUES ({GetCommaSeparatedColumns(insertColumnsNames, "S")})
+                    WHEN MATCHED THEN UPDATE SET {GetCommaSeparatedColumns(updateColumnsNames, "T", "S")}
+                    OUTPUT {GetCommaSeparatedColumns(outputColumnsNames, "INSERTED")}, S.TempColumnNumOrder
+                    INTO {outputTable};";
             return q;
         }
 
