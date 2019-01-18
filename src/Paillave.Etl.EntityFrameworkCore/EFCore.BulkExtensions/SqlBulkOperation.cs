@@ -39,13 +39,9 @@ namespace EFCore.BulkExtensions
                     catch (InvalidOperationException ex)
                     {
                         if (!tableInfo.BulkConfig.UseTempDB)
-                        {
                             context.Database.ExecuteSqlCommand(SqlQueryBuilder.DropTable(tableInfo.FullTempOutputTableName));
-                        }
                         if (ex.Message.Contains(ColumnMappingExceptionMessage))
-                        {
                             context.Database.ExecuteSqlCommand(SqlQueryBuilder.CreateTableCopy(tableInfo.FullTableName, tableInfo.FullTempTableName, tableInfo)); // Will throw Exception specify missing db column: Invalid column name ''
-                        }
                         throw ex;
                     }
                 }
@@ -118,13 +114,8 @@ namespace EFCore.BulkExtensions
                     context.Database.OpenConnection();
                     context.Database.ExecuteSqlCommand(SqlQueryBuilder.SetIdentityInsert(tableInfo.FullTableName, true));
                 }
-                //TODO:index source table on pivot key
-                //context.Database.ExecuteSqlCommand(SqlQueryBuilder.MergeTable(tableInfo, operationType));
+
                 string query = SqlQueryBuilder.MergeTable(tableInfo);
-                if (typeof(T).Name == "PortfolioComposition")
-                {
-                    //var tst2 = tableInfo.ExecuteQuery<T>(context, query).ToList();
-                }
 
                 var tst = tableInfo.QueryOutputTable<T>(context, query).ToList();
                 tableInfo.UpdateEntitiesIdentityIfNeeded<T>(entities, tst);

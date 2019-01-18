@@ -195,7 +195,7 @@ namespace FundProcess.Pms.Imports.Jobs
         }
         private static Security CreateSecurityFromInstrumentType(string rbcType, string currencyIso, string isin, string name, string internalCode, DateTime? nextCouponDate)
         {
-            var rbcCode = rbcType.Split(':')[0].Trim();
+            var rbcCode = string.IsNullOrWhiteSpace(rbcType)?"": rbcType.Split(':')[0].Trim();
 
             switch (rbcCode)
             {

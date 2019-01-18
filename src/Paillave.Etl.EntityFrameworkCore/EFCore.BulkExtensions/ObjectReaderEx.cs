@@ -12,16 +12,12 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.BulkExtensions
 {
     internal class ObjectReaderEx<T> : ObjectReader where T : class
-        // Overridden to fix ShadowProperties in FastMember library
     {
         private readonly HashSet<string> shadowProperties;
         private readonly Dictionary<string, ValueConverter> convertibleProperties;
         private readonly DbContext context;
         private readonly string[] members;
         private readonly FieldInfo currentFieldInfo;
-        public Dictionary<string, int> counters = new Dictionary<string, int>();
-        private MethodInfo entryWithoutDetectChangesMethodInfo;
-        // private EntityEntry<T> EntryWithoutDetectChanges(T entity) => (EntityEntry<T>)entryWithoutDetectChangesMethodInfo.Invoke(context, new object[] { entity });
         public ObjectReaderEx(Type type, IEnumerable source, HashSet<string> shadowProperties, Dictionary<string, ValueConverter> convertibleProperties, DbContext context, params string[] members) : base(type, source, members)
         {
             this.shadowProperties = shadowProperties;
@@ -30,7 +26,6 @@ namespace EFCore.BulkExtensions
             this.members = members;
             this.currentFieldInfo = typeof(ObjectReader).GetField("current", BindingFlags.Instance | BindingFlags.NonPublic);
             var ctxType = context.GetType();
-            entryWithoutDetectChangesMethodInfo = typeof(DbContext).GetMethods(BindingFlags.Instance | BindingFlags.NonPublic).FirstOrDefault(i => i.Name == "EntryWithoutDetectChanges" && i.ContainsGenericParameters && i.GetGenericArguments().Count() == 1).MakeGenericMethod(new[] { type });
         }
 
         public static ObjectReader Create(IEnumerable<T> source, HashSet<string> shadowProperties, Dictionary<string, ValueConverter> convertibleProperties, DbContext context, params string[] members)
@@ -44,25 +39,15 @@ namespace EFCore.BulkExtensions
         {
             get
             {
-                if (this.counters.TryGetValue(name, out int counter))
-                {
-                    this.counters[name] = counter + 1;
-                }
-                else
-                {
-                    this.counters[name] = 1;
-                }
                 if (shadowProperties.Contains(name))
                 {
                     var current = this.currentFieldInfo.GetValue(this);
-                    //var etr = EntryWithoutDetectChanges((T)current);
                     var etr = context.Entry(current);
                     return etr.Property(name).CurrentValue;
                 }
                 else if (convertibleProperties.TryGetValue(name, out var converter))
                 {
                     var current = this.currentFieldInfo.GetValue(this);
-                    //var etr = EntryWithoutDetectChanges((T)current);
                     var etr = context.Entry(current);
                     var currentValue = etr.Property(name).CurrentValue;
                     return converter.ConvertToProvider(currentValue);

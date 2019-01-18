@@ -58,6 +58,17 @@ namespace EFCore.BulkExtensions
             tableInfo.LoadData<T>(context);
             return tableInfo;
         }
+
+        private IEnumerable<IEntityType> GetSubEntityTypes(IEntityType et)
+        {
+            foreach (var item in et.GetDerivedTypes())
+            {
+                yield return item;
+                foreach (var i in GetSubEntityTypes(item))
+                    yield return i;
+            }
+        }
+
         #region Main
         public void LoadData<T>(DbContext context)
         {
@@ -76,13 +87,14 @@ namespace EFCore.BulkExtensions
 
             IdentityColumn = entityType.GetProperties().FirstOrDefault(i => i.SqlServer().ValueGenerationStrategy == SqlServerValueGenerationStrategy.IdentityColumn)?.Name;
 
-            var allProperties = entityType.GetProperties().AsEnumerable();
 
+            var subClassProperties = GetSubEntityTypes(entityType).Distinct().SelectMany(dt => dt.GetProperties()).Distinct(new LambdaEqualityComparer<IProperty, string>(i => i.Relational().ColumnName)).AsEnumerable();
+            var allProperties = subClassProperties; // entityType.GetProperties().AsEnumerable();
 
-            //var subClassProperties = entityType.GetDerivedTypes().SelectMany(dt => dt.GetProperties()).Distinct(new LambdaEqualityComparer<IProperty, string>(i => i.Relational().ColumnName));
+            var subClasses = GetSubEntityTypes(entityType).Distinct();
 
-
-            var allNavigationProperties = entityType.GetNavigations().Where(a => a.GetTargetType().IsOwned());
+            //var allNavigationProperties = entityType.GetNavigations().Where(a => a.GetTargetType().IsOwned());
+            var allNavigationProperties = subClasses.SelectMany(et => et.GetNavigations()).Where(a => a.GetTargetType().IsOwned()).Distinct();
 
             // timestamp/row version properties are only set by the Db, the property has a [Timestamp] Attribute or is configured in in FluentAPI with .IsRowVersion()
             // They can be identified by the column type "timestamp" or .IsConcurrencyToken in combination with .ValueGenerated == ValueGenerated.OnAddOrUpdate
@@ -143,6 +155,8 @@ namespace EFCore.BulkExtensions
             };
             sqlBulkCopy.BulkCopyTimeout = BulkConfig.BulkCopyTimeout ?? sqlBulkCopy.BulkCopyTimeout;
             sqlBulkCopy.EnableStreaming = BulkConfig.EnableStreaming;
+            foreach (var element in PropertyColumnNamesDict)
+                sqlBulkCopy.ColumnMappings.Add(element.Key, element.Value);
         }
         #endregion
         public void UpdateEntitiesIdentityIfNeeded<T>(IList<T> entities, IList<T> entitiesWithOutputIdentity)
