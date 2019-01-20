@@ -14,6 +14,7 @@ namespace FundProcess.Pms.DataAccess.Schemas.Pms.Configurations
         protected override void ConfigureWithoutTenant(EntityTypeBuilder<Security> builder)
         {
             builder.ToTable(nameof(Security), nameof(Schemas.Pms));
+            builder.HasAlternateKey(i => new { i.BelongsToEntityId, i.InternalCode });
             builder.HasKey(i => i.Id);
             builder.Property(i => i.Id).UseSqlServerIdentityColumn();
             // builder.Property(i => i.Type).HasConversion(new SecurityTypeValueConverter());

@@ -16,6 +16,8 @@ using System.Linq;
 using Paillave.Etl.Reactive.Operators;
 using Paillave.Etl.Reactive.Core;
 using System.Reflection;
+using System.Collections.Generic;
+using Paillave.Etl.EntityFrameworkCore.BulkSave;
 
 namespace FundProcess.Pms.ImportsTests
 {
@@ -46,10 +48,42 @@ namespace FundProcess.Pms.ImportsTests
             _databaseContext = new DataAccess.DatabaseContext(options, tenantContext);
         }
 
-        [Fact]
+        //[Fact]
         public void Tempo()
         {
-            var et = _databaseContext.Model.FindEntityType(typeof(Security));
+            //List<SubFund> elts = Enumerable
+            //    .Range(700, 100)
+            //    .Select(i => new SubFund
+            //    {
+            //        Id = i,
+            //        InternalCode = $"code{i}",
+            //        Name = $"name{i}",
+            //        CurrencyIso = $"CU{i % 10}"
+            //    })
+            //    .Union(Enumerable
+            //    .Range(300000, 100)
+            //    .Select(i => new SubFund
+            //    {
+            //        InternalCode = $"code{i}",
+            //        Name = $"name{i}",
+            //        CurrencyIso = $"CU{i % 10}"
+            //    }))
+            //    .ToList();
+            List<Security> elts = new List<Security>();
+            elts.Add(new SubFund
+            {
+                InternalCode = $"code{1}",
+                Name = $"name{0}",
+                CurrencyIso = $"CU{701 % 10}"
+            });
+            elts.Add(new SubFund
+            {
+                InternalCode = $"code{300701}",
+                Name = $"changed{300701}",
+                CurrencyIso = $"EUR"
+            });
+            Stopwatch sw = new Stopwatch();
+            _databaseContext.BulkSave(elts, i => i.InternalCode);
         }
         [Fact]
         public void Test1()

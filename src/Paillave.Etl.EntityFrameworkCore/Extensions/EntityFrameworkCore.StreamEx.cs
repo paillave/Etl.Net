@@ -19,7 +19,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
                     push(item);
             }, noParallelisation);
         }
-        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, SaveMode bulkLoadMode = SaveMode.BulkUpsert, int chunkSize = 10000)
+        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, SaveMode bulkLoadMode = SaveMode.Bulk, int chunkSize = 10000)
             where TResource : DbContext
             where TIn : class
         {
@@ -34,17 +34,17 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
             }).Output;
         }
 
-        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource, TEntityKey>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Expression<Func<TIn, TEntityKey>> getBusinessKey, SaveByKeyMode bulkInsertMode = SaveByKeyMode.BulkUpsert, int chunkSize = 10000)
+        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Expression<Func<TIn, object>> pivotKey, SaveMode saveMode = SaveMode.Bulk, int chunkSize = 10000)
             where TResource : DbContext
             where TIn : class
         {
-            return new ThroughEntityFrameworkCoreStreamNode<TIn, TResource, TEntityKey, TIn, TIn>(name, new ThroughEntityFrameworkCoreArgs<TIn, TResource, TEntityKey, TIn, TIn>
+            return new ThroughEntityFrameworkCoreStreamNode<TIn, TResource, TIn, TIn>(name, new ThroughEntityFrameworkCoreArgs<TIn, TResource, TIn, TIn>
             {
                 SourceStream = stream,
                 DbContextStream = dbContextStream,
                 BatchSize = chunkSize,
-                GetKey = getBusinessKey,
-                BulkLoadMode = bulkInsertMode,
+                PivotKey = pivotKey,
+                BulkLoadMode = saveMode,
                 GetEntity = (i,c) => i,
                 GetOutput = (i, j) => i,
             }).Output;
@@ -66,7 +66,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
         //    }).Output;
         //}
 
-        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn,TResource ,TInEf> getEntity, Func<TIn, TInEf, TOut> getResult, SaveMode bulkLoadMode = SaveMode.BulkUpsert, int chunkSize = 10000)
+        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn,TResource ,TInEf> getEntity, Func<TIn, TInEf, TOut> getResult, SaveMode bulkLoadMode = SaveMode.Bulk, int chunkSize = 10000)
             where TResource : DbContext
             where TInEf : class
         {
@@ -81,16 +81,16 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
             }).Output;
         }
 
-        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TEntityKey, TOut, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn, TResource, TInEf> getEntity, Expression<Func<TInEf, TEntityKey>> getBusinessKey, Func<TIn, TInEf, TOut> getResult, SaveByKeyMode bulkInsertMode = SaveByKeyMode.BulkUpsert, int chunkSize = 10000)
+        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn, TResource, TInEf> getEntity, Expression<Func<TInEf, object>> pivotKey, Func<TIn, TInEf, TOut> getResult, SaveMode bulkInsertMode = SaveMode.Bulk, int chunkSize = 10000)
             where TResource : DbContext
             where TInEf : class
         {
-            return new ThroughEntityFrameworkCoreStreamNode<TInEf, TResource, TEntityKey, TIn, TOut>(name, new ThroughEntityFrameworkCoreArgs<TInEf, TResource, TEntityKey, TIn, TOut>
+            return new ThroughEntityFrameworkCoreStreamNode<TInEf, TResource, TIn, TOut>(name, new ThroughEntityFrameworkCoreArgs<TInEf, TResource, TIn, TOut>
             {
                 SourceStream = stream,
                 DbContextStream = dbContextStream,
                 BatchSize = chunkSize,
-                GetKey = getBusinessKey,
+                PivotKey = pivotKey,
                 BulkLoadMode = bulkInsertMode,
                 GetEntity = getEntity,
                 GetOutput = getResult,

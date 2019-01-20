@@ -10,32 +10,57 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 
-namespace Paillave.Etl.EntityFrameworkCore.EFCore.BulkExtensions
+namespace Paillave.Etl.EntityFrameworkCore.BulkSave
 {
-    public class ObjectReader2 : IDataReader
+    public class ObjectDataReader : IDataReader
     {
+        private class ValueAccessor
+        {
+            private HashSet<string> _relatedProperties;
+            private TypeAccessor _accessor;
+
+            public ValueAccessor(Type type)
+            {
+                _accessor = TypeAccessor.Create(type);
+                _relatedProperties = new HashSet<string>(type.GetProperties().Select(i => i.Name));
+            }
+            public object this[object target, string key]
+            {
+                get
+                {
+                    if (_relatedProperties.Contains(key))
+                        return _accessor[target, key];
+                    else
+                        return null;
+                }
+            }
+        }
         private IEnumerator _source;
-        private readonly Dictionary<Type, TypeAccessor> _accessors = new Dictionary<Type, TypeAccessor>();
+        //private readonly Dictionary<string, TypeAccessor> _accessorsByProperty;
+        private readonly Dictionary<Type, ValueAccessor> _accessorsByType;
         private readonly HashSet<string> _shadowProperties;
         private readonly Dictionary<string, ValueConverter> _convertibleProperties;
         private readonly DbContext _context;
         private readonly string[] _memberNames;
         private readonly Type[] _effectiveTypes;
         private readonly bool[] _allowNull;
+        private string _tempColumnNumOrderName;
+        private int _rowCounter = 0;
 
-        public ObjectReader2(IEnumerable source, IProperty[] efProperties, Type[] types, HashSet<string> shadowProperties, Dictionary<string, ValueConverter> convertibleProperties, DbContext context)
+        public ObjectDataReader(IEnumerable source, IEnumerable<IProperty> efProperties, IEnumerable<IEntityType> types, DbContext context, string tempColumnNumOrderName)
         {
             if (source == null) throw new ArgumentOutOfRangeException("source");
 
-            _accessors = types.ToDictionary(i => i, i => TypeAccessor.Create(i));
-
-            _shadowProperties = shadowProperties;
-            _convertibleProperties = convertibleProperties;
+            _accessorsByType = types.ToDictionary(i => i.ClrType, i => new ValueAccessor(i.ClrType));
+            //_accessorsByProperty = efProperties.ToDictionary(i => i.Name, i => _accessorsByType[i.DeclaringType.ClrType]);
+            _tempColumnNumOrderName = tempColumnNumOrderName;
+            _shadowProperties = new HashSet<string>(efProperties.Where(i => i.IsShadowProperty).Select(i => i.Name));
+            _convertibleProperties = efProperties.Select(i => new { ValueConverter = i.GetValueConverter(), i.Name }).Where(i => i.ValueConverter != null).ToDictionary(i => i.Name, i => i.ValueConverter);
             _context = context;
 
             _currentType = null;
             Current = null;
-            _memberNames = efProperties.Select(i => i.Name).ToArray();
+            _memberNames = efProperties.Select(i => i.Name).Union(new[] { _tempColumnNumOrderName }).ToArray();
             _effectiveTypes = efProperties.Select(i => Nullable.GetUnderlyingType(i.ClrType) ?? i.ClrType).ToArray();
             _allowNull = efProperties.Select(i => i.IsColumnNullable()).ToArray();
             _source = source.GetEnumerator();
@@ -49,60 +74,68 @@ namespace Paillave.Etl.EntityFrameworkCore.EFCore.BulkExtensions
 
         public DataTable GetSchemaTable()
         {
-            // these are the columns used by DataTable load
-            DataTable table = new DataTable
-            {
-                Columns =
-                {
-                    {"ColumnOrdinal", typeof(int)},
-                    {"ColumnName", typeof(string)},
-                    {"DataType", typeof(Type)},
-                    {"ColumnSize", typeof(int)},
-                    {"AllowDBNull", typeof(bool)}
-                }
-            };
-            object[] rowData = new object[5];
-            for (int i = 0; i < _memberNames.Length; i++)
-            {
-                rowData[0] = i;
-                rowData[1] = _memberNames[i];
-                rowData[2] = _effectiveTypes == null ? typeof(object) : _effectiveTypes[i];
-                rowData[3] = -1;
-                rowData[4] = _allowNull == null ? true : _allowNull[i];
-                table.Rows.Add(rowData);
-            }
-            return table;
+            throw new NotImplementedException();
+            //// these are the columns used by DataTable load
+            //DataTable table = new DataTable
+            //{
+            //    Columns =
+            //    {
+            //        {"ColumnOrdinal", typeof(int)},
+            //        {"ColumnName", typeof(string)},
+            //        {"DataType", typeof(Type)},
+            //        {"ColumnSize", typeof(int)},
+            //        {"AllowDBNull", typeof(bool)}
+            //    }
+            //};
+            //for (int i = 0; i < _memberNames.Length; i++)
+            //{
+            //    object[] rowData = new object[5];
+            //    rowData[0] = i;
+            //    rowData[1] = _memberNames[i];
+            //    rowData[2] = _effectiveTypes == null ? typeof(object) : _effectiveTypes[i];
+            //    rowData[3] = -1;
+            //    rowData[4] = _allowNull == null ? true : _allowNull[i];
+            //    table.Rows.Add(rowData);
+            //}
+            //object[] rowDataForNum = new object[5];
+            //rowDataForNum[0] = _memberNames.Length;
+            //rowDataForNum[1] = _tempColumnNumOrderName;
+            //rowDataForNum[2] = typeof(int);
+            //rowDataForNum[3] = -1;
+            //rowDataForNum[4] = false;
+            //table.Rows.Add(rowDataForNum);
+            //return table;
         }
         public void Close()
         {
-            active = false;
+            HasRows = false;
             Current = null;
             _currentType = null;
             _source = null;
         }
 
-        public bool HasRows => active;
+        public bool HasRows { get; private set; } = true;
 
-        private bool active = true;
         public bool NextResult()
         {
-            active = false;
+            HasRows = false;
             return false;
         }
         public bool Read()
         {
-            if (active)
+            if (HasRows)
             {
                 var tmp = _source;
                 if (tmp != null && tmp.MoveNext())
                 {
                     Current = tmp.Current;
                     _currentType = Current.GetType();
+                    _rowCounter++;
                     return true;
                 }
                 else
                 {
-                    active = false;
+                    HasRows = false;
                 }
             }
             _currentType = null;
@@ -114,7 +147,7 @@ namespace Paillave.Etl.EntityFrameworkCore.EFCore.BulkExtensions
 
         public void Dispose()
         {
-            active = false;
+            HasRows = false;
             Current = null;
             _currentType = null;
             _source = null;
@@ -189,13 +222,8 @@ namespace Paillave.Etl.EntityFrameworkCore.EFCore.BulkExtensions
 
         public int GetValues(object[] values)
         {
-            // duplicate the key fields on the stack
-            var members = this._memberNames;
-            var current = this.Current;
-            var accessor = _accessors[_currentType];
-
-            int count = Math.Min(values.Length, members.Length);
-            for (int i = 0; i < count; i++) values[i] = accessor[current, members[i]] ?? DBNull.Value;
+            int count = Math.Min(values.Length, this._memberNames.Length);
+            for (int i = 0; i < count; i++) values[i] = this.GetValue(this.GetOrdinal(this._memberNames[i]));
             return count;
         }
 
@@ -210,18 +238,23 @@ namespace Paillave.Etl.EntityFrameworkCore.EFCore.BulkExtensions
         {
             get
             {
-                if (_shadowProperties.Contains(name))
+                if (name == _tempColumnNumOrderName)
+                {
+                    return _rowCounter - 1;
+                }
+                else if (_shadowProperties.Contains(name))
                 {
                     var etr = _context.Entry(Current);
                     return etr.Property(name).CurrentValue;
                 }
-                else if (_convertibleProperties.TryGetValue(name, out var converter))
+                else
                 {
-                    var etr = _context.Entry(Current);
-                    var currentValue = etr.Property(name).CurrentValue;
-                    return converter.ConvertToProvider(currentValue);
+                    if (!_accessorsByType.TryGetValue(_currentType, out var acc)) return DBNull.Value;
+                    var val = acc[Current, name];
+                    if (val == null) return DBNull.Value;
+                    if (_convertibleProperties.TryGetValue(name, out var converter)) return converter.ConvertToProvider(val);
+                    return val;
                 }
-                return _accessors[_currentType][Current, name] ?? DBNull.Value;
             }
         }
 
