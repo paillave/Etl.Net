@@ -11,7 +11,7 @@ namespace Paillave.Etl
 {
     internal class JobExecutionContext : IExecutionContext
     {
-        private Func<IPushObservable<TraceEvent>, IPushObservable<TraceEvent>> _stopEventFilter;
+        //private Func<IPushObservable<TraceEvent>, IPushObservable<TraceEvent>> _stopEventFilter;
         public TraceEvent EndOfProcessTraceEvent { get; private set; } = null;
         private readonly IPushSubject<TraceEvent> _traceSubject;
         private List<StreamToNodeLink> _streamToNodeLinks = new List<StreamToNodeLink>();

@@ -29,7 +29,7 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
     }
     public enum SaveMode
     {
-        EntityFrameworkCore,
+        //EntityFrameworkCore,
         Bulk
     }
     public class ThroughEntityFrameworkCoreStreamNode<TInEf, TCtx, TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TIn, TOut>>

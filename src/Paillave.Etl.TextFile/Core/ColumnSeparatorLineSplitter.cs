@@ -10,16 +10,13 @@ namespace Paillave.Etl.TextFile.Core
         private readonly char? _textDelimiter;
         private readonly Regex _regex;
 
-        public ColumnSeparatorLineSplitter(char fieldDelimiter = ';', char? textDelimiter = '"')
+        public ColumnSeparatorLineSplitter(char fieldDelimiter = ';', char textDelimiter = '"')
         {
             this._fieldDelimiter = fieldDelimiter;
             this._textDelimiter = textDelimiter;
             string sep = GetRegexTranslation(fieldDelimiter);
-            if (textDelimiter != null)
-            {
-                string tq = GetRegexTranslation(textDelimiter.Value);
-                this._regex = new Regex(sep + @"(?=(?:[^" + tq + "]*" + tq + "[^" + tq + "]*" + tq + ")*(?![^" + tq + "]*" + tq + "))", RegexOptions.Compiled | RegexOptions.Singleline);
-            }
+            string tq = GetRegexTranslation(textDelimiter);
+            this._regex = new Regex(sep + @"(?=(?:[^" + tq + "]*" + tq + "[^" + tq + "]*" + tq + ")*(?![^" + tq + "]*" + tq + "))", RegexOptions.Compiled | RegexOptions.Singleline);
         }
         private string GetRegexTranslation(char character)
         {
