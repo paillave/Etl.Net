@@ -14,7 +14,7 @@ namespace FundProcess.Pms.DataAccess.Schemas.Pms.Configurations
         protected override void ConfigureWithoutTenant(EntityTypeBuilder<HistoricalValue> builder)
         {
             builder.ToTable(nameof(HistoricalValue), nameof(Schemas.Pms));
-            builder.HasKey(i => new { i.Date, i.SecurityId, i.Type });
+            builder.HasKey(i => new { i.Date, i.SecurityId, i.Type, i.BelongsToEntityId });
             builder.Property(i => i.Type).HasConversion(new HistoricalValueTypeValueConverter()).HasMaxLength(3);
             builder.HasOne(i => i.Security).WithMany().OnDelete(DeleteBehavior.Restrict).HasForeignKey(i => i.SecurityId);
         }

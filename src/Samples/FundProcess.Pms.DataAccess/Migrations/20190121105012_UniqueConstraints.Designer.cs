@@ -5,14 +5,16 @@ using FundProcess.Pms.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FundProcess.Pms.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20190121105012_UniqueConstraints")]
+    partial class UniqueConstraints
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -272,7 +274,7 @@ namespace FundProcess.Pms.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.HasKey("SecurityId", "DataProvider", "BelongsToEntityId");
+                    b.HasKey("SecurityId", "DataProvider");
 
                     b.ToTable("DataProviderSecurity","Pms");
                 });
@@ -290,7 +292,7 @@ namespace FundProcess.Pms.DataAccess.Migrations
 
                     b.Property<decimal>("Value");
 
-                    b.HasKey("Date", "SecurityId", "Type", "BelongsToEntityId");
+                    b.HasKey("Date", "SecurityId", "Type");
 
                     b.HasIndex("SecurityId");
 

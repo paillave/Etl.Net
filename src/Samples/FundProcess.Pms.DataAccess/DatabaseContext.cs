@@ -38,7 +38,7 @@ namespace FundProcess.Pms.DataAccess
                 ChangeTracker.DetectChanges();
                 foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Added).Select(i => i.Entity).ToList())
                 {
-                    UpdateForMultiTenancy(item);
+                    UpdateEntityForMultiTenancy(item);
                 }
                 return base.SaveChanges();
             }
@@ -53,7 +53,7 @@ namespace FundProcess.Pms.DataAccess
         //    if (entityGroup != null && entityGroup.BelongsToEntityGroupId == null && _tenantContext.EntityGroupId != 0)
         //        entityGroup.BelongsToEntityGroupId = _tenantContext.EntityGroupId;
         //}
-        public T UpdateForMultiTenancy<T>(T item)
+        public T UpdateEntityForMultiTenancy<T>(T item)
         {
             IBelongsToEntity entity = item as IBelongsToEntity;
             if (entity != null && entity.BelongsToEntityId == null && _tenantContext.EntityId != 0)

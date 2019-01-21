@@ -6,7 +6,7 @@ namespace FundProcess.Pms.DataAccess.Schemas.Pms.Tables
     public class Sicav : IBelongsToEntity
     {
         public int Id { get; set; }
-        public string SicavName { get; set; }
+        public string Name { get; set; }
         public int? ProspectusId { get; set; }
         public SicavStructureType? LegalStructure { get; set; }
         public int? BelongsToEntityId { get; set; }

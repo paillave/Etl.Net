@@ -10,7 +10,7 @@ namespace FundProcess.Pms.DataAccess.Schemas.Pms.Configurations
         public void Configure(EntityTypeBuilder<DataProviderSecurity> builder)
         {
             builder.ToTable(nameof(DataProviderSecurity), nameof(Schemas.Pms));
-            builder.HasKey(i => new { i.SecurityId, i.DataProvider });
+            builder.HasKey(i => new { i.SecurityId, i.DataProvider, i.BelongsToEntityId });
             builder.Property(i => i.DataProvider).HasConversion(new DataProviderValueConverter()).IsRequired().HasMaxLength(50);
             builder.Property(i => i.Code).IsRequired().HasMaxLength(50);
         }

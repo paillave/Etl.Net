@@ -56,7 +56,6 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         }
         public BulkSaveEngineBase(DbContext context, Expression<Func<T, object>> pivotKey = null)
         {
-            //IProperty identityProperty;
             List<IProperty> computedProperties;
             List<IProperty> defaultValuesProperties;
             List<IProperty> notPivotComputedProperties;

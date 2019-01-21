@@ -29,7 +29,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
                 DbContextStream = dbContextStream,
                 BatchSize = chunkSize,
                 BulkLoadMode = bulkLoadMode,
-                GetEntity = (i,c) => i,
+                GetEntity = (i, c) => i,
                 GetOutput = (i, j) => j,
             }).Output;
         }
@@ -45,7 +45,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
                 BatchSize = chunkSize,
                 PivotKey = pivotKey,
                 BulkLoadMode = saveMode,
-                GetEntity = (i,c) => i,
+                GetEntity = (i, c) => i,
                 GetOutput = (i, j) => i,
             }).Output;
         }
@@ -66,7 +66,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
         //    }).Output;
         //}
 
-        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn,TResource ,TInEf> getEntity, Func<TIn, TInEf, TOut> getResult, SaveMode bulkLoadMode = SaveMode.Bulk, int chunkSize = 10000)
+        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn, TResource, TInEf> getEntity, Func<TIn, TInEf, TOut> getResult, SaveMode bulkLoadMode = SaveMode.Bulk, int chunkSize = 10000)
             where TResource : DbContext
             where TInEf : class
         {
@@ -112,7 +112,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
         //        GetOutput = getResult,
         //    }).Output;
         //}
-        public static IStream<TOut> EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TEntity, bool>> match, Func<TIn, TEntity, TOut> resultSelector, int cacheSize = 10000)
+        public static IStream<TOut> EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TEntity, bool>> match, Func<TIn, TEntity, TOut> resultSelector, Expression<Func<TEntity, bool>> defaultCache, Func<TIn, TEntity> createIfNotFound = null, int cacheSize = 10000)
             where TCtx : DbContext
             where TEntity : class
         {
@@ -122,7 +122,23 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
                 DbContextStream = dbContextStream,
                 InputStream = inputStream,
                 Match = match,
-                ResultSelector = resultSelector
+                ResultSelector = resultSelector,
+                CreateIfNotFound = createIfNotFound,
+                DefaultCache = defaultCache
+            }).Output;
+        }
+        public static IStream<TOut> EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TEntity, bool>> match, Func<TIn, TEntity, TOut> resultSelector, Func<TIn, TEntity> createIfNotFound = null, int cacheSize = 10000)
+            where TCtx : DbContext
+            where TEntity : class
+        {
+            return new LookupEntityFrameworkCoreStreamNode<TIn, TEntity, TCtx, TOut>(name, new LookupEntityFrameworkCoreArgs<TIn, TEntity, TCtx, TOut>
+            {
+                CacheSize = cacheSize,
+                DbContextStream = dbContextStream,
+                InputStream = inputStream,
+                Match = match,
+                ResultSelector = resultSelector,
+                CreateIfNotFound = createIfNotFound
             }).Output;
         }
         public static IStream<TIn> EntityFrameworkCoreDelete<TIn, TEntity, TCtx>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TEntity, bool>> match)

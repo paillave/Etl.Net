@@ -75,7 +75,7 @@ namespace FundProcess.Pms.Imports.Jobs
 
             var subFundStream = navFileStream
                 .Distinct("distinct sub funds", i => i.FundCode)
-                .Select("create sub funds", dbCnxStream, (i, ctx) => ctx.UpdateForMultiTenancy(new SubFund
+                .Select("create sub funds", dbCnxStream, (i, ctx) => ctx.UpdateEntityForMultiTenancy(new SubFund
                 {
                     InternalCode = i.FundCode,
                     Name = i.FundName,
@@ -86,7 +86,7 @@ namespace FundProcess.Pms.Imports.Jobs
             var shareClassStream = navFileStream
                 .Distinct("distinct share classes", i => new { i.FundCode, i.IsinCode })
                 .Lookup("link to related sub fund", subFundStream, i => i.FundCode, i => i.InternalCode, (l, r) => new { FromFile = l, FromDb = r })
-                .Select("create share classes", dbCnxStream, (i, ctx) => ctx.UpdateForMultiTenancy(new ShareClass
+                .Select("create share classes", dbCnxStream, (i, ctx) => ctx.UpdateEntityForMultiTenancy(new ShareClass
                 {
                     InternalCode = $"{i.FromFile.FundCode}_{i.FromFile.IsinCode}",
                     Name = $"{i.FromFile.FundName}_{i.FromFile.IsinCode}",
@@ -112,7 +112,7 @@ namespace FundProcess.Pms.Imports.Jobs
                     })
             .Where("Exclude empty values from sub fund hv", i => i.Value != null)
             .Lookup("get hv related sub fund", subFundStream, i => i.FundInternalCode, i => i.InternalCode, (l, r) => new { FromFile = l, FromDb = r })
-            .Select("create sub fund hv", dbCnxStream, (i, dbCnx) => dbCnx.UpdateForMultiTenancy(new HistoricalValue
+            .Select("create sub fund hv", dbCnxStream, (i, dbCnx) => dbCnx.UpdateEntityForMultiTenancy(new HistoricalValue
             {
                 SecurityId = i.FromDb.Id,
                 Date = i.FromFile.Date,
@@ -135,7 +135,7 @@ namespace FundProcess.Pms.Imports.Jobs
                         j.Value,
                     })
                 .Lookup("get hv related share class", shareClassStream, i => i.ShareClassInternalCode, i => i.InternalCode, (l, r) => new { FromFile = l, FromDb = r })
-                .Select("create share class hv", dbCnxStream, (i, dbCnx) => dbCnx.UpdateForMultiTenancy(new HistoricalValue
+                .Select("create share class hv", dbCnxStream, (i, dbCnx) => dbCnx.UpdateEntityForMultiTenancy(new HistoricalValue
                 {
                     SecurityId = i.FromDb.Id,
                     Date = i.FromFile.Date,
@@ -151,7 +151,7 @@ namespace FundProcess.Pms.Imports.Jobs
             var compositionStream = posFileStream
                 .Distinct("distinct composition for a date", i => new { i.FundCode, i.NavDate })
                 .Lookup("get composition sub fund", subFundStream, i => i.FundCode, i => i.InternalCode, (l, r) => new { FromFile = l, SubFund = r })
-                .ThroughEntityFrameworkCore("save composition", dbCnxStream, (i, ctx) => ctx.UpdateForMultiTenancy(new PortfolioComposition
+                .ThroughEntityFrameworkCore("save composition", dbCnxStream, (i, ctx) => ctx.UpdateEntityForMultiTenancy(new PortfolioComposition
                 {
                     Date = i.FromFile.NavDate,
                     PortfolioId = i.SubFund.Id
@@ -164,26 +164,33 @@ namespace FundProcess.Pms.Imports.Jobs
                     });
 
             var securitiesPositionStream = posFileStream
-                .Distinct("distinct positions", i => i.InternalNumber)
-                .Select("create security for composition", dbCnxStream, (i, ctx) => ctx.UpdateForMultiTenancy(CreateSecurityFromInstrumentType(i.InvestmentType, i.Currency, i.IsinCode, i.InstrumentName, i.InternalNumber, i.NextCouponDate)), false, true)
+                .Distinct("distinct positions security", i => i.InternalNumber)
+                .Select("create security for composition", dbCnxStream, (i, ctx) => ctx.UpdateEntityForMultiTenancy(CreateSecurityFromInstrumentType(i.InvestmentType, i.Currency, i.IsinCode, i.InstrumentName, i.InternalNumber, i.NextCouponDate)), false, true)
                 .ThroughEntityFrameworkCore("save security for composition", dbCnxStream, i => new { i.InternalCode, i.BelongsToEntityId });
 
             var composingSecurityStream = posFileStream
                 .Lookup("lookup for composition security", securitiesPositionStream, i => i.InternalNumber, i => i.InternalCode, (l, r) => new { FromFile = l, Security = r })
-                .Where("remove composition security with no security", i => i.Security != null)
+                .Where("exclude composition security with no security", i => i.Security != null)
                 .Lookup("get related composition", compositionStream,
                     i => new { i.FromFile.FundCode, i.FromFile.NavDate },
                     i => new { i.FromFile.FundCode, i.FromFile.NavDate },
-                    (l, r) => new
+                    (l, r) =>
                     {
-                        l.FromFile.Quantity,
-                        l.FromFile.MarketValueInFdCcy,
-                        l.FromFile.MarketValueInSecCcy,
-                        l.FromFile.PercNav,
-                        r.Composition,
-                        l.Security
+                        if (l.FromFile.MarketValueInFdCcy == 654576)
+                        {
+                            System.Diagnostics.Debug.WriteLine("coucou");
+                        }
+                        return new
+                        {
+                            l.FromFile.Quantity,
+                            l.FromFile.MarketValueInFdCcy,
+                            l.FromFile.MarketValueInSecCcy,
+                            l.FromFile.PercNav,
+                            r.Composition,
+                            l.Security
+                        };
                     })
-                .Select("create position", dbCnxStream, (i, ctx) => ctx.UpdateForMultiTenancy(new Position
+                .Select("create position", dbCnxStream, (i, ctx) => ctx.UpdateEntityForMultiTenancy(new Position
                 {
                     SecurityId = i.Security.Id,
                     MarketValueInPortfolioCcy = i.MarketValueInFdCcy,

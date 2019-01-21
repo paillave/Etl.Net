@@ -18,6 +18,7 @@ using Paillave.Etl.Reactive.Core;
 using System.Reflection;
 using System.Collections.Generic;
 using Paillave.Etl.EntityFrameworkCore.BulkSave;
+using Paillave.Etl.EntityFrameworkCore.EfSave;
 
 namespace FundProcess.Pms.ImportsTests
 {
@@ -69,21 +70,13 @@ namespace FundProcess.Pms.ImportsTests
             //        CurrencyIso = $"CU{i % 10}"
             //    }))
             //    .ToList();
-            List<Security> elts = new List<Security>();
-            elts.Add(new SubFund
+            List<Sicav> elts = new List<Sicav>();
+            elts.Add(new Sicav
             {
-                InternalCode = $"code{1}",
-                Name = $"name{0}",
-                CurrencyIso = $"CU{701 % 10}"
-            });
-            elts.Add(new SubFund
-            {
-                InternalCode = $"code{300701}",
-                Name = $"changed{300701}",
-                CurrencyIso = $"EUR"
+                Name = $"name0"
             });
             Stopwatch sw = new Stopwatch();
-            _databaseContext.BulkSave(elts, i => i.InternalCode);
+            _databaseContext.EfSave(elts);
         }
         [Fact]
         public void Test1()

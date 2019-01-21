@@ -22,6 +22,20 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
                 return base.VisitMember(node);
             }
         }
-
+        //public static List<MemberExpression> GetExpressionKeys<T>(Expression<Func<T, object>> getKey)
+        //{
+        //    var vis = new ExpressionKeyVisitor();
+        //    vis.Visit(getKey);
+        //    return vis.MemberExpressions;
+        //}
+        //private class ExpressionKeyVisitor : ExpressionVisitor
+        //{
+        //    public List<MemberExpression> MemberExpressions { get; } = new List<MemberExpression>();
+        //    protected override Expression VisitMember(MemberExpression node)
+        //    {
+        //        MemberExpressions.Add(node);
+        //        return base.VisitMember(node);
+        //    }
+        //}
     }
 }

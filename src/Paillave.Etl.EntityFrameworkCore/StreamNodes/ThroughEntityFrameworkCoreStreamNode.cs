@@ -12,6 +12,7 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Paillave.Etl.EntityFrameworkCore.Core;
 using Paillave.Etl.EntityFrameworkCore.BulkSave;
+using Paillave.Etl.EntityFrameworkCore.EfSave;
 
 namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
 {
@@ -29,7 +30,7 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
     }
     public enum SaveMode
     {
-        //EntityFrameworkCore,
+        EntityFrameworkCore,
         Bulk
     }
     public class ThroughEntityFrameworkCoreStreamNode<TInEf, TCtx, TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TIn, TOut>>
@@ -64,27 +65,9 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
             //};
             switch (bulkLoadMode)
             {
-                //case SaveMode.StandardEfCoreUpsert:
-                //    if (Args.Compare != null)
-                //    {
-                //        var entityType = dbContext.Model.GetEntityTypes().FirstOrDefault(i => string.Equals(i.Name.Split('.').Last(), typeof(TInEf).Name, StringComparison.InvariantCultureIgnoreCase));
-                //        var keyPropertyInfos = entityType.GetProperties().Where(i => !i.IsShadowProperty).Where(i => i.IsPrimaryKey()).Select(i => i.PropertyInfo).ToList();
-                //        foreach (var entity in entities)
-                //        {
-                //            var expr = Args.Compare.ApplyPartialLeft(entity);
-                //            TInEf elt = dbContext.Set<TInEf>().AsNoTracking().FirstOrDefault(expr);
-                //            if (elt != null)
-                //            {
-                //                foreach (var keyPropertyInfo in keyPropertyInfos)
-                //                {
-                //                    object val = keyPropertyInfo.GetValue(elt);
-                //                    keyPropertyInfo.SetValue(entity, val);
-                //                }
-                //            }
-                //        }
-                //    }
-                //    dbContext.UpdateRange(entities);
-                //    break;
+                case SaveMode.EntityFrameworkCore:
+                    dbContext.EfSave(entities, Args.PivotKey);
+                    break;
                 case SaveMode.Bulk:
                     dbContext.BulkSave(entities, Args.PivotKey);
                     break;

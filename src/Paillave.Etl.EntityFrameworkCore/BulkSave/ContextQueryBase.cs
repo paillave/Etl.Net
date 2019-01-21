@@ -74,7 +74,18 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
             var result = compiled(Context);
             return result;
         }
+        //.OrderBy(i=>EF.Property<int>(i,))
         public Expression<Func<DbContext, IQueryable<T>>> GetQueryExpression(string sqlQuery)
             => (ctx) => ctx.Set<T>().IgnoreQueryFilters().FromSql(sqlQuery).AsNoTracking();
+        //private Expression<Func<DbContext, IQueryable<T>>> OrderBy(Expression<Func<DbContext, IQueryable<T>>> source)
+        //{
+        //    Type entityType = typeof(T);
+        //    PropertyInfo property = entityType.GetProperty(ordering);
+        //    ParameterExpression parameter = Expression.Parameter(entityType);
+        //    MemberExpression propertyAccess = Expression.MakeMemberAccess(parameter, property);
+        //    LambdaExpression orderByExp = Expression.Lambda(propertyAccess, parameter);
+        //    MethodCallExpression resultExp = Expression.Call(typeof(Queryable), "OrderBy", new Type[] { entityType, property.PropertyType }, source.Body, Expression.Quote(orderByExp));
+        //    return Expression.Lambda<Func<DbContext, IQueryable<T>>>(resultExp, source.Parameters);
+        //}
     }
 }

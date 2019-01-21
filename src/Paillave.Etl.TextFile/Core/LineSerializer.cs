@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Paillave.Etl.Core;
-
+//https://bytefish.github.io/TinyCsvParser/index.html
 namespace Paillave.Etl.TextFile.Core
 {
     public class LineSerializer<T>

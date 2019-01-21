@@ -82,25 +82,11 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
             return (SqlConnection)connection;
         }
 
-        //protected SqlBulkCopy GetSqlBulkCopy(SqlConnection sqlConnection, IDbContextTransaction transaction, BulkConfig config)
-        //{
-        //    var sqlBulkCopyOptions = config.SqlBulkCopyOptions;
-        //    if (transaction == null)
-        //    {
-        //        return new SqlBulkCopy(sqlConnection, sqlBulkCopyOptions, null);
-        //    }
-        //    else
-        //    {
-        //        var sqlTransaction = (SqlTransaction)transaction.GetDbTransaction();
-        //        return new SqlBulkCopy(sqlConnection, sqlBulkCopyOptions, sqlTransaction);
-        //    }
-        //}
-
         public override IList<T> GetOutputStaging()
             => base.QueryOutputTable(GetOutputStagingSql()).ToList();
 
         protected virtual string GetOutputStagingSql()
-            => $@"select TOP 100 PERCENT * from {SqlOutputStagingTableName} order by {TempColumnNumOrderName}";
+            => $@"sp_executesql N'set nocount on; select * from {SqlOutputStagingTableName} order by {TempColumnNumOrderName}';"; //the sp_execute is to prevent EF core to wrap the query into another subquery that sorts the the result in a different order (not too proud of this solution, but I really didn't find better)
 
         public override void MergeFromStaging()
             => this.Context.Database.ExecuteSqlCommand(this.MergeFromStagingSql());
