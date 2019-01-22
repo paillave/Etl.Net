@@ -39,8 +39,6 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
     {
         public ThroughEntityFrameworkCoreStreamNode(string name, ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TIn, TOut> args) : base(name, args)
         {
-            //if (args.Compare != null)
-            //    args.BulkLoadMode = SaveMode.StandardEfCoreUpsert;
         }
 
         protected override IStream<TOut> CreateOutputStream(ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TIn, TOut> args)
@@ -57,12 +55,6 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         public void ProcessBatch(List<Tuple<TIn, TInEf>> items, TCtx dbContext, SaveMode bulkLoadMode)
         {
             var entities = items.Select(i => i.Item2).ToArray();
-            //var bulkConfig = new BulkConfig
-            //{
-            //    SetOutputIdentity = true,
-            //    BatchSize = items.Count,
-            //    TrackingEntities = false
-            //};
             switch (bulkLoadMode)
             {
                 case SaveMode.EntityFrameworkCore:
@@ -75,7 +67,6 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
                     break;
             }
             DetachAllEntities(dbContext);
-            //dbContext.SaveChanges(); //DO NOT SET IT ASYNC HERE. The point is to retrieve the Id in case of automatic key.
         }
         public void DetachAllEntities(DbContext dbContext)
         {

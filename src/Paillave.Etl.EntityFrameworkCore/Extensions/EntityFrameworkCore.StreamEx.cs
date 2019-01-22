@@ -50,22 +50,6 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
             }).Output;
         }
 
-        //public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Expression<Func<TIn, TIn, bool>> compare, int chunkSize = 10000)
-        //    where TResource : DbContext
-        //    where TIn : class
-        //{
-        //    return new ThroughEntityFrameworkCoreStreamNode<TIn, TResource, TIn, TIn>(name, new ThroughEntityFrameworkCoreArgs<TIn, TResource, TIn, TIn>
-        //    {
-        //        SourceStream = stream,
-        //        DbContextStream = dbContextStream,
-        //        BatchSize = chunkSize,
-        //        Compare = compare,
-        //        BulkLoadMode = SaveMode.StandardEfCoreUpsert,
-        //        GetEntity = i => i,
-        //        GetOutput = (i, j) => i,
-        //    }).Output;
-        //}
-
         public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn, TResource, TInEf> getEntity, Func<TIn, TInEf, TOut> getResult, SaveMode bulkLoadMode = SaveMode.Bulk, int chunkSize = 10000)
             where TResource : DbContext
             where TInEf : class
@@ -97,21 +81,6 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
             }).Output;
         }
 
-        //public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn, TInEf> getEntity, Expression<Func<TInEf, TInEf, bool>> compare, Func<TIn, TInEf, TOut> getResult, int chunkSize = 10000)
-        //    where TResource : DbContext
-        //    where TInEf : class
-        //{
-        //    return new ThroughEntityFrameworkCoreStreamNode<TInEf, TResource, TIn, TOut>(name, new ThroughEntityFrameworkCoreArgs<TInEf, TResource, TIn, TOut>
-        //    {
-        //        SourceStream = stream,
-        //        DbContextStream = dbContextStream,
-        //        BatchSize = chunkSize,
-        //        Compare = compare,
-        //        BulkLoadMode = SaveMode.StandardEfCoreUpsert,
-        //        GetEntity = getEntity,
-        //        GetOutput = getResult,
-        //    }).Output;
-        //}
         public static IStream<TOut> EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TEntity, bool>> match, Func<TIn, TEntity, TOut> resultSelector, Expression<Func<TEntity, bool>> defaultCache, Func<TIn, TEntity> createIfNotFound = null, int cacheSize = 10000)
             where TCtx : DbContext
             where TEntity : class

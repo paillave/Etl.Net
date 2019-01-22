@@ -86,7 +86,7 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
             => base.QueryOutputTable(GetOutputStagingSql()).ToList();
 
         protected virtual string GetOutputStagingSql()
-            => $@"sp_executesql N'set nocount on; select * from {SqlOutputStagingTableName} order by {TempColumnNumOrderName}';"; //the sp_execute is to prevent EF core to wrap the query into another subquery that sorts the the result in a different order (not too proud of this solution, but I really didn't find better)
+            => $@"sp_executesql N'set nocount on; select * from {SqlOutputStagingTableName} order by {TempColumnNumOrderName}';"; //the sp_execute is to prevent EF core to wrap the query into another subquery that will involve a different sorting depending in the situtation (not too proud of this solution, but I really didn't find better)
 
         public override void MergeFromStaging()
             => this.Context.Database.ExecuteSqlCommand(this.MergeFromStagingSql());

@@ -14,7 +14,8 @@ namespace FundProcess.Pms.DataAccess
         public void Configure(EntityTypeBuilder<T> builder)
         {
             ConfigureWithoutTenant(builder);
-            builder.HasQueryFilter(i => i.BelongsToEntityId == _tenantContext.EntityId || i.BelongsToEntityId == null);
+            if (!_tenantContext.IsEmpty)
+                builder.HasQueryFilter(i => i.BelongsToEntityId == _tenantContext.EntityId || i.BelongsToEntityId == null);
 
         }
         protected abstract void ConfigureWithoutTenant(EntityTypeBuilder<T> builder);

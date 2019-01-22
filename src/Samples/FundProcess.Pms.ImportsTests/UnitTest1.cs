@@ -19,6 +19,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using Paillave.Etl.EntityFrameworkCore.BulkSave;
 using Paillave.Etl.EntityFrameworkCore.EfSave;
+using System.Linq.Expressions;
 
 namespace FundProcess.Pms.ImportsTests
 {
@@ -48,8 +49,7 @@ namespace FundProcess.Pms.ImportsTests
             var tenantContext = new TenantContext(this.CreateTestManCo(options), 0);
             _databaseContext = new DataAccess.DatabaseContext(options, tenantContext);
         }
-
-        //[Fact]
+        [Fact]
         public void Tempo()
         {
             //List<SubFund> elts = Enumerable
@@ -70,13 +70,17 @@ namespace FundProcess.Pms.ImportsTests
             //        CurrencyIso = $"CU{i % 10}"
             //    }))
             //    .ToList();
-            List<Sicav> elts = new List<Sicav>();
-            elts.Add(new Sicav
+
+            var elt = new Sicav
             {
-                Name = $"name0"
-            });
-            Stopwatch sw = new Stopwatch();
-            _databaseContext.EfSave(elts);
+                Id = 2,
+                Name = $"name222"
+            };
+
+            List<Sicav> elts = new List<Sicav>();
+            elts.Add(elt);
+            //Stopwatch sw = new Stopwatch();
+            _databaseContext.EfSave(elts, i => new { i.Id });
         }
         [Fact]
         public void Test1()

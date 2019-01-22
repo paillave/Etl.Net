@@ -75,36 +75,6 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         public DataTable GetSchemaTable()
         {
             throw new NotImplementedException();
-            //// these are the columns used by DataTable load
-            //DataTable table = new DataTable
-            //{
-            //    Columns =
-            //    {
-            //        {"ColumnOrdinal", typeof(int)},
-            //        {"ColumnName", typeof(string)},
-            //        {"DataType", typeof(Type)},
-            //        {"ColumnSize", typeof(int)},
-            //        {"AllowDBNull", typeof(bool)}
-            //    }
-            //};
-            //for (int i = 0; i < _memberNames.Length; i++)
-            //{
-            //    object[] rowData = new object[5];
-            //    rowData[0] = i;
-            //    rowData[1] = _memberNames[i];
-            //    rowData[2] = _effectiveTypes == null ? typeof(object) : _effectiveTypes[i];
-            //    rowData[3] = -1;
-            //    rowData[4] = _allowNull == null ? true : _allowNull[i];
-            //    table.Rows.Add(rowData);
-            //}
-            //object[] rowDataForNum = new object[5];
-            //rowDataForNum[0] = _memberNames.Length;
-            //rowDataForNum[1] = _tempColumnNumOrderName;
-            //rowDataForNum[2] = typeof(int);
-            //rowDataForNum[3] = -1;
-            //rowDataForNum[4] = false;
-            //table.Rows.Add(rowDataForNum);
-            //return table;
         }
         public void Close()
         {
@@ -217,8 +187,6 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         public string GetString(int i) => (string)this[i];
 
         public object GetValue(int i) => this[i];
-
-        //public override IEnumerator GetEnumerator() => new DbEnumerator(this);
 
         public int GetValues(object[] values)
         {

@@ -21,7 +21,7 @@ namespace Paillave.Etl.EntityFrameworkCore.EfSave
             var entityType = context.Model.FindEntityType(typeof(T));
             if (entityType == null)
                 throw new InvalidOperationException("DbContext does not contain EntitySet for Type: " + typeof(T).Name);
-            _keyPropertyInfos = entityType.GetProperties().Where(i => !i.IsShadowProperty).Where(i => i.IsPrimaryKey()).Select(i => i.PropertyInfo).ToList();
+            _keyPropertyInfos = entityType.GetProperties().Where(i => !i.IsShadowProperty && i.IsPrimaryKey()).Select(i => i.PropertyInfo).ToList();
             List<PropertyInfo> propertyInfosForPivot;
             if (pivotKey == null)
                 propertyInfosForPivot = entityType.FindPrimaryKey().Properties.Select(i => i.PropertyInfo).ToList();
@@ -32,7 +32,7 @@ namespace Paillave.Etl.EntityFrameworkCore.EfSave
         }
         private Expression<Func<T, T, bool>> CreateFindConditionExpression(List<PropertyInfo> propertyInfosForPivot)
         {
-            ParameterExpression leftParam = Expression.Parameter(typeof(T), "leftParam");
+            ParameterExpression leftParam = Expression.Parameter(typeof(T), "i");
             ParameterExpression rightParam = Expression.Parameter(typeof(T), "rightParam");
             Expression predicateBody = null;
             foreach (var propertyInfoForPivot in propertyInfosForPivot)
@@ -44,6 +44,7 @@ namespace Paillave.Etl.EntityFrameworkCore.EfSave
             }
             return Expression.Lambda<Func<T, T, bool>>(predicateBody, new[] { leftParam, rightParam });
         }
+
         private Expression CreateEqualityExpression(PropertyInfo propertyInfo, ParameterExpression leftParam, ParameterExpression rightParam)
         {
             Expression leftValue = Expression.Property(leftParam, propertyInfo);
@@ -55,8 +56,8 @@ namespace Paillave.Etl.EntityFrameworkCore.EfSave
             var contextSet = _context.Set<T>();
             foreach (var entity in entities)
             {
-                var expr = _findConditionExpression.ApplyPartialLeft(entity);
-                T existingEntity = contextSet.AsNoTracking().FirstOrDefault(expr);
+                var expr3 = _findConditionExpression.ApplyPartialLeft(entity);
+                T existingEntity = contextSet.AsNoTracking().FirstOrDefault(expr3);
                 if (existingEntity != null)
                 {
                     foreach (var keyPropertyInfo in _keyPropertyInfos)
@@ -64,10 +65,10 @@ namespace Paillave.Etl.EntityFrameworkCore.EfSave
                         object val = keyPropertyInfo.GetValue(existingEntity);
                         keyPropertyInfo.SetValue(entity, val);
                     }
-                    contextSet.Update(existingEntity);
+                    contextSet.Update(entity);
                 }
                 else
-                    contextSet.Add(existingEntity);
+                    contextSet.Add(entity);
             }
             _context.SaveChanges();
         }
