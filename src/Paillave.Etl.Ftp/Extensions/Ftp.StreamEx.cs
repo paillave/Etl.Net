@@ -37,7 +37,7 @@ namespace Paillave.Etl.Ftp.Extensions
         #endregion
 
         #region ToFtpFile
-        public static IStream<Stream> ToFtpFile<TParams>(this IStream<Stream> stream, string name, IStream<TParams> paramsStream, Func<TParams, string> getOutputFilePath, Func<TParams, FtpConnectionInfo> getConnectionInfo)
+        public static IStream<Stream> ToFtpFile<TParams>(this IStream<Stream> stream, string name, ISingleStream<TParams> paramsStream, Func<TParams, string> getOutputFilePath, Func<TParams, FtpConnectionInfo> getConnectionInfo)
         {
             return new ToFtpFileStreamNode<TParams>(name, new ToFtpFileArgs<TParams>
             {

@@ -12,7 +12,9 @@ namespace Paillave.Etl.Core.Streams
     public interface IStream
     {
         IExecutionContext ExecutionContext { get; }
+        IPushObservable<TraceEvent> TraceObservable { get; }
+
         string SourceNodeName { get; }
-        object GetMatchingStream(ITracer tracer, IExecutionContext executionContext, string name, object observable); //normally it would be better to find a way to return the current type, whatever the current class that inherits... but as .net can't handle, return object
+        object GetMatchingStream(ITraceMapper tracer, IExecutionContext executionContext, string name, object observable); //normally it would be better to find a way to return the current type, whatever the current class that inherits... but as .net can't handle, return object
     }
 }

@@ -17,13 +17,18 @@ namespace Paillave.Etl.StreamNodes
     }
     public class GroupByStreamNode<TIn, TKey, TOut> : StreamNodeBase<TOut, IStream<TOut>, GroupArgs<TIn, TKey, TOut>>
     {
-        public override bool IsAwaitable => true;
         public GroupByStreamNode(string name, GroupArgs<TIn, TKey, TOut> args) : base(name, args)
         {
         }
         protected override IStream<TOut> CreateOutputStream(GroupArgs<TIn, TKey, TOut> args)
         {
-            var outputObservable = args.Stream.Observable.Group(args.GetKey, iS => args.SubProcess(new Stream<TIn>(this.Tracer.GetSubTracer(this), this.ExecutionContext, this.NodeName, iS)).Observable);
+            if (this.ExecutionContext is GetDefinitionExecutionContext)
+            {
+                var inputStream = new SingleStream<TIn>(this.Tracer.GetSubTraceMapper(this), this.ExecutionContext, this.NodeName, PushObservable.FromSingle(default(TIn)));
+                var outputStream = args.SubProcess(inputStream);
+                this.ExecutionContext.AddNode(this, outputStream.Observable, outputStream.TraceObservable);
+            }
+            var outputObservable = args.Stream.Observable.Group(args.GetKey, iS => args.SubProcess(new Stream<TIn>(this.Tracer.GetSubTraceMapper(this), this.ExecutionContext, this.NodeName, iS)).Observable);
             return base.CreateUnsortedStream(outputObservable);
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Paillave.Etl.Core;
-
+//https://bytefish.github.io/TinyCsvParser/index.html
 namespace Paillave.Etl.TextFile.Core
 {
     public class LineSerializer<T>
@@ -40,7 +40,8 @@ namespace Paillave.Etl.TextFile.Core
                     throw new FlatFileFieldDeserializeException(i.Key, i.Value.PropertyName, valueToParse, ex);
                 }
             });
-            return ObjectBuilder<T>.CreateInstance(values);
+            var obj = ObjectBuilder<T>.CreateInstance(values);
+            return obj;
         }
         public string Serialize(T value)
         {

@@ -14,13 +14,12 @@ namespace Paillave.Etl.Ftp.StreamNodes
     public class ToFtpFileArgs<TParams>
     {
         public IStream<Stream> Stream { get; set; }
-        public IStream<TParams> ParamStream { get; set; }
+        public ISingleStream<TParams> ParamStream { get; set; }
         public Func<TParams, string> GetOutputFilePath { get; set; }
         public Func<TParams, FtpConnectionInfo> GetConnectionInfo { get; set; }
     }
     public class ToFtpFileStreamNode<TParams> : StreamNodeBase<Stream, IStream<Stream>, ToFtpFileArgs<TParams>>
     {
-        public override bool IsAwaitable => true;
         public ToFtpFileStreamNode(string name, ToFtpFileArgs<TParams> args) : base(name, args)
         {
         }

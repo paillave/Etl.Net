@@ -21,8 +21,6 @@ namespace Paillave.Etl.ExcelFile.StreamNodes
     }
     public class ToExcelFileStreamNode<TIn> : StreamNodeBase<Stream, IStream<Stream>, ToExcelFileArgs<TIn>>
     {
-        public override bool IsAwaitable => true;
-
         public ToExcelFileStreamNode(string name, ToExcelFileArgs<TIn> args) : base(name, args)
         {
         }

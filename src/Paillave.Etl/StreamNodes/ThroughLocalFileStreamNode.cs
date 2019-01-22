@@ -18,7 +18,6 @@ namespace Paillave.Etl.StreamNodes
     }
     public class ThroughLocalFileStreamNode<TParams> : StreamNodeBase<Stream, IStream<Stream>, ThroughLocalFileArgs<TParams>>
     {
-        public override bool IsAwaitable => true;
         public ThroughLocalFileStreamNode(string name, ThroughLocalFileArgs<TParams> args) : base(name, args)
         {
         }

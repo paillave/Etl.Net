@@ -18,14 +18,13 @@ namespace Paillave.Etl.SqlServer.StreamNodes
     {
         public string SqlQuery { get; set; }
         public TStream SourceStream { get; set; }
-        public IStream<SqlConnection> SqlConnectionStream { get; set; }
+        public ISingleStream<SqlConnection> SqlConnectionStream { get; set; }
     }
     public class ThroughSqlCommandStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ThroughSqlCommandArgs<TIn, TStream>>
         where TIn : class
         where TStream : IStream<TIn>
     {
         private static IDictionary<string, PropertyInfo> _inPropertyInfos = typeof(TIn).GetProperties().ToDictionary(i => i.Name, StringComparer.InvariantCultureIgnoreCase);
-        public override bool IsAwaitable => true;
         public ThroughSqlCommandStreamNode(string name, ThroughSqlCommandArgs<TIn, TStream> args) : base(name, args)
         {
         }

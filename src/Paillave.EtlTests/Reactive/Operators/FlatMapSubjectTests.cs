@@ -3,6 +3,7 @@ using Paillave.Etl.Reactive.Core;
 using Paillave.Etl.Reactive.Operators;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -134,6 +135,24 @@ namespace Paillave.EtlTests.Reactive.Operators
 
             sobs[1].Complete();
             Assert.IsTrue(isComplete, "the output stream should be completed if the source is complete and its sub stream are completed");
+        }
+
+        [TestCategory(nameof(FlatMapSubjectTests))]
+        [TestMethod]
+        public void BigLoad()
+        {
+            int nb = 5000;
+            string example = "abcdefghijklmnopqrstuvwxyz";
+            var examples = Enumerable.Range(0, nb).Select(i => example).ToList();
+            var initObs = PushObservable.FromSingle(examples);
+            var task = initObs
+                .FlatMap(i => new DeferredPushObservable<string>(push => i.ForEach(push)))
+                .FlatMap(i => new DeferredPushObservable<char>(push => i.ToList().ForEach(push)))
+                .ToListAsync();
+            initObs.Start();
+            task.Wait(5000);
+            Assert.AreEqual(example.Count() * nb, task.Result.Count);
+            Assert.IsTrue(task.IsCompletedSuccessfully);
         }
     }
 }

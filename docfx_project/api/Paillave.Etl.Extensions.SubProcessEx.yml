@@ -16,7 +16,7 @@ items:
   source:
     id: SubProcessEx
     path: ''
-    startLine: 1174
+    startLine: 1160
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -55,7 +55,7 @@ items:
   source:
     id: SubProcess
     path: ''
-    startLine: 1176
+    startLine: 1162
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

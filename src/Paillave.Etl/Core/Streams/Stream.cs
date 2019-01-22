@@ -12,23 +12,23 @@ namespace Paillave.Etl.Core.Streams
 {
     public class Stream<T> : IStream<T>
     {
-        protected ITracer Tracer { get; }
-        public Stream(ITracer tracer, IExecutionContext executionContext, string sourceNodeName, IPushObservable<T> observable)
+        protected ITraceMapper TraceMapper { get; }
+        public Stream(ITraceMapper traceMapper, IExecutionContext executionContext, string sourceNodeName, IPushObservable<T> observable)
         {
-            this.Tracer = tracer;
+            this.TraceMapper = traceMapper;
             this.SourceNodeName = sourceNodeName;
             this.ExecutionContext = executionContext;
 
-            this.Observable = observable
-                .CompletesOnException(e => tracer.Trace(new UnhandledExceptionStreamTraceContent(e)))
-                .TakeUntil(executionContext.StopProcessEvents);
+            this.Observable = observable.TakeUntil(executionContext.StopProcessEvent);
 
-            if (tracer != null)
+            if (traceMapper != null)
             {
-                PushObservable.Merge<ITraceContent>(
-                    this.Observable.Count().Map(count => new CounterSummaryStreamTraceContent(count)),
-                    this.Observable.Map((e, i) => new RowProcessStreamTraceContent(i + 1, e))
-                ).Subscribe(tracer.Trace);
+                this.TraceObservable =
+                    PushObservable.Merge<ITraceContent>(
+                        this.Observable.ExceptionsToObservable().Map(e => new UnhandledExceptionStreamTraceContent(e)),
+                        this.Observable.Count().Map(count => new CounterSummaryStreamTraceContent(count)),
+                        this.Observable.Map((e, i) => new RowProcessStreamTraceContent(i + 1, e))
+                    ).Map(i => traceMapper.MapToTrace(i));
             }
         }
 
@@ -38,12 +38,14 @@ namespace Paillave.Etl.Core.Streams
 
         public string SourceNodeName { get; }
 
+        public IPushObservable<TraceEvent> TraceObservable { get; }
+
         public virtual object GetMatchingStream(IPushObservable<T> observable)
         {
-            return new Stream<T>(this.Tracer, this.ExecutionContext, this.SourceNodeName, observable);
+            return new Stream<T>(this.TraceMapper, this.ExecutionContext, this.SourceNodeName, observable);
         }
 
-        public virtual object GetMatchingStream(ITracer tracer, IExecutionContext executionContext, string name, object observable)
+        public virtual object GetMatchingStream(ITraceMapper tracer, IExecutionContext executionContext, string name, object observable)
         {
             return new Stream<T>(tracer, executionContext, name, (IPushObservable<T>)observable);
         }

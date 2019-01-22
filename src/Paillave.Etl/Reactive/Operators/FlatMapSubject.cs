@@ -21,6 +21,8 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public abstract class FlatMapSubjectBase<TIn, TOut> : PushSubject<TOut>
     {
+        private Guid _guid = Guid.NewGuid();
+
         private IDisposable _sourceSubscription;
         private IDisposableManager _outSubscriptions;
         private Func<TIn, IPushObservable<TOut>> _observableFactory;
@@ -51,6 +53,8 @@ namespace Paillave.Etl.Reactive.Operators
                     PushException(ex);
                     return;
                 }
+                //TODO: Solve the bug that makes FlatMapSubjectTests.BigLoad failing
+                #region The bug is here
                 IDisposable outSubscription = null;
                 outSubscription = outS.Subscribe(base.PushValue, () =>
                 {
@@ -58,15 +62,18 @@ namespace Paillave.Etl.Reactive.Operators
                     TryComplete();
                 }, base.PushException);
                 var deferred = outS as IDeferredPushObservable<TOut>;
-                if (deferred != null) deferred.Start();
                 _outSubscriptions.Set(outSubscription);
+                if (deferred != null) deferred.Start();
+                #endregion
             }
         }
 
         private void TryComplete()
         {
             if (this._sourceSubscription == null && this._outSubscriptions.IsDisposed)
+            {
                 base.Complete();
+            }
         }
 
         private void OnSourceComplete()

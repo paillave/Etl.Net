@@ -11,57 +11,45 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
         where TEntity : class
     {
         private Expression<Func<TInLeft, TEntity, bool>> _match;
-        private Queue<TEntity> _cachedEntities;
-        private int _cacheSize;
-        public EfMatcher(Expression<Func<TInLeft, TEntity, bool>> match, int cacheSize = 1000)
+        private static Queue<TEntity> _cachedEntities = new Queue<TEntity>();
+        private int _cacheSize = 1000;
+        public TCtx Context { get; }
+        Func<TInLeft, TEntity> _createIfNotFound = null;
+        public EfMatcher(TCtx context, Expression<Func<TInLeft, TEntity, bool>> match, Func<TInLeft, TEntity> createIfNotFound, int cacheSize = 1000)
         {
+            _createIfNotFound = createIfNotFound;
+            Context = context;
             _match = match;
-            _cachedEntities = new Queue<TEntity>();
             _cacheSize = cacheSize;
         }
-
-        public TEntity GetMatch(TCtx ctx, TInLeft input)
+        public EfMatcher(TCtx context, Expression<Func<TInLeft, TEntity, bool>> match, Func<TInLeft, TEntity> createIfNotFound, Expression<Func<TEntity, bool>> defaultDatasetCriteria, int minCacheSize = 1000)
         {
-            var matchExp = ApplyPartialLeft(_match, input);
+            _createIfNotFound = createIfNotFound;
+            Context = context;
+            _match = match;
+            var defaultCache = context.Set<TEntity>().Where(defaultDatasetCriteria).ToList();
+            _cacheSize = Math.Max( defaultCache.Count, minCacheSize);
+            _cachedEntities = new Queue<TEntity>(defaultCache);
+        }
+
+        public TEntity GetMatch(TInLeft input)
+        {
+            var matchExp = _match.ApplyPartialLeft(input);
             var ret = _cachedEntities.AsQueryable().FirstOrDefault(matchExp);
             if (ret != null) return ret;
-            var dbSet = ctx.Set<TEntity>();
+            var dbSet = Context.Set<TEntity>();
             ret = dbSet.AsNoTracking().FirstOrDefault(matchExp);
+
+            if (ret == null && _createIfNotFound != null)
+            {
+                ret = _createIfNotFound(input);
+                dbSet.Add(ret);
+                Context.SaveChanges();
+            }
+
             if (_cachedEntities.Count >= _cacheSize) _cachedEntities.Dequeue();
             _cachedEntities.Enqueue(ret);
             return ret;
-        }
-
-        private static Expression<Func<T1, TResult>> ApplyPartialRight<T1, T2, TResult>(Expression<Func<T1, T2, TResult>> expression, T2 value)
-        {
-            var parameterToBeReplaced = expression.Parameters[1];
-            var constant = Expression.Constant(value, parameterToBeReplaced.Type);
-            var visitor = new ReplacementVisitor(parameterToBeReplaced, constant);
-            var newBody = visitor.Visit(expression.Body);
-            return Expression.Lambda<Func<T1, TResult>>(newBody, expression.Parameters[0]);
-        }
-        private static Expression<Func<T2, TResult>> ApplyPartialLeft<T1, T2, TResult>(Expression<Func<T1, T2, TResult>> expression, T1 value)
-        {
-            var parameterToBeReplaced = expression.Parameters[0];
-            var constant = Expression.Constant(value, parameterToBeReplaced.Type);
-            var visitor = new ReplacementVisitor(parameterToBeReplaced, constant);
-            var newBody = visitor.Visit(expression.Body);
-            return Expression.Lambda<Func<T2, TResult>>(newBody, expression.Parameters[1]);
-        }
-        private class ReplacementVisitor : ExpressionVisitor
-        {
-            private readonly Expression original, replacement;
-
-            public ReplacementVisitor(Expression original, Expression replacement)
-            {
-                this.original = original;
-                this.replacement = replacement;
-            }
-
-            public override Expression Visit(Expression node)
-            {
-                return node == original ? replacement : base.Visit(node);
-            }
         }
     }
 }

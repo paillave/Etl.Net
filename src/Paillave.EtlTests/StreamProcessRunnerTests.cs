@@ -31,12 +31,10 @@ namespace Paillave.EtlTests
                         return i;
                     })
                     .ThroughAction("res2", Console.WriteLine);
-            }, traceStream => traceStream.ThroughAction("trace", i => System.Diagnostics.Debug.WriteLine(i)));
+            }, traceStream => { });
             try
             {
-                System.Diagnostics.Debug.WriteLine("before");
                 task.Wait(2000);
-                System.Diagnostics.Debug.WriteLine("after");
             }
             catch (Exception ex)
             {

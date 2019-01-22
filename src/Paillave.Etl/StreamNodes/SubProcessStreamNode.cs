@@ -17,21 +17,26 @@ namespace Paillave.Etl.StreamNodes
     }
     public class SubProcessStreamNode<TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, SubProcessArgs<TIn, TOut>>
     {
-        public override bool IsAwaitable => true;
         public SubProcessStreamNode(string name, SubProcessArgs<TIn, TOut> args) : base(name, args)
         {
         }
 
         protected override IStream<TOut> CreateOutputStream(SubProcessArgs<TIn, TOut> args)
         {
+            if (this.ExecutionContext is GetDefinitionExecutionContext)
+            {
+                var inputStream = new SingleStream<TIn>(this.Tracer.GetSubTraceMapper(this), this.ExecutionContext, this.NodeName, PushObservable.FromSingle(default(TIn)));
+                var outputStream = args.SubProcess(inputStream);
+                this.ExecutionContext.AddNode(this, outputStream.Observable, outputStream.TraceObservable);
+            }
             Synchronizer synchronizer = new Synchronizer(args.NoParallelisation);
             var outputObservable = args.Stream.Observable
                 .FlatMap(i =>
                 {
                     EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-                    var inputStream = new SingleStream<TIn>(this.Tracer.GetSubTracer(this), this.ExecutionContext, this.NodeName, PushObservable.FromSingle(i, waitHandle));
+                    var inputStream = new SingleStream<TIn>(this.Tracer.GetSubTraceMapper(this), this.ExecutionContext, this.NodeName, PushObservable.FromSingle(i, waitHandle));
                     var outputStream = args.SubProcess(inputStream);
-                    this.ExecutionContext.AddNode(this, outputStream.Observable);
+                    this.ExecutionContext.AddNode(this, outputStream.Observable, outputStream.TraceObservable);
                     IDisposable awaiter = null;
                     outputStream.Observable.Subscribe(j => { }, () => awaiter?.Dispose());
                     return new DeferredWrapperPushObservable<TOut>(outputStream.Observable, () =>

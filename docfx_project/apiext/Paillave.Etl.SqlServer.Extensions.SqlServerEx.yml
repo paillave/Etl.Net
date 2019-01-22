@@ -17,7 +17,7 @@ items:
   source:
     id: SqlServerEx
     path: ''
-    startLine: 355
+    startLine: 398
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.SqlServer.Extensions
@@ -56,7 +56,7 @@ items:
   source:
     id: CrossApplySqlServerQuery
     path: ''
-    startLine: 357
+    startLine: 400
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.SqlServer.Extensions
@@ -107,20 +107,20 @@ items:
   source:
     id: ThroughSqlServer
     path: ''
-    startLine: 362
+    startLine: 405
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.SqlServer.Extensions
   syntax:
     content: >-
-      public static IStream<TIn> ThroughSqlServer<TIn>(this IStream<TIn> stream, string name, ISingleStream<SqlConnection> sqlConnection, string sqlQuery)
+      public static IStream<TIn> ThroughSqlServer<TIn>(this IStream<TIn> stream, string name, ISingleStream<SqlConnection> sqlConnectionStream, string sqlQuery)
           where TIn : class
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
-    - id: sqlConnection
+    - id: sqlConnectionStream
       type: ISingleStream{SqlConnection}
     - id: sqlQuery
       type: System.String
@@ -131,7 +131,7 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function ThroughSqlServer(Of TIn As Class)(stream As IStream(Of TIn), name As String, sqlConnection As ISingleStream(Of SqlConnection), sqlQuery As String) As IStream(Of TIn)
+      Public Shared Function ThroughSqlServer(Of TIn As Class)(stream As IStream(Of TIn), name As String, sqlConnectionStream As ISingleStream(Of SqlConnection), sqlQuery As String) As IStream(Of TIn)
   overload: Paillave.Etl.SqlServer.Extensions.SqlServerEx.ThroughSqlServer*
   nameWithType.vb: SqlServerEx.ThroughSqlServer(Of TIn)(IStream(Of TIn), String, ISingleStream(Of SqlConnection), String)
   modifiers.csharp:

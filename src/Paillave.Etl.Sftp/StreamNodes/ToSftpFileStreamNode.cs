@@ -15,13 +15,12 @@ namespace Paillave.Etl.Sftp.StreamNodes
     public class ToSftpFileArgs<TParams>
     {
         public IStream<Stream> Stream { get; set; }
-        public IStream<TParams> ParamStream { get; set; }
+        public ISingleStream<TParams> ParamStream { get; set; }
         public Func<TParams, string> GetOutputFilePath { get; set; }
         public Func<TParams, SftpConnectionInfo> GetConnectionInfo { get; set; }
     }
     public class ToSftpFileStreamNode<TParams> : StreamNodeBase<Stream, IStream<Stream>, ToSftpFileArgs<TParams>>
     {
-        public override bool IsAwaitable => true;
         public ToSftpFileStreamNode(string name, ToSftpFileArgs<TParams> args) : base(name, args)
         {
         }

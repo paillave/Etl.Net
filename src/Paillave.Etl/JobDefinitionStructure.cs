@@ -14,14 +14,12 @@ namespace Paillave.Etl
             {
                 this.NodeName = nodeContext.NodeName;
                 this.TypeName = nodeContext.TypeName;
-                this.IsAwaitable = nodeContext.IsAwaitable;
             }
 
             public string NodeName { get; }
 
             public string TypeName { get; }
 
-            public bool IsAwaitable { get; }
         }
         public JobDefinitionStructure(List<StreamToNodeLink> streamToNodeLinks, List<INodeContext> nodes, string sourceNodeName)
         {

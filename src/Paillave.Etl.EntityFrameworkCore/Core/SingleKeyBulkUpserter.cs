@@ -15,15 +15,12 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
         private MethodInfo _containsMethodInfo;
         private Func<TIn, TKey> _getKey;
         private Expression<Func<TIn, TKey>> _getKeyExpr;
-
         public SingleKeyBulkUpserter(Expression<Func<TIn, TKey>> getKeyExpr)
         {
             _containsMethodInfo = GetContainsMethodInfo();
             _getKey = getKeyExpr.Compile();
             _getKeyExpr = getKeyExpr;
         }
-
-
         public void ProcessBatch(IEnumerable<TIn> items, TCtx dbContext)
         {
             var existingItemsFromDb = GetExistingElements(dbContext, items.Select(_getKey).ToArray());
@@ -39,7 +36,6 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
             dbContext.UpdateRange(itemsReadyToUpdate);
             dbContext.SaveChanges();
         }
-
         private MethodInfo GetContainsMethodInfo()
         {
             return typeof(System.Linq.Enumerable).GetMethods().Where(i => i.Name == "Contains").First(i =>
@@ -53,7 +49,6 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
                 if (!(!pars[1].ParameterType.IsGenericType && pars[1].ParameterType == gArgs[0])) return false;
                 return true;
             }).MakeGenericMethod(typeof(TKey));
-
         }
         private IEnumerable<TIn> GetExistingElements(TCtx dbCtx, TKey[] lst)
         {
@@ -63,7 +58,6 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
                 Expression.Constant(lst),
                 Expression.Property(param, (PropertyInfo)((MemberExpression)_getKeyExpr.Body).Member)
                 ), param);
-
             return dbCtx.Set<TIn>().AsNoTracking().Where(tmp);
         }
     }

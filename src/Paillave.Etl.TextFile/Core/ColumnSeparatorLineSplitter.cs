@@ -4,19 +4,22 @@ using System.Text.RegularExpressions;
 
 namespace Paillave.Etl.TextFile.Core
 {
-    public class ColumnSeparatorLineSplitter:ILineSplitter
+    public class ColumnSeparatorLineSplitter : ILineSplitter
     {
         private readonly char _fieldDelimiter;
-        private readonly char _textDelimiter;
+        private readonly char? _textDelimiter;
         private readonly Regex _regex;
 
-        public ColumnSeparatorLineSplitter(char fieldDelimiter = ';', char textDelimiter = '"')
+        public ColumnSeparatorLineSplitter(char fieldDelimiter = ';', char? textDelimiter = '"')
         {
             this._fieldDelimiter = fieldDelimiter;
             this._textDelimiter = textDelimiter;
             string sep = GetRegexTranslation(fieldDelimiter);
-            string tq = GetRegexTranslation(textDelimiter);
-            this._regex = new Regex(sep + @"(?=(?:[^" + tq + "]*" + tq + "[^" + tq + "]*" + tq + ")*(?![^" + tq + "]*" + tq + "))", RegexOptions.Compiled | RegexOptions.Singleline);
+            if (textDelimiter != null)
+            {
+                string tq = GetRegexTranslation(textDelimiter.Value);
+                this._regex = new Regex(sep + @"(?=(?:[^" + tq + "]*" + tq + "[^" + tq + "]*" + tq + ")*(?![^" + tq + "]*" + tq + "))", RegexOptions.Compiled | RegexOptions.Singleline);
+            }
         }
         private string GetRegexTranslation(char character)
         {
@@ -48,12 +51,18 @@ namespace Paillave.Etl.TextFile.Core
 
         public IList<string> Split(string line)
         {
-            return InternalParseCsvLine(line).ToList();
+            if (_textDelimiter == null)
+                return line.Split(_fieldDelimiter);
+            else
+                return InternalParseCsvLine(line).ToList();
         }
 
         public string Join(IEnumerable<string> line)
         {
-            return string.Join(this._fieldDelimiter.ToString(), line.Select(i =>
+            if (_textDelimiter == null)
+                return string.Join(this._fieldDelimiter.ToString(), line);
+            else
+                return string.Join(this._fieldDelimiter.ToString(), line.Select(i =>
             {
                 if (i.Contains(_fieldDelimiter)) return $"{_textDelimiter}{i.Replace(_textDelimiter.ToString(), $"{_textDelimiter}{_textDelimiter}")}{_textDelimiter}";
                 else return i;

@@ -5,8 +5,8 @@ items:
   id: UnpivotEx
   parent: Paillave.Etl.Extensions
   children:
-  - Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,System.Collections.Generic.IEnumerable{System.Func{``0,``1}},System.Func{``0,``1,``2})
-  - Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,System.Func{``0,``2}[])
+  - Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,FieldsToUnpivot{``0,``1},System.Func{``0,``1,``2})
+  - Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,FieldsToUnpivot{``0,``2})
   langs:
   - csharp
   - vb
@@ -17,7 +17,7 @@ items:
   source:
     id: UnpivotEx
     path: ''
-    startLine: 1559
+    startLine: 1545
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -41,34 +41,34 @@ items:
   modifiers.vb:
   - Public
   - Module
-- uid: Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,System.Collections.Generic.IEnumerable{System.Func{``0,``1}},System.Func{``0,``1,``2})
-  commentId: M:Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,System.Collections.Generic.IEnumerable{System.Func{``0,``1}},System.Func{``0,``1,``2})
-  id: Unpivot``3(IStream{``0},System.String,System.Collections.Generic.IEnumerable{System.Func{``0,``1}},System.Func{``0,``1,``2})
+- uid: Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,FieldsToUnpivot{``0,``1},System.Func{``0,``1,``2})
+  commentId: M:Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,FieldsToUnpivot{``0,``1},System.Func{``0,``1,``2})
+  id: Unpivot``3(IStream{``0},System.String,FieldsToUnpivot{``0,``1},System.Func{``0,``1,``2})
   isExtensionMethod: true
   parent: Paillave.Etl.Extensions.UnpivotEx
   langs:
   - csharp
   - vb
-  name: Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, String, IEnumerable<Func<TIn, TUnpivoted>>, Func<TIn, TUnpivoted, TOut>)
-  nameWithType: UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, String, IEnumerable<Func<TIn, TUnpivoted>>, Func<TIn, TUnpivoted, TOut>)
-  fullName: Paillave.Etl.Extensions.UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, System.String, System.Collections.Generic.IEnumerable<System.Func<TIn, TUnpivoted>>, System.Func<TIn, TUnpivoted, TOut>)
+  name: Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, String, FieldsToUnpivot<TIn, TUnpivoted>, Func<TIn, TUnpivoted, TOut>)
+  nameWithType: UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, String, FieldsToUnpivot<TIn, TUnpivoted>, Func<TIn, TUnpivoted, TOut>)
+  fullName: Paillave.Etl.Extensions.UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, System.String, FieldsToUnpivot<TIn, TUnpivoted>, System.Func<TIn, TUnpivoted, TOut>)
   type: Method
   source:
     id: Unpivot
     path: ''
-    startLine: 1561
+    startLine: 1547
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static IStream<TOut> Unpivot<TIn, TUnpivoted, TOut>(this IStream<TIn> stream, string name, IEnumerable<Func<TIn, TUnpivoted>> fieldsToUnpivot, Func<TIn, TUnpivoted, TOut> resultSelector)
+    content: public static IStream<TOut> Unpivot<TIn, TUnpivoted, TOut>(this IStream<TIn> stream, string name, FieldsToUnpivot<TIn, TUnpivoted> fieldsToUnpivot, Func<TIn, TUnpivoted, TOut> resultSelector)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: fieldsToUnpivot
-      type: System.Collections.Generic.IEnumerable{System.Func{{TIn},{TUnpivoted}}}
+      type: FieldsToUnpivot{{TIn},{TUnpivoted}}
     - id: resultSelector
       type: System.Func{{TIn},{TUnpivoted},{TOut}}
     typeParameters:
@@ -80,45 +80,45 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function Unpivot(Of TIn, TUnpivoted, TOut)(stream As IStream(Of TIn), name As String, fieldsToUnpivot As IEnumerable(Of Func(Of TIn, TUnpivoted)), resultSelector As Func(Of TIn, TUnpivoted, TOut)) As IStream(Of TOut)
+      Public Shared Function Unpivot(Of TIn, TUnpivoted, TOut)(stream As IStream(Of TIn), name As String, fieldsToUnpivot As FieldsToUnpivot(Of TIn, TUnpivoted), resultSelector As Func(Of TIn, TUnpivoted, TOut)) As IStream(Of TOut)
   overload: Paillave.Etl.Extensions.UnpivotEx.Unpivot*
-  nameWithType.vb: UnpivotEx.Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), String, IEnumerable(Of Func(Of TIn, TUnpivoted)), Func(Of TIn, TUnpivoted, TOut))
+  nameWithType.vb: UnpivotEx.Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), String, FieldsToUnpivot(Of TIn, TUnpivoted), Func(Of TIn, TUnpivoted, TOut))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.UnpivotEx.Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), System.String, System.Collections.Generic.IEnumerable(Of System.Func(Of TIn, TUnpivoted)), System.Func(Of TIn, TUnpivoted, TOut))
-  name.vb: Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), String, IEnumerable(Of Func(Of TIn, TUnpivoted)), Func(Of TIn, TUnpivoted, TOut))
-- uid: Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,System.Func{``0,``2}[])
-  commentId: M:Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,System.Func{``0,``2}[])
-  id: Unpivot``3(IStream{``0},System.String,System.Func{``0,``2}[])
+  fullName.vb: Paillave.Etl.Extensions.UnpivotEx.Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), System.String, FieldsToUnpivot(Of TIn, TUnpivoted), System.Func(Of TIn, TUnpivoted, TOut))
+  name.vb: Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), String, FieldsToUnpivot(Of TIn, TUnpivoted), Func(Of TIn, TUnpivoted, TOut))
+- uid: Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,FieldsToUnpivot{``0,``2})
+  commentId: M:Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,FieldsToUnpivot{``0,``2})
+  id: Unpivot``3(IStream{``0},System.String,FieldsToUnpivot{``0,``2})
   isExtensionMethod: true
   parent: Paillave.Etl.Extensions.UnpivotEx
   langs:
   - csharp
   - vb
-  name: Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, String, Func<TIn, TOut>[])
-  nameWithType: UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, String, Func<TIn, TOut>[])
-  fullName: Paillave.Etl.Extensions.UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, System.String, System.Func<TIn, TOut>[])
+  name: Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, String, FieldsToUnpivot<TIn, TOut>)
+  nameWithType: UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, String, FieldsToUnpivot<TIn, TOut>)
+  fullName: Paillave.Etl.Extensions.UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, System.String, FieldsToUnpivot<TIn, TOut>)
   type: Method
   source:
     id: Unpivot
     path: ''
-    startLine: 1570
+    startLine: 1556
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static IStream<TOut> Unpivot<TIn, TUnpivoted, TOut>(this IStream<TIn> stream, string name, params Func<TIn, TOut>[] fieldsToUnpivot)
+    content: public static IStream<TOut> Unpivot<TIn, TUnpivoted, TOut>(this IStream<TIn> stream, string name, FieldsToUnpivot<TIn, TOut> fieldsToUnpivot)
     parameters:
     - id: stream
       type: IStream{{TIn}}
     - id: name
       type: System.String
     - id: fieldsToUnpivot
-      type: System.Func{{TIn},{TOut}}[]
+      type: FieldsToUnpivot{{TIn},{TOut}}
     typeParameters:
     - id: TIn
     - id: TUnpivoted
@@ -128,17 +128,17 @@ items:
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function Unpivot(Of TIn, TUnpivoted, TOut)(stream As IStream(Of TIn), name As String, ParamArray fieldsToUnpivot As Func(Of TIn, TOut)()) As IStream(Of TOut)
+      Public Shared Function Unpivot(Of TIn, TUnpivoted, TOut)(stream As IStream(Of TIn), name As String, fieldsToUnpivot As FieldsToUnpivot(Of TIn, TOut)) As IStream(Of TOut)
   overload: Paillave.Etl.Extensions.UnpivotEx.Unpivot*
-  nameWithType.vb: UnpivotEx.Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), String, Func(Of TIn, TOut)())
+  nameWithType.vb: UnpivotEx.Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), String, FieldsToUnpivot(Of TIn, TOut))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.UnpivotEx.Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, TOut)())
-  name.vb: Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), String, Func(Of TIn, TOut)())
+  fullName.vb: Paillave.Etl.Extensions.UnpivotEx.Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), System.String, FieldsToUnpivot(Of TIn, TOut))
+  name.vb: Unpivot(Of TIn, TUnpivoted, TOut)(IStream(Of TIn), String, FieldsToUnpivot(Of TIn, TOut))
 references:
 - uid: Paillave.Etl.Extensions
   commentId: N:Paillave.Etl.Extensions
@@ -488,29 +488,20 @@ references:
   name: String
   nameWithType: String
   fullName: System.String
-- uid: System.Collections.Generic.IEnumerable{System.Func{{TIn},{TUnpivoted}}}
-  commentId: T:System.Collections.Generic.IEnumerable{System.Func{``0,``1}}
-  parent: System.Collections.Generic
-  definition: System.Collections.Generic.IEnumerable`1
-  name: IEnumerable<Func<TIn, TUnpivoted>>
-  nameWithType: IEnumerable<Func<TIn, TUnpivoted>>
-  fullName: System.Collections.Generic.IEnumerable<System.Func<TIn, TUnpivoted>>
-  nameWithType.vb: IEnumerable(Of Func(Of TIn, TUnpivoted))
-  fullName.vb: System.Collections.Generic.IEnumerable(Of System.Func(Of TIn, TUnpivoted))
-  name.vb: IEnumerable(Of Func(Of TIn, TUnpivoted))
+- uid: FieldsToUnpivot{{TIn},{TUnpivoted}}
+  commentId: '!:FieldsToUnpivot{``0,``1}'
+  definition: FieldsToUnpivot`2
+  name: FieldsToUnpivot<TIn, TUnpivoted>
+  nameWithType: FieldsToUnpivot<TIn, TUnpivoted>
+  fullName: FieldsToUnpivot<TIn, TUnpivoted>
+  nameWithType.vb: FieldsToUnpivot(Of TIn, TUnpivoted)
+  fullName.vb: FieldsToUnpivot(Of TIn, TUnpivoted)
+  name.vb: FieldsToUnpivot(Of TIn, TUnpivoted)
   spec.csharp:
-  - uid: System.Collections.Generic.IEnumerable`1
-    name: IEnumerable
-    nameWithType: IEnumerable
-    fullName: System.Collections.Generic.IEnumerable
-    isExternal: true
-  - name: <
-    nameWithType: <
-    fullName: <
-  - uid: System.Func`2
-    name: Func
-    nameWithType: Func
-    fullName: System.Func
+  - uid: FieldsToUnpivot`2
+    name: FieldsToUnpivot
+    nameWithType: FieldsToUnpivot
+    fullName: FieldsToUnpivot
     isExternal: true
   - name: <
     nameWithType: <
@@ -524,25 +515,14 @@ references:
   - name: TUnpivoted
     nameWithType: TUnpivoted
     fullName: TUnpivoted
-  - name: '>'
-    nameWithType: '>'
-    fullName: '>'
   - name: '>'
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: System.Collections.Generic.IEnumerable`1
-    name: IEnumerable
-    nameWithType: IEnumerable
-    fullName: System.Collections.Generic.IEnumerable
-    isExternal: true
-  - name: '(Of '
-    nameWithType: '(Of '
-    fullName: '(Of '
-  - uid: System.Func`2
-    name: Func
-    nameWithType: Func
-    fullName: System.Func
+  - uid: FieldsToUnpivot`2
+    name: FieldsToUnpivot
+    nameWithType: FieldsToUnpivot
+    fullName: FieldsToUnpivot
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
@@ -556,9 +536,6 @@ references:
   - name: TUnpivoted
     nameWithType: TUnpivoted
     fullName: TUnpivoted
-  - name: )
-    nameWithType: )
-    fullName: )
   - name: )
     nameWithType: )
     fullName: )
@@ -703,51 +680,56 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: System.Collections.Generic.IEnumerable`1
-  commentId: T:System.Collections.Generic.IEnumerable`1
+- uid: FieldsToUnpivot`2
   isExternal: true
-  name: IEnumerable<T>
-  nameWithType: IEnumerable<T>
-  fullName: System.Collections.Generic.IEnumerable<T>
-  nameWithType.vb: IEnumerable(Of T)
-  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
-  name.vb: IEnumerable(Of T)
+  name: FieldsToUnpivot<, >
+  nameWithType: FieldsToUnpivot<, >
+  fullName: FieldsToUnpivot<, >
+  nameWithType.vb: FieldsToUnpivot(Of , )
+  fullName.vb: FieldsToUnpivot(Of , )
+  name.vb: FieldsToUnpivot(Of , )
   spec.csharp:
-  - uid: System.Collections.Generic.IEnumerable`1
-    name: IEnumerable
-    nameWithType: IEnumerable
-    fullName: System.Collections.Generic.IEnumerable
+  - uid: FieldsToUnpivot`2
+    name: FieldsToUnpivot
+    nameWithType: FieldsToUnpivot
+    fullName: FieldsToUnpivot
     isExternal: true
   - name: <
     nameWithType: <
     fullName: <
-  - name: T
-    nameWithType: T
-    fullName: T
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
   - name: '>'
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: System.Collections.Generic.IEnumerable`1
-    name: IEnumerable
-    nameWithType: IEnumerable
-    fullName: System.Collections.Generic.IEnumerable
+  - uid: FieldsToUnpivot`2
+    name: FieldsToUnpivot
+    nameWithType: FieldsToUnpivot
+    fullName: FieldsToUnpivot
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
     fullName: '(Of '
-  - name: T
-    nameWithType: T
-    fullName: T
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
   - name: )
     nameWithType: )
     fullName: )
-- uid: System.Collections.Generic
-  commentId: N:System.Collections.Generic
-  isExternal: true
-  name: System.Collections.Generic
-  nameWithType: System.Collections.Generic
-  fullName: System.Collections.Generic
 - uid: System.Func`3
   commentId: T:System.Func`3
   isExternal: true
@@ -811,19 +793,20 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: System.Func{{TIn},{TOut}}[]
-  isExternal: true
-  name: Func<TIn, TOut>[]
-  nameWithType: Func<TIn, TOut>[]
-  fullName: System.Func<TIn, TOut>[]
-  nameWithType.vb: Func(Of TIn, TOut)()
-  fullName.vb: System.Func(Of TIn, TOut)()
-  name.vb: Func(Of TIn, TOut)()
+- uid: FieldsToUnpivot{{TIn},{TOut}}
+  commentId: '!:FieldsToUnpivot{``0,``2}'
+  definition: FieldsToUnpivot`2
+  name: FieldsToUnpivot<TIn, TOut>
+  nameWithType: FieldsToUnpivot<TIn, TOut>
+  fullName: FieldsToUnpivot<TIn, TOut>
+  nameWithType.vb: FieldsToUnpivot(Of TIn, TOut)
+  fullName.vb: FieldsToUnpivot(Of TIn, TOut)
+  name.vb: FieldsToUnpivot(Of TIn, TOut)
   spec.csharp:
-  - uid: System.Func`2
-    name: Func
-    nameWithType: Func
-    fullName: System.Func
+  - uid: FieldsToUnpivot`2
+    name: FieldsToUnpivot
+    nameWithType: FieldsToUnpivot
+    fullName: FieldsToUnpivot
     isExternal: true
   - name: <
     nameWithType: <
@@ -840,14 +823,11 @@ references:
   - name: '>'
     nameWithType: '>'
     fullName: '>'
-  - name: '[]'
-    nameWithType: '[]'
-    fullName: '[]'
   spec.vb:
-  - uid: System.Func`2
-    name: Func
-    nameWithType: Func
-    fullName: System.Func
+  - uid: FieldsToUnpivot`2
+    name: FieldsToUnpivot
+    nameWithType: FieldsToUnpivot
+    fullName: FieldsToUnpivot
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
@@ -864,6 +844,3 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-  - name: ()
-    nameWithType: ()
-    fullName: ()

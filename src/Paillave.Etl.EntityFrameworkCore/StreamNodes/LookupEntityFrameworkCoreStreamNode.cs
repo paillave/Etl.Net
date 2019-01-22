@@ -17,8 +17,10 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         public IStream<TIn> InputStream { get; set; }
         public ISingleStream<TCtx> DbContextStream { get; set; }
         public Expression<Func<TIn, TEntity, bool>> Match { get; set; }
+        public Func<TIn, TEntity> CreateIfNotFound { get; set; }
         public Func<TIn, TEntity, TOut> ResultSelector { get; set; }
         public int CacheSize { get; set; } = 1000;
+        public Expression<Func<TEntity, bool>> DefaultCache { get; set; }
     }
     public class LookupEntityFrameworkCoreStreamNode<TIn, TEntity, TCtx, TOut> : StreamNodeBase<TOut, IStream<TOut>, LookupEntityFrameworkCoreArgs<TIn, TEntity, TCtx, TOut>>
         where TCtx : DbContext
@@ -30,9 +32,19 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
 
         protected override IStream<TOut> CreateOutputStream(LookupEntityFrameworkCoreArgs<TIn, TEntity, TCtx, TOut> args)
         {
-            var matcher = new EfMatcher<TIn, TEntity, TCtx>(args.Match, args.CacheSize);
-            var matchingS = args.InputStream.Observable.CombineWithLatest(args.DbContextStream.Observable, (elt, ctx) => new { Element = elt, DbContext = ctx }, true)
-            .Map(i => args.ResultSelector(i.Element, matcher.GetMatch(i.DbContext, i.Element)));
+            var matchingS = args.InputStream.Observable.CombineWithLatest(args.DbContextStream.Observable.Map(ctx =>
+            {
+                if (args.DefaultCache == null)
+                    return new EfMatcher<TIn, TEntity, TCtx>(ctx, args.Match, args.CreateIfNotFound, args.CacheSize);
+                else
+                    return new EfMatcher<TIn, TEntity, TCtx>(ctx, args.Match, args.CreateIfNotFound, args.DefaultCache, args.CacheSize);
+            }), (elt, matcher) =>new { Element = elt, Matcher = matcher }, true)
+            .Map(i =>
+            {
+                TEntity entity = default(TEntity);
+                this.ExecutionContext.InvokeInDedicatedThread(i.Matcher.Context, () => entity = i.Matcher.GetMatch(i.Element));
+                return args.ResultSelector(i.Element, entity);
+            });
             return base.CreateUnsortedStream(matchingS);
         }
     }

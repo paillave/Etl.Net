@@ -4,10 +4,10 @@ namespace Paillave.Etl.Core.Streams
 {
     public class SingleStream<T> : KeyedStream<T, T>, ISingleStream<T>
     {
-        public SingleStream(ITracer tracer, IExecutionContext executionContext, string sourceNodeName, IPushObservable<T> observable) : base(tracer, executionContext, sourceNodeName, observable, new SortDefinition<T, T>(i => i))
+        public SingleStream(ITraceMapper tracer, IExecutionContext executionContext, string sourceNodeName, IPushObservable<T> observable) : base(tracer, executionContext, sourceNodeName, observable, new SortDefinition<T, T>(i => i))
         {
         }
-        public override object GetMatchingStream(ITracer tracer, IExecutionContext executionContext, string name, object observable)
+        public override object GetMatchingStream(ITraceMapper tracer, IExecutionContext executionContext, string name, object observable)
         {
             return new SingleStream<T>(tracer, executionContext, name, (IPushObservable<T>)observable);
         }
