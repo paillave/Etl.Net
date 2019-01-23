@@ -52,6 +52,7 @@ namespace FundProcess.Pms.Imports.Jobs
                     InternalCode = i.FundCode,
                     Name = i.FundName,
                     CurrencyIso = i.FundCurrency,
+                    IsManaged = true
                 }))
                 .ThroughEntityFrameworkCore("save sub funds", dbCnxStream, i => new { i.InternalCode, i.BelongsToEntityId });
 
@@ -135,13 +136,13 @@ namespace FundProcess.Pms.Imports.Jobs
                         Composition = j
                     });
 
-            var securitiesPositionStream = posFileStream
+            var composingSecuritiesStream = posFileStream
                 .Distinct("distinct positions security", i => i.InternalNumber)
-                .Select("create security for composition", dbCnxStream, (i, ctx) => ctx.UpdateEntityForMultiTenancy(CreateSecurityFromInstrumentType(i.InvestmentType, i.Currency, i.IsinCode, i.InstrumentName, i.InternalNumber, i.NextCouponDate)), false, true)
+                .Select("create security for composition", dbCnxStream, (i, ctx) => ctx.UpdateEntityForMultiTenancy(CreateSecurityForComposition(i.InvestmentType, i.Currency, i.IsinCode, i.InstrumentName, i.InternalNumber, i.NextCouponDate)), false, true)
                 .ThroughEntityFrameworkCore("save security for composition", dbCnxStream, i => new { i.InternalCode, i.BelongsToEntityId });
 
             var composingSecurityStream = posFileStream
-                .Lookup("lookup for composition security", securitiesPositionStream, i => i.InternalNumber, i => i.InternalCode, (l, r) => new { FromFile = l, Security = r })
+                .Lookup("lookup for composition security", composingSecuritiesStream, i => i.InternalNumber, i => i.InternalCode, (l, r) => new { FromFile = l, Security = r })
                 .Where("exclude composition security with no security", i => i.Security != null)
                 .Lookup("get related composition", compositionStream,
                     i => new { i.FromFile.FundCode, i.FromFile.NavDate },
@@ -166,9 +167,11 @@ namespace FundProcess.Pms.Imports.Jobs
                 }))
                 .ThroughEntityFrameworkCore("save position", dbCnxStream, i => new { i.SecurityId, i.PortfolioCompositionId, i.BelongsToEntityId });
         }
-        private static Security CreateSecurityFromInstrumentType(string rbcType, string currencyIso, string isin, string name, string internalCode, DateTime? nextCouponDate)
+        private static Security CreateSecurityForComposition(string rbcType, string currencyIso, string isin, string name, string internalCode, DateTime? nextCouponDate)
         {
-            var rbcCode = string.IsNullOrWhiteSpace(rbcType) ? "" : rbcType.Split(':')[0].Trim();
+            var splitted = rbcType.Split(':');
+            var rbcCode = string.IsNullOrWhiteSpace(rbcType) ? "" : splitted[0].Trim();
+            Security security = null;
             switch (rbcCode)
             {
                 case "100": // SHARES
@@ -178,20 +181,35 @@ namespace FundProcess.Pms.Imports.Jobs
                 case "117": // REITS
                 case "118": // NON G.T. REITS
                 case "411": // SICAF
-                    return new Equity { InternalCode = internalCode, CurrencyIso = currencyIso, Isin = isin, Name = name };
+                    security = new Equity();
+                    break;
                 case "484": // Investment Funds - UCITS- French
                 case "485": // Investment Funds - UCITS- European
-                    return new SubFund { InternalCode = internalCode, CurrencyIso = currencyIso, Isin = isin, Name = name };
+                    security = new SubFund();
+                    break;
                 case "200": // STRAIGHT BONDS
                 case "201": // FLOATING RATE BONDS
                 case "270": // Commercial paper
                 case "271": // Certificate of Deposit
                 case "202": // "202 : ZERO COUPON BONDS"
-                    return new Bond { InternalCode = internalCode, CurrencyIso = currencyIso, Isin = isin, Name = name, NextCouponDate = nextCouponDate };
+                    security = new Bond { NextCouponDate = nextCouponDate };
+                    break;
                 case "603": // Call/Put
-                    return new Derivative { InternalCode = internalCode, CurrencyIso = currencyIso, Isin = isin, Name = name };
+                    var derivativeType = splitted[1].TrimStart();
+                    if (derivativeType.StartsWith("option"))
+                        security = new Option { Type = OptionType.European };
+                    else if (derivativeType.StartsWith("future"))
+                        security = new Future();
+                    break;
             }
-            return null;
+            if (security != null)
+            {
+                security.InternalCode = internalCode;
+                security.CurrencyIso = currencyIso;
+                security.Isin = isin;
+                security.Name = name;
+            }
+            return security;
         }
     }
 }

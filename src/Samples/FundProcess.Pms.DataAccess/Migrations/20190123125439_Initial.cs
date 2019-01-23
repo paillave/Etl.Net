@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FundProcess.Pms.DataAccess.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -57,11 +57,27 @@ namespace FundProcess.Pms.DataAccess.Migrations
                     SecurityId = table.Column<int>(nullable: false),
                     Code = table.Column<string>(maxLength: 50, nullable: false),
                     DataProvider = table.Column<string>(maxLength: 50, nullable: false),
-                    BelongsToEntityId = table.Column<int>(nullable: true)
+                    BelongsToEntityId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DataProviderSecurity", x => new { x.SecurityId, x.DataProvider });
+                    table.PrimaryKey("PK_DataProviderSecurity", x => new { x.SecurityId, x.DataProvider, x.BelongsToEntityId });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Forex",
+                schema: "Pms",
+                columns: table => new
+                {
+                    CurrencyFromIso = table.Column<string>(maxLength: 3, nullable: false),
+                    CurrencyToIso = table.Column<string>(maxLength: 3, nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    Value = table.Column<decimal>(nullable: false),
+                    BelongsToEntityId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Forex", x => new { x.Date, x.CurrencyFromIso, x.CurrencyToIso, x.BelongsToEntityId });
                 });
 
             migrationBuilder.CreateTable(
@@ -207,7 +223,8 @@ namespace FundProcess.Pms.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    SicavName = table.Column<string>(maxLength: 255, nullable: true),
+                    InternalCode = table.Column<string>(maxLength: 50, nullable: true),
+                    Name = table.Column<string>(maxLength: 255, nullable: true),
                     ProspectusId = table.Column<int>(nullable: true),
                     LegalStructure = table.Column<string>(nullable: true),
                     BelongsToEntityId = table.Column<int>(nullable: true)
@@ -348,19 +365,17 @@ namespace FundProcess.Pms.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     InternalCode = table.Column<string>(maxLength: 50, nullable: false),
-                    Isin = table.Column<string>(maxLength: 12, nullable: false),
+                    Isin = table.Column<string>(maxLength: 12, nullable: true),
                     Name = table.Column<string>(maxLength: 250, nullable: false),
-                    BenchmarkId = table.Column<int>(nullable: false),
+                    BenchmarkId = table.Column<int>(nullable: true),
                     CurrencyIso = table.Column<string>(maxLength: 3, nullable: true),
                     CountryCode = table.Column<string>(maxLength: 2, nullable: true),
                     PricingFrequency = table.Column<int>(nullable: false),
-                    ClassificationStrategy = table.Column<string>(nullable: false),
-                    GicsSectorId = table.Column<int>(nullable: false),
-                    IcbSectorId = table.Column<int>(nullable: false),
-                    MarketPlaceId = table.Column<int>(nullable: false),
+                    ClassificationStrategy = table.Column<string>(nullable: true),
+                    MarketPlaceId = table.Column<int>(nullable: true),
                     CreationDate = table.Column<DateTime>(nullable: false),
                     LastModifiedDate = table.Column<DateTime>(nullable: false),
-                    BelongsToEntityId = table.Column<int>(nullable: true),
+                    BelongsToEntityId = table.Column<int>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
                     CouponType = table.Column<string>(maxLength: 3, nullable: true),
                     CouponRate = table.Column<decimal>(nullable: true),
@@ -376,6 +391,26 @@ namespace FundProcess.Pms.DataAccess.Migrations
                     CounterpartyId = table.Column<int>(nullable: true),
                     ContractSize = table.Column<decimal>(nullable: true),
                     StrikePrice = table.Column<decimal>(nullable: true),
+                    CurrencyToIso = table.Column<string>(maxLength: 3, nullable: true),
+                    Option_StrikePrice = table.Column<decimal>(nullable: true),
+                    Type = table.Column<int>(nullable: true),
+                    FundAdminId = table.Column<int>(nullable: true),
+                    CustodianId = table.Column<int>(nullable: true),
+                    NavFrequency = table.Column<int>(nullable: true),
+                    IsManaged = table.Column<bool>(nullable: true),
+                    SicavId = table.Column<int>(nullable: true),
+                    TransferAgentId = table.Column<int>(nullable: true),
+                    Url = table.Column<string>(maxLength: 500, nullable: true),
+                    DomicileIso = table.Column<string>(maxLength: 2, nullable: true),
+                    SubscriptionContactId = table.Column<int>(nullable: true),
+                    RecommendedTimeHorizon = table.Column<decimal>(nullable: true),
+                    SettlementNbDays = table.Column<int>(nullable: true),
+                    IsLiquidated = table.Column<bool>(nullable: true),
+                    LiquidationDate = table.Column<DateTime>(nullable: true),
+                    InvestmentProcess = table.Column<int>(nullable: true),
+                    ShortExposure = table.Column<bool>(nullable: true),
+                    Leverage = table.Column<bool>(nullable: true),
+                    ClosedEnded = table.Column<bool>(nullable: true),
                     SubFundId = table.Column<int>(nullable: true),
                     IsPrimary = table.Column<bool>(nullable: true),
                     DistributionType = table.Column<string>(maxLength: 50, nullable: true),
@@ -389,29 +424,30 @@ namespace FundProcess.Pms.DataAccess.Migrations
                     PerformanceFee = table.Column<decimal>(nullable: true),
                     DividendPeriodicity = table.Column<int>(nullable: true),
                     IsOpenForInvestment = table.Column<bool>(nullable: true),
-                    SicavId = table.Column<int>(nullable: true),
-                    FundAdminId = table.Column<int>(nullable: true),
-                    CustodianId = table.Column<int>(nullable: true),
-                    TransferAgentId = table.Column<int>(nullable: true),
-                    Url = table.Column<string>(maxLength: 500, nullable: true),
-                    DomicileIso = table.Column<string>(maxLength: 2, nullable: true),
-                    SubscriptionContactId = table.Column<int>(nullable: true),
-                    RecommendedTimeHorizon = table.Column<decimal>(nullable: true),
-                    SettlementNbDays = table.Column<int>(nullable: true),
-                    NavFrequency = table.Column<int>(nullable: true),
-                    IsLiquidated = table.Column<bool>(nullable: true),
-                    LiquidationDate = table.Column<DateTime>(nullable: true),
-                    InvestmentProcess = table.Column<int>(nullable: true),
-                    ShortExposure = table.Column<bool>(nullable: true),
-                    Leverage = table.Column<bool>(nullable: true),
-                    ClosedEnded = table.Column<bool>(nullable: true)
+                    GicsSectorId = table.Column<int>(nullable: true),
+                    IcbSectorId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Security", x => x.Id);
+                    table.UniqueConstraint("AK_Security_BelongsToEntityId_InternalCode", x => new { x.BelongsToEntityId, x.InternalCode });
                     table.ForeignKey(
                         name: "FK_Security_EntityBase_CounterpartyId",
                         column: x => x.CounterpartyId,
+                        principalSchema: "Entity",
+                        principalTable: "EntityBase",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Security_EntityBase_CustodianId",
+                        column: x => x.CustodianId,
+                        principalSchema: "Entity",
+                        principalTable: "EntityBase",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Security_EntityBase_FundAdminId",
+                        column: x => x.FundAdminId,
                         principalSchema: "Entity",
                         principalTable: "EntityBase",
                         principalColumn: "Id",
@@ -428,20 +464,6 @@ namespace FundProcess.Pms.DataAccess.Migrations
                         column: x => x.SubFundId,
                         principalSchema: "Pms",
                         principalTable: "Security",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Security_EntityBase_CustodianId",
-                        column: x => x.CustodianId,
-                        principalSchema: "Entity",
-                        principalTable: "EntityBase",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Security_EntityBase_FundAdminId",
-                        column: x => x.FundAdminId,
-                        principalSchema: "Entity",
-                        principalTable: "EntityBase",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -547,11 +569,11 @@ namespace FundProcess.Pms.DataAccess.Migrations
                     Type = table.Column<string>(maxLength: 3, nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     Value = table.Column<decimal>(nullable: false),
-                    BelongsToEntityId = table.Column<int>(nullable: true)
+                    BelongsToEntityId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HistoricalValue", x => new { x.Date, x.SecurityId, x.Type });
+                    table.PrimaryKey("PK_HistoricalValue", x => new { x.Date, x.SecurityId, x.Type, x.BelongsToEntityId });
                     table.ForeignKey(
                         name: "FK_HistoricalValue_Security_SecurityId",
                         column: x => x.SecurityId,
@@ -569,12 +591,13 @@ namespace FundProcess.Pms.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     PortfolioId = table.Column<int>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: true),
-                    BelongsToEntityId = table.Column<int>(nullable: true)
+                    Date = table.Column<DateTime>(nullable: false),
+                    BelongsToEntityId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PortfolioComposition", x => x.Id);
+                    table.UniqueConstraint("AK_PortfolioComposition_Date_PortfolioId_BelongsToEntityId", x => new { x.Date, x.PortfolioId, x.BelongsToEntityId });
                     table.ForeignKey(
                         name: "FK_PortfolioComposition_Security_PortfolioId",
                         column: x => x.PortfolioId,
@@ -842,16 +865,16 @@ namespace FundProcess.Pms.DataAccess.Migrations
                 column: "PortfolioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Position_PortfolioCompositionId",
-                schema: "Pms",
-                table: "Position",
-                column: "PortfolioCompositionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Position_SecurityId",
                 schema: "Pms",
                 table: "Position",
                 column: "SecurityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Position_PortfolioCompositionId_SecurityId_BelongsToEntityId",
+                schema: "Pms",
+                table: "Position",
+                columns: new[] { "PortfolioCompositionId", "SecurityId", "BelongsToEntityId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_RegisterAccount_DistributorId",
@@ -872,18 +895,6 @@ namespace FundProcess.Pms.DataAccess.Migrations
                 column: "CounterpartyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Security_BenchmarkId",
-                schema: "Pms",
-                table: "Security",
-                column: "BenchmarkId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Security_SubFundId",
-                schema: "Pms",
-                table: "Security",
-                column: "SubFundId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Security_CustodianId",
                 schema: "Pms",
                 table: "Security",
@@ -894,6 +905,18 @@ namespace FundProcess.Pms.DataAccess.Migrations
                 schema: "Pms",
                 table: "Security",
                 column: "FundAdminId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Security_BenchmarkId",
+                schema: "Pms",
+                table: "Security",
+                column: "BenchmarkId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Security_SubFundId",
+                schema: "Pms",
+                table: "Security",
+                column: "SubFundId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Security_SicavId",
@@ -966,6 +989,10 @@ namespace FundProcess.Pms.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "DataProviderSecurity",
+                schema: "Pms");
+
+            migrationBuilder.DropTable(
+                name: "Forex",
                 schema: "Pms");
 
             migrationBuilder.DropTable(

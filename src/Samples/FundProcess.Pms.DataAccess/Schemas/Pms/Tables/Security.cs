@@ -17,8 +17,6 @@ namespace FundProcess.Pms.DataAccess.Schemas.Pms.Tables
         public string CountryCode { get; set; }
         public FrequencyType PricingFrequency { get; set; }
         public string ClassificationStrategy { get; set; }
-        public int? GicsSectorId { get; set; }
-        public int? IcbSectorId { get; set; }
         public int? MarketPlaceId { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime LastModifiedDate { get; set; }

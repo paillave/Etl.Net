@@ -8,6 +8,5 @@ namespace FundProcess.Pms.DataAccess.Schemas.Pms.Tables
         public int? CounterpartyId { get; set; }
         public FinancialInstitution Counterparty { get; set; }
         public decimal? ContractSize { get; set; }
-        public decimal? StrikePrice { get; set; }
     }
 }

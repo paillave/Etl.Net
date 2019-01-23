@@ -10,10 +10,11 @@ namespace FundProcess.Pms.Imports.StreamTypes
         public string SubFundName { get; set; }
         public string SubFundCurrency { get; set; }
         public DateTime ValuationDate { get; set; }
-        public string IntrumentCode { get; set; }
-        public string IntrumentCategory { get; set; }
-        public string IntrumentName { get; set; }
-        public string IntrumentIsin { get; set; }
+        public string InstrumentCode { get; set; }
+        public string InstrumentCategory { get; set; }
+        public string InstrumentName { get; set; }
+        public string InstrumentIsin { get; set; }
+        public string InstrumentCurrency { get; set; }
         public string BloombergCode { get; set; }
         public string Category1 { get; set; }
         public string Category2 { get; set; }

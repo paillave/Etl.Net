@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FundProcess.Pms.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20181128003920_initial")]
-    partial class initial
+    [Migration("20190123125439_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -274,9 +274,28 @@ namespace FundProcess.Pms.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.HasKey("SecurityId", "DataProvider");
+                    b.HasKey("SecurityId", "DataProvider", "BelongsToEntityId");
 
                     b.ToTable("DataProviderSecurity","Pms");
+                });
+
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Forex", b =>
+                {
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("CurrencyFromIso")
+                        .HasMaxLength(3);
+
+                    b.Property<string>("CurrencyToIso")
+                        .HasMaxLength(3);
+
+                    b.Property<int?>("BelongsToEntityId");
+
+                    b.Property<decimal>("Value");
+
+                    b.HasKey("Date", "CurrencyFromIso", "CurrencyToIso", "BelongsToEntityId");
+
+                    b.ToTable("Forex","Pms");
                 });
 
             modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.HistoricalValue", b =>
@@ -292,7 +311,7 @@ namespace FundProcess.Pms.DataAccess.Migrations
 
                     b.Property<decimal>("Value");
 
-                    b.HasKey("Date", "SecurityId", "Type");
+                    b.HasKey("Date", "SecurityId", "Type", "BelongsToEntityId");
 
                     b.HasIndex("SecurityId");
 
@@ -305,13 +324,17 @@ namespace FundProcess.Pms.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BelongsToEntityId");
+                    b.Property<int?>("BelongsToEntityId")
+                        .IsRequired();
 
-                    b.Property<DateTime?>("Date");
+                    b.Property<DateTime?>("Date")
+                        .IsRequired();
 
                     b.Property<int>("PortfolioId");
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("Date", "PortfolioId", "BelongsToEntityId");
 
                     b.HasIndex("PortfolioId");
 
@@ -340,9 +363,9 @@ namespace FundProcess.Pms.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PortfolioCompositionId");
-
                     b.HasIndex("SecurityId");
+
+                    b.HasIndex("PortfolioCompositionId", "SecurityId", "BelongsToEntityId");
 
                     b.ToTable("Position","Pms");
                 });
@@ -388,12 +411,12 @@ namespace FundProcess.Pms.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BelongsToEntityId");
-
-                    b.Property<int>("BenchmarkId");
-
-                    b.Property<string>("ClassificationStrategy")
+                    b.Property<int?>("BelongsToEntityId")
                         .IsRequired();
+
+                    b.Property<int?>("BenchmarkId");
+
+                    b.Property<string>("ClassificationStrategy");
 
                     b.Property<string>("CountryCode")
                         .HasMaxLength(2);
@@ -406,21 +429,16 @@ namespace FundProcess.Pms.DataAccess.Migrations
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
-                    b.Property<int>("GicsSectorId");
-
-                    b.Property<int>("IcbSectorId");
-
                     b.Property<string>("InternalCode")
                         .IsRequired()
                         .HasMaxLength(50);
 
                     b.Property<string>("Isin")
-                        .IsRequired()
                         .HasMaxLength(12);
 
                     b.Property<DateTime>("LastModifiedDate");
 
-                    b.Property<int>("MarketPlaceId");
+                    b.Property<int?>("MarketPlaceId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -429,6 +447,8 @@ namespace FundProcess.Pms.DataAccess.Migrations
                     b.Property<int>("PricingFrequency");
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("BelongsToEntityId", "InternalCode");
 
                     b.HasIndex("BenchmarkId");
 
@@ -535,12 +555,15 @@ namespace FundProcess.Pms.DataAccess.Migrations
 
                     b.Property<int?>("BelongsToEntityId");
 
+                    b.Property<string>("InternalCode")
+                        .HasMaxLength(50);
+
                     b.Property<string>("LegalStructure");
 
-                    b.Property<int?>("ProspectusId");
-
-                    b.Property<string>("SicavName")
+                    b.Property<string>("Name")
                         .HasMaxLength(255);
+
+                    b.Property<int?>("ProspectusId");
 
                     b.HasKey("Id");
 
@@ -678,6 +701,16 @@ namespace FundProcess.Pms.DataAccess.Migrations
                     b.HasDiscriminator().HasValue("Bond");
                 });
 
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Cash", b =>
+                {
+                    b.HasBaseType("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Security");
+
+
+                    b.ToTable("Cash");
+
+                    b.HasDiscriminator().HasValue("Cash");
+                });
+
             modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Derivative", b =>
                 {
                     b.HasBaseType("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Security");
@@ -687,8 +720,6 @@ namespace FundProcess.Pms.DataAccess.Migrations
                     b.Property<int?>("CounterpartyId");
 
                     b.Property<bool?>("IsOtc");
-
-                    b.Property<decimal?>("StrikePrice");
 
                     b.HasIndex("CounterpartyId");
 
@@ -705,6 +736,27 @@ namespace FundProcess.Pms.DataAccess.Migrations
                     b.ToTable("Equity");
 
                     b.HasDiscriminator().HasValue("Equity");
+                });
+
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Portfolio", b =>
+                {
+                    b.HasBaseType("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Security");
+
+                    b.Property<int?>("CustodianId");
+
+                    b.Property<int?>("FundAdminId");
+
+                    b.Property<bool>("IsManaged");
+
+                    b.Property<int?>("NavFrequency");
+
+                    b.HasIndex("CustodianId");
+
+                    b.HasIndex("FundAdminId");
+
+                    b.ToTable("Portfolio");
+
+                    b.HasDiscriminator().HasValue("Portfolio");
                 });
 
             modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.ShareClass", b =>
@@ -745,57 +797,17 @@ namespace FundProcess.Pms.DataAccess.Migrations
                     b.HasDiscriminator().HasValue("ShareClass");
                 });
 
-            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.SubFund", b =>
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Stock", b =>
                 {
                     b.HasBaseType("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Security");
 
-                    b.Property<bool?>("ClosedEnded");
+                    b.Property<int?>("GicsSectorId");
 
-                    b.Property<int?>("CustodianId");
+                    b.Property<int?>("IcbSectorId");
 
-                    b.Property<string>("DomicileIso")
-                        .HasMaxLength(2);
+                    b.ToTable("Stock");
 
-                    b.Property<int?>("FundAdminId");
-
-                    b.Property<int?>("InvestmentProcess");
-
-                    b.Property<bool?>("IsLiquidated");
-
-                    b.Property<bool?>("Leverage");
-
-                    b.Property<DateTime?>("LiquidationDate");
-
-                    b.Property<int?>("NavFrequency");
-
-                    b.Property<decimal?>("RecommendedTimeHorizon");
-
-                    b.Property<int?>("SettlementNbDays");
-
-                    b.Property<bool?>("ShortExposure");
-
-                    b.Property<int?>("SicavId");
-
-                    b.Property<int?>("SubscriptionContactId");
-
-                    b.Property<int?>("TransferAgentId");
-
-                    b.Property<string>("Url")
-                        .HasMaxLength(500);
-
-                    b.HasIndex("CustodianId");
-
-                    b.HasIndex("FundAdminId");
-
-                    b.HasIndex("SicavId");
-
-                    b.HasIndex("SubscriptionContactId");
-
-                    b.HasIndex("TransferAgentId");
-
-                    b.ToTable("SubFund");
-
-                    b.HasDiscriminator().HasValue("SubFund");
+                    b.HasDiscriminator().HasValue("Stock");
                 });
 
             modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Entity.Tables.FinancialInstitution", b =>
@@ -826,6 +838,156 @@ namespace FundProcess.Pms.DataAccess.Migrations
                     b.ToTable("User");
 
                     b.HasDiscriminator().HasValue("User");
+                });
+
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Cfd", b =>
+                {
+                    b.HasBaseType("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Derivative");
+
+
+                    b.ToTable("Cfd");
+
+                    b.HasDiscriminator().HasValue("Cfd");
+                });
+
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Commodity", b =>
+                {
+                    b.HasBaseType("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Derivative");
+
+
+                    b.ToTable("Commodity");
+
+                    b.HasDiscriminator().HasValue("Commodity");
+                });
+
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Future", b =>
+                {
+                    b.HasBaseType("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Derivative");
+
+                    b.Property<decimal?>("StrikePrice");
+
+                    b.ToTable("Future");
+
+                    b.HasDiscriminator().HasValue("Future");
+                });
+
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.FxForward", b =>
+                {
+                    b.HasBaseType("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Derivative");
+
+                    b.Property<string>("CurrencyToIso")
+                        .HasMaxLength(3);
+
+                    b.ToTable("FxForward");
+
+                    b.HasDiscriminator().HasValue("FxForward");
+                });
+
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Index", b =>
+                {
+                    b.HasBaseType("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Derivative");
+
+
+                    b.ToTable("Index");
+
+                    b.HasDiscriminator().HasValue("Index");
+                });
+
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.InterestRate", b =>
+                {
+                    b.HasBaseType("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Derivative");
+
+
+                    b.ToTable("InterestRate");
+
+                    b.HasDiscriminator().HasValue("InterestRate");
+                });
+
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.ModelPortfolio", b =>
+                {
+                    b.HasBaseType("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Derivative");
+
+
+                    b.ToTable("ModelPortfolio");
+
+                    b.HasDiscriminator().HasValue("ModelPortfolio");
+                });
+
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Option", b =>
+                {
+                    b.HasBaseType("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Derivative");
+
+                    b.Property<decimal?>("StrikePrice")
+                        .HasColumnName("Option_StrikePrice");
+
+                    b.Property<int>("Type");
+
+                    b.ToTable("Option");
+
+                    b.HasDiscriminator().HasValue("Option");
+                });
+
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.StructuredProduct", b =>
+                {
+                    b.HasBaseType("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Derivative");
+
+
+                    b.ToTable("StructuredProduct");
+
+                    b.HasDiscriminator().HasValue("StructuredProduct");
+                });
+
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Swap", b =>
+                {
+                    b.HasBaseType("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Derivative");
+
+
+                    b.ToTable("Swap");
+
+                    b.HasDiscriminator().HasValue("Swap");
+                });
+
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.SubFund", b =>
+                {
+                    b.HasBaseType("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Portfolio");
+
+                    b.Property<bool?>("ClosedEnded");
+
+                    b.Property<string>("DomicileIso")
+                        .HasMaxLength(2);
+
+                    b.Property<int?>("InvestmentProcess");
+
+                    b.Property<bool?>("IsLiquidated");
+
+                    b.Property<bool?>("Leverage");
+
+                    b.Property<DateTime?>("LiquidationDate");
+
+                    b.Property<decimal?>("RecommendedTimeHorizon");
+
+                    b.Property<int?>("SettlementNbDays");
+
+                    b.Property<bool?>("ShortExposure");
+
+                    b.Property<int?>("SicavId");
+
+                    b.Property<int?>("SubscriptionContactId");
+
+                    b.Property<int?>("TransferAgentId");
+
+                    b.Property<string>("Url")
+                        .HasMaxLength(500);
+
+                    b.HasIndex("SicavId");
+
+                    b.HasIndex("SubscriptionContactId");
+
+                    b.HasIndex("TransferAgentId");
+
+                    b.ToTable("SubFund");
+
+                    b.HasDiscriminator().HasValue("SubFund");
                 });
 
             modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Entity.Tables.ManCo", b =>
@@ -1065,15 +1227,7 @@ namespace FundProcess.Pms.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.ShareClass", b =>
-                {
-                    b.HasOne("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.SubFund", "SubFund")
-                        .WithMany()
-                        .HasForeignKey("SubFundId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.SubFund", b =>
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Portfolio", b =>
                 {
                     b.HasOne("FundProcess.Pms.DataAccess.Schemas.Entity.Tables.FinancialInstitution", "Custodian")
                         .WithMany()
@@ -1084,7 +1238,18 @@ namespace FundProcess.Pms.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("FundAdminId")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
 
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.ShareClass", b =>
+                {
+                    b.HasOne("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.SubFund", "SubFund")
+                        .WithMany()
+                        .HasForeignKey("SubFundId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.SubFund", b =>
+                {
                     b.HasOne("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Sicav", "Sicav")
                         .WithMany()
                         .HasForeignKey("SicavId")
