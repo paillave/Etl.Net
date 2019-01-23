@@ -153,8 +153,10 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
                 var resultEntity = resultEntities[i];
                 var dicoToSet = propertiesToGetAfterSetInTarget.ToDictionary(p => p.Name, p => p.PropertyInfo.GetValue(resultEntity));
                 var entry = _context.Entry(inputEntity);
-                entry.OriginalValues.SetValues(dicoToSet);
                 entry.CurrentValues.SetValues(dicoToSet);
+                entry.OriginalValues.SetValues(dicoToSet);
+                foreach (var item in propertiesToGetAfterSetInTarget.Where(j => !j.IsShadowProperty).Select(j => j.PropertyInfo).ToList())
+                    item.SetValue(inputEntity, item.GetValue(resultEntity));
                 //_context.Entry(inputEntity).State = EntityState.Unchanged;
             }
         }

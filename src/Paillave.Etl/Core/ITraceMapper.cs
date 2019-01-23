@@ -12,6 +12,6 @@ namespace Paillave.Etl.Core
         //void Trace(ITraceContent content);
         //void AddTraceObservable(IPushObservable<ITraceContent> traceObservable);
         ITraceMapper GetSubTraceMapper(INodeContext nodeContext);
-        TraceEvent MapToTrace(ITraceContent content);
+        TraceEvent MapToTrace(ITraceContent content, int sequenceId);
     }
 }

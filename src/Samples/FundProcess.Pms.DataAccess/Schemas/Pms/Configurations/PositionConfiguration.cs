@@ -13,7 +13,7 @@ namespace FundProcess.Pms.DataAccess.Schemas.Pms.Configurations
         protected override void ConfigureWithoutTenant(EntityTypeBuilder<Position> builder)
         {
             builder.ToTable(nameof(Position), nameof(Schemas.Pms));
-            builder.HasAlternateKey(i => new { i.BelongsToEntityId, i.PortfolioCompositionId, i.SecurityId });
+            builder.HasIndex(i => new { i.PortfolioCompositionId, i.SecurityId, i.BelongsToEntityId });
             builder.HasKey(i => i.Id);
             builder.Property(i => i.Id).UseSqlServerIdentityColumn();
             builder.HasOne(i => i.PortfolioComposition).WithMany().OnDelete(DeleteBehavior.Restrict).HasForeignKey(i => i.PortfolioCompositionId);

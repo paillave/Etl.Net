@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FundProcess.Pms.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190121120136_MoreContraints")]
-    partial class MoreContraints
+    [Migration("20190122225109_InternalCodeOnSicav")]
+    partial class InternalCodeOnSicav
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -315,7 +315,7 @@ namespace FundProcess.Pms.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("BelongsToEntityId", "Date", "PortfolioId");
+                    b.HasAlternateKey("Date", "PortfolioId", "BelongsToEntityId");
 
                     b.HasIndex("PortfolioId");
 
@@ -328,8 +328,7 @@ namespace FundProcess.Pms.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BelongsToEntityId")
-                        .IsRequired();
+                    b.Property<int?>("BelongsToEntityId");
 
                     b.Property<decimal>("MarketValueInPortfolioCcy");
 
@@ -345,11 +344,9 @@ namespace FundProcess.Pms.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("BelongsToEntityId", "PortfolioCompositionId", "SecurityId");
-
-                    b.HasIndex("PortfolioCompositionId");
-
                     b.HasIndex("SecurityId");
+
+                    b.HasIndex("PortfolioCompositionId", "SecurityId", "BelongsToEntityId");
 
                     b.ToTable("Position","Pms");
                 });
@@ -542,6 +539,9 @@ namespace FundProcess.Pms.DataAccess.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("BelongsToEntityId");
+
+                    b.Property<string>("InternalCode")
+                        .HasMaxLength(50);
 
                     b.Property<string>("LegalStructure");
 

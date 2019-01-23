@@ -83,21 +83,40 @@ namespace FundProcess.Pms.ImportsTests
             _databaseContext.EfSave(elts, i => new { i.Id });
         }
         [Fact]
-        public void Test1()
+        public void RbcImportTest()
         {
             StreamProcessRunner.CreateAndExecuteAsync(
                 new ImportFilesConfig
                 {
                     //InputFilesRootFolderPath = @"C:\Users\sroyer\Downloads\RBC",
                     InputFilesRootFolderPath = @"C:\Users\paill\Desktop\rbc",
+                    NavFileFileNamePattern = "*NAVPUBLTEXTRACT*.csv",
+                    PositionFileFileNamePattern = "*PORTFVALEXTRACT*.csv",
                     DbCtx = _databaseContext
                 },
-                ImportFiles.DefineRbcImportProcess,
+                RbcJobs.FullInitialImport,
                 traceStream => traceStream
                     .Where("remove verbose", i => i.Content.Level != TraceLevel.Verbose)
                     .ThroughAction("trace", i => Debug.WriteLine(i))
             ).Wait();
-            var subFunds = _databaseContext.Set<SubFund>().ToListAsync().Result;
+        }
+        [Fact]
+        public void EfaImportTest()
+        {
+            StreamProcessRunner.CreateAndExecuteAsync(
+                new ImportFilesConfig
+                {
+                    //InputFilesRootFolderPath = @"C:\Users\sroyer\Downloads\RBC",
+                    InputFilesRootFolderPath = @"C:\Users\paill\Desktop\efa",
+                    NavFileFileNamePattern = "ffnav1_*.csv",
+                    PositionFileFileNamePattern = "ffpos1_*.csv",
+                    DbCtx = _databaseContext
+                },
+                EfaJobs.FullInitialImport,
+                traceStream => traceStream
+                    .Where("remove verbose", i => i.Content.Level != TraceLevel.Verbose)
+                    .ThroughAction("trace", i => Debug.WriteLine(i))
+            ).Wait();
         }
     }
 }

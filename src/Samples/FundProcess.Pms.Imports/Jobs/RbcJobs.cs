@@ -16,39 +16,11 @@ using System.Linq;
 
 namespace FundProcess.Pms.Imports.Jobs
 {
-    public class ImportFiles
+    public class RbcJobs
     {
-        // private class RbcNavFileContext
-        // {
-        //     public RbcNavFile FileInput { get; set; }
-        //     public DatabaseContext DbContext { get; set; }
-        // }
-        // private static IStream<RbcNavFileContext> ProcessSubfund(IStream<RbcNavFileContext> inputStream)
-        // {
-        //     return inputStream;
-        // }
-        //public static void Tmp(DatabaseContext dbContext)
-        //{
-        //    dbContext.Set<PortfolioComposition>()
-        //        .AsNoTracking()
-        //        .Where(i => i.PortfolioId == 12 && i.Date == DateTime.Today)
-        //        .Select(i => i.Positions.Sum(j => j.MarketValueInPortfolioCcy));
-
-
-        //    dbContext.Set<PortfolioComposition>()
-        //        .AsNoTracking()
-        //        .Where(i => i.PortfolioId == 12 && i.Date == DateTime.Today)
-        //        .Select(i => new
-        //        {
-        //            i.PortfolioId,
-        //            TotalMarketValueInPortfolioCCy = i.Positions.Sum(j => j.MarketValueInPortfolioCcy)
-        //        })
-        //        .GroupBy(i=>i.PortfolioId);
-        //}
-
-        public static void DefineRbcImportProcessWithNoCtx(ISingleStream<ImportFilesConfigNoCtx> configStream)
+        public static void FullInitialImportProcessWithNoCtx(ISingleStream<ImportFilesConfigNoCtx> configStream)
         {
-            DefineRbcImportProcess(configStream.Select("create config with Ctx", c =>
+            FullInitialImport(configStream.Select("create config with Ctx", c =>
             {
                 var csb = new SqlConnectionStringBuilder();
                 csb.IntegratedSecurity = true;
@@ -64,7 +36,7 @@ namespace FundProcess.Pms.Imports.Jobs
                 };
             }));
         }
-        public static void DefineRbcImportProcess(ISingleStream<ImportFilesConfig> configStream)
+        public static void FullInitialImport(ISingleStream<ImportFilesConfig> configStream)
         {
             var navFileStream = configStream
                 .CrossApplyFolderFiles("get all Nav files", i => i.InputFilesRootFolderPath, i => i.NavFileFileNamePattern, true)
@@ -174,21 +146,14 @@ namespace FundProcess.Pms.Imports.Jobs
                 .Lookup("get related composition", compositionStream,
                     i => new { i.FromFile.FundCode, i.FromFile.NavDate },
                     i => new { i.FromFile.FundCode, i.FromFile.NavDate },
-                    (l, r) =>
+                    (l, r) => new
                     {
-                        if (l.FromFile.MarketValueInFdCcy == 654576)
-                        {
-                            System.Diagnostics.Debug.WriteLine("coucou");
-                        }
-                        return new
-                        {
-                            l.FromFile.Quantity,
-                            l.FromFile.MarketValueInFdCcy,
-                            l.FromFile.MarketValueInSecCcy,
-                            l.FromFile.PercNav,
-                            r.Composition,
-                            l.Security
-                        };
+                        l.FromFile.Quantity,
+                        l.FromFile.MarketValueInFdCcy,
+                        l.FromFile.MarketValueInSecCcy,
+                        l.FromFile.PercNav,
+                        r.Composition,
+                        l.Security
                     })
                 .Select("create position", dbCnxStream, (i, ctx) => ctx.UpdateEntityForMultiTenancy(new Position
                 {
@@ -204,22 +169,21 @@ namespace FundProcess.Pms.Imports.Jobs
         private static Security CreateSecurityFromInstrumentType(string rbcType, string currencyIso, string isin, string name, string internalCode, DateTime? nextCouponDate)
         {
             var rbcCode = string.IsNullOrWhiteSpace(rbcType) ? "" : rbcType.Split(':')[0].Trim();
-
             switch (rbcCode)
             {
-                case "100":
-                case "102":
-                case "103":
-                case "120":
+                case "100": // SHARES
+                case "102": //
+                case "103": //
+                case "120": //
                 case "117": // REITS
                 case "118": // NON G.T. REITS
                 case "411": // SICAF
                     return new Equity { InternalCode = internalCode, CurrencyIso = currencyIso, Isin = isin, Name = name };
-                case "484":
-                case "485":
+                case "484": // Investment Funds - UCITS- French
+                case "485": // Investment Funds - UCITS- European
                     return new SubFund { InternalCode = internalCode, CurrencyIso = currencyIso, Isin = isin, Name = name };
-                case "200":
-                case "201":
+                case "200": // STRAIGHT BONDS
+                case "201": // FLOATING RATE BONDS
                 case "270": // Commercial paper
                 case "271": // Certificate of Deposit
                 case "202": // "202 : ZERO COUPON BONDS"
@@ -228,16 +192,6 @@ namespace FundProcess.Pms.Imports.Jobs
                     return new Derivative { InternalCode = internalCode, CurrencyIso = currencyIso, Isin = isin, Name = name };
             }
             return null;
-            //throw new Exception("Unrecognized code: " + rbcType);
-            //100 : SHARES
-            //484 : Investment Funds - UCITS- French
-            //117 : G.T. REITS
-            //485 : Investment Funds - UCITS- European
-            //200 : STRAIGHT BONDS
-            //201 : FLOATING RATE BONDS
-            //270 : COMMERCIAL PAPER
-            //202 : ZERO COUPON BONDS
         }
-
     }
 }

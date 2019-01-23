@@ -21,12 +21,12 @@ namespace FundProcess.Pms.Imports.FileDefinitions
                 IsinCode = i.ToColumn<string>("ISIN CODE"),
                 NavDate = i.ToDateColumn<DateTime>("NAV DATE", "yyyyMMdd"),
                 NavPerShare = i.ToNumberColumn<decimal>("NAV PER SHARE", "."),
-                PreviousNav = i.ToNumberColumn<decimal>("PREVIOUS NAV", "."),
-                QuantityRedemption = i.ToNumberColumn<decimal>("QUANTITY REDEMPTION", "."),
-                QuantitySubscription = i.ToNumberColumn<decimal>("QUANTITY SUBSCRIPTION", "."),
-                Tis = i.ToNumberColumn<decimal>("TIS", "."),
+                //PreviousNav = i.ToNumberColumn<decimal>("PREVIOUS NAV", "."),
+                //QuantityRedemption = i.ToNumberColumn<decimal>("QUANTITY REDEMPTION", "."),
+                //QuantitySubscription = i.ToNumberColumn<decimal>("QUANTITY SUBSCRIPTION", "."),
+                //Tis = i.ToNumberColumn<decimal>("TIS", "."),
                 TotalNetAsset = i.ToNumberColumn<decimal>("TOTAL NET ASSET", "."),
-                TotalTisAmount = i.ToNumberColumn<decimal>("TOTAL TIS AMOUNT", "."),
+                //TotalTisAmount = i.ToNumberColumn<decimal>("TOTAL TIS AMOUNT", "."),
             });
         }
     }

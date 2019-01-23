@@ -16,6 +16,7 @@ namespace FundProcess.Pms.DataAccess.Schemas.Pms.Configurations
             builder.ToTable(nameof(Sicav), nameof(Schemas.Pms));
             builder.HasKey(i => i.Id);
             builder.Property(i => i.Id).UseSqlServerIdentityColumn();
+            builder.Property(i => i.InternalCode).HasMaxLength(50);
             builder.Property(i => i.LegalStructure).HasConversion(new SicavStructureTypeValueConverter());
             builder.HasOne(i => i.ManCo).WithMany().OnDelete(DeleteBehavior.Restrict).HasForeignKey(i => i.BelongsToEntityId);
             builder.Property(i => i.Name).HasMaxLength(255);

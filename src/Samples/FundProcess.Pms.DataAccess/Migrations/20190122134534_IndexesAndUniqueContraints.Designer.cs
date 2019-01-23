@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FundProcess.Pms.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190121105012_UniqueConstraints")]
-    partial class UniqueConstraints
+    [Migration("20190122134534_IndexesAndUniqueContraints")]
+    partial class IndexesAndUniqueContraints
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -274,7 +274,7 @@ namespace FundProcess.Pms.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.HasKey("SecurityId", "DataProvider");
+                    b.HasKey("SecurityId", "DataProvider", "BelongsToEntityId");
 
                     b.ToTable("DataProviderSecurity","Pms");
                 });
@@ -292,7 +292,7 @@ namespace FundProcess.Pms.DataAccess.Migrations
 
                     b.Property<decimal>("Value");
 
-                    b.HasKey("Date", "SecurityId", "Type");
+                    b.HasKey("Date", "SecurityId", "Type", "BelongsToEntityId");
 
                     b.HasIndex("SecurityId");
 
@@ -315,7 +315,7 @@ namespace FundProcess.Pms.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("BelongsToEntityId", "Date", "PortfolioId");
+                    b.HasAlternateKey("Date", "PortfolioId", "BelongsToEntityId");
 
                     b.HasIndex("PortfolioId");
 
@@ -328,8 +328,7 @@ namespace FundProcess.Pms.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BelongsToEntityId")
-                        .IsRequired();
+                    b.Property<int?>("BelongsToEntityId");
 
                     b.Property<decimal>("MarketValueInPortfolioCcy");
 
@@ -345,11 +344,9 @@ namespace FundProcess.Pms.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("BelongsToEntityId", "PortfolioCompositionId", "SecurityId");
-
-                    b.HasIndex("PortfolioCompositionId");
-
                     b.HasIndex("SecurityId");
+
+                    b.HasIndex("PortfolioCompositionId", "SecurityId", "BelongsToEntityId");
 
                     b.ToTable("Position","Pms");
                 });
