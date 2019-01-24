@@ -48,7 +48,7 @@ namespace GotDotNet.XPath {
     // The class is the place to associate the xpath string expression
     // and it's compiled query expression
 
-    /// <include file='doc\XPathExpression.uex' path='docs/doc[@for="Array.CreateInstance"]/*' />
+    
 
     public class XPathQuery{
 
@@ -125,7 +125,7 @@ namespace GotDotNet.XPath {
 
         ///
         /// use can store this compiled expression to query other documents
-        /// <include file='doc\XPathExpression.uex' path='docs/doc[@for="Array.CreateInstance"]/*' />
+        
         public ArrayList GetXPathQueries {
             get { return compiledXPath; }
         }

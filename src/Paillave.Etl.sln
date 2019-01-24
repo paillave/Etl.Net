@@ -49,6 +49,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundProcess.Pms.Imports", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundProcess.Pms.ImportsTests", "Samples\FundProcess.Pms.ImportsTests\FundProcess.Pms.ImportsTests.csproj", "{0BBEAE24-1F01-488C-B6CD-1FDF1B892887}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.XmlFileTests", "Paillave.Etl.XmlFileTests\Paillave.Etl.XmlFileTests.csproj", "{37F4CB36-1D2D-49BB-9F65-5ED171EAEE4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +141,10 @@ Global
 		{0BBEAE24-1F01-488C-B6CD-1FDF1B892887}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BBEAE24-1F01-488C-B6CD-1FDF1B892887}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BBEAE24-1F01-488C-B6CD-1FDF1B892887}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37F4CB36-1D2D-49BB-9F65-5ED171EAEE4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37F4CB36-1D2D-49BB-9F65-5ED171EAEE4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37F4CB36-1D2D-49BB-9F65-5ED171EAEE4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37F4CB36-1D2D-49BB-9F65-5ED171EAEE4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

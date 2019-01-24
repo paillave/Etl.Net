@@ -12,7 +12,7 @@
     <PackageIconUrl>https://paillave.github.io/Etl.Net/images/NugetIcon.png</PackageIconUrl>
     <Description>XML files extensions for Etl.Net</Description>
     <PackageReleaseNotes>
-extensions for Etl.Net to read large XML files using 
+extensions for Etl.Net to quickly read very large XML files with low memory foot print
     </PackageReleaseNotes>
   </PropertyGroup>
 

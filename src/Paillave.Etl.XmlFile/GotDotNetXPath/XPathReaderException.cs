@@ -23,13 +23,13 @@ namespace GotDotNet.XPath
 
 	// The XPathException class contains XML parser errors.
 	// 
-	/// <include file='doc\XPathException.uex' path='docs/doc[@for="XPathException"]/*' />
-	/// <devdoc>
-	///    <para>
+	
+	/// <summary>
+	///    
 	///       Represents the exception that is thrown when there is error processing an
 	///       XPath expression.
-	///    </para>
-	/// </devdoc>
+	///    
+	/// </summary>
 	[Serializable]
 	public class XPathException : SystemException
 	{
@@ -39,13 +39,13 @@ namespace GotDotNet.XPath
 	}
     // The XPathReaderException class contains XML parser errors.
     // 
-    /// <include file='doc\XPathException.uex' path='docs/doc[@for="XPathException"]/*' />
-    /// <devdoc>
-    ///    <para>
+    
+    /// <summary>
+    ///    
     ///       Represents the exception that is thrown when there is error processing an
     ///       XPath expression.
-    ///    </para>
-    /// </devdoc>
+    ///    
+    /// </summary>
     [Serializable]
     public class XPathReaderException : XPathException
     {

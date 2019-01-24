@@ -29,3 +29,8 @@
   items:
   - uid: Paillave.Etl.TextFile.Extensions.TextFileEx
     name: TextFileEx
+- uid: Paillave.Etl.XmlFile.Extensions
+  name: Paillave.Etl.XmlFile.Extensions
+  items:
+  - uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx
+    name: XmlFileEx

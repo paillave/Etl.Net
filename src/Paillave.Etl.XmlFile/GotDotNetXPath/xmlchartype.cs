@@ -17,10 +17,10 @@ namespace GotDotNet.XPath
 	// The XmlCharType class is used for quick character type recognition
    // which is optimized for the first 127 ascii characters.
    //
-    /// <include file='doc\XmlCharType.uex' path='docs/doc[@for="XmlCharType"]/*' />
-    /// <internalonly/>
-    /// <devdoc>
-    /// </devdoc>
+    
+    
+    /// <summary>
+    /// </summary>
     internal sealed class XmlCharType
     {
         // Whitespace chars -- Section 2.3 [3]

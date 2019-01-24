@@ -18,143 +18,143 @@ namespace GotDotNet.XPath
     using System.Xml;
     using System.Collections;
 
-     /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XmlSortOrder"]/*' />
-     /// <devdoc>
-     ///    <para>[To be supplied.]</para>
-     /// </devdoc>
+     
+     /// <summary>
+     ///    [To be supplied.]
+     /// </summary>
     public enum XmlSortOrder {
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XmlSortOrder.Ascending"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         Ascending       = 1,
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XmlSortOrder.Descending"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         Descending      = 2,
     }
 
-     /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XmlCaseOrder"]/*' />
-     /// <devdoc>
-     ///    <para>[To be supplied.]</para>
-     /// </devdoc>
+     
+     /// <summary>
+     ///    [To be supplied.]
+     /// </summary>
     public enum XmlCaseOrder {
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XmlCaseOrder.None"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         None            = 0,
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XmlCaseOrder.UpperFirst"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         UpperFirst      = 1,
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XmlCaseOrder.LowerFirst"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         LowerFirst      = 2,
     }
 
-     /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XmlDataType"]/*' />
-     /// <devdoc>
-     ///    <para>[To be supplied.]</para>
-     /// </devdoc>    
+     
+     /// <summary>
+     ///    [To be supplied.]
+     /// </summary>    
     public enum XmlDataType {
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XmlDataType.Text"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         Text            = 1,
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XmlDataType.Number"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         Number          = 2,
     }
 
-     /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XPathNodeType"]/*' />
-     /// <devdoc>
-     ///    <para>[To be supplied.]</para>
-     /// </devdoc>
+     
+     /// <summary>
+     ///    [To be supplied.]
+     /// </summary>
     public enum XPathResultType {
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XPathNodeType.String"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         Number         = 0 ,
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XPathNodeType.Boolean"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         String          = 1,
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XPathNodeType.Number"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         Boolean         = 2,
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XPathNodeType.Navigator"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         NodeSet        = 3,
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XPathNodeType.NodeSet"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         Navigator       = XPathResultType.String,
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XPathNodeType.Any"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
          Any            = 5,
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XPathNodeType.Error"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         Error
     };
 
-     /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XPathExpression"]/*' />
-     /// <devdoc>
-     ///    <para>[To be supplied.]</para>
-     /// </devdoc>
+     
+     /// <summary>
+     ///    [To be supplied.]
+     /// </summary>
      /// 
 	/*
     public abstract class XPathExpression {
         //Added for UE
         internal XPathExpression(){}
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XPathExpression.Expressiom"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         public  abstract string Expression { get; }
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XPathExpression.AddSort"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         public abstract void AddSort(object expr, IComparer comparer);
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XPathExpression.AddSort1"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         public abstract void AddSort(object expr, XmlSortOrder order,
                     XmlCaseOrder caseOrder, string lang, XmlDataType dataType);
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XPathExpression.Clone"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         public abstract XPathExpression Clone();
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XPathExpression.SetContext"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         public abstract void SetContext(XmlNamespaceManager nsManager);
-         /// <include file='doc\XPathExpr.uex' path='docs/doc[@for="XPathExpression.ReturnType"]/*' />
-         /// <devdoc>
-         ///    <para>[To be supplied.]</para>
-         /// </devdoc>
+         
+         /// <summary>
+         ///    [To be supplied.]
+         /// </summary>
         public abstract XPathResultType ReturnType { get; }
     }
 	*/

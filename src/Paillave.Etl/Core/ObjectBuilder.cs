@@ -13,7 +13,7 @@ namespace Paillave.Etl.Core
         private readonly bool _isOutputAnonymous;
         private Type _outType;
         public IReadOnlyDictionary<string, Type> Types { get; }
-        public IDictionary<string, object> Values { get; private set; }
+        public IDictionary<string, object> Values { get; set; } = new Dictionary<string, object>();
         public ObjectBuilder(Type outType, bool presetDefaultValues = false)
         {
             _outType = outType;
