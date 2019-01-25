@@ -9,5 +9,12 @@ namespace Paillave.Etl.XmlFile.Core.Mapping.Visitors
             this.MappingSetter.XPathQuery = xPathQuery;
             return default;
         }
+
+        public T ToXPathQuery<T>(string xPathQuery, int depthScope)
+        {
+            this.MappingSetter.XPathQuery = xPathQuery;
+            this.MappingSetter.DepthScope = depthScope;
+            return default;
+        }
     }
 }

@@ -74,7 +74,7 @@ namespace GotDotNet.XPath {
             if (baseReader.MoveToAttribute(base.Name)) {
                 ret = reader.Value;
             }
-
+            
             //Move back to the parent
             baseReader.MoveToElement();
             return ret;

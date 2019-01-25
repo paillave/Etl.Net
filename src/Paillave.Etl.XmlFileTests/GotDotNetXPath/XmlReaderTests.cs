@@ -1543,46 +1543,6 @@ namespace Paillave.Etl.XmlFileTests.GotDotNetXPath
         }
 
         [TestMethod]
-        public void LoanBook()
-        {
-            XPathCollection xc = new XPathCollection();
-
-            List<int> nodesToCollect = new List<int>();
-            xc.Add("//book/title");
-
-            XmlTextReader reader = new XmlTextReader(new StringReader(@"
-               <books>
-                  <book publisher='IDG books' on-loan='Sanjay'>
-                     <title>XML Bible</title>
-                     <author>Elliotte Rusty Harold</author>
-                  </book>
-                  <book publisher='Addison-Wesley'>
-                     <title>The Mythical Man Month</title>
-                     <author>Frederick Brooks</author>
-                  </book>
-                  <book publisher='WROX'>
-                     <title>Professional XSLT 2nd Edition</title>
-                     <author>Michael Kay</author>
-                  </book>
-                  <book publisher='Prentice Hall' on-loan='Sander' >
-                     <title>Definitive XML Schema</title>
-                     <author>Priscilla Walmsley</author>
-                  </book>
-                  <book publisher='APress'>
-                     <title>A Programmer's Introduction to C#</title>
-                     <author>Eric Gunnerson</author>
-                  </book>
-                </books>"));
-            XPathReader xr = new XPathReader(reader, xc);
-            ArrayList matchList = new ArrayList();
-
-            while (xr.ReadUntilMatch())
-            {
-                System.Diagnostics.Debug.WriteLine(xr.ReadString());
-            }
-        }
-
-        [TestMethod]
         public void ChildAxisWithPrefixWithNamespaceMgr()
         {
 
@@ -1657,11 +1617,12 @@ namespace Paillave.Etl.XmlFileTests.GotDotNetXPath
                 </books>"));
 
             XPathCollection xc = new XPathCollection();
-            //int bookQuery = xc.Add("/books/book");
+            //int bookQueryTmp = xc.Add("/books/book");
             int bookQuery = xc.Add("/books/book[@on-loan]");
             int onloanQuery = xc.Add("/books/book[@on-loan]/@on-loan");
             int titleQuery = xc.Add("/books/book[@on-loan]/title");
             int authorQuery = xc.Add("/books/book[@on-loan]/author");
+            int authorQuery2 = xc.Add("/books/book[@on-loan]/author");
 
             XPathReader xpr = new XPathReader(reader, xc);
 
@@ -1673,8 +1634,6 @@ namespace Paillave.Etl.XmlFileTests.GotDotNetXPath
                 {
                     if (xpr.NodeType == XmlNodeType.Element)
                         messages.Add("Beginning of book");
-                    //else if (xpr.NodeType == XmlNodeType.EndElement)
-                    //    messages.Add("End of book");
                 }
                 else if (xpr.Match(onloanQuery))
                 {
@@ -1710,9 +1669,72 @@ namespace Paillave.Etl.XmlFileTests.GotDotNetXPath
                     "Beginning of book", "loaned by: Sander", "title: Definitive XML Schema", "author: Priscilla Walmsley",
                 },
                 messages.ToArray()
-                );
+            );
         }
 
+        [TestMethod]
+        public void LoanBook3()
+        {
+            System.Diagnostics.Debug.WriteLine("\nLoanBook3");
+            XmlTextReader reader = new XmlTextReader(new StringReader(@"<books></books>"));
+
+            XPathCollection xc = new XPathCollection();
+            //int bookQueryTmp = xc.Add("/books/book");
+            int bookQuery = xc.Add("/books");
+
+            XPathReader xpr = new XPathReader(reader, xc);
+
+            List<string> messages = new List<string>();
+
+            while (xpr.ReadUntilMatch())
+            {
+                if (xpr.Match(bookQuery))
+                {
+                    if (xpr.NodeType == XmlNodeType.Element)
+                        messages.Add("Beginning of book");
+                    else if (xpr.NodeType == XmlNodeType.EndElement)
+                        messages.Add("End of book");
+                }
+            }
+            CollectionAssert.AreEquivalent(
+                new[] {
+                    "Beginning of book", "End of book",
+                },
+                messages.ToArray()
+            );
+        }
+
+        //[TestMethod]
+        //public void LoanBook4()
+        //{
+        //    System.Diagnostics.Debug.WriteLine("\nLoanBook4");
+        //    XmlTextReader reader = new XmlTextReader(new StringReader(@"<books/>"));
+
+        //    XPathCollection xc = new XPathCollection();
+        //    //int bookQueryTmp = xc.Add("/books/book");
+        //    int bookQuery = xc.Add("/books");
+
+        //    XPathReader xpr = new XPathReader(reader, xc);
+
+        //    List<string> messages = new List<string>();
+
+        //    while (xpr.ReadUntilMatch())
+        //    {
+        //        if (xpr.Match(bookQuery))
+        //        {
+        //            if (xpr.NodeType == XmlNodeType.Element)
+        //                messages.Add("Beginning of book");
+        //            else if (xpr.NodeType == XmlNodeType.EndElement)
+        //                messages.Add("End of book");
+        //        }
+        //    }
+        //    CollectionAssert.AreEquivalent(
+        //        new[] {
+        //            "Beginning of book", "End of book",
+        //        },
+        //        messages.ToArray()
+        //    );
+        //}
 
         // public static void Main()
         // {

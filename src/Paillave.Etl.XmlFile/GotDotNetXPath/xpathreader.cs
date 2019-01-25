@@ -176,7 +176,7 @@ namespace GotDotNet.XPath
         /// <summary>
         ///     return true if one of the queries matches with the XmlReader context. 
         /// </summary>
-        public bool ReadUntilMatch()
+        public bool ReadUntilMatch(Action endOfUnmatchedElementAction = null)
         {
 
             while (true)
@@ -206,6 +206,10 @@ namespace GotDotNet.XPath
                     if (xpathCollection.MatchAnyQuery())
                     {
                         return true;
+                    }
+                    else
+                    {
+                        if (endOfUnmatchedElementAction != null && this.reader.NodeType == XmlNodeType.EndElement) endOfUnmatchedElementAction();
                     }
                 }
                 else

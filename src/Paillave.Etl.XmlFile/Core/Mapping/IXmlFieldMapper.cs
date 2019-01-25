@@ -7,5 +7,6 @@ namespace Paillave.Etl.XmlFile.Core.Mapping
     public interface IXmlFieldMapper
     {
         T ToXPathQuery<T>(string xPathQuery);
+        T ToXPathQuery<T>(string xPathQuery, int depthScope);
     }
 }

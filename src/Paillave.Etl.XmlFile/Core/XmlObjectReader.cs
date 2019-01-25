@@ -13,44 +13,34 @@ namespace Paillave.Etl.XmlFile.Core
 {
     public class XmlObjectReader
     {
+        private class XmlReadField
+        {
+            public XmlFieldToRead FieldToRead { get; set; }
+            public int Depth { get; set; }
+            public object Value { get; set; }
+        }
+        private class XmlReadNode
+        {
+            public XmlNodeToRead NodeToRead { get; set; }
+            public int Depth { get; set; }
+        }
+        private class XmlNodeToRead
+        {
+            public int SearchId { get; set; }
+            public IXmlNodeDefinition NodeDefinition { get; set; }
+            public List<XmlFieldToRead> FieldsToRead { get; set; }
+        }
+        private class XmlFieldToRead
+        {
+            public int SearchId { get; set; }
+            public XmlFieldDefinition FieldDefinition { get; set; }
+        }
+        private readonly List<XmlReadField> _inScopeReadFields = new List<XmlReadField>();
+        private readonly List<XmlNodeToRead> _nodesToRead;
+
         private XmlFileDefinition _xmlFileDefinition;
         private XPathReader _xpathReader;
         private XPathCollection _xPathCollection;
-        private class NodeDefinitionState
-        {
-            public IXmlNodeDefinition XmlNodeDefinition { get; }
-            private IXmlNamespaceResolver _namespaceResolver;
-            private ObjectBuilder _objectBuilder;
-            private Dictionary<int, XmlFieldDefinition> _xmlFieldDefinitions = new Dictionary<int, XmlFieldDefinition>();
-            public NodeDefinitionState(IXmlNodeDefinition xmlNodeDefinition, IXmlNamespaceResolver namespaceResolver)
-            {
-                _objectBuilder = new ObjectBuilder(xmlNodeDefinition.Type);
-                _namespaceResolver = namespaceResolver;
-                XmlNodeDefinition = xmlNodeDefinition;
-            }
-            public void AddFieldDefinition(int id, XmlFieldDefinition xmlFieldDefinition)
-            {
-                _xmlFieldDefinitions[id] = xmlFieldDefinition;
-            }
-            public void SetValue(XPathReader xpathReader)
-            {
-                var xmlFieldDefinition = _xmlFieldDefinitions.FirstOrDefault(i => xpathReader.Match(i.Key)).Value;
-                if (xmlFieldDefinition == null) return;
-                object val;
-                if (xpathReader.NodeType == XmlNodeType.Element)
-                    val = xpathReader.ReadElementContentAs(xmlFieldDefinition.TargetPropertyInfo.PropertyType, _namespaceResolver);//.ReadString();
-                else
-                    val = xpathReader.ReadContentAs(xmlFieldDefinition.TargetPropertyInfo.PropertyType, _namespaceResolver); //Value
-                _objectBuilder.Values[xmlFieldDefinition.TargetPropertyInfo.Name] = val;
-            }
-            public object CreateInstance()
-            {
-                var ret = _objectBuilder.CreateInstance();
-                _objectBuilder.Values = new Dictionary<string, object>();
-                return ret;
-            }
-        }
-        private IDictionary<int, NodeDefinitionState> _nodeDefinitionStates = new Dictionary<int, NodeDefinitionState>();
         public XmlObjectReader(XmlReader xmlReader, XmlFileDefinition xmlFileDefinition, Action<XmlNodeParsed> pushResult)
         {
             _pushResult = pushResult;
@@ -58,57 +48,102 @@ namespace Paillave.Etl.XmlFile.Core
 
             _xPathCollection = new XPathCollection(_xmlFileDefinition.NameSpaceManager);
 
-            foreach (var xmlNodeDefinition in xmlFileDefinition.XmlNodeDefinitions)
+            _nodesToRead = xmlFileDefinition.XmlNodeDefinitions.Select(xmlNodeDefinition =>
             {
-                var nodeDefinitionId = _xPathCollection.Add(xmlNodeDefinition.NodeXPath);
-                var nodeDefinitionState = new NodeDefinitionState(xmlNodeDefinition, _xmlFileDefinition.NameSpaceManager);
-                foreach (var xmlFieldDefinition in xmlNodeDefinition.GetXmlFieldDefinitions())
+                var nodeToReadSearchId = _xPathCollection.Add(xmlNodeDefinition.NodeXPath);
+                return new XmlNodeToRead
                 {
-                    var xmlFieldDefinitionId = _xPathCollection.Add(xmlFieldDefinition.XPathQuery);
-                    nodeDefinitionState.AddFieldDefinition(xmlFieldDefinitionId, xmlFieldDefinition);
-                }
-                _nodeDefinitionStates[nodeDefinitionId] = nodeDefinitionState;
-            }
+                    NodeDefinition = xmlNodeDefinition,
+                    SearchId = nodeToReadSearchId,
+                    FieldsToRead = xmlNodeDefinition.GetXmlFieldDefinitions().Select(xmlFieldDefinition =>
+                    {
+                        var fieldToReadSearchId = _xPathCollection.Add(xmlFieldDefinition.XPathQuery);
+                        return new XmlFieldToRead
+                        {
+                            SearchId = fieldToReadSearchId,
+                            FieldDefinition = xmlFieldDefinition
+                        };
+                    }).ToList()
+                };
+            }).ToList();
+
             _xpathReader = new XPathReader(xmlReader, _xPathCollection);
         }
-        private NodeDefinitionState _currentNodeDefinitionState = null;
         private Action<XmlNodeParsed> _pushResult;
-        private bool TryToDefineAsCurrentNodeDefinitionState()
+        private bool XmlReadFieldShouldBeCleanedUp(XmlReadField xmlReadField)
         {
-            if (_xpathReader.NodeType == XmlNodeType.EndElement && _currentNodeDefinitionState != null)
+            var depthScope = xmlReadField.FieldToRead.FieldDefinition.DepthScope;
+            int depthLimit;
+            if (depthScope > 0)
+                depthLimit = depthScope;
+            else
+                depthLimit = xmlReadField.Depth + depthScope;
+            return _xpathReader.Depth < depthLimit;
+        }
+        private void ProcessEndOfAnyNode()
+        {
+            foreach (var item in _inScopeReadFields.Where(XmlReadFieldShouldBeCleanedUp).ToList())
+                _inScopeReadFields.Remove(item);
+        }
+        private void ProcessEndOfSearchedNode()
+        {
+            if (_xpathReader.NodeType == XmlNodeType.EndElement)
             {
-                _pushResult(new XmlNodeParsed
+                var nodeToRead = _nodesToRead.FirstOrDefault(i => _xpathReader.Match(i.SearchId));
+                if (nodeToRead != null)
                 {
-                    Name = _currentNodeDefinitionState.XmlNodeDefinition.Name,
-                    NodeXPath = _currentNodeDefinitionState.XmlNodeDefinition.NodeXPath,
-                    Type = _currentNodeDefinitionState.XmlNodeDefinition.Type,
-                    Value = _currentNodeDefinitionState.CreateInstance()
-                });
-                _currentNodeDefinitionState = null;
-                return true;
+                    var objectBuilder = new ObjectBuilder(nodeToRead.NodeDefinition.Type);
+                    foreach (var inScopeReadField in _inScopeReadFields.Where(i => nodeToRead.FieldsToRead.Any(j => j.SearchId == i.FieldToRead.SearchId)))
+                        objectBuilder.Values[inScopeReadField.FieldToRead.FieldDefinition.TargetPropertyInfo.Name] = inScopeReadField.Value;
+
+                    _pushResult(new XmlNodeParsed
+                    {
+                        Name = nodeToRead.NodeDefinition.Name,
+                        NodeXPath = nodeToRead.NodeDefinition.NodeXPath,
+                        Type = nodeToRead.NodeDefinition.Type,
+                        Value = objectBuilder.CreateInstance()
+                    });
+                }
+                ProcessEndOfAnyNode();
             }
-            if (_xpathReader.NodeType != XmlNodeType.Element) return false;
-            var state = _nodeDefinitionStates.FirstOrDefault(i => _xpathReader.Match(i.Key)).Value;
-            if (state == null) return false;
-            if (_currentNodeDefinitionState != null)
+        }
+        private object GetFieldValue(XmlFieldDefinition xmlFieldDefinition)
+        {
+            if (_xpathReader.NodeType == XmlNodeType.Element)
+                return _xpathReader.ReadElementContentAs(xmlFieldDefinition.TargetPropertyInfo.PropertyType, _xmlFileDefinition.NameSpaceManager);//.ReadString();
+            else
+                return _xpathReader.ReadContentAs(xmlFieldDefinition.TargetPropertyInfo.PropertyType, _xmlFileDefinition.NameSpaceManager); //Value
+        }
+        private void ProcessSearchedField()
+        {
+            var matchingFieldsToReads = _nodesToRead.SelectMany(nodeToRead => nodeToRead.FieldsToRead.Where(fieldToRead => _xpathReader.Match(fieldToRead.SearchId))).ToList();
+
+            foreach (var matchingFieldToRead in matchingFieldsToReads)
             {
-                _pushResult(new XmlNodeParsed
+                var inScopeReadField = _inScopeReadFields.FirstOrDefault(i => i.Depth == _xpathReader.Depth && i.FieldToRead.SearchId == matchingFieldToRead.SearchId);
+                if (inScopeReadField == null)
                 {
-                    Name = _currentNodeDefinitionState.XmlNodeDefinition.Name,
-                    NodeXPath = _currentNodeDefinitionState.XmlNodeDefinition.NodeXPath,
-                    Type = _currentNodeDefinitionState.XmlNodeDefinition.Type,
-                    Value = _currentNodeDefinitionState.CreateInstance()
-                });
+                    inScopeReadField = new XmlReadField
+                    {
+                        Depth = _xpathReader.Depth,
+                        FieldToRead = matchingFieldToRead,
+                        Value = GetFieldValue(matchingFieldToRead.FieldDefinition)
+                    };
+                    _inScopeReadFields.Add(inScopeReadField);
+                }
+                else
+                {
+                    inScopeReadField.Value = GetFieldValue(matchingFieldToRead.FieldDefinition);
+                }
             }
-            _currentNodeDefinitionState = state;
-            return true;
         }
         public void Read()
         {
-            while (_xpathReader.ReadUntilMatch())
-                if (!TryToDefineAsCurrentNodeDefinitionState())
-                    if (_currentNodeDefinitionState != null)
-                        _currentNodeDefinitionState.SetValue(_xpathReader);
+            while (_xpathReader.ReadUntilMatch(ProcessEndOfAnyNode))
+            {
+                ProcessEndOfSearchedNode();
+                ProcessSearchedField();
+            }
         }
     }
 }
