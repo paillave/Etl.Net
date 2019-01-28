@@ -127,9 +127,9 @@ namespace FundProcess.Pms.ImportsTests
                 {
                     //InputFilesRootFolderPath = @"C:\Users\sroyer\Downloads\RBC",
                     InputFilesRootFolderPath = @"C:\Users\paill\Desktop\bdl",
-                    FileNamePattern = "*.xml",
+                    //FileNamePattern = "*.xml",
                     //FileNamePattern = "test.txt",
-                    //FileNamePattern = "shelter#aggr_iis_sftp162789960.xml",
+                    FileNamePattern = "shelter#aggr_iis_sftp162789960.xml",
                     DbContext = _databaseContext
                 },
                 BdlJobs.FullInitialImport,

@@ -25,9 +25,9 @@ namespace FundProcess.Pms.Imports.StreamTypes.InputOutput
         public string InstrCcy { get; set; } // <InstrCcy>EUR</InstrCcy>
         //public string PriceUnit { get; set; } // <PriceUnit>mon</PriceUnit>
         //public int QuotMode { get; set; } // <QuotMode>11</QuotMode>
-        public string PriceCcy { get; set; } // <PriceCcy>EUR</PriceCcy>
-        public decimal Price { get; set; } // <Price>166.63</Price>
-        public DateTime PriceDate { get; set; } // <PriceDate>2016-12-16</PriceDate>
+        //public string PriceCcy { get; set; } // <PriceCcy>EUR</PriceCcy>
+        //public decimal Price { get; set; } // <Price>166.63</Price>
+        //public DateTime PriceDate { get; set; } // <PriceDate>2016-12-16</PriceDate>
         //public DateTime IssueDate { get; set; } // <IssueDate>2006-12-15</IssueDate>
         //public DateTime MatRdmptDate { get; set; } // <MatRdmptDate/>
         //public decimal RdmptPrice { get; set; } // <RdmptPrice/>

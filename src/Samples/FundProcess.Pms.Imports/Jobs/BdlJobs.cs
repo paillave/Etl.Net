@@ -48,36 +48,149 @@ namespace FundProcess.Pms.Imports.Jobs
                 .CrossApplyFolderFiles("get all Nav files", i => i.InputFilesRootFolderPath, i => i.FileNamePattern, true)
                 .CrossApplyXmlFile("parse input file", new BdlFileDefinition());
 
-            var securitiesStream = nodesStream
-                .Where("list securities", i => i.NodeDefinitionName == "secbase")
-                .Select("cast to security", i => (BdlSecBaseNode)i.Value)
-                .Distinct("distinct securities", i => i.SecurityCode);
+            var sourceTargetSecuritiesStream = nodesStream
+                .Where("list target securities", i => i.NodeDefinitionName == "secbase")
+                .Select("cast to target security", i => (BdlSecBaseNode)i.Value)
+                .Distinct("distinct target securities", i => i.SecurityCode);
 
-            var securityPositionsStream = nodesStream
+            var sourceSecurityPositionsStream = nodesStream
                 .Where("list securities positions", i => i.NodeDefinitionName == "secpos")
                 .Select("cast to security position", i => (BdlSecPosNode)i.Value);
 
-            var managedSecurityCodes = securityPositionsStream
-                .Distinct("distinct portfolio code from securities positions", i => i.ContId)
-                .Select("get managed security code only", i => new { i.ContId });
-
-            var managedSecurities = securitiesStream
-                .Lookup("get matching security code from positions", managedSecurityCodes, i => i.SecurityCode, i => i.ContId, (l, r) => new { Security = l, IsManaged = r != null })
-                .Where("keep managed securities", i => i.IsManaged);
-
-            var cashPositionsStream = nodesStream
+            var sourceCashPositionsStream = nodesStream
                 .Where("list cash positions", i => i.NodeDefinitionName == "cashpos")
-                .Select("cast to cash position", i => (BdlCashposNode)i.Value);
+                .Select("cast to cash position", i => (BdlCashposNode)i.Value)
+                .ThroughAction("correct the iban if empty", i => { if (string.IsNullOrWhiteSpace(i.Iban)) i.Iban = $"BDL_{i.AssetCcy}"; });
+
+            var sourcePortfoliosStream = nodesStream
+                .Where("list portfolios", i => i.NodeDefinitionName == "custid")
+                .Select("cast to portfolio", i => (BdlCustidNode)i.Value)
+                .Distinct("distinct portfolio", i => i.ContId);
+
+            var portfolioStream = sourcePortfoliosStream
+                .Select("create portfolio", dbCnxStream, (i, ctx) => ctx.UpdateEntityForMultiTenancy(new Portfolio
+                {
+                    InternalCode = i.ContId,
+                    Name = $"BDL_{i.ContId}",
+                    CurrencyIso = i.DefaultCcy,
+                    CountryCode = i.Domicile
+                }))
+                .ThroughEntityFrameworkCore("save portfolio", dbCnxStream, i => new { i.InternalCode, i.BelongsToEntityId });
+
+            var portfolioCompositionFromSecurityPositionStream = sourceSecurityPositionsStream
+                .Lookup("get portfolio for security position", portfolioStream, i => i.ContId, i => i.InternalCode, (l, r) => new { FromFile = l, Portfolio = r })
+                .Select("create composition from security position", dbCnxStream, (i, ctx) => ctx.UpdateEntityForMultiTenancy(new PortfolioComposition
+                {
+                    Date = i.FromFile.AssBalDate,
+                    PortfolioId = i.Portfolio.Id
+                }));
+
+            var portfolioCompositionFromCashPositionStream = sourceCashPositionsStream
+                .Lookup("get portfolio for cash position", portfolioStream, i => i.ContId, i => i.InternalCode, (l, r) => new { FromFile = l, Portfolio = r })
+                .Select("create composition from cash position", dbCnxStream, (i, ctx) => ctx.UpdateEntityForMultiTenancy(new PortfolioComposition
+                {
+                    Date = i.FromFile.PosBalDate,
+                    PortfolioId = i.Portfolio.Id
+                }));
+
+            var portfolioCompositionStream = portfolioCompositionFromSecurityPositionStream
+                .Union("join portfolio composition from security and from cash", portfolioCompositionFromCashPositionStream)
+                .Distinct("distinct portfolio composition", i => new { i.Date, i.PortfolioId })
+                .ThroughEntityFrameworkCore("save portfolio composition", dbCnxStream, i => new { i.BelongsToEntityId, i.Date, i.PortfolioId });
+
+            var targetSecurityStream = sourceTargetSecuritiesStream
+                .Distinct("distinct target securities", i => i.SecurityCode)
+                .Select("create target security", dbCnxStream, (i, ctx) => ctx.UpdateEntityForMultiTenancy(CreateTargetSecurity(i.InstrType, i.Isin, i.SecurityCode, i.SecName, i.Domicile, i.InstrCcy, i.ValFreq)))
+                .ThroughEntityFrameworkCore("save target security", dbCnxStream, i => new { i.BelongsToEntityId, i.InternalCode });
+
+            var targetCashStream = sourceCashPositionsStream
+                .Distinct("distinct target cash", i => i.Iban)
+                .Select("create target cash", dbCnxStream, (i, ctx) => ctx.UpdateEntityForMultiTenancy(new Cash
+                {
+                    InternalCode = i.Iban,
+                    CurrencyIso = i.AssetCcy,
+                    Name = $"BDL_{i.Iban}"
+                }))
+                .ThroughEntityFrameworkCore("save target cash", dbCnxStream, i => new { i.BelongsToEntityId, i.InternalCode });
+
+            var cashPositions = sourceCashPositionsStream
+                .Lookup("lookup target cash", targetCashStream, i => i.Iban, i => i.InternalCode, (l, r) => new { FromFile = l, Cash = r })
+                .Lookup("lookup cash porfolio", portfolioStream, i => i.FromFile.ContId, i => i.InternalCode, (l, r) => new { l.FromFile, l.Cash, Portfolio = r })
+                .Lookup("lookup cash portfolio composition", portfolioCompositionStream,
+                    i => new { PortfolioId = i.Portfolio.Id, Date = i.FromFile.PosBalDate },
+                    i => new { i.PortfolioId, Date = i.Date.Value },
+                    (l, r) => new { l.FromFile, l.Cash, l.Portfolio, PortfolioComposition = r })
+                .Select("create cash pos", dbCnxStream, (i, ctx) => ctx.UpdateEntityForMultiTenancy(new Position
+                {
+                    PortfolioCompositionId = i.PortfolioComposition.Id,
+                    SecurityId = i.Cash.Id,
+                    MarketValueInPortfolioCcy = i.FromFile.PosBalRefCcy + i.FromFile.AccrInt
+                }))
+                .ThroughEntityFrameworkCore("save cash position", dbCnxStream, i => new { i.BelongsToEntityId, i.PortfolioCompositionId, i.SecurityId });
+
+            var targetSecurityPosition = sourceSecurityPositionsStream
+                .Lookup("lookup target security", targetSecurityStream, i => i.SecurityCode, i => i.InternalCode, (l, r) => new { FromFile = l, Security = r })
+                .Lookup("lookup security porfolio", portfolioStream, i => i.FromFile.ContId, i => i.InternalCode, (l, r) => new { l.FromFile, l.Security, Portfolio = r })
+                .Lookup("lookup securityportfolio composition", portfolioCompositionStream,
+                    i => new { PortfolioId = i.Portfolio.Id, Date = i.FromFile.AssBalDate },
+                    i => new { i.PortfolioId, Date = i.Date.Value },
+                    (l, r) => new { l.FromFile, l.Security, l.Portfolio, PortfolioComposition = r })
+                .Select("create security pos", dbCnxStream, (i, ctx) => ctx.UpdateEntityForMultiTenancy(new Position
+                {
+                    PortfolioCompositionId = i.PortfolioComposition.Id,
+                    SecurityId = i.Security.Id,
+                    //Quantity = i.FromFile.AssetQty,
+                    MarketValueInSecurityCcy = i.FromFile.TotSec,
+                    MarketValueInPortfolioCcy = i.FromFile.TotRefCcy
+                }))
+                .ThroughEntityFrameworkCore("save security position", dbCnxStream, i => new { i.BelongsToEntityId, i.PortfolioCompositionId, i.SecurityId });
+
         }
 
         private static Regex _srriRegex = new Regex(@".+[^(][(](?<code>\d{1,2})[)]$", RegexOptions.Compiled);
-        private int? ConvertSrri(string srriText)
+        private static int? ConvertSrri(string srriText)
         {
             var match = _srriRegex.Match(srriText);
             if (match == null) return null;
             var code = match.Groups["code"].Value;
             if (int.TryParse(code, out var srri)) return srri;
             else return null;
+        }
+
+        private static Security CreateTargetSecurity(int instrType, string isin, string securityCode, string name, string domicile, string instrCcy, string valFreq)
+        {
+            Security security = null;
+            switch (instrType)
+            {
+                case 805:
+                case 810:
+                case 820:
+                case 830:
+                case 840:
+                case 850:
+                case 855:
+                case 870:
+                case 880:
+                case 890:
+                case 896:
+                    security = new SubFund();
+                    break;
+                case 201:
+                case 202:
+                case 911:
+                case 993:
+                    security = new Stock(); //Equity??????????
+                    break;
+                default:
+                    break;
+            }
+            if (security == null) return null;
+            security.Name = name;
+            security.Isin = isin;
+            security.CountryCode = domicile;
+            security.CurrencyIso = instrCcy;
+            security.InternalCode = securityCode;
+            return security;
         }
     }
 }

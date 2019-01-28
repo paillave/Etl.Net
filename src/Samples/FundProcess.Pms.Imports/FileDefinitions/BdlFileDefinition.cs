@@ -18,9 +18,6 @@ namespace FundProcess.Pms.Imports.FileDefinitions
                 InstrType = i.ToXPathQuery<int>("/response/response/cont/pos/Secbase/InstrType"),
                 Isin = i.ToXPathQuery<string>("/response/response/cont/pos/Secbase/Isin"),
                 MifidRisk = i.ToXPathQuery<string>("/response/response/cont/pos/Secbase/MifidRisk"),
-                Price = i.ToXPathQuery<decimal>("/response/response/cont/pos/Secbase/Price"),
-                PriceCcy = i.ToXPathQuery<string>("/response/response/cont/pos/Secbase/PriceCcy"),
-                PriceDate = i.ToXPathQuery<DateTime>("/response/response/cont/pos/Secbase/PriceDate"),
                 Reuters = i.ToXPathQuery<string>("/response/response/cont/pos/Secbase/Reuters"),
                 SecName = i.ToXPathQuery<string>("/response/response/cont/pos/Secbase/SecName"),
                 SecurityCode = i.ToXPathQuery<string>("/response/response/cont/pos/Secbase/SecurityCode"),
@@ -45,6 +42,17 @@ namespace FundProcess.Pms.Imports.FileDefinitions
                 Iban = i.ToXPathQuery<string>("/response/response/cont/pos/Cashpos/Iban"),
                 PosBalDate = i.ToXPathQuery<DateTime>("/response/response/cont/pos/Cashpos/PosBalDate"),
                 PosBalRefCcy = i.ToXPathQuery<decimal>("/response/response/cont/pos/Cashpos/PosBalRefCcy"),
+            }));
+            this.AddNodeDefinition(XmlNodeDefinition.Create("custid", "/response/response/cont/Custid", i => new BdlCustidNode
+            {
+                ContId = i.ToXPathQuery<string>("/response/response/cont/@ContId"),
+                DefaultCcy = i.ToXPathQuery<string>("/response/response/cont/Custid/DefaultCcy"),
+                Domicile = i.ToXPathQuery<string>("/response/response/cont/Custid/Domicile")
+                //AccrInt = i.ToXPathQuery<decimal>("/response/response/cont/pos/Cashpos/AccrInt"),
+                //AssetCcy = i.ToXPathQuery<string>("/response/response/cont/pos/Cashpos/AssetCcy"),
+                //Iban = i.ToXPathQuery<string>("/response/response/cont/pos/Cashpos/Iban"),
+                //PosBalDate = i.ToXPathQuery<DateTime>("/response/response/cont/pos/Cashpos/PosBalDate"),
+                //PosBalRefCcy = i.ToXPathQuery<decimal>("/response/response/cont/pos/Cashpos/PosBalRefCcy"),
             }));
             //this.AddNodeDefinition(XmlNodeDefinition.Create("cashtr", "/response/response/cont/pos/Cashtr", i => new BdlCashTransactionNode
             //{

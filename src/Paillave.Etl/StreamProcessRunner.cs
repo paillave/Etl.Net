@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl
 {
+    //https://www.strathweb.com/2018/04/generic-and-dynamically-generated-controllers-in-asp-net-core-mvc/
     public class StreamProcessRunner
     {
         public static StreamProcessRunner<TConfig> Create<TConfig>(Action<ISingleStream<TConfig>> jobDefinition, string jobName = "NoName") => new StreamProcessRunner<TConfig>(jobDefinition, jobName);
