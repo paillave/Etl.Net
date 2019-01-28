@@ -29,13 +29,13 @@ namespace Paillave.Etl.XmlFile.ValuesProviders
         }
         public void PushValues(TIn input, Action<TOut> push)
         {
-            using (XmlTextReader reader = new XmlTextReader(_args.DataStreamSelector(input)))
+            using (var s = _args.DataStreamSelector(input))
             {
                 var xmlFileDefinition = new XmlFileDefinition()
                     .AddNodeDefinition(_args.XmlNodeDefinition)
                     .AddNameSpaces(_args.PrefixToUriNamespaces);
-                XmlObjectReader xmlObjectReader = new XmlObjectReader(reader, xmlFileDefinition, i => push(_args.ResultSelector(input, i.GetValue<TParsed>())));
-                xmlObjectReader.Read();
+                XmlObjectReader xmlObjectReader = new XmlObjectReader(xmlFileDefinition);
+                xmlObjectReader.Read(s, i => push(_args.ResultSelector(input, i.GetValue<TParsed>())));
             }
         }
     }
@@ -48,10 +48,10 @@ namespace Paillave.Etl.XmlFile.ValuesProviders
         }
         public void PushValues(TIn input, Action<TOut> push)
         {
-            using (XmlTextReader reader = new XmlTextReader(_args.DataStreamSelector(input)))
+            using (var s = _args.DataStreamSelector(input))
             {
-                XmlObjectReader xmlObjectReader = new XmlObjectReader(reader, _args.XmlFileDefinition, i => push(_args.ResultSelector(input, i)));
-                xmlObjectReader.Read();
+                XmlObjectReader xmlObjectReader = new XmlObjectReader(_args.XmlFileDefinition);
+                xmlObjectReader.Read(s, i => push(_args.ResultSelector(input, i)));
             }
         }
     }

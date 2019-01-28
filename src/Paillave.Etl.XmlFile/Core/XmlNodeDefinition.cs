@@ -19,14 +19,14 @@ namespace Paillave.Etl.XmlFile.Core
         public IList<XmlFieldDefinition> _xmlFieldDefinitions = new List<XmlFieldDefinition>();
 
         public IList<XmlFieldDefinition> GetXmlFieldDefinitions() => _xmlFieldDefinitions.ToList();
-        public string NodeXPath { get; private set; }
+        public string NodePath { get; private set; }
 
         public Type Type { get; } = typeof(T);
 
         public XmlNodeDefinition(string name, string nodeXPath)
         {
             this.Name = name;
-            this.NodeXPath = nodeXPath;
+            this.NodePath = nodeXPath;
         }
         public XmlNodeDefinition<T> WithMap(Expression<Func<IXmlFieldMapper, T>> expression)
         {
@@ -42,13 +42,13 @@ namespace Paillave.Etl.XmlFile.Core
             if (existingFieldDefinition == null)
                 _xmlFieldDefinitions.Add(xmlFieldDefinition);
             else
-                if (xmlFieldDefinition.XPathQuery != null) existingFieldDefinition.XPathQuery = xmlFieldDefinition.XPathQuery;
+                if (xmlFieldDefinition.NodePath != null) existingFieldDefinition.NodePath = xmlFieldDefinition.NodePath;
         }
         public XmlNodeDefinition<T> MapXPathToProperty<TField>(string valueXPathQuery, Expression<Func<T, TField>> memberLamda)
         {
             SetFieldDefinition(new XmlFieldDefinition
             {
-                XPathQuery = valueXPathQuery,
+                NodePath = valueXPathQuery,
                 TargetPropertyInfo = memberLamda.GetPropertyInfo()
             });
             return this;

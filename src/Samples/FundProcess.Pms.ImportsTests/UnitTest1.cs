@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using Paillave.Etl.EntityFrameworkCore.BulkSave;
 using Paillave.Etl.EntityFrameworkCore.EfSave;
 using System.Linq.Expressions;
+using FundProcess.Pms.Imports.StreamTypes.Config;
 
 namespace FundProcess.Pms.ImportsTests
 {
@@ -86,13 +87,13 @@ namespace FundProcess.Pms.ImportsTests
         public void RbcImportTest()
         {
             StreamProcessRunner.CreateAndExecuteAsync(
-                new ImportFilesConfig
+                new RbcImportFilesConfigCtx
                 {
                     //InputFilesRootFolderPath = @"C:\Users\sroyer\Downloads\RBC",
                     InputFilesRootFolderPath = @"C:\Users\paill\Desktop\rbc",
                     NavFileFileNamePattern = "*NAVPUBLTEXTRACT*.csv",
                     PositionFileFileNamePattern = "*PORTFVALEXTRACT*.csv",
-                    DbCtx = _databaseContext
+                    DbContext = _databaseContext
                 },
                 RbcJobs.FullInitialImport,
                 traceStream => traceStream
@@ -104,15 +105,34 @@ namespace FundProcess.Pms.ImportsTests
         public void EfaImportTest()
         {
             StreamProcessRunner.CreateAndExecuteAsync(
-                new ImportFilesConfig
+                new EfaImportFilesConfigCtx
                 {
                     //InputFilesRootFolderPath = @"C:\Users\sroyer\Downloads\RBC",
                     InputFilesRootFolderPath = @"C:\Users\paill\Desktop\efa",
                     NavFileFileNamePattern = "ffnav1_*.csv",
                     PositionFileFileNamePattern = "ffpos1_*.csv",
-                    DbCtx = _databaseContext
+                    DbContext = _databaseContext
                 },
                 EfaJobs.FullInitialImport,
+                traceStream => traceStream
+                    .Where("remove verbose", i => i.Content.Level != TraceLevel.Verbose)
+                    .ThroughAction("trace", i => Debug.WriteLine(i))
+            ).Wait();
+        }
+        [Fact]
+        public void BdlImportTest()
+        {
+            StreamProcessRunner.CreateAndExecuteAsync(
+                new BdlImportFilesConfigCtx
+                {
+                    //InputFilesRootFolderPath = @"C:\Users\sroyer\Downloads\RBC",
+                    InputFilesRootFolderPath = @"C:\Users\paill\Desktop\bdl",
+                    FileNamePattern = "*.xml",
+                    //FileNamePattern = "test.txt",
+                    //FileNamePattern = "shelter#aggr_iis_sftp162789960.xml",
+                    DbContext = _databaseContext
+                },
+                BdlJobs.FullInitialImport,
                 traceStream => traceStream
                     .Where("remove verbose", i => i.Content.Level != TraceLevel.Verbose)
                     .ThroughAction("trace", i => Debug.WriteLine(i))

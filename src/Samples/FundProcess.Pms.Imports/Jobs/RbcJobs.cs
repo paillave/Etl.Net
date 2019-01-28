@@ -13,37 +13,38 @@ using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
 using Paillave.Etl.StreamNodes;
 using System.Linq;
+using FundProcess.Pms.Imports.StreamTypes.Config;
+using FundProcess.Pms.Imports.StreamTypes.InputOutput;
 
 namespace FundProcess.Pms.Imports.Jobs
 {
     public class RbcJobs
     {
-        public static void FullInitialImportProcessWithNoCtx(ISingleStream<ImportFilesConfigNoCtx> configStream)
+        public static void FullInitialImportProcessWithNoCtx(ISingleStream<RbcImportFilesConfigNoCtx> configStream)
         {
-            FullInitialImport(configStream.Select("create config with Ctx", c =>
-            {
-                var csb = new SqlConnectionStringBuilder();
-                csb.IntegratedSecurity = true;
-                csb.DataSource = c.Server;
-                csb.InitialCatalog = c.Database;
-                csb.MultipleActiveResultSets = true;
-                return new ImportFilesConfig
+            FullInitialImport(configStream.Select("create config with Ctx",
+                c => new RbcImportFilesConfigCtx
                 {
                     InputFilesRootFolderPath = c.InputFilesRootFolderPath,
-                    DbCtx = new DatabaseContext(
-                        new DbContextOptionsBuilder<DataAccess.DatabaseContext>().UseSqlServer(csb.ConnectionString).Options,
+                    DbContext = new DatabaseContext(
+                        new DbContextOptionsBuilder<DatabaseContext>().UseSqlServer(new SqlConnectionStringBuilder
+                        {
+                            IntegratedSecurity = true,
+                            DataSource = c.Server,
+                            InitialCatalog = c.Database,
+                            MultipleActiveResultSets = true
+                        }.ConnectionString).Options,
                         new TenantContext(c.EntityId, c.EntityGroupId))
-                };
-            }));
+                }));
         }
-        public static void FullInitialImport(ISingleStream<ImportFilesConfig> configStream)
+        public static void FullInitialImport(ISingleStream<RbcImportFilesConfigCtx> configStream)
         {
+            var dbCnxStream = configStream
+                .Select("get dbcnx", i => i.DbContext, true);
+
             var navFileStream = configStream
                 .CrossApplyFolderFiles("get all Nav files", i => i.InputFilesRootFolderPath, i => i.NavFileFileNamePattern, true)
                 .CrossApplyTextFile("parse nav file", new RbcNavFileDefinition());
-
-            var dbCnxStream = configStream
-                .Select("get dbcnx", i => i.DbCtx, true);
 
             var subFundStream = navFileStream
                 .Distinct("distinct sub funds", i => i.FundCode)

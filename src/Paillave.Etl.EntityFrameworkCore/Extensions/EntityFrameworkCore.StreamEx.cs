@@ -6,6 +6,7 @@ using System.Linq;
 using Paillave.Etl;
 using Paillave.Etl.Extensions;
 using System.Linq.Expressions;
+using System.Collections.Generic;
 
 namespace Paillave.Etl.EntityFrameworkCore.Extensions
 {
@@ -15,7 +16,12 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
         {
             return stream.CrossApply(name, dbContextStream, (TIn inputValue, TResource valueToApply, Action<TOut> push) =>
             {
-                foreach (var item in getQuery(inputValue, valueToApply).ToList())
+                List<TOut> lsts = null;
+                stream.ExecutionContext.InvokeInDedicatedThread(valueToApply, () =>
+                {
+                    lsts = getQuery(inputValue, valueToApply).ToList();
+                });
+                foreach (var item in lsts)
                     push(item);
             }, noParallelisation);
         }

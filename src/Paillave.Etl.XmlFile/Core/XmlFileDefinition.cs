@@ -7,20 +7,19 @@ namespace Paillave.Etl.XmlFile.Core
 {
     public class XmlFileDefinition
     {
-        internal XmlNamespaceManager NameSpaceManager { get; } = new XmlNamespaceManager(new NameTable());
+        public Dictionary<string, string> PrefixToUriNameSpacesDictionary { get; } = new Dictionary<string, string>();
         internal List<IXmlNodeDefinition> XmlNodeDefinitions { get; } = new List<IXmlNodeDefinition>();
 
         public XmlFileDefinition AddNameSpace(string prefix, string uri)
         {
-            this.NameSpaceManager.AddNamespace(prefix, uri);
+            this.PrefixToUriNameSpacesDictionary[prefix] = uri;
             return this;
         }
 
-        public XmlFileDefinition AddNameSpaces(IDictionary<string, string> prefixToUriNameSpacesDictionary)
+        public XmlFileDefinition AddNameSpaces(IDictionary<string, string> _prefixToUriNameSpacesDictionary)
         {
-            if (prefixToUriNameSpacesDictionary != null)
-                foreach (var item in prefixToUriNameSpacesDictionary)
-                    this.NameSpaceManager.AddNamespace(item.Key, item.Value);
+            foreach (var item in _prefixToUriNameSpacesDictionary)
+                this.PrefixToUriNameSpacesDictionary[item.Key] = item.Value;
             return this;
         }
 

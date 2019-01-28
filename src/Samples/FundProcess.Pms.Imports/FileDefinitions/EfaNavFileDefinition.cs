@@ -1,5 +1,6 @@
 using System;
 using FundProcess.Pms.Imports.StreamTypes;
+using FundProcess.Pms.Imports.StreamTypes.InputOutput;
 using Paillave.Etl.TextFile.Core;
 
 namespace FundProcess.Pms.Imports.FileDefinitions

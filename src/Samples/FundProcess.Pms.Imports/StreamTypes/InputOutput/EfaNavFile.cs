@@ -1,6 +1,6 @@
 using System;
 
-namespace FundProcess.Pms.Imports.StreamTypes
+namespace FundProcess.Pms.Imports.StreamTypes.InputOutput
 {
     public class EfaNavFile
     {

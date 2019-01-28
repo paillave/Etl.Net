@@ -4,40 +4,43 @@ using Paillave.Etl.Core.Streams;
 using Paillave.Etl.Extensions;
 using Paillave.Etl.TextFile.Extensions;
 using Paillave.Etl.EntityFrameworkCore.Extensions;
+using Paillave.Etl.StreamNodes;
 using FundProcess.Pms.Imports.FileDefinitions;
-using Paillave.Etl.EntityFrameworkCore.StreamNodes;
 using FundProcess.Pms.DataAccess.Enums;
 using FundProcess.Pms.DataAccess;
 using FundProcess.Pms.DataAccess.Schemas.Pms.Tables;
 using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
-using Paillave.Etl.StreamNodes;
 using System.Linq;
+using FundProcess.Pms.Imports.StreamTypes.Config;
+using FundProcess.Pms.Imports.StreamTypes.InputOutput;
 
 namespace FundProcess.Pms.Imports.Jobs
 {
     public class EfaJobs
     {
-        public static void FullInitialImportProcessWithNoCtx(ISingleStream<ImportFilesConfigNoCtx> configStream)
+        public static void FullInitialImportProcessWithNoCtx(ISingleStream<EfaImportFilesConfigNoCtx> configStream)
         {
-            FullInitialImport(configStream.Select("create config with Ctx", c =>
-            {
-                var csb = new SqlConnectionStringBuilder();
-                csb.IntegratedSecurity = true;
-                csb.DataSource = c.Server;
-                csb.InitialCatalog = c.Database;
-                csb.MultipleActiveResultSets = true;
-                return new ImportFilesConfig
+            FullInitialImport(configStream.Select("create config with Ctx",
+                c => new EfaImportFilesConfigCtx
                 {
                     InputFilesRootFolderPath = c.InputFilesRootFolderPath,
-                    DbCtx = new DatabaseContext(
-                        new DbContextOptionsBuilder<DataAccess.DatabaseContext>().UseSqlServer(csb.ConnectionString).Options,
+                    DbContext = new DatabaseContext(
+                        new DbContextOptionsBuilder<DatabaseContext>().UseSqlServer(new SqlConnectionStringBuilder
+                        {
+                            IntegratedSecurity = true,
+                            DataSource = c.Server,
+                            InitialCatalog = c.Database,
+                            MultipleActiveResultSets = true
+                        }.ConnectionString).Options,
                         new TenantContext(c.EntityId, c.EntityGroupId))
-                };
-            }));
+                }));
         }
-        public static void FullInitialImport(ISingleStream<ImportFilesConfig> configStream)
+        public static void FullInitialImport(ISingleStream<EfaImportFilesConfigCtx> configStream)
         {
+            var dbCnxStream = configStream
+                .Select("get dbcnx", i => i.DbContext, true);
+
             var navFileStream = configStream
                 .CrossApplyFolderFiles("get all Nav files", i => i.InputFilesRootFolderPath, i => i.NavFileFileNamePattern, true)
                 .CrossApplyTextFile("parse nav file", new EfaNavFileDefinition());
@@ -45,9 +48,6 @@ namespace FundProcess.Pms.Imports.Jobs
             var posFileStream = configStream
                 .CrossApplyFolderFiles("get all position files", i => i.InputFilesRootFolderPath, i => i.PositionFileFileNamePattern, true)
                 .CrossApplyTextFile("parse position file", new EfaPositionFileDefinition(), i => i.Name);
-
-            var dbCnxStream = configStream
-                .Select("get dbcnx", i => i.DbCtx, true);
 
             var sicavStream = posFileStream
                 .Distinct("distinct sicavs", i => i.FundCode)
