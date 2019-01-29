@@ -104,8 +104,8 @@ Command line:
 ```powershell
 dotnet new console -n SimpleQuickstart
 cd SimpleQuickstart
-dotnet add package Etl.Net --version 1.0.124-alpha
-dotnet add package Etl.Net.TextFile --version 1.0.124-alpha
+dotnet add package Etl.Net --version 1.0.152-alpha
+dotnet add package Etl.Net.TextFile --version 1.0.152-alpha
 ```
 
 ### Implement the process

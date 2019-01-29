@@ -51,6 +51,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundProcess.Pms.ImportsTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.XmlFileTests", "Paillave.Etl.XmlFileTests\Paillave.Etl.XmlFileTests.csproj", "{37F4CB36-1D2D-49BB-9F65-5ED171EAEE4B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Recipes", "Samples\Paillave.Etl.Recipes\Paillave.Etl.Recipes.csproj", "{03518E71-F854-4D89-B09A-6EA7EC295E92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -145,6 +147,10 @@ Global
 		{37F4CB36-1D2D-49BB-9F65-5ED171EAEE4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37F4CB36-1D2D-49BB-9F65-5ED171EAEE4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37F4CB36-1D2D-49BB-9F65-5ED171EAEE4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03518E71-F854-4D89-B09A-6EA7EC295E92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03518E71-F854-4D89-B09A-6EA7EC295E92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03518E71-F854-4D89-B09A-6EA7EC295E92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03518E71-F854-4D89-B09A-6EA7EC295E92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -160,6 +166,7 @@ Global
 		{42D621BC-671C-4264-BB21-6844DB7FAEB4} = {8AF3C413-468E-421F-A681-FFDA84D2CAD5}
 		{DB4C1AAA-5E8C-4DBF-8A37-02F36E10F100} = {8AF3C413-468E-421F-A681-FFDA84D2CAD5}
 		{0BBEAE24-1F01-488C-B6CD-1FDF1B892887} = {8AF3C413-468E-421F-A681-FFDA84D2CAD5}
+		{03518E71-F854-4D89-B09A-6EA7EC295E92} = {8AF3C413-468E-421F-A681-FFDA84D2CAD5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {380A708A-BE28-4FCE-9848-B48E05B98A48}

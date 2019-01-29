@@ -23,7 +23,7 @@ items:
   source:
     id: EntityFrameworkCoreEx
     path: ''
-    startLine: 11
+    startLine: 12
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
@@ -62,7 +62,7 @@ items:
   source:
     id: CrossApplyEntityFrameworkCoreQuery
     path: ''
-    startLine: 13
+    startLine: 14
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
@@ -116,7 +116,7 @@ items:
   source:
     id: ThroughEntityFrameworkCore
     path: ''
-    startLine: 21
+    startLine: 27
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
@@ -169,7 +169,7 @@ items:
   source:
     id: ThroughEntityFrameworkCore
     path: ''
-    startLine: 36
+    startLine: 42
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
@@ -224,7 +224,7 @@ items:
   source:
     id: ThroughEntityFrameworkCore
     path: ''
-    startLine: 52
+    startLine: 58
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
@@ -283,7 +283,7 @@ items:
   source:
     id: ThroughEntityFrameworkCore
     path: ''
-    startLine: 67
+    startLine: 73
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
@@ -344,7 +344,7 @@ items:
   source:
     id: EntityFrameworkCoreLookup
     path: ''
-    startLine: 83
+    startLine: 89
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
@@ -405,7 +405,7 @@ items:
   source:
     id: EntityFrameworkCoreLookup
     path: ''
-    startLine: 98
+    startLine: 104
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
@@ -464,7 +464,7 @@ items:
   source:
     id: EntityFrameworkCoreDelete
     path: ''
-    startLine: 112
+    startLine: 118
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions

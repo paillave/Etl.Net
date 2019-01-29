@@ -20,7 +20,7 @@ items:
   source:
     id: SftpEx
     path: ''
-    startLine: 332
+    startLine: 338
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Sftp.Extensions
@@ -59,7 +59,7 @@ items:
   source:
     id: CrossApplySftpFiles
     path: ''
-    startLine: 335
+    startLine: 341
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Sftp.Extensions
@@ -109,7 +109,7 @@ items:
   source:
     id: CrossApplySftpFiles
     path: ''
-    startLine: 340
+    startLine: 346
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Sftp.Extensions
@@ -155,7 +155,7 @@ items:
   source:
     id: CrossApplySftpFiles
     path: ''
-    startLine: 345
+    startLine: 351
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Sftp.Extensions
@@ -208,7 +208,7 @@ items:
   source:
     id: CrossApplySftpFiles
     path: ''
-    startLine: 350
+    startLine: 356
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Sftp.Extensions
@@ -258,7 +258,7 @@ items:
   source:
     id: ToSftpFile
     path: ''
-    startLine: 358
+    startLine: 364
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Sftp.Extensions

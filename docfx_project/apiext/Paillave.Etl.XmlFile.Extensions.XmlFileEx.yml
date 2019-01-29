@@ -9,16 +9,16 @@ items:
   - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream{Stream},System.String,XmlFileDefinition,System.Boolean)
   - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream{System.String},System.String,XmlFileDefinition,System.Boolean)
   - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{``0},System.String,XmlFileDefinition,System.Func{``0,System.String},System.Boolean)
-  - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{LocalFilesValue},System.String,XmlNodeDefinition{``0},IDictionary{System.String,System.String},System.Boolean)
+  - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{LocalFilesValue},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
   - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{Stream},System.String,XmlFileDefinition,System.Func{XmlNodeParsed,``0},System.Boolean)
-  - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{Stream},System.String,XmlNodeDefinition{``0},IDictionary{System.String,System.String},System.Boolean)
+  - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
   - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{System.String},System.String,XmlFileDefinition,System.Func{System.String,XmlNodeParsed,``0},System.Boolean)
-  - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{System.String},System.String,XmlNodeDefinition{``0},IDictionary{System.String,System.String},System.Boolean)
+  - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
   - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{``0},System.String,XmlFileDefinition,System.Func{``0,System.String},System.Func{``0,XmlNodeParsed,``1},System.Boolean)
-  - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},IDictionary{System.String,System.String},System.Boolean)
-  - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Func{``0,``1},IDictionary{System.String,System.String},System.Boolean)
-  - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Func{System.String,``0,``1},IDictionary{System.String,System.String},System.Boolean)
-  - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``3(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},IDictionary{System.String,System.String},System.Boolean)
+  - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Func{``0,``1},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Func{System.String,``0,``1},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  - Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``3(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
   langs:
   - csharp
   - vb
@@ -29,7 +29,7 @@ items:
   source:
     id: XmlFileEx
     path: ''
-    startLine: 578
+    startLine: 584
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -53,9 +53,9 @@ items:
   modifiers.vb:
   - Public
   - Module
-- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{System.String},System.String,XmlNodeDefinition{``0},IDictionary{System.String,System.String},System.Boolean)
-  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{System.String},System.String,XmlNodeDefinition{``0},IDictionary{System.String,System.String},System.Boolean)
-  id: CrossApplyXmlFile``1(IStream{System.String},System.String,XmlNodeDefinition{``0},IDictionary{System.String,System.String},System.Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  id: CrossApplyXmlFile``1(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.XmlFile.Extensions.XmlFileEx
   langs:
@@ -63,12 +63,12 @@ items:
   - vb
   name: CrossApplyXmlFile<TOut>(IStream<String>, String, XmlNodeDefinition<TOut>, IDictionary<String, String>, Boolean)
   nameWithType: XmlFileEx.CrossApplyXmlFile<TOut>(IStream<String>, String, XmlNodeDefinition<TOut>, IDictionary<String, String>, Boolean)
-  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TOut>(IStream<System.String>, System.String, XmlNodeDefinition<TOut>, IDictionary<System.String, System.String>, System.Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TOut>(IStream<System.String>, System.String, XmlNodeDefinition<TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)
   type: Method
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 580
+    startLine: 586
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -82,7 +82,7 @@ items:
     - id: xmlNodeDefinitions
       type: XmlNodeDefinition{{TOut}}
     - id: prefixToUriNamespaces
-      type: IDictionary{System.String,System.String}
+      type: System.Collections.Generic.IDictionary{System.String,System.String}
     - id: noParallelisation
       type: System.Boolean
     typeParameters:
@@ -101,11 +101,11 @@ items:
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TOut)(IStream(Of System.String), System.String, XmlNodeDefinition(Of TOut), IDictionary(Of System.String, System.String), System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TOut)(IStream(Of System.String), System.String, XmlNodeDefinition(Of TOut), System.Collections.Generic.IDictionary(Of System.String, System.String), System.Boolean)
   name.vb: CrossApplyXmlFile(Of TOut)(IStream(Of String), String, XmlNodeDefinition(Of TOut), IDictionary(Of String, String), Boolean)
-- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{LocalFilesValue},System.String,XmlNodeDefinition{``0},IDictionary{System.String,System.String},System.Boolean)
-  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{LocalFilesValue},System.String,XmlNodeDefinition{``0},IDictionary{System.String,System.String},System.Boolean)
-  id: CrossApplyXmlFile``1(IStream{LocalFilesValue},System.String,XmlNodeDefinition{``0},IDictionary{System.String,System.String},System.Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{LocalFilesValue},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{LocalFilesValue},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  id: CrossApplyXmlFile``1(IStream{LocalFilesValue},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.XmlFile.Extensions.XmlFileEx
   langs:
@@ -113,12 +113,12 @@ items:
   - vb
   name: CrossApplyXmlFile<TOut>(IStream<LocalFilesValue>, String, XmlNodeDefinition<TOut>, IDictionary<String, String>, Boolean)
   nameWithType: XmlFileEx.CrossApplyXmlFile<TOut>(IStream<LocalFilesValue>, String, XmlNodeDefinition<TOut>, IDictionary<String, String>, Boolean)
-  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TOut>(IStream<LocalFilesValue>, System.String, XmlNodeDefinition<TOut>, IDictionary<System.String, System.String>, System.Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TOut>(IStream<LocalFilesValue>, System.String, XmlNodeDefinition<TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)
   type: Method
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 591
+    startLine: 597
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -132,7 +132,7 @@ items:
     - id: xmlNodeDefinitions
       type: XmlNodeDefinition{{TOut}}
     - id: prefixToUriNamespaces
-      type: IDictionary{System.String,System.String}
+      type: System.Collections.Generic.IDictionary{System.String,System.String}
     - id: noParallelisation
       type: System.Boolean
     typeParameters:
@@ -151,11 +151,11 @@ items:
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TOut)(IStream(Of LocalFilesValue), System.String, XmlNodeDefinition(Of TOut), IDictionary(Of System.String, System.String), System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TOut)(IStream(Of LocalFilesValue), System.String, XmlNodeDefinition(Of TOut), System.Collections.Generic.IDictionary(Of System.String, System.String), System.Boolean)
   name.vb: CrossApplyXmlFile(Of TOut)(IStream(Of LocalFilesValue), String, XmlNodeDefinition(Of TOut), IDictionary(Of String, String), Boolean)
-- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{Stream},System.String,XmlNodeDefinition{``0},IDictionary{System.String,System.String},System.Boolean)
-  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{Stream},System.String,XmlNodeDefinition{``0},IDictionary{System.String,System.String},System.Boolean)
-  id: CrossApplyXmlFile``1(IStream{Stream},System.String,XmlNodeDefinition{``0},IDictionary{System.String,System.String},System.Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  id: CrossApplyXmlFile``1(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.XmlFile.Extensions.XmlFileEx
   langs:
@@ -163,12 +163,12 @@ items:
   - vb
   name: CrossApplyXmlFile<TOut>(IStream<Stream>, String, XmlNodeDefinition<TOut>, IDictionary<String, String>, Boolean)
   nameWithType: XmlFileEx.CrossApplyXmlFile<TOut>(IStream<Stream>, String, XmlNodeDefinition<TOut>, IDictionary<String, String>, Boolean)
-  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TOut>(IStream<Stream>, System.String, XmlNodeDefinition<TOut>, IDictionary<System.String, System.String>, System.Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TOut>(IStream<Stream>, System.String, XmlNodeDefinition<TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)
   type: Method
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 602
+    startLine: 608
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -182,7 +182,7 @@ items:
     - id: xmlNodeDefinitions
       type: XmlNodeDefinition{{TOut}}
     - id: prefixToUriNamespaces
-      type: IDictionary{System.String,System.String}
+      type: System.Collections.Generic.IDictionary{System.String,System.String}
     - id: noParallelisation
       type: System.Boolean
     typeParameters:
@@ -201,11 +201,11 @@ items:
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TOut)(IStream(Of Stream), System.String, XmlNodeDefinition(Of TOut), IDictionary(Of System.String, System.String), System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TOut)(IStream(Of Stream), System.String, XmlNodeDefinition(Of TOut), System.Collections.Generic.IDictionary(Of System.String, System.String), System.Boolean)
   name.vb: CrossApplyXmlFile(Of TOut)(IStream(Of Stream), String, XmlNodeDefinition(Of TOut), IDictionary(Of String, String), Boolean)
-- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},IDictionary{System.String,System.String},System.Boolean)
-  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},IDictionary{System.String,System.String},System.Boolean)
-  id: CrossApplyXmlFile``2(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},IDictionary{System.String,System.String},System.Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  id: CrossApplyXmlFile``2(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.XmlFile.Extensions.XmlFileEx
   langs:
@@ -213,12 +213,12 @@ items:
   - vb
   name: CrossApplyXmlFile<TIn, TOut>(IStream<TIn>, String, XmlNodeDefinition<TOut>, Func<TIn, String>, IDictionary<String, String>, Boolean)
   nameWithType: XmlFileEx.CrossApplyXmlFile<TIn, TOut>(IStream<TIn>, String, XmlNodeDefinition<TOut>, Func<TIn, String>, IDictionary<String, String>, Boolean)
-  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TIn, TOut>(IStream<TIn>, System.String, XmlNodeDefinition<TOut>, System.Func<TIn, System.String>, IDictionary<System.String, System.String>, System.Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TIn, TOut>(IStream<TIn>, System.String, XmlNodeDefinition<TOut>, System.Func<TIn, System.String>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)
   type: Method
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 613
+    startLine: 619
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -234,7 +234,7 @@ items:
     - id: filePathSelector
       type: System.Func{{TIn},System.String}
     - id: prefixToUriNamespaces
-      type: IDictionary{System.String,System.String}
+      type: System.Collections.Generic.IDictionary{System.String,System.String}
     - id: noParallelisation
       type: System.Boolean
     typeParameters:
@@ -254,11 +254,11 @@ items:
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TIn, TOut)(IStream(Of TIn), System.String, XmlNodeDefinition(Of TOut), System.Func(Of TIn, System.String), IDictionary(Of System.String, System.String), System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TIn, TOut)(IStream(Of TIn), System.String, XmlNodeDefinition(Of TOut), System.Func(Of TIn, System.String), System.Collections.Generic.IDictionary(Of System.String, System.String), System.Boolean)
   name.vb: CrossApplyXmlFile(Of TIn, TOut)(IStream(Of TIn), String, XmlNodeDefinition(Of TOut), Func(Of TIn, String), IDictionary(Of String, String), Boolean)
-- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``3(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},IDictionary{System.String,System.String},System.Boolean)
-  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``3(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},IDictionary{System.String,System.String},System.Boolean)
-  id: CrossApplyXmlFile``3(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},IDictionary{System.String,System.String},System.Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``3(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``3(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  id: CrossApplyXmlFile``3(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.XmlFile.Extensions.XmlFileEx
   langs:
@@ -266,12 +266,12 @@ items:
   - vb
   name: CrossApplyXmlFile<TIn, TParsed, TOut>(IStream<TIn>, String, XmlNodeDefinition<TParsed>, Func<TIn, String>, Func<TIn, TParsed, TOut>, IDictionary<String, String>, Boolean)
   nameWithType: XmlFileEx.CrossApplyXmlFile<TIn, TParsed, TOut>(IStream<TIn>, String, XmlNodeDefinition<TParsed>, Func<TIn, String>, Func<TIn, TParsed, TOut>, IDictionary<String, String>, Boolean)
-  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TIn, TParsed, TOut>(IStream<TIn>, System.String, XmlNodeDefinition<TParsed>, System.Func<TIn, System.String>, System.Func<TIn, TParsed, TOut>, IDictionary<System.String, System.String>, System.Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TIn, TParsed, TOut>(IStream<TIn>, System.String, XmlNodeDefinition<TParsed>, System.Func<TIn, System.String>, System.Func<TIn, TParsed, TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)
   type: Method
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 624
+    startLine: 630
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -289,7 +289,7 @@ items:
     - id: resultSelector
       type: System.Func{{TIn},{TParsed},{TOut}}
     - id: prefixToUriNamespaces
-      type: IDictionary{System.String,System.String}
+      type: System.Collections.Generic.IDictionary{System.String,System.String}
     - id: noParallelisation
       type: System.Boolean
     typeParameters:
@@ -310,11 +310,11 @@ items:
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TIn, TParsed, TOut)(IStream(Of TIn), System.String, XmlNodeDefinition(Of TParsed), System.Func(Of TIn, System.String), System.Func(Of TIn, TParsed, TOut), IDictionary(Of System.String, System.String), System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TIn, TParsed, TOut)(IStream(Of TIn), System.String, XmlNodeDefinition(Of TParsed), System.Func(Of TIn, System.String), System.Func(Of TIn, TParsed, TOut), System.Collections.Generic.IDictionary(Of System.String, System.String), System.Boolean)
   name.vb: CrossApplyXmlFile(Of TIn, TParsed, TOut)(IStream(Of TIn), String, XmlNodeDefinition(Of TParsed), Func(Of TIn, String), Func(Of TIn, TParsed, TOut), IDictionary(Of String, String), Boolean)
-- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Func{System.String,``0,``1},IDictionary{System.String,System.String},System.Boolean)
-  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Func{System.String,``0,``1},IDictionary{System.String,System.String},System.Boolean)
-  id: CrossApplyXmlFile``2(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Func{System.String,``0,``1},IDictionary{System.String,System.String},System.Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Func{System.String,``0,``1},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Func{System.String,``0,``1},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  id: CrossApplyXmlFile``2(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Func{System.String,``0,``1},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.XmlFile.Extensions.XmlFileEx
   langs:
@@ -322,12 +322,12 @@ items:
   - vb
   name: CrossApplyXmlFile<TParsed, TOut>(IStream<String>, String, XmlNodeDefinition<TParsed>, Func<String, TParsed, TOut>, IDictionary<String, String>, Boolean)
   nameWithType: XmlFileEx.CrossApplyXmlFile<TParsed, TOut>(IStream<String>, String, XmlNodeDefinition<TParsed>, Func<String, TParsed, TOut>, IDictionary<String, String>, Boolean)
-  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TParsed, TOut>(IStream<System.String>, System.String, XmlNodeDefinition<TParsed>, System.Func<System.String, TParsed, TOut>, IDictionary<System.String, System.String>, System.Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TParsed, TOut>(IStream<System.String>, System.String, XmlNodeDefinition<TParsed>, System.Func<System.String, TParsed, TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)
   type: Method
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 635
+    startLine: 641
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -343,7 +343,7 @@ items:
     - id: resultSelector
       type: System.Func{System.String,{TParsed},{TOut}}
     - id: prefixToUriNamespaces
-      type: IDictionary{System.String,System.String}
+      type: System.Collections.Generic.IDictionary{System.String,System.String}
     - id: noParallelisation
       type: System.Boolean
     typeParameters:
@@ -363,11 +363,11 @@ items:
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TParsed, TOut)(IStream(Of System.String), System.String, XmlNodeDefinition(Of TParsed), System.Func(Of System.String, TParsed, TOut), IDictionary(Of System.String, System.String), System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TParsed, TOut)(IStream(Of System.String), System.String, XmlNodeDefinition(Of TParsed), System.Func(Of System.String, TParsed, TOut), System.Collections.Generic.IDictionary(Of System.String, System.String), System.Boolean)
   name.vb: CrossApplyXmlFile(Of TParsed, TOut)(IStream(Of String), String, XmlNodeDefinition(Of TParsed), Func(Of String, TParsed, TOut), IDictionary(Of String, String), Boolean)
-- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Func{``0,``1},IDictionary{System.String,System.String},System.Boolean)
-  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Func{``0,``1},IDictionary{System.String,System.String},System.Boolean)
-  id: CrossApplyXmlFile``2(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Func{``0,``1},IDictionary{System.String,System.String},System.Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Func{``0,``1},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Func{``0,``1},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  id: CrossApplyXmlFile``2(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Func{``0,``1},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
   isExtensionMethod: true
   parent: Paillave.Etl.XmlFile.Extensions.XmlFileEx
   langs:
@@ -375,12 +375,12 @@ items:
   - vb
   name: CrossApplyXmlFile<TParsed, TOut>(IStream<Stream>, String, XmlNodeDefinition<TParsed>, Func<TParsed, TOut>, IDictionary<String, String>, Boolean)
   nameWithType: XmlFileEx.CrossApplyXmlFile<TParsed, TOut>(IStream<Stream>, String, XmlNodeDefinition<TParsed>, Func<TParsed, TOut>, IDictionary<String, String>, Boolean)
-  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TParsed, TOut>(IStream<Stream>, System.String, XmlNodeDefinition<TParsed>, System.Func<TParsed, TOut>, IDictionary<System.String, System.String>, System.Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TParsed, TOut>(IStream<Stream>, System.String, XmlNodeDefinition<TParsed>, System.Func<TParsed, TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)
   type: Method
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 646
+    startLine: 652
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -396,7 +396,7 @@ items:
     - id: resultSelector
       type: System.Func{{TParsed},{TOut}}
     - id: prefixToUriNamespaces
-      type: IDictionary{System.String,System.String}
+      type: System.Collections.Generic.IDictionary{System.String,System.String}
     - id: noParallelisation
       type: System.Boolean
     typeParameters:
@@ -416,7 +416,7 @@ items:
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TParsed, TOut)(IStream(Of Stream), System.String, XmlNodeDefinition(Of TParsed), System.Func(Of TParsed, TOut), IDictionary(Of System.String, System.String), System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TParsed, TOut)(IStream(Of Stream), System.String, XmlNodeDefinition(Of TParsed), System.Func(Of TParsed, TOut), System.Collections.Generic.IDictionary(Of System.String, System.String), System.Boolean)
   name.vb: CrossApplyXmlFile(Of TParsed, TOut)(IStream(Of Stream), String, XmlNodeDefinition(Of TParsed), Func(Of TParsed, TOut), IDictionary(Of String, String), Boolean)
 - uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream{System.String},System.String,XmlFileDefinition,System.Boolean)
   commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream{System.String},System.String,XmlFileDefinition,System.Boolean)
@@ -433,7 +433,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 658
+    startLine: 664
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -479,7 +479,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 668
+    startLine: 674
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -525,7 +525,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 678
+    startLine: 684
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -571,7 +571,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 688
+    startLine: 694
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -621,7 +621,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 698
+    startLine: 704
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -674,7 +674,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 708
+    startLine: 714
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -724,7 +724,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 718
+    startLine: 724
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -1151,20 +1151,21 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: IDictionary{System.String,System.String}
-  commentId: '!:IDictionary{System.String,System.String}'
-  definition: IDictionary`2
+- uid: System.Collections.Generic.IDictionary{System.String,System.String}
+  commentId: T:System.Collections.Generic.IDictionary{System.String,System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IDictionary`2
   name: IDictionary<String, String>
   nameWithType: IDictionary<String, String>
-  fullName: IDictionary<System.String, System.String>
+  fullName: System.Collections.Generic.IDictionary<System.String, System.String>
   nameWithType.vb: IDictionary(Of String, String)
-  fullName.vb: IDictionary(Of System.String, System.String)
+  fullName.vb: System.Collections.Generic.IDictionary(Of System.String, System.String)
   name.vb: IDictionary(Of String, String)
   spec.csharp:
-  - uid: IDictionary`2
+  - uid: System.Collections.Generic.IDictionary`2
     name: IDictionary
     nameWithType: IDictionary
-    fullName: IDictionary
+    fullName: System.Collections.Generic.IDictionary
     isExternal: true
   - name: <
     nameWithType: <
@@ -1186,10 +1187,10 @@ references:
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: IDictionary`2
+  - uid: System.Collections.Generic.IDictionary`2
     name: IDictionary
     nameWithType: IDictionary
-    fullName: IDictionary
+    fullName: System.Collections.Generic.IDictionary
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
@@ -1332,56 +1333,63 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: IDictionary`2
+- uid: System.Collections.Generic.IDictionary`2
+  commentId: T:System.Collections.Generic.IDictionary`2
   isExternal: true
-  name: IDictionary<, >
-  nameWithType: IDictionary<, >
-  fullName: IDictionary<, >
-  nameWithType.vb: IDictionary(Of , )
-  fullName.vb: IDictionary(Of , )
-  name.vb: IDictionary(Of , )
+  name: IDictionary<TKey, TValue>
+  nameWithType: IDictionary<TKey, TValue>
+  fullName: System.Collections.Generic.IDictionary<TKey, TValue>
+  nameWithType.vb: IDictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.IDictionary(Of TKey, TValue)
+  name.vb: IDictionary(Of TKey, TValue)
   spec.csharp:
-  - uid: IDictionary`2
+  - uid: System.Collections.Generic.IDictionary`2
     name: IDictionary
     nameWithType: IDictionary
-    fullName: IDictionary
+    fullName: System.Collections.Generic.IDictionary
     isExternal: true
   - name: <
     nameWithType: <
     fullName: <
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
   - name: '>'
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: IDictionary`2
+  - uid: System.Collections.Generic.IDictionary`2
     name: IDictionary
     nameWithType: IDictionary
-    fullName: IDictionary
+    fullName: System.Collections.Generic.IDictionary
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
     fullName: '(Of '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
   - name: )
     nameWithType: )
     fullName: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
 - uid: IStream{LocalFilesValue}
   commentId: '!:IStream{LocalFilesValue}'
   definition: IStream`1

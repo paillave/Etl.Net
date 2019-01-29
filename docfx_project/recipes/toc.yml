@@ -1,6 +1,11 @@
 - uid: Define.Etl.Process
   name: Define an ETL process
+  href: Define.Etl.Process.md
 - uid: Execute.Etl.Process
-  name: Execute an ETL process definition
+  name: Execute an ETL process
+  href: Execute.Etl.Process.md
+- uid: Exception.Etl.Process
+  name: Exceptions in ETL process
+  href: Exception.Etl.Process.md
 - uid: Catch.Traces
   name: Catch process execution traces
