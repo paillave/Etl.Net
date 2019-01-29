@@ -9,6 +9,7 @@ namespace Paillave.Etl.Recipes.DefineProcess
 {
     [TestClass]
     public class SimpleJobThrowException
+    
     {
         #region InlineMethodWay
         [TestMethod]
