@@ -51,39 +51,6 @@ namespace FundProcess.Pms.ImportsTests
             _databaseContext = new DataAccess.DatabaseContext(options, tenantContext);
         }
         [Fact]
-        public void Tempo()
-        {
-            //List<SubFund> elts = Enumerable
-            //    .Range(700, 100)
-            //    .Select(i => new SubFund
-            //    {
-            //        Id = i,
-            //        InternalCode = $"code{i}",
-            //        Name = $"name{i}",
-            //        CurrencyIso = $"CU{i % 10}"
-            //    })
-            //    .Union(Enumerable
-            //    .Range(300000, 100)
-            //    .Select(i => new SubFund
-            //    {
-            //        InternalCode = $"code{i}",
-            //        Name = $"name{i}",
-            //        CurrencyIso = $"CU{i % 10}"
-            //    }))
-            //    .ToList();
-
-            var elt = new Sicav
-            {
-                Id = 2,
-                Name = $"name222"
-            };
-
-            List<Sicav> elts = new List<Sicav>();
-            elts.Add(elt);
-            //Stopwatch sw = new Stopwatch();
-            _databaseContext.EfSave(elts, i => new { i.Id });
-        }
-        [Fact]
         public void RbcImportTest()
         {
             StreamProcessRunner.CreateAndExecuteAsync(

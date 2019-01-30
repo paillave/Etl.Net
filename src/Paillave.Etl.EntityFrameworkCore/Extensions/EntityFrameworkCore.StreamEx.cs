@@ -87,31 +87,33 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
             }).Output;
         }
 
-        public static IStream<TOut> EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TEntity, bool>> match, Func<TIn, TEntity, TOut> resultSelector, Expression<Func<TEntity, bool>> defaultCache, Func<TIn, TEntity> createIfNotFound = null, int cacheSize = 10000)
+        public static IStream<TOut> EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut, TKey>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TKey>> getLeftStreamKey, Expression<Func<TEntity, TKey>> getEntityStreamKey, Func<TIn, TEntity, TOut> resultSelector, Expression<Func<TEntity, bool>> defaultCache, Func<TIn, TEntity> createIfNotFound = null, int cacheSize = 10000)
             where TCtx : DbContext
             where TEntity : class
         {
-            return new LookupEntityFrameworkCoreStreamNode<TIn, TEntity, TCtx, TOut>(name, new LookupEntityFrameworkCoreArgs<TIn, TEntity, TCtx, TOut>
+            return new LookupEntityFrameworkCoreStreamNode<TIn, TEntity, TCtx, TOut, TKey>(name, new LookupEntityFrameworkCoreArgs<TIn, TEntity, TCtx, TOut, TKey>
             {
                 CacheSize = cacheSize,
                 DbContextStream = dbContextStream,
                 InputStream = inputStream,
-                Match = match,
+                GetEntityStreamKey = getEntityStreamKey,
+                GetLeftStreamKey = getLeftStreamKey,
                 ResultSelector = resultSelector,
                 CreateIfNotFound = createIfNotFound,
                 DefaultCache = defaultCache
             }).Output;
         }
-        public static IStream<TOut> EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TEntity, bool>> match, Func<TIn, TEntity, TOut> resultSelector, Func<TIn, TEntity> createIfNotFound = null, int cacheSize = 10000)
+        public static IStream<TOut> EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut, TKey>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TKey>> getLeftStreamKey, Expression<Func<TEntity, TKey>> getEntityStreamKey, Func<TIn, TEntity, TOut> resultSelector, Func<TIn, TEntity> createIfNotFound = null, int cacheSize = 10000)
             where TCtx : DbContext
             where TEntity : class
         {
-            return new LookupEntityFrameworkCoreStreamNode<TIn, TEntity, TCtx, TOut>(name, new LookupEntityFrameworkCoreArgs<TIn, TEntity, TCtx, TOut>
+            return new LookupEntityFrameworkCoreStreamNode<TIn, TEntity, TCtx, TOut, TKey>(name, new LookupEntityFrameworkCoreArgs<TIn, TEntity, TCtx, TOut, TKey>
             {
                 CacheSize = cacheSize,
                 DbContextStream = dbContextStream,
                 InputStream = inputStream,
-                Match = match,
+                GetEntityStreamKey = getEntityStreamKey,
+                GetLeftStreamKey = getLeftStreamKey,
                 ResultSelector = resultSelector,
                 CreateIfNotFound = createIfNotFound
             }).Output;
