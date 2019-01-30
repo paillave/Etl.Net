@@ -51,7 +51,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundProcess.Pms.ImportsTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.XmlFileTests", "Paillave.Etl.XmlFileTests\Paillave.Etl.XmlFileTests.csproj", "{37F4CB36-1D2D-49BB-9F65-5ED171EAEE4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Recipes", "Samples\Paillave.Etl.Recipes\Paillave.Etl.Recipes.csproj", "{03518E71-F854-4D89-B09A-6EA7EC295E92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.Recipes", "Samples\Paillave.Etl.Recipes\Paillave.Etl.Recipes.csproj", "{03518E71-F854-4D89-B09A-6EA7EC295E92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

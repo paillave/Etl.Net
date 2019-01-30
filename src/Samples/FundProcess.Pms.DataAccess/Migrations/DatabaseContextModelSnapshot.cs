@@ -380,7 +380,7 @@ namespace FundProcess.Pms.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(250);
 
-                    b.Property<int>("DistributorId");
+                    b.Property<int?>("DistributorId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -388,7 +388,7 @@ namespace FundProcess.Pms.DataAccess.Migrations
 
                     b.Property<string>("Number");
 
-                    b.Property<int>("ShareHolderId");
+                    b.Property<int?>("ShareHolderId");
 
                     b.Property<string>("SortName")
                         .IsRequired()
@@ -401,6 +401,37 @@ namespace FundProcess.Pms.DataAccess.Migrations
                     b.HasIndex("ShareHolderId");
 
                     b.ToTable("RegisterAccount","Pms");
+                });
+
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.RegisterPosition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("BelongsToEntityId");
+
+                    b.Property<DateTime>("HoldingDate");
+
+                    b.Property<decimal?>("MarketValueInShareClassCcy");
+
+                    b.Property<decimal>("MarketValueInSubFundCcy");
+
+                    b.Property<decimal>("NbShares");
+
+                    b.Property<int>("RegisterAccountId");
+
+                    b.Property<int>("ShareClassId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegisterAccountId");
+
+                    b.HasIndex("ShareClassId");
+
+                    b.HasIndex("HoldingDate", "ShareClassId", "RegisterAccountId", "BelongsToEntityId");
+
+                    b.ToTable("RegisterPosition","Pms");
                 });
 
             modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.Security", b =>
@@ -1143,6 +1174,19 @@ namespace FundProcess.Pms.DataAccess.Migrations
                     b.HasOne("FundProcess.Pms.DataAccess.Schemas.Entity.Tables.Investor", "ShareHolder")
                         .WithMany()
                         .HasForeignKey("ShareHolderId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.RegisterPosition", b =>
+                {
+                    b.HasOne("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.RegisterAccount", "RegisterAccount")
+                        .WithMany()
+                        .HasForeignKey("RegisterAccountId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("FundProcess.Pms.DataAccess.Schemas.Pms.Tables.ShareClass", "ShareClass")
+                        .WithMany()
+                        .HasForeignKey("ShareClassId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

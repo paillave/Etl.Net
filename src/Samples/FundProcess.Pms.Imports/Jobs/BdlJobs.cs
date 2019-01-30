@@ -26,7 +26,7 @@ namespace FundProcess.Pms.Imports.Jobs
             FullInitialImport(configStream.Select("create config with Ctx",
                 c => new BdlImportFilesConfigCtx
                 {
-                    InputFilesRootFolderPath = c.InputFilesRootFolderPath,
+                    InputFilesRootFolderPath = c.InputFilesRootFolderPath, 
                     FileNamePattern = c.FileNamePattern,
                     DbContext = new DatabaseContext(
                         new DbContextOptionsBuilder<DatabaseContext>().UseSqlServer(new SqlConnectionStringBuilder
@@ -60,7 +60,7 @@ namespace FundProcess.Pms.Imports.Jobs
             var sourceCashPositionsStream = nodesStream
                 .Where("list cash positions", i => i.NodeDefinitionName == "cashpos")
                 .Select("cast to cash position", i => (BdlCashposNode)i.Value)
-                .ThroughAction("correct the iban if empty", i => { if (string.IsNullOrWhiteSpace(i.Iban)) i.Iban = $"BDL_{i.AssetCcy}"; });
+                .ThroughAction("correct the iban if empty", i => { if (string.IsNullOrWhiteSpace(i.Iban)) i.Iban = $"BDL_{i.ContId}_{i.AssetCcy}"; });
 
             var sourcePortfoliosStream = nodesStream
                 .Where("list portfolios", i => i.NodeDefinitionName == "custid")
@@ -73,7 +73,8 @@ namespace FundProcess.Pms.Imports.Jobs
                     InternalCode = i.ContId,
                     Name = $"BDL_{i.ContId}",
                     CurrencyIso = i.DefaultCcy,
-                    CountryCode = i.Domicile
+                    CountryCode = i.Domicile,
+                    IsManaged = true
                 }))
                 .ThroughEntityFrameworkCore("save portfolio", dbCnxStream, i => new { i.InternalCode, i.BelongsToEntityId });
 
@@ -101,6 +102,7 @@ namespace FundProcess.Pms.Imports.Jobs
             var targetSecurityStream = sourceTargetSecuritiesStream
                 .Distinct("distinct target securities", i => i.SecurityCode)
                 .Select("create target security", dbCnxStream, (i, ctx) => ctx.UpdateEntityForMultiTenancy(CreateTargetSecurity(i.InstrType, i.Isin, i.SecurityCode, i.SecName, i.Domicile, i.InstrCcy, i.ValFreq)))
+                .Where("exclude unknown security types", i => i != null)
                 .ThroughEntityFrameworkCore("save target security", dbCnxStream, i => new { i.BelongsToEntityId, i.InternalCode });
 
             var targetCashStream = sourceCashPositionsStream
@@ -124,12 +126,14 @@ namespace FundProcess.Pms.Imports.Jobs
                 {
                     PortfolioCompositionId = i.PortfolioComposition.Id,
                     SecurityId = i.Cash.Id,
+                    Value = 1,
                     MarketValueInPortfolioCcy = i.FromFile.PosBalRefCcy + i.FromFile.AccrInt
                 }))
                 .ThroughEntityFrameworkCore("save cash position", dbCnxStream, i => new { i.BelongsToEntityId, i.PortfolioCompositionId, i.SecurityId });
 
             var targetSecurityPosition = sourceSecurityPositionsStream
                 .Lookup("lookup target security", targetSecurityStream, i => i.SecurityCode, i => i.InternalCode, (l, r) => new { FromFile = l, Security = r })
+                .Where("ignore positions without target security", i => i.Security != null)
                 .Lookup("lookup security porfolio", portfolioStream, i => i.FromFile.ContId, i => i.InternalCode, (l, r) => new { l.FromFile, l.Security, Portfolio = r })
                 .Lookup("lookup securityportfolio composition", portfolioCompositionStream,
                     i => new { PortfolioId = i.Portfolio.Id, Date = i.FromFile.AssBalDate },
@@ -139,7 +143,7 @@ namespace FundProcess.Pms.Imports.Jobs
                 {
                     PortfolioCompositionId = i.PortfolioComposition.Id,
                     SecurityId = i.Security.Id,
-                    //Quantity = i.FromFile.AssetQty,
+                    Value = i.FromFile.AssetQty,
                     MarketValueInSecurityCcy = i.FromFile.TotSec,
                     MarketValueInPortfolioCcy = i.FromFile.TotRefCcy
                 }))
@@ -177,9 +181,10 @@ namespace FundProcess.Pms.Imports.Jobs
                     break;
                 case 201:
                 case 202:
+                case 910:
                 case 911:
                 case 993:
-                    security = new Stock(); //Equity??????????
+                    security = new Equity();
                     break;
                 default:
                     break;

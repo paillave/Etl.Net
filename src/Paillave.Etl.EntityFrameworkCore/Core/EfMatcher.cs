@@ -11,7 +11,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
         where TEntity : class
     {
         private Expression<Func<TInLeft, TEntity, bool>> _match;
-        private static Queue<TEntity> _cachedEntities = new Queue<TEntity>();
+        private Queue<TEntity> _cachedEntities = new Queue<TEntity>();
         private int _cacheSize = 1000;
         public TCtx Context { get; }
         Func<TInLeft, TEntity> _createIfNotFound = null;
@@ -28,7 +28,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
             Context = context;
             _match = match;
             var defaultCache = context.Set<TEntity>().Where(defaultDatasetCriteria).ToList();
-            _cacheSize = Math.Max( defaultCache.Count, minCacheSize);
+            _cacheSize = Math.Max(defaultCache.Count, minCacheSize);
             _cachedEntities = new Queue<TEntity>(defaultCache);
         }
 
@@ -48,7 +48,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
             }
 
             if (_cachedEntities.Count >= _cacheSize) _cachedEntities.Dequeue();
-            _cachedEntities.Enqueue(ret);
+            if (ret != null) _cachedEntities.Enqueue(ret);
             return ret;
         }
     }

@@ -8,7 +8,7 @@
     <title>Exceptions in ETL process </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Exceptions in ETL process ">
-    <meta name="generator" content="docfx 2.40.0.0">
+    <meta name="generator" content="docfx 2.40.1.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -79,22 +79,22 @@
 <li>The call that will stop if the job fails. The execution status and the  cause of the problem is into the task result object.</li>
 </ul>
 <h2 id="trycatch">Try/Catch</h2>
-<p>The exception must be caught on the <code>Wait()</code> method of the task. In this case, the expected exception is the regular exception type we get when the underlying process of a task raise an exception: <code>System.AggregateException</code>.
+<p>By using <code>ExecuteAsync</code> or <code>CreateAndExecuteAsync</code>, the exception must be caught on the <code>Wait()</code> method of the task. In this case, the expected exception is the regular exception type we get when the underlying process of a task raise an exception: <code>System.AggregateException</code>.
 This exception contains an InnerException that has the type <code>Paillave.Etl.Recipes.DefineProcess.SimpleJobThrowException</code>. <code>SimpleJobThrowException</code> gives access to the trace that is at the source of the end of this process. This trace permits to know in which node happened the exception, and possibly witch row when through at this moment. The exception that is the root cause of the problem is in the <code>InnerException</code> of <code>SimpleJobThrowException</code>.</p>
 <p>This will run the ETL process defined in the recipe <a href="Define.Etl.Process.html#source-code-example">Define an Etl process</a></p>
 <div class="tabGroup" id="tabgroup_CeZOj-G++Q">
 <ul role="tablist">
 <li role="presentation">
-<a href="#tabpanel_CeZOj-G++Q_InlineCallExecution" role="tab" aria-controls="tabpanel_CeZOj-G++Q_InlineCallExecution" data-tab="InlineCallExecution" tabindex="0" aria-selected="true">Inline call execution</a>
+<a href="#tabpanel_CeZOj-G++Q_TryCatchInlineCallExecution" role="tab" aria-controls="tabpanel_CeZOj-G++Q_TryCatchInlineCallExecution" data-tab="TryCatchInlineCallExecution" tabindex="0" aria-selected="true">Inline call execution</a>
 </li>
 <li role="presentation">
-<a href="#tabpanel_CeZOj-G++Q_InstanceRunnerCreation" role="tab" aria-controls="tabpanel_CeZOj-G++Q_InstanceRunnerCreation" data-tab="InstanceRunnerCreation" tabindex="-1">Ask runner instance creation</a>
+<a href="#tabpanel_CeZOj-G++Q_TryCatchInstanceRunnerCreation" role="tab" aria-controls="tabpanel_CeZOj-G++Q_TryCatchInstanceRunnerCreation" data-tab="TryCatchInstanceRunnerCreation" tabindex="-1">Ask runner instance creation</a>
 </li>
 <li role="presentation">
-<a href="#tabpanel_CeZOj-G++Q_CreateRunnerInstance" role="tab" aria-controls="tabpanel_CeZOj-G++Q_CreateRunnerInstance" data-tab="CreateRunnerInstance" tabindex="-1">Create runner instance</a>
+<a href="#tabpanel_CeZOj-G++Q_TryCatchCreateRunnerInstance" role="tab" aria-controls="tabpanel_CeZOj-G++Q_TryCatchCreateRunnerInstance" data-tab="TryCatchCreateRunnerInstance" tabindex="-1">Create runner instance</a>
 </li>
 </ul>
-<section id="tabpanel_CeZOj-G++Q_InlineCallExecution" role="tabpanel" data-tab="InlineCallExecution">
+<section id="tabpanel_CeZOj-G++Q_TryCatchInlineCallExecution" role="tabpanel" data-tab="TryCatchInlineCallExecution">
 <pre><code class="lang-csharp" name="Main">[TestMethod]
 public void InlineMethodWay()
 {
@@ -114,7 +114,7 @@ public void InlineMethodWay()
     }
 }
 </code></pre></section>
-<section id="tabpanel_CeZOj-G++Q_InstanceRunnerCreation" role="tabpanel" data-tab="InstanceRunnerCreation" aria-hidden="true" hidden="hidden">
+<section id="tabpanel_CeZOj-G++Q_TryCatchInstanceRunnerCreation" role="tabpanel" data-tab="TryCatchInstanceRunnerCreation" aria-hidden="true" hidden="hidden">
 <pre><code class="lang-csharp" name="Main">[TestMethod]
 public void StaticMethodWay()
 {
@@ -135,7 +135,7 @@ public void StaticMethodWay()
     }
 }
 </code></pre></section>
-<section id="tabpanel_CeZOj-G++Q_CreateRunnerInstance" role="tabpanel" data-tab="CreateRunnerInstance" aria-hidden="true" hidden="hidden">
+<section id="tabpanel_CeZOj-G++Q_TryCatchCreateRunnerInstance" role="tabpanel" data-tab="TryCatchCreateRunnerInstance" aria-hidden="true" hidden="hidden">
 <pre><code class="lang-csharp" name="Main">[TestMethod]
 public void InstanceMethodWay()
 {
@@ -158,6 +158,56 @@ public void InstanceMethodWay()
 </code></pre></section>
 </div>
 <h2 id="getting-the-execution-status">Getting the execution status</h2>
+<p>By using <code>ExecuteWithNoFaultAsync</code> or <code>CreateAndExecuteWithNoFaultAsync</code>, the necessary information about the success is returned in the result of type <code>Paillave.Etl.ExecutionStatus</code> of the task. The exception can be found in the object in the property <code>EndOfProcessTraceEvent</code> that should be of type <code>Paillave.Etl.Core.TraceContents.UnhandledExceptionStreamTraceContent</code>.</p>
+<p>This will run the ETL process defined in the recipe <a href="Define.Etl.Process.html#source-code-example">Define an Etl process</a></p>
+<div class="tabGroup" id="tabgroup_CeZOj-G++Q-1">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_CeZOj-G++Q-1_InlineCallExecution" role="tab" aria-controls="tabpanel_CeZOj-G++Q-1_InlineCallExecution" data-tab="InlineCallExecution" tabindex="0" aria-selected="true">Inline call execution</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_CeZOj-G++Q-1_InstanceRunnerCreation" role="tab" aria-controls="tabpanel_CeZOj-G++Q-1_InstanceRunnerCreation" data-tab="InstanceRunnerCreation" tabindex="-1">Ask runner instance creation</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_CeZOj-G++Q-1_CreateRunnerInstance" role="tab" aria-controls="tabpanel_CeZOj-G++Q-1_CreateRunnerInstance" data-tab="CreateRunnerInstance" tabindex="-1">Create runner instance</a>
+</li>
+</ul>
+<section id="tabpanel_CeZOj-G++Q-1_InlineCallExecution" role="tabpanel" data-tab="InlineCallExecution">
+<pre><code class="lang-csharp" name="Main">[TestMethod]
+public void InlineMethodWay()
+{
+    var config = new SimpleConfigStreamType { Divider = 0 };
+    var task = StreamProcessRunner.CreateAndExecuteWithNoFaultAsync(config, SimpleJob.Job1);
+    task.Wait();
+    Assert.IsTrue(task.Result.Failed, &quot;the execution should not be successfull&quot;);
+    Assert.IsInstanceOfType((task.Result.EndOfProcessTraceEvent?.Content as UnhandledExceptionStreamTraceContent)?.Exception, typeof(DivideByZeroException));
+}
+</code></pre></section>
+<section id="tabpanel_CeZOj-G++Q-1_InstanceRunnerCreation" role="tabpanel" data-tab="InstanceRunnerCreation" aria-hidden="true" hidden="hidden">
+<pre><code class="lang-csharp" name="Main">[TestMethod]
+public void StaticMethodWay()
+{
+    var runner = StreamProcessRunner.Create&lt;SimpleConfigStreamType&gt;(SimpleJob.Job1);
+    var config = new SimpleConfigStreamType { Divider = 0 };
+    var task = runner.ExecuteWithNoFaultAsync(config);
+    task.Wait();
+    Assert.IsTrue(task.Result.Failed, &quot;the execution should not be successfull&quot;);
+    Assert.IsInstanceOfType((task.Result.EndOfProcessTraceEvent?.Content as UnhandledExceptionStreamTraceContent)?.Exception, typeof(DivideByZeroException));
+}
+</code></pre></section>
+<section id="tabpanel_CeZOj-G++Q-1_CreateRunnerInstance" role="tabpanel" data-tab="CreateRunnerInstance" aria-hidden="true" hidden="hidden">
+<pre><code class="lang-csharp" name="Main">[TestMethod]
+public void InstanceMethodWay()
+{
+    var runner = new StreamProcessRunner&lt;SimpleConfigStreamType&gt;(SimpleJob.Job1);
+    var config = new SimpleConfigStreamType { Divider = 0 };
+    var task = runner.ExecuteWithNoFaultAsync(config);
+    task.Wait();
+    Assert.IsTrue(task.Result.Failed, &quot;the execution should not be successfull&quot;);
+    Assert.IsInstanceOfType((task.Result.EndOfProcessTraceEvent?.Content as UnhandledExceptionStreamTraceContent)?.Exception, typeof(DivideByZeroException));
+}
+</code></pre></section>
+</div>
 </article>
           </div>
           

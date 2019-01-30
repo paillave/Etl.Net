@@ -33,12 +33,17 @@ namespace FundProcess.Pms.ImportsTests
             // return 12;
             using (var ctx = new DataAccess.DatabaseContext(options, TenantContext.Empty))
             {
-                var manCo = new ManCo
+                var manCo = ctx.Set<ManCo>().FirstOrDefault(i => i.RegistrationNumber == "TEST");
+                if (manCo == null)
                 {
-                    Name = "my manco"
-                };
-                ctx.Add(manCo);
-                ctx.SaveChanges();
+                    manCo = new ManCo
+                    {
+                        RegistrationNumber = "TEST",
+                        Name = "my manco"
+                    };
+                    ctx.Add(manCo);
+                    ctx.SaveChanges();
+                }
                 return manCo.Id;
             }
         }
@@ -102,6 +107,24 @@ namespace FundProcess.Pms.ImportsTests
             ).Wait();
         }
         [Fact]
+        public void RbcImportAccountTest()
+        {
+            StreamProcessRunner.CreateAndExecuteAsync(
+                new RbcImportAccountFilesConfigCtx
+                {
+                    //InputFilesRootFolderPath = @"C:\Users\sroyer\Downloads\RBC",
+                    InputFilesRootFolderPath = @"C:\Users\paill\Desktop\rbc",
+                    AccountFileNamePattern = "*Shareholders*.xlsx",
+                    AccountPositionFileNamePattern = "*Position*.xlsx",
+                    DbContext = _databaseContext
+                },
+                RbcAccountJobs.FullInitialImport,
+                traceStream => traceStream
+                    .Where("remove verbose", i => i.Content.Level != TraceLevel.Verbose)
+                    .ThroughAction("trace", i => Debug.WriteLine(i))
+            ).Wait();
+        }
+        [Fact]
         public void EfaImportTest()
         {
             StreamProcessRunner.CreateAndExecuteAsync(
@@ -125,18 +148,24 @@ namespace FundProcess.Pms.ImportsTests
             StreamProcessRunner.CreateAndExecuteAsync(
                 new BdlImportFilesConfigCtx
                 {
-                    //InputFilesRootFolderPath = @"C:\Users\sroyer\Downloads\RBC",
                     InputFilesRootFolderPath = @"C:\Users\paill\Desktop\bdl",
-                    //FileNamePattern = "*.xml",
+                    FileNamePattern = "*.xml",
                     //FileNamePattern = "test.txt",
-                    FileNamePattern = "shelter#aggr_iis_sftp162789960.xml",
+                    //FileNamePattern = "shelter#aggr_iis_sftp162789960.xml",
                     DbContext = _databaseContext
                 },
-                BdlJobs.FullInitialImport,
-                traceStream => traceStream
-                    .Where("remove verbose", i => i.Content.Level != TraceLevel.Verbose)
-                    .ThroughAction("trace", i => Debug.WriteLine(i))
+                BdlJobs.FullInitialImport
+                , traceStream =>
+                {
+                    traceStream.Where("to debug console", i => i.Content.Level != TraceLevel.Verbose).ThroughAction("", i => Debug.WriteLine(i));
+                    //traceStream.KeepLastTracesPerNode().ThroughAction("trace", ProcessExecutionSummary);
+                }
             ).Wait();
+        }
+
+        private static void ProcessExecutionSummary(Dictionary<string, List<TraceEvent>> eventSummary)
+        {
+
         }
     }
 }
