@@ -38,22 +38,26 @@ namespace Paillave.Etl.ExcelFile.ValuesProviders
                 case DataOrientation.Horizontal:
                     for (int i = 0; i < reader.DataRange.Rows; i++)
                     {
-                        var propertySetter = reader.PropertySetters[i];
-                        if (propertySetter.SetValue(excelWorksheet, i + reader.DataRange.Start.Row, lineIndex + reader.DataRange.Start.Column))
+                        if (reader.PropertySetters.TryGetValue(i, out var propertySetter))
                         {
-                            isEmptyRow = false;
-                            row[propertySetter.ColumnName] = propertySetter.ParsedValue;
+                            if (propertySetter.SetValue(excelWorksheet, i + reader.DataRange.Start.Row, lineIndex + reader.DataRange.Start.Column))
+                            {
+                                isEmptyRow = false;
+                                row[propertySetter.PropertyInfo.Name] = propertySetter.ParsedValue;
+                            }
                         }
                     }
                     break;
                 case DataOrientation.Vertical:
                     for (int i = 0; i < reader.DataRange.Columns; i++)
                     {
-                        var propertySetter = reader.PropertySetters[i];
-                        if (propertySetter.SetValue(excelWorksheet, lineIndex + reader.DataRange.Start.Row, i + reader.DataRange.Start.Column))
+                        if (reader.PropertySetters.TryGetValue(i, out var propertySetter))
                         {
-                            isEmptyRow = false;
-                            row[propertySetter.ColumnName] = propertySetter.ParsedValue;
+                            if (propertySetter.SetValue(excelWorksheet, lineIndex + reader.DataRange.Start.Row, i + reader.DataRange.Start.Column))
+                            {
+                                isEmptyRow = false;
+                                row[propertySetter.PropertyInfo.Name] = propertySetter.ParsedValue;
+                            }
                         }
                     }
                     break;

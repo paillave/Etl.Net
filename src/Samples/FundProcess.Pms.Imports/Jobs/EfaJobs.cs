@@ -25,6 +25,8 @@ namespace FundProcess.Pms.Imports.Jobs
                 c => new EfaImportFilesConfigCtx
                 {
                     InputFilesRootFolderPath = c.InputFilesRootFolderPath,
+                    NavFileFileNamePattern = c.NavFileFileNamePattern,
+                    PositionFileFileNamePattern = c.PositionFileFileNamePattern,
                     DbContext = new DatabaseContext(
                         new DbContextOptionsBuilder<DatabaseContext>().UseSqlServer(new SqlConnectionStringBuilder
                         {
@@ -217,23 +219,23 @@ namespace FundProcess.Pms.Imports.Jobs
                 case "cfd":
                     security = new Cfd();
                     break;
-                //case "abnp":
-                //case "abtp":
-                //case "all":
-                //case "delta":
-                //case "dpt":
-                //case "emet":
-                //case "frt":
-                //case "iism":
-                //case "iiso":
-                //case "iisp":
-                //case "opc":
-                //case "swar":
-                //case "swav":
-                //case "tie":
-                //case "trew":
-                //    security = null;
-                //    break;
+                    //case "abnp":
+                    //case "abtp":
+                    //case "all":
+                    //case "delta":
+                    //case "dpt":
+                    //case "emet":
+                    //case "frt":
+                    //case "iism":
+                    //case "iiso":
+                    //case "iisp":
+                    //case "opc":
+                    //case "swar":
+                    //case "swav":
+                    //case "tie":
+                    //case "trew":
+                    //    security = null;
+                    //    break;
             }
             if (security != null)
             {

@@ -26,6 +26,8 @@ namespace FundProcess.Pms.Imports.Jobs
                 c => new RbcImportFilesConfigCtx
                 {
                     InputFilesRootFolderPath = c.InputFilesRootFolderPath,
+                    NavFileFileNamePattern = c.NavFileFileNamePattern,
+                    PositionFileFileNamePattern = c.PositionFileFileNamePattern,
                     DbContext = new DatabaseContext(
                         new DbContextOptionsBuilder<DatabaseContext>().UseSqlServer(new SqlConnectionStringBuilder
                         {
