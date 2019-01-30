@@ -63,7 +63,7 @@ namespace FundProcess.Pms.Imports.Jobs
                 .CrossApplyExcelSheets("get all account position excel sheets", i => i.Name)
                 .CrossApplyExcelRows("get account position excel content", new RbcAccountPositionFileDefinition())
                 .Distinct("exclude duplicate positions", i => new { i.AccountNumber, i.HoldingDate, i.Isin })
-                .EntityFrameworkCoreLookup("lookup for shareclass", dbCnxStream, (RbcAccountPositionFile f, ShareClass e) => f.Isin == e.Isin, (l, r) => new { FromFile = l, ShareClass = r })
+                .EntityFrameworkCoreLookup("lookup for shareclass", dbCnxStream, (RbcAccountPositionFile f)=>f.Isin, (ShareClass e) => e.Isin, (l, r) => new { FromFile = l, ShareClass = r })
                 .Where("exclude positions with no matching shareclass", i => i.ShareClass != null)
                 .Lookup("lookup for account", accountStream, i => i.FromFile.AccountNumber, i => i.Number, (l, r) => new { l.FromFile, l.ShareClass, Account = r })
                 .Where("exclude positions with no matching account", i => i.Account != null)
