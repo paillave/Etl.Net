@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageId>Etl.Net.TextFile</PackageId>
+    <PackageId>Etl.Net.XmlFile</PackageId>
     <Version>1.0.0-alpha</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
