@@ -13,6 +13,7 @@ items:
   - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,ISingleStream{``1},SaveMode,System.Int32)
   - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``3},Expression{System.Func{``3,System.Object}},System.Func{``0,``3,``2},SaveMode,System.Int32)
   - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``3},System.Func{``0,``3,``2},SaveMode,System.Int32)
+  - Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore``3(IStream{``0},System.String,ISingleStream{``1},Expression{System.Func{``0,``2}},Expression{System.Func{``0,``2}},UpdateMode,System.Int32)
   langs:
   - csharp
   - vb
@@ -101,6 +102,64 @@ items:
   - Shared
   fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery(Of TIn, TResource, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TResource), System.Func(Of TIn, TResource, IQueryable(Of TOut)), System.Boolean)
   name.vb: CrossApplyEntityFrameworkCoreQuery(Of TIn, TResource, TOut)(IStream(Of TIn), String, ISingleStream(Of TResource), Func(Of TIn, TResource, IQueryable(Of TOut)), Boolean)
+- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore``3(IStream{``0},System.String,ISingleStream{``1},Expression{System.Func{``0,``2}},Expression{System.Func{``0,``2}},UpdateMode,System.Int32)
+  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore``3(IStream{``0},System.String,ISingleStream{``1},Expression{System.Func{``0,``2}},Expression{System.Func{``0,``2}},UpdateMode,System.Int32)
+  id: UpdateEntityFrameworkCore``3(IStream{``0},System.String,ISingleStream{``1},Expression{System.Func{``0,``2}},Expression{System.Func{``0,``2}},UpdateMode,System.Int32)
+  isExtensionMethod: true
+  parent: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx
+  langs:
+  - csharp
+  - vb
+  name: UpdateEntityFrameworkCore<TIn, TResource, TEntity>(IStream<TIn>, String, ISingleStream<TResource>, Expression<Func<TIn, TEntity>>, Expression<Func<TIn, TEntity>>, UpdateMode, Int32)
+  nameWithType: EntityFrameworkCoreEx.UpdateEntityFrameworkCore<TIn, TResource, TEntity>(IStream<TIn>, String, ISingleStream<TResource>, Expression<Func<TIn, TEntity>>, Expression<Func<TIn, TEntity>>, UpdateMode, Int32)
+  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore<TIn, TResource, TEntity>(IStream<TIn>, System.String, ISingleStream<TResource>, Expression<System.Func<TIn, TEntity>>, Expression<System.Func<TIn, TEntity>>, UpdateMode, System.Int32)
+  type: Method
+  source:
+    id: UpdateEntityFrameworkCore
+    path: ''
+    startLine: 27
+  assemblies:
+  - cs.temp.dll
+  namespace: Paillave.Etl.EntityFrameworkCore.Extensions
+  syntax:
+    content: >-
+      public static IStream<TIn> UpdateEntityFrameworkCore<TIn, TResource, TEntity>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Expression<Func<TIn, TEntity>> updateKey, Expression<Func<TIn, TEntity>> updateValues, UpdateMode updateMode = null, int chunkSize = 10000)
+          where TResource : DbContext where TEntity : class
+    parameters:
+    - id: stream
+      type: IStream{{TIn}}
+    - id: name
+      type: System.String
+    - id: dbContextStream
+      type: ISingleStream{{TResource}}
+    - id: updateKey
+      type: Expression{System.Func{{TIn},{TEntity}}}
+    - id: updateValues
+      type: Expression{System.Func{{TIn},{TEntity}}}
+    - id: updateMode
+      type: UpdateMode
+    - id: chunkSize
+      type: System.Int32
+    typeParameters:
+    - id: TIn
+    - id: TResource
+    - id: TEntity
+    return:
+      type: IStream{{TIn}}
+    content.vb: >-
+      <ExtensionAttribute>
+
+      Public Shared Function UpdateEntityFrameworkCore(Of TIn, TResource As DbContext, TEntity As Class)(stream As IStream(Of TIn), name As String, dbContextStream As ISingleStream(Of TResource), updateKey As Expression(Of Func(Of TIn, TEntity)), updateValues As Expression(Of Func(Of TIn, TEntity)), updateMode As UpdateMode = Nothing, chunkSize As Integer = 10000) As IStream(Of TIn)
+  overload: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore*
+  nameWithType.vb: EntityFrameworkCoreEx.UpdateEntityFrameworkCore(Of TIn, TResource, TEntity)(IStream(Of TIn), String, ISingleStream(Of TResource), Expression(Of Func(Of TIn, TEntity)), Expression(Of Func(Of TIn, TEntity)), UpdateMode, Int32)
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore(Of TIn, TResource, TEntity)(IStream(Of TIn), System.String, ISingleStream(Of TResource), Expression(Of System.Func(Of TIn, TEntity)), Expression(Of System.Func(Of TIn, TEntity)), UpdateMode, System.Int32)
+  name.vb: UpdateEntityFrameworkCore(Of TIn, TResource, TEntity)(IStream(Of TIn), String, ISingleStream(Of TResource), Expression(Of Func(Of TIn, TEntity)), Expression(Of Func(Of TIn, TEntity)), UpdateMode, Int32)
 - uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,ISingleStream{``1},SaveMode,System.Int32)
   commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,ISingleStream{``1},SaveMode,System.Int32)
   id: ThroughEntityFrameworkCore``2(IStream{``0},System.String,ISingleStream{``1},SaveMode,System.Int32)
@@ -116,7 +175,7 @@ items:
   source:
     id: ThroughEntityFrameworkCore
     path: ''
-    startLine: 27
+    startLine: 42
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
@@ -169,7 +228,7 @@ items:
   source:
     id: ThroughEntityFrameworkCore
     path: ''
-    startLine: 42
+    startLine: 57
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
@@ -224,7 +283,7 @@ items:
   source:
     id: ThroughEntityFrameworkCore
     path: ''
-    startLine: 58
+    startLine: 73
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
@@ -283,7 +342,7 @@ items:
   source:
     id: ThroughEntityFrameworkCore
     path: ''
-    startLine: 73
+    startLine: 88
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
@@ -344,7 +403,7 @@ items:
   source:
     id: EntityFrameworkCoreLookup
     path: ''
-    startLine: 89
+    startLine: 104
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
@@ -408,7 +467,7 @@ items:
   source:
     id: EntityFrameworkCoreLookup
     path: ''
-    startLine: 105
+    startLine: 120
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
@@ -470,7 +529,7 @@ items:
   source:
     id: EntityFrameworkCoreDelete
     path: ''
-    startLine: 120
+    startLine: 135
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.EntityFrameworkCore.Extensions
@@ -1166,6 +1225,135 @@ references:
   - name: )
     nameWithType: )
     fullName: )
+- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore*
+  commentId: Overload:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore
+  name: UpdateEntityFrameworkCore
+  nameWithType: EntityFrameworkCoreEx.UpdateEntityFrameworkCore
+  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore
+- uid: Expression{System.Func{{TIn},{TEntity}}}
+  commentId: '!:Expression{System.Func{``0,``2}}'
+  definition: Expression`1
+  name: Expression<Func<TIn, TEntity>>
+  nameWithType: Expression<Func<TIn, TEntity>>
+  fullName: Expression<System.Func<TIn, TEntity>>
+  nameWithType.vb: Expression(Of Func(Of TIn, TEntity))
+  fullName.vb: Expression(Of System.Func(Of TIn, TEntity))
+  name.vb: Expression(Of Func(Of TIn, TEntity))
+  spec.csharp:
+  - uid: Expression`1
+    name: Expression
+    nameWithType: Expression
+    fullName: Expression
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TEntity
+    nameWithType: TEntity
+    fullName: TEntity
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: Expression`1
+    name: Expression
+    nameWithType: Expression
+    fullName: Expression
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TIn
+    nameWithType: TIn
+    fullName: TIn
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TEntity
+    nameWithType: TEntity
+    fullName: TEntity
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: UpdateMode
+  commentId: '!:UpdateMode'
+  isExternal: true
+  name: UpdateMode
+  nameWithType: UpdateMode
+  fullName: UpdateMode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: Expression`1
+  isExternal: true
+  name: Expression<>
+  nameWithType: Expression<>
+  fullName: Expression<>
+  nameWithType.vb: Expression(Of )
+  fullName.vb: Expression(Of )
+  name.vb: Expression(Of )
+  spec.csharp:
+  - uid: Expression`1
+    name: Expression
+    nameWithType: Expression
+    fullName: Expression
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: Expression`1
+    name: Expression
+    nameWithType: Expression
+    fullName: Expression
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
 - uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*
   commentId: Overload:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore
   name: ThroughEntityFrameworkCore
@@ -1176,13 +1364,6 @@ references:
   name: SaveMode
   nameWithType: SaveMode
   fullName: SaveMode
-- uid: System.Int32
-  commentId: T:System.Int32
-  parent: System
-  isExternal: true
-  name: Int32
-  nameWithType: Int32
-  fullName: System.Int32
 - uid: Expression{System.Func{{TIn},System.Object}}
   commentId: '!:Expression{System.Func{``0,System.Object}}'
   definition: Expression`1
@@ -1257,44 +1438,6 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-  - name: )
-    nameWithType: )
-    fullName: )
-- uid: Expression`1
-  isExternal: true
-  name: Expression<>
-  nameWithType: Expression<>
-  fullName: Expression<>
-  nameWithType.vb: Expression(Of )
-  fullName.vb: Expression(Of )
-  name.vb: Expression(Of )
-  spec.csharp:
-  - uid: Expression`1
-    name: Expression
-    nameWithType: Expression
-    fullName: Expression
-    isExternal: true
-  - name: <
-    nameWithType: <
-    fullName: <
-  - name: ''
-    nameWithType: ''
-    fullName: ''
-  - name: '>'
-    nameWithType: '>'
-    fullName: '>'
-  spec.vb:
-  - uid: Expression`1
-    name: Expression
-    nameWithType: Expression
-    fullName: Expression
-    isExternal: true
-  - name: '(Of '
-    nameWithType: '(Of '
-    fullName: '(Of '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
   - name: )
     nameWithType: )
     fullName: )

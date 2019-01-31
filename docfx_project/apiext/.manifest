@@ -9,6 +9,7 @@
   "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,ISingleStream{``1},SaveMode,System.Int32)": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.yml",
   "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``3},Expression{System.Func{``3,System.Object}},System.Func{``0,``3,``2},SaveMode,System.Int32)": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.yml",
   "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``3},System.Func{``0,``3,``2},SaveMode,System.Int32)": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.yml",
+  "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore``3(IStream{``0},System.String,ISingleStream{``1},Expression{System.Func{``0,``2}},Expression{System.Func{``0,``2}},UpdateMode,System.Int32)": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.yml",
   "Paillave.Etl.ExcelFile.Extensions": "Paillave.Etl.ExcelFile.Extensions.yml",
   "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
   "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Boolean)": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
