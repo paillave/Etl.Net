@@ -23,4 +23,6 @@ test:
     only:
     - src\Paillave.EtlTests\bin\Release\netcoreapp2.1\Paillave.EtlTests.dll
     - src\Paillave.Etl.TextFileTests\bin\Release\netcoreapp2.1\Paillave.Etl.TextFileTests.dll
-    - src\Paillave.Etl.TextFileTests\bin\Release\netcoreapp2.1\Paillave.Etl.XmlFileTests.dll
+    - src\Paillave.Etl.XmlFileTests\bin\Release\netcoreapp2.1\Paillave.Etl.XmlFileTests.dll
+    - src\Paillave.Etl.EntityFrameworkCoreTests\bin\Release\netcoreapp2.1\Paillave.Etl.EntityFrameworkCoreTests.dll
+    - src\Paillave.Etl.Recipes\bin\Release\netcoreapp2.1\Paillave.Etl.Recipes.dll
