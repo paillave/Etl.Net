@@ -38,7 +38,26 @@ namespace Paillave.Etl.Reactive.Core
             {
                 var xValue = (IComparable)item.GetValue(xKey);
                 var yValue = (IComparable)item.GetValue(yKey);
-                var cmp = item.SortOrder == SortOrder.Ascending ? xValue.CompareTo(yValue) : yValue.CompareTo(xValue);
+                int cmp;
+                if (item.SortOrder == SortOrder.Ascending)
+                {
+                    if (xValue != null)
+                        cmp = xValue.CompareTo(yValue);
+                    else if (yValue != null)
+                        cmp = -yValue.CompareTo(xValue);
+                    else
+                        cmp = 0;
+                }
+                else
+                {
+                    if (yValue != null)
+                        cmp = yValue.CompareTo(xValue);
+                    else if (xValue != null)
+                        cmp = -xValue.CompareTo(yValue);
+                    else
+                        cmp = 0;
+                }
+                //var cmp = item.SortOrder == SortOrder.Ascending ? xValue.CompareTo(yValue) : yValue.CompareTo(xValue);
                 if (cmp != 0) return cmp;
             }
             return 0;

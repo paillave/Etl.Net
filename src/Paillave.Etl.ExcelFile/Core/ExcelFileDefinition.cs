@@ -97,12 +97,12 @@ namespace Paillave.Etl.ExcelFile.Core
                         Position = po.Position,
                         PropertySerializer = new ExcelFilePropertySetter(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo, fd.ColumnName)
                     })
-                    .OrderBy(i => i.Position)
-                    .Select((i, idx) => new
-                    {
-                        Position = idx,
-                        PropertySerializer = i.PropertySerializer
-                    })
+                    //.OrderBy(i => i.Position)
+                    //.Select((i, idx) => new
+                    //{
+                    //    Position = idx,
+                    //    PropertySerializer = i.PropertySerializer
+                    //})
                     .ToDictionary(i => i.Position, i => i.PropertySerializer);
                 return new ExcelFileReader(dico, _columnHeaderRange, _dataRange, _datasetOrientation);
             }

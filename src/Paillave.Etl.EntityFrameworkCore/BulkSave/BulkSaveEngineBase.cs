@@ -21,7 +21,7 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         private string _schema;
         private string _table;
         private readonly DbContext _context;
-        protected abstract ContextQueryBase<T> CreateContextQueryInstance(DbContext context, string schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes);
+        protected abstract SaveContextQueryBase<T> CreateSaveContextQueryInstance(DbContext context, string schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes);
         private IEnumerable<IEntityType> GetAllRelatedEntityTypes(IEntityType et)
         {
             yield return et;
@@ -104,11 +104,19 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
                 .Distinct(new LambdaEqualityComparer<IProperty, string>(i => i.Relational().ColumnName))
                 .ToList();
         }
+        // public void Update<TSource, TKey>(IList<TSource> entities, Expression<Func<TSource, T>> updateKey, Expression<Func<TSource, T>> updateValues)
+        // {
+        //     var previousAutoDetect = _context.ChangeTracker.AutoDetectChangesEnabled;
+        //     _context.ChangeTracker.AutoDetectChangesEnabled = false;
+        //     var contextQuery = this.CreateContextQueryInstance(_context, _schema, _table, _propertiesToInsert, _propertiesToUpdate, _propertiesForPivot, _propertiesToBulkLoad, _entityTypes);
+
+        //     _context.ChangeTracker.AutoDetectChangesEnabled = previousAutoDetect;
+        // }
         public void Save(IList<T> entities)
         {
             var previousAutoDetect = _context.ChangeTracker.AutoDetectChangesEnabled;
             _context.ChangeTracker.AutoDetectChangesEnabled = false;
-            var contextQuery = this.CreateContextQueryInstance(_context, _schema, _table, _propertiesToInsert, _propertiesToUpdate, _propertiesForPivot, _propertiesToBulkLoad, _entityTypes);
+            var contextQuery = this.CreateSaveContextQueryInstance(_context, _schema, _table, _propertiesToInsert, _propertiesToUpdate, _propertiesForPivot, _propertiesToBulkLoad, _entityTypes);
             SetDiscriminatorValue(entities);
             contextQuery.CreateStagingTable();
             contextQuery.CreateOutputStagingTable();
@@ -153,8 +161,10 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
                 var resultEntity = resultEntities[i];
                 var dicoToSet = propertiesToGetAfterSetInTarget.ToDictionary(p => p.Name, p => p.PropertyInfo.GetValue(resultEntity));
                 var entry = _context.Entry(inputEntity);
-                entry.OriginalValues.SetValues(dicoToSet);
                 entry.CurrentValues.SetValues(dicoToSet);
+                entry.OriginalValues.SetValues(dicoToSet);
+                foreach (var item in propertiesToGetAfterSetInTarget.Where(j => !j.IsShadowProperty).Select(j => j.PropertyInfo).ToList())
+                    item.SetValue(inputEntity, item.GetValue(resultEntity));
                 //_context.Entry(inputEntity).State = EntityState.Unchanged;
             }
         }

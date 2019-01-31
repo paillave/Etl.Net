@@ -23,7 +23,7 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         public IStream<TIn> SourceStream { get; set; }
         public ISingleStream<TCtx> DbContextStream { get; set; }
         public int BatchSize { get; set; } = 10000;
-        public SaveMode BulkLoadMode { get; set; } = SaveMode.Bulk;
+        public SaveMode BulkLoadMode { get; set; } = SaveMode.SqlServerBulk;
         public Func<TIn, TCtx, TInEf> GetEntity { get; set; }
         public Func<TIn, TInEf, TOut> GetOutput { get; set; }
         public Expression<Func<TInEf, object>> PivotKey { get; set; }
@@ -31,7 +31,7 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
     public enum SaveMode
     {
         EntityFrameworkCore,
-        Bulk
+        SqlServerBulk
     }
     public class ThroughEntityFrameworkCoreStreamNode<TInEf, TCtx, TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, ThroughEntityFrameworkCoreArgs<TInEf, TCtx, TIn, TOut>>
         where TInEf : class
@@ -60,7 +60,7 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
                 case SaveMode.EntityFrameworkCore:
                     dbContext.EfSave(entities, Args.PivotKey);
                     break;
-                case SaveMode.Bulk:
+                case SaveMode.SqlServerBulk:
                     dbContext.BulkSave(entities, Args.PivotKey);
                     break;
                 default:

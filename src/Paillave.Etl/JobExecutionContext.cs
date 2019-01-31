@@ -56,9 +56,12 @@ namespace Paillave.Etl
         }
         public void AddDisposable(IDisposable disposable) => _disposables.Set(disposable);
         public void AddStreamToNodeLink(StreamToNodeLink link) => _streamToNodeLinks.Add(link);
-        public void Trace(TraceEvent traceEvent)
+        private int _currentTraceSequence = 0;
+        private object _traceSequenceLock = new object();
+        public int NextTraceSequence()
         {
-            throw new NotImplementedException();
+            lock (_traceSequenceLock)
+                return ++_currentTraceSequence;
         }
         public void InvokeInDedicatedThread(object threadOwner, Action action)
         {

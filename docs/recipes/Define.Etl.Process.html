@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Define an ETL process </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Define an ETL process ">
+    <meta name="generator" content="docfx 2.40.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+              <a class="navbar-brand" href="https://github.com/paillave/Etl.Net" style="float:right">
+                <img id="logo" class="svg" src="../images/github.svg" style="height:52px">
+              </a>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="define-an-etl-process">Define an ETL process</h1>
+
+<h2 id="the-etl-itself">The ETL itself</h2>
+<p>An Etl process is a method that take one parameter with the type <code>Paillave.Etl.Core.Streams.ISingleStream&lt;&gt;</code>.
+Ideally it should be a static method for it to be directly executable by the <a href="../debugger/index.html">debugger tool</a>. It should be placed in a specific namespace <code>Jobs</code></p>
+<p>The generic type of the of the parameter is a tpe that contains the starting point value of the ELT process. It will be issued only once into the input stream.</p>
+<h2 id="stream-types-used-by-the-process">Stream types used by the process</h2>
+<p>Every not anonymous type that is involved in a stream should be in a specific namespace <code>StreamTypes</code>. By defining ETL processes you will try to use as much anonymous types as possible. Ideally, since you want it to be as less confusing as possible you want to make a distinction between ETL config types and input/output types. ETL config types are the entry point of your process whereas input/output types are values that directly the representation of what is read or written by the ETL process.</p>
+<h2 id="namespaces-structure">Namespaces structure</h2>
+<p><img src="../images/Namespaces.svg" alt="Namespaces structure"></p>
+<h2 id="source-code-example">Source code example</h2>
+<div class="tabGroup" id="tabgroup_CeZOj-G++Q">
+<ul role="tablist">
+<li role="presentation">
+<a href="#tabpanel_CeZOj-G++Q_SimpleJob" role="tab" aria-controls="tabpanel_CeZOj-G++Q_SimpleJob" data-tab="SimpleJob" tabindex="0" aria-selected="true">SimpleJob.cs</a>
+</li>
+<li role="presentation">
+<a href="#tabpanel_CeZOj-G++Q_SimpleConfigStreamType" role="tab" aria-controls="tabpanel_CeZOj-G++Q_SimpleConfigStreamType" data-tab="SimpleConfigStreamType" tabindex="-1">SimpleConfigStreamType.cs</a>
+</li>
+</ul>
+<section id="tabpanel_CeZOj-G++Q_SimpleJob" role="tabpanel" data-tab="SimpleJob">
+<pre><code class="lang-csharp" name="Main">using Paillave.Etl.Extensions;
+using Paillave.Etl.Core.Streams;
+using Paillave.Etl.Recipes.DefineProcess.StreamTypes.Config;
+
+namespace Paillave.Etl.Recipes.DefineProcess.Jobs
+{
+    public class SimpleJob
+    {
+        public static void Job1(ISingleStream&lt;SimpleConfigStreamType&gt; config)
+        {
+            config.ThroughAction(&quot;show message&quot;, i =&gt; i.Messages.Add($&quot;{100 / i.Divider} times hello world!&quot;));
+        }
+    }
+}
+</code></pre></section>
+<section id="tabpanel_CeZOj-G++Q_SimpleConfigStreamType" role="tabpanel" data-tab="SimpleConfigStreamType" aria-hidden="true" hidden="hidden">
+<pre><code class="lang-csharp" name="Main">using System.Collections.Generic;
+
+namespace Paillave.Etl.Recipes.DefineProcess.StreamTypes.Config
+{
+    public class SimpleConfigStreamType
+    {
+        public int Divider { get; set; }
+        public List&lt;string&gt; Messages { get; set; } = new List&lt;string&gt;();
+    }
+}
+</code></pre></section>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <p><img src="../images/full-black-logo.svg" alt="Logo Etl.Net"></p>
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/paillave/Etl.Net/blob/rehandlereactive/docfx_project/recipes/Define.Etl.Process.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -6,6 +6,7 @@ using System.Linq;
 using Paillave.Etl;
 using Paillave.Etl.Extensions;
 using System.Linq.Expressions;
+using System.Collections.Generic;
 
 namespace Paillave.Etl.EntityFrameworkCore.Extensions
 {
@@ -15,11 +16,31 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
         {
             return stream.CrossApply(name, dbContextStream, (TIn inputValue, TResource valueToApply, Action<TOut> push) =>
             {
-                foreach (var item in getQuery(inputValue, valueToApply).ToList())
+                List<TOut> lsts = null;
+                stream.ExecutionContext.InvokeInDedicatedThread(valueToApply, () =>
+                {
+                    lsts = getQuery(inputValue, valueToApply).ToList();
+                });
+                foreach (var item in lsts)
                     push(item);
             }, noParallelisation);
         }
-        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, SaveMode bulkLoadMode = SaveMode.Bulk, int chunkSize = 10000)
+        public static IStream<TIn> UpdateEntityFrameworkCore<TIn, TResource, TEntity>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Expression<Func<TIn, TEntity>> updateKey, Expression<Func<TIn, TEntity>> updateValues, UpdateMode updateMode = UpdateMode.SqlServerBulk, int chunkSize = 10000)
+            where TResource : DbContext
+            where TEntity : class
+        {
+            return new UpdateEntityFrameworkCoreStreamNode<TEntity, TResource, TIn>(name, new UpdateEntityFrameworkCoreArgs<TEntity, TResource, TIn>
+            {
+                SourceStream = stream,
+                DbContextStream = dbContextStream,
+                BatchSize = chunkSize,
+                BulkLoadMode = updateMode,
+                UpdateKey = updateKey,
+                UpdateValues = updateValues
+            }).Output;
+        }
+
+        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, SaveMode bulkLoadMode = SaveMode.SqlServerBulk, int chunkSize = 10000)
             where TResource : DbContext
             where TIn : class
         {
@@ -34,7 +55,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
             }).Output;
         }
 
-        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Expression<Func<TIn, object>> pivotKey, SaveMode saveMode = SaveMode.Bulk, int chunkSize = 10000)
+        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Expression<Func<TIn, object>> pivotKey, SaveMode saveMode = SaveMode.SqlServerBulk, int chunkSize = 10000)
             where TResource : DbContext
             where TIn : class
         {
@@ -50,7 +71,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
             }).Output;
         }
 
-        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn, TResource, TInEf> getEntity, Func<TIn, TInEf, TOut> getResult, SaveMode bulkLoadMode = SaveMode.Bulk, int chunkSize = 10000)
+        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn, TResource, TInEf> getEntity, Func<TIn, TInEf, TOut> getResult, SaveMode bulkLoadMode = SaveMode.SqlServerBulk, int chunkSize = 10000)
             where TResource : DbContext
             where TInEf : class
         {
@@ -65,7 +86,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
             }).Output;
         }
 
-        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn, TResource, TInEf> getEntity, Expression<Func<TInEf, object>> pivotKey, Func<TIn, TInEf, TOut> getResult, SaveMode bulkInsertMode = SaveMode.Bulk, int chunkSize = 10000)
+        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn, TResource, TInEf> getEntity, Expression<Func<TInEf, object>> pivotKey, Func<TIn, TInEf, TOut> getResult, SaveMode bulkInsertMode = SaveMode.SqlServerBulk, int chunkSize = 10000)
             where TResource : DbContext
             where TInEf : class
         {
@@ -81,31 +102,33 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
             }).Output;
         }
 
-        public static IStream<TOut> EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TEntity, bool>> match, Func<TIn, TEntity, TOut> resultSelector, Expression<Func<TEntity, bool>> defaultCache, Func<TIn, TEntity> createIfNotFound = null, int cacheSize = 10000)
+        public static IStream<TOut> EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut, TKey>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TKey>> getLeftStreamKey, Expression<Func<TEntity, TKey>> getEntityStreamKey, Func<TIn, TEntity, TOut> resultSelector, Expression<Func<TEntity, bool>> defaultCache, Func<TIn, TEntity> createIfNotFound = null, int cacheSize = 10000)
             where TCtx : DbContext
             where TEntity : class
         {
-            return new LookupEntityFrameworkCoreStreamNode<TIn, TEntity, TCtx, TOut>(name, new LookupEntityFrameworkCoreArgs<TIn, TEntity, TCtx, TOut>
+            return new LookupEntityFrameworkCoreStreamNode<TIn, TEntity, TCtx, TOut, TKey>(name, new LookupEntityFrameworkCoreArgs<TIn, TEntity, TCtx, TOut, TKey>
             {
                 CacheSize = cacheSize,
                 DbContextStream = dbContextStream,
                 InputStream = inputStream,
-                Match = match,
+                GetEntityStreamKey = getEntityStreamKey,
+                GetLeftStreamKey = getLeftStreamKey,
                 ResultSelector = resultSelector,
                 CreateIfNotFound = createIfNotFound,
                 DefaultCache = defaultCache
             }).Output;
         }
-        public static IStream<TOut> EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TEntity, bool>> match, Func<TIn, TEntity, TOut> resultSelector, Func<TIn, TEntity> createIfNotFound = null, int cacheSize = 10000)
+        public static IStream<TOut> EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut, TKey>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TKey>> getLeftStreamKey, Expression<Func<TEntity, TKey>> getEntityStreamKey, Func<TIn, TEntity, TOut> resultSelector, Func<TIn, TEntity> createIfNotFound = null, int cacheSize = 10000)
             where TCtx : DbContext
             where TEntity : class
         {
-            return new LookupEntityFrameworkCoreStreamNode<TIn, TEntity, TCtx, TOut>(name, new LookupEntityFrameworkCoreArgs<TIn, TEntity, TCtx, TOut>
+            return new LookupEntityFrameworkCoreStreamNode<TIn, TEntity, TCtx, TOut, TKey>(name, new LookupEntityFrameworkCoreArgs<TIn, TEntity, TCtx, TOut, TKey>
             {
                 CacheSize = cacheSize,
                 DbContextStream = dbContextStream,
                 InputStream = inputStream,
-                Match = match,
+                GetEntityStreamKey = getEntityStreamKey,
+                GetLeftStreamKey = getLeftStreamKey,
                 ResultSelector = resultSelector,
                 CreateIfNotFound = createIfNotFound
             }).Output;

@@ -90,4 +90,10 @@ Runtime features:
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Extensions\obj\**" />
+    <EmbeddedResource Remove="Extensions\obj\**" />
+    <None Remove="Extensions\obj\**" />
+  </ItemGroup>
+
 </Project>

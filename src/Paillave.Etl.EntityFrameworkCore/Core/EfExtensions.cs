@@ -52,20 +52,5 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
             var constant = Expression.Constant(value, parameterToBeReplaced.Type);
             return ApplyPartialLeft(expression, constant);
         }
-        private class ReplacementVisitor : ExpressionVisitor
-        {
-            private readonly Expression original, replacement;
-
-            public ReplacementVisitor(Expression original, Expression replacement)
-            {
-                this.original = original;
-                this.replacement = replacement;
-            }
-
-            public override Expression Visit(Expression node)
-            {
-                return node == original ? replacement : base.Visit(node);
-            }
-        }
     }
 }

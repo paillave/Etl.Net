@@ -9,7 +9,7 @@ namespace Paillave.Etl.Core
 {
     public class TraceEvent
     {
-        public TraceEvent(string jobName, Guid executionId, string nodeTypeName, string nodeName, ITraceContent content)
+        public TraceEvent(string jobName, Guid executionId, string nodeTypeName, string nodeName, ITraceContent content, int sequenceId)
         {
             this.ExecutionId = executionId;
             this.JobName = jobName;
@@ -18,6 +18,7 @@ namespace Paillave.Etl.Core
             this.Content = content;
             this.DateTime = DateTime.Now;
         }
+        public int SequenceId { get; }
         public Guid ExecutionId { get; }
         public string JobName { get; }
         public DateTime DateTime { get; }

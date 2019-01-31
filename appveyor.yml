@@ -41,6 +41,8 @@ artifacts:
   name: Paillave.Etl.ExecutionPlan
 - path: src\Paillave.Etl.TextFile\bin\$(configuration)\*.nupkg
   name: Paillave.Etl.TextFile
+- path: src\Paillave.Etl.XmlFile\bin\$(configuration)\*.nupkg
+  name: Paillave.Etl.XmlFile
 - path: src\Paillave.Etl.ExcelFile\bin\$(configuration)\*.nupkg
   name: Paillave.Etl.ExcelFile
 - path: src\Paillave.Etl.SqlServer\bin\$(configuration)\*.nupkg
@@ -66,6 +68,10 @@ deploy:
   api_key:
     secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
   artifact: Paillave.Etl.TextFile
+- provider: NuGet
+  api_key:
+    secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
+  artifact: Paillave.Etl.XmlFile
 - provider: NuGet
   api_key:
     secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG

@@ -17,7 +17,7 @@ items:
   source:
     id: SqlServerEx
     path: ''
-    startLine: 398
+    startLine: 406
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.SqlServer.Extensions
@@ -56,7 +56,7 @@ items:
   source:
     id: CrossApplySqlServerQuery
     path: ''
-    startLine: 400
+    startLine: 408
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.SqlServer.Extensions
@@ -107,7 +107,7 @@ items:
   source:
     id: ThroughSqlServer
     path: ''
-    startLine: 405
+    startLine: 413
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.SqlServer.Extensions
