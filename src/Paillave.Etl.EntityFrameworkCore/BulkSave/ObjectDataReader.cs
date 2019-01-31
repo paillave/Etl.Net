@@ -60,7 +60,9 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
 
             _currentType = null;
             Current = null;
-            _memberNames = efProperties.Select(i => i.Name).Union(new[] { _tempColumnNumOrderName }).ToArray();
+            _memberNames = efProperties.Select(i => i.Name).ToArray();
+            if (!string.IsNullOrWhiteSpace(_tempColumnNumOrderName))
+                _memberNames = _memberNames.Union(new[] { _tempColumnNumOrderName }).ToArray();
             _effectiveTypes = efProperties.Select(i => Nullable.GetUnderlyingType(i.ClrType) ?? i.ClrType).ToArray();
             _allowNull = efProperties.Select(i => i.IsColumnNullable()).ToArray();
             _source = source.GetEnumerator();

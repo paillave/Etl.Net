@@ -13,6 +13,12 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
             vis.Visit(getKey);
             return vis.PropertyInfos;
         }
+        public static List<PropertyInfo> GetKeys<T,TKey>(Expression<Func<T, TKey>> getKey)
+        {
+            var vis = new KeyVisitor();
+            vis.Visit(getKey);
+            return vis.PropertyInfos;
+        }
         private class KeyVisitor : ExpressionVisitor
         {
             public List<PropertyInfo> PropertyInfos { get; } = new List<PropertyInfo>();

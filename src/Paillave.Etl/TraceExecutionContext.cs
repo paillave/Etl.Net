@@ -39,7 +39,7 @@ namespace Paillave.Etl
         public Task GetCompletionTask() => Task.WhenAll(_tasksToWait.ToArray()).ContinueWith(_ => _disposables.Dispose());
         public void AddDisposable(IDisposable disposable) => _disposables.Set(disposable);
         public void AddStreamToNodeLink(StreamToNodeLink link) { }
-        public void Trace(TraceEvent traceEvent) { }
+        public int NextTraceSequence() => 0;
         public void InvokeInDedicatedThread(object threadOwner, Action action)
         {
             this._jobPoolDispatcher.Invoke(threadOwner, action);

@@ -25,9 +25,9 @@ namespace Paillave.Etl.Core
             return new TraceMapper(_executionContext, nodeContext, $"{_nodeName}>{nodeContext.NodeName}");
         }
 
-        public TraceEvent MapToTrace(ITraceContent content)
+        public TraceEvent MapToTrace(ITraceContent content, int sequenceId)
         {
-            return new TraceEvent(_executionContext.JobName, _executionContext.ExecutionId, _typeName, _nodeName, content);
+            return new TraceEvent(_executionContext.JobName, _executionContext.ExecutionId, _typeName, _nodeName, content, sequenceId);
         }
     }
 }

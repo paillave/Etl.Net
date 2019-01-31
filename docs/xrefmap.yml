@@ -52,15 +52,24 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup
   nameWithType: EntityFrameworkCoreEx.EntityFrameworkCoreLookup
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup``4(IStream{``0},System.String,ISingleStream{``2},Expression{System.Func{``0,``1,System.Boolean}},System.Func{``0,``1,``3},System.Int32)
-  name: EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut>(IStream<TIn>, String, ISingleStream<TCtx>, Expression<Func<TIn, TEntity, Boolean>>, Func<TIn, TEntity, TOut>, Int32)
-  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_EntityFrameworkCoreLookup__4_IStream___0__System_String_ISingleStream___2__Expression_System_Func___0___1_System_Boolean___System_Func___0___1___3__System_Int32_
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup``4(IStream{``0},System.String,ISingleStream{``2},Expression{System.Func{``0,``1,System.Boolean}},System.Func{``0,``1,``3},System.Int32)
-  name.vb: EntityFrameworkCoreLookup(Of TIn, TEntity, TCtx, TOut)(IStream(Of TIn), String, ISingleStream(Of TCtx), Expression(Of Func(Of TIn, TEntity, Boolean)), Func(Of TIn, TEntity, TOut), Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut>(IStream<TIn>, System.String, ISingleStream<TCtx>, Expression<System.Func<TIn, TEntity, System.Boolean>>, System.Func<TIn, TEntity, TOut>, System.Int32)
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup(Of TIn, TEntity, TCtx, TOut)(IStream(Of TIn), System.String, ISingleStream(Of TCtx), Expression(Of System.Func(Of TIn, TEntity, System.Boolean)), System.Func(Of TIn, TEntity, TOut), System.Int32)
-  nameWithType: EntityFrameworkCoreEx.EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut>(IStream<TIn>, String, ISingleStream<TCtx>, Expression<Func<TIn, TEntity, Boolean>>, Func<TIn, TEntity, TOut>, Int32)
-  nameWithType.vb: EntityFrameworkCoreEx.EntityFrameworkCoreLookup(Of TIn, TEntity, TCtx, TOut)(IStream(Of TIn), String, ISingleStream(Of TCtx), Expression(Of Func(Of TIn, TEntity, Boolean)), Func(Of TIn, TEntity, TOut), Int32)
+- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup``5(IStream{``0},System.String,ISingleStream{``2},Expression{System.Func{``0,``4}},Expression{System.Func{``1,``4}},System.Func{``0,``1,``3},Expression{System.Func{``1,System.Boolean}},System.Func{``0,``1},System.Int32)
+  name: EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut, TKey>(IStream<TIn>, String, ISingleStream<TCtx>, Expression<Func<TIn, TKey>>, Expression<Func<TEntity, TKey>>, Func<TIn, TEntity, TOut>, Expression<Func<TEntity, Boolean>>, Func<TIn, TEntity>, Int32)
+  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_EntityFrameworkCoreLookup__5_IStream___0__System_String_ISingleStream___2__Expression_System_Func___0___4___Expression_System_Func___1___4___System_Func___0___1___3__Expression_System_Func___1_System_Boolean___System_Func___0___1__System_Int32_
+  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup``5(IStream{``0},System.String,ISingleStream{``2},Expression{System.Func{``0,``4}},Expression{System.Func{``1,``4}},System.Func{``0,``1,``3},Expression{System.Func{``1,System.Boolean}},System.Func{``0,``1},System.Int32)
+  name.vb: EntityFrameworkCoreLookup(Of TIn, TEntity, TCtx, TOut, TKey)(IStream(Of TIn), String, ISingleStream(Of TCtx), Expression(Of Func(Of TIn, TKey)), Expression(Of Func(Of TEntity, TKey)), Func(Of TIn, TEntity, TOut), Expression(Of Func(Of TEntity, Boolean)), Func(Of TIn, TEntity), Int32)
+  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut, TKey>(IStream<TIn>, System.String, ISingleStream<TCtx>, Expression<System.Func<TIn, TKey>>, Expression<System.Func<TEntity, TKey>>, System.Func<TIn, TEntity, TOut>, Expression<System.Func<TEntity, System.Boolean>>, System.Func<TIn, TEntity>, System.Int32)
+  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup(Of TIn, TEntity, TCtx, TOut, TKey)(IStream(Of TIn), System.String, ISingleStream(Of TCtx), Expression(Of System.Func(Of TIn, TKey)), Expression(Of System.Func(Of TEntity, TKey)), System.Func(Of TIn, TEntity, TOut), Expression(Of System.Func(Of TEntity, System.Boolean)), System.Func(Of TIn, TEntity), System.Int32)
+  nameWithType: EntityFrameworkCoreEx.EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut, TKey>(IStream<TIn>, String, ISingleStream<TCtx>, Expression<Func<TIn, TKey>>, Expression<Func<TEntity, TKey>>, Func<TIn, TEntity, TOut>, Expression<Func<TEntity, Boolean>>, Func<TIn, TEntity>, Int32)
+  nameWithType.vb: EntityFrameworkCoreEx.EntityFrameworkCoreLookup(Of TIn, TEntity, TCtx, TOut, TKey)(IStream(Of TIn), String, ISingleStream(Of TCtx), Expression(Of Func(Of TIn, TKey)), Expression(Of Func(Of TEntity, TKey)), Func(Of TIn, TEntity, TOut), Expression(Of Func(Of TEntity, Boolean)), Func(Of TIn, TEntity), Int32)
+- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup``5(IStream{``0},System.String,ISingleStream{``2},Expression{System.Func{``0,``4}},Expression{System.Func{``1,``4}},System.Func{``0,``1,``3},System.Func{``0,``1},System.Int32)
+  name: EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut, TKey>(IStream<TIn>, String, ISingleStream<TCtx>, Expression<Func<TIn, TKey>>, Expression<Func<TEntity, TKey>>, Func<TIn, TEntity, TOut>, Func<TIn, TEntity>, Int32)
+  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_EntityFrameworkCoreLookup__5_IStream___0__System_String_ISingleStream___2__Expression_System_Func___0___4___Expression_System_Func___1___4___System_Func___0___1___3__System_Func___0___1__System_Int32_
+  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup``5(IStream{``0},System.String,ISingleStream{``2},Expression{System.Func{``0,``4}},Expression{System.Func{``1,``4}},System.Func{``0,``1,``3},System.Func{``0,``1},System.Int32)
+  name.vb: EntityFrameworkCoreLookup(Of TIn, TEntity, TCtx, TOut, TKey)(IStream(Of TIn), String, ISingleStream(Of TCtx), Expression(Of Func(Of TIn, TKey)), Expression(Of Func(Of TEntity, TKey)), Func(Of TIn, TEntity, TOut), Func(Of TIn, TEntity), Int32)
+  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut, TKey>(IStream<TIn>, System.String, ISingleStream<TCtx>, Expression<System.Func<TIn, TKey>>, Expression<System.Func<TEntity, TKey>>, System.Func<TIn, TEntity, TOut>, System.Func<TIn, TEntity>, System.Int32)
+  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup(Of TIn, TEntity, TCtx, TOut, TKey)(IStream(Of TIn), System.String, ISingleStream(Of TCtx), Expression(Of System.Func(Of TIn, TKey)), Expression(Of System.Func(Of TEntity, TKey)), System.Func(Of TIn, TEntity, TOut), System.Func(Of TIn, TEntity), System.Int32)
+  nameWithType: EntityFrameworkCoreEx.EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut, TKey>(IStream<TIn>, String, ISingleStream<TCtx>, Expression<Func<TIn, TKey>>, Expression<Func<TEntity, TKey>>, Func<TIn, TEntity, TOut>, Func<TIn, TEntity>, Int32)
+  nameWithType.vb: EntityFrameworkCoreEx.EntityFrameworkCoreLookup(Of TIn, TEntity, TCtx, TOut, TKey)(IStream(Of TIn), String, ISingleStream(Of TCtx), Expression(Of Func(Of TIn, TKey)), Expression(Of Func(Of TEntity, TKey)), Func(Of TIn, TEntity, TOut), Func(Of TIn, TEntity), Int32)
 - uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore*
   name: ThroughEntityFrameworkCore
   href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore_
@@ -68,15 +77,15 @@ references:
   isSpec: "True"
   fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore
   nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,ISingleStream{``1},Expression{System.Func{``0,``0,System.Boolean}},System.Int32)
-  name: ThroughEntityFrameworkCore<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, Expression<Func<TIn, TIn, Boolean>>, Int32)
-  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__2_IStream___0__System_String_ISingleStream___1__Expression_System_Func___0___0_System_Boolean___System_Int32_
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,ISingleStream{``1},Expression{System.Func{``0,``0,System.Boolean}},System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource)(IStream(Of TIn), String, ISingleStream(Of TResource), Expression(Of Func(Of TIn, TIn, Boolean)), Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource>(IStream<TIn>, System.String, ISingleStream<TResource>, Expression<System.Func<TIn, TIn, System.Boolean>>, System.Int32)
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource)(IStream(Of TIn), System.String, ISingleStream(Of TResource), Expression(Of System.Func(Of TIn, TIn, System.Boolean)), System.Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, Expression<Func<TIn, TIn, Boolean>>, Int32)
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource)(IStream(Of TIn), String, ISingleStream(Of TResource), Expression(Of Func(Of TIn, TIn, Boolean)), Int32)
+- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,ISingleStream{``1},Expression{System.Func{``0,System.Object}},SaveMode,System.Int32)
+  name: ThroughEntityFrameworkCore<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, Expression<Func<TIn, Object>>, SaveMode, Int32)
+  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__2_IStream___0__System_String_ISingleStream___1__Expression_System_Func___0_System_Object___SaveMode_System_Int32_
+  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,ISingleStream{``1},Expression{System.Func{``0,System.Object}},SaveMode,System.Int32)
+  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource)(IStream(Of TIn), String, ISingleStream(Of TResource), Expression(Of Func(Of TIn, Object)), SaveMode, Int32)
+  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource>(IStream<TIn>, System.String, ISingleStream<TResource>, Expression<System.Func<TIn, System.Object>>, SaveMode, System.Int32)
+  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource)(IStream(Of TIn), System.String, ISingleStream(Of TResource), Expression(Of System.Func(Of TIn, System.Object)), SaveMode, System.Int32)
+  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, Expression<Func<TIn, Object>>, SaveMode, Int32)
+  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource)(IStream(Of TIn), String, ISingleStream(Of TResource), Expression(Of Func(Of TIn, Object)), SaveMode, Int32)
 - uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,ISingleStream{``1},SaveMode,System.Int32)
   name: ThroughEntityFrameworkCore<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, SaveMode, Int32)
   href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__2_IStream___0__System_String_ISingleStream___1__SaveMode_System_Int32_
@@ -86,42 +95,24 @@ references:
   fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource)(IStream(Of TIn), System.String, ISingleStream(Of TResource), SaveMode, System.Int32)
   nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, SaveMode, Int32)
   nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource)(IStream(Of TIn), String, ISingleStream(Of TResource), SaveMode, Int32)
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IStream{``0},System.String,ISingleStream{``1},Expression{System.Func{``0,``2}},SaveByKeyMode,System.Int32)
-  name: ThroughEntityFrameworkCore<TIn, TResource, TEntityKey>(IStream<TIn>, String, ISingleStream<TResource>, Expression<Func<TIn, TEntityKey>>, SaveByKeyMode, Int32)
-  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__3_IStream___0__System_String_ISingleStream___1__Expression_System_Func___0___2___SaveByKeyMode_System_Int32_
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``3(IStream{``0},System.String,ISingleStream{``1},Expression{System.Func{``0,``2}},SaveByKeyMode,System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey)(IStream(Of TIn), String, ISingleStream(Of TResource), Expression(Of Func(Of TIn, TEntityKey)), SaveByKeyMode, Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TEntityKey>(IStream<TIn>, System.String, ISingleStream<TResource>, Expression<System.Func<TIn, TEntityKey>>, SaveByKeyMode, System.Int32)
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey)(IStream(Of TIn), System.String, ISingleStream(Of TResource), Expression(Of System.Func(Of TIn, TEntityKey)), SaveByKeyMode, System.Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TEntityKey>(IStream<TIn>, String, ISingleStream<TResource>, Expression<Func<TIn, TEntityKey>>, SaveByKeyMode, Int32)
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey)(IStream(Of TIn), String, ISingleStream(Of TResource), Expression(Of Func(Of TIn, TEntityKey)), SaveByKeyMode, Int32)
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``3},Expression{System.Func{``3,``3,System.Boolean}},System.Func{``0,``3,``2},System.Int32)
-  name: ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, String, ISingleStream<TResource>, Func<TIn, TInEf>, Expression<Func<TInEf, TInEf, Boolean>>, Func<TIn, TInEf, TOut>, Int32)
-  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__4_IStream___0__System_String_ISingleStream___1__System_Func___0___3__Expression_System_Func___3___3_System_Boolean___System_Func___0___3___2__System_Int32_
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``3},Expression{System.Func{``3,``3,System.Boolean}},System.Func{``0,``3,``2},System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), String, ISingleStream(Of TResource), Func(Of TIn, TInEf), Expression(Of Func(Of TInEf, TInEf, Boolean)), Func(Of TIn, TInEf, TOut), Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, System.String, ISingleStream<TResource>, System.Func<TIn, TInEf>, Expression<System.Func<TInEf, TInEf, System.Boolean>>, System.Func<TIn, TInEf, TOut>, System.Int32)
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), System.String, ISingleStream(Of TResource), System.Func(Of TIn, TInEf), Expression(Of System.Func(Of TInEf, TInEf, System.Boolean)), System.Func(Of TIn, TInEf, TOut), System.Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, String, ISingleStream<TResource>, Func<TIn, TInEf>, Expression<Func<TInEf, TInEf, Boolean>>, Func<TIn, TInEf, TOut>, Int32)
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), String, ISingleStream(Of TResource), Func(Of TIn, TInEf), Expression(Of Func(Of TInEf, TInEf, Boolean)), Func(Of TIn, TInEf, TOut), Int32)
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``3},System.Func{``0,``3,``2},SaveMode,System.Int32)
-  name: ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, String, ISingleStream<TResource>, Func<TIn, TInEf>, Func<TIn, TInEf, TOut>, SaveMode, Int32)
-  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__4_IStream___0__System_String_ISingleStream___1__System_Func___0___3__System_Func___0___3___2__SaveMode_System_Int32_
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``3},System.Func{``0,``3,``2},SaveMode,System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), String, ISingleStream(Of TResource), Func(Of TIn, TInEf), Func(Of TIn, TInEf, TOut), SaveMode, Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, System.String, ISingleStream<TResource>, System.Func<TIn, TInEf>, System.Func<TIn, TInEf, TOut>, SaveMode, System.Int32)
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), System.String, ISingleStream(Of TResource), System.Func(Of TIn, TInEf), System.Func(Of TIn, TInEf, TOut), SaveMode, System.Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, String, ISingleStream<TResource>, Func<TIn, TInEf>, Func<TIn, TInEf, TOut>, SaveMode, Int32)
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), String, ISingleStream(Of TResource), Func(Of TIn, TInEf), Func(Of TIn, TInEf, TOut), SaveMode, Int32)
-- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``5(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``4},Expression{System.Func{``4,``2}},System.Func{``0,``4,``3},SaveByKeyMode,System.Int32)
-  name: ThroughEntityFrameworkCore<TIn, TResource, TEntityKey, TOut, TInEf>(IStream<TIn>, String, ISingleStream<TResource>, Func<TIn, TInEf>, Expression<Func<TInEf, TEntityKey>>, Func<TIn, TInEf, TOut>, SaveByKeyMode, Int32)
-  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__5_IStream___0__System_String_ISingleStream___1__System_Func___0___4__Expression_System_Func___4___2___System_Func___0___4___3__SaveByKeyMode_System_Int32_
-  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``5(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``4},Expression{System.Func{``4,``2}},System.Func{``0,``4,``3},SaveByKeyMode,System.Int32)
-  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey, TOut, TInEf)(IStream(Of TIn), String, ISingleStream(Of TResource), Func(Of TIn, TInEf), Expression(Of Func(Of TInEf, TEntityKey)), Func(Of TIn, TInEf, TOut), SaveByKeyMode, Int32)
-  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TEntityKey, TOut, TInEf>(IStream<TIn>, System.String, ISingleStream<TResource>, System.Func<TIn, TInEf>, Expression<System.Func<TInEf, TEntityKey>>, System.Func<TIn, TInEf, TOut>, SaveByKeyMode, System.Int32)
-  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey, TOut, TInEf)(IStream(Of TIn), System.String, ISingleStream(Of TResource), System.Func(Of TIn, TInEf), Expression(Of System.Func(Of TInEf, TEntityKey)), System.Func(Of TIn, TInEf, TOut), SaveByKeyMode, System.Int32)
-  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TEntityKey, TOut, TInEf>(IStream<TIn>, String, ISingleStream<TResource>, Func<TIn, TInEf>, Expression<Func<TInEf, TEntityKey>>, Func<TIn, TInEf, TOut>, SaveByKeyMode, Int32)
-  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TEntityKey, TOut, TInEf)(IStream(Of TIn), String, ISingleStream(Of TResource), Func(Of TIn, TInEf), Expression(Of Func(Of TInEf, TEntityKey)), Func(Of TIn, TInEf, TOut), SaveByKeyMode, Int32)
+- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``3},Expression{System.Func{``3,System.Object}},System.Func{``0,``3,``2},SaveMode,System.Int32)
+  name: ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, String, ISingleStream<TResource>, Func<TIn, TResource, TInEf>, Expression<Func<TInEf, Object>>, Func<TIn, TInEf, TOut>, SaveMode, Int32)
+  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__4_IStream___0__System_String_ISingleStream___1__System_Func___0___1___3__Expression_System_Func___3_System_Object___System_Func___0___3___2__SaveMode_System_Int32_
+  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``3},Expression{System.Func{``3,System.Object}},System.Func{``0,``3,``2},SaveMode,System.Int32)
+  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), String, ISingleStream(Of TResource), Func(Of TIn, TResource, TInEf), Expression(Of Func(Of TInEf, Object)), Func(Of TIn, TInEf, TOut), SaveMode, Int32)
+  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, System.String, ISingleStream<TResource>, System.Func<TIn, TResource, TInEf>, Expression<System.Func<TInEf, System.Object>>, System.Func<TIn, TInEf, TOut>, SaveMode, System.Int32)
+  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), System.String, ISingleStream(Of TResource), System.Func(Of TIn, TResource, TInEf), Expression(Of System.Func(Of TInEf, System.Object)), System.Func(Of TIn, TInEf, TOut), SaveMode, System.Int32)
+  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, String, ISingleStream<TResource>, Func<TIn, TResource, TInEf>, Expression<Func<TInEf, Object>>, Func<TIn, TInEf, TOut>, SaveMode, Int32)
+  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), String, ISingleStream(Of TResource), Func(Of TIn, TResource, TInEf), Expression(Of Func(Of TInEf, Object)), Func(Of TIn, TInEf, TOut), SaveMode, Int32)
+- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``3},System.Func{``0,``3,``2},SaveMode,System.Int32)
+  name: ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, String, ISingleStream<TResource>, Func<TIn, TResource, TInEf>, Func<TIn, TInEf, TOut>, SaveMode, Int32)
+  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_ThroughEntityFrameworkCore__4_IStream___0__System_String_ISingleStream___1__System_Func___0___1___3__System_Func___0___3___2__SaveMode_System_Int32_
+  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``3},System.Func{``0,``3,``2},SaveMode,System.Int32)
+  name.vb: ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), String, ISingleStream(Of TResource), Func(Of TIn, TResource, TInEf), Func(Of TIn, TInEf, TOut), SaveMode, Int32)
+  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, System.String, ISingleStream<TResource>, System.Func<TIn, TResource, TInEf>, System.Func<TIn, TInEf, TOut>, SaveMode, System.Int32)
+  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), System.String, ISingleStream(Of TResource), System.Func(Of TIn, TResource, TInEf), System.Func(Of TIn, TInEf, TOut), SaveMode, System.Int32)
+  nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, String, ISingleStream<TResource>, Func<TIn, TResource, TInEf>, Func<TIn, TInEf, TOut>, SaveMode, Int32)
+  nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), String, ISingleStream(Of TResource), Func(Of TIn, TResource, TInEf), Func(Of TIn, TInEf, TOut), SaveMode, Int32)
 - uid: Paillave.Etl.ExcelFile.Extensions
   name: Paillave.Etl.ExcelFile.Extensions
   href: apiext/Paillave.Etl.ExcelFile.Extensions.html
@@ -2043,3 +2034,148 @@ references:
   fullName.vb: Paillave.Etl.TextFile.Extensions.TextFileEx.ToTextFile(Of TIn)(IStream(Of TIn), System.String, FlatFileDefinition(Of TIn))
   nameWithType: TextFileEx.ToTextFile<TIn>(IStream<TIn>, String, FlatFileDefinition<TIn>)
   nameWithType.vb: TextFileEx.ToTextFile(Of TIn)(IStream(Of TIn), String, FlatFileDefinition(Of TIn))
+- uid: Paillave.Etl.XmlFile.Extensions
+  name: Paillave.Etl.XmlFile.Extensions
+  href: apiext/Paillave.Etl.XmlFile.Extensions.html
+  commentId: N:Paillave.Etl.XmlFile.Extensions
+  fullName: Paillave.Etl.XmlFile.Extensions
+  nameWithType: Paillave.Etl.XmlFile.Extensions
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx
+  name: XmlFileEx
+  href: apiext/Paillave.Etl.XmlFile.Extensions.XmlFileEx.html
+  commentId: T:Paillave.Etl.XmlFile.Extensions.XmlFileEx
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx
+  nameWithType: XmlFileEx
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream{LocalFilesValue},System.String,XmlFileDefinition,System.Boolean)
+  name: CrossApplyXmlFile(IStream<LocalFilesValue>, String, XmlFileDefinition, Boolean)
+  href: apiext/Paillave.Etl.XmlFile.Extensions.XmlFileEx.html#Paillave_Etl_XmlFile_Extensions_XmlFileEx_CrossApplyXmlFile_IStream_LocalFilesValue__System_String_XmlFileDefinition_System_Boolean_
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream{LocalFilesValue},System.String,XmlFileDefinition,System.Boolean)
+  name.vb: CrossApplyXmlFile(IStream(Of LocalFilesValue), String, XmlFileDefinition, Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream<LocalFilesValue>, System.String, XmlFileDefinition, System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream(Of LocalFilesValue), System.String, XmlFileDefinition, System.Boolean)
+  nameWithType: XmlFileEx.CrossApplyXmlFile(IStream<LocalFilesValue>, String, XmlFileDefinition, Boolean)
+  nameWithType.vb: XmlFileEx.CrossApplyXmlFile(IStream(Of LocalFilesValue), String, XmlFileDefinition, Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream{Stream},System.String,XmlFileDefinition,System.Boolean)
+  name: CrossApplyXmlFile(IStream<Stream>, String, XmlFileDefinition, Boolean)
+  href: apiext/Paillave.Etl.XmlFile.Extensions.XmlFileEx.html#Paillave_Etl_XmlFile_Extensions_XmlFileEx_CrossApplyXmlFile_IStream_Stream__System_String_XmlFileDefinition_System_Boolean_
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream{Stream},System.String,XmlFileDefinition,System.Boolean)
+  name.vb: CrossApplyXmlFile(IStream(Of Stream), String, XmlFileDefinition, Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream<Stream>, System.String, XmlFileDefinition, System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream(Of Stream), System.String, XmlFileDefinition, System.Boolean)
+  nameWithType: XmlFileEx.CrossApplyXmlFile(IStream<Stream>, String, XmlFileDefinition, Boolean)
+  nameWithType.vb: XmlFileEx.CrossApplyXmlFile(IStream(Of Stream), String, XmlFileDefinition, Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream{System.String},System.String,XmlFileDefinition,System.Boolean)
+  name: CrossApplyXmlFile(IStream<String>, String, XmlFileDefinition, Boolean)
+  href: apiext/Paillave.Etl.XmlFile.Extensions.XmlFileEx.html#Paillave_Etl_XmlFile_Extensions_XmlFileEx_CrossApplyXmlFile_IStream_System_String__System_String_XmlFileDefinition_System_Boolean_
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream{System.String},System.String,XmlFileDefinition,System.Boolean)
+  name.vb: CrossApplyXmlFile(IStream(Of String), String, XmlFileDefinition, Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream<System.String>, System.String, XmlFileDefinition, System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream(Of System.String), System.String, XmlFileDefinition, System.Boolean)
+  nameWithType: XmlFileEx.CrossApplyXmlFile(IStream<String>, String, XmlFileDefinition, Boolean)
+  nameWithType.vb: XmlFileEx.CrossApplyXmlFile(IStream(Of String), String, XmlFileDefinition, Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile*
+  name: CrossApplyXmlFile
+  href: apiext/Paillave.Etl.XmlFile.Extensions.XmlFileEx.html#Paillave_Etl_XmlFile_Extensions_XmlFileEx_CrossApplyXmlFile_
+  commentId: Overload:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile
+  isSpec: "True"
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile
+  nameWithType: XmlFileEx.CrossApplyXmlFile
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{``0},System.String,XmlFileDefinition,System.Func{``0,System.String},System.Boolean)
+  name: CrossApplyXmlFile<TIn>(IStream<TIn>, String, XmlFileDefinition, Func<TIn, String>, Boolean)
+  href: apiext/Paillave.Etl.XmlFile.Extensions.XmlFileEx.html#Paillave_Etl_XmlFile_Extensions_XmlFileEx_CrossApplyXmlFile__1_IStream___0__System_String_XmlFileDefinition_System_Func___0_System_String__System_Boolean_
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{``0},System.String,XmlFileDefinition,System.Func{``0,System.String},System.Boolean)
+  name.vb: CrossApplyXmlFile(Of TIn)(IStream(Of TIn), String, XmlFileDefinition, Func(Of TIn, String), Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TIn>(IStream<TIn>, System.String, XmlFileDefinition, System.Func<TIn, System.String>, System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TIn)(IStream(Of TIn), System.String, XmlFileDefinition, System.Func(Of TIn, System.String), System.Boolean)
+  nameWithType: XmlFileEx.CrossApplyXmlFile<TIn>(IStream<TIn>, String, XmlFileDefinition, Func<TIn, String>, Boolean)
+  nameWithType.vb: XmlFileEx.CrossApplyXmlFile(Of TIn)(IStream(Of TIn), String, XmlFileDefinition, Func(Of TIn, String), Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{LocalFilesValue},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  name: CrossApplyXmlFile<TOut>(IStream<LocalFilesValue>, String, XmlNodeDefinition<TOut>, IDictionary<String, String>, Boolean)
+  href: apiext/Paillave.Etl.XmlFile.Extensions.XmlFileEx.html#Paillave_Etl_XmlFile_Extensions_XmlFileEx_CrossApplyXmlFile__1_IStream_LocalFilesValue__System_String_XmlNodeDefinition___0__System_Collections_Generic_IDictionary_System_String_System_String__System_Boolean_
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{LocalFilesValue},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  name.vb: CrossApplyXmlFile(Of TOut)(IStream(Of LocalFilesValue), String, XmlNodeDefinition(Of TOut), IDictionary(Of String, String), Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TOut>(IStream<LocalFilesValue>, System.String, XmlNodeDefinition<TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TOut)(IStream(Of LocalFilesValue), System.String, XmlNodeDefinition(Of TOut), System.Collections.Generic.IDictionary(Of System.String, System.String), System.Boolean)
+  nameWithType: XmlFileEx.CrossApplyXmlFile<TOut>(IStream<LocalFilesValue>, String, XmlNodeDefinition<TOut>, IDictionary<String, String>, Boolean)
+  nameWithType.vb: XmlFileEx.CrossApplyXmlFile(Of TOut)(IStream(Of LocalFilesValue), String, XmlNodeDefinition(Of TOut), IDictionary(Of String, String), Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{Stream},System.String,XmlFileDefinition,System.Func{XmlNodeParsed,``0},System.Boolean)
+  name: CrossApplyXmlFile<TOut>(IStream<Stream>, String, XmlFileDefinition, Func<XmlNodeParsed, TOut>, Boolean)
+  href: apiext/Paillave.Etl.XmlFile.Extensions.XmlFileEx.html#Paillave_Etl_XmlFile_Extensions_XmlFileEx_CrossApplyXmlFile__1_IStream_Stream__System_String_XmlFileDefinition_System_Func_XmlNodeParsed___0__System_Boolean_
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{Stream},System.String,XmlFileDefinition,System.Func{XmlNodeParsed,``0},System.Boolean)
+  name.vb: CrossApplyXmlFile(Of TOut)(IStream(Of Stream), String, XmlFileDefinition, Func(Of XmlNodeParsed, TOut), Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TOut>(IStream<Stream>, System.String, XmlFileDefinition, System.Func<XmlNodeParsed, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TOut)(IStream(Of Stream), System.String, XmlFileDefinition, System.Func(Of XmlNodeParsed, TOut), System.Boolean)
+  nameWithType: XmlFileEx.CrossApplyXmlFile<TOut>(IStream<Stream>, String, XmlFileDefinition, Func<XmlNodeParsed, TOut>, Boolean)
+  nameWithType.vb: XmlFileEx.CrossApplyXmlFile(Of TOut)(IStream(Of Stream), String, XmlFileDefinition, Func(Of XmlNodeParsed, TOut), Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  name: CrossApplyXmlFile<TOut>(IStream<Stream>, String, XmlNodeDefinition<TOut>, IDictionary<String, String>, Boolean)
+  href: apiext/Paillave.Etl.XmlFile.Extensions.XmlFileEx.html#Paillave_Etl_XmlFile_Extensions_XmlFileEx_CrossApplyXmlFile__1_IStream_Stream__System_String_XmlNodeDefinition___0__System_Collections_Generic_IDictionary_System_String_System_String__System_Boolean_
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  name.vb: CrossApplyXmlFile(Of TOut)(IStream(Of Stream), String, XmlNodeDefinition(Of TOut), IDictionary(Of String, String), Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TOut>(IStream<Stream>, System.String, XmlNodeDefinition<TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TOut)(IStream(Of Stream), System.String, XmlNodeDefinition(Of TOut), System.Collections.Generic.IDictionary(Of System.String, System.String), System.Boolean)
+  nameWithType: XmlFileEx.CrossApplyXmlFile<TOut>(IStream<Stream>, String, XmlNodeDefinition<TOut>, IDictionary<String, String>, Boolean)
+  nameWithType.vb: XmlFileEx.CrossApplyXmlFile(Of TOut)(IStream(Of Stream), String, XmlNodeDefinition(Of TOut), IDictionary(Of String, String), Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{System.String},System.String,XmlFileDefinition,System.Func{System.String,XmlNodeParsed,``0},System.Boolean)
+  name: CrossApplyXmlFile<TOut>(IStream<String>, String, XmlFileDefinition, Func<String, XmlNodeParsed, TOut>, Boolean)
+  href: apiext/Paillave.Etl.XmlFile.Extensions.XmlFileEx.html#Paillave_Etl_XmlFile_Extensions_XmlFileEx_CrossApplyXmlFile__1_IStream_System_String__System_String_XmlFileDefinition_System_Func_System_String_XmlNodeParsed___0__System_Boolean_
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{System.String},System.String,XmlFileDefinition,System.Func{System.String,XmlNodeParsed,``0},System.Boolean)
+  name.vb: CrossApplyXmlFile(Of TOut)(IStream(Of String), String, XmlFileDefinition, Func(Of String, XmlNodeParsed, TOut), Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TOut>(IStream<System.String>, System.String, XmlFileDefinition, System.Func<System.String, XmlNodeParsed, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TOut)(IStream(Of System.String), System.String, XmlFileDefinition, System.Func(Of System.String, XmlNodeParsed, TOut), System.Boolean)
+  nameWithType: XmlFileEx.CrossApplyXmlFile<TOut>(IStream<String>, String, XmlFileDefinition, Func<String, XmlNodeParsed, TOut>, Boolean)
+  nameWithType.vb: XmlFileEx.CrossApplyXmlFile(Of TOut)(IStream(Of String), String, XmlFileDefinition, Func(Of String, XmlNodeParsed, TOut), Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  name: CrossApplyXmlFile<TOut>(IStream<String>, String, XmlNodeDefinition<TOut>, IDictionary<String, String>, Boolean)
+  href: apiext/Paillave.Etl.XmlFile.Extensions.XmlFileEx.html#Paillave_Etl_XmlFile_Extensions_XmlFileEx_CrossApplyXmlFile__1_IStream_System_String__System_String_XmlNodeDefinition___0__System_Collections_Generic_IDictionary_System_String_System_String__System_Boolean_
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  name.vb: CrossApplyXmlFile(Of TOut)(IStream(Of String), String, XmlNodeDefinition(Of TOut), IDictionary(Of String, String), Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TOut>(IStream<System.String>, System.String, XmlNodeDefinition<TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TOut)(IStream(Of System.String), System.String, XmlNodeDefinition(Of TOut), System.Collections.Generic.IDictionary(Of System.String, System.String), System.Boolean)
+  nameWithType: XmlFileEx.CrossApplyXmlFile<TOut>(IStream<String>, String, XmlNodeDefinition<TOut>, IDictionary<String, String>, Boolean)
+  nameWithType.vb: XmlFileEx.CrossApplyXmlFile(Of TOut)(IStream(Of String), String, XmlNodeDefinition(Of TOut), IDictionary(Of String, String), Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{``0},System.String,XmlFileDefinition,System.Func{``0,System.String},System.Func{``0,XmlNodeParsed,``1},System.Boolean)
+  name: CrossApplyXmlFile<TIn, TOut>(IStream<TIn>, String, XmlFileDefinition, Func<TIn, String>, Func<TIn, XmlNodeParsed, TOut>, Boolean)
+  href: apiext/Paillave.Etl.XmlFile.Extensions.XmlFileEx.html#Paillave_Etl_XmlFile_Extensions_XmlFileEx_CrossApplyXmlFile__2_IStream___0__System_String_XmlFileDefinition_System_Func___0_System_String__System_Func___0_XmlNodeParsed___1__System_Boolean_
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{``0},System.String,XmlFileDefinition,System.Func{``0,System.String},System.Func{``0,XmlNodeParsed,``1},System.Boolean)
+  name.vb: CrossApplyXmlFile(Of TIn, TOut)(IStream(Of TIn), String, XmlFileDefinition, Func(Of TIn, String), Func(Of TIn, XmlNodeParsed, TOut), Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TIn, TOut>(IStream<TIn>, System.String, XmlFileDefinition, System.Func<TIn, System.String>, System.Func<TIn, XmlNodeParsed, TOut>, System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TIn, TOut)(IStream(Of TIn), System.String, XmlFileDefinition, System.Func(Of TIn, System.String), System.Func(Of TIn, XmlNodeParsed, TOut), System.Boolean)
+  nameWithType: XmlFileEx.CrossApplyXmlFile<TIn, TOut>(IStream<TIn>, String, XmlFileDefinition, Func<TIn, String>, Func<TIn, XmlNodeParsed, TOut>, Boolean)
+  nameWithType.vb: XmlFileEx.CrossApplyXmlFile(Of TIn, TOut)(IStream(Of TIn), String, XmlFileDefinition, Func(Of TIn, String), Func(Of TIn, XmlNodeParsed, TOut), Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  name: CrossApplyXmlFile<TIn, TOut>(IStream<TIn>, String, XmlNodeDefinition<TOut>, Func<TIn, String>, IDictionary<String, String>, Boolean)
+  href: apiext/Paillave.Etl.XmlFile.Extensions.XmlFileEx.html#Paillave_Etl_XmlFile_Extensions_XmlFileEx_CrossApplyXmlFile__2_IStream___0__System_String_XmlNodeDefinition___1__System_Func___0_System_String__System_Collections_Generic_IDictionary_System_String_System_String__System_Boolean_
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  name.vb: CrossApplyXmlFile(Of TIn, TOut)(IStream(Of TIn), String, XmlNodeDefinition(Of TOut), Func(Of TIn, String), IDictionary(Of String, String), Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TIn, TOut>(IStream<TIn>, System.String, XmlNodeDefinition<TOut>, System.Func<TIn, System.String>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TIn, TOut)(IStream(Of TIn), System.String, XmlNodeDefinition(Of TOut), System.Func(Of TIn, System.String), System.Collections.Generic.IDictionary(Of System.String, System.String), System.Boolean)
+  nameWithType: XmlFileEx.CrossApplyXmlFile<TIn, TOut>(IStream<TIn>, String, XmlNodeDefinition<TOut>, Func<TIn, String>, IDictionary<String, String>, Boolean)
+  nameWithType.vb: XmlFileEx.CrossApplyXmlFile(Of TIn, TOut)(IStream(Of TIn), String, XmlNodeDefinition(Of TOut), Func(Of TIn, String), IDictionary(Of String, String), Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Func{``0,``1},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  name: CrossApplyXmlFile<TParsed, TOut>(IStream<Stream>, String, XmlNodeDefinition<TParsed>, Func<TParsed, TOut>, IDictionary<String, String>, Boolean)
+  href: apiext/Paillave.Etl.XmlFile.Extensions.XmlFileEx.html#Paillave_Etl_XmlFile_Extensions_XmlFileEx_CrossApplyXmlFile__2_IStream_Stream__System_String_XmlNodeDefinition___0__System_Func___0___1__System_Collections_Generic_IDictionary_System_String_System_String__System_Boolean_
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Func{``0,``1},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  name.vb: CrossApplyXmlFile(Of TParsed, TOut)(IStream(Of Stream), String, XmlNodeDefinition(Of TParsed), Func(Of TParsed, TOut), IDictionary(Of String, String), Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TParsed, TOut>(IStream<Stream>, System.String, XmlNodeDefinition<TParsed>, System.Func<TParsed, TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TParsed, TOut)(IStream(Of Stream), System.String, XmlNodeDefinition(Of TParsed), System.Func(Of TParsed, TOut), System.Collections.Generic.IDictionary(Of System.String, System.String), System.Boolean)
+  nameWithType: XmlFileEx.CrossApplyXmlFile<TParsed, TOut>(IStream<Stream>, String, XmlNodeDefinition<TParsed>, Func<TParsed, TOut>, IDictionary<String, String>, Boolean)
+  nameWithType.vb: XmlFileEx.CrossApplyXmlFile(Of TParsed, TOut)(IStream(Of Stream), String, XmlNodeDefinition(Of TParsed), Func(Of TParsed, TOut), IDictionary(Of String, String), Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Func{System.String,``0,``1},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  name: CrossApplyXmlFile<TParsed, TOut>(IStream<String>, String, XmlNodeDefinition<TParsed>, Func<String, TParsed, TOut>, IDictionary<String, String>, Boolean)
+  href: apiext/Paillave.Etl.XmlFile.Extensions.XmlFileEx.html#Paillave_Etl_XmlFile_Extensions_XmlFileEx_CrossApplyXmlFile__2_IStream_System_String__System_String_XmlNodeDefinition___0__System_Func_System_String___0___1__System_Collections_Generic_IDictionary_System_String_System_String__System_Boolean_
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Func{System.String,``0,``1},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  name.vb: CrossApplyXmlFile(Of TParsed, TOut)(IStream(Of String), String, XmlNodeDefinition(Of TParsed), Func(Of String, TParsed, TOut), IDictionary(Of String, String), Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TParsed, TOut>(IStream<System.String>, System.String, XmlNodeDefinition<TParsed>, System.Func<System.String, TParsed, TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TParsed, TOut)(IStream(Of System.String), System.String, XmlNodeDefinition(Of TParsed), System.Func(Of System.String, TParsed, TOut), System.Collections.Generic.IDictionary(Of System.String, System.String), System.Boolean)
+  nameWithType: XmlFileEx.CrossApplyXmlFile<TParsed, TOut>(IStream<String>, String, XmlNodeDefinition<TParsed>, Func<String, TParsed, TOut>, IDictionary<String, String>, Boolean)
+  nameWithType.vb: XmlFileEx.CrossApplyXmlFile(Of TParsed, TOut)(IStream(Of String), String, XmlNodeDefinition(Of TParsed), Func(Of String, TParsed, TOut), IDictionary(Of String, String), Boolean)
+- uid: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``3(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  name: CrossApplyXmlFile<TIn, TParsed, TOut>(IStream<TIn>, String, XmlNodeDefinition<TParsed>, Func<TIn, String>, Func<TIn, TParsed, TOut>, IDictionary<String, String>, Boolean)
+  href: apiext/Paillave.Etl.XmlFile.Extensions.XmlFileEx.html#Paillave_Etl_XmlFile_Extensions_XmlFileEx_CrossApplyXmlFile__3_IStream___0__System_String_XmlNodeDefinition___1__System_Func___0_System_String__System_Func___0___1___2__System_Collections_Generic_IDictionary_System_String_System_String__System_Boolean_
+  commentId: M:Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``3(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)
+  name.vb: CrossApplyXmlFile(Of TIn, TParsed, TOut)(IStream(Of TIn), String, XmlNodeDefinition(Of TParsed), Func(Of TIn, String), Func(Of TIn, TParsed, TOut), IDictionary(Of String, String), Boolean)
+  fullName: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TIn, TParsed, TOut>(IStream<TIn>, System.String, XmlNodeDefinition<TParsed>, System.Func<TIn, System.String>, System.Func<TIn, TParsed, TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)
+  fullName.vb: Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(Of TIn, TParsed, TOut)(IStream(Of TIn), System.String, XmlNodeDefinition(Of TParsed), System.Func(Of TIn, System.String), System.Func(Of TIn, TParsed, TOut), System.Collections.Generic.IDictionary(Of System.String, System.String), System.Boolean)
+  nameWithType: XmlFileEx.CrossApplyXmlFile<TIn, TParsed, TOut>(IStream<TIn>, String, XmlNodeDefinition<TParsed>, Func<TIn, String>, Func<TIn, TParsed, TOut>, IDictionary<String, String>, Boolean)
+  nameWithType.vb: XmlFileEx.CrossApplyXmlFile(Of TIn, TParsed, TOut)(IStream(Of TIn), String, XmlNodeDefinition(Of TParsed), Func(Of TIn, String), Func(Of TIn, TParsed, TOut), IDictionary(Of String, String), Boolean)

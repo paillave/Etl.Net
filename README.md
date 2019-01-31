@@ -13,31 +13,39 @@ The reactive approach for the implementation of this engine ensures parallelized
 | Etl.Net | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) |
 | Etl.Net.EntityFrameworkCore | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) |
 | Etl.Net.TextFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.TextFile.svg)](https://www.nuget.org/packages/Etl.Net.TextFile) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.TextFile.svg)](https://www.nuget.org/packages/Etl.Net.TextFile) |
+| Etl.Net.XmlFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.XmlFile.svg)](https://www.nuget.org/packages/Etl.Net.XmlFile) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.XmlFile.svg)](https://www.nuget.org/packages/Etl.Net.XmlFile) |
 | Etl.Net.Ftp | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.Ftp.svg)](https://www.nuget.org/packages/Etl.Net.Ftp) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.Ftp.svg)](https://www.nuget.org/packages/Etl.Net.Ftp) |
 | Etl.Net.Sftp | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.Sftp.svg)](https://www.nuget.org/packages/Etl.Net.Sftp) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.Sftp.svg)](https://www.nuget.org/packages/Etl.Net.Sftp) |
 | Etl.Net.ExcelFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) |
 | Etl.Net.SqlServer | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.SqlServer.svg)](https://www.nuget.org/packages/Etl.Net.SqlServer) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.SqlServer.svg)](https://www.nuget.org/packages/Etl.Net.SqlServer) |
 | Etl.Net.ExecutionPlan | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) |
 
-## Developement status :construction:
+## Development status :construction:
 
-> [!WARNING]
-> This library is still under development, don't use it on production environment yet as its api structure is subject for changes.
-> The documentation is being written with a large set of unit tests
+> [!IMPORTANT]
+> This library is still under development, don't use it on production environment yet as its api structure is subject for changes. This explains its alpha version.
+> The first beta release is expected once it starts to be a decent candidate to replace SSIS for common use cases, and when common bugs are solved.
 
-The first alpha release is expected once it starts to be a decent candidate to replace SSIS for common use cases.
+## Documentation :construction:
+
+The full (ongoing) documentation is on the website of Etl.Net: https://paillave.github.io/Etl.Net/
+
+Main recipes are on the page https://paillave.github.io/Etl.Net/recipes.
+
+> [!IMPORTANT]
+> Documentation is still under construction.
 
 ## ETL features
 
 ### Implemented
 
-Select, Where, Sort, Left Join, Lookup, Union, Union All, Skip, Top, Distinct, Pivot, Unpivot, Aggregate, Cross Apply, Ensure Sorted, Ensure Keyed, Script, Run subprocess, Keep section, Ignore section, List folder files, Read csv file, Read excel file, Write csv file, Write excel file, Read from Entity framework core, Write to Entity framework core, Entity framework core upsert, SQL Server bulk load, Read from sql server command, Write to sql server command, List files from FTP, Read file from FTP, Write file to FTP...
+Select, Where, Sort, Left Join, Lookup, Union, Union All, Skip, Top, Distinct, Pivot, Unpivot, Aggregate, Cross Apply, Ensure Sorted, Ensure Keyed, Script, Run subprocess, Keep section, Ignore section, List folder files, Read csv file, Read excel file, Write csv file, Write excel file, Read from Entity framework core, Write to Entity framework core, Entity framework core upsert, SQL Server bulk load, Read from sql server command, Write to sql server command, List files from FTP, Read file from FTP, Write file to FTP, List file from SFTP, Read file from SFTP, Write file to SFTP, read very large xml file, ...
 
 Check evolution of developments in [the projects section](https://github.com/paillave/Etl.Net/projects)
 
 ### To be coming
 
-Read very large xml file, Read very large json file, Read from Entity framework, Write to Entity framework, Read from MongoDb, Write to MongoDb, MongoDb upsert, Entity framework upsert, List file from SFTP, Read file from SFTP, Write file to SFTP, Read data from REST service, Write data to REST service...
+Read very large json file, Read from Entity framework, Write to Entity framework, Read from MongoDb, Write to MongoDb, MongoDb upsert, Entity framework upsert, Read data from REST service, Write data to REST service...
 
 > [!NOTE]
 > Follow the status in the issue section
@@ -48,7 +56,7 @@ Read very large xml file, Read very large json file, Read from Entity framework,
 
 ### Implemented
 
-Trace issued data by each node, Trace any error, Stop the entire process whenever an error is raised, Trace statistic result of each node at the end of the process, Execute any ETL process on traces to filter and save them, Show realtime process execution statistics...
+Trace issued data by each node, Trace any error, Stop the entire process whenever an error is raised, Trace statistic result of each node at the end of the process, Execute any ETL process on traces to filter and save them, Show real time process execution statistics...
 
 ### To be coming
 
@@ -373,8 +381,3 @@ namespace ComplexQuickstart
     }
 }
 ```
-
-## Documentation :construction:
-
-> [!IMPORTANT]
-> Documentation will be done once all essential features and bugs are solved.

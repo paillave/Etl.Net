@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Paillave.Etl.Core
 {
-    public class JobPoolDispatcher:IDisposable
+    public class JobPoolDispatcher : IDisposable
     {
         private object _sync = new object();
         private IDictionary<object, JobPool> _jobPoolDictionary = new Dictionary<object, JobPool>();

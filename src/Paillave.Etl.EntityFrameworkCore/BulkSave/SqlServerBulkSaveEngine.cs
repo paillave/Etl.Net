@@ -13,7 +13,7 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         {
         }
 
-        protected override ContextQueryBase<T> CreateContextQueryInstance(DbContext context, string schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes)
-            => new SqlServerContextQuery<T>(context, schema, table, propertiesToInsert, propertiesToUpdate, propertiesForPivot, propertiesToBulkLoad, entityTypes);
+        protected override SaveContextQueryBase<T> CreateSaveContextQueryInstance(DbContext context, string schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes)
+            => new SqlServerSaveContextQuery<T>(context, schema, table, propertiesToInsert, propertiesToUpdate, propertiesForPivot, propertiesToBulkLoad, entityTypes);
     }
 }

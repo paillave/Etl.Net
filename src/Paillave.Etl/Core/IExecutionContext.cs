@@ -12,7 +12,7 @@ namespace Paillave.Etl.Core
     {
         Guid ExecutionId { get; }
         string JobName { get; }
-        void Trace(TraceEvent traceEvent);
+        int NextTraceSequence();
         IPushObservable<TraceEvent> StopProcessEvent { get; }
         void AddNode<T>(INodeContext nodeContext, IPushObservable<T> observable, IPushObservable<TraceEvent> traceObservable);
         void AddDisposable(IDisposable disposable);

@@ -28,7 +28,7 @@ namespace Paillave.Etl.Core.Streams
                         this.Observable.ExceptionsToObservable().Map(e => new UnhandledExceptionStreamTraceContent(e)),
                         this.Observable.Count().Map(count => new CounterSummaryStreamTraceContent(count)),
                         this.Observable.Map((e, i) => new RowProcessStreamTraceContent(i + 1, e))
-                    ).Map(i => traceMapper.MapToTrace(i));
+                    ).Map(i => traceMapper.MapToTrace(i, executionContext.NextTraceSequence()));
             }
         }
 

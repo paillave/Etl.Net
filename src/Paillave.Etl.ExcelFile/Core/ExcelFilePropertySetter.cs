@@ -1,4 +1,5 @@
 using OfficeOpenXml;
+using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
@@ -26,6 +27,15 @@ namespace Paillave.Etl.ExcelFile.Core
         private object Deserialize(string text)
         {
             //TODO: Better exception handleling here
+            if (PropertyInfo.PropertyType == typeof(DateTime))
+            {
+                return DateTime.ParseExact(text.Trim(), _cultureInfo.DateTimeFormat.LongDatePattern, _cultureInfo);
+            }
+            if (PropertyInfo.PropertyType == typeof(DateTime?))
+            {
+                if (string.IsNullOrWhiteSpace(text)) return (DateTime?)null;
+                return DateTime.ParseExact(text.Trim(), _cultureInfo.DateTimeFormat.LongDatePattern, _cultureInfo);
+            }
             return _typeConverter.ConvertFromString(null, _cultureInfo, text.Trim());
         }
 

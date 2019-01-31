@@ -1,5 +1,12 @@
 # Etl.Net
 
+> [!WARNING]
+> This library is still under development, don't use it on production environment yet as its api structure is subject for changes. This explains its alpha version.
+> The first beta release is expected once it starts to be a decent candidate to replace SSIS for common use cases, and when common bugs are solved. Help me to achieve the beta version by raising issues in [the projects section](https://github.com/paillave/Etl.Net/projects)
+
+> [!NOTE]
+> Documentation is still under construction. Make some request of documentation in [the projects section](https://github.com/paillave/Etl.Net/projects)
+
 ## What is it?
 
 Etl.Net is a complete ETL for .net developers who need to embed SSIS-like features into their applications.
@@ -104,8 +111,8 @@ Command line:
 ```powershell
 dotnet new console -n SimpleQuickstart
 cd SimpleQuickstart
-dotnet add package Etl.Net --version 1.0.124-alpha
-dotnet add package Etl.Net.TextFile --version 1.0.124-alpha
+dotnet add package Etl.Net --version 1.0.152-alpha
+dotnet add package Etl.Net.TextFile --version 1.0.152-alpha
 ```
 
 ### Implement the process

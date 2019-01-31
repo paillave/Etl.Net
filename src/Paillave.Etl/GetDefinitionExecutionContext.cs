@@ -31,7 +31,7 @@ namespace Paillave.Etl
         public void AddNode<T>(INodeContext nodeContext, IPushObservable<T> observable, IPushObservable<TraceEvent> traceObservable) => _nodes.Add(nodeContext);
         public IPushObservable<TraceEvent> StopProcessEvent => PushObservable.Empty<TraceEvent>();
         public Task GetCompletionTask() => throw new NotImplementedException();
-        public void Trace(TraceEvent traceEvent) { }
+        public int NextTraceSequence() => 0;
         public void InvokeInDedicatedThread(object threadOwner, Action action) => throw new NotImplementedException();
         //public void Trace(TraceEvent traceEvent) => throw new NotImplementedException();
     }
