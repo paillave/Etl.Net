@@ -9,14 +9,14 @@ using System.Text;
 
 namespace Paillave.Etl.EntityFrameworkCore.BulkSave
 {
-    public class SqlServerContextQuery<T> : ContextQueryBase<T> where T : class
+    public class SqlServerSaveContextQuery<T> : SaveContextQueryBase<T> where T : class
     {
         private const string TempColumnNumOrderName = "_TempColumnNumOrder";
         private string SqlTargetTable => $"[{this.Schema}].[{this.Table}]";
         private string SqlStagingTableName => $"[{this.Schema}].[{this.Table}_temp_{this.StagingId}]";
         private string SqlOutputStagingTableName => $"[{this.Schema}].[{this.Table}_tempoutput_{this.StagingId}]";
 
-        public SqlServerContextQuery(DbContext Context, string schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes)
+        public SqlServerSaveContextQuery(DbContext Context, string schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes)
             : base(Context, schema ?? "dbo", table, propertiesToInsert, propertiesToUpdate, propertiesForPivot, propertiesToBulkLoad, entityTypes)
         {
         }

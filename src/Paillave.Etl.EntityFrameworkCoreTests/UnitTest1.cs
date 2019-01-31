@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Paillave.Etl.EntityFrameworkCore.BulkSave;
 using Paillave.Etl.EntityFrameworkCore.Core;
 
 namespace Paillave.Etl.EntityFrameworkCoreTests
@@ -36,6 +37,18 @@ namespace Paillave.Etl.EntityFrameworkCoreTests
             var ce = mcb.GetCriteriaExpression(new Class2 { MyProperty4 = 1, MyProperty5 = "1" });
             var res = lst1.FirstOrDefault(ce);
             Assert.AreEqual(new DateTime(2000, 1, 1).AddDays(1), res.MyProperty3);
+        }
+
+        [TestMethod]
+        public void TestGetSetters()
+        {
+            var setters = SettersExtractor.GetSetters((Class1 u) => new Class2
+            {
+                MyProperty4 = u.MyProperty1,
+                MyProperty5 = u.MyProperty2
+            });
+            CollectionAssert.AreEquivalent(new[] { "MyProperty4", "MyProperty5" }, setters.Keys.ToArray());
+            CollectionAssert.AreEquivalent(new[] { typeof(Class1).GetMember("MyProperty1")[0], typeof(Class1).GetMember("MyProperty2")[0] }, setters.Values.ToArray());
         }
     }
 }

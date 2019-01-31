@@ -8,17 +8,13 @@ using System.Text;
 
 namespace Paillave.Etl.EntityFrameworkCore.BulkSave
 {
-    public abstract class ContextQueryBase<T> where T : class
+    public abstract class UpdateContextQueryBase<TSource>
     {
         protected string Table { get; }
         protected string StagingId { get; } = Guid.NewGuid().ToString().Substring(0, 8);
         protected string Schema { get; }
-        protected List<IEntityType> EntityTypes { get; }
+        protected IEntityType BaseType { get; }
 
-        /// <summary>
-        /// Any column except computed
-        /// </summary>
-        protected List<IProperty> PropertiesToInsert { get; }
         /// <summary>
         /// any column except pivot, computed
         /// </summary>
@@ -34,16 +30,15 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         protected List<IProperty> PropertiesToBulkLoad { get; }
 
         protected DbContext Context { get; }
-        public ContextQueryBase(DbContext context, string schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes)
+        public UpdateContextQueryBase(DbContext context, string schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType)
         {
-            this.PropertiesToInsert = propertiesToInsert;
             this.PropertiesToUpdate = propertiesToUpdate;
             this.PropertiesForPivot = propertiesForPivot;
             this.PropertiesToBulkLoad = propertiesToBulkLoad;
             this.Schema = schema;
             this.Table = table;
             this.Context = context;
-            this.EntityTypes = entityTypes;
+            this.BaseType = baseType;
         }
 
         /// <summary>
@@ -51,30 +46,15 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         /// </summary>
         public abstract void CreateStagingTable();
         /// <summary>
-        /// Create the output staging table that is mean to receive the result of the merge in the right order to update entities
-        /// </summary>
-        public abstract void CreateOutputStagingTable();
-        /// <summary>
         /// save entities in the staging table
         /// </summary>
         /// <param name="entities">entities that will saved in staging</param>
-        public abstract void BulkSaveInStaging(IEnumerable<T> entities);
+        public abstract void BulkSaveInStaging(IEnumerable<TSource> sources);
         /// <summary>
         /// merge the staging table in the target table 
         /// </summary>
         public abstract void MergeFromStaging();
         public abstract void IndexStagingTable();
-        public abstract void IndexOutputStagingTable();
-        public abstract IList<T> GetOutputStaging();
         public abstract void DeleteStagingTable();
-        public abstract void DeleteOutputStagingTable();
-        protected IEnumerable<T> QueryOutputTable(string sqlQuery)
-        {
-            var compiled = EF.CompileQuery(GetQueryExpression(sqlQuery));
-            var result = compiled(Context);
-            return result;
-        }
-        public Expression<Func<DbContext, IQueryable<T>>> GetQueryExpression(string sqlQuery)
-            => (ctx) => ctx.Set<T>().IgnoreQueryFilters().FromSql(sqlQuery).AsNoTracking();
     }
 }
