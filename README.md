@@ -376,7 +376,7 @@ namespace ComplexQuickstart
 
             Console.WriteLine("Done");
             Console.WriteLine("Press a key...");
-            Console.ReadKey()
+            Console.ReadKey();
         }
     }
 }
