@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 
 namespace Paillave.Etl.EntityFrameworkCore.BulkSave
@@ -14,7 +15,7 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         protected string StagingId { get; } = Guid.NewGuid().ToString().Substring(0, 8);
         protected string Schema { get; }
         protected IEntityType BaseType { get; }
-
+        protected IDictionary<string, MemberInfo> PropertyGetters { get; }
         /// <summary>
         /// any column except pivot, computed
         /// </summary>
@@ -30,11 +31,13 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         protected List<IProperty> PropertiesToBulkLoad { get; }
 
         protected DbContext Context { get; }
-        public UpdateContextQueryBase(DbContext context, string schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType)
+        public UpdateContextQueryBase(DbContext context, string schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType, IDictionary<string, MemberInfo> propertyGetters)
         {
             this.PropertiesToUpdate = propertiesToUpdate;
             this.PropertiesForPivot = propertiesForPivot;
             this.PropertiesToBulkLoad = propertiesToBulkLoad;
+            this.PropertyGetters = propertyGetters;
+
             this.Schema = schema;
             this.Table = table;
             this.Context = context;

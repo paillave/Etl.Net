@@ -25,6 +25,21 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
                     push(item);
             }, noParallelisation);
         }
+        public static IStream<TIn> UpdateEntityFrameworkCore<TIn, TResource, TEntity>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Expression<Func<TIn, TEntity>> updateKey, Expression<Func<TIn, TEntity>> updateValues, UpdateMode updateMode = UpdateMode.SqlServerBulk, int chunkSize = 10000)
+            where TResource : DbContext
+            where TEntity : class
+        {
+            return new UpdateEntityFrameworkCoreStreamNode<TEntity, TResource, TIn>(name, new UpdateEntityFrameworkCoreArgs<TEntity, TResource, TIn>
+            {
+                SourceStream = stream,
+                DbContextStream = dbContextStream,
+                BatchSize = chunkSize,
+                BulkLoadMode = updateMode,
+                UpdateKey = updateKey,
+                UpdateValues = updateValues
+            }).Output;
+        }
+
         public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, SaveMode bulkLoadMode = SaveMode.SqlServerBulk, int chunkSize = 10000)
             where TResource : DbContext
             where TIn : class

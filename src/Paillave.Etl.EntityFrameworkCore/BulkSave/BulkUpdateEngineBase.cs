@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Paillave.Etl.EntityFrameworkCore.Core;
@@ -14,12 +15,13 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         private List<IProperty> _propertiesToUpdate; // any column except pivot, computed
         private List<IProperty> _propertiesForPivot; // pivot columns
         private List<IProperty> _propertiesToBulkLoad; // any column except computed that is not pivot
+        private IDictionary<string, MemberInfo> _propertyGetters;
         private IEntityType _baseType;
 
         private string _schema;
         private string _table;
         private readonly DbContext _context;
-        protected abstract UpdateContextQueryBase<TSource> CreateUpdateContextQueryInstance(DbContext context, string schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType);
+        protected abstract UpdateContextQueryBase<TSource> CreateUpdateContextQueryInstance(DbContext context, string schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType, IDictionary<string, MemberInfo> propertiesGetter);
         private IEnumerable<IEntityType> GetAllRelatedEntityTypes(IEntityType et)
         {
             yield return et;
@@ -68,8 +70,10 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
             var allProperties = entityTypes.SelectMany(dt => dt.GetProperties()).Distinct(new LambdaEqualityComparer<IProperty, string>(i => i.Relational().ColumnName)).ToList();
             computedProperties = allProperties.Where(i => (i.ValueGenerated & ValueGenerated.OnAddOrUpdate) != ValueGenerated.Never).ToList();
 
-            var valuesSetters = SettersExtractor.GetSetters(updateValues);
-            var keySetters = SettersExtractor.GetSetters(updateKey);
+            var valuesSetters = SettersExtractor.GetGetters(updateValues);
+            var keySetters = SettersExtractor.GetGetters(updateKey);
+
+            _propertyGetters = valuesSetters.Union(keySetters).ToDictionary(i => i.Key, i => i.Value);
 
             _propertiesForPivot = allProperties.Where(i => keySetters.ContainsKey(i.Name)).ToList();
             _propertiesToUpdate = allProperties.Where(i => valuesSetters.ContainsKey(i.Name)).Except(computedProperties).Except(_propertiesForPivot).ToList();
@@ -79,8 +83,7 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         {
             var previousAutoDetect = _context.ChangeTracker.AutoDetectChangesEnabled;
             _context.ChangeTracker.AutoDetectChangesEnabled = false;
-            var contextQuery = this.CreateUpdateContextQueryInstance(_context, _schema, _table, _propertiesToUpdate, _propertiesForPivot, _propertiesToBulkLoad, _baseType);
-            // SetDiscriminatorValue(entities);
+            var contextQuery = this.CreateUpdateContextQueryInstance(_context, _schema, _table, _propertiesToUpdate, _propertiesForPivot, _propertiesToBulkLoad, _baseType, _propertyGetters);
             contextQuery.CreateStagingTable();
             contextQuery.BulkSaveInStaging(sources);
             if (sources.Count > 10000)

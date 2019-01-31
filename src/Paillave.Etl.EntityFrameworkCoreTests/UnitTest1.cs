@@ -42,7 +42,7 @@ namespace Paillave.Etl.EntityFrameworkCoreTests
         [TestMethod]
         public void TestGetSetters()
         {
-            var setters = SettersExtractor.GetSetters((Class1 u) => new Class2
+            var setters = SettersExtractor.GetGetters((Class1 u) => new Class2
             {
                 MyProperty4 = u.MyProperty1,
                 MyProperty5 = u.MyProperty2

@@ -7,7 +7,7 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
 {
     public class SettersExtractor
     {
-        public static IDictionary<string, MemberInfo> GetSetters<TIn, TEntity>(Expression<Func<TIn, TEntity>> setValues)
+        public static IDictionary<string, MemberInfo> GetGetters<TIn, TEntity>(Expression<Func<TIn, TEntity>> setValues)
         {
             var vis = new MyVisitor<TIn, TEntity>();
             vis.Visit(setValues);

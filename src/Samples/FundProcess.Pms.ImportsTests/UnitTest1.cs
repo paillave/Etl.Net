@@ -21,12 +21,14 @@ using Paillave.Etl.EntityFrameworkCore.BulkSave;
 using Paillave.Etl.EntityFrameworkCore.EfSave;
 using System.Linq.Expressions;
 using FundProcess.Pms.Imports.StreamTypes.Config;
+using System.IO;
 
 namespace FundProcess.Pms.ImportsTests
 {
     public class UnitTest1
     {
         private readonly DataAccess.DatabaseContext _databaseContext;
+        private readonly string _rootFolder = @"C:\Users\paill\Desktop\InputFiles";
 
         private int CreateTestManCo(DbContextOptions<DataAccess.DatabaseContext> options)
         {
@@ -38,8 +40,8 @@ namespace FundProcess.Pms.ImportsTests
                 {
                     manCo = new ManCo
                     {
-                        RegistrationNumber = "TEST",
-                        Name = "my manco"
+                        RegistrationNumber = "SHELTER",
+                        Name = "Shelter"
                     };
                     ctx.Add(manCo);
                     ctx.SaveChanges();
@@ -62,30 +64,12 @@ namespace FundProcess.Pms.ImportsTests
                 new RbcImportFilesConfigCtx
                 {
                     //InputFilesRootFolderPath = @"C:\Users\sroyer\Downloads\RBC",
-                    InputFilesRootFolderPath = @"C:\Users\paill\Desktop\rbc",
+                    InputFilesRootFolderPath = Path.Combine(_rootFolder,"rbc"),
                     NavFileFileNamePattern = "*NAVPUBLTEXTRACT*.csv",
                     PositionFileFileNamePattern = "*PORTFVALEXTRACT*.csv",
                     DbContext = _databaseContext
                 },
                 RbcJobs.FullInitialImport,
-                traceStream => traceStream
-                    .Where("remove verbose", i => i.Content.Level != TraceLevel.Verbose)
-                    .ThroughAction("trace", i => Debug.WriteLine(i))
-            ).Wait();
-        }
-        [Fact]
-        public void RbcImportAccountTest()
-        {
-            StreamProcessRunner.CreateAndExecuteAsync(
-                new RbcImportAccountFilesConfigCtx
-                {
-                    //InputFilesRootFolderPath = @"C:\Users\sroyer\Downloads\RBC",
-                    InputFilesRootFolderPath = @"C:\Users\paill\Desktop\rbc",
-                    AccountFileNamePattern = "*Shareholders*.xlsx",
-                    AccountPositionFileNamePattern = "*Position*.xlsx",
-                    DbContext = _databaseContext
-                },
-                RbcAccountJobs.FullInitialImport,
                 traceStream => traceStream
                     .Where("remove verbose", i => i.Content.Level != TraceLevel.Verbose)
                     .ThroughAction("trace", i => Debug.WriteLine(i))
@@ -98,7 +82,7 @@ namespace FundProcess.Pms.ImportsTests
                 new EfaImportFilesConfigCtx
                 {
                     //InputFilesRootFolderPath = @"C:\Users\sroyer\Downloads\RBC",
-                    InputFilesRootFolderPath = @"C:\Users\paill\Desktop\efa",
+                    InputFilesRootFolderPath = Path.Combine(_rootFolder, "efa"),
                     NavFileFileNamePattern = "ffnav1_*.csv",
                     PositionFileFileNamePattern = "ffpos1_*.csv",
                     DbContext = _databaseContext
@@ -115,7 +99,7 @@ namespace FundProcess.Pms.ImportsTests
             StreamProcessRunner.CreateAndExecuteAsync(
                 new BdlImportFilesConfigCtx
                 {
-                    InputFilesRootFolderPath = @"C:\Users\paill\Desktop\bdl",
+                    InputFilesRootFolderPath = Path.Combine(_rootFolder, "bdl"),
                     FileNamePattern = "*.xml",
                     //FileNamePattern = "test.txt",
                     //FileNamePattern = "shelter#aggr_iis_sftp162789960.xml",
@@ -127,6 +111,24 @@ namespace FundProcess.Pms.ImportsTests
                     traceStream.Where("to debug console", i => i.Content.Level != TraceLevel.Verbose).ThroughAction("", i => Debug.WriteLine(i));
                     //traceStream.KeepLastTracesPerNode().ThroughAction("trace", ProcessExecutionSummary);
                 }
+            ).Wait();
+        }
+        [Fact]
+        public void RbcImportAccountTest()
+        {
+            StreamProcessRunner.CreateAndExecuteAsync(
+                new RbcImportAccountFilesConfigCtx
+                {
+                    //InputFilesRootFolderPath = @"C:\Users\sroyer\Downloads\RBC",
+                    InputFilesRootFolderPath = Path.Combine(_rootFolder, "rbc"),
+                    AccountFileNamePattern = "*Shareholders*.xlsx",
+                    AccountPositionFileNamePattern = "*Position*.xlsx",
+                    DbContext = _databaseContext
+                },
+                RbcAccountJobs.FullInitialImport,
+                traceStream => traceStream
+                    .Where("remove verbose", i => i.Content.Level != TraceLevel.Verbose)
+                    .ThroughAction("trace", i => Debug.WriteLine(i))
             ).Wait();
         }
 
