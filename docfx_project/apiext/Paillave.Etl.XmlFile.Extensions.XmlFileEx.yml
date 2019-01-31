@@ -29,7 +29,7 @@ items:
   source:
     id: XmlFileEx
     path: ''
-    startLine: 586
+    startLine: 601
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -68,7 +68,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 588
+    startLine: 603
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -118,7 +118,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 599
+    startLine: 614
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -168,7 +168,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 610
+    startLine: 625
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -218,7 +218,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 621
+    startLine: 636
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -271,7 +271,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 632
+    startLine: 647
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -327,7 +327,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 643
+    startLine: 658
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -380,7 +380,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 654
+    startLine: 669
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -433,7 +433,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 666
+    startLine: 681
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -479,7 +479,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 676
+    startLine: 691
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -525,7 +525,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 686
+    startLine: 701
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -571,7 +571,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 696
+    startLine: 711
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -621,7 +621,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 706
+    startLine: 721
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -674,7 +674,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 716
+    startLine: 731
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions
@@ -724,7 +724,7 @@ items:
   source:
     id: CrossApplyXmlFile
     path: ''
-    startLine: 726
+    startLine: 741
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.XmlFile.Extensions

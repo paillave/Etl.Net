@@ -29,7 +29,7 @@ items:
   source:
     id: ExcelFileEx
     path: ''
-    startLine: 146
+    startLine: 161
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -68,7 +68,7 @@ items:
   source:
     id: CrossApplyExcelSheets
     path: ''
-    startLine: 149
+    startLine: 164
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -116,7 +116,7 @@ items:
   source:
     id: CrossApplyExcelSheets
     path: ''
-    startLine: 154
+    startLine: 169
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -160,7 +160,7 @@ items:
   source:
     id: CrossApplyExcelSheets
     path: ''
-    startLine: 159
+    startLine: 174
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -204,7 +204,7 @@ items:
   source:
     id: CrossApplyExcelSheets
     path: ''
-    startLine: 164
+    startLine: 179
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -255,7 +255,7 @@ items:
   source:
     id: CrossApplyExcelSheets
     path: ''
-    startLine: 169
+    startLine: 184
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -303,7 +303,7 @@ items:
   source:
     id: CrossApplyExcelSheets
     path: ''
-    startLine: 174
+    startLine: 189
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -351,7 +351,7 @@ items:
   source:
     id: CrossApplyExcelRows
     path: ''
-    startLine: 182
+    startLine: 197
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -402,7 +402,7 @@ items:
   source:
     id: CrossApplyExcelRows
     path: ''
-    startLine: 187
+    startLine: 202
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -456,7 +456,7 @@ items:
   source:
     id: CrossApplyExcelRows
     path: ''
-    startLine: 192
+    startLine: 207
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -507,7 +507,7 @@ items:
   source:
     id: CrossApplyExcelRows
     path: ''
-    startLine: 197
+    startLine: 212
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -555,7 +555,7 @@ items:
   source:
     id: ThroughExcelFile
     path: ''
-    startLine: 232
+    startLine: 247
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -603,7 +603,7 @@ items:
   source:
     id: ThroughExcelFile
     path: ''
-    startLine: 241
+    startLine: 256
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -652,7 +652,7 @@ items:
   source:
     id: ThroughExcelFile
     path: ''
-    startLine: 250
+    startLine: 265
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions
@@ -701,7 +701,7 @@ items:
   source:
     id: ToExcelFile
     path: ''
-    startLine: 262
+    startLine: 277
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.ExcelFile.Extensions

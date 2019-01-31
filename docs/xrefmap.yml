@@ -113,6 +113,22 @@ references:
   fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), System.String, ISingleStream(Of TResource), System.Func(Of TIn, TResource, TInEf), System.Func(Of TIn, TInEf, TOut), SaveMode, System.Int32)
   nameWithType: EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, String, ISingleStream<TResource>, Func<TIn, TResource, TInEf>, Func<TIn, TInEf, TOut>, SaveMode, Int32)
   nameWithType.vb: EntityFrameworkCoreEx.ThroughEntityFrameworkCore(Of TIn, TResource, TOut, TInEf)(IStream(Of TIn), String, ISingleStream(Of TResource), Func(Of TIn, TResource, TInEf), Func(Of TIn, TInEf, TOut), SaveMode, Int32)
+- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore*
+  name: UpdateEntityFrameworkCore
+  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_UpdateEntityFrameworkCore_
+  commentId: Overload:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore
+  isSpec: "True"
+  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore
+  nameWithType: EntityFrameworkCoreEx.UpdateEntityFrameworkCore
+- uid: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore``3(IStream{``0},System.String,ISingleStream{``1},Expression{System.Func{``0,``2}},Expression{System.Func{``0,``2}},UpdateMode,System.Int32)
+  name: UpdateEntityFrameworkCore<TIn, TResource, TEntity>(IStream<TIn>, String, ISingleStream<TResource>, Expression<Func<TIn, TEntity>>, Expression<Func<TIn, TEntity>>, UpdateMode, Int32)
+  href: apiext/Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.html#Paillave_Etl_EntityFrameworkCore_Extensions_EntityFrameworkCoreEx_UpdateEntityFrameworkCore__3_IStream___0__System_String_ISingleStream___1__Expression_System_Func___0___2___Expression_System_Func___0___2___UpdateMode_System_Int32_
+  commentId: M:Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore``3(IStream{``0},System.String,ISingleStream{``1},Expression{System.Func{``0,``2}},Expression{System.Func{``0,``2}},UpdateMode,System.Int32)
+  name.vb: UpdateEntityFrameworkCore(Of TIn, TResource, TEntity)(IStream(Of TIn), String, ISingleStream(Of TResource), Expression(Of Func(Of TIn, TEntity)), Expression(Of Func(Of TIn, TEntity)), UpdateMode, Int32)
+  fullName: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore<TIn, TResource, TEntity>(IStream<TIn>, System.String, ISingleStream<TResource>, Expression<System.Func<TIn, TEntity>>, Expression<System.Func<TIn, TEntity>>, UpdateMode, System.Int32)
+  fullName.vb: Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore(Of TIn, TResource, TEntity)(IStream(Of TIn), System.String, ISingleStream(Of TResource), Expression(Of System.Func(Of TIn, TEntity)), Expression(Of System.Func(Of TIn, TEntity)), UpdateMode, System.Int32)
+  nameWithType: EntityFrameworkCoreEx.UpdateEntityFrameworkCore<TIn, TResource, TEntity>(IStream<TIn>, String, ISingleStream<TResource>, Expression<Func<TIn, TEntity>>, Expression<Func<TIn, TEntity>>, UpdateMode, Int32)
+  nameWithType.vb: EntityFrameworkCoreEx.UpdateEntityFrameworkCore(Of TIn, TResource, TEntity)(IStream(Of TIn), String, ISingleStream(Of TResource), Expression(Of Func(Of TIn, TEntity)), Expression(Of Func(Of TIn, TEntity)), UpdateMode, Int32)
 - uid: Paillave.Etl.ExcelFile.Extensions
   name: Paillave.Etl.ExcelFile.Extensions
   href: apiext/Paillave.Etl.ExcelFile.Extensions.html
