@@ -1,5 +1,6 @@
-component_depth: 1
+component_depth: 2
 languages:
 - csharp
 exclude:
 - /docfx_project/.*
+- /src/Samples/.*
