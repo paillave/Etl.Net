@@ -23,8 +23,7 @@ The reactive approach for the implementation of this engine ensures parallelized
 
 ## Development status :construction:
 
-> [!IMPORTANT]
-> This library is still under development, don't use it on production environment yet as its api structure is subject for changes. This explains its alpha version.
+> :warning: This library is still under development, don't use it on production environment yet as its api structure is subject for changes. This explains its alpha version.
 > The first beta release is expected once it starts to be a decent candidate to replace SSIS for common use cases, and when common bugs are solved.
 
 ## Documentation :construction:
@@ -33,8 +32,7 @@ The full (ongoing) documentation is on the website of Etl.Net: https://paillave.
 
 Main recipes are on the page https://paillave.github.io/Etl.Net/recipes.
 
-> [!IMPORTANT]
-> Documentation is still under construction.
+> :warning: Documentation is still under construction.
 
 ## ETL features
 
