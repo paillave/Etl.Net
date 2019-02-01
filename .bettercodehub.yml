@@ -1,4 +1,5 @@
+component_depth: 1
 languages:
 - csharp
 exclude:
-- /docfx_project/**
+- /docfx_project/.*
