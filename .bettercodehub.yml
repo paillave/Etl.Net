@@ -1,0 +1,4 @@
+languages:
+- csharp
+exclude:
+- /docfx_project/**
