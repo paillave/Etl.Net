@@ -76,7 +76,7 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
                 EfProperties = PropertiesToBulkLoad,
                 Types = EntityTypes,
                 Context = Context,
-                TempColumnNumOrderName = TempColumnNumOrderName
+                TempColumnNumOrderName =            TempColumnNumOrderName
             });
             //sqlBulkCopy.EnableStreaming = true;
             sqlBulkCopy.WriteToServer(dataReader);

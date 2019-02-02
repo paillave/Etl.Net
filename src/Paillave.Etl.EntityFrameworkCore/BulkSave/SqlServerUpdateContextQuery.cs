@@ -44,7 +44,6 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
                 Context = Context,
                 TempColumnNumOrderName = null
             });
-            //sqlBulkCopy.EnableStreaming = true;
             sqlBulkCopy.WriteToServer(dataReader);
         }
 
