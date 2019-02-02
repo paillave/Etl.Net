@@ -4,3 +4,4 @@ languages:
 exclude:
 - /docfx_project/.*
 - /src/Samples/.*
+- .*/Extensions/[^/]*\.Ex\.cs
