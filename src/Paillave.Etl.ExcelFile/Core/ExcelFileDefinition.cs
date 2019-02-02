@@ -1,4 +1,5 @@
 ﻿using OfficeOpenXml;
+using Paillave.Etl.Core;
 using Paillave.Etl.Core.Mapping;
 using Paillave.Etl.Core.Mapping.Visitors;
 using System;
@@ -21,7 +22,6 @@ namespace Paillave.Etl.ExcelFile.Core
     }
     public class ExcelFileDefinition<T>
     {
-        //public bool HasColumnHeader => _fieldDefinitions.Any(i => !string.IsNullOrWhiteSpace(i.ColumnName));
         private IList<ExcelFileFieldDefinition> _fieldDefinitions = new List<ExcelFileFieldDefinition>();
         private CultureInfo _cultureInfo = CultureInfo.CurrentCulture;
         private ExcelAddressBase _columnHeaderRange = null;
@@ -97,12 +97,6 @@ namespace Paillave.Etl.ExcelFile.Core
                         Position = po.Position,
                         PropertySerializer = new ExcelFilePropertySetter(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo, fd.ColumnName)
                     })
-                    //.OrderBy(i => i.Position)
-                    //.Select((i, idx) => new
-                    //{
-                    //    Position = idx,
-                    //    PropertySerializer = i.PropertySerializer
-                    //})
                     .ToDictionary(i => i.Position, i => i.PropertySerializer);
                 return new ExcelFileReader(dico, _columnHeaderRange, _dataRange, _datasetOrientation);
             }

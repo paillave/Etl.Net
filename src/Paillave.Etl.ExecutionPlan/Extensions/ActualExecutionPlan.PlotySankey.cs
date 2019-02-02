@@ -42,10 +42,6 @@ namespace Paillave.Etl.ExecutionPlan.Extensions
                 LinkValues = links.Select(i => i.value).ToList()
             };
         }
-        //public static async Task<string> GetJsonActualExecutionPlanPlotlySankeyAsync<T>(this ExecutionContext<T> executionStatus)
-        //{
-        //    return JsonConvert.SerializeObject(await executionStatus.GetActualExecutionPlanPlotlySankeyAsync());
-        //}
         [Obsolete("Use the debugger instead (https://github.com/paillave/Etl.Net-Debugger)")]
         public static string GetActualExecutionPlanHtmlPlotlySankey(this ExecutionStatus executionStatus)
         {

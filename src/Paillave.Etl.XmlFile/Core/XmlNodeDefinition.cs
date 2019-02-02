@@ -1,3 +1,4 @@
+using Paillave.Etl.Core;
 using Paillave.Etl.XmlFile.Core.Mapping;
 using Paillave.Etl.XmlFile.Core.Mapping.Visitors;
 using System;

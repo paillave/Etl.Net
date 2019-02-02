@@ -46,25 +46,24 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         private readonly bool[] _allowNull;
         private string _tempColumnNumOrderName;
         private int _rowCounter = 0;
-
-        public ObjectDataReader(IEnumerable source, IEnumerable<IProperty> efProperties, IEnumerable<IEntityType> types, DbContext context, string tempColumnNumOrderName)
+        public ObjectDataReader(IEnumerable source, ObjectDataReaderConfig config)
         {
             if (source == null) throw new ArgumentOutOfRangeException("source");
 
-            _accessorsByType = types.ToDictionary(i => i.ClrType, i => new ValueAccessor(i.ClrType));
+            _accessorsByType = config.Types.ToDictionary(i => i.ClrType, i => new ValueAccessor(i.ClrType));
             //_accessorsByProperty = efProperties.ToDictionary(i => i.Name, i => _accessorsByType[i.DeclaringType.ClrType]);
-            _tempColumnNumOrderName = tempColumnNumOrderName;
-            _shadowProperties = new HashSet<string>(efProperties.Where(i => i.IsShadowProperty).Select(i => i.Name));
-            _convertibleProperties = efProperties.Select(i => new { ValueConverter = i.GetValueConverter(), i.Name }).Where(i => i.ValueConverter != null).ToDictionary(i => i.Name, i => i.ValueConverter);
-            _context = context;
+            _tempColumnNumOrderName = config.TempColumnNumOrderName;
+            _shadowProperties = new HashSet<string>(config.EfProperties.Where(i => i.IsShadowProperty).Select(i => i.Name));
+            _convertibleProperties = config.EfProperties.Select(i => new { ValueConverter = i.GetValueConverter(), i.Name }).Where(i => i.ValueConverter != null).ToDictionary(i => i.Name, i => i.ValueConverter);
+            _context = config.Context;
 
             _currentType = null;
             Current = null;
-            _memberNames = efProperties.Select(i => i.Name).ToArray();
+            _memberNames = config.EfProperties.Select(i => i.Name).ToArray();
             if (!string.IsNullOrWhiteSpace(_tempColumnNumOrderName))
                 _memberNames = _memberNames.Union(new[] { _tempColumnNumOrderName }).ToArray();
-            _effectiveTypes = efProperties.Select(i => Nullable.GetUnderlyingType(i.ClrType) ?? i.ClrType).ToArray();
-            _allowNull = efProperties.Select(i => i.IsColumnNullable()).ToArray();
+            _effectiveTypes = config.EfProperties.Select(i => Nullable.GetUnderlyingType(i.ClrType) ?? i.ClrType).ToArray();
+            _allowNull = config.EfProperties.Select(i => i.IsColumnNullable()).ToArray();
             _source = source.GetEnumerator();
         }
 
@@ -229,5 +228,12 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         }
 
         public object this[int i] => this[_memberNames[i]] ?? DBNull.Value;
+    }
+    public class ObjectDataReaderConfig
+    {
+        public IEnumerable<IProperty> EfProperties { get; set; }
+        public IEnumerable<IEntityType> Types { get; set; }
+        public DbContext Context { get; set; }
+        public string TempColumnNumOrderName { get; set; }
     }
 }

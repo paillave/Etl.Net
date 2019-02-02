@@ -71,7 +71,13 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
             sqlBulkCopy.ColumnMappings.Add(TempColumnNumOrderName, TempColumnNumOrderName);
 
 
-            var dataReader = new ObjectDataReader(entities, PropertiesToBulkLoad, EntityTypes, Context, TempColumnNumOrderName);
+            var dataReader = new ObjectDataReader(entities, new ObjectDataReaderConfig
+            {
+                EfProperties = PropertiesToBulkLoad,
+                Types = EntityTypes,
+                Context = Context,
+                TempColumnNumOrderName =            TempColumnNumOrderName
+            });
             //sqlBulkCopy.EnableStreaming = true;
             sqlBulkCopy.WriteToServer(dataReader);
         }

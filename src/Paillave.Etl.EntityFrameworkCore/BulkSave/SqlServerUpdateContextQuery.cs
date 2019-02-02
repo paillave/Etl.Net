@@ -37,8 +37,13 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
                 sqlBulkCopy.ColumnMappings.Add(base.PropertyGetters[element.Name].Name, element.SqlServer().ColumnName);
 
 
-            var dataReader = new ObjectDataReader(sources, PropertiesToBulkLoad, new[] { base.BaseType }, Context, null);
-            //sqlBulkCopy.EnableStreaming = true;
+            var dataReader = new ObjectDataReader(sources, new ObjectDataReaderConfig
+            {
+                EfProperties = PropertiesToBulkLoad,
+                Types = new[] { base.BaseType },
+                Context = Context,
+                TempColumnNumOrderName = null
+            });
             sqlBulkCopy.WriteToServer(dataReader);
         }
 
