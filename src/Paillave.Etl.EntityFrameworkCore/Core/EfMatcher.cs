@@ -31,9 +31,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
         {
             _createIfNotFound = createIfNotFound;
             Context = context;
-            // _leftKeyExpression = leftKeyExpression;
             _getLeftKey = leftKeyExpression.Compile();
-            // _rightKeyExpression = rightKeyExpression;
             _getRightKey = rightKeyExpression.Compile();
             _matchCriteriaBuilder = MatchCriteriaBuilder.Create(leftKeyExpression, rightKeyExpression);
             _cacheSize = cacheSize;
@@ -42,9 +40,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
         {
             _createIfNotFound = createIfNotFound;
             Context = context;
-            // _leftKeyExpression = leftKeyExpression;
             _getLeftKey = leftKeyExpression.Compile();
-            // _rightKeyExpression = rightKeyExpression;
             _getRightKey = rightKeyExpression.Compile();
             _matchCriteriaBuilder = MatchCriteriaBuilder.Create(leftKeyExpression, rightKeyExpression);
             var defaultCache = context.Set<TEntity>().Where(defaultDatasetCriteria).ToList();
