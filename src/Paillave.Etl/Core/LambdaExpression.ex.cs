@@ -2,7 +2,7 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Paillave.Etl.TextFile.Core
+namespace Paillave.Etl.Core
 {
     public static class LambdaExpressionEx
     {
