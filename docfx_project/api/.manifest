@@ -35,6 +35,8 @@
   "Paillave.Etl.Extensions.GetStreamStatisticsEx.GetStreamStatisticsAsync(IStream{TraceEvent})": "Paillave.Etl.Extensions.GetStreamStatisticsEx.yml",
   "Paillave.Etl.Extensions.GroupByEx": "Paillave.Etl.Extensions.GroupByEx.yml",
   "Paillave.Etl.Extensions.GroupByEx.GroupBy``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})": "Paillave.Etl.Extensions.GroupByEx.yml",
+  "Paillave.Etl.Extensions.KeepLastTracesPerNodeEx": "Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.yml",
+  "Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream{TraceEvent},System.Int32)": "Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.yml",
   "Paillave.Etl.Extensions.LastEx": "Paillave.Etl.Extensions.LastEx.yml",
   "Paillave.Etl.Extensions.LastEx.Last``1(IStream{``0},System.String)": "Paillave.Etl.Extensions.LastEx.yml",
   "Paillave.Etl.Extensions.LeftJoinEx": "Paillave.Etl.Extensions.LeftJoinEx.yml",

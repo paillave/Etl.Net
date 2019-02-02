@@ -18,7 +18,7 @@ items:
   source:
     id: WhereEx
     path: ''
-    startLine: 1586
+    startLine: 1621
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -57,7 +57,7 @@ items:
   source:
     id: Where
     path: ''
-    startLine: 1588
+    startLine: 1623
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -104,7 +104,7 @@ items:
   source:
     id: Where
     path: ''
-    startLine: 1596
+    startLine: 1631
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -151,7 +151,7 @@ items:
   source:
     id: Where
     path: ''
-    startLine: 1604
+    startLine: 1639
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

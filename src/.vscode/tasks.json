@@ -11,7 +11,7 @@
       ],
       "problemMatcher": "$msCompile",
       "options": {
-        "cwd": "${workspaceFolder}/src"
+        "cwd": "${workspaceFolder}"
       },
       "group": "build"
     },
@@ -25,7 +25,7 @@
       ],
       "problemMatcher": "$msCompile",
       "options": {
-        "cwd": "${workspaceFolder}/src/FundProcess.Pms.Imports"
+        "cwd": "${workspaceFolder}/FundProcess.Pms.Imports"
       },
       "group": {
         "kind": "build",
@@ -42,7 +42,7 @@
       ],
       "problemMatcher": "$msCompile",
       "options": {
-        "cwd": "${workspaceFolder}/src"
+        "cwd": "${workspaceFolder}"
       }
     },
     {
@@ -55,18 +55,8 @@
       ],
       "problemMatcher": "$msCompile",
       "options": {
-        "cwd": "${workspaceFolder}/src/FundProcess.Pms.Imports"
+        "cwd": "${workspaceFolder}/FundProcess.Pms.Imports"
       }
-    },
-    {
-      "label": "build documentation",
-      "command": "docfx",
-      "type": "process",
-      "args": [
-        "docfx_project/docfx.json",
-        "--serve"
-      ],
-      "problemMatcher": []
     }
   ]
 }

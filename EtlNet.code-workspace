@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "src",
+			"name": "Sources"
+		},
+		{
+			"path": "docfx_project",
+			"name": "Documentation"
+		},
+		{
+			"path": ".",
+			"name": "Github files"
+		}
+	],
+	"settings": {}
+}

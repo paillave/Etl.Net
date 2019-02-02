@@ -3,7 +3,7 @@
     {
       "src": [
         {
-          "files": ["**/Paillave.Etl/**/*.StreamEx.cs", "**/SelectProcessor.cs", "**/ValuesProviderBase.cs", "**/IValuesProvider.cs"],
+          "files": ["**/Paillave.Etl/**/*.Stream.ex.cs", "**/SelectProcessor.cs", "**/ValuesProviderBase.cs", "**/IValuesProvider.cs"],
           "exclude": [],
           "src": "../src"
         }
@@ -16,7 +16,7 @@
       "src": [
         {
           "files": ["**/*.StreamEx.cs"],
-          "exclude": ["**/Paillave.Etl/**/*.StreamEx.cs"],
+          "exclude": ["**/Paillave.Etl/**/*.Stream.ex.cs"],
           "src": "../src"
         }
       ],

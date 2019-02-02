@@ -15,6 +15,7 @@ items:
   - Paillave.Etl.Extensions.FirstEx
   - Paillave.Etl.Extensions.GetStreamStatisticsEx
   - Paillave.Etl.Extensions.GroupByEx
+  - Paillave.Etl.Extensions.KeepLastTracesPerNodeEx
   - Paillave.Etl.Extensions.LastEx
   - Paillave.Etl.Extensions.LeftJoinEx
   - Paillave.Etl.Extensions.LookupEx
@@ -96,6 +97,11 @@ references:
   name: GroupByEx
   nameWithType: GroupByEx
   fullName: Paillave.Etl.Extensions.GroupByEx
+- uid: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx
+  commentId: T:Paillave.Etl.Extensions.KeepLastTracesPerNodeEx
+  name: KeepLastTracesPerNodeEx
+  nameWithType: KeepLastTracesPerNodeEx
+  fullName: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx
 - uid: Paillave.Etl.Extensions.LastEx
   commentId: T:Paillave.Etl.Extensions.LastEx
   name: LastEx

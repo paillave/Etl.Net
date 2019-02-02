@@ -23,7 +23,7 @@ items:
   source:
     id: SelectSectionEx
     path: ''
-    startLine: 962
+    startLine: 997
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -62,7 +62,7 @@ items:
   source:
     id: SelectSection
     path: ''
-    startLine: 964
+    startLine: 999
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -110,7 +110,7 @@ items:
   source:
     id: SelectSection
     path: ''
-    startLine: 973
+    startLine: 1008
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -156,7 +156,7 @@ items:
   source:
     id: SelectSection
     path: ''
-    startLine: 981
+    startLine: 1016
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -206,7 +206,7 @@ items:
   source:
     id: SelectSection
     path: ''
-    startLine: 991
+    startLine: 1026
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -254,7 +254,7 @@ items:
   source:
     id: SelectSection
     path: ''
-    startLine: 1013
+    startLine: 1048
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -305,7 +305,7 @@ items:
   source:
     id: SelectSection
     path: ''
-    startLine: 1023
+    startLine: 1058
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -354,7 +354,7 @@ items:
   source:
     id: SelectSection
     path: ''
-    startLine: 1032
+    startLine: 1067
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -407,7 +407,7 @@ items:
   source:
     id: SelectSection
     path: ''
-    startLine: 1043
+    startLine: 1078
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

@@ -1,28 +1,28 @@
 ### YamlMime:ManagedReference
 items:
-- uid: Paillave.Etl.Extensions.LastEx
-  commentId: T:Paillave.Etl.Extensions.LastEx
-  id: LastEx
+- uid: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx
+  commentId: T:Paillave.Etl.Extensions.KeepLastTracesPerNodeEx
+  id: KeepLastTracesPerNodeEx
   parent: Paillave.Etl.Extensions
   children:
-  - Paillave.Etl.Extensions.LastEx.Last``1(IStream{``0},System.String)
+  - Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream{TraceEvent},System.Int32)
   langs:
   - csharp
   - vb
-  name: LastEx
-  nameWithType: LastEx
-  fullName: Paillave.Etl.Extensions.LastEx
+  name: KeepLastTracesPerNodeEx
+  nameWithType: KeepLastTracesPerNodeEx
+  fullName: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx
   type: Class
   source:
-    id: LastEx
+    id: KeepLastTracesPerNodeEx
     path: ''
-    startLine: 607
+    startLine: 563
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static class LastEx
-    content.vb: Public Module LastEx
+    content: public static class KeepLastTracesPerNodeEx
+    content.vb: Public Module KeepLastTracesPerNodeEx
   inheritance:
   - System.Object
   inheritedMembers:
@@ -40,50 +40,48 @@ items:
   modifiers.vb:
   - Public
   - Module
-- uid: Paillave.Etl.Extensions.LastEx.Last``1(IStream{``0},System.String)
-  commentId: M:Paillave.Etl.Extensions.LastEx.Last``1(IStream{``0},System.String)
-  id: Last``1(IStream{``0},System.String)
+- uid: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream{TraceEvent},System.Int32)
+  commentId: M:Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream{TraceEvent},System.Int32)
+  id: KeepLastTracesPerNode(IStream{TraceEvent},System.Int32)
   isExtensionMethod: true
-  parent: Paillave.Etl.Extensions.LastEx
+  parent: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx
   langs:
   - csharp
   - vb
-  name: Last<TIn>(IStream<TIn>, String)
-  nameWithType: LastEx.Last<TIn>(IStream<TIn>, String)
-  fullName: Paillave.Etl.Extensions.LastEx.Last<TIn>(IStream<TIn>, System.String)
+  name: KeepLastTracesPerNode(IStream<TraceEvent>, Int32)
+  nameWithType: KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream<TraceEvent>, Int32)
+  fullName: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream<TraceEvent>, System.Int32)
   type: Method
   source:
-    id: Last
+    id: KeepLastTracesPerNode
     path: ''
-    startLine: 609
+    startLine: 565
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static ISingleStream<TIn> Last<TIn>(this IStream<TIn> stream, string name)
+    content: public static ISingleStream<Dictionary<string, List<TraceEvent>>> KeepLastTracesPerNode(this IStream<TraceEvent> traceEventStream, int limit = 100)
     parameters:
-    - id: stream
-      type: IStream{{TIn}}
-    - id: name
-      type: System.String
-    typeParameters:
-    - id: TIn
+    - id: traceEventStream
+      type: IStream{TraceEvent}
+    - id: limit
+      type: System.Int32
     return:
-      type: ISingleStream{{TIn}}
+      type: ISingleStream{System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{TraceEvent}}}
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function Last(Of TIn)(stream As IStream(Of TIn), name As String) As ISingleStream(Of TIn)
-  overload: Paillave.Etl.Extensions.LastEx.Last*
-  nameWithType.vb: LastEx.Last(Of TIn)(IStream(Of TIn), String)
+      Public Shared Function KeepLastTracesPerNode(traceEventStream As IStream(Of TraceEvent), limit As Integer = 100) As ISingleStream(Of Dictionary(Of String, List(Of TraceEvent)))
+  overload: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode*
+  nameWithType.vb: KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream(Of TraceEvent), Int32)
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.LastEx.Last(Of TIn)(IStream(Of TIn), System.String)
-  name.vb: Last(Of TIn)(IStream(Of TIn), String)
+  fullName.vb: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream(Of TraceEvent), System.Int32)
+  name.vb: KeepLastTracesPerNode(IStream(Of TraceEvent), Int32)
 references:
 - uid: Paillave.Etl.Extensions
   commentId: N:Paillave.Etl.Extensions
@@ -382,20 +380,20 @@ references:
   name: System
   nameWithType: System
   fullName: System
-- uid: Paillave.Etl.Extensions.LastEx.Last*
-  commentId: Overload:Paillave.Etl.Extensions.LastEx.Last
-  name: Last
-  nameWithType: LastEx.Last
-  fullName: Paillave.Etl.Extensions.LastEx.Last
-- uid: IStream{{TIn}}
-  commentId: '!:IStream{``0}'
+- uid: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode*
+  commentId: Overload:Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode
+  name: KeepLastTracesPerNode
+  nameWithType: KeepLastTracesPerNodeEx.KeepLastTracesPerNode
+  fullName: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode
+- uid: IStream{TraceEvent}
+  commentId: '!:IStream{TraceEvent}'
   definition: IStream`1
-  name: IStream<TIn>
-  nameWithType: IStream<TIn>
-  fullName: IStream<TIn>
-  nameWithType.vb: IStream(Of TIn)
-  fullName.vb: IStream(Of TIn)
-  name.vb: IStream(Of TIn)
+  name: IStream<TraceEvent>
+  nameWithType: IStream<TraceEvent>
+  fullName: IStream<TraceEvent>
+  nameWithType.vb: IStream(Of TraceEvent)
+  fullName.vb: IStream(Of TraceEvent)
+  name.vb: IStream(Of TraceEvent)
   spec.csharp:
   - uid: IStream`1
     name: IStream
@@ -405,9 +403,11 @@ references:
   - name: <
     nameWithType: <
     fullName: <
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
+  - uid: TraceEvent
+    name: TraceEvent
+    nameWithType: TraceEvent
+    fullName: TraceEvent
+    isExternal: true
   - name: '>'
     nameWithType: '>'
     fullName: '>'
@@ -420,28 +420,30 @@ references:
   - name: '(Of '
     nameWithType: '(Of '
     fullName: '(Of '
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
+  - uid: TraceEvent
+    name: TraceEvent
+    nameWithType: TraceEvent
+    fullName: TraceEvent
+    isExternal: true
   - name: )
     nameWithType: )
     fullName: )
-- uid: System.String
-  commentId: T:System.String
+- uid: System.Int32
+  commentId: T:System.Int32
   parent: System
   isExternal: true
-  name: String
-  nameWithType: String
-  fullName: System.String
-- uid: ISingleStream{{TIn}}
-  commentId: '!:ISingleStream{``0}'
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: ISingleStream{System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{TraceEvent}}}
+  commentId: '!:ISingleStream{System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{TraceEvent}}}'
   definition: ISingleStream`1
-  name: ISingleStream<TIn>
-  nameWithType: ISingleStream<TIn>
-  fullName: ISingleStream<TIn>
-  nameWithType.vb: ISingleStream(Of TIn)
-  fullName.vb: ISingleStream(Of TIn)
-  name.vb: ISingleStream(Of TIn)
+  name: ISingleStream<Dictionary<String, List<TraceEvent>>>
+  nameWithType: ISingleStream<Dictionary<String, List<TraceEvent>>>
+  fullName: ISingleStream<System.Collections.Generic.Dictionary<System.String, System.Collections.Generic.List<TraceEvent>>>
+  nameWithType.vb: ISingleStream(Of Dictionary(Of String, List(Of TraceEvent)))
+  fullName.vb: ISingleStream(Of System.Collections.Generic.Dictionary(Of System.String, System.Collections.Generic.List(Of TraceEvent)))
+  name.vb: ISingleStream(Of Dictionary(Of String, List(Of TraceEvent)))
   spec.csharp:
   - uid: ISingleStream`1
     name: ISingleStream
@@ -451,9 +453,41 @@ references:
   - name: <
     nameWithType: <
     fullName: <
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    nameWithType: Dictionary
+    fullName: System.Collections.Generic.Dictionary
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: TraceEvent
+    name: TraceEvent
+    nameWithType: TraceEvent
+    fullName: TraceEvent
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
   - name: '>'
     nameWithType: '>'
     fullName: '>'
@@ -466,9 +500,41 @@ references:
   - name: '(Of '
     nameWithType: '(Of '
     fullName: '(Of '
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    nameWithType: Dictionary
+    fullName: System.Collections.Generic.Dictionary
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: TraceEvent
+    name: TraceEvent
+    nameWithType: TraceEvent
+    fullName: TraceEvent
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  - name: )
+    nameWithType: )
+    fullName: )
   - name: )
     nameWithType: )
     fullName: )

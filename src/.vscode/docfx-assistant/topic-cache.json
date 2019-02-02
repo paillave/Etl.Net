@@ -1,0 +1,1937 @@
+[
+    {
+        "uid": "Paillave.Etl.Extensions.CrossApplyEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.CrossApplyEx",
+        "title": "CrossApplyEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.CrossApplyEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.CrossApplyEx.CrossApply``4(IStream{``0},System.String,System.Action{``1,System.Action{``2}},System.Func{``0,``1},System.Func{``2,``0,``3},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TValueIn, TValueOut, TOut>(IStream<TIn>, System.String, System.Action<TValueIn, System.Action<TValueOut>>, System.Func<TIn, TValueIn>, System.Func<TValueOut, TIn, TOut>, System.Boolean)",
+        "title": "CrossApplyEx.CrossApply<TIn, TValueIn, TValueOut, TOut>(IStream<TIn>, String, Action<TValueIn, Action<TValueOut>>, Func<TIn, TValueIn>, Func<TValueOut, TIn, TOut>, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.CrossApplyEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.CrossApplyEx.CrossApply``2(IStream{``0},System.String,System.Action{``0,System.Action{``1}},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TOut>(IStream<TIn>, System.String, System.Action<TIn, System.Action<TOut>>, System.Boolean)",
+        "title": "CrossApplyEx.CrossApply<TIn, TOut>(IStream<TIn>, String, Action<TIn, Action<TOut>>, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.CrossApplyEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.CrossApplyEx.CrossApply``5(IStream{``0},System.String,ISingleStream{``1},System.Action{``2,``1,System.Action{``3}},System.Func{``0,``1,``2},System.Func{``3,``0,``1,``4},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TInToApply, TValueIn, TValueOut, TOut>(IStream<TIn>, System.String, ISingleStream<TInToApply>, System.Action<TValueIn, TInToApply, System.Action<TValueOut>>, System.Func<TIn, TInToApply, TValueIn>, System.Func<TValueOut, TIn, TInToApply, TOut>, System.Boolean)",
+        "title": "CrossApplyEx.CrossApply<TIn, TInToApply, TValueIn, TValueOut, TOut>(IStream<TIn>, String, ISingleStream<TInToApply>, Action<TValueIn, TInToApply, Action<TValueOut>>, Func<TIn, TInToApply, TValueIn>, Func<TValueOut, TIn, TInToApply, TOut>, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.CrossApplyEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.CrossApplyEx.CrossApply``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,System.Action{``2}},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.CrossApplyEx.CrossApply<TIn, TInToApply, TOut>(IStream<TIn>, System.String, ISingleStream<TInToApply>, System.Action<TIn, TInToApply, System.Action<TOut>>, System.Boolean)",
+        "title": "CrossApplyEx.CrossApply<TIn, TInToApply, TOut>(IStream<TIn>, String, ISingleStream<TInToApply>, Action<TIn, TInToApply, Action<TOut>>, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.CrossApplyEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.CrossApplyFolderFilesEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.CrossApplyFolderFilesEx",
+        "title": "CrossApplyFolderFilesEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.CrossApplyFolderFilesEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.String,System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.String, System.Boolean, System.Boolean)",
+        "title": "CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, String, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.CrossApplyFolderFilesEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream{System.String},System.String,System.String,System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream<System.String>, System.String, System.String, System.Boolean, System.Boolean)",
+        "title": "CrossApplyFolderFilesEx.CrossApplyFolderFiles(IStream<String>, String, String, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.CrossApplyFolderFilesEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<TIn, System.String>, System.Boolean, System.Boolean)",
+        "title": "CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.CrossApplyFolderFilesEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.String,System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<LocalFilesValue, TIn, TOut>, System.String, System.Boolean, System.Boolean)",
+        "title": "CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, String, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.CrossApplyFolderFilesEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``1(IStream{System.String},System.String,System.Func{LocalFilesValue,System.String,``0},System.String,System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TOut>(IStream<System.String>, System.String, System.Func<LocalFilesValue, System.String, TOut>, System.String, System.Boolean, System.Boolean)",
+        "title": "CrossApplyFolderFilesEx.CrossApplyFolderFiles<TOut>(IStream<String>, String, Func<LocalFilesValue, String, TOut>, String, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.CrossApplyFolderFilesEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{``0,System.String},System.Func{LocalFilesValue,``0,``1},System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<TIn, System.String>, System.Func<LocalFilesValue, TIn, TOut>, System.Boolean, System.Boolean)",
+        "title": "CrossApplyFolderFilesEx.CrossApplyFolderFiles<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<TIn, String>, Func<LocalFilesValue, TIn, TOut>, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.CrossApplyFolderFilesEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.SelectEx",
+        "title": "SelectEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectEx.Select``2(IStream{``0},System.String,System.Func{``0,``1},System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectEx.Select<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, TOut>, System.Boolean, System.Boolean)",
+        "title": "SelectEx.Select<TIn, TOut>(IStream<TIn>, String, Func<TIn, TOut>, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectEx.Select``2(ISingleStream{``0},System.String,System.Func{``0,``1},System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, System.String, System.Func<TIn, TOut>, System.Boolean, System.Boolean)",
+        "title": "SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, String, Func<TIn, TOut>, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectEx.Select``3(IStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectEx.Select<TIn, TOut, TCtx>(IStream<TIn>, System.String, TCtx, System.Func<TIn, TCtx, System.Action<TCtx>, TOut>, System.Boolean, System.Boolean)",
+        "title": "SelectEx.Select<TIn, TOut, TCtx>(IStream<TIn>, String, TCtx, Func<TIn, TCtx, Action<TCtx>, TOut>, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectEx.Select``3(ISingleStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectEx.Select<TIn, TOut, TCtx>(ISingleStream<TIn>, System.String, TCtx, System.Func<TIn, TCtx, System.Action<TCtx>, TOut>, System.Boolean, System.Boolean)",
+        "title": "SelectEx.Select<TIn, TOut, TCtx>(ISingleStream<TIn>, String, TCtx, Func<TIn, TCtx, Action<TCtx>, TOut>, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectEx.Select``2(IStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectEx.Select<TIn, TOut>(IStream<TIn>, System.String, Paillave.Etl.StreamNodes.ISelectProcessor<TIn, TOut>, System.Boolean, System.Boolean)",
+        "title": "SelectEx.Select<TIn, TOut>(IStream<TIn>, String, ISelectProcessor<TIn, TOut>, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectEx.Select``2(ISingleStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, System.String, Paillave.Etl.StreamNodes.ISelectProcessor<TIn, TOut>, System.Boolean, System.Boolean)",
+        "title": "SelectEx.Select<TIn, TOut>(ISingleStream<TIn>, String, ISelectProcessor<TIn, TOut>, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectEx.Select``2(IStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{``0,``1},System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectEx.Select<TIn, TOut>(IStream<TIn>, System.String, Paillave.Etl.StreamNodes.ISelectWithIndexProcessor<TIn, TOut>, System.Boolean, System.Boolean)",
+        "title": "SelectEx.Select<TIn, TOut>(IStream<TIn>, String, ISelectWithIndexProcessor<TIn, TOut>, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectEx.Select``2(IStream{``0},System.String,System.Func{``0,System.Int32,``1},System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectEx.Select<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.Int32, TOut>, System.Boolean, System.Boolean)",
+        "title": "SelectEx.Select<TIn, TOut>(IStream<TIn>, String, Func<TIn, Int32, TOut>, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectEx.Select``3(IStream{``0},System.String,``2,System.Func{``0,System.Int32,``2,System.Action{``2},``1},System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectEx.Select<TIn, TOut, TCtx>(IStream<TIn>, System.String, TCtx, System.Func<TIn, System.Int32, TCtx, System.Action<TCtx>, TOut>, System.Boolean, System.Boolean)",
+        "title": "SelectEx.Select<TIn, TOut, TCtx>(IStream<TIn>, String, TCtx, Func<TIn, Int32, TCtx, Action<TCtx>, TOut>, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectEx.Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, ISingleStream<TIn2>, System.Func<TIn1, TIn2, System.Int32, TOut>, System.Boolean, System.Boolean)",
+        "title": "SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, Int32, TOut>, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectEx.Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectEx.Select<TIn1, TIn2, TOut>(ISingleStream<TIn1>, System.String, ISingleStream<TIn2>, System.Func<TIn1, TIn2, System.Int32, TOut>, System.Boolean, System.Boolean)",
+        "title": "SelectEx.Select<TIn1, TIn2, TOut>(ISingleStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, Int32, TOut>, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectEx.Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, ISingleStream<TIn2>, System.Func<TIn1, TIn2, TOut>, System.Boolean, System.Boolean)",
+        "title": "SelectEx.Select<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, TOut>, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectEx.Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectEx.Select<TIn1, TIn2, TOut>(ISingleStream<TIn1>, System.String, ISingleStream<TIn2>, System.Func<TIn1, TIn2, TOut>, System.Boolean, System.Boolean)",
+        "title": "SelectEx.Select<TIn1, TIn2, TOut>(ISingleStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, TOut>, Boolean, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectSectionEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.SelectSectionEx",
+        "title": "SelectSectionEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectSectionEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectSectionEx.SelectSection``1(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectSectionEx.SelectSection<TIn>(IStream<TIn>, System.String, KeepingState, System.Func<TIn, SwitchBehavior>)",
+        "title": "SelectSectionEx.SelectSection<TIn>(IStream<TIn>, String, KeepingState, Func<TIn, SwitchBehavior>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectSectionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectSectionEx.SelectSection``1(IStream{``0},System.String,System.Func{``0,SwitchBehavior})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectSectionEx.SelectSection<TIn>(IStream<TIn>, System.String, System.Func<TIn, SwitchBehavior>)",
+        "title": "SelectSectionEx.SelectSection<TIn>(IStream<TIn>, String, Func<TIn, SwitchBehavior>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectSectionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectSectionEx.SelectSection``1(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectSectionEx.SelectSection<TIn>(IStream<TIn>, System.String, KeepingState, System.Func<TIn, SwitchBehavior>, System.Func<TIn, SwitchBehavior>)",
+        "title": "SelectSectionEx.SelectSection<TIn>(IStream<TIn>, String, KeepingState, Func<TIn, SwitchBehavior>, Func<TIn, SwitchBehavior>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectSectionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectSectionEx.SelectSection``1(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectSectionEx.SelectSection<TIn>(IStream<TIn>, System.String, System.Func<TIn, SwitchBehavior>, System.Func<TIn, SwitchBehavior>)",
+        "title": "SelectSectionEx.SelectSection<TIn>(IStream<TIn>, String, Func<TIn, SwitchBehavior>, Func<TIn, SwitchBehavior>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectSectionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, System.String, KeepingState, System.Func<TIn, SwitchBehavior>, System.Func<TIn, System.Int32, TOut>)",
+        "title": "SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, String, KeepingState, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectSectionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, SwitchBehavior>, System.Func<TIn, System.Int32, TOut>)",
+        "title": "SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, String, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectSectionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,KeepingState,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, System.String, KeepingState, System.Func<TIn, SwitchBehavior>, System.Func<TIn, SwitchBehavior>, System.Func<TIn, System.Int32, TOut>)",
+        "title": "SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, String, KeepingState, Func<TIn, SwitchBehavior>, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectSectionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SelectSectionEx.SelectSection``2(IStream{``0},System.String,System.Func{``0,SwitchBehavior},System.Func{``0,SwitchBehavior},System.Func{``0,System.Int32,``1})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, SwitchBehavior>, System.Func<TIn, SwitchBehavior>, System.Func<TIn, System.Int32, TOut>)",
+        "title": "SelectSectionEx.SelectSection<TIn, TOut>(IStream<TIn>, String, Func<TIn, SwitchBehavior>, Func<TIn, SwitchBehavior>, Func<TIn, Int32, TOut>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SelectSectionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx",
+        "title": "ThroughActionEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``1(IStream{``0},System.String,System.Action{``0})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn>(IStream<TIn>, System.String, System.Action<TIn>)",
+        "title": "ThroughActionEx.ThroughAction<TIn>(IStream<TIn>, String, Action<TIn>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``2(ISortedStream{``0,``1},System.String,System.Action{``0})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, System.Action<TIn>)",
+        "title": "ThroughActionEx.ThroughAction<TIn, TKey>(ISortedStream<TIn, TKey>, String, Action<TIn>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``2(IKeyedStream{``0,``1},System.String,System.Action{``0})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, System.Action<TIn>)",
+        "title": "ThroughActionEx.ThroughAction<TIn, TKey>(IKeyedStream<TIn, TKey>, String, Action<TIn>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``1(IStream{``0},System.String,IThroughActionProcessor{``0})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn>(IStream<TIn>, System.String, IThroughActionProcessor<TIn>)",
+        "title": "ThroughActionEx.ThroughAction<TIn>(IStream<TIn>, String, IThroughActionProcessor<TIn>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``2(ISortedStream{``0,``1},System.String,IThroughActionProcessor{``0})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, IThroughActionProcessor<TIn>)",
+        "title": "ThroughActionEx.ThroughAction<TIn, TKey>(ISortedStream<TIn, TKey>, String, IThroughActionProcessor<TIn>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``2(IKeyedStream{``0,``1},System.String,IThroughActionProcessor{``0})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, IThroughActionProcessor<TIn>)",
+        "title": "ThroughActionEx.ThroughAction<TIn, TKey>(IKeyedStream<TIn, TKey>, String, IThroughActionProcessor<TIn>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource>, System.Action<TResource>)",
+        "title": "ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, Action<TIn, TResource>, Action<TResource>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource>, System.Action<TResource>)",
+        "title": "ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource>, Action<TResource>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,ISingleStream{``1},System.Action{``0,``1},System.Action{``1})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource>, System.Action<TResource>)",
+        "title": "ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource>, Action<TResource>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, System.String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)",
+        "title": "ThroughActionEx.ThroughAction<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``2},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)",
+        "title": "ThroughActionEx.ThroughAction<TIn, TResource, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``2},System.String,ISingleStream{``1},IThroughActionProcessor{``0,``1})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)",
+        "title": "ThroughActionEx.ThroughAction<TIn, TResource, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<TResource>, IThroughActionProcessor<TIn, TResource>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``2(IStream{``0},System.String,``1,System.Action{``0,``1,System.Action{``1}})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn, TCtx>(IStream<TIn>, System.String, TCtx, System.Action<TIn, TCtx, System.Action<TCtx>>)",
+        "title": "ThroughActionEx.ThroughAction<TIn, TCtx>(IStream<TIn>, String, TCtx, Action<TIn, TCtx, Action<TCtx>>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``3(ISortedStream{``0,``1},System.String,``2,System.Action{``0,``2,System.Action{``2}})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn, TKey, TCtx>(ISortedStream<TIn, TKey>, System.String, TCtx, System.Action<TIn, TCtx, System.Action<TCtx>>)",
+        "title": "ThroughActionEx.ThroughAction<TIn, TKey, TCtx>(ISortedStream<TIn, TKey>, String, TCtx, Action<TIn, TCtx, Action<TCtx>>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``3(IKeyedStream{``0,``1},System.String,``2,System.Action{``0,``2,System.Action{``2}})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn, TKey, TCtx>(IKeyedStream<TIn, TKey>, System.String, TCtx, System.Action<TIn, TCtx, System.Action<TCtx>>)",
+        "title": "ThroughActionEx.ThroughAction<TIn, TKey, TCtx>(IKeyedStream<TIn, TKey>, String, TCtx, Action<TIn, TCtx, Action<TCtx>>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``3(IStream{``0},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn, TResource, TCtx>(IStream<TIn>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource, TCtx, System.Action<TCtx>>, System.Action<TResource, System.Action<TCtx>>)",
+        "title": "ThroughActionEx.ThroughAction<TIn, TResource, TCtx>(IStream<TIn>, String, ISingleStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``4(ISortedStream{``0,``3},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource, TCtx, System.Action<TCtx>>, System.Action<TResource, System.Action<TCtx>>)",
+        "title": "ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction``4(IKeyedStream{``0,``3},System.String,ISingleStream{``1},System.Action{``0,``1,``2,System.Action{``2}},System.Action{``1,System.Action{``2}})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<TResource>, System.Action<TIn, TResource, TCtx, System.Action<TCtx>>, System.Action<TResource, System.Action<TCtx>>)",
+        "title": "ThroughActionEx.ThroughAction<TIn, TResource, TCtx, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<TResource>, Action<TIn, TResource, TCtx, Action<TCtx>>, Action<TResource, Action<TCtx>>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughActionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx",
+        "title": "EntityFrameworkCoreEx",
+        "sourceFile": "apiext\\Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,IQueryable{``2}},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery<TIn, TResource, TOut>(IStream<TIn>, System.String, ISingleStream<TResource>, System.Func<TIn, TResource, IQueryable<TOut>>, System.Boolean)",
+        "title": "EntityFrameworkCoreEx.CrossApplyEntityFrameworkCoreQuery<TIn, TResource, TOut>(IStream<TIn>, String, ISingleStream<TResource>, Func<TIn, TResource, IQueryable<TOut>>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore``3(IStream{``0},System.String,ISingleStream{``1},Expression{System.Func{``0,``2}},Expression{System.Func{``0,``2}},UpdateMode,System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.UpdateEntityFrameworkCore<TIn, TResource, TEntity>(IStream<TIn>, System.String, ISingleStream<TResource>, Expression<System.Func<TIn, TEntity>>, Expression<System.Func<TIn, TEntity>>, UpdateMode, System.Int32)",
+        "title": "EntityFrameworkCoreEx.UpdateEntityFrameworkCore<TIn, TResource, TEntity>(IStream<TIn>, String, ISingleStream<TResource>, Expression<Func<TIn, TEntity>>, Expression<Func<TIn, TEntity>>, UpdateMode, Int32)",
+        "sourceFile": "apiext\\Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,ISingleStream{``1},SaveMode,System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource>(IStream<TIn>, System.String, ISingleStream<TResource>, SaveMode, System.Int32)",
+        "title": "EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, SaveMode, Int32)",
+        "sourceFile": "apiext\\Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``2(IStream{``0},System.String,ISingleStream{``1},Expression{System.Func{``0,System.Object}},SaveMode,System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource>(IStream<TIn>, System.String, ISingleStream<TResource>, Expression<System.Func<TIn, System.Object>>, SaveMode, System.Int32)",
+        "title": "EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource>(IStream<TIn>, String, ISingleStream<TResource>, Expression<Func<TIn, Object>>, SaveMode, Int32)",
+        "sourceFile": "apiext\\Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``3},System.Func{``0,``3,``2},SaveMode,System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, System.String, ISingleStream<TResource>, System.Func<TIn, TResource, TInEf>, System.Func<TIn, TInEf, TOut>, SaveMode, System.Int32)",
+        "title": "EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, String, ISingleStream<TResource>, Func<TIn, TResource, TInEf>, Func<TIn, TInEf, TOut>, SaveMode, Int32)",
+        "sourceFile": "apiext\\Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore``4(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``3},Expression{System.Func{``3,System.Object}},System.Func{``0,``3,``2},SaveMode,System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, System.String, ISingleStream<TResource>, System.Func<TIn, TResource, TInEf>, Expression<System.Func<TInEf, System.Object>>, System.Func<TIn, TInEf, TOut>, SaveMode, System.Int32)",
+        "title": "EntityFrameworkCoreEx.ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(IStream<TIn>, String, ISingleStream<TResource>, Func<TIn, TResource, TInEf>, Expression<Func<TInEf, Object>>, Func<TIn, TInEf, TOut>, SaveMode, Int32)",
+        "sourceFile": "apiext\\Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup``5(IStream{``0},System.String,ISingleStream{``2},Expression{System.Func{``0,``4}},Expression{System.Func{``1,``4}},System.Func{``0,``1,``3},Expression{System.Func{``1,System.Boolean}},System.Func{``0,``1},System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut, TKey>(IStream<TIn>, System.String, ISingleStream<TCtx>, Expression<System.Func<TIn, TKey>>, Expression<System.Func<TEntity, TKey>>, System.Func<TIn, TEntity, TOut>, Expression<System.Func<TEntity, System.Boolean>>, System.Func<TIn, TEntity>, System.Int32)",
+        "title": "EntityFrameworkCoreEx.EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut, TKey>(IStream<TIn>, String, ISingleStream<TCtx>, Expression<Func<TIn, TKey>>, Expression<Func<TEntity, TKey>>, Func<TIn, TEntity, TOut>, Expression<Func<TEntity, Boolean>>, Func<TIn, TEntity>, Int32)",
+        "sourceFile": "apiext\\Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup``5(IStream{``0},System.String,ISingleStream{``2},Expression{System.Func{``0,``4}},Expression{System.Func{``1,``4}},System.Func{``0,``1,``3},System.Func{``0,``1},System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut, TKey>(IStream<TIn>, System.String, ISingleStream<TCtx>, Expression<System.Func<TIn, TKey>>, Expression<System.Func<TEntity, TKey>>, System.Func<TIn, TEntity, TOut>, System.Func<TIn, TEntity>, System.Int32)",
+        "title": "EntityFrameworkCoreEx.EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut, TKey>(IStream<TIn>, String, ISingleStream<TCtx>, Expression<Func<TIn, TKey>>, Expression<Func<TEntity, TKey>>, Func<TIn, TEntity, TOut>, Func<TIn, TEntity>, Int32)",
+        "sourceFile": "apiext\\Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreDelete``3(IStream{``0},System.String,ISingleStream{``2},Expression{System.Func{``0,``1,System.Boolean}})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.EntityFrameworkCoreDelete<TIn, TEntity, TCtx>(IStream<TIn>, System.String, ISingleStream<TCtx>, Expression<System.Func<TIn, TEntity, System.Boolean>>)",
+        "title": "EntityFrameworkCoreEx.EntityFrameworkCoreDelete<TIn, TEntity, TCtx>(IStream<TIn>, String, ISingleStream<TCtx>, Expression<Func<TIn, TEntity, Boolean>>)",
+        "sourceFile": "apiext\\Paillave.Etl.EntityFrameworkCore.Extensions.EntityFrameworkCoreEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.EntityFrameworkCore.Extensions",
+        "type": "Reference.Managed",
+        "memberType": "Namespace",
+        "name": "Paillave.Etl.EntityFrameworkCore.Extensions",
+        "title": "Paillave.Etl.EntityFrameworkCore.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.EntityFrameworkCore.Extensions.yml",
+        "detailedType": 2
+    },
+    {
+        "uid": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx",
+        "title": "ExcelFileEx",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{``0},System.String,System.Func{``0,System.String},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Boolean)",
+        "title": "ExcelFileEx.CrossApplyExcelSheets<TIn>(IStream<TIn>, String, Func<TIn, String>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{System.String},System.String,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream<System.String>, System.String, System.Boolean)",
+        "title": "ExcelFileEx.CrossApplyExcelSheets(IStream<String>, String, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream{Stream},System.String,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets(IStream<Stream>, System.String, System.Boolean)",
+        "title": "ExcelFileEx.CrossApplyExcelSheets(IStream<Stream>, String, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{ExcelSheetSelection,``0,``1},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<ExcelSheetSelection, TIn, TOut>, System.Boolean)",
+        "title": "ExcelFileEx.CrossApplyExcelSheets<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<ExcelSheetSelection, TIn, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{System.String},System.String,System.Func{ExcelSheetSelection,System.String,``0},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<System.String>, System.String, System.Func<ExcelSheetSelection, System.String, TOut>, System.Boolean)",
+        "title": "ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<String>, String, Func<ExcelSheetSelection, String, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets``1(IStream{Stream},System.String,System.Func{ExcelSheetSelection,``0},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<Stream>, System.String, System.Func<ExcelSheetSelection, TOut>, System.Boolean)",
+        "title": "ExcelFileEx.CrossApplyExcelSheets<TOut>(IStream<Stream>, String, Func<ExcelSheetSelection, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Func{``0,ExcelSheetSelection,``1},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, System.String, ExcelFileDefinition<TParsed>, System.Func<TParsed, ExcelSheetSelection, TOut>, System.Boolean)",
+        "title": "ExcelFileEx.CrossApplyExcelRows<TParsed, TOut>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>, Func<TParsed, ExcelSheetSelection, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``3(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Func{``1,``0,``2},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, System.String, ExcelFileDefinition<TParsed>, System.Func<TIn, ExcelSheetSelection>, System.Func<TParsed, TIn, TOut>, System.Boolean)",
+        "title": "ExcelFileEx.CrossApplyExcelRows<TIn, TParsed, TOut>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>, Func<TParsed, TIn, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``2(IStream{``0},System.String,ExcelFileDefinition{``1},System.Func{``0,ExcelSheetSelection},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, System.String, ExcelFileDefinition<TParsed>, System.Func<TIn, ExcelSheetSelection>, System.Boolean)",
+        "title": "ExcelFileEx.CrossApplyExcelRows<TIn, TParsed>(IStream<TIn>, String, ExcelFileDefinition<TParsed>, Func<TIn, ExcelSheetSelection>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows``1(IStream{ExcelSheetSelection},System.String,ExcelFileDefinition{``0},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, System.String, ExcelFileDefinition<TParsed>, System.Boolean)",
+        "title": "ExcelFileEx.CrossApplyExcelRows<TParsed>(IStream<ExcelSheetSelection>, String, ExcelFileDefinition<TParsed>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``1(IStream{``0},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile<TIn>(IStream<TIn>, System.String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)",
+        "title": "ExcelFileEx.ThroughExcelFile<TIn>(IStream<TIn>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``2(ISortedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)",
+        "title": "ExcelFileEx.ThroughExcelFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{Stream},ExcelFileDefinition{``0})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)",
+        "title": "ExcelFileEx.ThroughExcelFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<Stream>, ExcelFileDefinition<TIn>)",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ToExcelFile``1(IStream{``0},System.String,ExcelFileDefinition{``0})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.ToExcelFile<TIn>(IStream<TIn>, System.String, ExcelFileDefinition<TIn>)",
+        "title": "ExcelFileEx.ToExcelFile<TIn>(IStream<TIn>, String, ExcelFileDefinition<TIn>)",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.ExcelFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.ExcelFile.Extensions",
+        "type": "Reference.Managed",
+        "memberType": "Namespace",
+        "name": "Paillave.Etl.ExcelFile.Extensions",
+        "title": "Paillave.Etl.ExcelFile.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.ExcelFile.Extensions.yml",
+        "detailedType": 2
+    },
+    {
+        "uid": "Paillave.Etl.Ftp.Extensions.FtpEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Ftp.Extensions.FtpEx",
+        "title": "FtpEx",
+        "sourceFile": "apiext\\Paillave.Etl.Ftp.Extensions.FtpEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles<TIn>(IStream<TIn>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<TIn, System.String>, System.Boolean)",
+        "title": "FtpEx.CrossApplyFtpFiles<TIn>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.Ftp.Extensions.FtpEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles(IStream<System.String>, System.String, ISingleStream<FtpConnectionInfo>, System.Boolean)",
+        "title": "FtpEx.CrossApplyFtpFiles(IStream<String>, String, ISingleStream<FtpConnectionInfo>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.Ftp.Extensions.FtpEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``2(IStream{``0},System.String,ISingleStream{FtpConnectionInfo},System.Func{``0,System.String},System.Func{FtpFilesValue,``0,FtpConnectionInfo,``1},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<TIn, System.String>, System.Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>, System.Boolean)",
+        "title": "FtpEx.CrossApplyFtpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<FtpConnectionInfo>, Func<TIn, String>, Func<FtpFilesValue, TIn, FtpConnectionInfo, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.Ftp.Extensions.FtpEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles``1(IStream{System.String},System.String,ISingleStream{FtpConnectionInfo},System.Func{FtpFilesValue,System.String,FtpConnectionInfo,``0},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Ftp.Extensions.FtpEx.CrossApplyFtpFiles<TOut>(IStream<System.String>, System.String, ISingleStream<FtpConnectionInfo>, System.Func<FtpFilesValue, System.String, FtpConnectionInfo, TOut>, System.Boolean)",
+        "title": "FtpEx.CrossApplyFtpFiles<TOut>(IStream<String>, String, ISingleStream<FtpConnectionInfo>, Func<FtpFilesValue, String, FtpConnectionInfo, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.Ftp.Extensions.FtpEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile``1(IStream{Stream},System.String,ISingleStream{``0},System.Func{``0,System.String},System.Func{``0,FtpConnectionInfo})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Ftp.Extensions.FtpEx.ToFtpFile<TParams>(IStream<Stream>, System.String, ISingleStream<TParams>, System.Func<TParams, System.String>, System.Func<TParams, FtpConnectionInfo>)",
+        "title": "FtpEx.ToFtpFile<TParams>(IStream<Stream>, String, ISingleStream<TParams>, Func<TParams, String>, Func<TParams, FtpConnectionInfo>)",
+        "sourceFile": "apiext\\Paillave.Etl.Ftp.Extensions.FtpEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Ftp.Extensions",
+        "type": "Reference.Managed",
+        "memberType": "Namespace",
+        "name": "Paillave.Etl.Ftp.Extensions",
+        "title": "Paillave.Etl.Ftp.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.Ftp.Extensions.yml",
+        "detailedType": 2
+    },
+    {
+        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Sftp.Extensions.SftpEx",
+        "title": "SftpEx",
+        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``1(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles<TIn>(IStream<TIn>, System.String, ISingleStream<SftpConnectionInfo>, System.Func<TIn, System.String>, System.Boolean)",
+        "title": "SftpEx.CrossApplySftpFiles<TIn>(IStream<TIn>, String, ISingleStream<SftpConnectionInfo>, Func<TIn, String>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles(IStream<System.String>, System.String, ISingleStream<SftpConnectionInfo>, System.Boolean)",
+        "title": "SftpEx.CrossApplySftpFiles(IStream<String>, String, ISingleStream<SftpConnectionInfo>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``2(IStream{``0},System.String,ISingleStream{SftpConnectionInfo},System.Func{``0,System.String},System.Func{SftpFilesValue,``0,SftpConnectionInfo,``1},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles<TIn, TOut>(IStream<TIn>, System.String, ISingleStream<SftpConnectionInfo>, System.Func<TIn, System.String>, System.Func<SftpFilesValue, TIn, SftpConnectionInfo, TOut>, System.Boolean)",
+        "title": "SftpEx.CrossApplySftpFiles<TIn, TOut>(IStream<TIn>, String, ISingleStream<SftpConnectionInfo>, Func<TIn, String>, Func<SftpFilesValue, TIn, SftpConnectionInfo, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles``1(IStream{System.String},System.String,ISingleStream{SftpConnectionInfo},System.Func{SftpFilesValue,System.String,SftpConnectionInfo,``0},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Sftp.Extensions.SftpEx.CrossApplySftpFiles<TOut>(IStream<System.String>, System.String, ISingleStream<SftpConnectionInfo>, System.Func<SftpFilesValue, System.String, SftpConnectionInfo, TOut>, System.Boolean)",
+        "title": "SftpEx.CrossApplySftpFiles<TOut>(IStream<String>, String, ISingleStream<SftpConnectionInfo>, Func<SftpFilesValue, String, SftpConnectionInfo, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile``1(IStream{Stream},System.String,ISingleStream{``0},System.Func{``0,System.String},System.Func{``0,SftpConnectionInfo})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Sftp.Extensions.SftpEx.ToSftpFile<TParams>(IStream<Stream>, System.String, ISingleStream<TParams>, System.Func<TParams, System.String>, System.Func<TParams, SftpConnectionInfo>)",
+        "title": "SftpEx.ToSftpFile<TParams>(IStream<Stream>, String, ISingleStream<TParams>, Func<TParams, String>, Func<TParams, SftpConnectionInfo>)",
+        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.SftpEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Sftp.Extensions",
+        "type": "Reference.Managed",
+        "memberType": "Namespace",
+        "name": "Paillave.Etl.Sftp.Extensions",
+        "title": "Paillave.Etl.Sftp.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.Sftp.Extensions.yml",
+        "detailedType": 2
+    },
+    {
+        "uid": "Paillave.Etl.SqlServer.Extensions.SqlServerEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.SqlServer.Extensions.SqlServerEx",
+        "title": "SqlServerEx",
+        "sourceFile": "apiext\\Paillave.Etl.SqlServer.Extensions.SqlServerEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.SqlServer.Extensions.SqlServerEx.CrossApplySqlServerQuery``2(IStream{``0},System.String,ISingleStream{SqlConnection},System.String,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.SqlServer.Extensions.SqlServerEx.CrossApplySqlServerQuery<TIn, TOut>(IStream<TIn>, System.String, ISingleStream<SqlConnection>, System.String, System.Boolean)",
+        "title": "SqlServerEx.CrossApplySqlServerQuery<TIn, TOut>(IStream<TIn>, String, ISingleStream<SqlConnection>, String, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.SqlServer.Extensions.SqlServerEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.SqlServer.Extensions.SqlServerEx.ThroughSqlServer``1(IStream{``0},System.String,ISingleStream{SqlConnection},System.String)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.SqlServer.Extensions.SqlServerEx.ThroughSqlServer<TIn>(IStream<TIn>, System.String, ISingleStream<SqlConnection>, System.String)",
+        "title": "SqlServerEx.ThroughSqlServer<TIn>(IStream<TIn>, String, ISingleStream<SqlConnection>, String)",
+        "sourceFile": "apiext\\Paillave.Etl.SqlServer.Extensions.SqlServerEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.SqlServer.Extensions",
+        "type": "Reference.Managed",
+        "memberType": "Namespace",
+        "name": "Paillave.Etl.SqlServer.Extensions",
+        "title": "Paillave.Etl.SqlServer.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.SqlServer.Extensions.yml",
+        "detailedType": 2
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx",
+        "title": "TextFileEx",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{System.String},System.String,FlatFileDefinition{``0},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TOut>(IStream<System.String>, System.String, FlatFileDefinition<TOut>, System.Boolean)",
+        "title": "TextFileEx.CrossApplyTextFile<TOut>(IStream<String>, String, FlatFileDefinition<TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{LocalFilesValue},System.String,FlatFileDefinition{``0},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TOut>(IStream<LocalFilesValue>, System.String, FlatFileDefinition<TOut>, System.Boolean)",
+        "title": "TextFileEx.CrossApplyTextFile<TOut>(IStream<LocalFilesValue>, String, FlatFileDefinition<TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{Stream},System.String,FlatFileDefinition{``0},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TOut>(IStream<Stream>, System.String, FlatFileDefinition<TOut>, System.Boolean)",
+        "title": "TextFileEx.CrossApplyTextFile<TOut>(IStream<Stream>, String, FlatFileDefinition<TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,FlatFileDefinition{``1},System.Func{``0,System.String},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, System.String, FlatFileDefinition<TOut>, System.Func<TIn, System.String>, System.Boolean)",
+        "title": "TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, String, FlatFileDefinition<TOut>, Func<TIn, String>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``3(IStream{``0},System.String,FlatFileDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TIn, TParsed, TOut>(IStream<TIn>, System.String, FlatFileDefinition<TParsed>, System.Func<TIn, System.String>, System.Func<TIn, TParsed, TOut>, System.Boolean)",
+        "title": "TextFileEx.CrossApplyTextFile<TIn, TParsed, TOut>(IStream<TIn>, String, FlatFileDefinition<TParsed>, Func<TIn, String>, Func<TIn, TParsed, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{System.String},System.String,FlatFileDefinition{``0},System.Func{System.String,``0,``1},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TParsed, TOut>(IStream<System.String>, System.String, FlatFileDefinition<TParsed>, System.Func<System.String, TParsed, TOut>, System.Boolean)",
+        "title": "TextFileEx.CrossApplyTextFile<TParsed, TOut>(IStream<String>, String, FlatFileDefinition<TParsed>, Func<String, TParsed, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{Stream},System.String,FlatFileDefinition{``0},System.Func{``0,``1},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TParsed, TOut>(IStream<Stream>, System.String, FlatFileDefinition<TParsed>, System.Func<TParsed, TOut>, System.Boolean)",
+        "title": "TextFileEx.CrossApplyTextFile<TParsed, TOut>(IStream<Stream>, String, FlatFileDefinition<TParsed>, Func<TParsed, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream{System.String},System.String,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream<System.String>, System.String, System.Boolean)",
+        "title": "TextFileEx.CrossApplyTextFile(IStream<String>, String, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream{Stream},System.String,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile(IStream<Stream>, System.String, System.Boolean)",
+        "title": "TextFileEx.CrossApplyTextFile(IStream<Stream>, String, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{``0},System.String,System.Func{``0,System.String},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Boolean)",
+        "title": "TextFileEx.CrossApplyTextFile<TIn>(IStream<TIn>, String, Func<TIn, String>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``2(IStream{``0},System.String,System.Func{``0,System.String},System.Func{System.String,``0,``1},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.String>, System.Func<System.String, TIn, TOut>, System.Boolean)",
+        "title": "TextFileEx.CrossApplyTextFile<TIn, TOut>(IStream<TIn>, String, Func<TIn, String>, Func<String, TIn, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{System.String},System.String,System.Func{System.String,System.String,``0},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TOut>(IStream<System.String>, System.String, System.Func<System.String, System.String, TOut>, System.Boolean)",
+        "title": "TextFileEx.CrossApplyTextFile<TOut>(IStream<String>, String, Func<String, String, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile``1(IStream{Stream},System.String,System.Func{System.String,``0},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.CrossApplyTextFile<TOut>(IStream<Stream>, System.String, System.Func<System.String, TOut>, System.Boolean)",
+        "title": "TextFileEx.CrossApplyTextFile<TOut>(IStream<Stream>, String, Func<String, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile``1(IStream{``0},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile<TIn>(IStream<TIn>, System.String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)",
+        "title": "TextFileEx.ThroughTextFile<TIn>(IStream<TIn>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile``2(ISortedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)",
+        "title": "TextFileEx.ThroughTextFile<TIn, TKey>(ISortedStream<TIn, TKey>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile``2(IKeyedStream{``0,``1},System.String,ISingleStream{SystemIO.Stream},FlatFileDefinition{``0})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)",
+        "title": "TextFileEx.ThroughTextFile<TIn, TKey>(IKeyedStream<TIn, TKey>, String, ISingleStream<SystemIO.Stream>, FlatFileDefinition<TIn>)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions.TextFileEx.ToTextFile``1(IStream{``0},System.String,FlatFileDefinition{``0})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.TextFile.Extensions.TextFileEx.ToTextFile<TIn>(IStream<TIn>, System.String, FlatFileDefinition<TIn>)",
+        "title": "TextFileEx.ToTextFile<TIn>(IStream<TIn>, String, FlatFileDefinition<TIn>)",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.TextFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.TextFile.Extensions",
+        "type": "Reference.Managed",
+        "memberType": "Namespace",
+        "name": "Paillave.Etl.TextFile.Extensions",
+        "title": "Paillave.Etl.TextFile.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.TextFile.Extensions.yml",
+        "detailedType": 2
+    },
+    {
+        "uid": "Paillave.Etl.XmlFile.Extensions.XmlFileEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.XmlFile.Extensions.XmlFileEx",
+        "title": "XmlFileEx",
+        "sourceFile": "apiext\\Paillave.Etl.XmlFile.Extensions.XmlFileEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TOut>(IStream<System.String>, System.String, XmlNodeDefinition<TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)",
+        "title": "XmlFileEx.CrossApplyXmlFile<TOut>(IStream<String>, String, XmlNodeDefinition<TOut>, IDictionary<String, String>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.XmlFile.Extensions.XmlFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{LocalFilesValue},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TOut>(IStream<LocalFilesValue>, System.String, XmlNodeDefinition<TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)",
+        "title": "XmlFileEx.CrossApplyXmlFile<TOut>(IStream<LocalFilesValue>, String, XmlNodeDefinition<TOut>, IDictionary<String, String>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.XmlFile.Extensions.XmlFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TOut>(IStream<Stream>, System.String, XmlNodeDefinition<TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)",
+        "title": "XmlFileEx.CrossApplyXmlFile<TOut>(IStream<Stream>, String, XmlNodeDefinition<TOut>, IDictionary<String, String>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.XmlFile.Extensions.XmlFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TIn, TOut>(IStream<TIn>, System.String, XmlNodeDefinition<TOut>, System.Func<TIn, System.String>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)",
+        "title": "XmlFileEx.CrossApplyXmlFile<TIn, TOut>(IStream<TIn>, String, XmlNodeDefinition<TOut>, Func<TIn, String>, IDictionary<String, String>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.XmlFile.Extensions.XmlFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``3(IStream{``0},System.String,XmlNodeDefinition{``1},System.Func{``0,System.String},System.Func{``0,``1,``2},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TIn, TParsed, TOut>(IStream<TIn>, System.String, XmlNodeDefinition<TParsed>, System.Func<TIn, System.String>, System.Func<TIn, TParsed, TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)",
+        "title": "XmlFileEx.CrossApplyXmlFile<TIn, TParsed, TOut>(IStream<TIn>, String, XmlNodeDefinition<TParsed>, Func<TIn, String>, Func<TIn, TParsed, TOut>, IDictionary<String, String>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.XmlFile.Extensions.XmlFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{System.String},System.String,XmlNodeDefinition{``0},System.Func{System.String,``0,``1},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TParsed, TOut>(IStream<System.String>, System.String, XmlNodeDefinition<TParsed>, System.Func<System.String, TParsed, TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)",
+        "title": "XmlFileEx.CrossApplyXmlFile<TParsed, TOut>(IStream<String>, String, XmlNodeDefinition<TParsed>, Func<String, TParsed, TOut>, IDictionary<String, String>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.XmlFile.Extensions.XmlFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{Stream},System.String,XmlNodeDefinition{``0},System.Func{``0,``1},System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TParsed, TOut>(IStream<Stream>, System.String, XmlNodeDefinition<TParsed>, System.Func<TParsed, TOut>, System.Collections.Generic.IDictionary<System.String, System.String>, System.Boolean)",
+        "title": "XmlFileEx.CrossApplyXmlFile<TParsed, TOut>(IStream<Stream>, String, XmlNodeDefinition<TParsed>, Func<TParsed, TOut>, IDictionary<String, String>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.XmlFile.Extensions.XmlFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream{System.String},System.String,XmlFileDefinition,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream<System.String>, System.String, XmlFileDefinition, System.Boolean)",
+        "title": "XmlFileEx.CrossApplyXmlFile(IStream<String>, String, XmlFileDefinition, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.XmlFile.Extensions.XmlFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream{LocalFilesValue},System.String,XmlFileDefinition,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream<LocalFilesValue>, System.String, XmlFileDefinition, System.Boolean)",
+        "title": "XmlFileEx.CrossApplyXmlFile(IStream<LocalFilesValue>, String, XmlFileDefinition, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.XmlFile.Extensions.XmlFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream{Stream},System.String,XmlFileDefinition,System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile(IStream<Stream>, System.String, XmlFileDefinition, System.Boolean)",
+        "title": "XmlFileEx.CrossApplyXmlFile(IStream<Stream>, String, XmlFileDefinition, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.XmlFile.Extensions.XmlFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{``0},System.String,XmlFileDefinition,System.Func{``0,System.String},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TIn>(IStream<TIn>, System.String, XmlFileDefinition, System.Func<TIn, System.String>, System.Boolean)",
+        "title": "XmlFileEx.CrossApplyXmlFile<TIn>(IStream<TIn>, String, XmlFileDefinition, Func<TIn, String>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.XmlFile.Extensions.XmlFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``2(IStream{``0},System.String,XmlFileDefinition,System.Func{``0,System.String},System.Func{``0,XmlNodeParsed,``1},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TIn, TOut>(IStream<TIn>, System.String, XmlFileDefinition, System.Func<TIn, System.String>, System.Func<TIn, XmlNodeParsed, TOut>, System.Boolean)",
+        "title": "XmlFileEx.CrossApplyXmlFile<TIn, TOut>(IStream<TIn>, String, XmlFileDefinition, Func<TIn, String>, Func<TIn, XmlNodeParsed, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.XmlFile.Extensions.XmlFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{System.String},System.String,XmlFileDefinition,System.Func{System.String,XmlNodeParsed,``0},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TOut>(IStream<System.String>, System.String, XmlFileDefinition, System.Func<System.String, XmlNodeParsed, TOut>, System.Boolean)",
+        "title": "XmlFileEx.CrossApplyXmlFile<TOut>(IStream<String>, String, XmlFileDefinition, Func<String, XmlNodeParsed, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.XmlFile.Extensions.XmlFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile``1(IStream{Stream},System.String,XmlFileDefinition,System.Func{XmlNodeParsed,``0},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.XmlFile.Extensions.XmlFileEx.CrossApplyXmlFile<TOut>(IStream<Stream>, System.String, XmlFileDefinition, System.Func<XmlNodeParsed, TOut>, System.Boolean)",
+        "title": "XmlFileEx.CrossApplyXmlFile<TOut>(IStream<Stream>, String, XmlFileDefinition, Func<XmlNodeParsed, TOut>, Boolean)",
+        "sourceFile": "apiext\\Paillave.Etl.XmlFile.Extensions.XmlFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.XmlFile.Extensions",
+        "type": "Reference.Managed",
+        "memberType": "Namespace",
+        "name": "Paillave.Etl.XmlFile.Extensions",
+        "title": "Paillave.Etl.XmlFile.Extensions",
+        "sourceFile": "apiext\\Paillave.Etl.XmlFile.Extensions.yml",
+        "detailedType": 2
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.AggregateEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.AggregateEx",
+        "title": "AggregateEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.AggregateEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.AggregateEx.Aggregate``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{``0,``2},System.Func{``1,``0,``1})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.AggregateEx.Aggregate<TIn, TAggr, TKey>(IStream<TIn>, System.String, System.Func<TIn, TAggr>, System.Func<TIn, TKey>, System.Func<TAggr, TIn, TAggr>)",
+        "title": "AggregateEx.Aggregate<TIn, TAggr, TKey>(IStream<TIn>, String, Func<TIn, TAggr>, Func<TIn, TKey>, Func<TAggr, TIn, TAggr>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.AggregateEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.AggregateEx.Aggregate``3(ISortedStream{``0,``2},System.String,System.Func{``0,``1},System.Func{``1,``0,``1})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.AggregateEx.Aggregate<TIn, TAggr, TKey>(ISortedStream<TIn, TKey>, System.String, System.Func<TIn, TAggr>, System.Func<TAggr, TIn, TAggr>)",
+        "title": "AggregateEx.Aggregate<TIn, TAggr, TKey>(ISortedStream<TIn, TKey>, String, Func<TIn, TAggr>, Func<TAggr, TIn, TAggr>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.AggregateEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.CrossApplyEnumerableEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.CrossApplyEnumerableEx",
+        "title": "CrossApplyEnumerableEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.CrossApplyEnumerableEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.CrossApplyEnumerableEx.CrossApplyEnumerable``2(IStream{``0},System.String,System.Func{``0,System.Collections.Generic.IEnumerable{``1}},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.CrossApplyEnumerableEx.CrossApplyEnumerable<TIn, TOut>(IStream<TIn>, System.String, System.Func<TIn, System.Collections.Generic.IEnumerable<TOut>>, System.Boolean)",
+        "title": "CrossApplyEnumerableEx.CrossApplyEnumerable<TIn, TOut>(IStream<TIn>, String, Func<TIn, IEnumerable<TOut>>, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.CrossApplyEnumerableEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.CrossApplyEnumerableEx.CrossApplyEnumerable``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Collections.Generic.IEnumerable{``2}},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.CrossApplyEnumerableEx.CrossApplyEnumerable<TIn1, TIn2, TOut>(IStream<TIn1>, System.String, ISingleStream<TIn2>, System.Func<TIn1, TIn2, System.Collections.Generic.IEnumerable<TOut>>, System.Boolean)",
+        "title": "CrossApplyEnumerableEx.CrossApplyEnumerable<TIn1, TIn2, TOut>(IStream<TIn1>, String, ISingleStream<TIn2>, Func<TIn1, TIn2, IEnumerable<TOut>>, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.CrossApplyEnumerableEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.DistinctEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.DistinctEx",
+        "title": "DistinctEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.DistinctEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.DistinctEx.Distinct``2(IStream{``0},System.String,System.Func{``0,``1})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.DistinctEx.Distinct<TIn, TKey>(IStream<TIn>, System.String, System.Func<TIn, TKey>)",
+        "title": "DistinctEx.Distinct<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.DistinctEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.DistinctEx.Distinct``2(ISortedStream{``0,``1},System.String)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.DistinctEx.Distinct<TIn, TKey>(ISortedStream<TIn, TKey>, System.String)",
+        "title": "DistinctEx.Distinct<TIn, TKey>(ISortedStream<TIn, TKey>, String)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.DistinctEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.EnsureKeyedEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.EnsureKeyedEx",
+        "title": "EnsureKeyedEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.EnsureKeyedEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.EnsureKeyedEx.EnsureKeyed``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.EnsureKeyedEx.EnsureKeyed<TIn, TKey>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Object)",
+        "title": "EnsureKeyedEx.EnsureKeyed<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.EnsureKeyedEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.EnsureKeyedEx.EnsureKeyed``2(IStream{``0},System.String,SortDefinition{``0,``1})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.EnsureKeyedEx.EnsureKeyed<TIn, TKey>(IStream<TIn>, System.String, SortDefinition<TIn, TKey>)",
+        "title": "EnsureKeyedEx.EnsureKeyed<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.EnsureKeyedEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.EnsureSingleEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.EnsureSingleEx",
+        "title": "EnsureSingleEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.EnsureSingleEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.EnsureSingleEx.EnsureSingle``1(IStream{``0},System.String,System.Object)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.EnsureSingleEx.EnsureSingle<TIn>(IStream<TIn>, System.String, System.Object)",
+        "title": "EnsureSingleEx.EnsureSingle<TIn>(IStream<TIn>, String, Object)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.EnsureSingleEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.EnsureSortedEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.EnsureSortedEx",
+        "title": "EnsureSortedEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.EnsureSortedEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.EnsureSortedEx.EnsureSorted``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.EnsureSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Object)",
+        "title": "EnsureSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.EnsureSortedEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.EnsureSortedEx.EnsureSorted``2(IStream{``0},System.String,SortDefinition{``0,``1})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.EnsureSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, System.String, SortDefinition<TIn, TKey>)",
+        "title": "EnsureSortedEx.EnsureSorted<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.EnsureSortedEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.FirstEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.FirstEx",
+        "title": "FirstEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.FirstEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.FirstEx.First``1(IStream{``0},System.String)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.FirstEx.First<TIn>(IStream<TIn>, System.String)",
+        "title": "FirstEx.First<TIn>(IStream<TIn>, String)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.FirstEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.GetStreamStatisticsEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.GetStreamStatisticsEx",
+        "title": "GetStreamStatisticsEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.GetStreamStatisticsEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.GetStreamStatisticsEx.GetStreamStatisticsAsync(IStream{TraceEvent})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.GetStreamStatisticsEx.GetStreamStatisticsAsync(IStream<TraceEvent>)",
+        "title": "GetStreamStatisticsEx.GetStreamStatisticsAsync(IStream<TraceEvent>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.GetStreamStatisticsEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.GroupByEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.GroupByEx",
+        "title": "GroupByEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.GroupByEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.GroupByEx.GroupBy``3(IStream{``0},System.String,System.Func{``0,``1},System.Func{IStream{``0},IStream{``2}})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.GroupByEx.GroupBy<TIn, TKey, TOut>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Func<IStream<TIn>, IStream<TOut>>)",
+        "title": "GroupByEx.GroupBy<TIn, TKey, TOut>(IStream<TIn>, String, Func<TIn, TKey>, Func<IStream<TIn>, IStream<TOut>>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.GroupByEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.LastEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.LastEx",
+        "title": "LastEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.LastEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.LastEx.Last``1(IStream{``0},System.String)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.LastEx.Last<TIn>(IStream<TIn>, System.String)",
+        "title": "LastEx.Last<TIn>(IStream<TIn>, String)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.LastEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.LeftJoinEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.LeftJoinEx",
+        "title": "LeftJoinEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.LeftJoinEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.LeftJoinEx.LeftJoin``4(ISortedStream{``0,``3},System.String,IKeyedStream{``1,``3},System.Func{``0,``1,``2})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.LeftJoinEx.LeftJoin<TInLeft, TInRight, TOut, TKey>(ISortedStream<TInLeft, TKey>, System.String, IKeyedStream<TInRight, TKey>, System.Func<TInLeft, TInRight, TOut>)",
+        "title": "LeftJoinEx.LeftJoin<TInLeft, TInRight, TOut, TKey>(ISortedStream<TInLeft, TKey>, String, IKeyedStream<TInRight, TKey>, Func<TInLeft, TInRight, TOut>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.LeftJoinEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.LookupEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.LookupEx",
+        "title": "LookupEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.LookupEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.LookupEx.Lookup``4(IStream{``0},System.String,IStream{``1},System.Func{``0,``3},System.Func{``1,``3},System.Func{``0,``1,``2})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.LookupEx.Lookup<TInLeft, TInRight, TOut, TKey>(IStream<TInLeft>, System.String, IStream<TInRight>, System.Func<TInLeft, TKey>, System.Func<TInRight, TKey>, System.Func<TInLeft, TInRight, TOut>)",
+        "title": "LookupEx.Lookup<TInLeft, TInRight, TOut, TKey>(IStream<TInLeft>, String, IStream<TInRight>, Func<TInLeft, TKey>, Func<TInRight, TKey>, Func<TInLeft, TInRight, TOut>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.LookupEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.PivotEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.PivotEx",
+        "title": "PivotEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.PivotEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.PivotEx.Pivot``3(IStream{``0},System.String,System.Func{``0,``2},Expression{System.Func{``0,``1}})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.PivotEx.Pivot<TIn, TAggr, TKey>(IStream<TIn>, System.String, System.Func<TIn, TKey>, Expression<System.Func<TIn, TAggr>>)",
+        "title": "PivotEx.Pivot<TIn, TAggr, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Expression<Func<TIn, TAggr>>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.PivotEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.PivotEx.Pivot``3(ISortedStream{``0,``2},System.String,Expression{System.Func{``0,``1}})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.PivotEx.Pivot<TIn, TAggr, TKey>(ISortedStream<TIn, TKey>, System.String, Expression<System.Func<TIn, TAggr>>)",
+        "title": "PivotEx.Pivot<TIn, TAggr, TKey>(ISortedStream<TIn, TKey>, String, Expression<Func<TIn, TAggr>>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.PivotEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SkipEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.SkipEx",
+        "title": "SkipEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SkipEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SkipEx.Skip``2(ISortedStream{``0,``1},System.String,System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SkipEx.Skip<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, System.Int32)",
+        "title": "SkipEx.Skip<TIn, TKey>(ISortedStream<TIn, TKey>, String, Int32)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SkipEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SkipEx.Skip``2(IKeyedStream{``0,``1},System.String,System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SkipEx.Skip<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, System.Int32)",
+        "title": "SkipEx.Skip<TIn, TKey>(IKeyedStream<TIn, TKey>, String, Int32)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SkipEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SkipEx.Skip``1(IStream{``0},System.String,System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SkipEx.Skip<TIn>(IStream<TIn>, System.String, System.Int32)",
+        "title": "SkipEx.Skip<TIn>(IStream<TIn>, String, Int32)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SkipEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SortEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.SortEx",
+        "title": "SortEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SortEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SortEx.Sort``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SortEx.Sort<TIn, TKey>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Object)",
+        "title": "SortEx.Sort<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SortEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SortEx.Sort``2(IStream{``0},System.String,SortDefinition{``0,``1})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SortEx.Sort<TIn, TKey>(IStream<TIn>, System.String, SortDefinition<TIn, TKey>)",
+        "title": "SortEx.Sort<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SortEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SubProcessEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.SubProcessEx",
+        "title": "SubProcessEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SubProcessEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.SubProcessEx.SubProcess``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}},System.Boolean)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.SubProcessEx.SubProcess<TIn, TOut>(IStream<TIn>, System.String, System.Func<ISingleStream<TIn>, IStream<TOut>>, System.Boolean)",
+        "title": "SubProcessEx.SubProcess<TIn, TOut>(IStream<TIn>, String, Func<ISingleStream<TIn>, IStream<TOut>>, Boolean)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.SubProcessEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughLocalFileEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.ThroughLocalFileEx",
+        "title": "ThroughLocalFileEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughLocalFileEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile(IStream{System.IO.Stream},System.String,IStream{System.String})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile(IStream<System.IO.Stream>, System.String, IStream<System.String>)",
+        "title": "ThroughLocalFileEx.ThroughLocalFile(IStream<Stream>, String, IStream<String>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughLocalFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile``1(IStream{System.IO.Stream},System.String,IStream{``0},System.Func{``0,System.String})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.ThroughLocalFileEx.ThroughLocalFile<TParam>(IStream<System.IO.Stream>, System.String, IStream<TParam>, System.Func<TParam, System.String>)",
+        "title": "ThroughLocalFileEx.ThroughLocalFile<TParam>(IStream<Stream>, String, IStream<TParam>, Func<TParam, String>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.ThroughLocalFileEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.TopEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.TopEx",
+        "title": "TopEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.TopEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.TopEx.Top``2(ISortedStream{``0,``1},System.String,System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.TopEx.Top<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, System.Int32)",
+        "title": "TopEx.Top<TIn, TKey>(ISortedStream<TIn, TKey>, String, Int32)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.TopEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.TopEx.Top``2(IKeyedStream{``0,``1},System.String,System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.TopEx.Top<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, System.Int32)",
+        "title": "TopEx.Top<TIn, TKey>(IKeyedStream<TIn, TKey>, String, Int32)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.TopEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.TopEx.Top``1(IStream{``0},System.String,System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.TopEx.Top<TIn>(IStream<TIn>, System.String, System.Int32)",
+        "title": "TopEx.Top<TIn>(IStream<TIn>, String, Int32)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.TopEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.UnionAllEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.UnionAllEx",
+        "title": "UnionAllEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.UnionAllEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.UnionAllEx.UnionAll``1(IStream{``0},System.String,IStream{``0})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.UnionAllEx.UnionAll<I>(IStream<I>, System.String, IStream<I>)",
+        "title": "UnionAllEx.UnionAll<I>(IStream<I>, String, IStream<I>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.UnionAllEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.UnionAllEx.UnionAll``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}}[])",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.UnionAllEx.UnionAll<TIn, TOut>(IStream<TIn>, System.String, System.Func<ISingleStream<TIn>, IStream<TOut>>[])",
+        "title": "UnionAllEx.UnionAll<TIn, TOut>(IStream<TIn>, String, Func<ISingleStream<TIn>, IStream<TOut>>[])",
+        "sourceFile": "api\\Paillave.Etl.Extensions.UnionAllEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.UnionEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.UnionEx",
+        "title": "UnionEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.UnionEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.UnionEx.Union``1(IStream{``0},System.String,IStream{``0})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.UnionEx.Union<I>(IStream<I>, System.String, IStream<I>)",
+        "title": "UnionEx.Union<I>(IStream<I>, String, IStream<I>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.UnionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.UnionEx.Union``2(IStream{``0},System.String,System.Func{ISingleStream{``0},IStream{``1}}[])",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.UnionEx.Union<TIn, TOut>(IStream<TIn>, System.String, System.Func<ISingleStream<TIn>, IStream<TOut>>[])",
+        "title": "UnionEx.Union<TIn, TOut>(IStream<TIn>, String, Func<ISingleStream<TIn>, IStream<TOut>>[])",
+        "sourceFile": "api\\Paillave.Etl.Extensions.UnionEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.UnpivotEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.UnpivotEx",
+        "title": "UnpivotEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.UnpivotEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,FieldsToUnpivot{``0,``1},System.Func{``0,``1,``2})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, System.String, FieldsToUnpivot<TIn, TUnpivoted>, System.Func<TIn, TUnpivoted, TOut>)",
+        "title": "UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, String, FieldsToUnpivot<TIn, TUnpivoted>, Func<TIn, TUnpivoted, TOut>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.UnpivotEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.UnpivotEx.Unpivot``3(IStream{``0},System.String,FieldsToUnpivot{``0,``2})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, System.String, FieldsToUnpivot<TIn, TOut>)",
+        "title": "UnpivotEx.Unpivot<TIn, TUnpivoted, TOut>(IStream<TIn>, String, FieldsToUnpivot<TIn, TOut>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.UnpivotEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.WhereEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.WhereEx",
+        "title": "WhereEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.WhereEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.WhereEx.Where``2(IKeyedStream{``0,``1},System.String,System.Func{``0,System.Boolean})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.WhereEx.Where<TIn, TKey>(IKeyedStream<TIn, TKey>, System.String, System.Func<TIn, System.Boolean>)",
+        "title": "WhereEx.Where<TIn, TKey>(IKeyedStream<TIn, TKey>, String, Func<TIn, Boolean>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.WhereEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.WhereEx.Where``2(ISortedStream{``0,``1},System.String,System.Func{``0,System.Boolean})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.WhereEx.Where<TIn, TKey>(ISortedStream<TIn, TKey>, System.String, System.Func<TIn, System.Boolean>)",
+        "title": "WhereEx.Where<TIn, TKey>(ISortedStream<TIn, TKey>, String, Func<TIn, Boolean>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.WhereEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.WhereEx.Where``1(IStream{``0},System.String,System.Func{``0,System.Boolean})",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.WhereEx.Where<TIn>(IStream<TIn>, System.String, System.Func<TIn, System.Boolean>)",
+        "title": "WhereEx.Where<TIn>(IStream<TIn>, String, Func<TIn, Boolean>)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.WhereEx.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes.ContextSelectProcessor`3",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.StreamNodes.ContextSelectProcessor<TIn, TOut, TCtx>",
+        "title": "ContextSelectProcessor<TIn, TOut, TCtx>",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.ContextSelectProcessor-3.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes.ContextSelectProcessor`3.#ctor(System.Func{`0,`2,System.Action{`2},`1},`2)",
+        "type": "Reference.Managed",
+        "memberType": "Constructor",
+        "name": "Paillave.Etl.StreamNodes.ContextSelectProcessor<TIn, TOut, TCtx>.ContextSelectProcessor(System.Func<TIn, TCtx, System.Action<TCtx>, TOut>, TCtx)",
+        "title": "ContextSelectProcessor<TIn, TOut, TCtx>.ContextSelectProcessor(Func<TIn, TCtx, Action<TCtx>, TOut>, TCtx)",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.ContextSelectProcessor-3.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes.ContextSelectProcessor`3.ProcessRow(`0)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.StreamNodes.ContextSelectProcessor<TIn, TOut, TCtx>.ProcessRow(TIn)",
+        "title": "ContextSelectProcessor<TIn, TOut, TCtx>.ProcessRow(TIn)",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.ContextSelectProcessor-3.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes.ContextSelectWithIndexProcessor`3",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.StreamNodes.ContextSelectWithIndexProcessor<TIn, TOut, TCtx>",
+        "title": "ContextSelectWithIndexProcessor<TIn, TOut, TCtx>",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.ContextSelectWithIndexProcessor-3.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes.ContextSelectWithIndexProcessor`3.#ctor(System.Func{`0,System.Int32,`2,System.Action{`2},`1},`2)",
+        "type": "Reference.Managed",
+        "memberType": "Constructor",
+        "name": "Paillave.Etl.StreamNodes.ContextSelectWithIndexProcessor<TIn, TOut, TCtx>.ContextSelectWithIndexProcessor(System.Func<TIn, System.Int32, TCtx, System.Action<TCtx>, TOut>, TCtx)",
+        "title": "ContextSelectWithIndexProcessor<TIn, TOut, TCtx>.ContextSelectWithIndexProcessor(Func<TIn, Int32, TCtx, Action<TCtx>, TOut>, TCtx)",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.ContextSelectWithIndexProcessor-3.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes.ContextSelectWithIndexProcessor`3.ProcessRow(`0,System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.StreamNodes.ContextSelectWithIndexProcessor<TIn, TOut, TCtx>.ProcessRow(TIn, System.Int32)",
+        "title": "ContextSelectWithIndexProcessor<TIn, TOut, TCtx>.ProcessRow(TIn, Int32)",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.ContextSelectWithIndexProcessor-3.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes.ISelectProcessor`2",
+        "type": "Reference.Managed",
+        "memberType": "Interface",
+        "name": "Paillave.Etl.StreamNodes.ISelectProcessor<TIn, TOut>",
+        "title": "ISelectProcessor<TIn, TOut>",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.ISelectProcessor-2.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes.ISelectProcessor`2.ProcessRow(`0)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.StreamNodes.ISelectProcessor<TIn, TOut>.ProcessRow(TIn)",
+        "title": "ISelectProcessor<TIn, TOut>.ProcessRow(TIn)",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.ISelectProcessor-2.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2",
+        "type": "Reference.Managed",
+        "memberType": "Interface",
+        "name": "Paillave.Etl.StreamNodes.ISelectWithIndexProcessor<TIn, TOut>",
+        "title": "ISelectWithIndexProcessor<TIn, TOut>",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.ISelectWithIndexProcessor-2.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes.ISelectWithIndexProcessor`2.ProcessRow(`0,System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.StreamNodes.ISelectWithIndexProcessor<TIn, TOut>.ProcessRow(TIn, System.Int32)",
+        "title": "ISelectWithIndexProcessor<TIn, TOut>.ProcessRow(TIn, Int32)",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.ISelectWithIndexProcessor-2.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes.SimpleSelectProcessor`2",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.StreamNodes.SimpleSelectProcessor<TIn, TOut>",
+        "title": "SimpleSelectProcessor<TIn, TOut>",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.SimpleSelectProcessor-2.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes.SimpleSelectProcessor`2.#ctor(System.Func{`0,`1})",
+        "type": "Reference.Managed",
+        "memberType": "Constructor",
+        "name": "Paillave.Etl.StreamNodes.SimpleSelectProcessor<TIn, TOut>.SimpleSelectProcessor(System.Func<TIn, TOut>)",
+        "title": "SimpleSelectProcessor<TIn, TOut>.SimpleSelectProcessor(Func<TIn, TOut>)",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.SimpleSelectProcessor-2.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes.SimpleSelectProcessor`2.ProcessRow(`0)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.StreamNodes.SimpleSelectProcessor<TIn, TOut>.ProcessRow(TIn)",
+        "title": "SimpleSelectProcessor<TIn, TOut>.ProcessRow(TIn)",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.SimpleSelectProcessor-2.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor<TIn, TOut>",
+        "title": "SimpleSelectWithIndexProcessor<TIn, TOut>",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor-2.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2.#ctor(System.Func{`0,System.Int32,`1})",
+        "type": "Reference.Managed",
+        "memberType": "Constructor",
+        "name": "Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor<TIn, TOut>.SimpleSelectWithIndexProcessor(System.Func<TIn, System.Int32, TOut>)",
+        "title": "SimpleSelectWithIndexProcessor<TIn, TOut>.SimpleSelectWithIndexProcessor(Func<TIn, Int32, TOut>)",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor-2.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor`2.ProcessRow(`0,System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor<TIn, TOut>.ProcessRow(TIn, System.Int32)",
+        "title": "SimpleSelectWithIndexProcessor<TIn, TOut>.ProcessRow(TIn, Int32)",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.SimpleSelectWithIndexProcessor-2.yml",
+        "detailedType": 5
+    },
+    {
+        "uid": "Paillave.Etl.StreamNodes",
+        "type": "Reference.Managed",
+        "memberType": "Namespace",
+        "name": "Paillave.Etl.StreamNodes",
+        "title": "Paillave.Etl.StreamNodes",
+        "sourceFile": "api\\Paillave.Etl.StreamNodes.yml",
+        "detailedType": 2
+    },
+    {
+        "uid": "Paillave.Etl.Extensions",
+        "type": "Reference.Managed",
+        "memberType": "Namespace",
+        "name": "Paillave.Etl.Extensions",
+        "title": "Paillave.Etl.Extensions",
+        "sourceFile": "api\\Paillave.Etl.Extensions.yml",
+        "detailedType": 2
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.KeepLastTracesPerNodeEx",
+        "type": "Reference.Managed",
+        "memberType": "Class",
+        "name": "Paillave.Etl.Extensions.KeepLastTracesPerNodeEx",
+        "title": "KeepLastTracesPerNodeEx",
+        "sourceFile": "api\\Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.yml",
+        "detailedType": 3
+    },
+    {
+        "uid": "Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream{TraceEvent},System.Int32)",
+        "type": "Reference.Managed",
+        "memberType": "Method",
+        "name": "Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream<TraceEvent>, System.Int32)",
+        "title": "KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream<TraceEvent>, Int32)",
+        "sourceFile": "api\\Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.yml",
+        "detailedType": 5
+    }
+]

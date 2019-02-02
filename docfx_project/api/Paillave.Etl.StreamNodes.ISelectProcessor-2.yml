@@ -16,7 +16,7 @@ items:
   source:
     id: ISelectProcessor
     path: ''
-    startLine: 1632
+    startLine: 1667
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.StreamNodes
@@ -53,7 +53,7 @@ items:
   source:
     id: ProcessRow
     path: ''
-    startLine: 1639
+    startLine: 1674
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.StreamNodes

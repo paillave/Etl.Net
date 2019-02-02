@@ -660,6 +660,28 @@ references:
   fullName.vb: Paillave.Etl.Extensions.GroupByEx.GroupBy(Of TIn, TKey, TOut)(IStream(Of TIn), System.String, System.Func(Of TIn, TKey), System.Func(Of IStream(Of TIn), IStream(Of TOut)))
   nameWithType: GroupByEx.GroupBy<TIn, TKey, TOut>(IStream<TIn>, String, Func<TIn, TKey>, Func<IStream<TIn>, IStream<TOut>>)
   nameWithType.vb: GroupByEx.GroupBy(Of TIn, TKey, TOut)(IStream(Of TIn), String, Func(Of TIn, TKey), Func(Of IStream(Of TIn), IStream(Of TOut)))
+- uid: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx
+  name: KeepLastTracesPerNodeEx
+  href: api/Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.html
+  commentId: T:Paillave.Etl.Extensions.KeepLastTracesPerNodeEx
+  fullName: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx
+  nameWithType: KeepLastTracesPerNodeEx
+- uid: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream{TraceEvent},System.Int32)
+  name: KeepLastTracesPerNode(IStream<TraceEvent>, Int32)
+  href: api/Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.html#Paillave_Etl_Extensions_KeepLastTracesPerNodeEx_KeepLastTracesPerNode_IStream_TraceEvent__System_Int32_
+  commentId: M:Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream{TraceEvent},System.Int32)
+  name.vb: KeepLastTracesPerNode(IStream(Of TraceEvent), Int32)
+  fullName: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream<TraceEvent>, System.Int32)
+  fullName.vb: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream(Of TraceEvent), System.Int32)
+  nameWithType: KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream<TraceEvent>, Int32)
+  nameWithType.vb: KeepLastTracesPerNodeEx.KeepLastTracesPerNode(IStream(Of TraceEvent), Int32)
+- uid: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode*
+  name: KeepLastTracesPerNode
+  href: api/Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.html#Paillave_Etl_Extensions_KeepLastTracesPerNodeEx_KeepLastTracesPerNode_
+  commentId: Overload:Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode
+  isSpec: "True"
+  fullName: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx.KeepLastTracesPerNode
+  nameWithType: KeepLastTracesPerNodeEx.KeepLastTracesPerNode
 - uid: Paillave.Etl.Extensions.LastEx
   name: LastEx
   href: api/Paillave.Etl.Extensions.LastEx.html
