@@ -12,6 +12,24 @@
       "problemMatcher": "$msCompile",
       "options": {
         "cwd": "${workspaceFolder}/src"
+      },
+      "group": "build"
+    },
+    {
+      "label": "build apps",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "FundProcess.Pms.Imports.sln"
+      ],
+      "problemMatcher": "$msCompile",
+      "options": {
+        "cwd": "${workspaceFolder}/src/FundProcess.Pms.Imports"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
       }
     },
     {
@@ -25,6 +43,19 @@
       "problemMatcher": "$msCompile",
       "options": {
         "cwd": "${workspaceFolder}/src"
+      }
+    },
+    {
+      "label": "clean apps",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "clean",
+        "FundProcess.Pms.Imports.sln"
+      ],
+      "problemMatcher": "$msCompile",
+      "options": {
+        "cwd": "${workspaceFolder}/src/FundProcess.Pms.Imports"
       }
     },
     {

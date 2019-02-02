@@ -331,3 +331,5 @@ ASALocalRun/
 
 # big files
 *.big.*
+
+/src/FundProcess.Pms.Imports
