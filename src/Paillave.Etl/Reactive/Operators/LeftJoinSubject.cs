@@ -12,6 +12,7 @@ namespace Paillave.Etl.Reactive.Operators
     {
         private IDisposable _leftSubscription;
         private IDisposable _rightSubscription;
+        private object _sync = new object();
 
         private class Side<T>
         {
@@ -23,32 +24,41 @@ namespace Paillave.Etl.Reactive.Operators
             public void Enqueue(T element) => _queue.Enqueue(element);
         }
 
-        public LeftJoinSubject(IPushObservable<TInLeft> leftS, IPushObservable<TInRight> rightS, IComparer<TInLeft, TInRight> comparer, Func<TInLeft, TInRight, TOut> selector)
+        private void TryUnstackQueues(Side<TInLeft> lSide, Side<TInRight> rSide, LeftJoinParams<TInLeft, TInRight, TOut> leftJoinParams)
         {
-            var leftSide = new Side<TInLeft>();
-            var rightSide = new Side<TInRight>();
-
-            object gate = new object();
-
-            Action TryUnstackQueues = () =>
+            bool somethingChanged;
+            do
             {
-                bool somethingChanged;
-                do
+                somethingChanged = false;
+                while (!rSide.IsEmpty && !lSide.IsEmpty && leftJoinParams.comparer.Compare(lSide.CurrentValue, rSide.CurrentValue) > 0)
                 {
-                    somethingChanged = false;
-                    while (!rightSide.IsEmpty && !leftSide.IsEmpty && comparer.Compare(leftSide.CurrentValue, rightSide.CurrentValue) > 0)
-                    {
-                        rightSide.Dequeue();
-                        somethingChanged = true;
-                    }
+                    rSide.Dequeue();
+                    somethingChanged = true;
+                }
 
-                    int comparison;
-                    while (!leftSide.IsEmpty && !rightSide.IsEmpty && (comparison = comparer.Compare(leftSide.CurrentValue, rightSide.CurrentValue)) <= 0)
+                int comparison;
+                while (!lSide.IsEmpty && !rSide.IsEmpty && (comparison = leftJoinParams.comparer.Compare(lSide.CurrentValue, rSide.CurrentValue)) <= 0)
+                {
+                    TOut ret;
+                    try
+                    {
+                        ret = leftJoinParams.selector(lSide.Dequeue(), comparison == 0 ? rSide.CurrentValue : default(TInRight));
+                        this.PushValue(ret);
+                    }
+                    catch (Exception ex)
+                    {
+                        PushException(ex);
+                    }
+                    somethingChanged = true;
+                }
+
+                if (rSide.IsEmpty && rSide.IsComplete)
+                    while (!lSide.IsEmpty)
                     {
                         TOut ret;
                         try
                         {
-                            ret = selector(leftSide.Dequeue(), comparison == 0 ? rightSide.CurrentValue : default(TInRight));
+                            ret = leftJoinParams.selector(lSide.Dequeue(), default(TInRight));
                             this.PushValue(ret);
                         }
                         catch (Exception ex)
@@ -57,59 +67,48 @@ namespace Paillave.Etl.Reactive.Operators
                         }
                         somethingChanged = true;
                     }
+            } while (somethingChanged);
+            if (lSide.IsComplete && (lSide.IsEmpty || rSide.IsComplete)) this.Complete();
+        }
 
-                    if (rightSide.IsEmpty && rightSide.IsComplete)
-                        while (!leftSide.IsEmpty)
-                        {
-                            TOut ret;
-                            try
-                            {
-                                ret = selector(leftSide.Dequeue(), default(TInRight));
-                                this.PushValue(ret);
-                            }
-                            catch (Exception ex)
-                            {
-                                PushException(ex);
-                            }
-                            somethingChanged = true;
-                        }
-                } while (somethingChanged);
-                if (leftSide.IsComplete && (leftSide.IsEmpty || rightSide.IsComplete)) this.Complete();
-            };
+        public LeftJoinSubject(IPushObservable<TInLeft> leftS, IPushObservable<TInRight> rightS, LeftJoinParams<TInLeft, TInRight, TOut> leftJoinParams)
+        {
+            var leftSide = new Side<TInLeft>();
+            var rightSide = new Side<TInRight>();
 
             _leftSubscription = leftS.Subscribe(
                     (leftValue) =>
                     {
-                        lock (gate)
+                        lock (_sync)
                         {
                             leftSide.Enqueue(leftValue);
-                            TryUnstackQueues();
+                            TryUnstackQueues(leftSide, rightSide, leftJoinParams);
                         }
                     },
                     () =>
                     {
-                        lock (gate)
+                        lock (_sync)
                         {
                             leftSide.IsComplete = true;
-                            TryUnstackQueues();
+                            TryUnstackQueues(leftSide, rightSide, leftJoinParams);
                         }
                     }
                 );
             _rightSubscription = rightS.Subscribe(
                     (rightValue) =>
                     {
-                        lock (gate)
+                        lock (_sync)
                         {
                             rightSide.Enqueue(rightValue);
-                            TryUnstackQueues();
+                            TryUnstackQueues(leftSide, rightSide, leftJoinParams);
                         }
                     },
                     () =>
                     {
-                        lock (gate)
+                        lock (_sync)
                         {
                             rightSide.IsComplete = true;
-                            TryUnstackQueues();
+                            TryUnstackQueues(leftSide, rightSide, leftJoinParams);
                         }
                     }
                 );
@@ -122,23 +121,30 @@ namespace Paillave.Etl.Reactive.Operators
             _rightSubscription.Dispose();
         }
     }
-
+    public class LeftJoinParams<TInLeft, TInRight, TOut>
+    {
+        public IComparer<TInLeft, TInRight> comparer { get; set; }
+        public Func<TInLeft, TInRight, TOut> selector { get; set; }
+    }
     public static partial class ObservableExtensions
     {
         public static IPushObservable<TOut> LeftJoin<TInLeft, TInRight, TOut>(this IPushObservable<TInLeft> observable, IPushObservable<TInRight> rightS, IComparer<TInLeft, TInRight> comparer, Func<TInLeft, TInRight, TOut> selector)
         {
-            return new LeftJoinSubject<TInLeft, TInRight, TOut>(observable, rightS, comparer, selector);
+            return new LeftJoinSubject<TInLeft, TInRight, TOut>(observable, rightS, new LeftJoinParams<TInLeft, TInRight, TOut> { comparer = comparer, selector = selector });
         }
         public static IPushObservable<TOut> LeftJoin<TInLeft, TInRight, TOut, TKey>(this IPushObservable<TInLeft> observable, IPushObservable<TInRight> rightS, Func<TInLeft, TKey> leftKey, Func<TInRight, TKey> rightKey, object keyPositions, Func<TInLeft, TInRight, TOut> selector)
         {
             return new LeftJoinSubject<TInLeft, TInRight, TOut>(
                 observable,
                 rightS,
-                new SortDefinitionComparer<TInLeft, TInRight,TKey>(
-                    new SortDefinition<TInLeft, TKey>(leftKey, keyPositions),
-                    new SortDefinition<TInRight, TKey>(rightKey, keyPositions)
-                ),
-                selector);
+                new LeftJoinParams<TInLeft, TInRight, TOut>
+                {
+                    comparer = new SortDefinitionComparer<TInLeft, TInRight, TKey>(
+                        new SortDefinition<TInLeft, TKey>(leftKey, keyPositions),
+                        new SortDefinition<TInRight, TKey>(rightKey, keyPositions)
+                    ),
+                    selector = selector
+                });
         }
     }
 }
