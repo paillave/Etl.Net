@@ -17,7 +17,7 @@ namespace Paillave.EtlTests.Reactive.Operators
         public void QuickTest()
         {
             var left = PushObservable.FromEnumerable(new[] { 1, 2, 2, 3, 4, 4, 5, 6, 7 });
-            var right = PushObservable.FromEnumerable(new[] { 2, 5 });
+            var right = PushObservable.FromEnumerable(new[] { 2, 5, 5, 6 });
             left.Subscribe(i => System.Diagnostics.Debug.WriteLine($"left:{i}"));
             right.Subscribe(i => System.Diagnostics.Debug.WriteLine($"_____right:{i}"));
             var output = left.Substract(right, i => i, i => i);
@@ -27,7 +27,32 @@ namespace Paillave.EtlTests.Reactive.Operators
             left.Start();
             right.Start();
             task.Wait();
-            CollectionAssert.AreEquivalent(new[] { 1, 3, 4, 4, 6, 7 }, task.Result);
+            CollectionAssert.AreEquivalent(new[] { 1, 3, 4, 4, 7 }, task.Result);
+        }
+        [TestCategory(nameof(SubstractSubjectTests))]
+        [TestMethod]
+        public void QuickTest2()
+        {
+            var rnd = new Random();
+            var leftList = Enumerable.Range(0, 100).Select(i => rnd.Next(50)).OrderBy(i => i).ToList();
+            var rightList = Enumerable.Range(0, 100).Select(i => rnd.Next(50)).OrderBy(i => i).ToList();
+            var expected = leftList.Where(i => !rightList.Contains(i)).OrderBy(i => i).ToList();
+
+            var left = PushObservable.FromEnumerable(leftList);
+            var right = PushObservable.FromEnumerable(rightList);
+            // left.Subscribe(i => System.Diagnostics.Debug.WriteLine($"left:{i}"), () => System.Diagnostics.Debug.WriteLine($"left:complete"));
+            // right.Subscribe(i => System.Diagnostics.Debug.WriteLine($"_____right:{i}"), () => System.Diagnostics.Debug.WriteLine($"_____right:complete"));
+            var output = left.Substract(right, i => i, i => i);
+
+            var task = output.ToListAsync();
+
+            left.Start();
+            right.Start();
+            task.Wait();
+            // System.Diagnostics.Debug.WriteLine($"->left:{string.Join(",", leftList)}");
+            // System.Diagnostics.Debug.WriteLine($"->right:{string.Join(",", rightList)}");
+            // System.Diagnostics.Debug.WriteLine($"->expected:{string.Join(",", expected)}");
+            CollectionAssert.AreEquivalent(expected, task.Result);
         }
         [TestCategory(nameof(SubstractSubjectTests))]
         [TestMethod]
@@ -95,7 +120,7 @@ namespace Paillave.EtlTests.Reactive.Operators
             left.PushValue(2);
             CollectionAssert.AreEquivalent(new int[] { 1 }.ToList(), outputValues);
             left.PushValue(3); //<-
-            CollectionAssert.AreEquivalent(new int[] { 1, 3}.ToList(), outputValues);
+            CollectionAssert.AreEquivalent(new int[] { 1, 3 }.ToList(), outputValues);
             left.PushValue(4); //<-
             CollectionAssert.AreEquivalent(new int[] { 1, 3, 4 }.ToList(), outputValues);
             left.PushValue(4); //<-
@@ -103,13 +128,63 @@ namespace Paillave.EtlTests.Reactive.Operators
             left.PushValue(5); //<-
             CollectionAssert.AreEquivalent(new int[] { 1, 3, 4, 4 }.ToList(), outputValues);
             left.PushValue(6); //<-
-            CollectionAssert.AreEquivalent(new int[] { 1, 3, 4, 4, 6 }.ToList(), outputValues);
+            CollectionAssert.AreEquivalent(new int[] { 1, 3, 4, 4 }.ToList(), outputValues);
             left.PushValue(7); //<-
-            CollectionAssert.AreEquivalent(new int[] { 1, 3, 4, 4, 6, 7 }.ToList(), outputValues);
+            CollectionAssert.AreEquivalent(new int[] { 1, 3, 4, 4 }.ToList(), outputValues);
             left.Complete();
-            CollectionAssert.AreEquivalent(new int[] { 1, 3, 4, 4, 6, 7 }.ToList(), outputValues);
+            CollectionAssert.AreEquivalent(new int[] { 1, 3, 4, 4 }.ToList(), outputValues);
             ______right.Complete();
             CollectionAssert.AreEquivalent(new int[] { 1, 3, 4, 4, 6, 7 }.ToList(), outputValues);
+        }
+        [TestCategory(nameof(SubstractSubjectTests))]
+        [TestMethod]
+        public void SteppedTest4()
+        {
+            var left = new PushSubject<int>();
+            var ______right = new PushSubject<int>();
+            var outputValues = new List<int>();
+            left.Substract(______right, i => i, i => i).Subscribe(outputValues.Add);
+
+            left.PushValue(2);
+            CollectionAssert.AreEquivalent(new int[] { }.ToList(), outputValues);
+            ______right.PushValue(0);
+            CollectionAssert.AreEquivalent(new int[] { }.ToList(), outputValues);
+            left.PushValue(2);
+            CollectionAssert.AreEquivalent(new int[] { }.ToList(), outputValues);
+            ______right.PushValue(2);
+            CollectionAssert.AreEquivalent(new int[] { }.ToList(), outputValues);
+            left.PushValue(4);
+            CollectionAssert.AreEquivalent(new int[] { }.ToList(), outputValues);
+            left.PushValue(4);
+            CollectionAssert.AreEquivalent(new int[] { }.ToList(), outputValues);
+            ______right.PushValue(3);
+            CollectionAssert.AreEquivalent(new int[] { }.ToList(), outputValues);
+            left.PushValue(5);
+            CollectionAssert.AreEquivalent(new int[] { }.ToList(), outputValues);
+            ______right.PushValue(6);
+            CollectionAssert.AreEquivalent(new int[] { 4, 4, 5 }.ToList(), outputValues);
+            left.PushValue(5);
+            CollectionAssert.AreEquivalent(new int[] { 4, 4, 5, 5 }.ToList(), outputValues);
+            ______right.PushValue(6);
+            CollectionAssert.AreEquivalent(new int[] { 4, 4, 5, 5 }.ToList(), outputValues);
+            ______right.PushValue(7);
+            CollectionAssert.AreEquivalent(new int[] { 4, 4, 5, 5 }.ToList(), outputValues);
+            left.PushValue(8);
+            CollectionAssert.AreEquivalent(new int[] { 4, 4, 5, 5 }.ToList(), outputValues);
+            ______right.PushValue(7);
+            CollectionAssert.AreEquivalent(new int[] { 4, 4, 5, 5 }.ToList(), outputValues);
+            ______right.PushValue(8);
+            CollectionAssert.AreEquivalent(new int[] { 4, 4, 5, 5 }.ToList(), outputValues);
+            left.PushValue(9);
+            CollectionAssert.AreEquivalent(new int[] { 4, 4, 5, 5 }.ToList(), outputValues);
+            left.PushValue(9);
+            CollectionAssert.AreEquivalent(new int[] { 4, 4, 5, 5 }.ToList(), outputValues);
+            ______right.PushValue(9);
+            CollectionAssert.AreEquivalent(new int[] { 4, 4, 5, 5 }.ToList(), outputValues);
+            left.Complete();
+            CollectionAssert.AreEquivalent(new int[] { 4, 4, 5, 5 }.ToList(), outputValues);
+            ______right.Complete();
+            CollectionAssert.AreEquivalent(new int[] { 4, 4, 5, 5 }.ToList(), outputValues);
         }
     }
 }

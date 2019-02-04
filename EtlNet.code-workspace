@@ -36,6 +36,9 @@
 		],
 		"cSpell.words": [
 			"Unpivot"
-		]
+		],
+		"editor.acceptSuggestionOnCommitCharacter": false,
+		"editor.acceptSuggestionOnEnter": "off",
+		"editor.snippetSuggestions": "bottom"
 	}
 }
