@@ -26,28 +26,27 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
         private Dictionary<TKey, CachedEntity> _cachedEntities = new Dictionary<TKey, CachedEntity>();
         private int _cacheSize = 1000;
         public TCtx Context { get; }
-        Func<TInLeft, TEntity> _createIfNotFound = null;
-        public EfMatcher(TCtx context, Expression<Func<TInLeft, TKey>> leftKeyExpression, Expression<Func<TEntity, TKey>> rightKeyExpression, Func<TInLeft, TEntity> createIfNotFound, int cacheSize = 1000)
+        private Func<TInLeft, TCtx, TEntity> _createIfNotFound = null;
+        private Func<IQueryable<TEntity>, IQueryable<TEntity>> _includeInstruction = null;
+        public EfMatcher(EfMatcherConfig<TInLeft, TEntity, TCtx, TKey> config)
         {
-            _createIfNotFound = createIfNotFound;
-            Context = context;
-            _getLeftKey = leftKeyExpression.Compile();
-            _getRightKey = rightKeyExpression.Compile();
-            _matchCriteriaBuilder = MatchCriteriaBuilder.Create(leftKeyExpression, rightKeyExpression);
-            _cacheSize = cacheSize;
+            _createIfNotFound = config.CreateIfNotFound;
+            _includeInstruction = config.IncludeInstruction;
+            Context = config.Context;
+            _getLeftKey = config.LeftKeyExpression.Compile();
+            _getRightKey = config.RightKeyExpression.Compile();
+            _matchCriteriaBuilder = MatchCriteriaBuilder.Create(config.LeftKeyExpression, config.RightKeyExpression, config.DefaultDatasetCriteria);
+            if (config.DefaultDatasetCriteria != null && config.GetFullDataset)
+            {
+                var defaultCache = (_includeInstruction == null ? config.Context.Set<TEntity>() : _includeInstruction(config.Context.Set<TEntity>())).Where(config.DefaultDatasetCriteria).ToList();
+                _cacheSize = Math.Max(defaultCache.Count, config.MinCacheSize);
+                _cachedEntities = defaultCache.ToDictionary(_getRightKey, i => new CachedEntity(i));
+            }
+            else
+            {
+                _cacheSize = config.MinCacheSize;
+            }
         }
-        public EfMatcher(TCtx context, Expression<Func<TInLeft, TKey>> leftKeyExpression, Expression<Func<TEntity, TKey>> rightKeyExpression, Func<TInLeft, TEntity> createIfNotFound, Expression<Func<TEntity, bool>> defaultDatasetCriteria, int minCacheSize = 1000)
-        {
-            _createIfNotFound = createIfNotFound;
-            Context = context;
-            _getLeftKey = leftKeyExpression.Compile();
-            _getRightKey = rightKeyExpression.Compile();
-            _matchCriteriaBuilder = MatchCriteriaBuilder.Create(leftKeyExpression, rightKeyExpression);
-            var defaultCache = context.Set<TEntity>().Where(defaultDatasetCriteria).ToList();
-            _cacheSize = Math.Max(defaultCache.Count, minCacheSize);
-            _cachedEntities = defaultCache.ToDictionary(_getRightKey, i => new CachedEntity(i));
-        }
-
         public TEntity GetMatch(TInLeft input)
         {
             var inputKey = _getLeftKey(input);
@@ -55,11 +54,13 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
                 return entryFromCache.Entity;
             var dbSet = Context.Set<TEntity>();
             var expr = _matchCriteriaBuilder.GetCriteriaExpression(input);
-            var ret = dbSet.AsNoTracking().FirstOrDefault(expr);
+
+            var queryable = _includeInstruction == null ? dbSet : _includeInstruction(dbSet);
+            var ret = queryable.AsNoTracking().FirstOrDefault(expr);
 
             if (ret == null && _createIfNotFound != null)
             {
-                ret = _createIfNotFound(input);
+                ret = _createIfNotFound(input, Context);
                 dbSet.Add(ret);
                 Context.SaveChanges();
             }
@@ -72,5 +73,26 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
             _cachedEntities[inputKey] = new CachedEntity(ret);
             return ret;
         }
+    }
+    public class EfMatcherConfig<TInLeft, TEntity, TCtx, TKey>
+        where TCtx : DbContext
+        where TEntity : class
+    {
+        public TCtx Context { get; set; }
+        public Expression<Func<TInLeft, TKey>> LeftKeyExpression { get; set; }
+        public Expression<Func<TEntity, TKey>> RightKeyExpression { get; set; }
+        public Func<TInLeft, TCtx, TEntity> CreateIfNotFound { get; set; }
+        /// <summary>
+        /// Criteria that is applied on top of the selection criteria on the EntitySet
+        /// </summary>
+        /// <value></value>
+        public Expression<Func<TEntity, bool>> DefaultDatasetCriteria { get; set; }
+        /// <summary>
+        /// If true, will fill the cache from the start with values that correspond the DefaultDatasetCriteria
+        /// </summary>
+        /// <value></value>
+        public bool GetFullDataset { get; set; }
+        public int MinCacheSize { get; set; } = 1000;
+        public Func<IQueryable<TEntity>, IQueryable<TEntity>> IncludeInstruction { get; set; } = null;
     }
 }
