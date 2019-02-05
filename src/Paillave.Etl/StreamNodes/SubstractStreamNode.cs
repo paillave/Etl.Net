@@ -14,9 +14,9 @@ namespace Paillave.Etl.StreamNodes
         public ISortedStream<TInLeft, TKey> LeftInputStream { get; set; }
         public ISortedStream<TInRight, TKey> RightInputStream { get; set; }
     }
-    public class SubstractUnsortedArgs<TInLeft, TInRight, TKey>
+    public class SubstractUnsortedArgs<TStream, TInLeft, TInRight, TKey> where TStream : IStream<TInLeft>
     {
-        public IStream<TInLeft> LeftInputStream { get; set; }
+        public TStream LeftInputStream { get; set; }
         public IStream<TInRight> RightInputStream { get; set; }
         public Func<TInLeft, TKey> GetLeftKey { get; set; }
         public Func<TInRight, TKey> GetRightKey { get; set; }
@@ -28,20 +28,28 @@ namespace Paillave.Etl.StreamNodes
         }
         protected override IStream<TInLeft> CreateOutputStream(SubstractArgs<TInLeft, TInRight, TKey> args)
         {
-            return base.CreateUnsortedStream(args.LeftInputStream.Observable.Substract<TInLeft, TInRight, TKey>(args.RightInputStream.Observable, new SortDefinitionComparer<TInLeft, TInRight, TKey>(args.LeftInputStream.SortDefinition, args.RightInputStream.SortDefinition)));
+            return base.CreateSortedStream(args.LeftInputStream.Observable.Substract<TInLeft, TInRight, TKey>(args.RightInputStream.Observable, new SortDefinitionComparer<TInLeft, TInRight, TKey>(args.LeftInputStream.SortDefinition, args.RightInputStream.SortDefinition)), args.LeftInputStream.SortDefinition);
         }
     }
-    public class SubstractUnsortedStreamNode<TInLeft, TInRight, TKey> : StreamNodeBase<TInLeft, IStream<TInLeft>, SubstractUnsortedArgs<TInLeft, TInRight, TKey>>
+    public class SubstractUnsortedStreamNode<TStream, TInLeft, TInRight, TKey> : StreamNodeBase<TInLeft, TStream, SubstractUnsortedArgs<TStream, TInLeft, TInRight, TKey>> where TStream : IStream<TInLeft>
     {
-        public SubstractUnsortedStreamNode(string name, SubstractUnsortedArgs<TInLeft, TInRight, TKey> args) : base(name, args)
+        public SubstractUnsortedStreamNode(string name, SubstractUnsortedArgs<TStream, TInLeft, TInRight, TKey> args) : base(name, args)
         {
         }
-        protected override IStream<TInLeft> CreateOutputStream(SubstractUnsortedArgs<TInLeft, TInRight, TKey> args)
+        protected override TStream CreateOutputStream(SubstractUnsortedArgs<TStream, TInLeft, TInRight, TKey> args)
         {
-            return base.CreateUnsortedStream(args.LeftInputStream.Observable
+            var keyToExcludeHashObservable = args.RightInputStream.Observable.ToList().Map(i => new HashSet<TKey>(i.Select(j => args.GetRightKey(j)).Distinct()));
+            var outObservable = args.LeftInputStream.Observable
                 .CombineWithLatest(
-                    args.RightInputStream.Observable.ToList().Map(i => new HashSet<TKey>(i.Select(j => args.GetRightKey(j)))),
-                    (l, r) => new { l, MustExclude = r.Contains(args.GetLeftKey(l)) }).Map(i => i.l));
+                    keyToExcludeHashObservable,
+                    (l, r) => new
+                    {
+                        Value = l,
+                        MustExclude = r.Contains(args.GetLeftKey(l))
+                    })
+                .Filter(i => !i.MustExclude)
+                .Map(i => i.Value);
+            return base.CreateMatchingStream(outObservable, args.LeftInputStream);
         }
     }
 }
