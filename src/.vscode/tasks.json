@@ -13,20 +13,6 @@
       "options": {
         "cwd": "${workspaceFolder}"
       },
-      "group": "build"
-    },
-    {
-      "label": "build apps",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "build",
-        "FundProcess.Pms.Imports.sln"
-      ],
-      "problemMatcher": "$msCompile",
-      "options": {
-        "cwd": "${workspaceFolder}/FundProcess.Pms.Imports"
-      },
       "group": {
         "kind": "build",
         "isDefault": true
@@ -45,18 +31,5 @@
         "cwd": "${workspaceFolder}"
       }
     },
-    {
-      "label": "clean apps",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "clean",
-        "FundProcess.Pms.Imports.sln"
-      ],
-      "problemMatcher": "$msCompile",
-      "options": {
-        "cwd": "${workspaceFolder}/FundProcess.Pms.Imports"
-      }
-    }
   ]
 }

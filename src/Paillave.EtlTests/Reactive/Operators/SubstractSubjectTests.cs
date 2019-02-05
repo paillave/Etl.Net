@@ -18,8 +18,6 @@ namespace Paillave.EtlTests.Reactive.Operators
         {
             var left = PushObservable.FromEnumerable(new[] { 1, 2, 2, 3, 4, 4, 5, 6, 7 });
             var right = PushObservable.FromEnumerable(new[] { 2, 5, 5, 6 });
-            left.Subscribe(i => System.Diagnostics.Debug.WriteLine($"left:{i}"));
-            right.Subscribe(i => System.Diagnostics.Debug.WriteLine($"_____right:{i}"));
             var output = left.Substract(right, i => i, i => i);
 
             var task = output.ToListAsync();
@@ -34,24 +32,27 @@ namespace Paillave.EtlTests.Reactive.Operators
         public void QuickTest2()
         {
             var rnd = new Random();
-            var leftList = Enumerable.Range(0, 100).Select(i => rnd.Next(50)).OrderBy(i => i).ToList();
-            var rightList = Enumerable.Range(0, 100).Select(i => rnd.Next(50)).OrderBy(i => i).ToList();
+            var leftList = Enumerable.Range(0, 1000).Select(i => rnd.Next(25)).OrderBy(i => i).ToList();
+            var rightList = Enumerable.Range(0, 100).Select(i => rnd.Next(50) / 2).OrderBy(i => i).ToList();
             var expected = leftList.Where(i => !rightList.Contains(i)).OrderBy(i => i).ToList();
 
             var left = PushObservable.FromEnumerable(leftList);
             var right = PushObservable.FromEnumerable(rightList);
-            // left.Subscribe(i => System.Diagnostics.Debug.WriteLine($"left:{i}"), () => System.Diagnostics.Debug.WriteLine($"left:complete"));
-            // right.Subscribe(i => System.Diagnostics.Debug.WriteLine($"_____right:{i}"), () => System.Diagnostics.Debug.WriteLine($"_____right:complete"));
+            // left.Subscribe(i => System.Diagnostics.Debug.WriteLine($"left.PushValue({i});"), () => System.Diagnostics.Debug.WriteLine($"left.Complete();"));
+            // right.Subscribe(i => System.Diagnostics.Debug.WriteLine($"______right.PushValue({i});"), () => System.Diagnostics.Debug.WriteLine($"______right.Complete();"));
             var output = left.Substract(right, i => i, i => i);
+            // output.Subscribe(i => System.Diagnostics.Debug.WriteLine($"===output.PushValue({i});"), () => System.Diagnostics.Debug.WriteLine($"===output.Complete();"));
 
             var task = output.ToListAsync();
 
             left.Start();
             right.Start();
             task.Wait();
-            // System.Diagnostics.Debug.WriteLine($"->left:{string.Join(",", leftList)}");
-            // System.Diagnostics.Debug.WriteLine($"->right:{string.Join(",", rightList)}");
-            // System.Diagnostics.Debug.WriteLine($"->expected:{string.Join(",", expected)}");
+
+            System.Diagnostics.Debug.WriteLine($"->left:{string.Join(",", leftList)}");
+            System.Diagnostics.Debug.WriteLine($"->right:{string.Join(",", rightList)}");
+            System.Diagnostics.Debug.WriteLine($"->expected:{string.Join(",", expected)}");
+            System.Diagnostics.Debug.WriteLine($"->result:{string.Join(",", task.Result)}");
             CollectionAssert.AreEquivalent(expected, task.Result);
         }
         [TestCategory(nameof(SubstractSubjectTests))]
@@ -185,6 +186,34 @@ namespace Paillave.EtlTests.Reactive.Operators
             CollectionAssert.AreEquivalent(new int[] { 4, 4, 5, 5 }.ToList(), outputValues);
             ______right.Complete();
             CollectionAssert.AreEquivalent(new int[] { 4, 4, 5, 5 }.ToList(), outputValues);
+        }
+        [TestCategory(nameof(SubstractSubjectTests))]
+        [TestMethod]
+        public void SteppedTest5()
+        {
+            var left = new PushSubject<int>();
+            var ______right = new PushSubject<int>();
+            var outputValues = new List<int>();
+            left.Substract(______right, i => i, i => i).Subscribe(outputValues.Add);
+
+            left.PushValue(1);
+            ______right.PushValue(2);
+            left.PushValue(2);
+            ______right.PushValue(5);
+            left.PushValue(2);
+            left.PushValue(3);
+            left.PushValue(4);
+            ______right.PushValue(5);
+            left.PushValue(4);
+            ______right.PushValue(6);
+            left.PushValue(5);
+            ______right.Complete();
+            left.PushValue(6);
+            left.PushValue(7);
+            left.PushValue(7);
+            left.PushValue(8);
+            left.Complete();
+            CollectionAssert.AreEquivalent(new[] { 1, 3, 4, 4, 7, 7, 8 }, outputValues.ToArray());
         }
     }
 }

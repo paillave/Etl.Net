@@ -59,8 +59,6 @@ namespace Paillave.Etl.Reactive.Operators
                 this._observable = observable;
                 _subscription = observable.Subscribe(onPushValue, onComplete, onException);
             }
-            // public bool ContainsValue<T2>(T2 value, IComparer<T, T2> comparer) 
-            //     => Values.Any(i => comparer.Compare(i, value) == 0);
             public void Dispose() => this._subscription.Dispose();
         }
         public SubstractSubject(IPushObservable<TLeft> observable, IPushObservable<TRight> observableToRemove, IComparer<TLeft, TRight> comparer)
@@ -73,29 +71,19 @@ namespace Paillave.Etl.Reactive.Operators
         {
             lock (_lockObject)
             {
-                // if (!_rightSubscriptionItem.Values.TryPeek(out var rightValue))
-                //     _leftSubscriptionItem.Values.Enqueue(value);
-                // else
-                // {
                 _leftSubscriptionItem.SetLastValue(value);
                 int? comp = null;
                 foreach (var rightItem in _rightSubscriptionItem.Values)
                 {
                     comp = _comparer.Compare(value, rightItem);
                     if (comp == 0) break;
-                    // if (comp > 0)
-                    // {
-                    //     _leftSubscriptionItem.Values.Enqueue(value);
-                    //     break;
-                    // }
                 }
                 if (comp == null)
                     _leftSubscriptionItem.Values.Enqueue(value);
-                else if (comp < 0)
+                else if (comp < 0 || (comp > 0 && _rightSubscriptionItem.IsComplete))
                     PushValue(value);
                 else if (comp > 0)
                     _leftSubscriptionItem.Values.Enqueue(value);
-                // }
             }
         }
 
@@ -128,34 +116,48 @@ namespace Paillave.Etl.Reactive.Operators
             lock (_lockObject)
             {
                 _leftSubscriptionItem.IsComplete = true;
-                TryComplete(true);
+                TryComplete();
             }
         }
-        private void TryComplete(bool complete)
+        private void TryComplete()
         {
             if (!_rightSubscriptionItem.IsComplete || !_leftSubscriptionItem.IsComplete) return;
             int comp;
-            while (_leftSubscriptionItem.Values.TryDequeue(out var firstValueLeft))
+            bool hasRightValue = _rightSubscriptionItem.Values.TryPeek(out TRight rightValue);
+            while (_leftSubscriptionItem.Values.TryDequeue(out var leftValue))
             {
-                comp = _comparer.Compare(firstValueLeft, _rightSubscriptionItem.Values.Dequeue());
-                if (comp != 0) PushValue(firstValueLeft);
+                if (!hasRightValue)
+                {
+                    PushValue(leftValue);
+                }
+                else
+                {
+                    comp = _comparer.Compare(leftValue, rightValue);
+                    while (comp > 0 && (hasRightValue = _rightSubscriptionItem.Values.TryDequeue(out rightValue)))
+                    {
+                        comp = _comparer.Compare(leftValue, rightValue);
+                    }
+                    if (comp < 0 || (comp > 0 && _rightSubscriptionItem.Values.IsEmpty())) PushValue(leftValue);
+                }
             }
-            if (complete) base.Complete();
+            base.Complete();
         }
         private void HandleCompleteRight()
         {
             lock (_lockObject)
             {
                 _rightSubscriptionItem.IsComplete = true;
-                TryComplete(false);
+                TryComplete();
             }
         }
-
         public override void Dispose()
         {
-            base.Dispose();
-            _leftSubscriptionItem.Dispose();
-            _rightSubscriptionItem.Dispose();
+            lock (_lockObject)
+            {
+                base.Dispose();
+                _leftSubscriptionItem.Dispose();
+                _rightSubscriptionItem.Dispose();
+            }
         }
     }
     public static partial class ObservableExtensions
