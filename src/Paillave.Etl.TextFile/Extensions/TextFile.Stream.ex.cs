@@ -65,6 +65,20 @@ namespace Paillave.Etl.TextFile.Extensions
             });
             return stream.CrossApply<TIn, TOut>(name, valuesProvider.PushValues, noParallelisation);
         }
+        public static IStream<TParsed> CrossApplyTextFile<TIn, TParsed>(this IStream<TIn> stream, string name, FlatFileDefinition<TParsed> args, Func<TIn, string> filePathSelector, Action<TIn, TParsed> resultApply, bool noParallelisation = false)
+        {
+            var valuesProvider = new FlatFileValuesProvider<TIn, TParsed, TParsed>(new FlatFileValuesProviderArgs<TIn, TParsed, TParsed>()
+            {
+                DataStreamSelector = i => File.OpenRead(filePathSelector(i)),
+                Mapping = args,
+                ResultSelector = (i,j)=>
+                {
+                    resultApply(i, j);
+                    return j;
+                }
+            });
+            return stream.CrossApply<TIn, TParsed>(name, valuesProvider.PushValues, noParallelisation);
+        }
         public static IStream<TOut> CrossApplyTextFile<TParsed, TOut>(this IStream<string> stream, string name, FlatFileDefinition<TParsed> args, Func<string, TParsed, TOut> resultSelector, bool noParallelisation = false)
         {
             var valuesProvider = new FlatFileValuesProvider<string, TParsed, TOut>(new FlatFileValuesProviderArgs<string, TParsed, TOut>()
@@ -74,6 +88,20 @@ namespace Paillave.Etl.TextFile.Extensions
                 ResultSelector = resultSelector
             });
             return stream.CrossApply<string, TOut>(name, valuesProvider.PushValues, noParallelisation);
+        }
+        public static IStream<TParsed> CrossApplyTextFile<TParsed>(this IStream<string> stream, string name, FlatFileDefinition<TParsed> args, Action<string, TParsed> resultApply, bool noParallelisation = false)
+        {
+            var valuesProvider = new FlatFileValuesProvider<string, TParsed, TParsed>(new FlatFileValuesProviderArgs<string, TParsed, TParsed>()
+            {
+                DataStreamSelector = i => File.OpenRead(i),
+                Mapping = args,
+                ResultSelector = (i,j)=>
+                {
+                    resultApply(i, j);
+                    return j;
+                }
+            });
+            return stream.CrossApply<string, TParsed>(name, valuesProvider.PushValues, noParallelisation);
         }
         public static IStream<TOut> CrossApplyTextFile<TParsed, TOut>(this IStream<Stream> stream, string name, FlatFileDefinition<TParsed> args, Func<TParsed, TOut> resultSelector, bool noParallelisation = false)
         {
@@ -89,7 +117,7 @@ namespace Paillave.Etl.TextFile.Extensions
         public static IStream<string> CrossApplyTextFile(this IStream<string> stream, string name, bool noParallelisation = false)
         {
             var valuesProvider = new TextFileValuesProvider();
-            return stream.CrossApply<string, Stream, string, string>(name, valuesProvider.PushValues, i => File.OpenRead(i), (i, _) => i, noParallelisation);
+            return stream.CrossApply<string, Stream, string, string>(name, valuesProvider.PushValues, File.OpenRead, (i, _) => i, noParallelisation);
         }
         public static IStream<string> CrossApplyTextFile(this IStream<Stream> stream, string name, bool noParallelisation = false)
         {
