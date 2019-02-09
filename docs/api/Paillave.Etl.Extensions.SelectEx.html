@@ -97,12 +97,12 @@
   
   
   <a id="Paillave_Etl_Extensions_SelectEx_Select_" data-uid="Paillave.Etl.Extensions.SelectEx.Select*"></a>
-  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__2_ISingleStream___0__System_String_Paillave_Etl_StreamNodes_ISelectProcessor___0___1__System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``2(ISingleStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean,System.Boolean)">Select&lt;TIn, TOut&gt;(ISingleStream&lt;TIn&gt;, String, ISelectProcessor&lt;TIn, TOut&gt;, Boolean, Boolean)</h4>
+  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__2_ISingleStream___0__System_String_Paillave_Etl_StreamNodes_ISelectProcessor___0___1__System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``2(ISingleStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean)">Select&lt;TIn, TOut&gt;(ISingleStream&lt;TIn&gt;, String, ISelectProcessor&lt;TIn, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ISingleStream&lt;TOut&gt; Select&lt;TIn, TOut&gt;(this ISingleStream&lt;TIn&gt; stream, string name, ISelectProcessor&lt;TIn, TOut&gt; processor, bool withNoDispose = false, bool excludeNull = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static ISingleStream&lt;TOut&gt; Select&lt;TIn, TOut&gt;(this ISingleStream&lt;TIn&gt; stream, string name, ISelectProcessor&lt;TIn, TOut&gt; processor, bool withNoDispose = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -134,11 +134,6 @@
         <td><span class="parametername">withNoDispose</span></td>
         <td></td>
       </tr>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">excludeNull</span></td>
-        <td></td>
-      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -178,12 +173,12 @@
   
   
   <a id="Paillave_Etl_Extensions_SelectEx_Select_" data-uid="Paillave.Etl.Extensions.SelectEx.Select*"></a>
-  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__2_ISingleStream___0__System_String_System_Func___0___1__System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``2(ISingleStream{``0},System.String,System.Func{``0,``1},System.Boolean,System.Boolean)">Select&lt;TIn, TOut&gt;(ISingleStream&lt;TIn&gt;, String, Func&lt;TIn, TOut&gt;, Boolean, Boolean)</h4>
+  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__2_ISingleStream___0__System_String_System_Func___0___1__System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``2(ISingleStream{``0},System.String,System.Func{``0,``1},System.Boolean)">Select&lt;TIn, TOut&gt;(ISingleStream&lt;TIn&gt;, String, Func&lt;TIn, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ISingleStream&lt;TOut&gt; Select&lt;TIn, TOut&gt;(this ISingleStream&lt;TIn&gt; stream, string name, Func&lt;TIn, TOut&gt; resultSelector, bool withNoDispose = false, bool excludeNull = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static ISingleStream&lt;TOut&gt; Select&lt;TIn, TOut&gt;(this ISingleStream&lt;TIn&gt; stream, string name, Func&lt;TIn, TOut&gt; resultSelector, bool withNoDispose = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -215,11 +210,6 @@
         <td><span class="parametername">withNoDispose</span></td>
         <td></td>
       </tr>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">excludeNull</span></td>
-        <td></td>
-      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -259,13 +249,13 @@
   
   
   <a id="Paillave_Etl_Extensions_SelectEx_Select_" data-uid="Paillave.Etl.Extensions.SelectEx.Select*"></a>
-  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__2_IStream___0__System_String_Paillave_Etl_StreamNodes_ISelectProcessor___0___1__System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``2(IStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean,System.Boolean)">Select&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, ISelectProcessor&lt;TIn, TOut&gt;, Boolean, Boolean)</h4>
+  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__2_IStream___0__System_String_Paillave_Etl_StreamNodes_ISelectProcessor___0___1__System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``2(IStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectProcessor{``0,``1},System.Boolean)">Select&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, ISelectProcessor&lt;TIn, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"><p>Transform the input stream into a similar stream but with a different structure and calculation using a processor</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Select&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, ISelectProcessor&lt;TIn, TOut&gt; processor, bool withNoDispose = false, bool excludeNull = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Select&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, ISelectProcessor&lt;TIn, TOut&gt; processor, bool withNoDispose = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -300,12 +290,6 @@
         <td><span class="parametername">withNoDispose</span></td>
         <td></td>
       </tr>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">excludeNull</span></td>
-        <td><p>Any output that is null won't be issued</p>
-</td>
-      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -348,13 +332,13 @@
   
   
   <a id="Paillave_Etl_Extensions_SelectEx_Select_" data-uid="Paillave.Etl.Extensions.SelectEx.Select*"></a>
-  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__2_IStream___0__System_String_Paillave_Etl_StreamNodes_ISelectWithIndexProcessor___0___1__System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``2(IStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{``0,``1},System.Boolean,System.Boolean)">Select&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, ISelectWithIndexProcessor&lt;TIn, TOut&gt;, Boolean, Boolean)</h4>
+  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__2_IStream___0__System_String_Paillave_Etl_StreamNodes_ISelectWithIndexProcessor___0___1__System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``2(IStream{``0},System.String,Paillave.Etl.StreamNodes.ISelectWithIndexProcessor{``0,``1},System.Boolean)">Select&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, ISelectWithIndexProcessor&lt;TIn, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"><p>Transform the input stream into a similar stream but with a different structure and calculation using a processor based on the occurrence index</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Select&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, ISelectWithIndexProcessor&lt;TIn, TOut&gt; processor, bool withNoDispose = false, bool excludeNull = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Select&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, ISelectWithIndexProcessor&lt;TIn, TOut&gt; processor, bool withNoDispose = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -389,12 +373,6 @@
         <td><span class="parametername">withNoDispose</span></td>
         <td></td>
       </tr>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">excludeNull</span></td>
-        <td><p>Any output that is null won't be issued</p>
-</td>
-      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -437,13 +415,13 @@
   
   
   <a id="Paillave_Etl_Extensions_SelectEx_Select_" data-uid="Paillave.Etl.Extensions.SelectEx.Select*"></a>
-  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__2_IStream___0__System_String_System_Func___0___1__System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``2(IStream{``0},System.String,System.Func{``0,``1},System.Boolean,System.Boolean)">Select&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, TOut&gt;, Boolean, Boolean)</h4>
+  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__2_IStream___0__System_String_System_Func___0___1__System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``2(IStream{``0},System.String,System.Func{``0,``1},System.Boolean)">Select&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"><p>Transform the input stream into a similar stream but with a different structure and calculation using a lambda expression</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Select&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, TOut&gt; resultSelector, bool withNoDispose = false, bool excludeNull = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Select&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, TOut&gt; resultSelector, bool withNoDispose = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -478,12 +456,6 @@
         <td><span class="parametername">withNoDispose</span></td>
         <td></td>
       </tr>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">excludeNull</span></td>
-        <td><p>Any output that is null won't be issued</p>
-</td>
-      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -526,13 +498,13 @@
   
   
   <a id="Paillave_Etl_Extensions_SelectEx_Select_" data-uid="Paillave.Etl.Extensions.SelectEx.Select*"></a>
-  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__2_IStream___0__System_String_System_Func___0_System_Int32___1__System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``2(IStream{``0},System.String,System.Func{``0,System.Int32,``1},System.Boolean,System.Boolean)">Select&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, Int32, TOut&gt;, Boolean, Boolean)</h4>
+  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__2_IStream___0__System_String_System_Func___0_System_Int32___1__System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``2(IStream{``0},System.String,System.Func{``0,System.Int32,``1},System.Boolean)">Select&lt;TIn, TOut&gt;(IStream&lt;TIn&gt;, String, Func&lt;TIn, Int32, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"><p>Transform the input stream into a similar stream but with a different structure and calculation using a lambda expression based on the occurrence index</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Select&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, int, TOut&gt; resultSelector, bool withNoDispose = false, bool excludeNull = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Select&lt;TIn, TOut&gt;(this IStream&lt;TIn&gt; stream, string name, Func&lt;TIn, int, TOut&gt; resultSelector, bool withNoDispose = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -567,12 +539,6 @@
         <td><span class="parametername">withNoDispose</span></td>
         <td></td>
       </tr>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">excludeNull</span></td>
-        <td><p>Any output that is null won't be issued</p>
-</td>
-      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -615,12 +581,12 @@
   
   
   <a id="Paillave_Etl_Extensions_SelectEx_Select_" data-uid="Paillave.Etl.Extensions.SelectEx.Select*"></a>
-  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__3_ISingleStream___0__System_String___2_System_Func___0___2_System_Action___2____1__System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``3(ISingleStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean,System.Boolean)">Select&lt;TIn, TOut, TCtx&gt;(ISingleStream&lt;TIn&gt;, String, TCtx, Func&lt;TIn, TCtx, Action&lt;TCtx&gt;, TOut&gt;, Boolean, Boolean)</h4>
+  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__3_ISingleStream___0__System_String___2_System_Func___0___2_System_Action___2____1__System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``3(ISingleStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean)">Select&lt;TIn, TOut, TCtx&gt;(ISingleStream&lt;TIn&gt;, String, TCtx, Func&lt;TIn, TCtx, Action&lt;TCtx&gt;, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ISingleStream&lt;TOut&gt; Select&lt;TIn, TOut, TCtx&gt;(this ISingleStream&lt;TIn&gt; stream, string name, TCtx initialContext, Func&lt;TIn, TCtx, Action&lt;TCtx&gt;, TOut&gt; resultSelector, bool withNoDispose = false, bool excludeNull = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static ISingleStream&lt;TOut&gt; Select&lt;TIn, TOut, TCtx&gt;(this ISingleStream&lt;TIn&gt; stream, string name, TCtx initialContext, Func&lt;TIn, TCtx, Action&lt;TCtx&gt;, TOut&gt; resultSelector, bool withNoDispose = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -655,11 +621,6 @@
       <tr>
         <td><span class="xref">System.Boolean</span></td>
         <td><span class="parametername">withNoDispose</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">excludeNull</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -705,12 +666,12 @@
   
   
   <a id="Paillave_Etl_Extensions_SelectEx_Select_" data-uid="Paillave.Etl.Extensions.SelectEx.Select*"></a>
-  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__3_ISingleStream___0__System_String_ISingleStream___1__System_Func___0___1___2__System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean,System.Boolean)">Select&lt;TIn1, TIn2, TOut&gt;(ISingleStream&lt;TIn1&gt;, String, ISingleStream&lt;TIn2&gt;, Func&lt;TIn1, TIn2, TOut&gt;, Boolean, Boolean)</h4>
+  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__3_ISingleStream___0__System_String_ISingleStream___1__System_Func___0___1___2__System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean)">Select&lt;TIn1, TIn2, TOut&gt;(ISingleStream&lt;TIn1&gt;, String, ISingleStream&lt;TIn2&gt;, Func&lt;TIn1, TIn2, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ISingleStream&lt;TOut&gt; Select&lt;TIn1, TIn2, TOut&gt;(this ISingleStream&lt;TIn1&gt; stream, string name, ISingleStream&lt;TIn2&gt; streamToApply, Func&lt;TIn1, TIn2, TOut&gt; resultSelector, bool withNoDispose = false, bool excludeNull = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static ISingleStream&lt;TOut&gt; Select&lt;TIn1, TIn2, TOut&gt;(this ISingleStream&lt;TIn1&gt; stream, string name, ISingleStream&lt;TIn2&gt; streamToApply, Func&lt;TIn1, TIn2, TOut&gt; resultSelector, bool withNoDispose = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -747,11 +708,6 @@
         <td><span class="parametername">withNoDispose</span></td>
         <td></td>
       </tr>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">excludeNull</span></td>
-        <td></td>
-      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -795,12 +751,12 @@
   
   
   <a id="Paillave_Etl_Extensions_SelectEx_Select_" data-uid="Paillave.Etl.Extensions.SelectEx.Select*"></a>
-  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__3_ISingleStream___0__System_String_ISingleStream___1__System_Func___0___1_System_Int32___2__System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean,System.Boolean)">Select&lt;TIn1, TIn2, TOut&gt;(ISingleStream&lt;TIn1&gt;, String, ISingleStream&lt;TIn2&gt;, Func&lt;TIn1, TIn2, Int32, TOut&gt;, Boolean, Boolean)</h4>
+  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__3_ISingleStream___0__System_String_ISingleStream___1__System_Func___0___1_System_Int32___2__System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``3(ISingleStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)">Select&lt;TIn1, TIn2, TOut&gt;(ISingleStream&lt;TIn1&gt;, String, ISingleStream&lt;TIn2&gt;, Func&lt;TIn1, TIn2, Int32, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ISingleStream&lt;TOut&gt; Select&lt;TIn1, TIn2, TOut&gt;(this ISingleStream&lt;TIn1&gt; stream, string name, ISingleStream&lt;TIn2&gt; streamToApply, Func&lt;TIn1, TIn2, int, TOut&gt; resultSelector, bool withNoDispose = false, bool excludeNull = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static ISingleStream&lt;TOut&gt; Select&lt;TIn1, TIn2, TOut&gt;(this ISingleStream&lt;TIn1&gt; stream, string name, ISingleStream&lt;TIn2&gt; streamToApply, Func&lt;TIn1, TIn2, int, TOut&gt; resultSelector, bool withNoDispose = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -837,11 +793,6 @@
         <td><span class="parametername">withNoDispose</span></td>
         <td></td>
       </tr>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">excludeNull</span></td>
-        <td></td>
-      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -885,13 +836,13 @@
   
   
   <a id="Paillave_Etl_Extensions_SelectEx_Select_" data-uid="Paillave.Etl.Extensions.SelectEx.Select*"></a>
-  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__3_IStream___0__System_String___2_System_Func___0___2_System_Action___2____1__System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``3(IStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean,System.Boolean)">Select&lt;TIn, TOut, TCtx&gt;(IStream&lt;TIn&gt;, String, TCtx, Func&lt;TIn, TCtx, Action&lt;TCtx&gt;, TOut&gt;, Boolean, Boolean)</h4>
+  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__3_IStream___0__System_String___2_System_Func___0___2_System_Action___2____1__System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``3(IStream{``0},System.String,``2,System.Func{``0,``2,System.Action{``2},``1},System.Boolean)">Select&lt;TIn, TOut, TCtx&gt;(IStream&lt;TIn&gt;, String, TCtx, Func&lt;TIn, TCtx, Action&lt;TCtx&gt;, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"><p>Transform the input stream into a similar stream but with a different structure and calculation using a lambda expression that works with a context</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Select&lt;TIn, TOut, TCtx&gt;(this IStream&lt;TIn&gt; stream, string name, TCtx initialContext, Func&lt;TIn, TCtx, Action&lt;TCtx&gt;, TOut&gt; resultSelector, bool withNoDispose = false, bool excludeNull = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Select&lt;TIn, TOut, TCtx&gt;(this IStream&lt;TIn&gt; stream, string name, TCtx initialContext, Func&lt;TIn, TCtx, Action&lt;TCtx&gt;, TOut&gt; resultSelector, bool withNoDispose = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -932,12 +883,6 @@
         <td><span class="parametername">withNoDispose</span></td>
         <td></td>
       </tr>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">excludeNull</span></td>
-        <td><p>Any output that is null won't be issued</p>
-</td>
-      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -985,13 +930,13 @@
   
   
   <a id="Paillave_Etl_Extensions_SelectEx_Select_" data-uid="Paillave.Etl.Extensions.SelectEx.Select*"></a>
-  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__3_IStream___0__System_String___2_System_Func___0_System_Int32___2_System_Action___2____1__System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``3(IStream{``0},System.String,``2,System.Func{``0,System.Int32,``2,System.Action{``2},``1},System.Boolean,System.Boolean)">Select&lt;TIn, TOut, TCtx&gt;(IStream&lt;TIn&gt;, String, TCtx, Func&lt;TIn, Int32, TCtx, Action&lt;TCtx&gt;, TOut&gt;, Boolean, Boolean)</h4>
+  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__3_IStream___0__System_String___2_System_Func___0_System_Int32___2_System_Action___2____1__System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``3(IStream{``0},System.String,``2,System.Func{``0,System.Int32,``2,System.Action{``2},``1},System.Boolean)">Select&lt;TIn, TOut, TCtx&gt;(IStream&lt;TIn&gt;, String, TCtx, Func&lt;TIn, Int32, TCtx, Action&lt;TCtx&gt;, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"><p>Transform the input stream into a similar stream but with a different structure and calculation using a lambda expression that works with a context and the occurrence index</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Select&lt;TIn, TOut, TCtx&gt;(this IStream&lt;TIn&gt; stream, string name, TCtx initialContext, Func&lt;TIn, int, TCtx, Action&lt;TCtx&gt;, TOut&gt; resultSelector, bool withNoDispose = false, bool excludeNull = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Select&lt;TIn, TOut, TCtx&gt;(this IStream&lt;TIn&gt; stream, string name, TCtx initialContext, Func&lt;TIn, int, TCtx, Action&lt;TCtx&gt;, TOut&gt; resultSelector, bool withNoDispose = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1032,12 +977,6 @@
         <td><span class="parametername">withNoDispose</span></td>
         <td></td>
       </tr>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">excludeNull</span></td>
-        <td><p>Any output that is null won't be issued</p>
-</td>
-      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -1085,14 +1024,14 @@
   
   
   <a id="Paillave_Etl_Extensions_SelectEx_Select_" data-uid="Paillave.Etl.Extensions.SelectEx.Select*"></a>
-  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__3_IStream___0__System_String_ISingleStream___1__System_Func___0___1___2__System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean,System.Boolean)">Select&lt;TIn1, TIn2, TOut&gt;(IStream&lt;TIn1&gt;, String, ISingleStream&lt;TIn2&gt;, Func&lt;TIn1, TIn2, TOut&gt;, Boolean, Boolean)</h4>
+  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__3_IStream___0__System_String_ISingleStream___1__System_Func___0___1___2__System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,``2},System.Boolean)">Select&lt;TIn1, TIn2, TOut&gt;(IStream&lt;TIn1&gt;, String, ISingleStream&lt;TIn2&gt;, Func&lt;TIn1, TIn2, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"><p>Transform the input stream into a similar stream but with a different structure and calculation using a lambda expression and the occurrence index.
 The calculation takes in consideration a single element stream</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Select&lt;TIn1, TIn2, TOut&gt;(this IStream&lt;TIn1&gt; stream, string name, ISingleStream&lt;TIn2&gt; streamToApply, Func&lt;TIn1, TIn2, TOut&gt; resultSelector, bool withNoDispose = false, bool excludeNull = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Select&lt;TIn1, TIn2, TOut&gt;(this IStream&lt;TIn1&gt; stream, string name, ISingleStream&lt;TIn2&gt; streamToApply, Func&lt;TIn1, TIn2, TOut&gt; resultSelector, bool withNoDispose = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1132,12 +1071,6 @@ The calculation takes in consideration a single element stream</p>
         <td><span class="xref">System.Boolean</span></td>
         <td><span class="parametername">withNoDispose</span></td>
         <td></td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">excludeNull</span></td>
-        <td><p>Any output that is null won't be issued</p>
-</td>
       </tr>
     </tbody>
   </table>
@@ -1186,14 +1119,14 @@ The calculation takes in consideration a single element stream</p>
   
   
   <a id="Paillave_Etl_Extensions_SelectEx_Select_" data-uid="Paillave.Etl.Extensions.SelectEx.Select*"></a>
-  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__3_IStream___0__System_String_ISingleStream___1__System_Func___0___1_System_Int32___2__System_Boolean_System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean,System.Boolean)">Select&lt;TIn1, TIn2, TOut&gt;(IStream&lt;TIn1&gt;, String, ISingleStream&lt;TIn2&gt;, Func&lt;TIn1, TIn2, Int32, TOut&gt;, Boolean, Boolean)</h4>
+  <h4 id="Paillave_Etl_Extensions_SelectEx_Select__3_IStream___0__System_String_ISingleStream___1__System_Func___0___1_System_Int32___2__System_Boolean_" data-uid="Paillave.Etl.Extensions.SelectEx.Select``3(IStream{``0},System.String,ISingleStream{``1},System.Func{``0,``1,System.Int32,``2},System.Boolean)">Select&lt;TIn1, TIn2, TOut&gt;(IStream&lt;TIn1&gt;, String, ISingleStream&lt;TIn2&gt;, Func&lt;TIn1, TIn2, Int32, TOut&gt;, Boolean)</h4>
   <div class="markdown level1 summary"><p>Transform the input stream into a similar stream but with a different structure and calculation using a lambda expression.
 The calculation takes in consideration a single element stream</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Select&lt;TIn1, TIn2, TOut&gt;(this IStream&lt;TIn1&gt; stream, string name, ISingleStream&lt;TIn2&gt; streamToApply, Func&lt;TIn1, TIn2, int, TOut&gt; resultSelector, bool withNoDispose = false, bool excludeNull = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Select&lt;TIn1, TIn2, TOut&gt;(this IStream&lt;TIn1&gt; stream, string name, ISingleStream&lt;TIn2&gt; streamToApply, Func&lt;TIn1, TIn2, int, TOut&gt; resultSelector, bool withNoDispose = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1233,12 +1166,6 @@ The calculation takes in consideration a single element stream</p>
         <td><span class="xref">System.Boolean</span></td>
         <td><span class="parametername">withNoDispose</span></td>
         <td></td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><span class="parametername">excludeNull</span></td>
-        <td><p>Any output that is null won't be issued</p>
-</td>
       </tr>
     </tbody>
   </table>

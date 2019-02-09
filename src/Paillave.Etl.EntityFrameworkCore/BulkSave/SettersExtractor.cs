@@ -22,7 +22,6 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
                 if (node.BindingType == MemberBindingType.Assignment)
                 {
                     var memberAssignment = (MemberAssignment)node;
-                    // var tmp = Expression.Lambda(memberAssignment.Expression);
                     switch (memberAssignment.Expression)
                     {
                         case MemberExpression me:

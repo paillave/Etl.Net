@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Paillave.Etl.TextFile.Core;
 
-namespace Paillave.EtlTests.TextFileTests.Core
+namespace Paillave.Etl.TextFileTests.Core
 {
     [TestClass]
     public class FileDefinitionHeaderTests

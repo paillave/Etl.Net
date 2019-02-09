@@ -16,7 +16,7 @@ items:
   source:
     id: LastEx
     path: ''
-    startLine: 572
+    startLine: 607
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -55,7 +55,7 @@ items:
   source:
     id: Last
     path: ''
-    startLine: 574
+    startLine: 609
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

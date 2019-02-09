@@ -7,12 +7,12 @@ using Paillave.Etl.Core;
 using Paillave.Etl.Extensions;
 using Paillave.Etl.ValuesProviders;
 
-namespace Paillave.EtlTests.Extensions
+namespace Paillave.Etl.Extensions
 {
     [TestClass()]
-    public class CrossApplyFolderFiles
+    public class CrossApplyFolderFilesTests
     {
-        private const string TestFolder = nameof(Paillave.EtlTests.Extensions) + "." + nameof(CrossApplyFolderFiles);
+        private const string TestFolder = nameof(Paillave.Etl.Extensions) + "." + nameof(CrossApplyFolderFilesTests);
         [TestInitialize]
         public void TestInitialize()
         {
@@ -40,7 +40,7 @@ namespace Paillave.EtlTests.Extensions
             Directory.Delete(Path.Combine(tmpPath, TestFolder), true);
         }
 
-        [TestCategory(nameof(CrossApplyFolderFiles))]
+        [TestCategory(nameof(CrossApplyFolderFilesTests))]
         [TestMethod]
         public void GetFilesFromFolder()
         {
@@ -60,7 +60,7 @@ namespace Paillave.EtlTests.Extensions
             CollectionAssert.AreEquivalent(expected, actual);
         }
 
-        [TestCategory(nameof(CrossApplyFolderFiles))]
+        [TestCategory(nameof(CrossApplyFolderFilesTests))]
         [TestMethod]
         public void GetFilesFromFolderRecursive()
         {

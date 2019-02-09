@@ -24,6 +24,8 @@
     name: GetStreamStatisticsEx
   - uid: Paillave.Etl.Extensions.GroupByEx
     name: GroupByEx
+  - uid: Paillave.Etl.Extensions.KeepLastTracesPerNodeEx
+    name: KeepLastTracesPerNodeEx
   - uid: Paillave.Etl.Extensions.LastEx
     name: LastEx
   - uid: Paillave.Etl.Extensions.LeftJoinEx
@@ -42,6 +44,8 @@
     name: SortEx
   - uid: Paillave.Etl.Extensions.SubProcessEx
     name: SubProcessEx
+  - uid: Paillave.Etl.Extensions.SubstractEx
+    name: SubstractEx
   - uid: Paillave.Etl.Extensions.ThroughActionEx
     name: ThroughActionEx
   - uid: Paillave.Etl.Extensions.ThroughLocalFileEx

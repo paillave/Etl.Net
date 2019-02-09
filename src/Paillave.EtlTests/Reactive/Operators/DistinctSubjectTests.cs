@@ -80,5 +80,40 @@ namespace Paillave.EtlTests.Reactive.Operators
             obs.Complete();
             Assert.IsTrue(isComplete, "the stream should be completed");
         }
+        [TestCategory(nameof(DistinctSubjectTests))]
+        [TestMethod]
+        public void ComplexDistinct1()
+        {
+            var valueStack = new Stack<Tuple<int>>();
+            var errorStack = new Stack<Exception>();
+            bool isComplete = false;
+
+            var obs = new PushSubject<Tuple<int>>();
+
+            var output = obs.Distinct(l => l.Item1);
+
+            output.Subscribe(valueStack.Push, () => isComplete = true, errorStack.Push);
+
+            obs.PushValue(new Tuple<int>(1));
+            Assert.AreEqual(1, valueStack.Peek().Item1, "the input value should be issued");
+
+            obs.PushValue(new Tuple<int>(2));
+            Assert.AreEqual(2, valueStack.Peek().Item1, "the input value should be issued");
+
+            obs.PushValue(new Tuple<int>(1));
+            Assert.AreEqual(2, valueStack.Count, "the input value should not be issued as it has been submitted first");
+
+            obs.PushValue(new Tuple<int>(3));
+            Assert.AreEqual(3, valueStack.Peek().Item1, "the input value should be issued");
+
+            obs.PushValue(new Tuple<int>(1));
+            Assert.AreEqual(3, valueStack.Count, "the input value should not be issued as it has been submitted first");
+
+            obs.PushValue(new Tuple<int>(2));
+            Assert.AreEqual(3, valueStack.Count, "the input value should not be issued as it has been submitted first");
+
+            obs.Complete();
+            Assert.IsTrue(isComplete, "the stream should be completed");
+        }
     }
 }

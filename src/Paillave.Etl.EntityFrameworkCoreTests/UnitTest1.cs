@@ -38,6 +38,28 @@ namespace Paillave.Etl.EntityFrameworkCoreTests
             var res = lst1.FirstOrDefault(ce);
             Assert.AreEqual(new DateTime(2000, 1, 1).AddDays(1), res.MyProperty3);
         }
+        [TestMethod]
+        public void TestMethodWithDefaultCriteria1()
+        {
+            var lst1 = Enumerable.Range(1, 100).Select(i => new Class1
+            {
+                MyProperty1 = i,
+                MyProperty2 = i.ToString(),
+                MyProperty3 = new DateTime(2000, 1, 1).AddDays(i)
+            }).AsQueryable();
+            var mcb = MatchCriteriaBuilder.Create(
+                (Class2 i) => new { A = i.MyProperty4, B = i.MyProperty5 },
+                (Class1 i) => new { A = i.MyProperty1, B = i.MyProperty2 },
+                i => i.MyProperty1 % 2 == 0
+                );
+            var ce = mcb.GetCriteriaExpression(new Class2 { MyProperty4 = 1, MyProperty5 = "1" });
+            var res = lst1.FirstOrDefault(ce);
+            Assert.AreEqual(null, res);
+
+            ce = mcb.GetCriteriaExpression(new Class2 { MyProperty4 = 2, MyProperty5 = "2" });
+            res = lst1.FirstOrDefault(ce);
+            Assert.AreEqual(new DateTime(2000, 1, 1).AddDays(2), res.MyProperty3);
+        }
 
         [TestMethod]
         public void TestGetSetters()

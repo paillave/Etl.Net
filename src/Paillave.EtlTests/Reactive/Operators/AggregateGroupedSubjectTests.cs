@@ -6,9 +6,9 @@ using Paillave.Etl.Reactive.Operators;
 namespace Paillave.EtlTests.Reactive.Operators
 {
     [TestClass()]
-    public class AggregateGroupedSubjectTest
+    public class AggregateGroupedSubjectTests
     {
-        [TestCategory(nameof(AggregateGroupedSubjectTest))]
+        [TestCategory(nameof(AggregateGroupedSubjectTests))]
         [TestMethod]
         public void NoElements()
         {
@@ -20,7 +20,7 @@ namespace Paillave.EtlTests.Reactive.Operators
             task.Wait();
             Assert.AreEqual(0, task.Result.Count, "the output stream should be empty");
         }
-        [TestCategory(nameof(AggregateGroupedSubjectTest))]
+        [TestCategory(nameof(AggregateGroupedSubjectTests))]
         [TestMethod]
         public void OneElements()
         {
@@ -34,7 +34,7 @@ namespace Paillave.EtlTests.Reactive.Operators
             CollectionAssert.AreEquivalent(new[] { 0 }, task.Result[0].Value);
             Assert.AreEqual(0, task.Result[0].Key);
         }
-        [TestCategory(nameof(AggregateGroupedSubjectTest))]
+        [TestCategory(nameof(AggregateGroupedSubjectTests))]
         [TestMethod]
         public void SeveralSortedElements()
         {

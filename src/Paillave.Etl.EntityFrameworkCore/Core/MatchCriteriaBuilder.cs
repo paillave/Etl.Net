@@ -6,16 +6,17 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
 {
     public class MatchCriteriaBuilder
     {
-        public static MatchCriteriaBuilder<TInLeft, TEntity, TKey> Create<TInLeft, TEntity, TKey>(Expression<Func<TInLeft, TKey>> leftKeyExpression, Expression<Func<TEntity, TKey>> rightKeyExpression)
-            => new MatchCriteriaBuilder<TInLeft, TEntity, TKey>(leftKeyExpression, rightKeyExpression);
+        public static MatchCriteriaBuilder<TInLeft, TEntity, TKey> Create<TInLeft, TEntity, TKey>(Expression<Func<TInLeft, TKey>> leftKeyExpression, Expression<Func<TEntity, TKey>> rightKeyExpression, Expression<Func<TEntity, bool>> defaultDatasetCriteria = null)
+            => new MatchCriteriaBuilder<TInLeft, TEntity, TKey>(leftKeyExpression, rightKeyExpression, defaultDatasetCriteria);
     }
     public class MatchCriteriaBuilder<TInLeft, TEntity, TKey>
     {
         private Expression<Func<TInLeft, TEntity, bool>> _matchExpression;
         private ParameterExpression _leftParamExpression;
         private ParameterExpression _entityParamExpression;
-        public MatchCriteriaBuilder(Expression<Func<TInLeft, TKey>> leftKeyExpression, Expression<Func<TEntity, TKey>> rightKeyExpression)
+        public MatchCriteriaBuilder(Expression<Func<TInLeft, TKey>> leftKeyExpression, Expression<Func<TEntity, TKey>> rightKeyExpression, Expression<Func<TEntity, bool>> defaultDatasetCriteria = null)
         {
+            // http://www.albahari.com/nutshell/predicatebuilder.aspx
             var leftKeyProperties = KeyDefinitionExtractor.GetKeys(leftKeyExpression);
             var rightKeyProperties = KeyDefinitionExtractor.GetKeys(rightKeyExpression);
             ParameterExpression leftParam = Expression.Parameter(typeof(TInLeft), "left");
@@ -32,10 +33,13 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
                 if (expr == null) expr = equalityExpression;
                 else expr = Expression.AndAlso(expr, equalityExpression);
             }
+            if (defaultDatasetCriteria != null)
+            {
+                expr = Expression.AndAlso(expr, Expression.Invoke(defaultDatasetCriteria, rightParam));
+            }
             _leftParamExpression = leftParam;
             _entityParamExpression = rightParam;
             _matchExpression = Expression.Lambda<Func<TInLeft, TEntity, bool>>(expr, _leftParamExpression, _entityParamExpression);
-            // _matchExpression = (Expression<Func<TInLeft, TEntity, bool>>)expr.Conversion;
         }
         public Expression<Func<TEntity, bool>> GetCriteriaExpression(TInLeft value)
         {

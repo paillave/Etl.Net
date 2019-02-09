@@ -26,6 +26,39 @@ namespace Paillave.Etl.Extensions
                 Stream2 = inputStream2
             }).Output;
         }
+
+        public static IStream<TOut> Union<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> inputStream2, Func<TIn1, TOut> resultSelectorLeft, Func<TIn2, TOut> resultSelectorRight)
+        {
+            return new UnionStreamNode<TIn1, TIn2, TOut>(name, new UnionArgs<TIn1, TIn2, TOut>
+            {
+                Stream1 = stream,
+                Stream2 = inputStream2,
+                ResultSelectorLeft = resultSelectorLeft,
+                ResultSelectorRight = resultSelectorRight
+            }).Output;
+        }
+
+        public static IStream<TOut> Union<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> inputStream2, Func<TIn1, TIn2, TOut> resultSelector)
+        {
+            return new UnionStreamNode<TIn1, TIn2, TOut>(name, new UnionArgs<TIn1, TIn2, TOut>
+            {
+                Stream1 = stream,
+                Stream2 = inputStream2,
+                FullResultSelectorLeft = resultSelector
+            }).Output;
+        }
+
+        public static IStream<TOut> Union<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> inputStream2, Func<TIn1, TIn2, TOut> resultSelectorLeft, Func<TIn1, TIn2, TOut> resultSelectorRight)
+        {
+            return new UnionStreamNode<TIn1, TIn2, TOut>(name, new UnionArgs<TIn1, TIn2, TOut>
+            {
+                Stream1 = stream,
+                Stream2 = inputStream2,
+                FullResultSelectorLeft = resultSelectorLeft,
+                FullResultSelectorRight = resultSelectorRight,
+            }).Output;
+        }
+
         public static IStream<TOut> Union<TIn, TOut>(this IStream<TIn> stream, string name, params Func<ISingleStream<TIn>, IStream<TOut>>[] subProcesses)
         {
             return new ToSubProcessesStreamNode<TIn, TOut>(name, new ToSubProcessesArgs<TIn, TOut>

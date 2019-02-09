@@ -13,7 +13,6 @@ namespace Paillave.Etl.StreamNodes
     {
         public IStream<TIn> Stream { get; set; }
         public ISelectProcessor<TIn, TOut> Processor { get; set; }
-        public bool ExcludeNull { get; set; }
         public bool WithNoDispose { get; set; }
     }
     public class SelectStreamNode<TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, SelectArgs<TIn, TOut>>
@@ -25,8 +24,6 @@ namespace Paillave.Etl.StreamNodes
         protected override IStream<TOut> CreateOutputStream(SelectArgs<TIn, TOut> args)
         {
             IPushObservable<TOut> obs = args.Stream.Observable.Map(WrapSelectForDisposal<TIn, TOut>(args.Processor.ProcessRow, args.WithNoDispose));
-            if (args.ExcludeNull)
-                obs = obs.Filter(i => i != null);
             return base.CreateUnsortedStream(obs);
         }
     }
@@ -37,7 +34,6 @@ namespace Paillave.Etl.StreamNodes
     {
         public IStream<TIn> Stream { get; set; }
         public ISelectWithIndexProcessor<TIn, TOut> Processor { get; set; }
-        public bool ExcludeNull { get; set; }
         public bool WithNoDispose { get; set; }
     }
     public class SelectWithIndexStreamNode<TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, SelectWithIndexArgs<TIn, TOut>>
@@ -49,8 +45,6 @@ namespace Paillave.Etl.StreamNodes
         protected override IStream<TOut> CreateOutputStream(SelectWithIndexArgs<TIn, TOut> args)
         {
             IPushObservable<TOut> obs = args.Stream.Observable.Map(WrapSelectIndexForDisposal<TIn, TOut>(args.Processor.ProcessRow, args.WithNoDispose));
-            if (args.ExcludeNull)
-                obs = obs.Filter(i => i != null);
             return base.CreateUnsortedStream(obs);
         }
     }
@@ -61,7 +55,6 @@ namespace Paillave.Etl.StreamNodes
     {
         public ISingleStream<TIn> Stream { get; set; }
         public ISelectProcessor<TIn, TOut> Processor { get; set; }
-        public bool ExcludeNull { get; set; }
         public bool WithNoDispose { get; set; }
     }
     public class SelectSingleStreamNode<TIn, TOut> : StreamNodeBase<TOut, ISingleStream<TOut>, SelectSingleArgs<TIn, TOut>>
@@ -73,8 +66,6 @@ namespace Paillave.Etl.StreamNodes
         protected override ISingleStream<TOut> CreateOutputStream(SelectSingleArgs<TIn, TOut> args)
         {
             IPushObservable<TOut> obs = args.Stream.Observable.Map(WrapSelectForDisposal<TIn, TOut>(args.Processor.ProcessRow, args.WithNoDispose));
-            if (args.ExcludeNull)
-                obs = obs.Filter(i => i != null);
             return base.CreateSingleStream(obs);
         }
     }
