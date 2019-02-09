@@ -75,7 +75,7 @@
 <h2 id="the-etl-itself">The ETL itself</h2>
 <p>An Etl process is a method that take one parameter with the type <code>Paillave.Etl.Core.Streams.ISingleStream&lt;&gt;</code>.
 Ideally it should be a static method for it to be directly executable by the <a href="../debugger/index.html">debugger tool</a>. It should be placed in a specific namespace <code>Jobs</code></p>
-<p>The generic type of the of the parameter is a tpe that contains the starting point value of the ELT process. It will be issued only once into the input stream.</p>
+<p>The generic type of the parameter is the type that contains the starting point value of the ELT process. It will be issued only once into the input stream.</p>
 <h2 id="stream-types-used-by-the-process">Stream types used by the process</h2>
 <p>Every not anonymous type that is involved in a stream should be in a specific namespace <code>StreamTypes</code>. By defining ETL processes you will try to use as much anonymous types as possible. Ideally, since you want it to be as less confusing as possible you want to make a distinction between ETL config types and input/output types. ETL config types are the entry point of your process whereas input/output types are values that directly the representation of what is read or written by the ETL process.</p>
 <h2 id="namespaces-structure">Namespaces structure</h2>
@@ -128,7 +128,7 @@ namespace Paillave.Etl.Recipes.DefineProcess.StreamTypes.Config
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/paillave/Etl.Net/blob/rehandlereactive/docfx_project/recipes/Define.Etl.Process.md/#L1" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/paillave/Etl.Net/blob/develop/docfx_project/recipes/Define.Etl.Process.md/#L1" class="contribution-link">Improve this Doc</a>
                   </li>
                 </ul>
               </div>
