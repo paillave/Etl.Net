@@ -1,29 +1,29 @@
 ### YamlMime:ManagedReference
 items:
-- uid: Paillave.Etl.Extensions.SortEx
-  commentId: T:Paillave.Etl.Extensions.SortEx
-  id: SortEx
+- uid: Paillave.Etl.Extensions.SubstractEx
+  commentId: T:Paillave.Etl.Extensions.SubstractEx
+  id: SubstractEx
   parent: Paillave.Etl.Extensions
   children:
-  - Paillave.Etl.Extensions.SortEx.Sort``2(IStream{``0},System.String,SortDefinition{``0,``1})
-  - Paillave.Etl.Extensions.SortEx.Sort``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
+  - Paillave.Etl.Extensions.SubstractEx.Substract``3(ISortedStream{``0,``2},System.String,ISortedStream{``1,``2})
+  - Paillave.Etl.Extensions.SubstractEx.Substract``4(``0,System.String,IStream{``2},System.Func{``1,``3},System.Func{``2,``3})
   langs:
   - csharp
   - vb
-  name: SortEx
-  nameWithType: SortEx
-  fullName: Paillave.Etl.Extensions.SortEx
+  name: SubstractEx
+  nameWithType: SubstractEx
+  fullName: Paillave.Etl.Extensions.SubstractEx
   type: Class
   source:
-    id: SortEx
+    id: SubstractEx
     path: ''
-    startLine: 1135
+    startLine: 1206
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static class SortEx
-    content.vb: Public Module SortEx
+    content: public static class SubstractEx
+    content.vb: Public Module SubstractEx
   inheritance:
   - System.Object
   inheritedMembers:
@@ -41,102 +41,109 @@ items:
   modifiers.vb:
   - Public
   - Module
-- uid: Paillave.Etl.Extensions.SortEx.Sort``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
-  commentId: M:Paillave.Etl.Extensions.SortEx.Sort``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
-  id: Sort``2(IStream{``0},System.String,System.Func{``0,``1},System.Object)
+- uid: Paillave.Etl.Extensions.SubstractEx.Substract``3(ISortedStream{``0,``2},System.String,ISortedStream{``1,``2})
+  commentId: M:Paillave.Etl.Extensions.SubstractEx.Substract``3(ISortedStream{``0,``2},System.String,ISortedStream{``1,``2})
+  id: Substract``3(ISortedStream{``0,``2},System.String,ISortedStream{``1,``2})
   isExtensionMethod: true
-  parent: Paillave.Etl.Extensions.SortEx
+  parent: Paillave.Etl.Extensions.SubstractEx
   langs:
   - csharp
   - vb
-  name: Sort<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)
-  nameWithType: SortEx.Sort<TIn, TKey>(IStream<TIn>, String, Func<TIn, TKey>, Object)
-  fullName: Paillave.Etl.Extensions.SortEx.Sort<TIn, TKey>(IStream<TIn>, System.String, System.Func<TIn, TKey>, System.Object)
+  name: Substract<TInLeft, TInRight, TKey>(ISortedStream<TInLeft, TKey>, String, ISortedStream<TInRight, TKey>)
+  nameWithType: SubstractEx.Substract<TInLeft, TInRight, TKey>(ISortedStream<TInLeft, TKey>, String, ISortedStream<TInRight, TKey>)
+  fullName: Paillave.Etl.Extensions.SubstractEx.Substract<TInLeft, TInRight, TKey>(ISortedStream<TInLeft, TKey>, System.String, ISortedStream<TInRight, TKey>)
   type: Method
   source:
-    id: Sort
+    id: Substract
     path: ''
-    startLine: 1137
+    startLine: 1208
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static ISortedStream<TIn, TKey> Sort<TIn, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, object keyPositions = null)
+    content: public static IStream<TInLeft> Substract<TInLeft, TInRight, TKey>(this ISortedStream<TInLeft, TKey> leftStream, string name, ISortedStream<TInRight, TKey> rightStream)
     parameters:
-    - id: stream
-      type: IStream{{TIn}}
+    - id: leftStream
+      type: ISortedStream{{TInLeft},{TKey}}
     - id: name
       type: System.String
-    - id: getKey
-      type: System.Func{{TIn},{TKey}}
-    - id: keyPositions
-      type: System.Object
+    - id: rightStream
+      type: ISortedStream{{TInRight},{TKey}}
     typeParameters:
-    - id: TIn
+    - id: TInLeft
+    - id: TInRight
     - id: TKey
     return:
-      type: ISortedStream{{TIn},{TKey}}
+      type: IStream{{TInLeft}}
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function Sort(Of TIn, TKey)(stream As IStream(Of TIn), name As String, getKey As Func(Of TIn, TKey), keyPositions As Object = Nothing) As ISortedStream(Of TIn, TKey)
-  overload: Paillave.Etl.Extensions.SortEx.Sort*
-  nameWithType.vb: SortEx.Sort(Of TIn, TKey)(IStream(Of TIn), String, Func(Of TIn, TKey), Object)
+      Public Shared Function Substract(Of TInLeft, TInRight, TKey)(leftStream As ISortedStream(Of TInLeft, TKey), name As String, rightStream As ISortedStream(Of TInRight, TKey)) As IStream(Of TInLeft)
+  overload: Paillave.Etl.Extensions.SubstractEx.Substract*
+  nameWithType.vb: SubstractEx.Substract(Of TInLeft, TInRight, TKey)(ISortedStream(Of TInLeft, TKey), String, ISortedStream(Of TInRight, TKey))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.SortEx.Sort(Of TIn, TKey)(IStream(Of TIn), System.String, System.Func(Of TIn, TKey), System.Object)
-  name.vb: Sort(Of TIn, TKey)(IStream(Of TIn), String, Func(Of TIn, TKey), Object)
-- uid: Paillave.Etl.Extensions.SortEx.Sort``2(IStream{``0},System.String,SortDefinition{``0,``1})
-  commentId: M:Paillave.Etl.Extensions.SortEx.Sort``2(IStream{``0},System.String,SortDefinition{``0,``1})
-  id: Sort``2(IStream{``0},System.String,SortDefinition{``0,``1})
+  fullName.vb: Paillave.Etl.Extensions.SubstractEx.Substract(Of TInLeft, TInRight, TKey)(ISortedStream(Of TInLeft, TKey), System.String, ISortedStream(Of TInRight, TKey))
+  name.vb: Substract(Of TInLeft, TInRight, TKey)(ISortedStream(Of TInLeft, TKey), String, ISortedStream(Of TInRight, TKey))
+- uid: Paillave.Etl.Extensions.SubstractEx.Substract``4(``0,System.String,IStream{``2},System.Func{``1,``3},System.Func{``2,``3})
+  commentId: M:Paillave.Etl.Extensions.SubstractEx.Substract``4(``0,System.String,IStream{``2},System.Func{``1,``3},System.Func{``2,``3})
+  id: Substract``4(``0,System.String,IStream{``2},System.Func{``1,``3},System.Func{``2,``3})
   isExtensionMethod: true
-  parent: Paillave.Etl.Extensions.SortEx
+  parent: Paillave.Etl.Extensions.SubstractEx
   langs:
   - csharp
   - vb
-  name: Sort<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)
-  nameWithType: SortEx.Sort<TIn, TKey>(IStream<TIn>, String, SortDefinition<TIn, TKey>)
-  fullName: Paillave.Etl.Extensions.SortEx.Sort<TIn, TKey>(IStream<TIn>, System.String, SortDefinition<TIn, TKey>)
+  name: Substract<TStream, TInLeft, TInRight, TKey>(TStream, String, IStream<TInRight>, Func<TInLeft, TKey>, Func<TInRight, TKey>)
+  nameWithType: SubstractEx.Substract<TStream, TInLeft, TInRight, TKey>(TStream, String, IStream<TInRight>, Func<TInLeft, TKey>, Func<TInRight, TKey>)
+  fullName: Paillave.Etl.Extensions.SubstractEx.Substract<TStream, TInLeft, TInRight, TKey>(TStream, System.String, IStream<TInRight>, System.Func<TInLeft, TKey>, System.Func<TInRight, TKey>)
   type: Method
   source:
-    id: Sort
+    id: Substract
     path: ''
-    startLine: 1145
+    startLine: 1217
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
   syntax:
-    content: public static ISortedStream<TIn, TKey> Sort<TIn, TKey>(this IStream<TIn> stream, string name, SortDefinition<TIn, TKey> sortDefinition)
+    content: >-
+      public static TStream Substract<TStream, TInLeft, TInRight, TKey>(this TStream leftStream, string name, IStream<TInRight> rightStream, Func<TInLeft, TKey> getLeftKey, Func<TInRight, TKey> getRightKey)
+          where TStream : IStream<TInLeft>
     parameters:
-    - id: stream
-      type: IStream{{TIn}}
+    - id: leftStream
+      type: '{TStream}'
     - id: name
       type: System.String
-    - id: sortDefinition
-      type: SortDefinition{{TIn},{TKey}}
+    - id: rightStream
+      type: IStream{{TInRight}}
+    - id: getLeftKey
+      type: System.Func{{TInLeft},{TKey}}
+    - id: getRightKey
+      type: System.Func{{TInRight},{TKey}}
     typeParameters:
-    - id: TIn
+    - id: TStream
+    - id: TInLeft
+    - id: TInRight
     - id: TKey
     return:
-      type: ISortedStream{{TIn},{TKey}}
+      type: '{TStream}'
     content.vb: >-
       <ExtensionAttribute>
 
-      Public Shared Function Sort(Of TIn, TKey)(stream As IStream(Of TIn), name As String, sortDefinition As SortDefinition(Of TIn, TKey)) As ISortedStream(Of TIn, TKey)
-  overload: Paillave.Etl.Extensions.SortEx.Sort*
-  nameWithType.vb: SortEx.Sort(Of TIn, TKey)(IStream(Of TIn), String, SortDefinition(Of TIn, TKey))
+      Public Shared Function Substract(Of TStream As IStream(Of TInLeft), TInLeft, TInRight, TKey)(leftStream As TStream, name As String, rightStream As IStream(Of TInRight), getLeftKey As Func(Of TInLeft, TKey), getRightKey As Func(Of TInRight, TKey)) As TStream
+  overload: Paillave.Etl.Extensions.SubstractEx.Substract*
+  nameWithType.vb: SubstractEx.Substract(Of TStream, TInLeft, TInRight, TKey)(TStream, String, IStream(Of TInRight), Func(Of TInLeft, TKey), Func(Of TInRight, TKey))
   modifiers.csharp:
   - public
   - static
   modifiers.vb:
   - Public
   - Shared
-  fullName.vb: Paillave.Etl.Extensions.SortEx.Sort(Of TIn, TKey)(IStream(Of TIn), System.String, SortDefinition(Of TIn, TKey))
-  name.vb: Sort(Of TIn, TKey)(IStream(Of TIn), String, SortDefinition(Of TIn, TKey))
+  fullName.vb: Paillave.Etl.Extensions.SubstractEx.Substract(Of TStream, TInLeft, TInRight, TKey)(TStream, System.String, IStream(Of TInRight), System.Func(Of TInLeft, TKey), System.Func(Of TInRight, TKey))
+  name.vb: Substract(Of TStream, TInLeft, TInRight, TKey)(TStream, String, IStream(Of TInRight), Func(Of TInLeft, TKey), Func(Of TInRight, TKey))
 references:
 - uid: Paillave.Etl.Extensions
   commentId: N:Paillave.Etl.Extensions
@@ -435,47 +442,59 @@ references:
   name: System
   nameWithType: System
   fullName: System
-- uid: Paillave.Etl.Extensions.SortEx.Sort*
-  commentId: Overload:Paillave.Etl.Extensions.SortEx.Sort
-  name: Sort
-  nameWithType: SortEx.Sort
-  fullName: Paillave.Etl.Extensions.SortEx.Sort
-- uid: IStream{{TIn}}
-  commentId: '!:IStream{``0}'
-  definition: IStream`1
-  name: IStream<TIn>
-  nameWithType: IStream<TIn>
-  fullName: IStream<TIn>
-  nameWithType.vb: IStream(Of TIn)
-  fullName.vb: IStream(Of TIn)
-  name.vb: IStream(Of TIn)
+- uid: Paillave.Etl.Extensions.SubstractEx.Substract*
+  commentId: Overload:Paillave.Etl.Extensions.SubstractEx.Substract
+  name: Substract
+  nameWithType: SubstractEx.Substract
+  fullName: Paillave.Etl.Extensions.SubstractEx.Substract
+- uid: ISortedStream{{TInLeft},{TKey}}
+  commentId: '!:ISortedStream{``0,``3}'
+  definition: ISortedStream`2
+  name: ISortedStream<TInLeft, TKey>
+  nameWithType: ISortedStream<TInLeft, TKey>
+  fullName: ISortedStream<TInLeft, TKey>
+  nameWithType.vb: ISortedStream(Of TInLeft, TKey)
+  fullName.vb: ISortedStream(Of TInLeft, TKey)
+  name.vb: ISortedStream(Of TInLeft, TKey)
   spec.csharp:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
     isExternal: true
   - name: <
     nameWithType: <
     fullName: <
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
+  - name: TInLeft
+    nameWithType: TInLeft
+    fullName: TInLeft
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
   - name: '>'
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: IStream`1
-    name: IStream
-    nameWithType: IStream
-    fullName: IStream
+  - uid: ISortedStream`2
+    name: ISortedStream
+    nameWithType: ISortedStream
+    fullName: ISortedStream
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
     fullName: '(Of '
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
+  - name: TInLeft
+    nameWithType: TInLeft
+    fullName: TInLeft
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
   - name: )
     nameWithType: )
     fullName: )
@@ -486,67 +505,15 @@ references:
   name: String
   nameWithType: String
   fullName: System.String
-- uid: System.Func{{TIn},{TKey}}
-  commentId: T:System.Func{``0,``2}
-  parent: System
-  definition: System.Func`2
-  name: Func<TIn, TKey>
-  nameWithType: Func<TIn, TKey>
-  fullName: System.Func<TIn, TKey>
-  nameWithType.vb: Func(Of TIn, TKey)
-  fullName.vb: System.Func(Of TIn, TKey)
-  name.vb: Func(Of TIn, TKey)
-  spec.csharp:
-  - uid: System.Func`2
-    name: Func
-    nameWithType: Func
-    fullName: System.Func
-    isExternal: true
-  - name: <
-    nameWithType: <
-    fullName: <
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
-  - name: ', '
-    nameWithType: ', '
-    fullName: ', '
-  - name: TKey
-    nameWithType: TKey
-    fullName: TKey
-  - name: '>'
-    nameWithType: '>'
-    fullName: '>'
-  spec.vb:
-  - uid: System.Func`2
-    name: Func
-    nameWithType: Func
-    fullName: System.Func
-    isExternal: true
-  - name: '(Of '
-    nameWithType: '(Of '
-    fullName: '(Of '
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
-  - name: ', '
-    nameWithType: ', '
-    fullName: ', '
-  - name: TKey
-    nameWithType: TKey
-    fullName: TKey
-  - name: )
-    nameWithType: )
-    fullName: )
-- uid: ISortedStream{{TIn},{TKey}}
-  commentId: '!:ISortedStream{``0,``2}'
+- uid: ISortedStream{{TInRight},{TKey}}
+  commentId: '!:ISortedStream{``1,``2}'
   definition: ISortedStream`2
-  name: ISortedStream<TIn, TKey>
-  nameWithType: ISortedStream<TIn, TKey>
-  fullName: ISortedStream<TIn, TKey>
-  nameWithType.vb: ISortedStream(Of TIn, TKey)
-  fullName.vb: ISortedStream(Of TIn, TKey)
-  name.vb: ISortedStream(Of TIn, TKey)
+  name: ISortedStream<TInRight, TKey>
+  nameWithType: ISortedStream<TInRight, TKey>
+  fullName: ISortedStream<TInRight, TKey>
+  nameWithType.vb: ISortedStream(Of TInRight, TKey)
+  fullName.vb: ISortedStream(Of TInRight, TKey)
+  name.vb: ISortedStream(Of TInRight, TKey)
   spec.csharp:
   - uid: ISortedStream`2
     name: ISortedStream
@@ -556,9 +523,9 @@ references:
   - name: <
     nameWithType: <
     fullName: <
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
+  - name: TInRight
+    nameWithType: TInRight
+    fullName: TInRight
   - name: ', '
     nameWithType: ', '
     fullName: ', '
@@ -577,9 +544,9 @@ references:
   - name: '(Of '
     nameWithType: '(Of '
     fullName: '(Of '
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
+  - name: TInRight
+    nameWithType: TInRight
+    fullName: TInRight
   - name: ', '
     nameWithType: ', '
     fullName: ', '
@@ -589,14 +556,15 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: IStream`1
-  isExternal: true
-  name: IStream<>
-  nameWithType: IStream<>
-  fullName: IStream<>
-  nameWithType.vb: IStream(Of )
-  fullName.vb: IStream(Of )
-  name.vb: IStream(Of )
+- uid: IStream{{TInLeft}}
+  commentId: '!:IStream{``0}'
+  definition: IStream`1
+  name: IStream<TInLeft>
+  nameWithType: IStream<TInLeft>
+  fullName: IStream<TInLeft>
+  nameWithType.vb: IStream(Of TInLeft)
+  fullName.vb: IStream(Of TInLeft)
+  name.vb: IStream(Of TInLeft)
   spec.csharp:
   - uid: IStream`1
     name: IStream
@@ -606,9 +574,9 @@ references:
   - name: <
     nameWithType: <
     fullName: <
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: TInLeft
+    nameWithType: TInLeft
+    fullName: TInLeft
   - name: '>'
     nameWithType: '>'
     fullName: '>'
@@ -621,60 +589,9 @@ references:
   - name: '(Of '
     nameWithType: '(Of '
     fullName: '(Of '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
-  - name: )
-    nameWithType: )
-    fullName: )
-- uid: System.Func`2
-  commentId: T:System.Func`2
-  isExternal: true
-  name: Func<T, TResult>
-  nameWithType: Func<T, TResult>
-  fullName: System.Func<T, TResult>
-  nameWithType.vb: Func(Of T, TResult)
-  fullName.vb: System.Func(Of T, TResult)
-  name.vb: Func(Of T, TResult)
-  spec.csharp:
-  - uid: System.Func`2
-    name: Func
-    nameWithType: Func
-    fullName: System.Func
-    isExternal: true
-  - name: <
-    nameWithType: <
-    fullName: <
-  - name: T
-    nameWithType: T
-    fullName: T
-  - name: ', '
-    nameWithType: ', '
-    fullName: ', '
-  - name: TResult
-    nameWithType: TResult
-    fullName: TResult
-  - name: '>'
-    nameWithType: '>'
-    fullName: '>'
-  spec.vb:
-  - uid: System.Func`2
-    name: Func
-    nameWithType: Func
-    fullName: System.Func
-    isExternal: true
-  - name: '(Of '
-    nameWithType: '(Of '
-    fullName: '(Of '
-  - name: T
-    nameWithType: T
-    fullName: T
-  - name: ', '
-    nameWithType: ', '
-    fullName: ', '
-  - name: TResult
-    nameWithType: TResult
-    fullName: TResult
+  - name: TInLeft
+    nameWithType: TInLeft
+    fullName: TInLeft
   - name: )
     nameWithType: )
     fullName: )
@@ -728,27 +645,111 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: SortDefinition{{TIn},{TKey}}
-  commentId: '!:SortDefinition{``0,``1}'
-  definition: SortDefinition`2
-  name: SortDefinition<TIn, TKey>
-  nameWithType: SortDefinition<TIn, TKey>
-  fullName: SortDefinition<TIn, TKey>
-  nameWithType.vb: SortDefinition(Of TIn, TKey)
-  fullName.vb: SortDefinition(Of TIn, TKey)
-  name.vb: SortDefinition(Of TIn, TKey)
+- uid: IStream`1
+  isExternal: true
+  name: IStream<>
+  nameWithType: IStream<>
+  fullName: IStream<>
+  nameWithType.vb: IStream(Of )
+  fullName.vb: IStream(Of )
+  name.vb: IStream(Of )
   spec.csharp:
-  - uid: SortDefinition`2
-    name: SortDefinition
-    nameWithType: SortDefinition
-    fullName: SortDefinition
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
     isExternal: true
   - name: <
     nameWithType: <
     fullName: <
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: '{TStream}'
+  commentId: '!:TStream'
+  definition: TStream
+  name: TStream
+  nameWithType: TStream
+  fullName: TStream
+- uid: IStream{{TInRight}}
+  commentId: '!:IStream{``1}'
+  definition: IStream`1
+  name: IStream<TInRight>
+  nameWithType: IStream<TInRight>
+  fullName: IStream<TInRight>
+  nameWithType.vb: IStream(Of TInRight)
+  fullName.vb: IStream(Of TInRight)
+  name.vb: IStream(Of TInRight)
+  spec.csharp:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TInRight
+    nameWithType: TInRight
+    fullName: TInRight
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: IStream`1
+    name: IStream
+    nameWithType: IStream
+    fullName: IStream
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TInRight
+    nameWithType: TInRight
+    fullName: TInRight
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Func{{TInLeft},{TKey}}
+  commentId: T:System.Func{``0,``3}
+  parent: System
+  definition: System.Func`2
+  name: Func<TInLeft, TKey>
+  nameWithType: Func<TInLeft, TKey>
+  fullName: System.Func<TInLeft, TKey>
+  nameWithType.vb: Func(Of TInLeft, TKey)
+  fullName.vb: System.Func(Of TInLeft, TKey)
+  name.vb: Func(Of TInLeft, TKey)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TInLeft
+    nameWithType: TInLeft
+    fullName: TInLeft
   - name: ', '
     nameWithType: ', '
     fullName: ', '
@@ -759,17 +760,17 @@ references:
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: SortDefinition`2
-    name: SortDefinition
-    nameWithType: SortDefinition
-    fullName: SortDefinition
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
     fullName: '(Of '
-  - name: TIn
-    nameWithType: TIn
-    fullName: TIn
+  - name: TInLeft
+    nameWithType: TInLeft
+    fullName: TInLeft
   - name: ', '
     nameWithType: ', '
     fullName: ', '
@@ -779,53 +780,110 @@ references:
   - name: )
     nameWithType: )
     fullName: )
-- uid: SortDefinition`2
-  isExternal: true
-  name: SortDefinition<, >
-  nameWithType: SortDefinition<, >
-  fullName: SortDefinition<, >
-  nameWithType.vb: SortDefinition(Of , )
-  fullName.vb: SortDefinition(Of , )
-  name.vb: SortDefinition(Of , )
+- uid: System.Func{{TInRight},{TKey}}
+  commentId: T:System.Func{``1,``3}
+  parent: System
+  definition: System.Func`2
+  name: Func<TInRight, TKey>
+  nameWithType: Func<TInRight, TKey>
+  fullName: System.Func<TInRight, TKey>
+  nameWithType.vb: Func(Of TInRight, TKey)
+  fullName.vb: System.Func(Of TInRight, TKey)
+  name.vb: Func(Of TInRight, TKey)
   spec.csharp:
-  - uid: SortDefinition`2
-    name: SortDefinition
-    nameWithType: SortDefinition
-    fullName: SortDefinition
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
     isExternal: true
   - name: <
     nameWithType: <
     fullName: <
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: TInRight
+    nameWithType: TInRight
+    fullName: TInRight
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
   - name: '>'
     nameWithType: '>'
     fullName: '>'
   spec.vb:
-  - uid: SortDefinition`2
-    name: SortDefinition
-    nameWithType: SortDefinition
-    fullName: SortDefinition
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
     isExternal: true
   - name: '(Of '
     nameWithType: '(Of '
     fullName: '(Of '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: TInRight
+    nameWithType: TInRight
+    fullName: TInRight
   - name: ', '
     nameWithType: ', '
     fullName: ', '
-  - name: ''
-    nameWithType: ''
-    fullName: ''
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: TStream
+  name: TStream
+  nameWithType: TStream
+  fullName: TStream
+- uid: System.Func`2
+  commentId: T:System.Func`2
+  isExternal: true
+  name: Func<T, TResult>
+  nameWithType: Func<T, TResult>
+  fullName: System.Func<T, TResult>
+  nameWithType.vb: Func(Of T, TResult)
+  fullName.vb: System.Func(Of T, TResult)
+  name.vb: Func(Of T, TResult)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    nameWithType: Func
+    fullName: System.Func
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TResult
+    nameWithType: TResult
+    fullName: TResult
   - name: )
     nameWithType: )
     fullName: )

@@ -25,6 +25,7 @@ items:
   - Paillave.Etl.Extensions.SkipEx
   - Paillave.Etl.Extensions.SortEx
   - Paillave.Etl.Extensions.SubProcessEx
+  - Paillave.Etl.Extensions.SubstractEx
   - Paillave.Etl.Extensions.ThroughActionEx
   - Paillave.Etl.Extensions.ThroughLocalFileEx
   - Paillave.Etl.Extensions.TopEx
@@ -147,6 +148,11 @@ references:
   name: SubProcessEx
   nameWithType: SubProcessEx
   fullName: Paillave.Etl.Extensions.SubProcessEx
+- uid: Paillave.Etl.Extensions.SubstractEx
+  commentId: T:Paillave.Etl.Extensions.SubstractEx
+  name: SubstractEx
+  nameWithType: SubstractEx
+  fullName: Paillave.Etl.Extensions.SubstractEx
 - uid: Paillave.Etl.Extensions.ThroughActionEx
   commentId: T:Paillave.Etl.Extensions.ThroughActionEx
   name: ThroughActionEx

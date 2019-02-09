@@ -21,7 +21,7 @@ namespace Paillave.Etl.StreamNodes
 
         protected override IStream<TIn> CreateOutputStream(DistinctArgs<TIn, TKey> args)
         {
-            return base.CreateUnsortedStream(args.InputStream.Observable.Distinct(new SortDefinition<TIn, TKey>(args.GetKey)));
+            return base.CreateUnsortedStream(args.InputStream.Observable.Distinct(args.GetKey));
         }
     }
 }

@@ -18,7 +18,7 @@ items:
   source:
     id: TopEx
     path: ''
-    startLine: 1453
+    startLine: 1474
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -57,7 +57,7 @@ items:
   source:
     id: Top
     path: ''
-    startLine: 1455
+    startLine: 1476
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -104,7 +104,7 @@ items:
   source:
     id: Top
     path: ''
-    startLine: 1463
+    startLine: 1484
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -151,7 +151,7 @@ items:
   source:
     id: Top
     path: ''
-    startLine: 1471
+    startLine: 1492
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

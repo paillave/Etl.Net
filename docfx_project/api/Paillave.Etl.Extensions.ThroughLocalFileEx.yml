@@ -17,7 +17,7 @@ items:
   source:
     id: ThroughLocalFileEx
     path: ''
-    startLine: 1412
+    startLine: 1433
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -56,7 +56,7 @@ items:
   source:
     id: ThroughLocalFile
     path: ''
-    startLine: 1414
+    startLine: 1435
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions
@@ -100,7 +100,7 @@ items:
   source:
     id: ThroughLocalFile
     path: ''
-    startLine: 1423
+    startLine: 1444
   assemblies:
   - cs.temp.dll
   namespace: Paillave.Etl.Extensions

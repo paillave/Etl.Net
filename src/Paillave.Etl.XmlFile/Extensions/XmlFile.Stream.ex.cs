@@ -110,6 +110,16 @@ namespace Paillave.Etl.XmlFile.Extensions
             });
             return stream.CrossApply<LocalFilesValue, XmlNodeParsed>(name, valuesProvider.PushValues, noParallelisation);
         }
+        public static IStream<TOut> CrossApplyXmlFile<TOut>(this IStream<LocalFilesValue> stream, string name, XmlFileDefinition xmlFileDefinition, Func<LocalFilesValue, XmlNodeParsed, TOut> resultSelector, bool noParallelisation = false)
+        {
+            var valuesProvider = new XmlFileValuesProvider<LocalFilesValue, TOut>(new XmlFileValuesProviderArgs<LocalFilesValue, TOut>()
+            {
+                DataStreamSelector = i => i.GetContent(),
+                XmlFileDefinition = xmlFileDefinition,
+                ResultSelector = resultSelector
+            });
+            return stream.CrossApply<LocalFilesValue, TOut>(name, valuesProvider.PushValues, noParallelisation);
+        }
         public static IStream<XmlNodeParsed> CrossApplyXmlFile(this IStream<Stream> stream, string name, XmlFileDefinition xmlFileDefinition, bool noParallelisation = false)
         {
             var valuesProvider = new XmlFileValuesProvider<Stream, XmlNodeParsed>(new XmlFileValuesProviderArgs<Stream, XmlNodeParsed>()

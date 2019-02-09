@@ -228,6 +228,256 @@
       </tr>
     </tbody>
   </table>
+  
+  
+  <a id="Paillave_Etl_Extensions_UnionEx_Union_" data-uid="Paillave.Etl.Extensions.UnionEx.Union*"></a>
+  <h4 id="Paillave_Etl_Extensions_UnionEx_Union__3_IStream___0__System_String_IStream___1__System_Func___0___1___2__" data-uid="Paillave.Etl.Extensions.UnionEx.Union``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,``2})">Union&lt;TIn1, TIn2, TOut&gt;(IStream&lt;TIn1&gt;, String, IStream&lt;TIn2&gt;, Func&lt;TIn1, TIn2, TOut&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Union&lt;TIn1, TIn2, TOut&gt;(this IStream&lt;TIn1&gt; stream, string name, IStream&lt;TIn2&gt; inputStream2, Func&lt;TIn1, TIn2, TOut&gt; resultSelector)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TIn1&gt;</td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TIn2&gt;</td>
+        <td><span class="parametername">inputStream2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TIn1, TIn2, TOut&gt;</td>
+        <td><span class="parametername">resultSelector</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TOut&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TIn2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TOut</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Paillave_Etl_Extensions_UnionEx_Union_" data-uid="Paillave.Etl.Extensions.UnionEx.Union*"></a>
+  <h4 id="Paillave_Etl_Extensions_UnionEx_Union__3_IStream___0__System_String_IStream___1__System_Func___0___1___2__System_Func___0___1___2__" data-uid="Paillave.Etl.Extensions.UnionEx.Union``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``1,``2},System.Func{``0,``1,``2})">Union&lt;TIn1, TIn2, TOut&gt;(IStream&lt;TIn1&gt;, String, IStream&lt;TIn2&gt;, Func&lt;TIn1, TIn2, TOut&gt;, Func&lt;TIn1, TIn2, TOut&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Union&lt;TIn1, TIn2, TOut&gt;(this IStream&lt;TIn1&gt; stream, string name, IStream&lt;TIn2&gt; inputStream2, Func&lt;TIn1, TIn2, TOut&gt; resultSelectorLeft, Func&lt;TIn1, TIn2, TOut&gt; resultSelectorRight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TIn1&gt;</td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TIn2&gt;</td>
+        <td><span class="parametername">inputStream2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TIn1, TIn2, TOut&gt;</td>
+        <td><span class="parametername">resultSelectorLeft</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TIn1, TIn2, TOut&gt;</td>
+        <td><span class="parametername">resultSelectorRight</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TOut&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TIn2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TOut</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="Paillave_Etl_Extensions_UnionEx_Union_" data-uid="Paillave.Etl.Extensions.UnionEx.Union*"></a>
+  <h4 id="Paillave_Etl_Extensions_UnionEx_Union__3_IStream___0__System_String_IStream___1__System_Func___0___2__System_Func___1___2__" data-uid="Paillave.Etl.Extensions.UnionEx.Union``3(IStream{``0},System.String,IStream{``1},System.Func{``0,``2},System.Func{``1,``2})">Union&lt;TIn1, TIn2, TOut&gt;(IStream&lt;TIn1&gt;, String, IStream&lt;TIn2&gt;, Func&lt;TIn1, TOut&gt;, Func&lt;TIn2, TOut&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IStream&lt;TOut&gt; Union&lt;TIn1, TIn2, TOut&gt;(this IStream&lt;TIn1&gt; stream, string name, IStream&lt;TIn2&gt; inputStream2, Func&lt;TIn1, TOut&gt; resultSelectorLeft, Func&lt;TIn2, TOut&gt; resultSelectorRight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TIn1&gt;</td>
+        <td><span class="parametername">stream</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TIn2&gt;</td>
+        <td><span class="parametername">inputStream2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TIn1, TOut&gt;</td>
+        <td><span class="parametername">resultSelectorLeft</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;TIn2, TOut&gt;</td>
+        <td><span class="parametername">resultSelectorRight</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IStream</span>&lt;TOut&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TIn2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TOut</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
 </article>
           </div>
           
