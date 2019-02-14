@@ -26,21 +26,31 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
         private Dictionary<TKey, CachedEntity> _cachedEntities = new Dictionary<TKey, CachedEntity>();
         private int _cacheSize = 1000;
         public TCtx Context { get; }
+
+        private readonly bool _getFullDataset;
         private Func<TInLeft, TCtx, TEntity> _createIfNotFound = null;
         private Func<IQueryable<TEntity>, IQueryable<TEntity>> _includeInstruction = null;
         public EfMatcher(EfMatcherConfig<TInLeft, TEntity, TCtx, TKey> config)
         {
+            _getFullDataset = config.GetFullDataset;
             _createIfNotFound = config.CreateIfNotFound;
             _includeInstruction = config.IncludeInstruction;
             Context = config.Context;
             _getLeftKey = config.LeftKeyExpression.Compile();
             _getRightKey = config.RightKeyExpression.Compile();
             _matchCriteriaBuilder = MatchCriteriaBuilder.Create(config.LeftKeyExpression, config.RightKeyExpression, config.DefaultDatasetCriteria);
-            if (config.DefaultDatasetCriteria != null && config.GetFullDataset)
+            if (config.GetFullDataset)
             {
-                var defaultCache = (_includeInstruction == null ? config.Context.Set<TEntity>() : _includeInstruction(config.Context.Set<TEntity>())).Where(config.DefaultDatasetCriteria).ToList();
+                var query = (_includeInstruction == null ? config.Context.Set<TEntity>() : _includeInstruction(config.Context.Set<TEntity>()));
+                if (config.DefaultDatasetCriteria != null)
+                    query = query.Where(config.DefaultDatasetCriteria);
+
+                var defaultCache = query.ToList();
                 _cacheSize = Math.Max(defaultCache.Count, config.MinCacheSize);
-                _cachedEntities = defaultCache.ToDictionary(_getRightKey, i => new CachedEntity(i));
+                _cachedEntities = defaultCache
+                    .Select(i => new { Key = _getRightKey(i), Value = new CachedEntity(i) })
+                    .Where(i => i.Key != null)
+                    .ToDictionary(i => i.Key, i => i.Value);
             }
             else
             {
@@ -50,8 +60,10 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
         public TEntity GetMatch(TInLeft input)
         {
             var inputKey = _getLeftKey(input);
+            if (inputKey == null) return null;
             if (_cachedEntities.TryGetValue(inputKey, out var entryFromCache))
                 return entryFromCache.Entity;
+            if (_getFullDataset) return default;
             var dbSet = Context.Set<TEntity>();
             var expr = _matchCriteriaBuilder.GetCriteriaExpression(input);
 

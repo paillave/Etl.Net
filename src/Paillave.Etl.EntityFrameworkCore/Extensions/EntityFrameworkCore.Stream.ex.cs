@@ -127,7 +127,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
             }).Output;
         }
 
-        public static IStream<TOut> EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut, TKey>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TKey>> getLeftStreamKey, Expression<Func<TEntity, TKey>> getEntityStreamKey, Func<TIn, TEntity, TOut> resultSelector, Expression<Func<TEntity, bool>> defaultCriteria, bool getFullDataset = false, Func<IQueryable<TEntity>, IQueryable<TEntity>> includeInstruction = null, Func<TIn, TCtx, TEntity> createIfNotFound = null, int cacheSize = 10000)
+        public static IStream<TOut> EntityFrameworkCoreLookup<TIn, TEntity, TCtx, TOut, TKey>(this IStream<TIn> inputStream, string name, ISingleStream<TCtx> dbContextStream, Expression<Func<TIn, TKey>> getLeftStreamKey, Expression<Func<TEntity, TKey>> getEntityStreamKey, Func<TIn, TEntity, TOut> resultSelector, bool getFullDataset = false, Expression<Func<TEntity, bool>> defaultCriteria=null, Func<IQueryable<TEntity>, IQueryable<TEntity>> includeInstruction = null, Func<TIn, TCtx, TEntity> createIfNotFound = null, int cacheSize = 10000)
             where TCtx : DbContext
             where TEntity : class
         {

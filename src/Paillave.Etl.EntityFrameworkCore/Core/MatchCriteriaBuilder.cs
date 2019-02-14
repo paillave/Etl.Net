@@ -11,43 +11,39 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
     }
     public class MatchCriteriaBuilder<TInLeft, TEntity, TKey>
     {
-        private Expression<Func<TInLeft, TEntity, bool>> _matchExpression;
-        private ParameterExpression _leftParamExpression;
-        private ParameterExpression _entityParamExpression;
-        public MatchCriteriaBuilder(Expression<Func<TInLeft, TKey>> leftKeyExpression, Expression<Func<TEntity, TKey>> rightKeyExpression, Expression<Func<TEntity, bool>> defaultDatasetCriteria = null)
+        private readonly Expression<Func<TEntity, bool>> _defaultDatasetCriteria;
+        private readonly KeyDefinitionExtractor.ExpressionKeysResult _inputKeyExpressionStructure;
+        private readonly KeyDefinitionExtractor.ExpressionKeysResult _entityKeyExpressionStructure;
+        // private Expression<Func<TInLeft, TEntity, bool>> _matchExpression;
+        // private ParameterExpression _leftParamExpression;
+        // private ParameterExpression _entityParamExpression;
+        public MatchCriteriaBuilder(Expression<Func<TInLeft, TKey>> leftKeyExpression, Expression<Func<TEntity, TKey>> entityKeyExpression, Expression<Func<TEntity, bool>> defaultDatasetCriteria = null)
         {
-            // http://www.albahari.com/nutshell/predicatebuilder.aspx
-            var leftKeyProperties = KeyDefinitionExtractor.GetKeys(leftKeyExpression);
-            var rightKeyProperties = KeyDefinitionExtractor.GetKeys(rightKeyExpression);
-            ParameterExpression leftParam = Expression.Parameter(typeof(TInLeft), "left");
-            ParameterExpression rightParam = Expression.Parameter(typeof(TEntity), "entity");
-            var equalityExpressions = leftKeyProperties.Zip(rightKeyProperties, (l, r) =>
-              {
-                  var leftValExpression = Expression.Property(leftParam, l);
-                  var rightValExpression = Expression.Property(rightParam, r);
-                  return Expression.Equal(leftValExpression, rightValExpression);
-              });
+            this._defaultDatasetCriteria = defaultDatasetCriteria;
+            this._inputKeyExpressionStructure = KeyDefinitionExtractor.GetExpressionKeys(leftKeyExpression);
+            this._entityKeyExpressionStructure = KeyDefinitionExtractor.GetExpressionKeys(entityKeyExpression);
+        }
+        public Expression<Func<TEntity, bool>> GetCriteriaExpression(TInLeft value)
+        {
+            var paramExpr = Expression.Constant(value);
+
+            var equalityExpressions = _inputKeyExpressionStructure.MemberExpressions
+                .Zip(_entityKeyExpressionStructure.MemberExpressions, (i, e) => Expression.Equal(i, e));
+
             BinaryExpression expr = null;
             foreach (var equalityExpression in equalityExpressions)
             {
                 if (expr == null) expr = equalityExpression;
                 else expr = Expression.AndAlso(expr, equalityExpression);
             }
-            if (defaultDatasetCriteria != null)
+            if (_defaultDatasetCriteria != null)
             {
-                expr = Expression.AndAlso(expr, Expression.Invoke(defaultDatasetCriteria, rightParam));
+                expr = Expression.AndAlso(expr, Expression.Invoke(_defaultDatasetCriteria, _entityKeyExpressionStructure.ParameterExpression));
             }
-            _leftParamExpression = leftParam;
-            _entityParamExpression = rightParam;
-            _matchExpression = Expression.Lambda<Func<TInLeft, TEntity, bool>>(expr, _leftParamExpression, _entityParamExpression);
-        }
-        public Expression<Func<TEntity, bool>> GetCriteriaExpression(TInLeft value)
-        {
-            var parameterToBeReplaced = _leftParamExpression;
-            var constantExpression = Expression.Constant(value, parameterToBeReplaced.Type);
-            var visitor = new ReplacementVisitor(parameterToBeReplaced, constantExpression);
-            var newBody = visitor.Visit(_matchExpression.Body);
-            return Expression.Lambda<Func<TEntity, bool>>(newBody, _entityParamExpression);
+
+            var fExpr = Expression.Lambda<Func<TInLeft, TEntity, bool>>(expr, _inputKeyExpressionStructure.ParameterExpression, _entityKeyExpressionStructure.ParameterExpression);
+
+            return fExpr.ApplyPartialLeft(value);
         }
     }
 }
