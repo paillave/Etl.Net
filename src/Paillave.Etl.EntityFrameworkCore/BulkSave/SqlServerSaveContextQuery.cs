@@ -76,7 +76,7 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
                 EfProperties = PropertiesToBulkLoad,
                 Types = EntityTypes,
                 Context = Context,
-                TempColumnNumOrderName =            TempColumnNumOrderName
+                TempColumnNumOrderName = TempColumnNumOrderName
             });
             //sqlBulkCopy.EnableStreaming = true;
             sqlBulkCopy.WriteToServer(dataReader);
@@ -91,8 +91,16 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         public override IList<T> GetOutputStaging()
             => base.QueryOutputTable(GetOutputStagingSql()).ToList();
 
+        public override IList<T> GetOutputStagingForComputedColumns()
+            => base.QueryOutputTable(GetOutputStagingForComputedColumnsSql()).ToList();
+
+
         protected virtual string GetOutputStagingSql()
             => $@"sp_executesql N'set nocount on; select * from {SqlOutputStagingTableName} order by {TempColumnNumOrderName}';"; //the sp_execute is to prevent EF core to wrap the query into another subquery that will involve a different sorting depending in the situtation (not too proud of this solution, but I really didn't find better)
+
+
+        protected virtual string GetOutputStagingForComputedColumnsSql()
+            => $@"sp_executesql N'set nocount on; select T.* from {SqlStagingTableName} as S left join {SqlTargetTable} as T on {string.Join(" AND ", PropertiesForPivot.Select(i => CreateEqualityConditionSql("T", "S", i)))} order by S.{TempColumnNumOrderName}';";
 
         public override void MergeFromStaging()
             => this.Context.Database.ExecuteSqlCommand(this.MergeFromStagingSql());

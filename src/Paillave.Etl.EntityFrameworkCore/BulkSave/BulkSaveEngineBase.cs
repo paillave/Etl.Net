@@ -126,7 +126,11 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
             contextQuery.MergeFromStaging();
             if (entities.Count > 10000)
                 contextQuery.IndexOutputStagingTable();
-            var resultEntities = contextQuery.GetOutputStaging();
+            IList<T> resultEntities;
+            if (_propertiesToUpdate.Count > 0)
+                resultEntities = contextQuery.GetOutputStaging();
+            else
+                resultEntities = contextQuery.GetOutputStagingForComputedColumns();
             UpdateInputEntities(_propertiesToGetAfterSetInTarget, entities, resultEntities);
             contextQuery.DeleteStagingTable();
             contextQuery.DeleteOutputStagingTable();

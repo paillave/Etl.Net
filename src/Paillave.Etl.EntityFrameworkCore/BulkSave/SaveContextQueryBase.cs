@@ -66,6 +66,7 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         public abstract void IndexStagingTable();
         public abstract void IndexOutputStagingTable();
         public abstract IList<T> GetOutputStaging();
+        public abstract IList<T> GetOutputStagingForComputedColumns();
         public abstract void DeleteStagingTable();
         public abstract void DeleteOutputStagingTable();
         protected IEnumerable<T> QueryOutputTable(string sqlQuery)

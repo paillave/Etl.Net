@@ -24,13 +24,15 @@ namespace Paillave.Etl.StreamNodes
 
         protected override IStream<TOut> CreateOutputStream(LookupArgs<TInLeft, TInRight, TOut, TKey> args)
         {
-            var rightDicoS = args.RightInputStream.Observable.ToList().Map(l => l.ToDictionary(args.GetRightStreamKey));
+            var rightDicoS = args.RightInputStream.Observable.ToList().Map(l => l.Select(i => new { Key = args.GetRightStreamKey(i), Value = i }).Where(i => i.Key != null).ToDictionary(i => i.Key, i => i.Value));
             var matchingS = args.LeftInputStream.Observable.CombineWithLatest(rightDicoS, (l, rl) => new { Left = l, Right = this.HandleMatching(l, rl, args.GetLeftStreamKey) }, true);
             return base.CreateUnsortedStream(matchingS.Map(i => args.ResultSelector(i.Left, i.Right)));
         }
         private TInRight HandleMatching(TInLeft l, Dictionary<TKey, TInRight> rl, Func<TInLeft, TKey> getLeftStreamKey)
         {
-            rl.TryGetValue(getLeftStreamKey(l), out TInRight r);
+            var key = getLeftStreamKey(l);
+            if (key == null) return default;
+            rl.TryGetValue(key, out TInRight r);
             return r;
         }
     }

@@ -13,7 +13,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
             vis.Visit(getKey);
             return vis.PropertyInfos;
         }
-        public static List<PropertyInfo> GetKeys<T,TKey>(Expression<Func<T, TKey>> getKey)
+        public static List<PropertyInfo> GetKeys<T, TKey>(Expression<Func<T, TKey>> getKey)
         {
             var vis = new KeyVisitor();
             vis.Visit(getKey);
@@ -28,20 +28,36 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
                 return base.VisitMember(node);
             }
         }
-        //public static List<MemberExpression> GetExpressionKeys<T>(Expression<Func<T, object>> getKey)
-        //{
-        //    var vis = new ExpressionKeyVisitor();
-        //    vis.Visit(getKey);
-        //    return vis.MemberExpressions;
-        //}
-        //private class ExpressionKeyVisitor : ExpressionVisitor
-        //{
-        //    public List<MemberExpression> MemberExpressions { get; } = new List<MemberExpression>();
-        //    protected override Expression VisitMember(MemberExpression node)
-        //    {
-        //        MemberExpressions.Add(node);
-        //        return base.VisitMember(node);
-        //    }
-        //}
+        public class ExpressionKeysResult
+        {
+            public List<MemberExpression> MemberExpressions { get; } = new List<MemberExpression>();
+            public ParameterExpression ParameterExpression { get; set; }
+        }
+        public static ExpressionKeysResult GetExpressionKeys<T>(Expression<Func<T, object>> getKey)
+        {
+            var vis = new ExpressionKeyVisitor();
+            vis.Visit(getKey);
+            return vis.Result;
+        }
+        public static ExpressionKeysResult GetExpressionKeys<T, TKey>(Expression<Func<T, TKey>> getKey)
+        {
+            var vis = new ExpressionKeyVisitor();
+            vis.Visit(getKey);
+            return vis.Result;
+        }
+        private class ExpressionKeyVisitor : ExpressionVisitor
+        {
+            public ExpressionKeysResult Result { get; } = new ExpressionKeysResult();
+            protected override Expression VisitParameter(ParameterExpression node)
+            {
+                Result.ParameterExpression = node;
+                return node;
+            }
+            protected override Expression VisitMember(MemberExpression node)
+            {
+                Result.MemberExpressions.Add(node);
+                return node;
+            }
+        }
     }
 }

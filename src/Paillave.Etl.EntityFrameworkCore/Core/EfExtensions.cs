@@ -52,5 +52,18 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
             var constant = Expression.Constant(value, parameterToBeReplaced.Type);
             return ApplyPartialLeft(expression, constant);
         }
+        public static Expression<Func<TResult>> ApplyPartial<T1, TResult>(this Expression<Func<T1, TResult>> expression, Expression expressionValue)
+        {
+            var parameterToBeReplaced = expression.Parameters[0];
+            var visitor = new ReplacementVisitor(parameterToBeReplaced, expressionValue);
+            var newBody = visitor.Visit(expression.Body);
+            return Expression.Lambda<Func<TResult>>(newBody, expression.Parameters[1]);
+        }
+        public static Expression<Func<TResult>> ApplyPartial<T1, TResult>(this Expression<Func<T1, TResult>> expression, T1 value)
+        {
+            var parameterToBeReplaced = expression.Parameters[0];
+            var constant = Expression.Constant(value, parameterToBeReplaced.Type);
+            return ApplyPartial(expression, constant);
+        }
     }
 }
