@@ -7,9 +7,5 @@ namespace Paillave.Etl.Sftp
 {
     public class SftpUploadException:Exception
     {
-        // public SftpUploadException(SftpStatusCode statusCode, string statusDescription) : base($"failed to upload. {statusCode}: {statusDescription}")
-        // {
-
-        // }
     }
 }

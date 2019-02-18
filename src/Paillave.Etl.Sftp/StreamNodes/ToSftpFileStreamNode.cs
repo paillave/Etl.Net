@@ -48,8 +48,6 @@ namespace Paillave.Etl.Sftp.StreamNodes
                 }
 
                 client.WriteAllBytes(outputPath, fileContents);
-                // using (var outputSteam = client.OpenWrite(outputPath))
-                //     stream.CopyTo(outputSteam);
             }
         }
     }

@@ -36,7 +36,6 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
             }
         }
         private IEnumerator _source;
-        //private readonly Dictionary<string, TypeAccessor> _accessorsByProperty;
         private readonly Dictionary<Type, ValueAccessor> _accessorsByType;
         private readonly HashSet<string> _shadowProperties;
         private readonly Dictionary<string, ValueConverter> _convertibleProperties;
@@ -51,7 +50,6 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
             if (source == null) throw new ArgumentOutOfRangeException("source");
 
             _accessorsByType = config.Types.ToDictionary(i => i.ClrType, i => new ValueAccessor(i.ClrType));
-            //_accessorsByProperty = efProperties.ToDictionary(i => i.Name, i => _accessorsByType[i.DeclaringType.ClrType]);
             _tempColumnNumOrderName = config.TempColumnNumOrderName;
             _shadowProperties = new HashSet<string>(config.EfProperties.Where(i => i.IsShadowProperty).Select(i => i.Name));
             _convertibleProperties = config.EfProperties.Select(i => new { ValueConverter = i.GetValueConverter(), i.Name }).Where(i => i.ValueConverter != null).ToDictionary(i => i.Name, i => i.ValueConverter);
@@ -155,54 +153,31 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
             s.CopyTo((int)fieldoffset, buffer, bufferoffset, count);
             return count;
         }
-
-        //protected override DbDataReader GetDbDataReader(int i)
-        //{
-        //    throw new NotSupportedException();
-        //}
-
         public string GetDataTypeName(int i) => (_effectiveTypes == null ? typeof(object) : _effectiveTypes[i]).Name;
-
         public DateTime GetDateTime(int i) => (DateTime)this[i];
-
         public decimal GetDecimal(int i) => (decimal)this[i];
-
         public double GetDouble(int i) => (double)this[i];
-
         public Type GetFieldType(int i) => _effectiveTypes == null ? typeof(object) : _effectiveTypes[i];
-
         public float GetFloat(int i) => (float)this[i];
-
         public Guid GetGuid(int i) => (Guid)this[i];
-
         public short GetInt16(int i) => (short)this[i];
-
         public int GetInt32(int i) => (int)this[i];
-
         public long GetInt64(int i) => (long)this[i];
-
         public string GetName(int i) => _memberNames[i];
-
         public int GetOrdinal(string name) => Array.IndexOf(_memberNames, name);
-
         public string GetString(int i) => (string)this[i];
-
         public object GetValue(int i) => this[i];
-
         public int GetValues(object[] values)
         {
             int count = Math.Min(values.Length, this._memberNames.Length);
             for (int i = 0; i < count; i++) values[i] = this.GetValue(this.GetOrdinal(this._memberNames[i]));
             return count;
         }
-
         public bool IsDBNull(int i) => this[i] is DBNull;
-
         public IDataReader GetData(int i)
         {
             throw new NotImplementedException();
         }
-
         public object this[string name]
         {
             get
@@ -226,7 +201,6 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
                 }
             }
         }
-
         public object this[int i] => this[_memberNames[i]] ?? DBNull.Value;
     }
     public class ObjectDataReaderConfig

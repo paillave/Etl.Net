@@ -14,9 +14,6 @@ namespace Paillave.Etl.EntityFrameworkCore.Core
         private readonly Expression<Func<TEntity, bool>> _defaultDatasetCriteria;
         private readonly KeyDefinitionExtractor.ExpressionKeysResult _inputKeyExpressionStructure;
         private readonly KeyDefinitionExtractor.ExpressionKeysResult _entityKeyExpressionStructure;
-        // private Expression<Func<TInLeft, TEntity, bool>> _matchExpression;
-        // private ParameterExpression _leftParamExpression;
-        // private ParameterExpression _entityParamExpression;
         public MatchCriteriaBuilder(Expression<Func<TInLeft, TKey>> leftKeyExpression, Expression<Func<TEntity, TKey>> entityKeyExpression, Expression<Func<TEntity, bool>> defaultDatasetCriteria = null)
         {
             this._defaultDatasetCriteria = defaultDatasetCriteria;
