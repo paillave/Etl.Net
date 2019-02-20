@@ -20,10 +20,6 @@ namespace Paillave.Etl.ExcelFile.Core
             this._cultureInfo = cultureInfo;
         }
 
-        //private string Serialize(object value)
-        //{
-        //    return _typeConverter.ConvertToString(null, _cultureInfo, value);
-        //}
         private object Deserialize(string text)
         {
             //TODO: Better exception handleling here
