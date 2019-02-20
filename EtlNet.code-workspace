@@ -43,5 +43,30 @@
 		"editor.acceptSuggestionOnCommitCharacter": false,
 		"editor.acceptSuggestionOnEnter": "off",
 		"editor.snippetSuggestions": "bottom"
+	},
+	"extensions": {
+		"recommendations": [
+			"GitHub.vscode-pull-request-github",
+			"CoenraadS.bracket-pair-colorizer",
+			"alefragnani.Bookmarks",
+			"christian-kohler.path-intellisense",
+			"docsmsft.docs-authoring-pack",
+			"donjayamanne.githistory",
+			"cssho.vscode-svgviewer",
+			"eamodio.gitlens",
+			"fabiospampinato.vscode-todo-plus",
+			"formulahendry.dotnet-test-explorer",
+			"idbartosz.darkpp-italic",
+			"formulahendry.dotnet",
+			"felipecaputo.git-project-manager",
+			"wayou.vscode-todo-highlight",
+			"streetsidesoftware.code-spell-checker",
+			"ms-vsts.team",
+			"ms-vscode.vs-keybindings",
+			"ms-docfx.DocFX",
+			"robertohuertasm.vscode-icons",
+			"jchannon.csharpextensions",
+			"ms-vscode.csharp"
+		]
 	}
 }
