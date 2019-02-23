@@ -31,6 +31,7 @@ namespace Paillave.Etl.TextFile.Core
                 {
                     throw new FlatFileNoFieldDeserializeException(i.Key, i.Value.PropertyName, ex);
                 }
+                    // if(string.IsNullOrWhiteSpace(valueToParse) && Nullable.)
                 try
                 {
                     return i.Value.Deserialize(valueToParse);
