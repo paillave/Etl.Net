@@ -10,12 +10,14 @@ namespace Paillave.Etl.TextFile.Core
         private readonly CultureInfo _cultureInfo;
         private readonly TypeConverter _typeConverter;
         private readonly PropertyInfo _propertyInfo;
+        private readonly bool _isTargetString;
         public string PropertyName => _propertyInfo.Name;
         public FlatFilePropertySerializer(PropertyInfo propertyInfo, CultureInfo cultureInfo)
         {
             this._propertyInfo = propertyInfo;
             this._typeConverter = TypeDescriptor.GetConverter(this._propertyInfo.PropertyType);
             this._cultureInfo = cultureInfo;
+            this._isTargetString = propertyInfo.PropertyType == typeof(string);
         }
 
         private string Serialize(object value)
@@ -24,6 +26,7 @@ namespace Paillave.Etl.TextFile.Core
         }
         public object Deserialize(string text)
         {
+            if (_isTargetString && string.IsNullOrWhiteSpace(text)) return (string)null;
             //TODO: Handle deserialization pb
             if (_propertyInfo.PropertyType == typeof(DateTime))
             {
