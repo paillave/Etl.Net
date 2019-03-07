@@ -37,11 +37,11 @@
       "type": "process",
       "args": [
         "build",
-        "FundProcess.Pms.Imports.sln"
+        "FundProcess.Pms.Processes.sln"
       ],
       "problemMatcher": "$msCompile",
       "options": {
-        "cwd": "${workspaceFolder}/FundProcess.Pms.Imports"
+        "cwd": "${workspaceFolder}/FundProcess.Pms.Processes"
       },
       "group":"build"
     },
@@ -51,11 +51,11 @@
       "type": "process",
       "args": [
         "clean",
-        "FundProcess.Pms.Imports.sln"
+        "FundProcess.Pms.Processes.sln"
       ],
       "problemMatcher": "$msCompile",
       "options": {
-        "cwd": "${workspaceFolder}/FundProcess.Pms.Imports"
+        "cwd": "${workspaceFolder}/FundProcess.Pms.Processes"
       }
     },
   ]

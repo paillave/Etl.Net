@@ -62,7 +62,7 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         /// <summary>
         /// merge the staging table in the target table 
         /// </summary>
-        public abstract void MergeFromStaging();
+        public abstract void MergeFromStaging(bool doNotUpdateIfExists = false);
         public abstract void IndexStagingTable();
         public abstract void IndexOutputStagingTable();
         public abstract IList<T> GetOutputStaging();

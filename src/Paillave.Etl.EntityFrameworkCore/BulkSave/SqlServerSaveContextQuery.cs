@@ -101,8 +101,8 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
         protected virtual string GetOutputStagingForComputedColumnsSql()
             => $@"sp_executesql N'set nocount on; select T.* from {SqlStagingTableName} as S left join {SqlTargetTable} as T on {string.Join(" AND ", PropertiesForPivot.Select(i => CreateEqualityConditionSql("T", "S", i)))} order by S.{TempColumnNumOrderName}';";
 
-        public override void MergeFromStaging()
-            => this.Context.Database.ExecuteSqlCommand(this.MergeFromStagingSql());
+        public override void MergeFromStaging(bool doNotUpdateIfExists = false)
+            => this.Context.Database.ExecuteSqlCommand(this.MergeFromStagingSql(doNotUpdateIfExists));
 
         private string CreateEqualityConditionSql(string aliasLeft, string aliasRight, IProperty property)
         {
@@ -112,12 +112,12 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
             else
                 return regularEquality;
         }
-        protected virtual string MergeFromStagingSql()
+        protected virtual string MergeFromStagingSql(bool doNotUpdateIfExists = false)
         {
             string whenNotMatchedStatement = $@"WHEN NOT MATCHED BY TARGET THEN 
                     INSERT ({string.Join(", ", PropertiesToInsert.Select(i => i.SqlServer().ColumnName))})
                     VALUES ({string.Join(", ", PropertiesToInsert.Select(i => $"S.{i.SqlServer().ColumnName}"))})";
-            string whenMatchedStatement = PropertiesToUpdate.Count == 0 ? "" : $@"WHEN MATCHED THEN 
+            string whenMatchedStatement = (PropertiesToUpdate.Count == 0 || doNotUpdateIfExists) ? "" : $@"WHEN MATCHED THEN 
                     UPDATE SET {string.Join(", ", PropertiesToUpdate.Select(i => $"T.{i.SqlServer().ColumnName} = S.{i.SqlServer().ColumnName}"))}";
             return $@"MERGE {SqlTargetTable} WITH (HOLDLOCK) AS T 
                     USING {SqlStagingTableName} AS S 

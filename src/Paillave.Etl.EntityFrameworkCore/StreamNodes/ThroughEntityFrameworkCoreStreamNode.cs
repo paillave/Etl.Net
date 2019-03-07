@@ -22,6 +22,7 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
         public Func<TIn, TCtx, TInEf> GetEntity { get; set; }
         public Func<TIn, TInEf, TOut> GetOutput { get; set; }
         public Expression<Func<TInEf, object>> PivotKey { get; set; }
+        public bool DoNotUpdateIfExists { get; set; } = false;
     }
     public enum SaveMode
     {
@@ -53,10 +54,10 @@ namespace Paillave.Etl.EntityFrameworkCore.StreamNodes
             switch (bulkLoadMode)
             {
                 case SaveMode.EntityFrameworkCore:
-                    dbContext.EfSave(entities, Args.PivotKey);
+                    dbContext.EfSave(entities, Args.PivotKey, Args.DoNotUpdateIfExists);
                     break;
                 case SaveMode.SqlServerBulk:
-                    dbContext.BulkSave(entities, Args.PivotKey);
+                    dbContext.BulkSave(entities, Args.PivotKey, Args.DoNotUpdateIfExists);
                     break;
                 default:
                     break;

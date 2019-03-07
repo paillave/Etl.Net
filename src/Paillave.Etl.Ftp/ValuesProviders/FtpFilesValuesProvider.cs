@@ -33,6 +33,14 @@ namespace Paillave.Etl.Ftp.ValuesProviders
             using (FileStream fs = File.OpenWrite(filePath))
                 response.GetResponseStream().CopyTo(fs);
         }
+        public void DeleteOnRemote(){
+            UriBuilder uriBuilder = new UriBuilder("ftp", _connectionInfo.Server, _connectionInfo.PortNumber, Path.Combine(_path, this.Name).Replace('\\', '/'));
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uriBuilder.Uri);
+            request.Method = WebRequestMethods.Ftp.DeleteFile;
+
+            request.Credentials = new NetworkCredential(_connectionInfo.Login, _connectionInfo.Password);
+            using (FtpWebResponse response = (FtpWebResponse)request.GetResponse());
+        }
 
         public Stream GetContent()
         {

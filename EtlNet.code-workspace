@@ -42,7 +42,8 @@
 		],
 		"editor.acceptSuggestionOnCommitCharacter": false,
 		"editor.acceptSuggestionOnEnter": "off",
-		"editor.snippetSuggestions": "bottom"
+		"editor.snippetSuggestions": "bottom",
+		"workbench.tree.indent": 20
 	},
 	"extensions": {
 		"recommendations": [

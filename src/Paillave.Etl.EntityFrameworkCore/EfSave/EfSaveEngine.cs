@@ -51,7 +51,7 @@ namespace Paillave.Etl.EntityFrameworkCore.EfSave
             Expression rightValue = Expression.Property(rightParam, propertyInfo);
             return Expression.Equal(leftValue, rightValue);
         }
-        public void Save(IList<T> entities)
+        public void Save(IList<T> entities, bool doNotUpdateIfExists = false)
         {
             var contextSet = _context.Set<T>();
             foreach (var entity in entities)
@@ -60,12 +60,15 @@ namespace Paillave.Etl.EntityFrameworkCore.EfSave
                 T existingEntity = contextSet.AsNoTracking().FirstOrDefault(expr3);
                 if (existingEntity != null)
                 {
-                    foreach (var keyPropertyInfo in _keyPropertyInfos)
+                    if (!doNotUpdateIfExists)
                     {
-                        object val = keyPropertyInfo.GetValue(existingEntity);
-                        keyPropertyInfo.SetValue(entity, val);
+                        foreach (var keyPropertyInfo in _keyPropertyInfos)
+                        {
+                            object val = keyPropertyInfo.GetValue(existingEntity);
+                            keyPropertyInfo.SetValue(entity, val);
+                        }
+                        contextSet.Update(entity);
                     }
-                    contextSet.Update(entity);
                 }
                 else
                     contextSet.Add(entity);

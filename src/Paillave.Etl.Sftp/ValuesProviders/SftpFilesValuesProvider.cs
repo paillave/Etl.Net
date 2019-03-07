@@ -32,6 +32,15 @@ namespace Paillave.Etl.Sftp.ValuesProviders
             }
         }
 
+        public void DeleteOnRemote(){
+            var connectionInfo = _connectionInfo.CreateConnectionInfo();
+            using (var client = new SftpClient(connectionInfo))
+            {
+                client.Connect();
+                client.DeleteFile(Path.Combine(_path, Name));
+            }
+        }
+
         public Stream GetContent()
         {
             var connectionInfo = _connectionInfo.CreateConnectionInfo();

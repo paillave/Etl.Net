@@ -70,7 +70,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
             }).Output;
         }
 
-        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, SaveMode bulkLoadMode = SaveMode.SqlServerBulk, int chunkSize = 10000)
+        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, bool doNotUpdateIfExists = false, SaveMode bulkLoadMode = SaveMode.SqlServerBulk, int chunkSize = 10000)
             where TResource : DbContext
             where TIn : class
         {
@@ -82,10 +82,11 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
                 BulkLoadMode = bulkLoadMode,
                 GetEntity = (i, c) => i,
                 GetOutput = (i, j) => j,
+                DoNotUpdateIfExists = doNotUpdateIfExists
             }).Output;
         }
 
-        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Expression<Func<TIn, object>> pivotKey, SaveMode saveMode = SaveMode.SqlServerBulk, int chunkSize = 10000)
+        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Expression<Func<TIn, object>> pivotKey, bool doNotUpdateIfExists = false, SaveMode saveMode = SaveMode.SqlServerBulk, int chunkSize = 10000)
             where TResource : DbContext
             where TIn : class
         {
@@ -98,10 +99,11 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
                 BulkLoadMode = saveMode,
                 GetEntity = (i, c) => i,
                 GetOutput = (i, j) => i,
+                DoNotUpdateIfExists = doNotUpdateIfExists
             }).Output;
         }
 
-        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn, TResource, TInEf> getEntity, Func<TIn, TInEf, TOut> getResult, SaveMode bulkLoadMode = SaveMode.SqlServerBulk, int chunkSize = 10000)
+        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn, TResource, TInEf> getEntity, Func<TIn, TInEf, TOut> getResult, bool doNotUpdateIfExists = false, SaveMode bulkLoadMode = SaveMode.SqlServerBulk, int chunkSize = 10000)
             where TResource : DbContext
             where TInEf : class
         {
@@ -113,10 +115,11 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
                 BulkLoadMode = bulkLoadMode,
                 GetEntity = getEntity,
                 GetOutput = getResult,
+                DoNotUpdateIfExists = doNotUpdateIfExists
             }).Output;
         }
 
-        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn, TResource, TInEf> getEntity, Expression<Func<TInEf, object>> pivotKey, Func<TIn, TInEf, TOut> getResult, SaveMode bulkInsertMode = SaveMode.SqlServerBulk, int chunkSize = 10000)
+        public static IStream<TOut> ThroughEntityFrameworkCore<TIn, TResource, TOut, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn, TResource, TInEf> getEntity, Expression<Func<TInEf, object>> pivotKey, Func<TIn, TInEf, TOut> getResult, bool doNotUpdateIfExists = false, SaveMode bulkInsertMode = SaveMode.SqlServerBulk, int chunkSize = 10000)
             where TResource : DbContext
             where TInEf : class
         {
@@ -129,10 +132,11 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
                 BulkLoadMode = bulkInsertMode,
                 GetEntity = getEntity,
                 GetOutput = getResult,
+                DoNotUpdateIfExists = doNotUpdateIfExists
             }).Output;
         }
 
-        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn, TResource, TInEf> getEntity, Expression<Func<TInEf, object>> pivotKey, SaveMode bulkInsertMode = SaveMode.SqlServerBulk, int chunkSize = 10000)
+        public static IStream<TIn> ThroughEntityFrameworkCore<TIn, TResource, TInEf>(this IStream<TIn> stream, string name, ISingleStream<TResource> dbContextStream, Func<TIn, TResource, TInEf> getEntity, Expression<Func<TInEf, object>> pivotKey, bool doNotUpdateIfExists = false, SaveMode bulkInsertMode = SaveMode.SqlServerBulk, int chunkSize = 10000)
             where TResource : DbContext
             where TInEf : class
         {
@@ -145,6 +149,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Extensions
                 BulkLoadMode = bulkInsertMode,
                 GetEntity = getEntity,
                 GetOutput = (i, j) => i,
+                DoNotUpdateIfExists = doNotUpdateIfExists
             }).Output;
         }
 

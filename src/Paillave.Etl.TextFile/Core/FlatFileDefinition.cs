@@ -79,14 +79,7 @@ namespace Paillave.Etl.TextFile.Core
                         Position = po.Position,
                         PropertySerializer = new FlatFilePropertySerializer(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo)
                     })
-                    // .OrderBy(i => i.Position)
-                    // .Select((i, idx) => new
-                    // {
-                    //     Position = idx,
-                    //     PropertySerializer = i.PropertySerializer
-                    // })
                     .ToDictionary(i => i.Position, i => i.PropertySerializer);
-
                 return new LineSerializer<T>(_lineSplitter, indexToPropertySerializerDictionary);
             }
             else
