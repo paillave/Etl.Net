@@ -4,5 +4,9 @@
         "Paillave",
         "Sankey",
         "Upsert"
-    ]
+    ],
+    "files.exclude": {
+        "*/bin": true,
+        "*/obj": true
+    }
 }

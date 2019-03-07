@@ -32,6 +32,21 @@
       }
     },
     {
+      "label": "test",
+      "command": "dotnet",
+      "type": "shell",
+      "args": [
+        "test",
+        "-p:CollectCoverage=true",
+        "-p:CoverletOutputFormat=lcov",
+        "-p:CoverletOutput=./lcov.info",
+        "-p:Exclude=\"[xunit*]*\""
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
       "label": "buildApp",
       "command": "dotnet",
       "type": "process",
@@ -43,7 +58,7 @@
       "options": {
         "cwd": "${workspaceFolder}/FundProcess.Pms.Imports"
       },
-      "group":"build"
+      "group": "build"
     },
     {
       "label": "cleanApp",
