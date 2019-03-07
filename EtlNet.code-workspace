@@ -14,6 +14,9 @@
 		}
 	],
 	"settings": {
+		"editor.fontLigatures": true,
+		"editor.fontFamily": "'Fira Code iScript', Consolas, 'Courier New', monospace",	
+		"workbench.tree.indent": 20,
 		"dotnet-test-explorer.testProjectPath": "**/*Tests.csproj",
 		"todo.embedded.exclude": [
 			"**/.*",
@@ -42,7 +45,8 @@
 		],
 		"editor.acceptSuggestionOnCommitCharacter": false,
 		"editor.acceptSuggestionOnEnter": "off",
-		"editor.snippetSuggestions": "bottom"
+		"editor.snippetSuggestions": "bottom",
+		"workbench.tree.indent": 20
 	},
 	"extensions": {
 		"recommendations": [
@@ -66,7 +70,8 @@
 			"ms-docfx.DocFX",
 			"robertohuertasm.vscode-icons",
 			"jchannon.csharpextensions",
-			"ms-vscode.csharp"
+			"ms-vscode.csharp",
+			"ryanluker.vscode-coverage-gutters"
 		]
 	}
 }

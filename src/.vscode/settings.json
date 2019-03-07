@@ -4,5 +4,11 @@
         "Paillave",
         "Sankey",
         "Upsert"
-    ]
+    ],
+    "files.exclude": {
+        "*/bin": true,
+        "*/obj": true, 
+        "FundProcess.Pms.Processes/*/bin": true,
+        "FundProcess.Pms.Processes/*/obj": true
+    }
 }

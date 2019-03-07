@@ -32,18 +32,33 @@
       }
     },
     {
+      "label": "test",
+      "command": "dotnet",
+      "type": "shell",
+      "args": [
+        "test",
+        "-p:CollectCoverage=true",
+        "-p:CoverletOutputFormat=lcov",
+        "-p:CoverletOutput=./lcov.info",
+        "-p:Exclude=\"[xunit*]*\""
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
       "label": "buildApp",
       "command": "dotnet",
       "type": "process",
       "args": [
         "build",
-        "FundProcess.Pms.Imports.sln"
+        "FundProcess.Pms.Processes.sln"
       ],
       "problemMatcher": "$msCompile",
       "options": {
-        "cwd": "${workspaceFolder}/FundProcess.Pms.Imports"
+        "cwd": "${workspaceFolder}/FundProcess.Pms.Processes"
       },
-      "group":"build"
+      "group": "build"
     },
     {
       "label": "cleanApp",
@@ -51,11 +66,11 @@
       "type": "process",
       "args": [
         "clean",
-        "FundProcess.Pms.Imports.sln"
+        "FundProcess.Pms.Processes.sln"
       ],
       "problemMatcher": "$msCompile",
       "options": {
-        "cwd": "${workspaceFolder}/FundProcess.Pms.Imports"
+        "cwd": "${workspaceFolder}/FundProcess.Pms.Processes"
       }
     },
   ]

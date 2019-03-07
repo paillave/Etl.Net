@@ -112,7 +112,7 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
 
         //     _context.ChangeTracker.AutoDetectChangesEnabled = previousAutoDetect;
         // }
-        public void Save(IList<T> entities)
+        public void Save(IList<T> entities, bool doNotUpdateIfExists = false)
         {
             var previousAutoDetect = _context.ChangeTracker.AutoDetectChangesEnabled;
             _context.ChangeTracker.AutoDetectChangesEnabled = false;
@@ -123,7 +123,7 @@ namespace Paillave.Etl.EntityFrameworkCore.BulkSave
             contextQuery.BulkSaveInStaging(entities);
             if (entities.Count > 10000)
                 contextQuery.IndexStagingTable();
-            contextQuery.MergeFromStaging();
+            contextQuery.MergeFromStaging(doNotUpdateIfExists);
             if (entities.Count > 10000)
                 contextQuery.IndexOutputStagingTable();
             IList<T> resultEntities;

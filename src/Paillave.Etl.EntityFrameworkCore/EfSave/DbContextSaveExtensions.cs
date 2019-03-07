@@ -8,10 +8,10 @@ namespace Paillave.Etl.EntityFrameworkCore.EfSave
 {
     public static class DbContextSaveExtensions
     {
-        public static void EfSave<T>(this DbContext context, IList<T> entities, Expression<Func<T, object>> pivotKey = null) where T : class
+        public static void EfSave<T>(this DbContext context, IList<T> entities, Expression<Func<T, object>> pivotKey = null, bool doNotUpdateIfExists = false) where T : class
         {
             EfSaveEngine<T> efSaveEngine = new EfSaveEngine<T>(context, pivotKey);
-            efSaveEngine.Save(entities);
+            efSaveEngine.Save(entities, doNotUpdateIfExists);
         }
     }
 }
