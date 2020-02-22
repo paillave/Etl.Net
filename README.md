@@ -1,5 +1,7 @@
 # Etl.Net [![Join the chat at https://gitter.im/Etl-Net/Lobby](https://badges.gitter.im/Etl-Net/Lobby.svg)](https://gitter.im/Etl-Net/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+> As of 2020, Etl.Net is still under active development. Some very powerfull features are being added and a lot of bug fixes, with the support of Entity Framework Core 3.1. The first stable release version is to be expected this year.
+
 |develop|master|
 |-|-|
 | ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/develop.svg) | ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/master.svg) |
