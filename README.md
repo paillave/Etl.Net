@@ -7,6 +7,7 @@
 | ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/develop.svg) | ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/master.svg) |
 | [![Build status](https://ci.appveyor.com/api/projects/status/n0ok6xrd7d5s176b/branch/develop?svg=true)](https://ci.appveyor.com/project/paillave/etl-net-vyqub) | [![Build status](https://ci.appveyor.com/api/projects/status/sqjh6f6cwadxfoou/branch/master?svg=true)](https://ci.appveyor.com/project/paillave/etl-net) |
 | [![Better Code Hub status](https://bettercodehub.com/edge/badge/paillave/Etl.Net?branch=develop)](https://bettercodehub.com) |[![Better Code Hub status](https://bettercodehub.com/edge/badge/paillave/Etl.Net?branch=master)](https://bettercodehub.com) |
+| |[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fpaillave%2FEtl.Net.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fpaillave%2FEtl.Net?ref=badge_shield) |
 
 Implementation of a multi platform reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but that is used in the same way than Linq.
 The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
@@ -22,6 +23,8 @@ The reactive approach for the implementation of this engine ensures parallelized
 | Etl.Net.ExcelFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) |
 | Etl.Net.SqlServer | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.SqlServer.svg)](https://www.nuget.org/packages/Etl.Net.SqlServer) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.SqlServer.svg)](https://www.nuget.org/packages/Etl.Net.SqlServer) |
 | Etl.Net.ExecutionPlan | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) |
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fpaillave%2FEtl.Net.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fpaillave%2FEtl.Net?ref=badge_large)
 
 ## Development status :construction:
 
