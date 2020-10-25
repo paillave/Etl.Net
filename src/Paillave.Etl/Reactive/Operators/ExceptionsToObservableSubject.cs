@@ -11,7 +11,7 @@ namespace Paillave.Etl.Reactive.Operators
     {
         private readonly IDisposable _subscription;
 
-        public ExceptionsToObservableSubject(IPushObservable<T> observable)
+        public ExceptionsToObservableSubject(IPushObservable<T> observable) : base(observable.CancellationToken)
         {
             _subscription = observable.Subscribe(_ => { }, HandleComplete, HandlePushError);
         }
@@ -23,6 +23,10 @@ namespace Paillave.Etl.Reactive.Operators
 
         private void HandlePushError(Exception obj)
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             PushValue(obj);
         }
 

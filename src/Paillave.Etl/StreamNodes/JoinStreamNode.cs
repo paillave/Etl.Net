@@ -22,6 +22,10 @@ namespace Paillave.Etl.StreamNodes
         {
         }
 
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
+
         protected override IStream<TOut> CreateOutputStream(JoinArgs<TInLeft, TInRight, TOut, TKey> args)
         {
             return base.CreateUnsortedStream(args.LeftInputStream.Observable.LeftJoin(args.RightInputStream.Observable, new SortDefinitionComparer<TInLeft, TInRight, TKey>(args.LeftInputStream.SortDefinition, args.RightInputStream.SortDefinition), args.ResultSelector));

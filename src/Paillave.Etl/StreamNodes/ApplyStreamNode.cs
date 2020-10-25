@@ -32,6 +32,10 @@ namespace Paillave.Etl.StreamNodes
         {
         }
 
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
+
         protected override ISingleStream<TOut> CreateOutputStream(ApplySingleArgs<TInMain, TInToApply, TOut> args)
         {
             IPushObservable<TOut> obs;
@@ -50,6 +54,10 @@ namespace Paillave.Etl.StreamNodes
         public ApplyStreamNode(string name, ApplyArgs<TInMain, TInToApply, TOut> args) : base(name, args)
         {
         }
+
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
         protected override IStream<TOut> CreateOutputStream(ApplyArgs<TInMain, TInToApply, TOut> args)
         {

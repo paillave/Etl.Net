@@ -26,6 +26,11 @@ namespace Paillave.Etl.StreamNodes
         public SubstractStreamNode(string name, SubstractArgs<TInLeft, TInRight, TKey> args) : base(name, args)
         {
         }
+
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
+
         protected override IStream<TInLeft> CreateOutputStream(SubstractArgs<TInLeft, TInRight, TKey> args)
         {
             return base.CreateSortedStream(args.LeftInputStream.Observable.Substract<TInLeft, TInRight, TKey>(args.RightInputStream.Observable, new SortDefinitionComparer<TInLeft, TInRight, TKey>(args.LeftInputStream.SortDefinition, args.RightInputStream.SortDefinition)), args.LeftInputStream.SortDefinition);
@@ -36,6 +41,11 @@ namespace Paillave.Etl.StreamNodes
         public SubstractUnsortedStreamNode(string name, SubstractUnsortedArgs<TStream, TInLeft, TInRight, TKey> args) : base(name, args)
         {
         }
+
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Heavy;
+
         protected override TStream CreateOutputStream(SubstractUnsortedArgs<TStream, TInLeft, TInRight, TKey> args)
         {
             var keyToExcludeHashObservable = args.RightInputStream.Observable.ToList().Map(i => new HashSet<TKey>(i.Select(j => args.GetRightKey(j)).Distinct()));

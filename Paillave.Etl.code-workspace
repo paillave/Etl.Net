@@ -1,0 +1,21 @@
+{
+    "folders": [
+        {
+            "path": "src",
+            "name": "Server Sources"
+        },
+        {
+            "path": ".",
+            "name": "Root"
+        },
+    ],
+    "settings": {
+		"omnisharp.projectLoadTimeout": 1000,
+        "editor.fontLigatures": true,
+        "editor.fontFamily": "'Fira Code iScript', 'Fira Code', Consolas, 'Courier New', monospace",
+		"telemetry.enableCrashReporter": false,
+		"telemetry.enableTelemetry": false,
+		"gitlens.advanced.telemetry.enabled": false,
+		"dotnet.enableTelemetry": false,
+    }
+}

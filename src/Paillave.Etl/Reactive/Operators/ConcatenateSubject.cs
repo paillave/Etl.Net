@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Paillave.Etl.Reactive.Operators
 {
@@ -14,7 +15,7 @@ namespace Paillave.Etl.Reactive.Operators
         private bool _topComplete = false;
         private bool _bottomComplete = false;
 
-        public ConcatenateSubject(IPushObservable<TIn> topObservable, IPushObservable<TIn> bottomObservable)
+        public ConcatenateSubject(IPushObservable<TIn> topObservable, IPushObservable<TIn> bottomObservable) : base(CancellationTokenSource.CreateLinkedTokenSource(topObservable.CancellationToken, bottomObservable.CancellationToken).Token)
         {
             _topSubscription = topObservable.Subscribe(this.HandlePushTop, this.HandleCompleteTop, this.HandleException);
             _bottomSubscription = bottomObservable.Subscribe(this.HandlePushBottom, this.HandleCompleteBottom, this.HandleException);
@@ -22,6 +23,10 @@ namespace Paillave.Etl.Reactive.Operators
 
         private void HandleCompleteBottom()
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_lockObject)
             {
                 _bottomComplete = true;
@@ -32,6 +37,10 @@ namespace Paillave.Etl.Reactive.Operators
 
         private void HandlePushBottom(TIn obj)
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_lockObject)
             {
                 if (_topComplete)
@@ -53,7 +62,13 @@ namespace Paillave.Etl.Reactive.Operators
             {
                 _topComplete = true;
                 foreach (var item in _bottomBuffer)
+                {
+                    if (CancellationToken.IsCancellationRequested)
+                    {
+                        break;
+                    }
                     this.PushValue(item);
+                }
                 _bottomBuffer.Clear();
                 if (_bottomComplete)
                     this.Complete();
@@ -62,6 +77,10 @@ namespace Paillave.Etl.Reactive.Operators
 
         private void HandlePushTop(TIn obj)
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_lockObject)
             {
                 this.PushValue(obj);

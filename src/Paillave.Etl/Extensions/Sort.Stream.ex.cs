@@ -34,5 +34,13 @@ namespace Paillave.Etl.Extensions
                 SortDefinition = sortDefinition
             }).Output;
         }
+        public static ISortedStream<Correlated<TIn>, TKey> Sort<TIn, TKey>(this IStream<Correlated<TIn>> stream, string name, Func<TIn, TKey> getKey, object keyPositions = null)
+        {
+            return new SortStreamNode<Correlated<TIn>, TKey>(name, new SortArgs<Correlated<TIn>, TKey>
+            {
+                Input = stream,
+                SortDefinition = SortDefinition.Create((Correlated<TIn> i) => getKey(i.Row), keyPositions)
+            }).Output;
+        }
     }
 }

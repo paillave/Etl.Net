@@ -36,7 +36,12 @@ namespace Paillave.Etl.TextFile.Core
                     ColumnName = item.ColumnName,
                     Position = item.ColumnIndex,
                     PropertyInfo = item.TargetPropertyInfo,
-                    CultureInfo = item.CreateCultureInfo()
+                    CultureInfo = item.CreateCultureInfo(),
+                    ForSourceName = item.ForSourceName,
+                    ForLineNumber = item.ForLineNumber,
+                    ForRowGuid = item.ForRowGuid,
+                    FalseValues = item.FalseValues,
+                    TrueValues = item.TrueValues
                 });
             }
             if (vis.MappingSetters.Any(i => i.Size.HasValue))
@@ -68,19 +73,23 @@ namespace Paillave.Etl.TextFile.Core
         {
             if ((_fieldDefinitions?.Count ?? 0) == 0) SetDefaultMapping();
             if (columnNames == null) columnNames = GetDefaultColumnNames().ToList();
+            var fileNamePropertyNames = _fieldDefinitions.Where(i => i.ForSourceName).Select(i => i.PropertyInfo.Name).ToList();
+            var rowNumberPropertyNames = _fieldDefinitions.Where(i => i.ForLineNumber).Select(i => i.PropertyInfo.Name).ToList();
+            var rowGuidPropertyNames = _fieldDefinitions.Where(i => i.ForRowGuid).Select(i => i.PropertyInfo.Name).ToList();
             if (this.HasColumnHeader)
             {
-                var indexToPropertySerializerDictionary = _fieldDefinitions.Join(
+                var indexToPropertySerializerDictionaryTmp = _fieldDefinitions.Join(
                     columnNames.Select((ColumnName, Position) => new { ColumnName, Position }),
-                    i => i.ColumnName.ToLowerInvariant().Trim(),
+                    i => i?.ColumnName?.ToLowerInvariant()?.Trim(),
                     i => i.ColumnName.ToLowerInvariant().Trim(),
                     (fd, po) => new
                     {
                         Position = po.Position,
-                        PropertySerializer = new FlatFilePropertySerializer(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo)
-                    })
+                        PropertySerializer = new FlatFilePropertySerializer(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo, fd.TrueValues, fd.FalseValues, po.ColumnName)
+                    });
+                var indexToPropertySerializerDictionary = indexToPropertySerializerDictionaryTmp
                     .ToDictionary(i => i.Position, i => i.PropertySerializer);
-                return new LineSerializer<T>(_lineSplitter, indexToPropertySerializerDictionary);
+                return new LineSerializer<T>(_lineSplitter, indexToPropertySerializerDictionary, fileNamePropertyNames, rowNumberPropertyNames, rowGuidPropertyNames);
             }
             else
             {
@@ -89,10 +98,10 @@ namespace Paillave.Etl.TextFile.Core
                     .Select((fd, idx) => new
                     {
                         Position = idx,
-                        PropertySerializer = new FlatFilePropertySerializer(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo)
+                        PropertySerializer = new FlatFilePropertySerializer(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo, fd.TrueValues, fd.FalseValues, $"<{idx}>")
                     })
                     .ToDictionary(i => i.Position, i => i.PropertySerializer);
-                return new LineSerializer<T>(_lineSplitter, indexToPropertySerializerDictionary);
+                return new LineSerializer<T>(_lineSplitter, indexToPropertySerializerDictionary, fileNamePropertyNames, rowNumberPropertyNames, rowGuidPropertyNames);
             }
         }
         private IEnumerable<string> GetDefaultColumnNames()
@@ -126,26 +135,26 @@ namespace Paillave.Etl.TextFile.Core
             this._cultureInfo = CultureInfo.GetCultureInfo(name);
             return this;
         }
-        public FlatFileDefinition<T> MapColumnToProperty<TField>(int index, Expression<Func<T, TField>> memberLamda, CultureInfo cultureInfo = null)
-        {
-            SetFieldDefinition(new FlatFileFieldDefinition
-            {
-                CultureInfo = cultureInfo,
-                Position = index,
-                PropertyInfo = memberLamda.GetPropertyInfo()
-            });
-            return this;
-        }
-        public FlatFileDefinition<T> MapColumnToProperty<TField>(int index, Expression<Func<T, TField>> memberLamda, string cultureInfo)
-        {
-            SetFieldDefinition(new FlatFileFieldDefinition
-            {
-                CultureInfo = CultureInfo.GetCultureInfo(cultureInfo),
-                Position = index,
-                PropertyInfo = memberLamda.GetPropertyInfo()
-            });
-            return this;
-        }
+        // public FlatFileDefinition<T> MapColumnToProperty<TField>(int index, Expression<Func<T, TField>> memberLamda, CultureInfo cultureInfo = null)
+        // {
+        //     SetFieldDefinition(new FlatFileFieldDefinition
+        //     {
+        //         CultureInfo = cultureInfo,
+        //         Position = index,
+        //         PropertyInfo = memberLamda.GetPropertyInfo()
+        //     });
+        //     return this;
+        // }
+        // public FlatFileDefinition<T> MapColumnToProperty<TField>(int index, Expression<Func<T, TField>> memberLamda, string cultureInfo)
+        // {
+        //     SetFieldDefinition(new FlatFileFieldDefinition
+        //     {
+        //         CultureInfo = CultureInfo.GetCultureInfo(cultureInfo),
+        //         Position = index,
+        //         PropertyInfo = memberLamda.GetPropertyInfo()
+        //     });
+        //     return this;
+        // }
         private void SetFieldDefinition(FlatFileFieldDefinition fieldDefinition)
         {
             var existingFieldDefinition = _fieldDefinitions.FirstOrDefault(i => i.PropertyInfo.Name == fieldDefinition.PropertyInfo.Name);
@@ -161,47 +170,55 @@ namespace Paillave.Etl.TextFile.Core
                 if (fieldDefinition.Position != null) existingFieldDefinition.Position = fieldDefinition.Position;
             }
         }
-        public FlatFileDefinition<T> MapColumnToProperty<TField>(string columnName, Expression<Func<T, TField>> memberLamda, CultureInfo cultureInfo = null)
-        {
-            SetFieldDefinition(new FlatFileFieldDefinition
-            {
-                CultureInfo = cultureInfo,
-                ColumnName = columnName,
-                PropertyInfo = memberLamda.GetPropertyInfo()
-            });
-            return this;
-        }
-        public FlatFileDefinition<T> MapColumnToProperty<TField>(string columnName, Expression<Func<T, TField>> memberLamda, string cultureInfo)
-        {
-            SetFieldDefinition(new FlatFileFieldDefinition
-            {
-                CultureInfo = CultureInfo.GetCultureInfo(cultureInfo),
-                ColumnName = columnName,
-                PropertyInfo = memberLamda.GetPropertyInfo()
-            });
-            return this;
-        }
-        public FlatFileDefinition<T> MapColumnToProperty<TField>(string columnName, int position, Expression<Func<T, TField>> memberLamda, CultureInfo cultureInfo = null)
-        {
-            SetFieldDefinition(new FlatFileFieldDefinition
-            {
-                CultureInfo = cultureInfo,
-                ColumnName = columnName,
-                Position = position,
-                PropertyInfo = memberLamda.GetPropertyInfo()
-            });
-            return this;
-        }
-        public FlatFileDefinition<T> MapColumnToProperty<TField>(string columnName, int position, Expression<Func<T, TField>> memberLamda, string cultureInfo)
-        {
-            SetFieldDefinition(new FlatFileFieldDefinition
-            {
-                CultureInfo = CultureInfo.GetCultureInfo(cultureInfo),
-                ColumnName = columnName,
-                Position = position,
-                PropertyInfo = memberLamda.GetPropertyInfo()
-            });
-            return this;
-        }
+        // public FlatFileDefinition<T> MapColumnToProperty<TField>(string columnName, Expression<Func<T, TField>> memberLamda, CultureInfo cultureInfo = null, string[] trueValues = null, string[] falseValues = null)
+        // {
+        //     SetFieldDefinition(new FlatFileFieldDefinition
+        //     {
+        //         TrueValues = trueValues,
+        //         FalseValues = falseValues,
+        //         CultureInfo = cultureInfo,
+        //         ColumnName = columnName,
+        //         PropertyInfo = memberLamda.GetPropertyInfo()
+        //     });
+        //     return this;
+        // }
+        // public FlatFileDefinition<T> MapColumnToProperty<TField>(string columnName, Expression<Func<T, TField>> memberLamda, string cultureInfo, string[] trueValues = null, string[] falseValues = null)
+        // {
+        //     SetFieldDefinition(new FlatFileFieldDefinition
+        //     {
+        //         TrueValues = trueValues,
+        //         FalseValues = falseValues,
+        //         CultureInfo = CultureInfo.GetCultureInfo(cultureInfo),
+        //         ColumnName = columnName,
+        //         PropertyInfo = memberLamda.GetPropertyInfo()
+        //     });
+        //     return this;
+        // }
+        // public FlatFileDefinition<T> MapColumnToProperty<TField>(string columnName, int position, Expression<Func<T, TField>> memberLamda, CultureInfo cultureInfo = null, string[] trueValues = null, string[] falseValues = null)
+        // {
+        //     SetFieldDefinition(new FlatFileFieldDefinition
+        //     {
+        //         TrueValues = trueValues,
+        //         FalseValues = falseValues,
+        //         CultureInfo = cultureInfo,
+        //         ColumnName = columnName,
+        //         Position = position,
+        //         PropertyInfo = memberLamda.GetPropertyInfo()
+        //     });
+        //     return this;
+        // }
+        // public FlatFileDefinition<T> MapColumnToProperty<TField>(string columnName, int position, Expression<Func<T, TField>> memberLamda, string cultureInfo, string[] trueValues = null, string[] falseValues = null)
+        // {
+        //     SetFieldDefinition(new FlatFileFieldDefinition
+        //     {
+        //         TrueValues = trueValues,
+        //         FalseValues = falseValues,
+        //         CultureInfo = CultureInfo.GetCultureInfo(cultureInfo),
+        //         ColumnName = columnName,
+        //         Position = position,
+        //         PropertyInfo = memberLamda.GetPropertyInfo()
+        //     });
+        //     return this;
+        // }
     }
 }

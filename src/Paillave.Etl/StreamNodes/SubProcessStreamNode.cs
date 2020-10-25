@@ -21,29 +21,33 @@ namespace Paillave.Etl.StreamNodes
         {
         }
 
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
+
         protected override IStream<TOut> CreateOutputStream(SubProcessArgs<TIn, TOut> args)
         {
             if (this.ExecutionContext is GetDefinitionExecutionContext)
             {
-                var inputStream = new SingleStream<TIn>(this.Tracer.GetSubTraceMapper(this), this.ExecutionContext, this.NodeName, PushObservable.FromSingle(default(TIn)));
+                var inputStream = new SingleStream<TIn>(new SubNodeWrapper( this), PushObservable.FromSingle(default(TIn), args.Stream.Observable.CancellationToken));
                 var outputStream = args.SubProcess(inputStream);
-                this.ExecutionContext.AddNode(this, outputStream.Observable, outputStream.TraceObservable);
+                this.ExecutionContext.AddNode(this, outputStream.Observable);
             }
             Synchronizer synchronizer = new Synchronizer(args.NoParallelisation);
             var outputObservable = args.Stream.Observable
-                .FlatMap(i =>
+                .FlatMap((i, ct) =>
                 {
                     EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-                    var inputStream = new SingleStream<TIn>(this.Tracer.GetSubTraceMapper(this), this.ExecutionContext, this.NodeName, PushObservable.FromSingle(i, waitHandle));
+                    var inputStream = new SingleStream<TIn>(new SubNodeWrapper( this), PushObservable.FromSingle(i, waitHandle, ct));
                     var outputStream = args.SubProcess(inputStream);
-                    this.ExecutionContext.AddNode(this, outputStream.Observable, outputStream.TraceObservable);
+                    this.ExecutionContext.AddNode(this, outputStream.Observable);
                     IDisposable awaiter = null;
                     outputStream.Observable.Subscribe(j => { }, () => awaiter?.Dispose());
                     return new DeferredWrapperPushObservable<TOut>(outputStream.Observable, () =>
                     {
                         awaiter = synchronizer.WaitBeforeProcess();
                         waitHandle.Set();
-                    });
+                    }, null, ct);
                 });
             return base.CreateUnsortedStream(outputObservable);
         }

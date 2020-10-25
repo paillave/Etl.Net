@@ -19,6 +19,10 @@ namespace Paillave.Etl.StreamNodes
         {
         }
 
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
+
         protected override ISingleStream<TOut> CreateOutputStream(EnsureSingleArgs<TOut> args)
         {
             return base.CreateSingleStream(args.Input.Observable.Map((i, idx) =>

@@ -2,8 +2,6 @@
 using Paillave.Etl.Core.Streams;
 using Paillave.Etl.Reactive.Operators;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Paillave.Etl.StreamNodes
 {
@@ -17,6 +15,10 @@ namespace Paillave.Etl.StreamNodes
         public WhereStreamNode(string name, WhereArgs<TOut, TOutStream> args) : base(name, args)
         {
         }
+
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
         protected override TOutStream CreateOutputStream(WhereArgs<TOut, TOutStream> args)
         {

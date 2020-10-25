@@ -1,10 +1,5 @@
 ﻿using Paillave.Etl.Core.Aggregation.AggregationInstances;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paillave.Etl
 {
@@ -23,6 +18,12 @@ namespace Paillave.Etl
 
         [AggregationInstance(typeof(FirstAggregationInstance))]
         public static TOut First<TOut>(TOut input)
+        {
+            throw new NotSupportedException();
+        }
+
+        [AggregationInstance(typeof(FirstNotNullAggregationInstance))]
+        public static TOut FirstNotNull<TOut>(TOut input)
         {
             throw new NotSupportedException();
         }

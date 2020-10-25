@@ -15,16 +15,20 @@ namespace Paillave.Etl.Reactive.Operators
         private DicoAggregateElement<TIn, TAggr> _currentAggregation = new DicoAggregateElement<TIn, TAggr>();
         private object _lockSync = new object();
         private Func<TIn, TAggr, TOut> _resultSelector;
-        public AggregateGroupedComparableSubject(IPushObservable<TIn> observable, Func<TAggr, TIn, TAggr> reducer, IEqualityComparer<TIn> equalityComparer, Func<TIn, TAggr> createInitialValue, Func<TIn, TAggr, TOut> resultSelector)
+        public AggregateGroupedComparableSubject(IPushObservable<TIn> observable, Func<TAggr, TIn, TAggr> reducer, IEqualityComparer<TIn> equalityComparer, Func<TIn, TAggr> createInitialValue, Func<TIn, TAggr, TOut> resultSelector) : base(observable.CancellationToken)
         {
             _resultSelector = resultSelector;
             var _isAggrDisposable = typeof(IDisposable).IsAssignableFrom(typeof(TAggr));
             _subscription = observable.Subscribe(i =>
             {
+                if (CancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
                 lock (_lockSync)
                 {
                     if (_hasValue && !equalityComparer.Equals(_currentAggregation.InValue, i))
-                        PushValue(_resultSelector(_currentAggregation.InValue, _currentAggregation.CurrentAggregation));
+                        TryPushValue(() => _resultSelector(_currentAggregation.InValue, _currentAggregation.CurrentAggregation));
                     if (!_hasValue || !equalityComparer.Equals(_currentAggregation.InValue, i))
                     {
                         var aggr = createInitialValue(i);
@@ -41,7 +45,7 @@ namespace Paillave.Etl.Reactive.Operators
             lock (_lockSync)
             {
                 if (_hasValue)
-                    PushValue(_resultSelector(_currentAggregation.InValue, _currentAggregation.CurrentAggregation));
+                    TryPushValue(() => _resultSelector(_currentAggregation.InValue, _currentAggregation.CurrentAggregation));
                 _disposable.Dispose();
                 base.Complete();
             }

@@ -12,17 +12,18 @@ namespace Paillave.Etl.Core.Streams
 {
     public class SortedStream<T, TKey> : Stream<T>, ISortedStream<T, TKey>
     {
-        public SortedStream(ITraceMapper tracer, IExecutionContext executionContext, string sourceNodeName, IPushObservable<T> observable, SortDefinition<T, TKey> sortDefinition)
-            : base(tracer, executionContext, sourceNodeName, observable)
+        public SortedStream(INodeContext sourceNode, IPushObservable<T> observable, SortDefinition<T, TKey> sortDefinition)
+            : base(sourceNode, observable)
         {
             if (sortDefinition == null) throw new ArgumentOutOfRangeException(nameof(sortDefinition), "sorting criteria list cannot be empty");
             this.SortDefinition = sortDefinition;
         }
         public SortDefinition<T, TKey> SortDefinition { get; }
 
-        public override object GetMatchingStream(ITraceMapper tracer, IExecutionContext executionContext, string name, object observable)
+        public override object GetMatchingStream<TOut>(INodeContext sourceNode, object observable)
         {
-            return new SortedStream<T, TKey>(tracer, executionContext, name, (IPushObservable<T>)observable, this.SortDefinition);
+            // TODO: the following is an absolute dreadful solution about which I MUST find a proper alternative
+            return new SortedStream<TOut, TKey>(sourceNode, (IPushObservable<TOut>)observable, (SortDefinition<TOut, TKey>)((object)this.SortDefinition));
         }
     }
 }

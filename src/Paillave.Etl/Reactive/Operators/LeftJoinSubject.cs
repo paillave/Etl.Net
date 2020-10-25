@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Paillave.Etl.Reactive.Core;
 using System.Linq.Expressions;
+using System.Threading;
 
 namespace Paillave.Etl.Reactive.Operators
 {
@@ -29,9 +30,17 @@ namespace Paillave.Etl.Reactive.Operators
             bool somethingChanged;
             do
             {
+                if (CancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
                 somethingChanged = false;
                 while (!rSide.IsEmpty && !lSide.IsEmpty && leftJoinParams.comparer.Compare(lSide.CurrentValue, rSide.CurrentValue) > 0)
                 {
+                    if (CancellationToken.IsCancellationRequested)
+                    {
+                        break;
+                    }
                     rSide.Dequeue();
                     somethingChanged = true;
                 }
@@ -39,39 +48,29 @@ namespace Paillave.Etl.Reactive.Operators
                 int comparison;
                 while (!lSide.IsEmpty && !rSide.IsEmpty && (comparison = leftJoinParams.comparer.Compare(lSide.CurrentValue, rSide.CurrentValue)) <= 0)
                 {
-                    TOut ret;
-                    try
+                    if (CancellationToken.IsCancellationRequested)
                     {
-                        ret = leftJoinParams.selector(lSide.Dequeue(), comparison == 0 ? rSide.CurrentValue : default(TInRight));
-                        this.PushValue(ret);
+                        break;
                     }
-                    catch (Exception ex)
-                    {
-                        PushException(ex);
-                    }
+                    this.TryPushValue(() => leftJoinParams.selector(lSide.Dequeue(), comparison == 0 ? rSide.CurrentValue : default(TInRight)));
                     somethingChanged = true;
                 }
 
                 if (rSide.IsEmpty && rSide.IsComplete)
                     while (!lSide.IsEmpty)
                     {
-                        TOut ret;
-                        try
+                        if (CancellationToken.IsCancellationRequested)
                         {
-                            ret = leftJoinParams.selector(lSide.Dequeue(), default(TInRight));
-                            this.PushValue(ret);
+                            break;
                         }
-                        catch (Exception ex)
-                        {
-                            PushException(ex);
-                        }
+                        this.TryPushValue(() => leftJoinParams.selector(lSide.Dequeue(), default(TInRight)));
                         somethingChanged = true;
                     }
             } while (somethingChanged);
             if (lSide.IsComplete && (lSide.IsEmpty || rSide.IsComplete)) this.Complete();
         }
 
-        public LeftJoinSubject(IPushObservable<TInLeft> leftS, IPushObservable<TInRight> rightS, LeftJoinParams<TInLeft, TInRight, TOut> leftJoinParams)
+        public LeftJoinSubject(IPushObservable<TInLeft> leftS, IPushObservable<TInRight> rightS, LeftJoinParams<TInLeft, TInRight, TOut> leftJoinParams) : base(CancellationTokenSource.CreateLinkedTokenSource(leftS.CancellationToken, rightS.CancellationToken).Token)
         {
             var leftSide = new Side<TInLeft>();
             var rightSide = new Side<TInRight>();
@@ -79,6 +78,10 @@ namespace Paillave.Etl.Reactive.Operators
             _leftSubscription = leftS.Subscribe(
                     (leftValue) =>
                     {
+                        if (CancellationToken.IsCancellationRequested)
+                        {
+                            return;
+                        }
                         lock (_sync)
                         {
                             leftSide.Enqueue(leftValue);
@@ -97,6 +100,10 @@ namespace Paillave.Etl.Reactive.Operators
             _rightSubscription = rightS.Subscribe(
                     (rightValue) =>
                     {
+                        if (CancellationToken.IsCancellationRequested)
+                        {
+                            return;
+                        }
                         lock (_sync)
                         {
                             rightSide.Enqueue(rightValue);

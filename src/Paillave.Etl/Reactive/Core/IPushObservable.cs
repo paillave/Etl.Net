@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace Paillave.Etl.Reactive.Core
 {
-    public interface IPushObservable<out T>
+    public interface IPushObservable
+    {
+        CancellationToken CancellationToken { get; }
+    }
+    public interface IPushObservable<out T> : IPushObservable
     {
         IDisposable Subscribe(Action<T> onPush);
         IDisposable Subscribe(Action<T> onPush, Action onComplete);

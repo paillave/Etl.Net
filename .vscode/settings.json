@@ -1,7 +1,5 @@
 {
     "files.exclude": {
         "src": true, // this is a default value
-        "docfx_project": true, // this is a default value
-        "docs": true
-    }
+    },
 }

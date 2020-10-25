@@ -20,6 +20,19 @@ namespace Paillave.Etl.Core
             }
             jobPool.Execute(action);
         }
+        public T Invoke<T>(object threadOwner, Func<T> action)
+        {
+            JobPool jobPool;
+            lock (_sync)
+            {
+                if (!_jobPoolDictionary.TryGetValue(threadOwner, out jobPool))
+                {
+                    jobPool = new JobPool();
+                    _jobPoolDictionary[threadOwner] = jobPool;
+                }
+            }
+            return jobPool.Execute(action);
+        }
 
         #region IDisposable Support
         private bool disposedValue = false;

@@ -37,6 +37,16 @@ namespace Paillave.Etl.Extensions
                 ResultSelectorRight = resultSelectorRight
             }).Output;
         }
+        public static IStream<Correlated<TOut>> Union<TIn1, TIn2, TOut>(this IStream<Correlated<TIn1>> stream, string name, IStream<Correlated<TIn2>> inputStream2, Func<TIn1, TOut> resultSelectorLeft, Func<TIn2, TOut> resultSelectorRight)
+        {
+            return new UnionStreamNode<Correlated<TIn1>, Correlated<TIn2>, Correlated<TOut>>(name, new UnionArgs<Correlated<TIn1>, Correlated<TIn2>, Correlated<TOut>>
+            {
+                Stream1 = stream,
+                Stream2 = inputStream2,
+                ResultSelectorLeft = i => new Correlated<TOut> { Row = resultSelectorLeft(i.Row), CorrelationKeys = i.CorrelationKeys },
+                ResultSelectorRight = i => new Correlated<TOut> { Row = resultSelectorRight(i.Row), CorrelationKeys = i.CorrelationKeys }
+            }).Output;
+        }
 
         public static IStream<TOut> Union<TIn1, TIn2, TOut>(this IStream<TIn1> stream, string name, IStream<TIn2> inputStream2, Func<TIn1, TIn2, TOut> resultSelector)
         {
@@ -45,6 +55,19 @@ namespace Paillave.Etl.Extensions
                 Stream1 = stream,
                 Stream2 = inputStream2,
                 FullResultSelectorLeft = resultSelector
+            }).Output;
+        }
+        public static IStream<Correlated<TOut>> Union<TIn1, TIn2, TOut>(this IStream<Correlated<TIn1>> stream, string name, IStream<Correlated<TIn2>> inputStream2, Func<TIn1, TIn2, TOut> resultSelector)
+        {
+            return new UnionStreamNode<Correlated<TIn1>, Correlated<TIn2>, Correlated<TOut>>(name, new UnionArgs<Correlated<TIn1>, Correlated<TIn2>, Correlated<TOut>>
+            {
+                Stream1 = stream,
+                Stream2 = inputStream2,
+                FullResultSelectorLeft = (l, r) => new Correlated<TOut>
+                {
+                    Row = resultSelector(l == null ? default : l.Row, r == null ? default : r.Row),
+                    CorrelationKeys = l?.CorrelationKeys ?? r?.CorrelationKeys
+                }
             }).Output;
         }
 
@@ -56,6 +79,24 @@ namespace Paillave.Etl.Extensions
                 Stream2 = inputStream2,
                 FullResultSelectorLeft = resultSelectorLeft,
                 FullResultSelectorRight = resultSelectorRight,
+            }).Output;
+        }
+        public static IStream<Correlated<TOut>> Union<TIn1, TIn2, TOut>(this IStream<Correlated<TIn1>> stream, string name, IStream<Correlated<TIn2>> inputStream2, Func<TIn1, TIn2, TOut> resultSelectorLeft, Func<TIn1, TIn2, TOut> resultSelectorRight)
+        {
+            return new UnionStreamNode<Correlated<TIn1>, Correlated<TIn2>, Correlated<TOut>>(name, new UnionArgs<Correlated<TIn1>, Correlated<TIn2>, Correlated<TOut>>
+            {
+                Stream1 = stream,
+                Stream2 = inputStream2,
+                FullResultSelectorLeft = (l, r) => new Correlated<TOut>
+                {
+                    Row = resultSelectorLeft(l == null ? default : l.Row, r == null ? default : r.Row),
+                    CorrelationKeys = l?.CorrelationKeys ?? r?.CorrelationKeys
+                },
+                FullResultSelectorRight = (l, r) => new Correlated<TOut>
+                {
+                    Row = resultSelectorRight(l == null ? default : l.Row, r == null ? default : r.Row),
+                    CorrelationKeys = l?.CorrelationKeys ?? r?.CorrelationKeys
+                }
             }).Output;
         }
 

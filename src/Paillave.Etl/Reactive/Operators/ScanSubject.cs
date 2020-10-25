@@ -11,7 +11,7 @@ namespace Paillave.Etl.Reactive.Operators
     {
         private IDisposable _subscription;
         private object _lockSync = new object();
-        public ScanSubject(IPushObservable<TIn> observable, Func<TOut, TIn, TOut> reducer, TOut initialValue)
+        public ScanSubject(IPushObservable<TIn> observable, Func<TOut, TIn, TOut> reducer, TOut initialValue) : base(observable.CancellationToken)
         {
             this._subscription = observable.Subscribe(i =>
             {
@@ -37,9 +37,13 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TOut> Scan<TIn, TOut>(this IPushObservable<TIn> observable, Func<TOut, TIn, TOut> reducer, TOut initialValue = default)
+        public static IPushObservable<TOut> Scan<TIn, TOut>(this IPushObservable<TIn> observable, TOut initialValue, Func<TOut, TIn, TOut> reducer)
         {
             return new ScanSubject<TIn, TOut>(observable, reducer, initialValue);
+        }
+        public static IPushObservable<TOut> Scan<TIn, TOut>(this IPushObservable<TIn> observable, Func<TOut, TIn, TOut> reducer)
+        {
+            return new ScanSubject<TIn, TOut>(observable, reducer, default(TOut));
         }
     }
 }

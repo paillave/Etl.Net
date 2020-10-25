@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Paillave.Etl.Reactive.Core;
 
 namespace Paillave.Etl.Reactive.Operators
@@ -12,21 +8,25 @@ namespace Paillave.Etl.Reactive.Operators
         private IDisposable _subscription;
         private object _syncValue = new object();
 
-        public DoSubject(IPushObservable<T> observable, Action<T> action)
+        public DoSubject(IPushObservable<T> observable, Action<T> action) : base(observable.CancellationToken)
         {
             this._subscription = observable.Subscribe(i =>
             {
+                if (CancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
                 lock (_syncValue)
                 {
                     try
                     {
                         action(i);
+                        this.PushValue(i);
                     }
                     catch (Exception ex)
                     {
                         this.PushException(ex);
                     }
-                    this.PushValue(i);
                 }
             }, this.Complete, this.PushException);
         }

@@ -7,13 +7,10 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl.Reactive.Core
 {
-    public class DeferredPushObservable<T> : PushObservableBase<T>, IDeferredPushObservable<T>
+    public class DeferredPushObservable<T> : PushSubject<T>, IDeferredPushObservable<T>
     {
-        private Action<Action<T>> _valuesFactory;
-        public DeferredPushObservable(Action<Action<T>> valuesFactory)
-        {
-            _valuesFactory = valuesFactory;
-        }
+        private Action<Action<T>, CancellationToken> _valuesFactory;
+        public DeferredPushObservable(Action<Action<T>, CancellationToken> valuesFactory, CancellationToken cancellationToken) : base(cancellationToken) => _valuesFactory = valuesFactory;
 
         private Guid tmp = Guid.NewGuid();
         public void Start()
@@ -26,7 +23,7 @@ namespace Paillave.Etl.Reactive.Core
             {
                 try
                 {
-                    _valuesFactory(PushValue);
+                    _valuesFactory(PushValue, base.CancellationToken);
                 }
                 catch (Exception ex)
                 {

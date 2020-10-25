@@ -18,6 +18,10 @@ namespace Paillave.Etl.StreamNodes
         {
         }
 
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
+
         protected override TOutStream CreateOutputStream(SkipArgs<TOut, TOutStream> args)
         {
             return base.CreateMatchingStream(args.Input.Observable.Skip(args.Count), args.Input);

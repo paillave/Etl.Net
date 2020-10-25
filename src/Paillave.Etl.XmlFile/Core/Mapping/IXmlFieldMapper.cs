@@ -8,5 +8,7 @@ namespace Paillave.Etl.XmlFile.Core.Mapping
     {
         T ToXPathQuery<T>(string xPathQuery);
         T ToXPathQuery<T>(string xPathQuery, int depthScope);
+        string ToSourceName();
+        Guid ToRowGuid();
     }
 }

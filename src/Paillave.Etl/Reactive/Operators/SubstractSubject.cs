@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Paillave.Etl.Reactive.Core;
 
@@ -61,7 +62,7 @@ namespace Paillave.Etl.Reactive.Operators
             }
             public void Dispose() => this._subscription.Dispose();
         }
-        public SubstractSubject(IPushObservable<TLeft> observable, IPushObservable<TRight> observableToRemove, IComparer<TLeft, TRight> comparer)
+        public SubstractSubject(IPushObservable<TLeft> observable, IPushObservable<TRight> observableToRemove, IComparer<TLeft, TRight> comparer) : base(CancellationTokenSource.CreateLinkedTokenSource(observable.CancellationToken, observableToRemove.CancellationToken).Token)
         {
             _comparer = comparer;
             _leftSubscriptionItem = new SubscriptionItem<TLeft>(observable, HandlePushValueLeft, HandleCompleteLeft, PushException);
@@ -69,6 +70,10 @@ namespace Paillave.Etl.Reactive.Operators
         }
         private void HandlePushValueLeft(TLeft value)
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_lockObject)
             {
                 _leftSubscriptionItem.SetLastValue(value);
@@ -89,6 +94,10 @@ namespace Paillave.Etl.Reactive.Operators
 
         private void HandlePushValueRight(TRight value)
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_lockObject)
             {
                 _rightSubscriptionItem.SetLastValue(value);
@@ -105,6 +114,10 @@ namespace Paillave.Etl.Reactive.Operators
                 _rightSubscriptionItem.Values.Enqueue(value);
                 while (_leftSubscriptionItem.Values.TryPeek(out var leftValue) && (comp = _comparer.Compare(leftValue, value)) <= 0)
                 {
+                    if (CancellationToken.IsCancellationRequested)
+                    {
+                        break;
+                    }
                     _leftSubscriptionItem.Values.Dequeue();
                     if (comp < 0) PushValue(leftValue);
                 }
@@ -121,11 +134,19 @@ namespace Paillave.Etl.Reactive.Operators
         }
         private void TryComplete()
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             if (!_rightSubscriptionItem.IsComplete || !_leftSubscriptionItem.IsComplete) return;
             int comp;
             bool hasRightValue = _rightSubscriptionItem.Values.TryPeek(out TRight rightValue);
             while (_leftSubscriptionItem.Values.TryDequeue(out var leftValue))
             {
+                if (CancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
                 if (!hasRightValue)
                 {
                     PushValue(leftValue);

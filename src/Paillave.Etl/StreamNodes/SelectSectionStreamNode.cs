@@ -29,6 +29,10 @@ namespace Paillave.Etl.StreamNodes
         {
         }
 
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
+
         protected override IStream<TIn> CreateOutputStream(SelectSectionArgs<TIn> args)
         {
             IPushObservable<TIn> obs;
@@ -56,6 +60,10 @@ namespace Paillave.Etl.StreamNodes
         public SelectSectionStreamNode(string name, SelectSectionArgs<TIn, TOut> args) : base(name, args)
         {
         }
+
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
         protected override IStream<TOut> CreateOutputStream(SelectSectionArgs<TIn, TOut> args)
         {

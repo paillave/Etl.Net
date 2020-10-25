@@ -20,6 +20,10 @@ namespace Paillave.Etl.StreamNodes
         {
         }
 
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
+
         protected override ISortedStream<TOut, TKey> CreateOutputStream(EnsureSortedArgs<TOut, TKey> args)
         {
             return base.CreateSortedStream(args.Input.Observable.ExceptionOnUnsorted(args.SortDefinition, false), args.SortDefinition);

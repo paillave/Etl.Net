@@ -20,12 +20,16 @@ namespace Paillave.Etl.StreamNodes
         {
         }
 
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Heavy;
+
         protected override ISortedStream<TOut, TKey> CreateOutputStream(SortArgs<TOut, TKey> args)
         {
-            return base.CreateSortedStream(args.Input.Observable.ToList().FlatMap(i =>
+            return base.CreateSortedStream(args.Input.Observable.ToList().FlatMap((i, ct) =>
             {
                 i.Sort(args.SortDefinition);
-                return PushObservable.FromEnumerable(i);
+                return PushObservable.FromEnumerable(i, ct);
             }), args.SortDefinition);
         }
     }

@@ -2,9 +2,6 @@
 using Paillave.Etl.Core.Streams;
 using Paillave.Etl.Reactive.Core;
 using Paillave.Etl.Reactive.Operators;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Paillave.Etl.StreamNodes
 {
@@ -20,6 +17,10 @@ namespace Paillave.Etl.StreamNodes
         public SelectStreamNode(string name, SelectArgs<TIn, TOut> args) : base(name, args)
         {
         }
+
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
         protected override IStream<TOut> CreateOutputStream(SelectArgs<TIn, TOut> args)
         {
@@ -42,6 +43,10 @@ namespace Paillave.Etl.StreamNodes
         {
         }
 
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
+
         protected override IStream<TOut> CreateOutputStream(SelectWithIndexArgs<TIn, TOut> args)
         {
             IPushObservable<TOut> obs = args.Stream.Observable.Map(WrapSelectIndexForDisposal<TIn, TOut>(args.Processor.ProcessRow, args.WithNoDispose));
@@ -62,6 +67,10 @@ namespace Paillave.Etl.StreamNodes
         public SelectSingleStreamNode(string name, SelectSingleArgs<TIn, TOut> args) : base(name, args)
         {
         }
+
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
         protected override ISingleStream<TOut> CreateOutputStream(SelectSingleArgs<TIn, TOut> args)
         {

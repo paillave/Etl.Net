@@ -8,13 +8,15 @@ using System.Text.RegularExpressions;
 
 namespace Paillave.Etl.Core
 {
-    public abstract class StreamNodeBase<TOut, TOutStream, TArgs> : INodeContext
-        where TOutStream : IStream<TOut>
+
+    public abstract class StreamNodeBase<TOut, TOutStream, TArgs> : INodeContext, IStreamNode<TOut, TOutStream> where TOutStream : IStream<TOut>
     {
         public Guid IdNode { get; } = Guid.NewGuid();
-        protected IExecutionContext ExecutionContext { get; }
-        protected ITraceMapper Tracer { get; private set; }
-        public string NodeName { get; private set; }
+        public IExecutionContext ExecutionContext { get; }
+        public ITraceEventFactory Tracer { get; private set; }
+        public abstract ProcessImpact PerformanceImpact { get; }
+        public abstract ProcessImpact MemoryFootPrint { get; }
+        public string NodeName { get; }
         public virtual string TypeName
         {
             get
@@ -25,17 +27,24 @@ namespace Paillave.Etl.Core
         }
         public TOutStream Output { get; }
         protected TArgs Args { get; }
+
+        public bool IsRootNode => false;
+
         public StreamNodeBase(string name, TArgs args)
         {
+            // System.Diagnostics.StackFrame CallStack = new System.Diagnostics.StackFrame(3, true);
+            // Console.WriteLine($"{name} at line {CallStack.GetFileName()}:{CallStack.GetFileLineNumber()}.{CallStack.GetFileColumnNumber()}");
             this.Args = args;
             this.NodeName = name;
             this.ExecutionContext = this.GetExecutionContext(args);
-            this.Tracer = new TraceMapper(this.ExecutionContext, this);
+            this.Tracer = new TraceEventFactory(this.ExecutionContext, this);
             this.Output = CreateOutputStream(args);
             this.Output.Observable.Subscribe(i => { }, PostProcess);
-            this.ExecutionContext.AddNode(this, this.Output.Observable, this.Output.TraceObservable);
+            this.ExecutionContext.AddNode(this, this.Output.Observable);
             foreach (var item in this.GetInputStreams(args))
+            {
                 this.ExecutionContext.AddStreamToNodeLink(new StreamToNodeLink(item.SourceNodeName, item.InputName, this.NodeName));
+            }
         }
         protected virtual void PostProcess()
         {
@@ -52,7 +61,7 @@ namespace Paillave.Etl.Core
                 .GetProperties()
                 .Select(propertyInfo => new { propertyInfo.Name, Value = propertyInfo.GetValue(args) as IStream })
                 .Where(i => i.Value != null)
-                .Select(i => new InputStream { SourceNodeName = i.Value.SourceNodeName, InputName = i.Name })
+                .Select(i => new InputStream { SourceNodeName = i.Value.SourceNode.NodeName, InputName = i.Name })
                 .ToList();
         }
 
@@ -62,7 +71,7 @@ namespace Paillave.Etl.Core
                 .GetProperties()
                 .Select(propertyInfo => propertyInfo.GetValue(args))
                 .OfType<IStream>()
-                .Select(i => i.ExecutionContext)
+                .Select(i => i.SourceNode.ExecutionContext)
                 .OrderBy(i => !i.IsTracingContext)
                 .FirstOrDefault();
         }
@@ -71,27 +80,28 @@ namespace Paillave.Etl.Core
 
         protected IStream<TOut> CreateUnsortedStream(IPushObservable<TOut> observable)
         {
-            return new Stream<TOut>(this.Tracer, this.ExecutionContext, this.NodeName, observable);
+            return new Stream<TOut>(this, observable);
         }
 
         protected ISingleStream<TOut> CreateSingleStream(IPushObservable<TOut> observable)
         {
-            return new SingleStream<TOut>(this.Tracer, this.ExecutionContext, this.NodeName, observable);
+            return new SingleStream<TOut>(this, observable);
         }
 
         protected ISortedStream<TOut, TKey> CreateSortedStream<TKey>(IPushObservable<TOut> observable, SortDefinition<TOut, TKey> sortDefinition)
         {
-            return new SortedStream<TOut, TKey>(this.Tracer, this.ExecutionContext, this.NodeName, observable, sortDefinition);
+            return new SortedStream<TOut, TKey>(this, observable, sortDefinition);
         }
 
         protected IKeyedStream<TOut, TKey> CreateKeyedStream<TKey>(IPushObservable<TOut> observable, SortDefinition<TOut, TKey> sortDefinition)
         {
-            return new KeyedStream<TOut, TKey>(this.Tracer, this.ExecutionContext, this.NodeName, observable, sortDefinition);
+            return new KeyedStream<TOut, TKey>(this, observable, sortDefinition);
         }
 
         protected TOutStream CreateMatchingStream(IPushObservable<TOut> observable, TOutStream matchingSourceStream)
         {
-            return (TOutStream)matchingSourceStream.GetMatchingStream(Tracer, ExecutionContext, NodeName, observable);
+            // TODO: the following is an absolute dreadful solution about which I MUST find a proper alternative
+            return (TOutStream)matchingSourceStream.GetMatchingStream<TOut>(this, observable);
         }
         protected Func<T1, T2> WrapSelectForDisposal<T1, T2>(Func<T1, T2> creator, bool withNoDispose)
         {
@@ -102,6 +112,19 @@ namespace Paillave.Etl.Core
                     T2 disposable = creator(inp);
                     this.ExecutionContext.AddDisposable(disposable as IDisposable);
                     return disposable;
+                };
+            else
+                return creator;
+        }
+        protected Func<Correlated<T1>, Correlated<T2>> WrapSelectCorrelatedForDisposal<T1, T2>(Func<Correlated<T1>, Correlated<T2>> creator, bool withNoDispose)
+        {
+            bool isDisposable = typeof(IDisposable).IsAssignableFrom(typeof(T2));
+            if (isDisposable && !withNoDispose)
+                return (Correlated<T1> inp) =>
+                {
+                    T2 disposable = creator(inp).Row;
+                    this.ExecutionContext.AddDisposable(disposable as IDisposable);
+                    return new Correlated<T2> { Row = disposable, CorrelationKeys = inp.CorrelationKeys };
                 };
             else
                 return creator;

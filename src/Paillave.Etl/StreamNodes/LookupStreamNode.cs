@@ -22,6 +22,10 @@ namespace Paillave.Etl.StreamNodes
         {
         }
 
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
+
         protected override IStream<TOut> CreateOutputStream(LookupArgs<TInLeft, TInRight, TOut, TKey> args)
         {
             var rightDicoS = args.RightInputStream.Observable.ToList().Map(l => l.Select(i => new { Key = args.GetRightStreamKey(i), Value = i }).Where(i => i.Key != null).ToDictionary(i => i.Key, i => i.Value));

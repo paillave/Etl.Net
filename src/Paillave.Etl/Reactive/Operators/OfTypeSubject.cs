@@ -1,24 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Paillave.Etl.Reactive.Core;
 
 namespace Paillave.Etl.Reactive.Operators
 {
-    public class OfTypeSubject<TIn, TOut> : PushSubject<TOut> where TOut : class, TIn
+    public class OfTypeSubject<TIn, TOut> : PushSubject<TOut> where TOut : TIn
     {
         private IDisposable _subscription;
 
-        public OfTypeSubject(IPushObservable<TIn> observable)
+        public OfTypeSubject(IPushObservable<TIn> observable) : base(observable.CancellationToken)
         {
             this._subscription = observable.Subscribe(i =>
             {
+                if (CancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
                 try
                 {
-                    TOut ret = i as TOut;
-                    if (ret != null) this.PushValue(ret);
+                    if (i is TOut output) this.PushValue(output);
                 }
                 catch (Exception ex)
                 {
@@ -35,9 +34,9 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TOut> OfType<TOut>(this IPushObservable<object> observable) where TOut : class
+        public static IPushObservable<TOut> OfType<TIn, TOut>(this IPushObservable<TIn> observable) where TOut : TIn
         {
-            return new OfTypeSubject<object, TOut>(observable);
+            return new OfTypeSubject<TIn, TOut>(observable);
         }
     }
 }

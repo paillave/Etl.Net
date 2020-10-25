@@ -12,10 +12,14 @@ namespace Paillave.Etl.Reactive.Operators
         private IDisposable _subscription;
         private object _lockObject = new object();
 
-        public SkipSubject(IPushObservable<T> observable, int count)
+        public SkipSubject(IPushObservable<T> observable, int count) : base(observable.CancellationToken)
         {
             this._subscription = observable.Subscribe(i =>
             {
+                if (CancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
                 lock (_lockObject)
                 {
                     if (count <= 0)

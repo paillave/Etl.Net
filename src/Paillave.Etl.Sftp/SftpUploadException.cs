@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Paillave.Etl.Sftp
 {
-    public class SftpUploadException:Exception
+    public class SftpUploadException : Exception
     {
     }
 }

@@ -1,10 +1,5 @@
-﻿using Paillave.Etl.Core;
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.Reactive.Core;
-using Paillave.Etl.Reactive.Operators;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Paillave.Etl.StreamNodes
 {
@@ -48,6 +43,40 @@ namespace Paillave.Etl.StreamNodes
         public TOut ProcessRow(TIn value)
         {
             return _selector(value);
+        }
+    }
+    /// <summary>
+    /// Implementation of a select transformation adding a sequence for a given keyset
+    /// </summary>
+    /// <typeparam name="TKey">Key type</typeparam>
+    /// <typeparam name="TIn">Input type</typeparam>
+    /// <typeparam name="TOut">Outout type</typeparam>
+    public class SelectWithSequenceProcessor<TIn, TKey, TOut> : ISelectProcessor<TIn, TOut>
+    {
+        private Dictionary<TKey, int> _sequences = new Dictionary<TKey, int>();
+        private Func<TIn, int, TOut> _selector;
+        private Func<TIn, TKey> _keySelector;
+        /// <summary>
+        /// Builds the processor giving the process to be applied at any occurrence as a parameter
+        /// </summary>
+        /// <param name="selector">Delegate describing the tranformation</param>
+        public SelectWithSequenceProcessor(Func<TIn, int, TOut> selector, Func<TIn, TKey> keySelector)
+        {
+            _selector = selector;
+            _keySelector = keySelector;
+        }
+        /// <summary>
+        /// Transformation to apply on an occurrence of an element of the stream
+        /// </summary>
+        /// <param name="value">Input value</param>
+        /// <returns>Output value</returns>
+        public TOut ProcessRow(TIn value)
+        {
+            int sequence = 0;
+            var key = _keySelector(value);
+            _sequences.TryGetValue(key, out sequence);
+            _sequences[key] = ++sequence;
+            return _selector(value, sequence);
         }
     }
     /// <summary>

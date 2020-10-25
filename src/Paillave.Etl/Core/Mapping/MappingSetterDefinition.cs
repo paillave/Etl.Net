@@ -9,13 +9,19 @@ namespace Paillave.Etl.Core.Mapping
 {
     public class MappingSetterDefinition
     {
+        public string[] TrueValues { get; internal set; } = null;
+        public string[] FalseValues { get; internal set; } = null;
         public string ColumnName { get; internal set; } = null;
         public int? ColumnIndex { get; internal set; } = null;
         public string DateFormat { get; internal set; } = null;
         public PropertyInfo TargetPropertyInfo { get; internal set; }
         public string DecimalSeparator { get; internal set; } = null;
+        public string GroupSeparator { get; internal set; } = null;
         public string CultureName { get; internal set; } = null;
         public int? Size { get; internal set; } = null;
+        public bool ForSourceName { get; internal set; } = false;
+        public bool ForLineNumber { get; internal set; } = false;
+        public bool ForRowGuid { get; internal set; } = false;
 
         public CultureInfo CreateCultureInfo()
         {
@@ -61,9 +67,12 @@ namespace Paillave.Etl.Core.Mapping
                 typeof(System.UInt16?),
             }.Contains(TargetPropertyInfo.PropertyType))
             {
-                if (DecimalSeparator != null)
+                if (!string.IsNullOrWhiteSpace(DecimalSeparator) || !string.IsNullOrWhiteSpace(GroupSeparator))
                 {
                     CultureInfo ci = CultureInfo.CreateSpecificCulture(string.Empty);
+                    ci.NumberFormat.NumberGroupSeparator = GroupSeparator ?? "";
+                    ci.NumberFormat.CurrencyGroupSeparator = GroupSeparator ?? "";
+                    ci.NumberFormat.PercentGroupSeparator = GroupSeparator ?? "";
                     ci.NumberFormat.NumberDecimalSeparator = DecimalSeparator;
                     ci.NumberFormat.CurrencyDecimalSeparator = DecimalSeparator;
                     ci.NumberFormat.PercentDecimalSeparator = DecimalSeparator;

@@ -36,7 +36,7 @@ namespace Paillave.Etl.Reactive.Operators
         }
         public static IPushObservable<T> DelayTillEndOfStream<T>(this IPushObservable<T> observable)
         {
-            return observable.ToList().FlatMap(i => PushObservable.FromEnumerable(i));
+            return observable.ToList().FlatMap((i, ct) => PushObservable.FromEnumerable(i, ct));
         }
         public static Task<List<T>> ToListAsync<T>(this IPushObservable<T> observable)
         {
@@ -44,15 +44,15 @@ namespace Paillave.Etl.Reactive.Operators
         }
         public static IPushObservable<int> Count<T>(this IPushObservable<T> observable)
         {
-            return observable.Scan((acc, red) => acc + 1, 0).Last();
+            return observable.Aggregate<T, int>((acc, red) => acc + 1);
         }
         public static IPushObservable<int> Count<T>(this IPushObservable<T> observable, Func<T, bool> criteria)
         {
-            return observable.Filter(criteria).Scan<T, int>((acc, red) => acc + 1, 0).Last();
+            return observable.Filter(criteria).Aggregate<T, int>((acc, red) => acc + 1);
         }
         public static IPushObservable<Tuple<TResult, TResult>> PairWithPrevious<TResult>(this IPushObservable<TResult> sourceS)
         {
-            return sourceS.Scan<TResult, Tuple<TResult, TResult>>((a, v) => new Tuple<TResult, TResult>(a == null ? v : a.Item2, v), null);
+            return sourceS.Scan<TResult, Tuple<TResult, TResult>>(null, (a, v) => new Tuple<TResult, TResult>(a == null ? v : a.Item2, v));
         }
     }
 }

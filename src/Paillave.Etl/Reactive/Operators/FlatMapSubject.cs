@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 using Paillave.Etl.Reactive.Core;
 using System.Linq.Expressions;
 using Paillave.Etl.Reactive.Disposables;
+using System.Threading;
 
 namespace Paillave.Etl.Reactive.Operators
 {
     public class FlatMapSubject<TIn, TOut> : FlatMapSubjectBase<TIn, TOut>
     {
-        public FlatMapSubject(IPushObservable<TIn> sourceS, Func<TIn, IPushObservable<TOut>> observableFactory) : base(sourceS, observableFactory) { }
+        public FlatMapSubject(IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory) : base(sourceS, observableFactory) { }
         protected override IDisposableManager CreateDisposableManagerInstance() => new CollectionDisposableManager();
     }
     public class SwitchMapSubject<TIn, TOut> : FlatMapSubjectBase<TIn, TOut>
     {
-        public SwitchMapSubject(IPushObservable<TIn> sourceS, Func<TIn, IPushObservable<TOut>> observableFactory) : base(sourceS, observableFactory) { }
+        public SwitchMapSubject(IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory) : base(sourceS, observableFactory) { }
         protected override IDisposableManager CreateDisposableManagerInstance() => new SingleDisposableManager();
     }
     public abstract class FlatMapSubjectBase<TIn, TOut> : PushSubject<TOut>
@@ -25,12 +26,12 @@ namespace Paillave.Etl.Reactive.Operators
 
         private IDisposable _sourceSubscription;
         private IDisposableManager _outSubscriptions;
-        private Func<TIn, IPushObservable<TOut>> _observableFactory;
+        private Func<TIn, CancellationToken, IPushObservable<TOut>> _observableFactory;
         private object _syncLock = new object();
 
         protected abstract IDisposableManager CreateDisposableManagerInstance();
 
-        public FlatMapSubjectBase(IPushObservable<TIn> sourceS, Func<TIn, IPushObservable<TOut>> observableFactory)
+        public FlatMapSubjectBase(IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory) : base(sourceS.CancellationToken)
         {
             lock (_syncLock)
             {
@@ -41,12 +42,16 @@ namespace Paillave.Etl.Reactive.Operators
         }
         private void OnSourcePush(TIn value)
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_syncLock)
             {
                 IPushObservable<TOut> outS;
                 try
                 {
-                    outS = _observableFactory(value);
+                    outS = _observableFactory(value, this.CancellationToken);
                 }
                 catch (Exception ex)
                 {
@@ -102,11 +107,11 @@ namespace Paillave.Etl.Reactive.Operators
 
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TOut> FlatMap<TIn, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, IPushObservable<TOut>> observableFactory) //PERMIT TO BE SYNCHRONE
+        public static IPushObservable<TOut> FlatMap<TIn, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory) //PERMIT TO BE SYNCHRONE
         {
             return new FlatMapSubject<TIn, TOut>(sourceS, observableFactory);
         }
-        public static IPushObservable<TOut> SwitchMap<TIn, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, IPushObservable<TOut>> observableFactory)
+        public static IPushObservable<TOut> SwitchMap<TIn, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory)
         {
             return new SwitchMapSubject<TIn, TOut>(sourceS, observableFactory);
         }

@@ -7,47 +7,55 @@ using System.Diagnostics;
 using Paillave.Etl.Reactive.Core;
 using Paillave.Etl.Reactive.Operators;
 using Paillave.Etl.Core.TraceContents;
+using System.Threading;
 
 namespace Paillave.Etl.Core.Streams
 {
     public class Stream<T> : IStream<T>
     {
-        protected ITraceMapper TraceMapper { get; }
-        public Stream(ITraceMapper traceMapper, IExecutionContext executionContext, string sourceNodeName, IPushObservable<T> observable)
+        private class RowTracer
         {
-            this.TraceMapper = traceMapper;
-            this.SourceNodeName = sourceNodeName;
-            this.ExecutionContext = executionContext;
-
-            this.Observable = observable.TakeUntil(executionContext.StopProcessEvent);
-
-            if (traceMapper != null)
+            private Stopwatch _stopwatch = new Stopwatch();
+            private int _count = 0;
+            public RowProcessStreamTraceContent ProcessRow(T row, int rowNumber)
             {
-                this.TraceObservable =
-                    PushObservable.Merge<ITraceContent>(
-                        this.Observable.ExceptionsToObservable().Map(e => new UnhandledExceptionStreamTraceContent(e)),
-                        this.Observable.Count().Map(count => new CounterSummaryStreamTraceContent(count)),
-                        this.Observable.Map((e, i) => new RowProcessStreamTraceContent(i + 1, e))
-                    ).Map(i => traceMapper.MapToTrace(i, executionContext.NextTraceSequence()));
+                Interlocked.Increment(ref _count);
+                return new RowProcessStreamTraceContent(rowNumber + 1, GetAverageDuration(), row);
+            }
+            public int? GetAverageDuration()
+            {
+                if (!_stopwatch.IsRunning)
+                {
+                    _stopwatch.Start();
+                    return null;
+                }
+                return (int)(_stopwatch.ElapsedMilliseconds / _count);
+            }
+        }
+        public Stream(INodeContext sourceNode, IPushObservable<T> observable)
+        {
+            this.SourceNode = sourceNode;
+            var rowTracer = new RowTracer();
+
+            this.Observable = observable;
+
+            if (!this.SourceNode.ExecutionContext.IsTracingContext)
+            {
+                PushObservable.Merge<ITraceContent>(
+                    this.Observable.Map(rowTracer.ProcessRow),
+                    this.Observable.Count().Map(count => new CounterSummaryStreamTraceContent(count)),
+                    this.Observable.ExceptionsToObservable().Map(e => new UnhandledExceptionStreamTraceContent(e))
+                ).Do(i => this.SourceNode.ExecutionContext.AddTrace(i, sourceNode));
             }
         }
 
         public IPushObservable<T> Observable { get; }
 
-        public IExecutionContext ExecutionContext { get; }
+        public INodeContext SourceNode { get; }
 
-        public string SourceNodeName { get; }
-
-        public IPushObservable<TraceEvent> TraceObservable { get; }
-
-        public virtual object GetMatchingStream(IPushObservable<T> observable)
+        public virtual object GetMatchingStream<TOut>(INodeContext sourceNode, object observable)
         {
-            return new Stream<T>(this.TraceMapper, this.ExecutionContext, this.SourceNodeName, observable);
-        }
-
-        public virtual object GetMatchingStream(ITraceMapper tracer, IExecutionContext executionContext, string name, object observable)
-        {
-            return new Stream<T>(tracer, executionContext, name, (IPushObservable<T>)observable);
+            return new Stream<TOut>(sourceNode, (IPushObservable<TOut>)observable);
         }
     }
 }

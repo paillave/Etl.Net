@@ -17,6 +17,7 @@ namespace Paillave.Etl.Core
             this.NodeName = nodeName;
             this.Content = content;
             this.DateTime = DateTime.Now;
+            this.SequenceId = sequenceId;
         }
         public int SequenceId { get; }
         public Guid ExecutionId { get; }

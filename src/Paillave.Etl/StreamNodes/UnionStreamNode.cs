@@ -21,6 +21,10 @@ namespace Paillave.Etl.StreamNodes
         {
         }
 
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
+
         protected override IStream<TIn> CreateOutputStream(UnionArgs<TIn> args)
         {
             return base.CreateUnsortedStream(args.Stream1.Observable.Merge(args.Stream2.Observable));
@@ -42,6 +46,10 @@ namespace Paillave.Etl.StreamNodes
         public UnionStreamNode(string name, UnionArgs<TIn1, TIn2, TOut> args) : base(name, args)
         {
         }
+
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
         protected override IStream<TOut> CreateOutputStream(UnionArgs<TIn1, TIn2, TOut> args)
         {

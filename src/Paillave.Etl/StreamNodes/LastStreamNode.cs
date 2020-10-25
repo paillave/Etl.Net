@@ -1,9 +1,6 @@
 ﻿using Paillave.Etl.Core;
 using Paillave.Etl.Core.Streams;
 using Paillave.Etl.Reactive.Operators;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Paillave.Etl.StreamNodes
 {
@@ -16,6 +13,10 @@ namespace Paillave.Etl.StreamNodes
         public LastStreamNode(string name, LastArgs<TOut> args) : base(name, args)
         {
         }
+
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
         protected override ISingleStream<TOut> CreateOutputStream(LastArgs<TOut> args)
         {

@@ -1,8 +1,7 @@
-﻿using System;
-
-namespace Paillave.Etl.Ftp
+﻿namespace Paillave.Etl.Ftp
 {
-    public class FtpConnectionInfo
+
+    public class FtpConnectionInfo : IFtpConnectionInfo
     {
         public string Server { get; set; }
         public int PortNumber { get; set; } = 21;

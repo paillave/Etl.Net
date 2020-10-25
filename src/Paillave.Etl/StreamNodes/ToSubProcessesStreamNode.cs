@@ -23,6 +23,10 @@ namespace Paillave.Etl.StreamNodes
         {
         }
 
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
+
         protected override IStream<TOut> CreateOutputStream(ToSubProcessesArgs<TIn, TOut> args)
         {
             // Semaphore semaphore = args.NoParallelisation ? new Semaphore(1, 1) : new Semaphore(10, 10);
@@ -30,24 +34,24 @@ namespace Paillave.Etl.StreamNodes
 
             if (this.ExecutionContext is GetDefinitionExecutionContext)
             {
-                var inputStream = new SingleStream<TIn>(this.Tracer.GetSubTraceMapper(this), this.ExecutionContext, this.NodeName, PushObservable.FromSingle(default(TIn)));
+                var inputStream = new SingleStream<TIn>(new SubNodeWrapper( this), PushObservable.FromSingle(default(TIn), args.Stream.Observable.CancellationToken));
                 foreach (var subProcess in args.SubProcesses)
                 {
                     var outputStream = subProcess(inputStream);
-                    this.ExecutionContext.AddNode(this, outputStream.Observable, outputStream.TraceObservable);
+                    this.ExecutionContext.AddNode(this, outputStream.Observable);
                 }
             }
 
             var outputObservable = args.Stream.Observable
-                .FlatMap(i => PushObservable.FromEnumerable(args.SubProcesses.Select(sp => new
+                .FlatMap((i, ct) => PushObservable.FromEnumerable(args.SubProcesses.Select(sp => new
                 {
                     config = i,
                     subProc = sp
-                })))
-                .FlatMap(i =>
+                }), ct))
+                .FlatMap((i, ct) =>
                 {
                     EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-                    var inputStream = new SingleStream<TIn>(this.Tracer.GetSubTraceMapper(this), this.ExecutionContext, this.NodeName, PushObservable.FromSingle(i.config, waitHandle));
+                    var inputStream = new SingleStream<TIn>(new SubNodeWrapper( this), PushObservable.FromSingle(i.config, waitHandle, ct));
                     var outputStream = i.subProc(inputStream);
                     IDisposable awaiter = null;
                     outputStream.Observable.Subscribe(j => { }, () => awaiter?.Dispose());
@@ -55,7 +59,7 @@ namespace Paillave.Etl.StreamNodes
                     {
                         awaiter = synchronizer.WaitBeforeProcess();
                         waitHandle.Set();
-                    });
+                    }, null, ct);
                 });
             return base.CreateUnsortedStream(outputObservable);
         }

@@ -11,10 +11,14 @@ namespace Paillave.Etl.Reactive.Operators
     {
         private IDisposable _subscription;
         private object _syncLock = new object();
-        public MultiMapSubject(IPushObservable<TIn> observable, Action<TIn, Action<TOut>> outputValuesFactory)
+        public MultiMapSubject(IPushObservable<TIn> observable, Action<TIn, Action<TOut>> outputValuesFactory) : base(observable.CancellationToken)
         {
             this._subscription = observable.Subscribe(i =>
             {
+                if (CancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
                 lock (_syncLock)
                 {
                     try
@@ -28,11 +32,15 @@ namespace Paillave.Etl.Reactive.Operators
                 }
             }, this.Complete, this.PushException);
         }
-        public MultiMapSubject(IPushObservable<TIn> observable, Action<TIn, int, Action<TOut>> outputValuesFactory)
+        public MultiMapSubject(IPushObservable<TIn> observable, Action<TIn, int, Action<TOut>> outputValuesFactory) : base(observable.CancellationToken)
         {
             int counter = 0;
             this._subscription = observable.Subscribe(i =>
             {
+                if (CancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
                 lock (_syncLock)
                 {
                     try

@@ -23,7 +23,7 @@ namespace Paillave.Etl.Reactive.Operators
         public GroupSubject(
             IPushObservable<TIn> sourceS,
             Func<TIn, TKey> getKey,
-            Func<IPushObservable<TIn>, IPushObservable<TOut>> groupedObservableTransformation)
+            Func<IPushObservable<TIn>, IPushObservable<TOut>> groupedObservableTransformation) : base(sourceS.CancellationToken)
         {
             _getKey = getKey;
             _groupedObservableTransformation = groupedObservableTransformation;
@@ -38,7 +38,7 @@ namespace Paillave.Etl.Reactive.Operators
                 grp = new KeyGroup
                 {
                     Key = key,
-                    PushSubject = new PushSubject<TIn>()
+                    PushSubject = new PushSubject<TIn>(this.CancellationToken)
                 };
                 grp.OutputSubscription = _groupedObservableTransformation(grp.PushSubject).Subscribe(
                         i => OnOutputPushValue(grp, i),
@@ -52,18 +52,26 @@ namespace Paillave.Etl.Reactive.Operators
         }
         private void OnSourcePush(TIn value)
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_syncLock)
             {
-                var obs = GetOrCreateObservable(value);
-                obs.PushSubject.PushValue(value);
+                try
+                {
+                    var obs = GetOrCreateObservable(value);
+                    obs.PushSubject.PushValue(value);
+                }
+                catch (Exception ex)
+                {
+                    this.PushException(ex);
+                }
             }
         }
         private void OnOutputPushValue(KeyGroup grp, TOut value)
         {
-            lock (_syncLock)
-            {
-                base.PushValue(value);
-            }
+            base.PushValue(value);
         }
         private void OnOutputException(KeyGroup grp, Exception exception)
         {
@@ -87,10 +95,20 @@ namespace Paillave.Etl.Reactive.Operators
         }
         private void OnSourceComplete()
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_syncLock)
             {
                 foreach (var item in _observableDictionary.ToList())
+                {
+                    if (CancellationToken.IsCancellationRequested)
+                    {
+                        break;
+                    }
                     item.Value.PushSubject.Complete();
+                }
                 _sourceSubscription.Dispose();
                 _sourceSubscription = null;
                 TryComplete();

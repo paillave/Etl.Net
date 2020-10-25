@@ -5,23 +5,28 @@
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseUrl>https://github.com/paillave/Etl.Net/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive SFTP</PackageTags>
     <Product>ETL.net SFTP extensions</Product>
-    <PackageIconUrl>https://paillave.github.io/Etl.Net/images/NugetIcon.png</PackageIconUrl>
+    <PackageIcon>NugetIcon.png</PackageIcon>
     <Description>SFTP extensions for Etl.Net</Description>
     <PackageReleaseNotes>
 extensions for Etl.Net to query against SFTP
     </PackageReleaseNotes>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
+  </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="3.1.8" />
     <PackageReference Include="SSH.NET" Version="2016.1.0" />
   </ItemGroup>
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

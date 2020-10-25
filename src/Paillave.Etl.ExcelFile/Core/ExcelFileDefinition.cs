@@ -107,7 +107,7 @@ namespace Paillave.Etl.ExcelFile.Core
                     .Select((fd, idx) => new
                     {
                         Position = idx,
-                        PropertySerializer = new ExcelFilePropertySetter(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo, fd.ColumnName)
+                        PropertySerializer = new ExcelFilePropertySetter(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo, fd.ColumnName, $"<{idx}>")
                     })
                     .ToDictionary(i => i.Position, i => i.PropertySerializer);
                 return new ExcelFileReader(dico, _columnHeaderRange, _dataRange, _datasetOrientation);
