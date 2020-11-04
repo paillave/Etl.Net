@@ -13,7 +13,6 @@ namespace Paillave.Etl.Core
     public abstract class ValuesProviderBase<TValueIn, TValueOut> : IValuesProvider<TValueIn, TValueOut>
     {
         public virtual string TypeName => this.GetType().Name;
-        private readonly IDependencyResolver _resolver = null;
         public abstract void PushValues(TValueIn input, Action<TValueOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker);
         public abstract ProcessImpact PerformanceImpact { get; }
         public abstract ProcessImpact MemoryFootPrint { get; }

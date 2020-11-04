@@ -20,7 +20,8 @@ namespace Paillave.Etl.FileSystem
         {
             var l = fileValue.GetContent();
             l.Seek(0, SeekOrigin.Begin);
-            using (var fileStream = File.OpenWrite(Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "", fileValue.Name)))
+            var outputFilePath=Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "", fileValue.Name);
+            using (var fileStream = File.OpenWrite(outputFilePath))
                 l.CopyTo(fileStream);
             push(fileValue);
         }

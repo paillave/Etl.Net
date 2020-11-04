@@ -5,6 +5,10 @@
             "label": "build",
             "command": "dotnet",
             "type": "process",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "args": [
                 "build",
                 "${workspaceFolder}/Paillave.Etl.Samples/Paillave.Etl.Samples.csproj",

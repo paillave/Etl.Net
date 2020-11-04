@@ -11,10 +11,11 @@ using SystemIO = System.IO;
 
 namespace Paillave.Etl.TextFile
 {
-    public class ToTextDataStreamArgs<TIn>
+    public class ToTextDataStreamArgs<TIn, TRow>
     {
         public IStream<TIn> MainStream { get; set; }
-        public FlatFileDefinition<TIn> Mapping { get; set; }
+        public Func<TIn, TRow> GetRow { get; set; }
+        public FlatFileDefinition<TRow> Mapping { get; set; }
         public string FileName { get; set; }
         public Encoding Encoding { get; set; }
         public Dictionary<string, Destination> Destinations { get; set; }
@@ -24,11 +25,11 @@ namespace Paillave.Etl.TextFile
     /// Writes what goes in the stream into a structured flat file
     /// </summary>
     /// <typeparam name="TIn"></typeparam>
-    public class ToTextDataStreamStreamNode<TIn> : StreamNodeBase<IFileValue, ISingleStream<IFileValue>, ToTextDataStreamArgs<TIn>>
+    public class ToFileValueStreamNode<TIn, TRow> : StreamNodeBase<IFileValue, ISingleStream<IFileValue>, ToTextDataStreamArgs<TIn, TRow>>
     {
-        private readonly LineSerializer<TIn> _serialize;
+        private readonly LineSerializer<TRow> _serialize;
         private FileValueWriter<FlatFileValueMetadata> _streamWriter;
-        public ToTextDataStreamStreamNode(string name, ToTextDataStreamArgs<TIn> args) : base(name, args)
+        public ToFileValueStreamNode(string name, ToTextDataStreamArgs<TIn, TRow> args) : base(name, args)
         {
             _serialize = args.Mapping.GetSerializer();
             _streamWriter = FileValueWriter.Create(new FlatFileValueMetadata
@@ -41,12 +42,12 @@ namespace Paillave.Etl.TextFile
         }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-        protected override ISingleStream<IFileValue> CreateOutputStream(ToTextDataStreamArgs<TIn> args)
+        protected override ISingleStream<IFileValue> CreateOutputStream(ToTextDataStreamArgs<TIn, TRow> args)
         {
             var obs = args.MainStream.Observable.Do(ProcessValueToOutput).Completed().Map(i => _streamWriter);
             return CreateSingleStream(obs);
         }
-        private void ProcessValueToOutput(TIn value) => _streamWriter.WriteLine(_serialize.Serialize(value));
+        private void ProcessValueToOutput(TIn value) => _streamWriter.WriteLine(_serialize.Serialize(Args.GetRow(value)));
     }
     public class FlatFileValueMetadata : FileValueMetadataBase, IFileValueWithDestinationMetadata
     {

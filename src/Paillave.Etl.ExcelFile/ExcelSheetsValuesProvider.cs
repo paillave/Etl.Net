@@ -7,6 +7,7 @@ using System.Threading;
 
 namespace Paillave.Etl.ExcelFile
 {
+    // https://github.com/mrjono1/FastExcel
     public class ExcelSheetSelection
     {
         internal ExcelWorksheet ExcelWorksheet { get; }

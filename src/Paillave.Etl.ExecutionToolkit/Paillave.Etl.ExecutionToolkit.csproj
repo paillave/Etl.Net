@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Etl.Net.ExecutionToolkit</PackageId>
+    <Version>1.0.0-alpha</Version>
+    <Authors>Stéphane Royer</Authors>
+    <Company></Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
+    <PackageTags>ETL .net core SSIS reactive Entity Framework core</PackageTags>
+    <Product>ETL.net Execution plan extensions</Product>
+    <Description>ExecutionToolkit extensions for Etl.Net</Description>
+    <PackageIcon>NugetIcon.png</PackageIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources/*" />
+    <!-- <None Remove="ActualExecutionPlan.D3Sankey.html" />
+    <None Remove="ActualExecutionPlan.PlotySankey.html" />
+    <None Remove="ActualExecutionPlan.VisNetwork.html" />
+    <None Remove="EstimatedExecutionPlan.D3Sankey.html" />
+    <None Remove="EstimatedExecutionPlan.PlotySankey.html" />
+    <None Remove="EstimatedExecutionPlan.VisNetwork.html" /> -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources/*" />
+    <!-- <EmbeddedResource Include="EstimatedExecutionPlan.PlotySankey.html" />
+    <EmbeddedResource Include="EstimatedExecutionPlan.D3Sankey.html" />
+    <EmbeddedResource Include="EstimatedExecutionPlan.VisNetwork.html" />
+    <EmbeddedResource Include="ActualExecutionPlan.VisNetwork.html" />
+    <EmbeddedResource Include="ActualExecutionPlan.PlotySankey.html" />
+    <EmbeddedResource Include="ActualExecutionPlan.D3Sankey.html" /> -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="4.7.2" />
+    <PackageReference Include="Terminal.Gui" Version="0.90.3" />
+  </ItemGroup>
+
+</Project>

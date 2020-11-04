@@ -6,6 +6,7 @@ using Paillave.Etl.Extensions;
 using Paillave.Etl.ValuesProviders;
 using System.Text;
 using System.Collections.Generic;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.TextFile
 {
@@ -65,10 +66,24 @@ namespace Paillave.Etl.TextFile
         #region ToTextFile
         public static ISingleStream<IFileValue> ToTextFileValue<TIn>(this IStream<TIn> stream, string name, string fileName, FlatFileDefinition<TIn> mapping, Dictionary<string, Destination> destinations = null, object extraMetadata = null, Encoding encoding = null)
         {
-            return new ToTextDataStreamStreamNode<TIn>(name, new ToTextDataStreamArgs<TIn>
+            return new ToFileValueStreamNode<TIn, TIn>(name, new ToTextDataStreamArgs<TIn, TIn>
             {
                 MainStream = stream,
                 Mapping = mapping,
+                GetRow = i => i,
+                FileName = fileName,
+                Encoding = encoding,
+                Metadata = extraMetadata,
+                Destinations = destinations
+            }).Output;
+        }
+        public static ISingleStream<IFileValue> ToTextFileValue<TIn>(this IStream<Correlated<TIn>> stream, string name, string fileName, FlatFileDefinition<TIn> mapping, Dictionary<string, Destination> destinations = null, object extraMetadata = null, Encoding encoding = null)
+        {
+            return new ToFileValueStreamNode<Correlated<TIn>, TIn>(name, new ToTextDataStreamArgs<Correlated<TIn>, TIn>
+            {
+                MainStream = stream,
+                Mapping = mapping,
+                GetRow = i => i.Row,
                 FileName = fileName,
                 Encoding = encoding,
                 Metadata = extraMetadata,

@@ -7,6 +7,7 @@
     <ProjectReference Include="..\Paillave.Etl.EntityFrameworkCore\Paillave.Etl.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Paillave.Etl.FromConfigurationConnectors\Paillave.Etl.FromConfigurationConnectors.csproj" />
     <ProjectReference Include="..\Paillave.Etl.FileSystem\Paillave.Etl.FileSystem.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.ExecutionToolkit\Paillave.Etl.ExecutionToolkit.csproj" />
   </ItemGroup>
 
   <ItemGroup>
