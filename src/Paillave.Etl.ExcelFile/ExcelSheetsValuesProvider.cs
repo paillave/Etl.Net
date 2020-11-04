@@ -26,7 +26,7 @@ namespace Paillave.Etl.ExcelFile
         public ExcelSheetsValuesProvider(ExcelSheetsValuesProviderArgs<TOut> args) => _args = args;
         public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-        public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver)
+        public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
             var pck = new ExcelPackage(input.GetContent());
             foreach (var worksheet in pck.Workbook.Worksheets)

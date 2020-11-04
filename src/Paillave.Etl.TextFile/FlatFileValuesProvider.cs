@@ -20,7 +20,7 @@ namespace Paillave.Etl.TextFile
         public FlatFileValuesProvider(FlatFileValuesProviderArgs<TParsed, TOut> args) => _args = args;
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-        public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver)
+        public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
             var stream = input.GetContent();
             string sourceName = input.Name;

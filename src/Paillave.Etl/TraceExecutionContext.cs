@@ -24,7 +24,7 @@ namespace Paillave.Etl
             this.JobName = null;
             this._startSynchronizer = startSynchronizer;
             this.DependencyResolver = resolver;
-            this.ContextBag = new ContextBag();
+            this.ContextBag = new SimpleDependencyResolver();
         }
         public IDependencyResolver DependencyResolver { get; }
         private readonly JobPoolDispatcher _jobPoolDispatcher;
@@ -34,7 +34,7 @@ namespace Paillave.Etl
         public bool IsTracingContext => true;
         public void AddNode<T>(INodeDescription nodeContext, IPushObservable<T> observable) => _tasksToWait.Add(observable.ToTaskAsync());
         public Task GetCompletionTask() => Task.WhenAll(_tasksToWait.ToArray()).ContinueWith(_ => _disposables.Dispose());
-        public ContextBag ContextBag { get; }
+        public SimpleDependencyResolver ContextBag { get; }
         public void AddDisposable(IDisposable disposable) => _disposables.Set(disposable);
         public void AddStreamToNodeLink(StreamToNodeLink link) { }
         public int NextTraceSequence() => 0;

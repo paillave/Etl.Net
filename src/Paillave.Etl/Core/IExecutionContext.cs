@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl.Core
 {
-    public interface IExecutionContext
+
+    public interface IExecutionContext : IInvoker
     {
         Guid ExecutionId { get; }
         string JobName { get; }
@@ -17,11 +18,14 @@ namespace Paillave.Etl.Core
         void AddStreamToNodeLink(StreamToNodeLink link);
 
         IDependencyResolver DependencyResolver { get; }
-        ContextBag ContextBag { get; }
+        SimpleDependencyResolver ContextBag { get; }
         bool IsTracingContext { get; }
         void AddTrace(ITraceContent traceContent, INodeContext sourceNode);
+        IFileValueConnectors Connectors { get; }
+    }
+    public interface IInvoker
+    {
         void InvokeInDedicatedThread(object threadOwner, Action action);
         T InvokeInDedicatedThread<T>(object threadOwner, Func<T> action);
-        IFileValueConnectors Connectors { get; }
     }
 }

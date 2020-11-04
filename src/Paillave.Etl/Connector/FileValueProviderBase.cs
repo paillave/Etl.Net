@@ -24,9 +24,9 @@ namespace Paillave.Etl.Connector
             _providerParameters = providerParameters;
         }
 
-        public void Provide(Action<IFileValue> pushFileValue, CancellationToken cancellationToken, IDependencyResolver resolver)
-            => Provide(pushFileValue, _connectionParameters, _providerParameters, cancellationToken, resolver);
-        protected abstract void Provide(Action<IFileValue> pushFileValue, TConnectionParameters connectionParameters, TProviderParameters providerParameters, CancellationToken cancellationToken, IDependencyResolver resolver);
+        public void Provide(Action<IFileValue> pushFileValue, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+            => Provide(pushFileValue, _connectionParameters, _providerParameters, cancellationToken, resolver, invoker);
+        protected abstract void Provide(Action<IFileValue> pushFileValue, TConnectionParameters connectionParameters, TProviderParameters providerParameters, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker);
         public void Test() => Test(_connectionParameters, _providerParameters);
         protected abstract void Test(TConnectionParameters connectionParameters, TProviderParameters providerParameters);
     }

@@ -15,14 +15,15 @@ namespace Paillave.Etl.EntityFrameworkCore
         internal IStream<TIn> InputStream { get; }
         internal DeleteEntityFrameworkCoreArgsBuilder(IStream<TIn> inputStream)
             => (InputStream) = (inputStream);
-        public DeleteEntityFrameworkCoreArgsBuilder<TIn, TEntity> Set<TEntity>() where TEntity : class
-            => new DeleteEntityFrameworkCoreArgsBuilder<TIn, TEntity>(this);
+        public DeleteEntityFrameworkCoreArgsBuilder<TIn, TEntity> Set<TEntity>(string keyedConnection = null) where TEntity : class
+            => new DeleteEntityFrameworkCoreArgsBuilder<TIn, TEntity>(this, keyedConnection);
     }
     public class DeleteEntityFrameworkCoreArgsBuilder<TIn, TEntity> where TEntity : class
     {
         internal DeleteEntityFrameworkCoreArgsBuilder<TIn> Parent { get; }
-        internal DeleteEntityFrameworkCoreArgsBuilder(DeleteEntityFrameworkCoreArgsBuilder<TIn> parent)
-            => (Parent) = (parent);
+        internal string KeyedConnection { get; private set; }
+        internal DeleteEntityFrameworkCoreArgsBuilder(DeleteEntityFrameworkCoreArgsBuilder<TIn> parent, string keyedConnection)
+            => (Parent, KeyedConnection) = (parent, keyedConnection);
         internal Expression<Func<TIn, TEntity, bool>> WhereStatement { get; private set; } = null;
         public DeleteEntityFrameworkCoreArgsBuilder<TIn, TEntity> Where(Expression<Func<TIn, TEntity, bool>> match)
         {
@@ -34,7 +35,8 @@ namespace Paillave.Etl.EntityFrameworkCore
             {
                 InputStream = this.Parent.InputStream,
                 GetValue = i => i,
-                Match = this.WhereStatement
+                Match = this.WhereStatement,
+                KeyedConnection = this.KeyedConnection
             };
     }
 
@@ -43,14 +45,15 @@ namespace Paillave.Etl.EntityFrameworkCore
         internal IStream<Correlated<TIn>> InputStream { get; }
         internal DeleteEntityFrameworkCoreCorrelatedArgsBuilder(IStream<Correlated<TIn>> inputStream)
             => (InputStream) = (inputStream);
-        public DeleteEntityFrameworkCoreCorrelatedArgsBuilder<TIn, TEntity> Set<TEntity>() where TEntity : class
-            => new DeleteEntityFrameworkCoreCorrelatedArgsBuilder<TIn, TEntity>(this);
+        public DeleteEntityFrameworkCoreCorrelatedArgsBuilder<TIn, TEntity> Set<TEntity>(string keyedConnection = null) where TEntity : class
+            => new DeleteEntityFrameworkCoreCorrelatedArgsBuilder<TIn, TEntity>(this, keyedConnection);
     }
     public class DeleteEntityFrameworkCoreCorrelatedArgsBuilder<TIn, TEntity> where TEntity : class
     {
         private DeleteEntityFrameworkCoreCorrelatedArgsBuilder<TIn> Parent { get; }
-        public DeleteEntityFrameworkCoreCorrelatedArgsBuilder(DeleteEntityFrameworkCoreCorrelatedArgsBuilder<TIn> parent)
-            => (Parent) = (parent);
+        internal string KeyedConnection { get; private set; }
+        public DeleteEntityFrameworkCoreCorrelatedArgsBuilder(DeleteEntityFrameworkCoreCorrelatedArgsBuilder<TIn> parent, string keyedConnection)
+            => (Parent, KeyedConnection) = (parent, keyedConnection);
         internal Expression<Func<TIn, TEntity, bool>> WhereStatement { get; private set; } = null;
         public DeleteEntityFrameworkCoreCorrelatedArgsBuilder<TIn, TEntity> Where(Expression<Func<TIn, TEntity, bool>> match)
         {
@@ -62,7 +65,8 @@ namespace Paillave.Etl.EntityFrameworkCore
             {
                 InputStream = this.Parent.InputStream,
                 GetValue = i => i.Row,
-                Match = this.WhereStatement
+                Match = this.WhereStatement,
+                KeyedConnection = this.KeyedConnection
             };
     }
 
@@ -84,6 +88,7 @@ namespace Paillave.Etl.EntityFrameworkCore
         public IStream<TIn> InputStream { get; set; }
         public Expression<Func<TValue, TEntity, bool>> Match { get; set; }
         public Func<TIn, TValue> GetValue { get; set; }
+        internal string KeyedConnection { get; set; } = null;
     }
     public class DeleteEntityFrameworkCoreStreamNode<TIn, TValue, TEntity> : StreamNodeBase<TIn, IStream<TIn>, DeleteEntityFrameworkCoreArgs<TIn, TValue, TEntity>>
         where TEntity : class
@@ -101,7 +106,9 @@ namespace Paillave.Etl.EntityFrameworkCore
             var matchingS = args.InputStream.Observable
                 .Map(i =>
                 {
-                    var ctx = this.ExecutionContext.DependencyResolver.Resolve<DbContext>();
+                    var ctx = args.KeyedConnection == null
+                        ? this.ExecutionContext.DependencyResolver.Resolve<DbContext>()
+                        : this.ExecutionContext.DependencyResolver.Resolve<DbContext>(args.KeyedConnection);
                     TValue val = args.GetValue(i);
                     this.ExecutionContext.InvokeInDedicatedThread(ctx, () =>
                     {

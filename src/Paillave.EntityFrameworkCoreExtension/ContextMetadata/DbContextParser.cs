@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -26,7 +27,11 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         {
             return new LinkSummary
             {
+                FromName = entityType.ClrType.Name,
+                FromSchema = entityType.GetSchema(),
                 From = $"{entityType.GetSchema()}.{entityType.ClrType.Name}",
+                ToName = navigation.GetTargetType().ClrType.Name,
+                ToSchema = navigation.GetTargetType().GetSchema(),
                 To = $"{navigation.GetTargetType().GetSchema()}.{navigation.GetTargetType().ClrType.Name}",
                 Name = navigation.Name,
                 Type = navigation.IsCollection() ? LinkType.Aggregates : LinkType.References,
@@ -37,7 +42,11 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         {
             return new LinkSummary
             {
+                FromName = from.ClrType.Name,
+                FromSchema = from.GetSchema(),
                 From = $"{from.GetSchema()}.{from.ClrType.Name}",
+                ToName = to.ClrType.Name,
+                ToSchema = to.GetSchema(),
                 To = $"{to.GetSchema()}.{to.ClrType.Name}",
                 Type = LinkType.Inherits
             };
@@ -123,7 +132,11 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
             return new LinkSummary
             {
                 From = $"{entityType.GetSchema()}.{entityType.ClrType.Name}",
+                FromSchema = entityType.GetSchema(),
+                FromName = entityType.ClrType.Name,
                 To = $"{navigation.GetTargetType().GetSchema()}.{navigation.GetTargetType().ClrType.Name}",
+                ToSchema = navigation.GetTargetType().GetSchema(),
+                ToName = navigation.GetTargetType().ClrType.Name,
                 Name = navigation.Name,
                 Type = navigation.IsCollection() ? LinkType.Aggregates : LinkType.References,
                 Required = navigation.ForeignKey.IsRequired
@@ -134,7 +147,11 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
             return new LinkSummary
             {
                 From = $"{from.GetSchema()}.{from.ClrType.Name}",
+                FromSchema = from.GetSchema(),
+                FromName = from.ClrType.Name,
                 To = $"{to.GetSchema()}.{to.ClrType.Name}",
+                ToSchema = to.GetSchema(),
+                ToName = to.ClrType.Name,
                 Type = LinkType.Inherits
             };
         }
@@ -167,9 +184,21 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
             var underlyingType = Nullable.GetUnderlyingType(type);
             return underlyingType == null ? type.Name : underlyingType.Name;
         }
+        private static IEnumerable<Type> GetTypes(Assembly assembly)
+        {
+            if (assembly == null) throw new ArgumentNullException(nameof(assembly));
+            try
+            {
+                return assembly.GetTypes();
+            }
+            catch (ReflectionTypeLoadException e)
+            {
+                return e.Types.Where(t => t != null);
+            }
+        }
         private static DbContext CreateDbContextInstance(Assembly assembly, string[] args)
         {
-            var allTypes = assembly.GetTypes();
+            var allTypes = GetTypes(assembly);
             var dbContextType = allTypes.FirstOrDefault(i => typeof(DbContext).IsAssignableFrom(i));
             if (dbContextType == null) return null;
             if (dbContextType.GetConstructor(new Type[] { }) == null)

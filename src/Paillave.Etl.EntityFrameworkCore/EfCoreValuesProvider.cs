@@ -45,6 +45,7 @@ namespace Paillave.Etl.EntityFrameworkCore
     {
         internal EfCoreValuesProviderArgsBase() { }
         internal abstract List<TOut> GetResult(DbContext dbContext, TIn value);
+        internal abstract DbContext GetDbContext(IDependencyResolver resolver);
     }
     public abstract class EfCoreValuesProviderArgsBase<TIn, TEntity, TOut> : EfCoreValuesProviderArgsBase<TIn, TOut> where TEntity : class
     {
@@ -59,11 +60,16 @@ namespace Paillave.Etl.EntityFrameworkCore
     public class EfCoreValuesProviderArgsBuilder<TIn>
     {
         internal EfCoreValuesProviderArgsBuilder() { }
-        public EfCoreValuesProviderArgsBuilderSet<TIn, TEntity> Set<TEntity>() where TEntity : class => new EfCoreValuesProviderArgsBuilderSet<TIn, TEntity>();
+        public EfCoreValuesProviderArgsBuilderSet<TIn, TEntity> Set<TEntity>(string keyedConnection = null) where TEntity : class => new EfCoreValuesProviderArgsBuilderSet<TIn, TEntity>(keyedConnection);
     }
     public class EfCoreValuesProviderArgsBuilderSet<TIn, TEntity> : EfCoreValuesProviderArgsBase<TIn, TEntity, TEntity> where TEntity : class
     {
-        internal EfCoreValuesProviderArgsBuilderSet() { }
+        internal readonly string _keyedConnection = null;
+        internal EfCoreValuesProviderArgsBuilderSet(string keyedConnection) => (_keyedConnection) = (keyedConnection);
+        internal override DbContext GetDbContext(IDependencyResolver resolver)
+            => _keyedConnection == null
+                ? resolver.Resolve<DbContext>()
+                : resolver.Resolve<DbContext>(_keyedConnection);
         internal override IQueryable<TEntity> GetQueryable(DbContext dbContext, TIn value) => dbContext.Set<TEntity>();
         internal override List<TEntity> GetResult(DbContext dbContext, TIn value) => GetQueryable(dbContext, value).ToList();
     }
@@ -74,6 +80,7 @@ namespace Paillave.Etl.EntityFrameworkCore
         internal EfCoreValuesProviderArgsBuilderTop(EfCoreValuesProviderArgsBase<TIn, TEntity, TEntity> from, int top) => (_from, _top) = (from, top);
         internal override IQueryable<TEntity> GetQueryable(DbContext dbContext, TIn value) => _from.GetQueryable(dbContext, value).Take(_top);
         internal override List<TEntity> GetResult(DbContext dbContext, TIn value) => GetQueryable(dbContext, value).ToList();
+        internal override DbContext GetDbContext(IDependencyResolver resolver) => _from.GetDbContext(resolver);
     }
     public class EfCoreValuesProviderArgsBuilderWhere<TIn, TEntity> : EfCoreValuesProviderArgsBase<TIn, TEntity, TEntity> where TEntity : class
     {
@@ -82,6 +89,7 @@ namespace Paillave.Etl.EntityFrameworkCore
         internal EfCoreValuesProviderArgsBuilderWhere(EfCoreValuesProviderArgsBase<TIn, TEntity, TEntity> from, Expression<Func<TEntity, bool>> queryCriteria) => (_from, _queryCriteria) = (from, queryCriteria);
         internal override IQueryable<TEntity> GetQueryable(DbContext dbContext, TIn value) => _from.GetQueryable(dbContext, value).Where(_queryCriteria);
         internal override List<TEntity> GetResult(DbContext dbContext, TIn value) => GetQueryable(dbContext, value).ToList();
+        internal override DbContext GetDbContext(IDependencyResolver resolver) => _from.GetDbContext(resolver);
     }
     public class EfCoreValuesProviderArgsBuilderOrderBy<TIn, TEntity, TKey> : EfCoreValuesProviderArgsBase<TIn, TEntity, TEntity> where TEntity : class
     {
@@ -90,6 +98,7 @@ namespace Paillave.Etl.EntityFrameworkCore
         internal EfCoreValuesProviderArgsBuilderOrderBy(EfCoreValuesProviderArgsBase<TIn, TEntity, TEntity> from, Expression<Func<TEntity, TKey>> orderBy) => (_from, _orderBy) = (from, orderBy);
         internal override IQueryable<TEntity> GetQueryable(DbContext dbContext, TIn value) => _from.GetQueryable(dbContext, value).OrderBy(_orderBy);
         internal override List<TEntity> GetResult(DbContext dbContext, TIn value) => GetQueryable(dbContext, value).ToList();
+        internal override DbContext GetDbContext(IDependencyResolver resolver) => _from.GetDbContext(resolver);
     }
     public class EfCoreValuesProviderArgsBuilderOrderByDescending<TIn, TEntity, TKey> : EfCoreValuesProviderArgsBase<TIn, TEntity, TEntity> where TEntity : class
     {
@@ -98,6 +107,7 @@ namespace Paillave.Etl.EntityFrameworkCore
         internal EfCoreValuesProviderArgsBuilderOrderByDescending(EfCoreValuesProviderArgsBase<TIn, TEntity, TEntity> from, Expression<Func<TEntity, TKey>> orderByDescending) => (_from, _orderByDescending) = (from, orderByDescending);
         internal override IQueryable<TEntity> GetQueryable(DbContext dbContext, TIn value) => _from.GetQueryable(dbContext, value).OrderByDescending(_orderByDescending);
         internal override List<TEntity> GetResult(DbContext dbContext, TIn value) => GetQueryable(dbContext, value).ToList();
+        internal override DbContext GetDbContext(IDependencyResolver resolver) => _from.GetDbContext(resolver);
     }
     public class EfCoreValuesProviderArgsBuilderWhereWithValue<TIn, TEntity> : EfCoreValuesProviderArgsBase<TIn, TEntity, TEntity> where TEntity : class
     {
@@ -106,6 +116,7 @@ namespace Paillave.Etl.EntityFrameworkCore
         internal EfCoreValuesProviderArgsBuilderWhereWithValue(EfCoreValuesProviderArgsBase<TIn, TEntity, TEntity> from, Expression<Func<TEntity, TIn, bool>> queryCriteria) => (_from, _queryCriteria) = (from, queryCriteria);
         internal override IQueryable<TEntity> GetQueryable(DbContext dbContext, TIn value) => _from.GetQueryable(dbContext, value).Where(_queryCriteria.ApplyPartialRight(value));
         internal override List<TEntity> GetResult(DbContext dbContext, TIn value) => GetQueryable(dbContext, value).ToList();
+        internal override DbContext GetDbContext(IDependencyResolver resolver) => _from.GetDbContext(resolver);
     }
     public class EfCoreValuesProviderArgsBuilderInclude<TIn, TEntity, TProp> : EfCoreValuesProviderArgsIncluderBase<TIn, TEntity, TProp, TEntity> where TEntity : class where TProp : class
     {
@@ -115,6 +126,7 @@ namespace Paillave.Etl.EntityFrameworkCore
         internal override IIncludableQueryable<TEntity, TProp> GetIncludableQueryable(DbContext dbContext, TIn value) => _from.GetQueryable(dbContext, value).Include(_include);
         internal override IQueryable<TEntity> GetQueryable(DbContext dbContext, TIn value) => GetIncludableQueryable(dbContext, value);
         internal override List<TEntity> GetResult(DbContext dbContext, TIn value) => GetQueryable(dbContext, value).ToList();
+        internal override DbContext GetDbContext(IDependencyResolver resolver) => _from.GetDbContext(resolver);
     }
     public class EfCoreValuesProviderArgsBuilderThenInclude<TIn, TEntity, TFromProp, TToProp> : EfCoreValuesProviderArgsIncluderBase<TIn, TEntity, TToProp, TEntity> where TEntity : class where TFromProp : class where TToProp : class
     {
@@ -124,6 +136,7 @@ namespace Paillave.Etl.EntityFrameworkCore
         internal override IIncludableQueryable<TEntity, TToProp> GetIncludableQueryable(DbContext dbContext, TIn value) => _from.GetIncludableQueryable(dbContext, value).ThenInclude(_thenInclude);
         internal override IQueryable<TEntity> GetQueryable(DbContext dbContext, TIn value) => GetIncludableQueryable(dbContext, value);
         internal override List<TEntity> GetResult(DbContext dbContext, TIn value) => GetQueryable(dbContext, value).ToList();
+        internal override DbContext GetDbContext(IDependencyResolver resolver) => _from.GetDbContext(resolver);
     }
     public class EfCoreValuesProviderArgsBuilderPostProcess<TIn, TEntity, TOut> : EfCoreValuesProviderArgsBase<TIn, TEntity, TOut> where TEntity : class
     {
@@ -132,6 +145,7 @@ namespace Paillave.Etl.EntityFrameworkCore
         internal EfCoreValuesProviderArgsBuilderPostProcess(EfCoreValuesProviderArgsBase<TIn, TEntity, TEntity> from, Func<TEntity, TIn, TOut> postProcess) => (_from, _postProcess) = (from, postProcess);
         internal override IQueryable<TEntity> GetQueryable(DbContext dbContext, TIn value) => _from.GetQueryable(dbContext, value);
         internal override List<TOut> GetResult(DbContext dbContext, TIn value) => GetQueryable(dbContext, value).ToList().Select(i => _postProcess(i, value)).ToList();
+        internal override DbContext GetDbContext(IDependencyResolver resolver) => _from.GetDbContext(resolver);
     }
     public class EfCoreValuesProviderArgs<TIn, TOut>
     {
@@ -149,11 +163,10 @@ namespace Paillave.Etl.EntityFrameworkCore
         public EfCoreValuesProvider(EfCoreValuesProviderArgs<TIn, TOut> args) => _args = args;
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-        public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver)
+        public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
-            var dbContext = resolver.Resolve<DbContext>();
-            List<TOut> lsts = null;
-            this._args.InputStream.SourceNode.ExecutionContext.InvokeInDedicatedThread(dbContext, () => lsts = _args.Arguments.GetResult(dbContext, input));
+            var dbContext = this._args.Arguments.GetDbContext(resolver);
+            var lsts = invoker.InvokeInDedicatedThread(dbContext, () => _args.Arguments.GetResult(dbContext, input));
             lsts.ForEach(push);
         }
     }

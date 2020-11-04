@@ -6,7 +6,7 @@ namespace Paillave.Etl.Core
     public interface IValuesProvider<TValueIn, TValueOut>
     {
         string TypeName { get; }
-        void PushValues(TValueIn input, Action<TValueOut> push, CancellationToken cancellationToken, IDependencyResolver resolver);
+        void PushValues(TValueIn input, Action<TValueOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker);
         ProcessImpact PerformanceImpact { get; }
         ProcessImpact MemoryFootPrint { get; }
     }
@@ -14,14 +14,14 @@ namespace Paillave.Etl.Core
     {
         public virtual string TypeName => this.GetType().Name;
         private readonly IDependencyResolver _resolver = null;
-        public abstract void PushValues(TValueIn input, Action<TValueOut> push, CancellationToken cancellationToken, IDependencyResolver resolver);
+        public abstract void PushValues(TValueIn input, Action<TValueOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker);
         public abstract ProcessImpact PerformanceImpact { get; }
         public abstract ProcessImpact MemoryFootPrint { get; }
     }
     public interface IValuesProvider<TValueIn, TInToApply, TValueOut>
     {
         string TypeName { get; }
-        void PushValues(TValueIn input, TInToApply toApply, Action<TValueOut> push, CancellationToken cancellationToken, IDependencyResolver resolver);
+        void PushValues(TValueIn input, TInToApply toApply, Action<TValueOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker);
         ProcessImpact PerformanceImpact { get; }
         ProcessImpact MemoryFootPrint { get; }
     }
@@ -30,6 +30,6 @@ namespace Paillave.Etl.Core
         public virtual string TypeName => this.GetType().Name;
         public abstract ProcessImpact PerformanceImpact { get; }
         public abstract ProcessImpact MemoryFootPrint { get; }
-        public abstract void PushValues(TValueIn input, TInToApply toApply, Action<TValueOut> push, CancellationToken cancellationToken, IDependencyResolver resolver);
+        public abstract void PushValues(TValueIn input, TInToApply toApply, Action<TValueOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker);
     }
 }

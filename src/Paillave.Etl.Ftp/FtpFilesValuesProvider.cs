@@ -33,7 +33,7 @@ namespace Paillave.Etl.Ftp
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
 
-        public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver)
+        public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
             var connectionInfo = _args.ConnectionInfo ?? resolver.Resolve<FtpConnectionInfo>();
             string path = this._args?.GetFolderPath(input);

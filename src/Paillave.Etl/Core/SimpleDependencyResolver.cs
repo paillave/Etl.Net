@@ -4,12 +4,19 @@ using System.Linq;
 
 namespace Paillave.Etl.Core
 {
-    public class ContextBag
+    public class SimpleDependencyResolver : IDependencyResolver
     {
         private object _lock = new object();
         private IDictionary<string, object> _dictionary = new Dictionary<string, object>();
-        public ContextBag() { }
-        public T Get<T>(string key, Func<T> creator)
+        public SimpleDependencyResolver Register<T>(T instance, string key = null)
+        {
+            if (key == null)
+                key = typeof(T).Name;
+            this._dictionary[typeof(T).Name] = instance;
+            return this;
+        }
+        public SimpleDependencyResolver() { }
+        public T Resolve<T>(string key, Func<T> creator)
         {
             lock (_lock)
             {
@@ -19,7 +26,7 @@ namespace Paillave.Etl.Core
                 return (T)ret;
             }
         }
-        public T Get<T>(Func<T> creator)
+        public T Resolve<T>(Func<T> creator)
         {
             lock (_lock)
             {
@@ -30,7 +37,7 @@ namespace Paillave.Etl.Core
                 return (T)ret;
             }
         }
-        public T Get<T>(string key)
+        public T Resolve<T>(string key)
         {
             lock (_lock)
             {
@@ -38,7 +45,7 @@ namespace Paillave.Etl.Core
                 return default;
             }
         }
-        public T Get<T>()
+        public T Resolve<T>()
         {
             lock (_lock)
             {
@@ -47,11 +54,19 @@ namespace Paillave.Etl.Core
                 return default;
             }
         }
-        public object Get(Type type)
+        public object Resolve(Type type)
         {
             lock (_lock)
             {
                 return this._dictionary.Values.FirstOrDefault(v => v.GetType() == type);
+            }
+        }
+
+        public object Resolve(string key, Type type)
+        {
+            lock (_lock)
+            {
+                return this._dictionary.FirstOrDefault(v => v.Value.GetType() == type && v.Key == key).Value;
             }
         }
     }

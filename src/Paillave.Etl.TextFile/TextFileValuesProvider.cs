@@ -28,7 +28,7 @@ namespace Paillave.Etl.TextFile
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
-        public override void PushValues(Stream input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver)
+        public override void PushValues(Stream input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
             var sr = _args.Encoding == null ? new StreamReader(input, true) : new StreamReader(input, _args.Encoding);
             using (sr)

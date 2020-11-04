@@ -98,11 +98,12 @@ namespace Paillave.EntityFrameworkCoreExtension.EfSave
                         object val = keyPropertyInfo.GetValue(existingEntity);
                         keyPropertyInfo.SetValue(entity, val);
                     }
-                    contextSet.Update(entity);
+                    // contextSet.Update(entity);
                 }
             }
-            else
-                contextSet.Add(entity);
+            // else
+            //     contextSet.Add(entity);
+            contextSet.Update(entity);
         }
     }
 }

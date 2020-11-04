@@ -24,9 +24,9 @@ namespace Paillave.Etl.Connector
             _processorParameters = processorParameters;
         }
 
-        public void Process(IFileValue fileValue, Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver)
-            => Process(fileValue, _connectionParameters, _processorParameters, push, cancellationToken, resolver);
-        protected abstract void Process(IFileValue fileValue, TConnectionParameters connectionParameters, TProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver);
+        public void Process(IFileValue fileValue, Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+            => Process(fileValue, _connectionParameters, _processorParameters, push, cancellationToken, resolver, invoker);
+        protected abstract void Process(IFileValue fileValue, TConnectionParameters connectionParameters, TProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker);
         public void Test() => Test(_connectionParameters, _processorParameters);
         protected abstract void Test(TConnectionParameters connectionParameters, TProcessorParameters processorParameters);
     }

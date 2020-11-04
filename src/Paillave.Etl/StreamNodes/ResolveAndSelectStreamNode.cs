@@ -47,7 +47,7 @@ namespace Paillave.Etl.StreamNodes
             {
                 var ret = (TService)Activator.CreateInstance(type);
                 foreach (var property in type.GetProperties())
-                    property.SetValue(ret, _dependencyResolver.Get(property.PropertyType));
+                    property.SetValue(ret, _dependencyResolver.Resolve(property.PropertyType));
                 return ret;
             }
             else

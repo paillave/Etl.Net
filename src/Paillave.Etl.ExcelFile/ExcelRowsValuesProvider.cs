@@ -30,7 +30,7 @@ namespace Paillave.Etl.ExcelFile
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
 
-        public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver)
+        public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
             var selection = _args.GetSheetSelection(input);
             // TODO: better exception handling here

@@ -22,7 +22,7 @@ namespace Paillave.Etl.XmlFile
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
-        public override void PushValues(IFileValue input, Action<XmlNodeParsed> push, CancellationToken cancellationToken, IDependencyResolver resolver)
+        public override void PushValues(IFileValue input, Action<XmlNodeParsed> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
             using (var s = input.GetContent())
             {

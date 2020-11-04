@@ -33,11 +33,11 @@ namespace Paillave.Etl
             this._internalCancellationTokenSource = internalCancellationTokenSource;
             this._traceSubject = traceSubject;
             this.Connectors = connectors;
-            this.ContextBag = new ContextBag();
+            this.ContextBag = new SimpleDependencyResolver();
             this.DependencyResolver = resolver;
         }
         public IFileValueConnectors Connectors { get; }
-        public ContextBag ContextBag { get; }
+        public SimpleDependencyResolver ContextBag { get; }
         public IDependencyResolver DependencyResolver { get; }
         public Guid ExecutionId { get; }
         public string JobName { get; }

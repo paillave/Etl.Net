@@ -10,7 +10,7 @@ namespace Paillave.Etl.Connector
         string Code { get; }
         ProcessImpact PerformanceImpact { get; }
         ProcessImpact MemoryFootPrint { get; }
-        void Provide(Action<IFileValue> pushFileValue, CancellationToken cancellationToken, IDependencyResolver resolver);
+        void Provide(Action<IFileValue> pushFileValue, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker);
         void Test();
     }
 }

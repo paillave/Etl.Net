@@ -6,8 +6,8 @@ namespace Paillave.Etl.Core
     {
         T Resolve<T>();
         T Resolve<T>(string key);
-        object Get(Type type);
-        object Get(string key, Type type);
+        object Resolve(Type type);
+        object Resolve(string key, Type type);
 
     }
 }

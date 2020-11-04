@@ -7,7 +7,7 @@ using Paillave.Etl.Connector;
 
 namespace Paillave.Etl.FromConfigurationConnectors
 {
-    public partial class ConfigurationFileValueConnectorParser
+    public class ConfigurationFileValueConnectorParser
     {
         private IProviderProcessorAdapter[] _providerProcessorAdapter;
         public ConfigurationFileValueConnectorParser(params IProviderProcessorAdapter[] providerProcessorAdapter)
@@ -33,7 +33,7 @@ namespace Paillave.Etl.FromConfigurationConnectors
                 .Select(i => ParseConnections(i, adapterDictionary));
             var processors = elts.SelectMany(i => i.processors).ToDictionary(i => i.Code);
             var providers = elts.SelectMany(i => i.providers).ToDictionary(i => i.Code);
-            return new ConfigurationFileConnectors(providers, processors);
+            return new FileValueConnectors(providers, processors);
         }
         private (List<IFileValueProvider> providers, List<IFileValueProcessor> processors) ParseConnections(JProperty property, Dictionary<string, IProviderProcessorAdapter> adapterDictionary)
         {

@@ -23,7 +23,7 @@ namespace Paillave.Etl.ValuesProviders
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
-        public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver)
+        public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
             foreach (var value in _getValues(input))
             {
@@ -45,7 +45,7 @@ namespace Paillave.Etl.ValuesProviders
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
-        public override void PushValues(TIn1 input1, TIn2 input2, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver)
+        public override void PushValues(TIn1 input1, TIn2 input2, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
             foreach (var value in _getValues(input1, input2))
             {

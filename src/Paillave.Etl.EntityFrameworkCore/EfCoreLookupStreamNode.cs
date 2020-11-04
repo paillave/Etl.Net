@@ -16,14 +16,15 @@ namespace Paillave.Etl.EntityFrameworkCore
     {
         internal IStream<TIn> SourceStream { get; }
         internal EfCoreLookupArgsBuilder(IStream<TIn> sourceStream) => (SourceStream) = (sourceStream);
-        public EfCoreLookupArgsBuilder<TIn, TEntity> Set<TEntity>() where TEntity : class => new EfCoreLookupArgsBuilder<TIn, TEntity>(this);
+        public EfCoreLookupArgsBuilder<TIn, TEntity> Set<TEntity>(string keyedConnection = null) where TEntity : class => new EfCoreLookupArgsBuilder<TIn, TEntity>(this, keyedConnection);
     }
     public class EfCoreLookupArgsBuilder<TIn, TEntity> where TEntity : class
     {
         internal EfCoreLookupArgsBuilder<TIn> Parent { get; }
         internal Expression<Func<TEntity, bool>> WhereClause { get; private set; } = null;
         internal Func<IncludableQueryable<TEntity>, IncludableQueryable<TEntity>> IncludeClause { get; private set; } = null;
-        internal EfCoreLookupArgsBuilder(EfCoreLookupArgsBuilder<TIn> parent) => (Parent) = (parent);
+        internal string KeyedConnection { get; private set; }
+        internal EfCoreLookupArgsBuilder(EfCoreLookupArgsBuilder<TIn> parent, string keyedConnection = null) => (Parent, KeyedConnection) = (parent, keyedConnection);
         public EfCoreLookupArgsBuilder<TIn, TEntity> Where(Expression<Func<TEntity, bool>> where)
         {
             this.WhereClause = where;
@@ -65,7 +66,8 @@ namespace Paillave.Etl.EntityFrameworkCore
                 GetInputValue = i => i,
                 GetOutputValue = (i, j) => j,
                 WhereClause = _parent.Parent.WhereClause,
-                Includer = _parent.Parent.IncludeClause
+                Includer = _parent.Parent.IncludeClause,
+                KeyedConnection = _parent.Parent.KeyedConnection,
             };
         internal EfCoreLookupArgsBuilder(EfCoreLookupArgsBuilder<TIn, TEntity, TKey> parent, Func<TIn, TEntity, TOut> resultSelector)
             => (_parent, _resultSelector) = (parent, resultSelector);
@@ -92,14 +94,15 @@ namespace Paillave.Etl.EntityFrameworkCore
     {
         internal IStream<Correlated<TIn>> SourceStream { get; }
         internal EfCoreLookupCorrelatedArgsBuilder(IStream<Correlated<TIn>> sourceStream) => (SourceStream) = (sourceStream);
-        public EfCoreLookupCorrelatedArgsBuilder<TIn, TEntity> Set<TEntity>() where TEntity : class => new EfCoreLookupCorrelatedArgsBuilder<TIn, TEntity>(this);
+        public EfCoreLookupCorrelatedArgsBuilder<TIn, TEntity> Set<TEntity>(string keyedConnection = null) where TEntity : class => new EfCoreLookupCorrelatedArgsBuilder<TIn, TEntity>(this, keyedConnection);
     }
     public class EfCoreLookupCorrelatedArgsBuilder<TIn, TEntity> where TEntity : class
     {
         internal EfCoreLookupCorrelatedArgsBuilder<TIn> Parent { get; }
         internal Expression<Func<TEntity, bool>> WhereClause { get; private set; } = null;
+        internal string KeyedConnection { get; private set; } = null;
         internal Func<IncludableQueryable<TEntity>, IncludableQueryable<TEntity>> IncludeClause { get; private set; } = null;
-        internal EfCoreLookupCorrelatedArgsBuilder(EfCoreLookupCorrelatedArgsBuilder<TIn> parent) => (Parent) = (parent);
+        internal EfCoreLookupCorrelatedArgsBuilder(EfCoreLookupCorrelatedArgsBuilder<TIn> parent, string keyedConnection) => (Parent, KeyedConnection) = (parent, keyedConnection);
         public EfCoreLookupCorrelatedArgsBuilder<TIn, TEntity> Where(Expression<Func<TEntity, bool>> where)
         {
             this.WhereClause = where;
@@ -142,7 +145,8 @@ namespace Paillave.Etl.EntityFrameworkCore
                 GetInputValue = i => i.Row,
                 GetOutputValue = (i, j) => new Correlated<TOut> { Row = j, CorrelationKeys = i.CorrelationKeys },
                 WhereClause = _parent.Parent.WhereClause,
-                Includer = _parent.Parent.IncludeClause
+                Includer = _parent.Parent.IncludeClause,
+                KeyedConnection = _parent.Parent.KeyedConnection,
             };
         internal EfCoreLookupCorrelatedArgsBuilder(EfCoreLookupCorrelatedArgsBuilder<TIn, TEntity, TKey> parent, Func<TIn, TEntity, TOut> resultSelector)
             => (_parent, _resultSelector) = (parent, resultSelector);
@@ -177,6 +181,7 @@ namespace Paillave.Etl.EntityFrameworkCore
         public Func<IncludableQueryable<TEntity>, IncludableQueryable<TEntity>> Includer { get; set; } = null;
         public int CacheSize { get; set; } = 1000;
         public bool GetFullDataset { get; set; } = false;
+        public string KeyedConnection { get; set; } = null;
     }
     public class EfCoreLookupStreamNode<TIn, TValue, TEntity, TValueOut, TKey, TOut> : StreamNodeBase<TOut, IStream<TOut>, EfCoreLookupArgs<TIn, TValue, TEntity, TValueOut, TKey, TOut>>
         where TEntity : class
@@ -193,8 +198,10 @@ namespace Paillave.Etl.EntityFrameworkCore
         {
             IPushObservable<TOut> matchingS = args.SourceStream.Observable.Map(elt =>
                     {
-                        var ctx = this.ExecutionContext.DependencyResolver.Resolve<DbContext>();
-                        var matcher = this.ExecutionContext.ContextBag.Get(this.NodeName, () =>
+                        var ctx = args.KeyedConnection == null
+                            ? this.ExecutionContext.DependencyResolver.Resolve<DbContext>()
+                            : this.ExecutionContext.DependencyResolver.Resolve<DbContext>(args.KeyedConnection);
+                        var matcher = this.ExecutionContext.ContextBag.Resolve(this.NodeName, () =>
                         {
                             EfMatcher<TValue, TEntity, TKey> ret = default;
                             this.ExecutionContext.InvokeInDedicatedThread(ctx, () =>

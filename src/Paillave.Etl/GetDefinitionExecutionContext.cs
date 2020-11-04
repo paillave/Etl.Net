@@ -35,7 +35,7 @@ namespace Paillave.Etl
         public bool IsTracingContext => false;
         public void AddDisposable(IDisposable disposable) { }
         public void AddNode<T>(INodeDescription nodeContext, IPushObservable<T> observable) => _nodes.Add(nodeContext);
-        public ContextBag ContextBag => new ContextBag();
+        public SimpleDependencyResolver ContextBag => new SimpleDependencyResolver();
         public IFileValueConnectors Connectors { get; }
         public IDependencyResolver DependencyResolver => new DummyDependencyResolver();
         public Task GetCompletionTask() => throw new NotImplementedException();

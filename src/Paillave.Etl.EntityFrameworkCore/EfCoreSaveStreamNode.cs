@@ -34,6 +34,7 @@ namespace Paillave.Etl.EntityFrameworkCore
             args.DoNotUpdateIfExists = this.Args.DoNotUpdateIfExists;
             args.InsertOnly = this.Args.InsertOnly;
             args.SourceStream = this.Args.SourceStream;
+            args.KeyedConnection = this.Args.KeyedConnection;
             return args;
         }
         public EfCoreSaveArgsBuilder<TNewInEf, TIn, TNewInEf> Entity<TNewInEf>(Func<TIn, TNewInEf> getEntity) where TNewInEf : class
@@ -64,6 +65,11 @@ namespace Paillave.Etl.EntityFrameworkCore
         public EfCoreSaveArgsBuilder<TInEf, TIn, TOut> WithBatchSize(int batchSize)
         {
             this.Args.BatchSize = batchSize;
+            return this;
+        }
+        public EfCoreSaveArgsBuilder<TInEf, TIn, TOut> WithKeyedConnection(string keyedConnection)
+        {
+            this.Args.KeyedConnection = keyedConnection;
             return this;
         }
         public EfCoreSaveArgsBuilder<TInEf, TIn, TOut> WithMode(SaveMode bulkLoadMode)
@@ -112,6 +118,7 @@ namespace Paillave.Etl.EntityFrameworkCore
             args.DoNotUpdateIfExists = this.Args.DoNotUpdateIfExists;
             args.InsertOnly = this.Args.InsertOnly;
             args.SourceStream = this.Args.SourceStream;
+            args.KeyedConnection = this.Args.KeyedConnection;
             return args;
         }
         public EfCoreSaveCorrelatedArgsBuilder<TNewInEf, TIn, TNewInEf> Entity<TNewInEf>(Func<TIn, TNewInEf> getEntity) where TNewInEf : class
@@ -144,6 +151,11 @@ namespace Paillave.Etl.EntityFrameworkCore
             this.Args.BatchSize = batchSize;
             return this;
         }
+        public EfCoreSaveCorrelatedArgsBuilder<TInEf, TIn, TOut> WithKeyedConnection(string keyedConnection)
+        {
+            this.Args.KeyedConnection = keyedConnection;
+            return this;
+        }
         public EfCoreSaveCorrelatedArgsBuilder<TInEf, TIn, TOut> WithMode(SaveMode bulkLoadMode)
         {
             this.Args.BulkLoadMode = bulkLoadMode;
@@ -168,6 +180,7 @@ namespace Paillave.Etl.EntityFrameworkCore
         SaveMode BulkLoadMode { get; set; }
         bool DoNotUpdateIfExists { get; set; }
         bool InsertOnly { get; set; }
+        string KeyedConnection { get; set; }
     }
     public class EfCoreSaveArgs<TInEf, TIn, TOut> : IThroughEntityFrameworkCoreArgs<TIn>
     {
@@ -180,6 +193,7 @@ namespace Paillave.Etl.EntityFrameworkCore
         public List<Expression<Func<TInEf, object>>> PivotKeys { get; set; }
         public bool DoNotUpdateIfExists { get; set; } = false;
         public bool InsertOnly { get; set; } = false;
+        public string KeyedConnection { get; set; } = null;
     }
     public enum SaveMode
     {
@@ -204,7 +218,9 @@ namespace Paillave.Etl.EntityFrameworkCore
                 .Map(i => i.Select(j => (Input: j, Entity: args.GetEntity(j))).ToList())
                 .Do(i =>
                 {
-                    var dbContext = this.ExecutionContext.DependencyResolver.Resolve<DbContext>();
+                    var dbContext = args.KeyedConnection == null
+                        ? this.ExecutionContext.DependencyResolver.Resolve<DbContext>()
+                        : this.ExecutionContext.DependencyResolver.Resolve<DbContext>(args.KeyedConnection);
                     this.ExecutionContext.InvokeInDedicatedThread(dbContext, () => ProcessBatch(i, dbContext, args.BulkLoadMode));
                 })
                 .FlatMap((i, ct) => PushObservable.FromEnumerable(i, ct))
