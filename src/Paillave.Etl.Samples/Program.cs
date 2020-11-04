@@ -6,7 +6,6 @@ using Paillave.Etl.Core;
 using Paillave.Etl.ExecutionToolkit;
 using System.Threading.Tasks;
 using System.IO;
-using Paillave.Etl.Reactive.Operators;
 
 namespace Paillave.Etl.Samples
 {
@@ -27,7 +26,7 @@ namespace Paillave.Etl.Samples
                     .Register(new FileSystemFileValueProcessor("OUT", "Result", Path.Combine(Environment.CurrentDirectory, "InputFiles"))),
                 Resolver = new SimpleDependencyResolver()
                     .Register(new DataAccess.TestDbContext()),
-                TraceProcessDefinition = (i, j) => i.Observable.Do(traceReporter.HandleTrace)
+                TraceProcessDefinition = traceReporter.TraceProcessDefinition
             };
             traceReporter.Initialize(structure);
 
@@ -36,16 +35,15 @@ namespace Paillave.Etl.Samples
         }
         static async Task MainSimple(string[] args)
         {
-            var executionOptions = new ExecutionOptions<string[]>
+            var processRunner = StreamProcessRunner.Create<string[]>(TestImport.Import);
+            await processRunner.ExecuteAsync(args, new ExecutionOptions<string[]>
             {
                 Connectors = new FileValueConnectors()
                     .Register(new FileSystemFileValueProvider("PTF", "Portfolios", Path.Combine(Environment.CurrentDirectory, "InputFiles"), "*.Portfolios.csv"))
                     .Register(new FileSystemFileValueProvider("POS", "Positions", Path.Combine(Environment.CurrentDirectory, "InputFiles"), "*.Positions.csv")),
                 Resolver = new SimpleDependencyResolver()
                     .Register(new DataAccess.TestDbContext()),
-            };
-            var processRunner = StreamProcessRunner.Create<string[]>(TestImport.Import);
-            await processRunner.ExecuteAsync(args, executionOptions);
+            });
         }
     }
 }
