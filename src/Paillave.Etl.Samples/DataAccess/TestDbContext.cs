@@ -6,7 +6,7 @@ namespace Paillave.Etl.Samples.DataAccess
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=localhost,1433;Database=TestEtl;user=sa;password=FundProcess.Pms.2019;MultipleActiveResultSets=True");
+            optionsBuilder.UseSqlServer(@"Server=localhost,1433;Database=TestEtl;user=TestEtl;password=TestEtl.TestEtl;MultipleActiveResultSets=True");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
