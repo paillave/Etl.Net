@@ -1,0 +1,20 @@
+{
+    "$schema": "./connectorsConfigSchema.json",
+    "inputFiles": {
+        "Type": "FileSystem",
+        "Connection": {
+            "RootFolder": "/home/stephane/Documents/Sources/Etl.Net/src/Paillave.Etl.Samples/InputFiles"
+        },
+        "Providers": {
+            "PTF": {
+                "FileNamePattern": "*.Portfolios.csv"
+            },
+            "POS": {
+                "FileNamePattern": "*.Positions.csv"
+            }
+        },
+        "Processors": {
+            "OUT": {}
+        }
+    }
+}

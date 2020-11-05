@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Samples", "Pai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.ExecutionToolkit", "Paillave.Etl.ExecutionToolkit\Paillave.Etl.ExecutionToolkit.csproj", "{43CCC8DC-25DF-4D01-83B5-7B4E697CDB8D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Zip", "Paillave.Etl.Zip\Paillave.Etl.Zip.csproj", "{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -209,6 +211,18 @@ Global
 		{43CCC8DC-25DF-4D01-83B5-7B4E697CDB8D}.Release|x64.Build.0 = Release|Any CPU
 		{43CCC8DC-25DF-4D01-83B5-7B4E697CDB8D}.Release|x86.ActiveCfg = Release|Any CPU
 		{43CCC8DC-25DF-4D01-83B5-7B4E697CDB8D}.Release|x86.Build.0 = Release|Any CPU
+		{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}.Debug|x64.Build.0 = Debug|Any CPU
+		{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}.Debug|x86.Build.0 = Debug|Any CPU
+		{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}.Release|x64.ActiveCfg = Release|Any CPU
+		{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}.Release|x64.Build.0 = Release|Any CPU
+		{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}.Release|x86.ActiveCfg = Release|Any CPU
+		{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

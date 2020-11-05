@@ -7,6 +7,10 @@
     <ProjectReference Include="..\Paillave.Etl.EntityFrameworkCore\Paillave.Etl.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Paillave.Etl.FromConfigurationConnectors\Paillave.Etl.FromConfigurationConnectors.csproj" />
     <ProjectReference Include="..\Paillave.Etl.FileSystem\Paillave.Etl.FileSystem.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.Ftp\Paillave.Etl.Ftp.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.Sftp\Paillave.Etl.Sftp.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.Mail\Paillave.Etl.Mail.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.Zip\Paillave.Etl.Zip.csproj" />
     <ProjectReference Include="..\Paillave.Etl.ExecutionToolkit\Paillave.Etl.ExecutionToolkit.csproj" />
   </ItemGroup>
 
