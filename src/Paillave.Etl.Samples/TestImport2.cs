@@ -113,7 +113,7 @@ namespace Paillave.Etl.Samples
                     .AlternativelySeekOn(i => i.InternalCode)
                     .DoNotUpdateIfExists());
 
-            var positionStream = positionFileStream
+            positionFileStream
                 .CorrelateToSingle("Get related security", securityStream, (row, security) => new { Row = row, SecurityId = security.Id })
                 .CorrelateToSingle("Get related composition and create position", compositionStream, (row, composition) => new DataAccess.Position
                 {
@@ -122,9 +122,7 @@ namespace Paillave.Etl.Samples
                     CompositionId = composition.Composition.Id
                 })
                 .Distinct("Distinct positions", i => new { i.CompositionId, i.SecurityId }, o => o.ForProperty(i => i.Value, DistinctAggregator.Sum))
-                .EfCoreSave("Save position");
-
-            positionStream
+                .EfCoreSave("Save position")
                 .CorrelateToSingle("Get position portfolio", compositionStream, (p, c) => new { c.Portfolio.InternalCode, c.Composition.Date, p.Value })
                 .Distinct("Aggregate position per portfolio", i => new { i.InternalCode, i.Date }, o => o.ForProperty(i => i.Value, DistinctAggregator.Sum))
                 .ToTextFileValue("Export portfolios weight", "PortfoliosWeight.csv", FlatFileDefinition.Create(i => new

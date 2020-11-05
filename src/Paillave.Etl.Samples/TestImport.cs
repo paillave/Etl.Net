@@ -103,7 +103,7 @@ namespace Paillave.Etl.Samples
                     .AlternativelySeekOn(i => i.InternalCode)
                     .DoNotUpdateIfExists());
 
-            var positionStream = positionFileStream
+            positionFileStream
                 .CorrelateToSingle("Get related security", securityStream, (row, security) => new { Row = row, SecurityId = security.Id })
                 .CorrelateToSingle("Get related composition and create position", compositionStream, (row, composition) => new DataAccess.Position
                 {

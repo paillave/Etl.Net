@@ -2,7 +2,7 @@
     "folders": [
         {
             "path": "src",
-            "name": "Server Sources"
+            "name": "Sources"
         },
         {
             "path": ".",

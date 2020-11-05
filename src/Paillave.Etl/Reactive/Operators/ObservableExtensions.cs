@@ -50,9 +50,9 @@ namespace Paillave.Etl.Reactive.Operators
         {
             return observable.Filter(criteria).Aggregate<T, int>((acc, red) => acc + 1);
         }
-        public static IPushObservable<Tuple<TResult, TResult>> PairWithPrevious<TResult>(this IPushObservable<TResult> sourceS)
+        public static IPushObservable<TResult[]> PairWithPrevious<TResult>(this IPushObservable<TResult> sourceS, int count)
         {
-            return sourceS.Scan<TResult, Tuple<TResult, TResult>>(null, (a, v) => new Tuple<TResult, TResult>(a == null ? v : a.Item2, v));
+            return sourceS.Scan<TResult, TResult[]>(null, (a, v) => new TResult[] { v, a == null ? default : a[0] });
         }
     }
 }
