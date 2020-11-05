@@ -84,18 +84,14 @@ namespace Paillave.Etl.Samples
         static async Task ImportAndCreateFileWithConfigAsync(string[] args)
         {
             var processRunner = StreamProcessRunner.Create<string[]>(TestImport2.Import);
-
-            IFileValueConnectors connectors = CreateConfigurationFileValueConnectorParser()
-                .GetConnectors(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "connectorsConfig.json")));
             var executionOptions = new ExecutionOptions<string[]>
             {
-                Connectors = connectors,
+                Connectors = CreateConfigurationFileValueConnectorParser()
+                    .GetConnectors(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "connectorsConfig.json"))),
                 Resolver = new SimpleDependencyResolver()
                     .Register(new DataAccess.TestDbContext())
             };
-
             var res = await processRunner.ExecuteAsync(args, executionOptions);
-            res.OpenActualExecutionPlan();
         }
     }
 }
