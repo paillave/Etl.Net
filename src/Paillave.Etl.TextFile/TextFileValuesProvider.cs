@@ -1,9 +1,6 @@
 ﻿using Paillave.Etl.Core;
-using Paillave.Etl.StreamNodes;
-using Paillave.Etl.Reactive.Core;
-using Paillave.Etl.Reactive.Operators;
+using Paillave.Etl.ValuesProviders;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -15,7 +12,7 @@ namespace Paillave.Etl.TextFile
         public Encoding Encoding { get; set; } = null;
         public Func<string, TOut> GetResult { get; set; }
     }
-    public class TextFileValuesProvider<TOut> : ValuesProviderBase<Stream, TOut>
+    public class TextFileValuesProvider<TOut> : ValuesProviderBase<IFileValue, TOut>
     {
         private readonly TextFileValuesProviderArgs<TOut> _args;
 
@@ -28,9 +25,9 @@ namespace Paillave.Etl.TextFile
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
-        public override void PushValues(Stream input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
-            var sr = _args.Encoding == null ? new StreamReader(input, true) : new StreamReader(input, _args.Encoding);
+            var sr = _args.Encoding == null ? new StreamReader(input.GetContent(), true) : new StreamReader(input.GetContent(), _args.Encoding);
             using (sr)
                 while (!sr.EndOfStream)
                 {

@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.ExecutionToolk
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Zip", "Paillave.Etl.Zip\Paillave.Etl.Zip.csproj", "{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.SqlServer", "Paillave.Etl.SqlServer\Paillave.Etl.SqlServer.csproj", "{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -223,6 +225,18 @@ Global
 		{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}.Release|x64.Build.0 = Release|Any CPU
 		{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}.Release|x86.ActiveCfg = Release|Any CPU
 		{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}.Release|x86.Build.0 = Release|Any CPU
+		{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}.Debug|x64.Build.0 = Debug|Any CPU
+		{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}.Debug|x86.Build.0 = Debug|Any CPU
+		{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}.Release|x64.ActiveCfg = Release|Any CPU
+		{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}.Release|x64.Build.0 = Release|Any CPU
+		{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}.Release|x86.ActiveCfg = Release|Any CPU
+		{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
