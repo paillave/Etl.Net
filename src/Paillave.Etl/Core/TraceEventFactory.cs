@@ -21,8 +21,8 @@ namespace Paillave.Etl.Core
         {
             this._jobName = executionContext.JobName;
             this._executionId = executionContext.ExecutionId;
-            this._nodeName = "ProcessRunner";
-            _typeName = "ProcessRunner";
+            this._nodeName = "-ProcessRunner-";
+            _typeName = "-ProcessRunner-";
         }
         private TraceEventFactory(string nodeName, string typeName, Guid executionId, string jobName)
         {
