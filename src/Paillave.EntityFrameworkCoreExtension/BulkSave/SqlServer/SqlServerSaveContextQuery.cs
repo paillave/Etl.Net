@@ -32,13 +32,19 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
         protected virtual string CreateStagingTableSql()
             => $@"SELECT TOP 0 { string.Join(",", PropertiesToBulkLoad.Select(i => $"T.[{i.GetColumnName()}]")) }, 0 as [{TempColumnNumOrderName}]
                     INTO {SqlStagingTableName} FROM {SqlTargetTable} AS T 
-                    LEFT JOIN {SqlTargetTable} AS Source ON 1 = 0;";
+                    LEFT JOIN {SqlTargetTable} AS Source ON 1 = 0 option(recompile);";
 
         public override void IndexStagingTable(List<IProperty> propertiesForPivot)
-            => this.Context.Database.ExecuteSqlRaw(this.IndexStagingTableSql(propertiesForPivot));
+        {
+            this.Context.Database.ExecuteSqlRaw(this.IndexStagingTableSql(propertiesForPivot));
+            this.Context.Database.ExecuteSqlRaw(this.CounterIndexStagingTableSql(propertiesForPivot));
+        }
 
         protected virtual string IndexStagingTableSql(List<IProperty> propertiesForPivot)
             => $@"CREATE UNIQUE CLUSTERED INDEX IX_{this.Table}_temp_{this.StagingId}_{string.Join("_", propertiesForPivot.Select(p => p.GetColumnName()))} ON {SqlStagingTableName} ({string.Join(", ", propertiesForPivot.Select(i => $"[{i.GetColumnName()}]"))})";
+
+        protected virtual string CounterIndexStagingTableSql(List<IProperty> propertiesForPivot)
+            => $@"CREATE UNIQUE INDEX IX_{this.Table}_temp_{this.StagingId}_{TempColumnNumOrderName} ON {SqlStagingTableName} ({TempColumnNumOrderName})";
 
         public override void DeleteStagingTable()
             => this.Context.Database.ExecuteSqlRaw(this.DeleteStagingTableSql());
@@ -58,7 +64,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
         protected virtual string CreateOutputStagingTableSql()
             => $@"SELECT TOP 0 T.*, 0 as [{TempColumnNumOrderName}], 'mergeaction' as [{TempColumnAction}]
                     INTO {SqlOutputStagingTableName} FROM {SqlTargetTable} AS T 
-                    LEFT JOIN {SqlTargetTable} AS Source ON 1 = 0;";
+                    LEFT JOIN {SqlTargetTable} AS Source ON 1 = 0 option(recompile);";
 
         public override void IndexOutputStagingTable()
             => this.Context.Database.ExecuteSqlRaw(this.IndexOutputStagingTableSql());
@@ -104,12 +110,12 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
 
 
         protected virtual string GetOutputStagingSql()
-            => $@"select * from {SqlOutputStagingTableName} order by [{TempColumnNumOrderName}]"; //the sp_execute is to prevent EF core to wrap the query into another subquery that will involve a different sorting depending in the situtation (not too proud of this solution, but I really didn't find better)
+            => $@"select * from {SqlOutputStagingTableName} order by [{TempColumnNumOrderName}] option(recompile)"; //the sp_execute is to prevent EF core to wrap the query into another subquery that will involve a different sorting depending in the situtation (not too proud of this solution, but I really didn't find better)
                                                                                                   // => $@"sp_executesql N'set nocount on; select * from {SqlOutputStagingTableName} order by {TempColumnNumOrderName}';"; //the sp_execute is to prevent EF core to wrap the query into another subquery that will involve a different sorting depending in the situtation (not too proud of this solution, but I really didn't find better)
 
 
         protected virtual string GetOutputStagingForComputedColumnsSql()
-            => $@"select T.* from {SqlStagingTableName} as S left join {SqlTargetTable} as T on {string.Join(" OR ", this.PropertiesForPivotSet.Select(propertiesForPivot => string.Join(" AND ", propertiesForPivot.Select(i => CreateEqualityConditionSql("T", "S", i)))))} order by S.{TempColumnNumOrderName}";
+            => $@"select T.* from {SqlStagingTableName} as S left join {SqlTargetTable} as T on {string.Join(" OR ", this.PropertiesForPivotSet.Select(propertiesForPivot => string.Join(" AND ", propertiesForPivot.Select(i => CreateEqualityConditionSql("T", "S", i)))))} order by S.{TempColumnNumOrderName} option(recompile)";
         // => $@"select T.* from {SqlStagingTableName} as S left join {SqlTargetTable} as T on {string.Join(" AND ", PropertiesForPivot.Select(i => CreateEqualityConditionSql("T", "S", i)))} order by S.{TempColumnNumOrderName}";
 
 
@@ -171,7 +177,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
                     {whenNotMatchedStatement}
                     {whenMatchedStatement}
                     OUTPUT INSERTED.*, S.[{TempColumnNumOrderName}], $action
-                    INTO {SqlOutputStagingTableName};";
+                    INTO {SqlOutputStagingTableName} option(recompile);";
         }
         protected virtual string InsertFromStagingSql()
         {
@@ -183,7 +189,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
                     ON 1=0
                     {whenNotMatchedStatement}
                     OUTPUT INSERTED.*, S.[{TempColumnNumOrderName}], $action
-                    INTO {SqlOutputStagingTableName};";
+                    INTO {SqlOutputStagingTableName} option(recompile);";
         }
     }
 }

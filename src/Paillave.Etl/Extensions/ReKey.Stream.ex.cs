@@ -1,34 +1,13 @@
 using Paillave.Etl.Core;
 using Paillave.Etl.StreamNodes;
 using Paillave.Etl.Core.Streams;
-using Paillave.Etl.Core.TraceContents;
-using Paillave.Etl.ValuesProviders;
-using Paillave.Etl.Reactive.Core;
-using Paillave.Etl.Reactive.Operators;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using SystemIO = System.IO;
 
 namespace Paillave.Etl.Extensions
 {
     public static partial class ReKeyEx
     {
-        /// <summary>
-        /// Aggregate every element of a stream into a list of aggregations computed for each group by multiple keys
-        /// </summary>
-        /// <param name="stream">Input stream</param>
-        /// <param name="name">Name of the operation</param>
-        /// <param name="getKeys">Method to get the list of key of an element of the stream</param>
-        /// <param name="resultSelector">Create the output row by using the full list of keys</param>
-        /// <typeparam name="TIn">Main stream type</typeparam>
-        /// <typeparam name="TAggr">Aggregation type</typeparam>
-        /// <typeparam name="TKeys">Key type</typeparam>
-        /// <returns>Output type</returns>
         public static IStream<TOut> ReKey<TIn, TKeys, TOut>(this IStream<TIn> stream, string name, Func<TIn, TKeys> getKeys, Func<TIn, TKeys, TOut> resultSelector)
         {
             return new ReKeyStreamNode<TIn, TOut, TKeys>(name, new ReKeyArgs<TIn, TOut, TKeys>
@@ -38,17 +17,6 @@ namespace Paillave.Etl.Extensions
                 GetKeys = getKeys
             }).Output;
         }
-        /// <summary>
-        /// Aggregate every element of a stream into a list of aggregations computed for each group by multiple keys
-        /// </summary>
-        /// <param name="stream">Input stream</param>
-        /// <param name="name">Name of the operation</param>
-        /// <param name="getKeys">Method to get the list of key of an element of the stream</param>
-        /// <param name="resultSelector">Create the output row by using the full list of keys</param>
-        /// <typeparam name="TIn">Main stream type</typeparam>
-        /// <typeparam name="TAggr">Aggregation type</typeparam>
-        /// <typeparam name="TKeys">Key type</typeparam>
-        /// <returns>Output type</returns>
         public static IStream<Correlated<TOut>> ReKey<TIn, TKeys, TOut>(this IStream<Correlated<TIn>> stream, string name, Func<TIn, TKeys> getKeys, Func<TIn, TKeys, TOut> resultSelector)
         {
             return new ReKeyStreamNode<Correlated<TIn>, Correlated<TOut>, TKeys>(name, new ReKeyArgs<Correlated<TIn>, Correlated<TOut>, TKeys>
@@ -56,6 +24,27 @@ namespace Paillave.Etl.Extensions
                 InputStream = stream,
                 ResultSelector = (i, k) => new Correlated<TOut> { Row = resultSelector(i.Row, k), CorrelationKeys = i.CorrelationKeys },
                 GetKeys = i => getKeys(i.Row)
+            }).Output;
+        }
+
+        public static IStream<TIn> ReKey<TIn>(this IStream<TIn> stream, string name, Expression<Func<TIn, object>> getKeys)
+        {
+            return new ReKey2StreamNode<TIn, TIn, TIn>(name, new ReKey2Args<TIn, TIn, TIn>
+            {
+                InputStream = stream,
+                ResultSelector = (i, j) => j,
+                RowSelector = i => i,
+                GetKeys = getKeys
+            }).Output;
+        }
+        public static IStream<Correlated<TIn>> ReKey<TIn>(this IStream<Correlated<TIn>> stream, string name, Expression<Func<TIn, object>> getKeys)
+        {
+            return new ReKey2StreamNode<Correlated<TIn>, TIn, Correlated<TIn>>(name, new ReKey2Args<Correlated<TIn>, TIn, Correlated<TIn>>
+            {
+                InputStream = stream,
+                ResultSelector = (i, k) => new Correlated<TIn> { Row = k, CorrelationKeys = i.CorrelationKeys },
+                GetKeys = getKeys,
+                RowSelector = i => i.Row
             }).Output;
         }
     }

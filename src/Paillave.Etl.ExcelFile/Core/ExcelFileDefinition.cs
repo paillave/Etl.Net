@@ -150,23 +150,23 @@ namespace Paillave.Etl.ExcelFile.Core
             this._cultureInfo = CultureInfo.GetCultureInfo(name);
             return this;
         }
-        public ExcelFileDefinition<T> MapColumnToProperty<TField>(int index, Expression<Func<T, TField>> memberLamda, CultureInfo cultureInfo = null)
+        public ExcelFileDefinition<T> MapColumnToProperty<TField>(int index, Expression<Func<T, TField>> memberLambda, CultureInfo cultureInfo = null)
         {
             SetFieldDefinition(new ExcelFileFieldDefinition
             {
                 CultureInfo = cultureInfo,
                 Position = index,
-                PropertyInfo = memberLamda.GetPropertyInfo()
+                PropertyInfo = memberLambda.GetPropertyInfo()
             });
             return this;
         }
-        public ExcelFileDefinition<T> MapColumnToProperty<TField>(int index, Expression<Func<T, TField>> memberLamda, string cultureInfo)
+        public ExcelFileDefinition<T> MapColumnToProperty<TField>(int index, Expression<Func<T, TField>> memberLambda, string cultureInfo)
         {
             SetFieldDefinition(new ExcelFileFieldDefinition
             {
                 CultureInfo = CultureInfo.GetCultureInfo(cultureInfo),
                 Position = index,
-                PropertyInfo = memberLamda.GetPropertyInfo()
+                PropertyInfo = memberLambda.GetPropertyInfo()
             });
             return this;
         }
@@ -185,45 +185,45 @@ namespace Paillave.Etl.ExcelFile.Core
                 if (fieldDefinition.Position != null) existingFieldDefinition.Position = fieldDefinition.Position;
             }
         }
-        public ExcelFileDefinition<T> MapColumnToProperty<TField>(string columnName, Expression<Func<T, TField>> memberLamda, CultureInfo cultureInfo = null)
+        public ExcelFileDefinition<T> MapColumnToProperty<TField>(string columnName, Expression<Func<T, TField>> memberLambda, CultureInfo cultureInfo = null)
         {
             SetFieldDefinition(new ExcelFileFieldDefinition
             {
                 CultureInfo = cultureInfo,
                 ColumnName = columnName,
-                PropertyInfo = memberLamda.GetPropertyInfo()
+                PropertyInfo = memberLambda.GetPropertyInfo()
             });
             return this;
         }
-        public ExcelFileDefinition<T> MapColumnToProperty<TField>(string columnName, Expression<Func<T, TField>> memberLamda, string cultureInfo)
+        public ExcelFileDefinition<T> MapColumnToProperty<TField>(string columnName, Expression<Func<T, TField>> memberLambda, string cultureInfo)
         {
             SetFieldDefinition(new ExcelFileFieldDefinition
             {
                 CultureInfo = CultureInfo.GetCultureInfo(cultureInfo),
                 ColumnName = columnName,
-                PropertyInfo = memberLamda.GetPropertyInfo()
+                PropertyInfo = memberLambda.GetPropertyInfo()
             });
             return this;
         }
-        public ExcelFileDefinition<T> MapColumnToProperty<TField>(string columnName, int position, Expression<Func<T, TField>> memberLamda, CultureInfo cultureInfo = null)
+        public ExcelFileDefinition<T> MapColumnToProperty<TField>(string columnName, int position, Expression<Func<T, TField>> memberLambda, CultureInfo cultureInfo = null)
         {
             SetFieldDefinition(new ExcelFileFieldDefinition
             {
                 CultureInfo = cultureInfo,
                 ColumnName = columnName,
                 Position = position,
-                PropertyInfo = memberLamda.GetPropertyInfo()
+                PropertyInfo = memberLambda.GetPropertyInfo()
             });
             return this;
         }
-        public ExcelFileDefinition<T> MapColumnToProperty<TField>(string columnName, int position, Expression<Func<T, TField>> memberLamda, string cultureInfo)
+        public ExcelFileDefinition<T> MapColumnToProperty<TField>(string columnName, int position, Expression<Func<T, TField>> memberLambda, string cultureInfo)
         {
             SetFieldDefinition(new ExcelFileFieldDefinition
             {
                 CultureInfo = CultureInfo.GetCultureInfo(cultureInfo),
                 ColumnName = columnName,
                 Position = position,
-                PropertyInfo = memberLamda.GetPropertyInfo()
+                PropertyInfo = memberLambda.GetPropertyInfo()
             });
             return this;
         }

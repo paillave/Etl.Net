@@ -8,6 +8,7 @@ namespace Paillave.Etl.Core
 {
     public class ObjectBuilder
     {
+        public static object CreateInstance(Type type, Dictionary<string, object> values) => new ObjectBuilder(type) { Values = values }.CreateInstance();
         private readonly ParameterInfo[] _anonymousConstructorParameters;
         private readonly IDictionary<string, PropertyInfo> _nonAnonymousPropertyInfos;
         private readonly bool _isOutputAnonymous;

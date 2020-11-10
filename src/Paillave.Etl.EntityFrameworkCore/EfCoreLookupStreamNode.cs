@@ -68,6 +68,9 @@ namespace Paillave.Etl.EntityFrameworkCore
                 WhereClause = _parent.Parent.WhereClause,
                 Includer = _parent.Parent.IncludeClause,
                 KeyedConnection = _parent.Parent.KeyedConnection,
+                GetFullDataset = _fullDataset,
+                CacheSize = _cacheSize,
+                CreateIfNotFound = _createIfNotFound
             };
         internal EfCoreLookupArgsBuilder(EfCoreLookupArgsBuilder<TIn, TEntity, TKey> parent, Func<TIn, TEntity, TOut> resultSelector)
             => (_parent, _resultSelector) = (parent, resultSelector);
@@ -84,6 +87,11 @@ namespace Paillave.Etl.EntityFrameworkCore
         public EfCoreLookupArgsBuilder<TIn, TEntity, TOut, TKey> CacheFullDataset(bool fullDataset = true)
         {
             this._fullDataset = fullDataset;
+            return this;
+        }
+        public EfCoreLookupArgsBuilder<TIn, TEntity, TOut, TKey> NoCacheFullDataset(bool notFullDataset = true)
+        {
+            this._fullDataset = !notFullDataset;
             return this;
         }
     }
@@ -147,6 +155,9 @@ namespace Paillave.Etl.EntityFrameworkCore
                 WhereClause = _parent.Parent.WhereClause,
                 Includer = _parent.Parent.IncludeClause,
                 KeyedConnection = _parent.Parent.KeyedConnection,
+                CacheSize = _cacheSize,
+                CreateIfNotFound = _createIfNotFound,
+                GetFullDataset = _fullDataset
             };
         internal EfCoreLookupCorrelatedArgsBuilder(EfCoreLookupCorrelatedArgsBuilder<TIn, TEntity, TKey> parent, Func<TIn, TEntity, TOut> resultSelector)
             => (_parent, _resultSelector) = (parent, resultSelector);
@@ -165,6 +176,11 @@ namespace Paillave.Etl.EntityFrameworkCore
             this._fullDataset = fullDataset;
             return this;
         }
+        public EfCoreLookupCorrelatedArgsBuilder<TIn, TEntity, TOut, TKey> NoCacheFullDataset(bool notFullDataset = true)
+        {
+            this._fullDataset = !notFullDataset;
+            return this;
+        }
     }
     #endregion
     public class EfCoreLookupArgs<TIn, TValueIn, TEntity, TValueOut, TKey, TOut> where TEntity : class
@@ -180,7 +196,7 @@ namespace Paillave.Etl.EntityFrameworkCore
         public Expression<Func<TEntity, bool>> WhereClause { get; set; }
         public Func<IncludableQueryable<TEntity>, IncludableQueryable<TEntity>> Includer { get; set; } = null;
         public int CacheSize { get; set; } = 1000;
-        public bool GetFullDataset { get; set; } = false;
+        public bool GetFullDataset { get; set; } = true;
         public string KeyedConnection { get; set; } = null;
     }
     public class EfCoreLookupStreamNode<TIn, TValue, TEntity, TValueOut, TKey, TOut> : StreamNodeBase<TOut, IStream<TOut>, EfCoreLookupArgs<TIn, TValue, TEntity, TValueOut, TKey, TOut>>
@@ -198,39 +214,34 @@ namespace Paillave.Etl.EntityFrameworkCore
         {
             IPushObservable<TOut> matchingS = args.SourceStream.Observable.Map(elt =>
                     {
-                        var ctx = args.KeyedConnection == null
-                            ? this.ExecutionContext.DependencyResolver.Resolve<DbContext>()
-                            : this.ExecutionContext.DependencyResolver.Resolve<DbContext>(args.KeyedConnection);
                         var matcher = this.ExecutionContext.ContextBag.Resolve(this.NodeName, () =>
                         {
-                            EfMatcher<TValue, TEntity, TKey> ret = default;
-                            this.ExecutionContext.InvokeInDedicatedThread(ctx, () =>
+                            var ctx = args.KeyedConnection == null
+                                ? this.ExecutionContext.DependencyResolver.Resolve<DbContext>()
+                                : this.ExecutionContext.DependencyResolver.Resolve<DbContext>(args.KeyedConnection);
+                            return this.ExecutionContext.InvokeInDedicatedThread(ctx, () => new EfMatcher<TValue, TEntity, TKey>(new EfMatcherConfig<TValue, TEntity, TKey>
                             {
-                                ret = new EfMatcher<TValue, TEntity, TKey>(new EfMatcherConfig<TValue, TEntity, TKey>
+                                Context = ctx,
+                                CreateIfNotFound = args.CreateIfNotFound,
+                                WhereClause = args.WhereClause,
+                                LeftKeyExpression = args.GetLeftStreamKey,
+                                RightKeyExpression = args.GetEntityStreamKey,
+                                MinCacheSize = args.CacheSize,
+                                GetFullDataset = args.GetFullDataset,
+                                IncludeClause = i =>
                                 {
-                                    Context = ctx,
-                                    CreateIfNotFound = args.CreateIfNotFound,
-                                    WhereClause = args.WhereClause,
-                                    LeftKeyExpression = args.GetLeftStreamKey,
-                                    RightKeyExpression = args.GetEntityStreamKey,
-                                    MinCacheSize = args.CacheSize,
-                                    GetFullDataset = args.GetFullDataset,
-                                    IncludeClause = i =>
-                                    {
-                                        if (args.Includer == null)
-                                            return i;
-                                        else
-                                            return args.Includer(new IncludableQueryable<TEntity>(i)).Queryable;
-                                    }
-                                });
-                            });
-                            return ret;
+                                    if (args.Includer == null)
+                                        return i;
+                                    else
+                                        return args.Includer(new IncludableQueryable<TEntity>(i)).Queryable;
+                                }
+                            }));
                         });
                         TEntity entity = default;
                         var val = args.GetInputValue(elt);
                         if (!args.GetFullDataset)
                         {
-                            this.ExecutionContext.InvokeInDedicatedThread(matcher.Context, () => entity = matcher.GetMatch(val));
+                            entity = this.ExecutionContext.InvokeInDedicatedThread(matcher.Context, () => matcher.GetMatch(val));
                         }
                         else
                         {

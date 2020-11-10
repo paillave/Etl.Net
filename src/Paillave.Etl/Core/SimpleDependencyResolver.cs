@@ -7,12 +7,18 @@ namespace Paillave.Etl.Core
     public class SimpleDependencyResolver : IDependencyResolver
     {
         private object _lock = new object();
-        private IDictionary<string, object> _dictionary = new Dictionary<string, object>();
-        public SimpleDependencyResolver Register<T>(T instance, string key = null)
+        private IDictionary<string, object> _namedDictionary = new Dictionary<string, object>();
+        private IDictionary<Type, object> _typedDictionary = new Dictionary<Type, object>();
+        public SimpleDependencyResolver Register<T>(T instance, string key) => Register(typeof(T), instance, key);
+        public SimpleDependencyResolver Register(Type type, object instance, string key)
         {
-            if (key == null)
-                key = typeof(T).Name;
-            this._dictionary[typeof(T).Name] = instance;
+            this._namedDictionary[key] = instance;
+            return this;
+        }
+        public SimpleDependencyResolver Register<T>(T instance) => Register(typeof(T), instance);
+        public SimpleDependencyResolver Register(Type type, object instance)
+        {
+            this._typedDictionary[type] = instance;
             return this;
         }
         public SimpleDependencyResolver() { }
@@ -20,9 +26,9 @@ namespace Paillave.Etl.Core
         {
             lock (_lock)
             {
-                if (this._dictionary.TryGetValue(key, out var ret)) return (T)ret;
+                if (this._namedDictionary.TryGetValue(key, out var ret)) return (T)ret;
                 ret = creator();
-                this._dictionary[key] = ret;
+                this._namedDictionary[key] = ret;
                 return (T)ret;
             }
         }
@@ -30,10 +36,9 @@ namespace Paillave.Etl.Core
         {
             lock (_lock)
             {
-                T ret = this._dictionary.Values.OfType<T>().FirstOrDefault();
-                if (ret != null) return ret;
+                if (this._typedDictionary.TryGetValue(typeof(T), out var ret)) return (T)ret;
                 ret = creator();
-                this._dictionary[typeof(T).Name] = ret;
+                this._typedDictionary[typeof(T)] = ret;
                 return (T)ret;
             }
         }
@@ -41,32 +46,31 @@ namespace Paillave.Etl.Core
         {
             lock (_lock)
             {
-                if (this._dictionary.TryGetValue(key, out var ret)) return (T)ret;
-                return default;
+                return (T)Resolve(key);
             }
         }
         public T Resolve<T>()
         {
             lock (_lock)
             {
-                T ret = this._dictionary.Values.OfType<T>().FirstOrDefault();
-                if (ret != null) return ret;
-                return default;
+                return (T)Resolve(typeof(T));
             }
         }
         public object Resolve(Type type)
         {
             lock (_lock)
             {
-                return this._dictionary.Values.FirstOrDefault(v => v.GetType() == type);
+                if (this._typedDictionary.TryGetValue(type, out var ret)) return ret;
+                return default;
             }
         }
 
-        public object Resolve(string key, Type type)
+        public object Resolve(string key)
         {
             lock (_lock)
             {
-                return this._dictionary.FirstOrDefault(v => v.Value.GetType() == type && v.Key == key).Value;
+                if (this._namedDictionary.TryGetValue(key, out var res)) return res;
+                return null;
             }
         }
     }

@@ -6,6 +6,7 @@ using Paillave.Etl.Reactive.Operators;
 using System.Linq;
 using System.Reflection;
 using Paillave.Etl.Reactive.Core;
+using System.Linq.Expressions;
 
 namespace Paillave.Etl.StreamNodes
 {
@@ -37,6 +38,71 @@ namespace Paillave.Etl.StreamNodes
                 }
             });
             return CreateUnsortedStream(observableOut);
+        }
+    }
+
+
+
+
+
+
+
+
+
+    public class ReKey2Args<TIn, TRow, TOut>
+    {
+        public IStream<TIn> InputStream { get; set; }
+        public Func<TIn, TRow> RowSelector { get; set; }
+        public Func<TIn, TRow, TOut> ResultSelector { get; set; }
+        public Expression<Func<TRow, object>> GetKeys { get; set; }
+    }
+    public class ReKey2StreamNode<TIn, TRow, TOut> : StreamNodeBase<TOut, IStream<TOut>, ReKey2Args<TIn, TRow, TOut>>
+    {
+        public ReKey2StreamNode(string name, ReKey2Args<TIn, TRow, TOut> args) : base(name, args)
+        {
+            if (args.GetKeys.GetPropertyInfos().Count != 2)
+            {
+                throw new ArgumentException($"{name}: The rekey accepts only 2 keys");
+            }
+        }
+
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Heavy;
+
+        protected override IStream<TOut> CreateOutputStream(ReKey2Args<TIn, TRow, TOut> args)
+        {
+            var observableOut = args.InputStream.Observable.ToList().MultiMap<List<TIn>, TOut>(ProcessList);
+            return CreateUnsortedStream(observableOut);
+        }
+        private void ProcessList(List<TIn> inputs, Action<TOut> pushValue)
+        {
+            var pis = Args.GetKeys.GetPropertyInfos();
+            var pi1 = pis[0];
+            var pi2 = pis[1];
+            var items = inputs.Select(i =>
+            {
+                var row = Args.RowSelector(i);
+                return new
+                {
+                    Input = i,
+                    Row = row,
+                    Key1 = pi1.GetValue(row),
+                    Key2 = pi2.GetValue(row)
+                };
+            }).ToList();
+            var key1Dico = items.Where(i => i.Key1 != null && i.Key2 != null).GroupBy(i => i.Key1).ToDictionary(i => i.Key, i => i.First());
+            var key2Dico = items.Where(i => i.Key2 != null && i.Key2 != null).GroupBy(i => i.Key2).ToDictionary(i => i.Key, i => i.First());
+            foreach (var item in items)
+            {
+                var propertyInfos = item.Row.GetType().GetProperties();
+                var values = propertyInfos.ToDictionary(i => i.Name, i => i.GetValue(item.Row));
+                if (item.Key1 != null && key1Dico.TryGetValue(item.Key1, out var key1Row))
+                    values[pi2.Name] = key1Row.Key2;
+                else if (item.Key1 == null && item.Key2 != null && key2Dico.TryGetValue(item.Key2, out var key2Row))
+                    values[pi1.Name] = key2Row.Key1;
+                pushValue(Args.ResultSelector(item.Input, (TRow)ObjectBuilder.CreateInstance(item.Row.GetType(), values)));
+            }
         }
     }
 }
