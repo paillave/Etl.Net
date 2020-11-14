@@ -104,6 +104,10 @@ namespace Paillave.EntityFrameworkCoreExtension.EfSave
             // else
             //     contextSet.Add(entity);
             contextSet.Update(entity);
+            if (existingEntity == null)
+            {
+                _context.Entry(entity).State = EntityState.Added;
+            }
         }
     }
 }
