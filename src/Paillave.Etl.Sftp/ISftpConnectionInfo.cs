@@ -8,5 +8,6 @@ namespace Paillave.Etl.Sftp
         string Password { get; set; }
         string PrivateKeyPassPhrase { get; set; }
         string PrivateKey { get; set; }
+        int MaxAttempts { get; set; }
     }
 }

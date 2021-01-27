@@ -14,5 +14,6 @@ namespace Paillave.Etl.Sftp
         public string Password { get; set; }
         public string PrivateKeyPassPhrase { get; set; }
         public string PrivateKey { get; set; }
+        public int MaxAttempts { get; set; } = 3;
     }
 }

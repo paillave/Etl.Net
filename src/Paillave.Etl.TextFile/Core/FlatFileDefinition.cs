@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 
 namespace Paillave.Etl.TextFile.Core
 {
@@ -15,6 +16,7 @@ namespace Paillave.Etl.TextFile.Core
     }
     public class FlatFileDefinition<T>
     {
+        public Encoding Encoding { get; private set; } = null;
         public bool HasColumnHeader => _fieldDefinitions.Any(i => !string.IsNullOrWhiteSpace(i.ColumnName));
         private IList<FlatFileFieldDefinition> _fieldDefinitions = new List<FlatFileFieldDefinition>();
         private ILineSplitter _lineSplitter = new ColumnSeparatorLineSplitter();
@@ -128,6 +130,11 @@ namespace Paillave.Etl.TextFile.Core
         public FlatFileDefinition<T> WithCultureInfo(CultureInfo cultureInfo)
         {
             this._cultureInfo = cultureInfo;
+            return this;
+        }
+        public FlatFileDefinition<T> WithEncoding(Encoding encoding)
+        {
+            this.Encoding = encoding;
             return this;
         }
         public FlatFileDefinition<T> WithCultureInfo(string name)

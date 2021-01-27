@@ -22,7 +22,8 @@ namespace Paillave.Etl.Sftp
                 ConnectionName = connectionName,
                 ConnectorName = connectorName
             }) => (Name, _folder, _connectionInfo) = (fileName, folder, connectionInfo);
-        protected override void DeleteFile()
+        protected override void DeleteFile() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, DeleteFileSingleTime);
+        protected void DeleteFileSingleTime()
         {
             var connectionInfo = _connectionInfo.CreateConnectionInfo();
             using (var client = new SftpClient(connectionInfo))
@@ -31,7 +32,8 @@ namespace Paillave.Etl.Sftp
                 client.DeleteFile(Path.Combine(_folder, Name));
             }
         }
-        public override Stream GetContent()
+        public override Stream GetContent() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, GetContentSingleTime);
+        private Stream GetContentSingleTime()
         {
             var connectionInfo = _connectionInfo.CreateConnectionInfo();
             using (var client = new SftpClient(connectionInfo))

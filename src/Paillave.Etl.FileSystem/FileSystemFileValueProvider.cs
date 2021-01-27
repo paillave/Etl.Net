@@ -25,7 +25,7 @@ namespace Paillave.Etl.FileSystem
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
         protected override void Provide(Action<IFileValue> pushFileValue, FileSystemAdapterConnectionParameters connectionParameters, FileSystemAdapterProviderParameters providerParameters, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
-            var folder = Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
+            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
             var searchPattern = string.IsNullOrEmpty(providerParameters.FileNamePattern) ? "*" : providerParameters.FileNamePattern;
             var files = Directory
                 .GetFiles(folder, searchPattern, providerParameters.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
@@ -38,7 +38,8 @@ namespace Paillave.Etl.FileSystem
         }
         protected override void Test(FileSystemAdapterConnectionParameters connectionParameters, FileSystemAdapterProviderParameters providerParameters)
         {
-            var folder = Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
+            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
+            // var folder = Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
             var searchPattern = string.IsNullOrEmpty(providerParameters.FileNamePattern) ? "*" : providerParameters.FileNamePattern;
             var files = Directory
                 .GetFiles(folder, searchPattern, providerParameters.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);

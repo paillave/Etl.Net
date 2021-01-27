@@ -52,7 +52,7 @@ namespace Paillave.Etl.Tests
             var navFileStream = fileStream
                 .CrossApplyTextFile($"parse nav file", efaNavFileDefinition);
 
-            var managedSubFundStream = processContextStream.EfCoreSelect($"get subfunds from db", i => i.Set<SubFund>());
+            var managedSubFundStream = processContextStream.EfCoreSelect($"get subfunds from db", (c, i) => c.Set<SubFund>());
         }
     }
     public class SubFund

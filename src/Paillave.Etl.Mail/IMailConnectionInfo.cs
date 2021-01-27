@@ -6,5 +6,7 @@ namespace Paillave.Etl.Mail
         int PortNumber { get; set; }
         string Login { get; set; }
         string Password { get; set; }
+        bool Secured { get; set; }
+        int MaxAttempts { get; set; }
     }
 }

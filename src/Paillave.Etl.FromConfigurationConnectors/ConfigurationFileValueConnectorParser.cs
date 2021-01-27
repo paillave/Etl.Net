@@ -16,6 +16,10 @@ namespace Paillave.Etl.FromConfigurationConnectors
         }
         public IFileValueConnectors GetConnectors(string jsonConfig)
         {
+            if (string.IsNullOrWhiteSpace(jsonConfig))
+            {
+                return new NoFileValueConnectors();
+            }
             try
             {
                 var validator = new NJsonSchema.Validation.JsonSchemaValidator().Validate(jsonConfig, this.GetConnectorsSchema());

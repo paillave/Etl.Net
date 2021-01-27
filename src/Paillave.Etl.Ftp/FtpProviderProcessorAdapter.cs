@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Paillave.Etl.Connector;
 
@@ -13,11 +14,18 @@ namespace Paillave.Etl.Ftp
         public string Login { get; set; }
         [Required]
         public string Password { get; set; }
+        public string FingerPrintSha1 { get; set; }
+        public string SerialNumber { get; set; }
+        public Dictionary<string, string> SubjectChecks { get; set; }
+        public Dictionary<string, string> IssuerChecks { get; set; }
+        public string PublicKey { get; set; }
+        public int MaxAttempts { get; set; } = 3;
     }
     public class FtpAdapterProviderParameters
     {
         public string SubFolder { get; set; }
         public string FileNamePattern { get; set; }
+        public bool Recursive { get; set; }
     }
     public class FtpAdapterProcessorParameters
     {

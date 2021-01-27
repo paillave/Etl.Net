@@ -22,40 +22,61 @@ namespace Paillave.Etl.Mail
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
         protected override void Process(IFileValue fileValue, MailAdapterConnectionParameters connectionParameters, MailAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
-            using (var client = new SmtpClient(connectionParameters.Server, connectionParameters.PortNumber))
+            var portNumber = connectionParameters.PortNumber == 0 ? 25 : connectionParameters.PortNumber;
+
+
+            IFileValueWithDestinationMetadata destinationMetadata = fileValue.Metadata as IFileValueWithDestinationMetadata;
+            JObject metadataJson = fileValue.Metadata == null ? new JObject() : JObject.FromObject(fileValue.Metadata);
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress(FormatText(processorParameters.From, metadataJson), FormatText(processorParameters.FromDisplayName, metadataJson));
+            var mailAddresses = processorParameters.To.Split(";");
+            var displayNames = (processorParameters.ToDisplayName ?? "").Split(";");
+
+            for (int i = 0; i < mailAddresses.Length; i++)
+            {
+                var mailAddress = FormatText(mailAddresses[i], metadataJson);
+                if (displayNames.Length == mailAddresses.Length)
+                {
+                    mailMessage.To.Add(new MailAddress(mailAddress, FormatText(displayNames[i], metadataJson)));
+                }
+                else
+                {
+                    mailMessage.To.Add(new MailAddress(mailAddress));
+                }
+            }
+            mailMessage.Subject = FormatText(processorParameters.Subject, metadataJson);
+            var stream = fileValue.GetContent();
+            var fileExtension = Path.GetExtension(fileValue.Name);
+            if (string.IsNullOrWhiteSpace(processorParameters.Body)
+                && (string.Equals(fileExtension, ".html", StringComparison.InvariantCultureIgnoreCase)
+                    || string.Equals(fileExtension, ".htm", StringComparison.InvariantCultureIgnoreCase)))
+            {
+                mailMessage.IsBodyHtml = true;
+                var content = new StreamReader(stream).ReadToEnd();
+                mailMessage.Body = content;
+                if (string.IsNullOrWhiteSpace(mailMessage.Subject))
+                    mailMessage.Subject = Path.GetFileNameWithoutExtension(fileValue.Name);
+            }
+            else
+            {
+                mailMessage.Body = FormatText(processorParameters.Body, metadataJson);
+                Attachment attachment = new Attachment(stream, fileValue.Name, MimeTypes.GetMimeType(fileValue.Name));
+                mailMessage.Attachments.Add(attachment);
+            }
+            ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => SendSingleFile(connectionParameters, mailMessage, portNumber));
+            push(fileValue);
+        }
+        private void SendSingleFile(MailAdapterConnectionParameters connectionParameters, MailMessage mailMessage, int portNumber)
+        {
+            using (var client = new SmtpClient(connectionParameters.Server, portNumber))
             {
                 if (!string.IsNullOrWhiteSpace(connectionParameters.Login))
                 {
                     client.UseDefaultCredentials = false;
                     client.Credentials = new NetworkCredential(connectionParameters.Login, connectionParameters.Password);
                 }
-                IFileValueWithDestinationMetadata destinationMetadata = fileValue.Metadata as IFileValueWithDestinationMetadata;
-                JObject metadataJson = fileValue.Metadata == null ? new JObject() : JObject.FromObject(fileValue.Metadata);
-                MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress(FormatText(processorParameters.From, metadataJson), FormatText(processorParameters.FromDisplayName, metadataJson));
-                mailMessage.To.Add(new MailAddress(FormatText(processorParameters.To, metadataJson), FormatText(processorParameters.ToDisplayName, metadataJson)));
-                mailMessage.Subject = FormatText(processorParameters.Subject, metadataJson);
-                var stream = fileValue.GetContent();
-                var fileExtension = Path.GetExtension(fileValue.Name);
-                if (string.IsNullOrWhiteSpace(processorParameters.Body)
-                    && (string.Equals(fileExtension, ".html", StringComparison.InvariantCultureIgnoreCase)
-                        || string.Equals(fileExtension, ".htm", StringComparison.InvariantCultureIgnoreCase)))
-                {
-                    mailMessage.IsBodyHtml = true;
-                    var content = new StreamReader(stream).ReadToEnd();
-                    mailMessage.Body = content;
-                    if (string.IsNullOrWhiteSpace(mailMessage.Subject))
-                        mailMessage.Subject = Path.GetFileNameWithoutExtension(fileValue.Name);
-                }
-                else
-                {
-                    mailMessage.Body = FormatText(processorParameters.Body, metadataJson);
-                    Attachment attachment = new Attachment(stream, fileValue.Name, MimeTypes.GetMimeType(fileValue.Name));
-                    mailMessage.Attachments.Add(attachment);
-                }
                 client.Send(mailMessage);
             }
-            push(fileValue);
         }
         private static string FormatText(string text, JToken metadata)
         {
@@ -83,28 +104,14 @@ namespace Paillave.Etl.Mail
 
         protected override void Test(MailAdapterConnectionParameters connectionParameters, MailAdapterProcessorParameters processorParameters)
         {
-            using (var client = new SmtpClient(connectionParameters.Server, connectionParameters.PortNumber))
+            var portNumber = connectionParameters.PortNumber == 0 ? 25 : connectionParameters.PortNumber;
+            using (var client = new SmtpClient(connectionParameters.Server, portNumber))
             {
                 if (!string.IsNullOrWhiteSpace(connectionParameters.Login))
                 {
                     client.UseDefaultCredentials = false;
                     client.Credentials = new NetworkCredential(connectionParameters.Login, connectionParameters.Password);
                 }
-                // IFileValueWithDestinationMetadata destinationMetadata = fileValue.Metadata as IFileValueWithDestinationMetadata;
-                // JObject metadataJson = JObject.FromObject(fileValue.Metadata);
-                // MailMessage mailMessage = new MailMessage();
-                // mailMessage.From = new MailAddress(FormatText(processorParameters.From, metadataJson), FormatText(processorParameters.FromDisplayName, metadataJson));
-                // mailMessage.To.Add(new MailAddress(FormatText(processorParameters.To, metadataJson), FormatText(processorParameters.ToDisplayName, metadataJson)));
-                // mailMessage.Body = FormatText(processorParameters.Body, metadataJson);
-                // mailMessage.Subject = FormatText(processorParameters.Subject, metadataJson);
-                // var stream = fileValue.GetContent();
-                // Attachment attachment = new Attachment(stream, fileValue.Name, MimeTypes.GetMimeType(fileValue.Name));
-                // mailMessage.Attachments.Add(attachment);
-                // try
-                // {
-                //     client.Send(mailMessage);
-                // }
-                // catch { }
             }
         }
     }

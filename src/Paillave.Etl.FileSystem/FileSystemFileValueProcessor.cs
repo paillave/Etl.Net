@@ -20,7 +20,8 @@ namespace Paillave.Etl.FileSystem
         {
             var l = fileValue.GetContent();
             l.Seek(0, SeekOrigin.Begin);
-            var outputFilePath=Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "", fileValue.Name);
+            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
+            var outputFilePath=Path.Combine(folder, fileValue.Name);
             using (var fileStream = File.OpenWrite(outputFilePath))
                 l.CopyTo(fileStream);
             push(fileValue);
@@ -31,9 +32,10 @@ namespace Paillave.Etl.FileSystem
             var fileName = Guid.NewGuid().ToString();
             var l = new MemoryStream();
             l.Seek(0, SeekOrigin.Begin);
-            using (var fileStream = File.OpenWrite(Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "", fileName)))
+            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
+            using (var fileStream = File.OpenWrite(Path.Combine(folder, fileName)))
                 l.CopyTo(fileStream);
-            File.Delete(Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "", fileName));
+            File.Delete(Path.Combine(folder, fileName));
         }
     }
 }

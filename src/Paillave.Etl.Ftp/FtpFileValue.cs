@@ -1,8 +1,6 @@
+using FluentFTP;
 using Paillave.Etl.ValuesProviders;
-using System;
 using System.IO;
-using System.Linq;
-using System.Net;
 
 namespace Paillave.Etl.Ftp
 {
@@ -23,29 +21,25 @@ namespace Paillave.Etl.Ftp
                 ConnectionName = connectionName,
                 ConnectorName = connectorName
             }) => (Name, _folder, _connectionInfo) = (fileName, folder, connectionInfo);
-        protected override void DeleteFile()
+        protected override void DeleteFile() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, DeleteFileSingleTime);
+        protected void DeleteFileSingleTime()
         {
-            UriBuilder uriBuilder = new UriBuilder("ftp", _connectionInfo.Server, _connectionInfo.PortNumber, Path.Combine(_folder, this.Name).Replace('\\', '/'));
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uriBuilder.Uri);
-            request.Method = WebRequestMethods.Ftp.DeleteFile;
-
-            request.Credentials = new NetworkCredential(_connectionInfo.Login, _connectionInfo.Password);
-            using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
-                if (!new[] { FtpStatusCode.CommandOK, FtpStatusCode.FileActionOK }.Contains(response.StatusCode))
-                    throw new Exception("Ftp request failed");
+            var pathToDelete = Path.Combine(_folder, this.Name).Replace('\\', '/');
+            using (FtpClient client = _connectionInfo.CreateFtpClient())
+                client.DeleteFile(pathToDelete);
         }
-        public override Stream GetContent()
+        public override Stream GetContent() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, GetContentSingleTime);
+        private Stream GetContentSingleTime()
         {
-            UriBuilder uriBuilder = new UriBuilder("ftp", _connectionInfo.Server, _connectionInfo.PortNumber, Path.Combine(_folder, this.Name).Replace('\\', '/'));
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uriBuilder.Uri);
-            request.Method = WebRequestMethods.Ftp.DownloadFile;
-
-            request.Credentials = new NetworkCredential(_connectionInfo.Login, _connectionInfo.Password);
-            MemoryStream ms = new MemoryStream();
-            using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
-                response.GetResponseStream().CopyTo(ms);
-            ms.Seek(0, SeekOrigin.Begin);
-            return ms;
+            using (FtpClient client = _connectionInfo.CreateFtpClient())
+            {
+                MemoryStream ms = new MemoryStream();
+                var pathToDownload = Path.Combine(_folder, this.Name).Replace('\\', '/');
+                if (!client.Download(ms, pathToDownload))
+                    throw new System.Exception($"File {pathToDownload} failed to be downloaded");
+                ms.Seek(0, SeekOrigin.Begin);
+                return ms;
+            }
         }
     }
     public class FtpFileValueMetadata : FileValueMetadataBase

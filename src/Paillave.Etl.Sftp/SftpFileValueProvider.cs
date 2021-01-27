@@ -6,6 +6,7 @@ using Paillave.Etl.Connector;
 using Paillave.Etl.ValuesProviders;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Renci.SshNet;
+using System.Linq;
 
 namespace Paillave.Etl.Sftp
 {
@@ -17,26 +18,31 @@ namespace Paillave.Etl.Sftp
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
         protected override void Provide(Action<IFileValue> pushFileValue, SftpAdapterConnectionParameters connectionParameters, SftpAdapterProviderParameters providerParameters, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
-            var folder = Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
             var searchPattern = string.IsNullOrEmpty(providerParameters.FileNamePattern) ? "*" : providerParameters.FileNamePattern;
             var matcher = new Matcher().AddInclude(searchPattern);
+            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
+
+            var files = ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => GetFileList(connectionParameters, providerParameters));
+            foreach (var file in files)
+            {
+                if (cancellationToken.IsCancellationRequested) break;
+                if (matcher.Match(file.Name).HasMatches)
+                    pushFileValue(new SftpFileValue(connectionParameters, folder, file.Name, this.Code, this.Name, this.ConnectionName));
+            }
+        }
+        private Renci.SshNet.Sftp.SftpFile[] GetFileList(SftpAdapterConnectionParameters connectionParameters, SftpAdapterProviderParameters providerParameters)
+        {
+            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
             var connectionInfo = connectionParameters.CreateConnectionInfo();
             using (var client = new SftpClient(connectionInfo))
             {
                 client.Connect();
-                var files = client.ListDirectory(folder);
-                foreach (var file in files)
-                {
-                    if (cancellationToken.IsCancellationRequested) break;
-                    if (matcher.Match(file.Name).HasMatches)
-                        pushFileValue(new SftpFileValue(connectionParameters, folder, file.Name, this.Code, this.Name, this.ConnectionName));
-                }
+                return client.ListDirectory(folder).ToArray();
             }
         }
-
         protected override void Test(SftpAdapterConnectionParameters connectionParameters, SftpAdapterProviderParameters providerParameters)
         {
-            var folder = Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
+            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
             var searchPattern = string.IsNullOrEmpty(providerParameters.FileNamePattern) ? "*" : providerParameters.FileNamePattern;
             var matcher = new Matcher().AddInclude(searchPattern);
             var connectionInfo = connectionParameters.CreateConnectionInfo();

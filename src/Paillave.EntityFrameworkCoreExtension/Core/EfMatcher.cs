@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 namespace Paillave.EntityFrameworkCoreExtension.Core
 {
     public class EfMatcher<TInLeft, TEntity, TKey>
-        where TEntity : class
     {
         private class CachedEntity
         {
@@ -28,7 +27,7 @@ namespace Paillave.EntityFrameworkCoreExtension.Core
 
         private readonly bool _getFullDataset;
         private Func<TInLeft, TEntity> _createIfNotFound = null;
-        private Func<IQueryable<TEntity>, IQueryable<TEntity>> _includeInstruction = null;
+        private IQueryable<TEntity> _query = null;
         private static IEqualityComparer<TKey> GetEqualityComparer()
         {
             if (typeof(TKey) == typeof(string))
@@ -40,47 +39,41 @@ namespace Paillave.EntityFrameworkCoreExtension.Core
         {
             _getFullDataset = config.GetFullDataset;
             _createIfNotFound = config.CreateIfNotFound;
-            _includeInstruction = config.IncludeClause;
             Context = config.Context;
             _getLeftKey = config.LeftKeyExpression.Compile();
             _getRightKey = config.RightKeyExpression.Compile();
-            _matchCriteriaBuilder = MatchCriteriaBuilder.Create(config.LeftKeyExpression, config.RightKeyExpression, config.WhereClause);
+            _matchCriteriaBuilder = MatchCriteriaBuilder.Create(config.LeftKeyExpression, config.RightKeyExpression);
             if (config.GetFullDataset)
             {
-                var query = (_includeInstruction == null ? config.Context.Set<TEntity>() : _includeInstruction(config.Context.Set<TEntity>()));
-                if (config.WhereClause != null)
-                    query = query.Where(config.WhereClause);
-
-                var defaultCache = query.ToList();
+                var defaultCache = config.Query.ToList();
                 _cacheSize = Math.Max(defaultCache.Count, config.MinCacheSize);
                 _cachedEntities = defaultCache
                     .Select(i => new { Key = _getRightKey(i), Value = new CachedEntity(i) })
                     .Where(i => i.Key != null)
-                    .GroupBy(i=>i.Key)
+                    .GroupBy(i => i.Key)
                     .ToDictionary(i => i.Key, i => i.First().Value, GetEqualityComparer());
             }
             else
             {
+                _query = config.Query;
                 _cacheSize = config.MinCacheSize;
             }
         }
         public TEntity GetMatch(TInLeft input)
         {
             var inputKey = _getLeftKey(input);
-            if (inputKey == null) return null;
+            if (inputKey == null) return default;
             if (_cachedEntities.TryGetValue(inputKey, out var entryFromCache))
                 return entryFromCache.Entity;
             if (_getFullDataset) return default;
-            var dbSet = Context.Set<TEntity>();
             var expr = _matchCriteriaBuilder.GetCriteriaExpression(input);
 
-            var queryable = _includeInstruction == null ? dbSet : _includeInstruction(dbSet);
-            var ret = queryable.AsNoTracking().FirstOrDefault(expr);
+            var ret = _query.FirstOrDefault(expr);
 
             if (ret == null && _createIfNotFound != null)
             {
                 ret = _createIfNotFound(input);
-                dbSet.Add(ret);
+                Context.Add(ret);
                 Context.SaveChanges();
             }
 
@@ -94,23 +87,17 @@ namespace Paillave.EntityFrameworkCoreExtension.Core
         }
     }
     public class EfMatcherConfig<TInLeft, TEntity, TKey>
-        where TEntity : class
     {
         public DbContext Context { get; set; }
         public Expression<Func<TInLeft, TKey>> LeftKeyExpression { get; set; }
         public Expression<Func<TEntity, TKey>> RightKeyExpression { get; set; }
         public Func<TInLeft, TEntity> CreateIfNotFound { get; set; }
         /// <summary>
-        /// Criteria that is applied on top of the selection criteria on the EntitySet
-        /// </summary>
-        /// <value></value>
-        public Expression<Func<TEntity, bool>> WhereClause { get; set; }
-        /// <summary>
         /// If true, will fill the cache from the start with values that correspond the DefaultDatasetCriteria
         /// </summary>
         /// <value></value>
         public bool GetFullDataset { get; set; }
         public int MinCacheSize { get; set; } = 1000;
-        public Func<IQueryable<TEntity>, IQueryable<TEntity>> IncludeClause { get; set; } = null;
+        public IQueryable<TEntity> Query { get; set; } = null;
     }
 }

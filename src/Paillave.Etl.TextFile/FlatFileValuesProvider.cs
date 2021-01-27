@@ -24,7 +24,8 @@ namespace Paillave.Etl.TextFile
         {
             var stream = input.GetContent();
             string sourceName = input.Name;
-            var sr = _args.Encoding == null ? new StreamReader(stream, true) : new StreamReader(stream, _args.Encoding);
+            var encoding = _args.Encoding ?? _args.Mapping.Encoding;
+            var sr = encoding == null ? new StreamReader(stream, true) : new StreamReader(stream, encoding);
             using (sr)
             {
                 if (_args.Mapping.HasColumnHeader)

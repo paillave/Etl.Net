@@ -12,14 +12,20 @@ namespace Paillave.Etl.Core
         public SimpleDependencyResolver Register<T>(T instance, string key) => Register(typeof(T), instance, key);
         public SimpleDependencyResolver Register(Type type, object instance, string key)
         {
-            this._namedDictionary[key] = instance;
-            return this;
+            lock (_lock)
+            {
+                this._namedDictionary[key] = instance;
+                return this;
+            }
         }
         public SimpleDependencyResolver Register<T>(T instance) => Register(typeof(T), instance);
         public SimpleDependencyResolver Register(Type type, object instance)
         {
-            this._typedDictionary[type] = instance;
-            return this;
+            lock (_lock)
+            {
+                this._typedDictionary[type] = instance;
+                return this;
+            }
         }
         public SimpleDependencyResolver() { }
         public T Resolve<T>(string key, Func<T> creator)

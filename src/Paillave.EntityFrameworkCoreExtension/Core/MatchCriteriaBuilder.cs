@@ -6,17 +6,16 @@ namespace Paillave.EntityFrameworkCoreExtension.Core
 {
     public class MatchCriteriaBuilder
     {
-        public static MatchCriteriaBuilder<TInLeft, TEntity, TKey> Create<TInLeft, TEntity, TKey>(Expression<Func<TInLeft, TKey>> leftKeyExpression, Expression<Func<TEntity, TKey>> rightKeyExpression, Expression<Func<TEntity, bool>> defaultDatasetCriteria = null)
-            => new MatchCriteriaBuilder<TInLeft, TEntity, TKey>(leftKeyExpression, rightKeyExpression, defaultDatasetCriteria);
+        public static MatchCriteriaBuilder<TInLeft, TEntity, TKey> Create<TInLeft, TEntity, TKey>(Expression<Func<TInLeft, TKey>> leftKeyExpression, Expression<Func<TEntity, TKey>> rightKeyExpression)
+            => new MatchCriteriaBuilder<TInLeft, TEntity, TKey>(leftKeyExpression, rightKeyExpression);
     }
     public class MatchCriteriaBuilder<TInLeft, TEntity, TKey>
     {
-        private readonly Expression<Func<TEntity, bool>> _defaultDatasetCriteria;
+        // private readonly Expression<Func<TEntity, bool>> _defaultDatasetCriteria;
         private readonly KeyDefinitionExtractor.ExpressionKeysResult _inputKeyExpressionStructure;
         private readonly KeyDefinitionExtractor.ExpressionKeysResult _entityKeyExpressionStructure;
-        public MatchCriteriaBuilder(Expression<Func<TInLeft, TKey>> leftKeyExpression, Expression<Func<TEntity, TKey>> entityKeyExpression, Expression<Func<TEntity, bool>> defaultDatasetCriteria = null)
+        public MatchCriteriaBuilder(Expression<Func<TInLeft, TKey>> leftKeyExpression, Expression<Func<TEntity, TKey>> entityKeyExpression)
         {
-            this._defaultDatasetCriteria = defaultDatasetCriteria;
             this._inputKeyExpressionStructure = KeyDefinitionExtractor.GetExpressionKeys(leftKeyExpression);
             this._entityKeyExpressionStructure = KeyDefinitionExtractor.GetExpressionKeys(entityKeyExpression);
         }
@@ -33,11 +32,6 @@ namespace Paillave.EntityFrameworkCoreExtension.Core
                 if (expr == null) expr = equalityExpression;
                 else expr = Expression.AndAlso(expr, equalityExpression);
             }
-            if (_defaultDatasetCriteria != null)
-            {
-                expr = Expression.AndAlso(expr, Expression.Invoke(_defaultDatasetCriteria, _entityKeyExpressionStructure.ParameterExpression));
-            }
-
             var fExpr = Expression.Lambda<Func<TInLeft, TEntity, bool>>(expr, _inputKeyExpressionStructure.ParameterExpression, _entityKeyExpressionStructure.ParameterExpression);
 
             return fExpr.ApplyPartialLeft(value);

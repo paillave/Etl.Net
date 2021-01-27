@@ -16,29 +16,31 @@ namespace Paillave.Etl.Sftp
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
         protected override void Process(IFileValue fileValue, SftpAdapterConnectionParameters connectionParameters, SftpAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
-            var folder = Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
+            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
+            var stream = fileValue.GetContent();
+            byte[] fileContents;
+            stream.Position = 0;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                stream.CopyTo(ms);
+                fileContents = ms.ToArray();
+            }
+            ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => UploadSingleTime(connectionParameters, fileContents, Path.Combine(folder, fileValue.Name)));
+            push(fileValue);
+        }
+        private void UploadSingleTime(SftpAdapterConnectionParameters connectionParameters, byte[] fileContents, string filePath)
+        {
             var connectionInfo = connectionParameters.CreateConnectionInfo();
             using (var client = new SftpClient(connectionInfo))
             {
                 client.Connect();
-                var stream = fileValue.GetContent();
-                byte[] fileContents;
-                stream.Position = 0;
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    stream.CopyTo(ms);
-                    fileContents = ms.ToArray();
-                }
-
-                client.WriteAllBytes(Path.Combine(folder, fileValue.Name), fileContents);
+                client.WriteAllBytes(filePath, fileContents);
             }
-            push(fileValue);
         }
-
         protected override void Test(SftpAdapterConnectionParameters connectionParameters, SftpAdapterProcessorParameters processorParameters)
         {
             var fileName = Guid.NewGuid().ToString();
-            var folder = Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
+            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
             var connectionInfo = connectionParameters.CreateConnectionInfo();
             using (var client = new SftpClient(connectionInfo))
             {
