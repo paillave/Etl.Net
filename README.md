@@ -2,12 +2,12 @@
 
 > **:beers: This is May 2021, Etl.Net is now ready for release to be used in production environments but we are working on a basic documentation to finally publish this release with incredible new features after 2 years and half of efforts. Still a bit of patience!**
 
-|develop|master|
-|-|-|
-| ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/develop.svg) | ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/master.svg) |
-| [![Build status](https://ci.appveyor.com/api/projects/status/n0ok6xrd7d5s176b/branch/develop?svg=true)](https://ci.appveyor.com/project/paillave/etl-net-vyqub) | [![Build status](https://ci.appveyor.com/api/projects/status/sqjh6f6cwadxfoou/branch/master?svg=true)](https://ci.appveyor.com/project/paillave/etl-net) |
-| [![Better Code Hub status](https://bettercodehub.com/edge/badge/paillave/Etl.Net?branch=develop)](https://bettercodehub.com) |[![Better Code Hub status](https://bettercodehub.com/edge/badge/paillave/Etl.Net?branch=master)](https://bettercodehub.com) |
-| |[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fpaillave%2FEtl.Net.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fpaillave%2FEtl.Net?ref=badge_shield) |
+|V2|develop|master|
+|-|-|-|
+| ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/V2.svg) | ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/develop.svg) | ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/master.svg) |
+| | [![Build status](https://ci.appveyor.com/api/projects/status/n0ok6xrd7d5s176b/branch/develop?svg=true)](https://ci.appveyor.com/project/paillave/etl-net-vyqub) | [![Build status](https://ci.appveyor.com/api/projects/status/sqjh6f6cwadxfoou/branch/master?svg=true)](https://ci.appveyor.com/project/paillave/etl-net) |
+| | [![Better Code Hub status](https://bettercodehub.com/edge/badge/paillave/Etl.Net?branch=develop)](https://bettercodehub.com) |[![Better Code Hub status](https://bettercodehub.com/edge/badge/paillave/Etl.Net?branch=master)](https://bettercodehub.com) |
+| | |[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fpaillave%2FEtl.Net.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fpaillave%2FEtl.Net?ref=badge_shield) |
 
 Implementation of a multi platform reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but that is used in the same way than Linq.
 The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
