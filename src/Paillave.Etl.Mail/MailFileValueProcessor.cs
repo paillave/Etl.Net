@@ -20,7 +20,9 @@ namespace Paillave.Etl.Mail
             : base(code, name, connectionName, connectionParameters, processorParameters) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-        protected override void Process(IFileValue fileValue, MailAdapterConnectionParameters connectionParameters, MailAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        protected override void Process(
+            IFileValue fileValue, MailAdapterConnectionParameters connectionParameters, MailAdapterProcessorParameters processorParameters,
+            Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
             var portNumber = connectionParameters.PortNumber == 0 ? 25 : connectionParameters.PortNumber;
 

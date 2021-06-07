@@ -101,8 +101,10 @@ namespace Paillave.EntityFrameworkCoreExtension.EfSave
                     // contextSet.Update(entity);
                 }
             }
-            // else
-            //     contextSet.Add(entity);
+            if (this._context is MultiTenantDbContext mtCtx)
+            {
+                mtCtx.UpdateEntityForMultiTenancy(entity);
+            }
             contextSet.Update(entity);
             if (existingEntity == null)
             {

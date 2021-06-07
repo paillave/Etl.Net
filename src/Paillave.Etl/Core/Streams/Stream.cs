@@ -36,16 +36,23 @@ namespace Paillave.Etl.Core.Streams
         {
             this.SourceNode = sourceNode;
             var rowTracer = new RowTracer();
+            var executionContext = this.SourceNode.ExecutionContext;
 
-            this.Observable = observable;
+            this.Observable = observable.Filter(i => !executionContext.Terminating);
 
             if (!this.SourceNode.ExecutionContext.IsTracingContext)
             {
-                PushObservable.Merge<ITraceContent>(
-                    this.Observable.Map(rowTracer.ProcessRow),
-                    this.Observable.Count().Map(count => new CounterSummaryStreamTraceContent(count)),
-                    this.Observable.ExceptionsToObservable().Map(e => new UnhandledExceptionStreamTraceContent(e))
-                ).Do(i => this.SourceNode.ExecutionContext.AddTrace(i, sourceNode));
+                if (executionContext.UseDetailedTraces)
+                    PushObservable.Merge<ITraceContent>(
+                        this.Observable.Map(rowTracer.ProcessRow),
+                        this.Observable.Count().Map(count => new CounterSummaryStreamTraceContent(count)),
+                        this.Observable.ExceptionsToObservable().Map(e => new UnhandledExceptionStreamTraceContent(e))
+                    ).Do(i => this.SourceNode.ExecutionContext.AddTrace(i, sourceNode));
+                else
+                    PushObservable.Merge<ITraceContent>(
+                        this.Observable.Count().Map(count => new CounterSummaryStreamTraceContent(count)),
+                        this.Observable.ExceptionsToObservable().Map(e => new UnhandledExceptionStreamTraceContent(e))
+                    ).Do(i => this.SourceNode.ExecutionContext.AddTrace(i, sourceNode));
             }
         }
 

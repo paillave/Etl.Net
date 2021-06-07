@@ -15,5 +15,6 @@ namespace Paillave.Etl.EntityFrameworkCore
                         GetQuery = getQuery,
                         ConnectionKey = connectionKey
                     }), noParallelisation);
+        //TODO: make a version for correlated
     }
 }

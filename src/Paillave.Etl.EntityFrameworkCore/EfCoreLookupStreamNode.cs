@@ -38,7 +38,7 @@ namespace Paillave.Etl.EntityFrameworkCore
         public EfCoreLookupArgsBuilder<TIn, TEntity, TOut, TKey> Select<TOut>(Func<TIn, TEntity, TOut> resultSelector)
             => new EfCoreLookupArgsBuilder<TIn, TEntity, TOut, TKey>(this, resultSelector);
     }
-    public class EfCoreLookupArgsBuilder<TIn, TEntity, TOut, TKey> 
+    public class EfCoreLookupArgsBuilder<TIn, TEntity, TOut, TKey>
     {
         private readonly EfCoreLookupArgsBuilder<TIn, TEntity, TKey> _parent;
         private readonly Func<TIn, TEntity, TOut> _resultSelector;
@@ -205,7 +205,7 @@ namespace Paillave.Etl.EntityFrameworkCore
                             var ctx = args.KeyedConnection == null
                                 ? this.ExecutionContext.DependencyResolver.Resolve<DbContext>()
                                 : this.ExecutionContext.DependencyResolver.Resolve<DbContext>(args.KeyedConnection);
-                            return this.ExecutionContext.InvokeInDedicatedThread(ctx, () => new EfMatcher<TValue, TEntity, TKey>(new EfMatcherConfig<TValue, TEntity, TKey>
+                            return this.ExecutionContext.InvokeInDedicatedThreadAsync(ctx, () => new EfMatcher<TValue, TEntity, TKey>(new EfMatcherConfig<TValue, TEntity, TKey>
                             {
                                 Context = ctx,
                                 CreateIfNotFound = args.CreateIfNotFound,
@@ -214,13 +214,13 @@ namespace Paillave.Etl.EntityFrameworkCore
                                 MinCacheSize = args.CacheSize,
                                 GetFullDataset = args.GetFullDataset,
                                 Query = args.Query(new DbContextWrapper(ctx))
-                            }));
+                            })).Result;
                         });
                         TEntity entity = default;
                         var val = args.GetInputValue(elt);
                         if (!args.GetFullDataset)
                         {
-                            entity = this.ExecutionContext.InvokeInDedicatedThread(matcher.Context, () => matcher.GetMatch(val));
+                            entity = this.ExecutionContext.InvokeInDedicatedThreadAsync(matcher.Context, () => matcher.GetMatch(val)).Result;
                         }
                         else
                         {

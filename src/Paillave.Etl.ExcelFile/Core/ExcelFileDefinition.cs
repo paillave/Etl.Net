@@ -27,6 +27,7 @@ namespace Paillave.Etl.ExcelFile.Core
         private ExcelAddressBase _columnHeaderRange = null;
         private ExcelAddressBase _dataRange = null;
         private DataOrientation _datasetOrientation = DataOrientation.Vertical;
+        private bool _respectHeaderCase = false;
 
         public ExcelFileDefinition<T> WithHorizontalDataset()
         {
@@ -90,8 +91,8 @@ namespace Paillave.Etl.ExcelFile.Core
             {
                 var dico = _fieldDefinitions.Join(
                     columnNames.Select((ColumnName, Position) => new { ColumnName, Position }),
-                    i => i.ColumnName.Trim(),
-                    i => i.ColumnName.Trim(),
+                    i => _respectHeaderCase ? i?.ColumnName?.Trim() : i?.ColumnName?.ToLowerInvariant()?.Trim(),
+                    i => _respectHeaderCase ? i.ColumnName.Trim() : i.ColumnName.ToLowerInvariant().Trim(),
                     (fd, po) => new
                     {
                         Position = po.Position,
@@ -132,6 +133,11 @@ namespace Paillave.Etl.ExcelFile.Core
                         .Select(i => excelWorksheet.GetValue<string>(_columnHeaderRange.Start.Row, i));
             }
             return new string[] { };
+        }
+        public ExcelFileDefinition<T> RespectHeaderCase(bool respectHeaderCase = true)
+        {
+            this._respectHeaderCase = respectHeaderCase;
+            return this;
         }
         private IEnumerable<string> GetDefaultColumnNames()
         {

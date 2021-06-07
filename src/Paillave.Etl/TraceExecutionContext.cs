@@ -35,11 +35,16 @@ namespace Paillave.Etl
         public void AddNode<T>(INodeDescription nodeContext, IPushObservable<T> observable) => _tasksToWait.Add(observable.ToTaskAsync());
         public Task GetCompletionTask() => Task.WhenAll(_tasksToWait.ToArray()).ContinueWith(_ => _disposables.Dispose());
         public SimpleDependencyResolver ContextBag { get; }
+
+        public bool Terminating => false;
+
+        public bool UseDetailedTraces => false;
+
         public void AddDisposable(IDisposable disposable) => _disposables.Set(disposable);
         public void AddStreamToNodeLink(StreamToNodeLink link) { }
         public int NextTraceSequence() => 0;
-        public void InvokeInDedicatedThread(object threadOwner, Action action) => this._jobPoolDispatcher.Invoke(threadOwner, action);
-        public T InvokeInDedicatedThread<T>(object threadOwner, Func<T> action) => this._jobPoolDispatcher.Invoke(threadOwner, action);
+        public Task InvokeInDedicatedThreadAsync(object threadOwner, Action action) => this._jobPoolDispatcher.InvokeAsync(threadOwner, action);
+        public Task<T> InvokeInDedicatedThreadAsync<T>(object threadOwner, Func<T> action) => this._jobPoolDispatcher.InvokeAsync(threadOwner, action);
         public object GetOrCreateFromContextBag(string key, Func<object> creator) => throw new NotImplementedException();
         public T GetOrCreateFromContextBag<T>(Func<T> creator) => throw new NotImplementedException();
         public void AddTrace(ITraceContent traceContent, INodeContext sourceNode) { }

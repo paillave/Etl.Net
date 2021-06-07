@@ -57,7 +57,7 @@ namespace Paillave.Etl.Reactive.Core
         {
             lock (LockObject)
             {
-                if (this._isComplete) subscription.OnComplete();
+                if (this._isComplete && subscription.OnComplete != null) subscription.OnComplete();
                 this.Subscriptions.Add(subscription);
                 return new Unsubscriber(this, subscription);
             }
@@ -82,7 +82,8 @@ namespace Paillave.Etl.Reactive.Core
 #endif
                 this._isComplete = true;
                 foreach (var item in this.Subscriptions.ToList())
-                    item.OnComplete();
+                    if (item.OnComplete != null)
+                        item.OnComplete();
             }
         }
 
@@ -97,7 +98,8 @@ namespace Paillave.Etl.Reactive.Core
             {
                 if (!this._isComplete)
                     foreach (var item in this.Subscriptions.ToList())
-                        item.OnPushException(exception);
+                        if (item.OnPushException != null)
+                            item.OnPushException(exception);
             }
         }
 
@@ -126,11 +128,13 @@ namespace Paillave.Etl.Reactive.Core
                     {
                         try
                         {
-                            item.OnPushValue(value);
+                            if (item.OnPushValue != null)
+                                item.OnPushValue(value);
                         }
                         catch (Exception ex)
                         {
-                            item.OnPushException(ex);
+                            if (item.OnPushException != null)
+                                item.OnPushException(ex);
                         }
                     }
             }

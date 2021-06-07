@@ -10,7 +10,9 @@ namespace Paillave.Etl.Core
     public interface IExecutionContext : IInvoker
     {
         Guid ExecutionId { get; }
+        bool UseDetailedTraces { get; }
         string JobName { get; }
+        bool Terminating { get; }
         // int NextTraceSequence();
         void AddNode<T>(INodeDescription nodeContext, IPushObservable<T> observable);
         void AddDisposable(IDisposable disposable);
@@ -25,7 +27,7 @@ namespace Paillave.Etl.Core
     }
     public interface IInvoker
     {
-        void InvokeInDedicatedThread(object threadOwner, Action action);
-        T InvokeInDedicatedThread<T>(object threadOwner, Func<T> action);
+        Task InvokeInDedicatedThreadAsync(object threadOwner, Action action);
+        Task<T> InvokeInDedicatedThreadAsync<T>(object threadOwner, Func<T> action);
     }
 }

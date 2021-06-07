@@ -46,7 +46,7 @@ namespace Paillave.Etl.EntityFrameworkCore
                 .Do(i =>
                 {
                     var dbContext = this.ExecutionContext.DependencyResolver.Resolve<DbContext>();
-                    this.ExecutionContext.InvokeInDedicatedThread(dbContext, () => ProcessBatch(i.ToList(), dbContext, args.BulkLoadMode));
+                    this.ExecutionContext.InvokeInDedicatedThreadAsync(dbContext, () => ProcessBatch(i.ToList(), dbContext, args.BulkLoadMode)).Wait();
                 })
                 .FlatMap((i, ct) => PushObservable.FromEnumerable(i, ct));
             return base.CreateUnsortedStream(ret);

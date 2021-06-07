@@ -25,8 +25,9 @@ namespace Paillave.Etl
         public JobDefinitionStructure GetDefinitionStructure() => new JobDefinitionStructure(_streamToNodeLinks, _nodes, this.JobName);
         private readonly List<Task> _tasksToWait = new List<Task>();
         private readonly CollectionDisposableManager _disposables = new CollectionDisposableManager();
-        public JobExecutionContext(string jobName, Guid executionId, IPushSubject<TraceEvent> traceSubject, JobPoolDispatcher jobPoolDispatcher, IDependencyResolver resolver, CancellationTokenSource internalCancellationTokenSource, IFileValueConnectors connectors)
+        public JobExecutionContext(string jobName, Guid executionId, IPushSubject<TraceEvent> traceSubject, JobPoolDispatcher jobPoolDispatcher, IDependencyResolver resolver, CancellationTokenSource internalCancellationTokenSource, IFileValueConnectors connectors, bool useDetailedTraces)
         {
+            this.UseDetailedTraces = useDetailedTraces;
             this.ExecutionId = executionId;
             this.JobName = jobName;
             this._jobPoolDispatcher = jobPoolDispatcher;
@@ -42,10 +43,15 @@ namespace Paillave.Etl
         public Guid ExecutionId { get; }
         public string JobName { get; }
         public bool IsTracingContext => false;
+
+        public bool Terminating => EndOfProcessTraceEvent != null;
+
+        public bool UseDetailedTraces { get; }
+
         public void AddNode<T>(INodeDescription nodeContext, IPushObservable<T> observable)
         {
             _nodes.Add(nodeContext);
-            _tasksToWait.Add(observable.ToTaskAsync());
+            _tasksToWait.Add(observable.ToEndAsync());
         }
         public void ReleaseResources() => _disposables.Dispose();
         public Task GetCompletionTask() => Task.WhenAll(_tasksToWait.ToArray());
@@ -58,8 +64,9 @@ namespace Paillave.Etl
             lock (_traceSequenceLock)
                 return ++_currentTraceSequence;
         }
-        public void InvokeInDedicatedThread(object threadOwner, Action action) => this._jobPoolDispatcher.Invoke(threadOwner, action);
-        public T InvokeInDedicatedThread<T>(object threadOwner, Func<T> action) => this._jobPoolDispatcher.Invoke(threadOwner, action);
+
+        public Task InvokeInDedicatedThreadAsync(object threadOwner, Action action) => this._jobPoolDispatcher.InvokeAsync(threadOwner, action);
+        public Task<T> InvokeInDedicatedThreadAsync<T>(object threadOwner, Func<T> action) => this._jobPoolDispatcher.InvokeAsync(threadOwner, action);
         public void AddTrace(ITraceContent traceContent, INodeContext sourceNode)
         {
             var traceEvent = sourceNode.Tracer.CreateTraceEvent(traceContent, this.NextTraceSequence());

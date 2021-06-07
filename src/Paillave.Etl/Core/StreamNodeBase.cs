@@ -34,6 +34,14 @@ namespace Paillave.Etl.Core
         {
             // System.Diagnostics.StackFrame CallStack = new System.Diagnostics.StackFrame(3, true);
             // Console.WriteLine($"{name} at line {CallStack.GetFileName()}:{CallStack.GetFileLineNumber()}.{CallStack.GetFileColumnNumber()}");
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException(nameof(name), "The name of a node cannot be empty");
+            }
+            if (args == null)
+            {
+                throw new ArgumentNullException(nameof(args));
+            }
             this.Args = args;
             this.NodeName = name;
             this.ExecutionContext = this.GetExecutionContext(args);

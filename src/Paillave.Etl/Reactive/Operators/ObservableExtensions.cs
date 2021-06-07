@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,24 +16,62 @@ namespace Paillave.Etl.Reactive.Operators
         }
         public static Task<T> ToTaskAsync<T>(this IPushObservable<T> observable)
         {
-            var guid = Guid.NewGuid();
-            var mtxInit = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
-            var task = Task.Run(() =>
+            T latestValue = default(T);
+            var tcs = new TaskCompletionSource<T>();
+            var subscription = observable.Subscribe(v => latestValue = v, () => tcs.SetResult(latestValue));
+            return tcs.Task.ContinueWith(i =>
             {
-                T latestValue = default(T);
-                var mtx = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
-                using (observable.Subscribe(
-                    v => latestValue = v,
-                    () => mtx.Set()))
-                {
-                    mtxInit.Set(); //only once the stream is listened, the task can be returned. Otherwise, some events can be missed
-                    var tmp = guid;
-                    mtx.WaitOne();
-                    return latestValue;
-                }
+                subscription.Dispose();
+                return i.Result;
             });
-            mtxInit.WaitOne();
-            return task;
+
+
+            // var mtxInit = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
+            // var task = Task.Run(() =>
+            // {
+            //     T latestValue = default(T);
+            //     var mtx = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
+            //     using (observable.Subscribe(v => latestValue = v, () => mtx.Set()))
+            //     {
+            //         mtxInit.Set(); //only once the stream is listened, the task can be returned. Otherwise, some events can be missed
+            //         mtx.WaitOne();
+            //         return latestValue;
+            //     }
+            // });
+            // //TODO: THIS IS THE SOURCE OF DELAY WHEN BUILDING ETL
+            // mtxInit.WaitOne();
+            // return task;
+        }
+        public static Task ToEndAsync<T>(this IPushObservable<T> observable)
+        {
+            var tcs = new TaskCompletionSource<T>();
+            var subscription = observable.Subscribe(v => { }, () => tcs.SetResult(default));
+            return tcs.Task.ContinueWith(i => subscription.Dispose());
+
+
+
+            // Moni
+            // var tmp = Guid.NewGuid();
+            // // https://jonskeet.uk/csharp/threads/waithandles.html
+            // var mtxInit = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
+            // Stopwatch stopwatch0 = Stopwatch.StartNew();
+            // var task = Task.Run(() =>
+            // {
+            //     var mtx = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
+
+            //     Stopwatch stopwatch = Stopwatch.StartNew();
+            //     using (observable.Subscribe(null, () => mtx.Set()))
+            //     {
+            //         Console.WriteLine($"subs: {tmp}->{stopwatch.ElapsedMilliseconds}");
+            //         mtxInit.Set(); //only once the stream is listened, the task can be returned. Otherwise, some events can be missed
+            //         mtx.WaitOne();
+            //     }
+            // });
+            // //TODO: THIS IS THE SOURCE OF DELAY WHEN BUILDING ETL
+            // Console.WriteLine($"task0: {tmp}->{stopwatch0.ElapsedMilliseconds}");
+            // mtxInit.WaitOne();
+            // Console.WriteLine($"task1: {tmp}->{stopwatch0.ElapsedMilliseconds}");
+            // return task;
         }
         public static IPushObservable<T> DelayTillEndOfStream<T>(this IPushObservable<T> observable)
         {

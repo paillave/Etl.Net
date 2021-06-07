@@ -13,18 +13,25 @@ namespace Paillave.EntityFrameworkCoreExtension.Core
     public class MultiTenantDbContext : DbContext
     {
         private object _sync = new object();
+        private readonly string collation;
 
         public int TenantId { get; }
 
         // https://docs.microsoft.com/en-us/ef/core/providers/sqlite/limitations
         // https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/providers?tabs=dotnet-core-cli
 
-        public MultiTenantDbContext(DbContextOptions options, int tenantId) : base(options)
+        public MultiTenantDbContext(DbContextOptions options, int tenantId, string collation = null) : base(options)
         {
             this.TenantId = tenantId;
+            this.collation = collation;
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // For EFCore5
+            if (!string.IsNullOrWhiteSpace(collation))
+            {
+                // modelBuilder.UseCollation(collation);
+            }
             // https://github.com/aspnet/EntityFrameworkCore/blob/a9c6cb3548df771a57af97f0aafe55009464f8f9/src/EFCore/ModelBuilder.cs#L266
             ApplyConfigurationsFromAssembly(modelBuilder);
         }

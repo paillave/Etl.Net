@@ -41,7 +41,8 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
         }
 
         protected virtual string IndexStagingTableSql(List<IProperty> propertiesForPivot)
-            => $@"CREATE UNIQUE CLUSTERED INDEX IX_{this.Table}_temp_{this.StagingId}_{string.Join("_", propertiesForPivot.Select(p => p.GetColumnName()))} ON {SqlStagingTableName} ({string.Join(", ", propertiesForPivot.Select(i => $"[{i.GetColumnName()}]"))})";
+            => $@"CREATE UNIQUE CLUSTERED INDEX IX_{this.Table}_temp_{this.StagingId}_PivotKey ON {SqlStagingTableName} ({string.Join(", ", propertiesForPivot.Select(i => $"[{i.GetColumnName()}]"))})";
+            // => $@"CREATE UNIQUE CLUSTERED INDEX IX_{this.Table}_temp_{this.StagingId}_{string.Join("_", propertiesForPivot.Select(p => p.GetColumnName()))} ON {SqlStagingTableName} ({string.Join(", ", propertiesForPivot.Select(i => $"[{i.GetColumnName()}]"))})";
 
         protected virtual string CounterIndexStagingTableSql(List<IProperty> propertiesForPivot)
             => $@"CREATE UNIQUE INDEX IX_{this.Table}_temp_{this.StagingId}_{TempColumnNumOrderName} ON {SqlStagingTableName} ({TempColumnNumOrderName})";

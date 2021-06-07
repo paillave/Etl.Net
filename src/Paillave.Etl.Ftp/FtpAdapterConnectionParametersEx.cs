@@ -49,6 +49,7 @@ namespace Paillave.Etl.Ftp
                 client.EncryptionMode = FtpEncryptionMode.Explicit;
                 client.ValidateCertificate += (c, e) => e.Accept = certificateChecks.All(certificateCheck => certificateCheck(e.Certificate));
             }
+            // client.Connect();
             return client;
         }
     }

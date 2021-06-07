@@ -28,7 +28,7 @@ namespace Paillave.Etl.EntityFrameworkCore
             var dbContext = _args.ConnectionKey == null
                     ? resolver.Resolve<DbContext>()
                     : resolver.Resolve<DbContext>(_args.ConnectionKey);
-            var lsts = invoker.InvokeInDedicatedThread(dbContext, () => _args.GetQuery(new DbContextWrapper(dbContext), input).ToList());
+            var lsts = invoker.InvokeInDedicatedThreadAsync(dbContext, () => _args.GetQuery(new DbContextWrapper(dbContext), input).ToList()).Result;
             lsts.ForEach(push);
         }
     }

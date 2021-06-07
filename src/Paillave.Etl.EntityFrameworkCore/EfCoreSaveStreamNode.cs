@@ -221,7 +221,7 @@ namespace Paillave.Etl.EntityFrameworkCore
                     var dbContext = args.KeyedConnection == null
                         ? this.ExecutionContext.DependencyResolver.Resolve<DbContext>()
                         : this.ExecutionContext.DependencyResolver.Resolve<DbContext>(args.KeyedConnection);
-                    this.ExecutionContext.InvokeInDedicatedThread(dbContext, () => ProcessBatch(i, dbContext, args.BulkLoadMode));
+                    this.ExecutionContext.InvokeInDedicatedThreadAsync(dbContext, () => ProcessBatch(i, dbContext, args.BulkLoadMode)).Wait();
                 })
                 .FlatMap((i, ct) => PushObservable.FromEnumerable(i, ct))
                 .Map(i => args.GetOutput(i.Input, i.Entity));

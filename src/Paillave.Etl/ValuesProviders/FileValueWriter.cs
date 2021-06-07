@@ -9,7 +9,7 @@ namespace Paillave.Etl.ValuesProviders
     {
         private readonly StreamWriter _streamWriter;
         public FileValueWriter(TMetadata metadata, string name, Encoding encoding = null, int bufferSize = -1)
-            => (_streamWriter, Name) = (new StreamWriter(new MemoryStream(), encoding, bufferSize, true), name);
+            => (_streamWriter, Name, Metadata) = (new StreamWriter(new MemoryStream(), encoding, bufferSize, true), name, metadata);
 
         public void Write(string format, params object[] arg) => _streamWriter.Write(format, arg);
         public void Write(string format, object arg0, object arg1, object arg2) => _streamWriter.Write(format, arg0, arg1, arg2);

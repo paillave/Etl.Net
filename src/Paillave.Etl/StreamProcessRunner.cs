@@ -43,6 +43,7 @@ namespace Paillave.Etl
     }
     public class ExecutionOptions<TConfig>
     {
+        public bool UseDetailedTraces { get; set; } = false;
         public Action<IStream<TraceEvent>, ISingleStream<TConfig>> TraceProcessDefinition { get; set; } = null;
         public IDependencyResolver Resolver { get; set; } = null;
         public IDependencyResolver TraceResolver { get; set; } = null;
@@ -99,7 +100,7 @@ namespace Paillave.Etl
             IPushSubject<TConfig> startupSubject = new PushSubject<TConfig>(combinedCancellationToken);
             var jobPoolDispatcher = new JobPoolDispatcher();
             IExecutionContext traceExecutionContext = new TraceExecutionContext(startSynchronizer, executionId, jobPoolDispatcher, options?.TraceResolver ?? options?.Resolver ?? new DummyDependencyResolver(), CancellationToken.None, connectors);
-            JobExecutionContext jobExecutionContext = new JobExecutionContext(this.JobName, executionId, traceSubject, jobPoolDispatcher, options?.Resolver ?? new DummyDependencyResolver(), internalCancellationTokenSource, connectors);
+            JobExecutionContext jobExecutionContext = new JobExecutionContext(this.JobName, executionId, traceSubject, jobPoolDispatcher, options?.Resolver ?? new DummyDependencyResolver(), internalCancellationTokenSource, connectors, options?.UseDetailedTraces ?? false);
             if (options?.CancellationToken != null)
             {
                 options.CancellationToken.Register(() => traceSubject.PushValue(new TraceEventFactory(jobExecutionContext).CreateTraceEvent(new CancellationTraceContent(CancellationCause.CancelledFromOutside), jobExecutionContext.NextTraceSequence())));

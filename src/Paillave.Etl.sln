@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Zip", "Paillav
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.SqlServer", "Paillave.Etl.SqlServer\Paillave.Etl.SqlServer.csproj", "{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Dropbox", "Paillave.Etl.Dropbox\Paillave.Etl.Dropbox.csproj", "{0BE639A1-6CE1-4BDF-A26B-BEB130F44C11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -237,6 +239,18 @@ Global
 		{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}.Release|x64.Build.0 = Release|Any CPU
 		{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}.Release|x86.ActiveCfg = Release|Any CPU
 		{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}.Release|x86.Build.0 = Release|Any CPU
+		{0BE639A1-6CE1-4BDF-A26B-BEB130F44C11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BE639A1-6CE1-4BDF-A26B-BEB130F44C11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BE639A1-6CE1-4BDF-A26B-BEB130F44C11}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0BE639A1-6CE1-4BDF-A26B-BEB130F44C11}.Debug|x64.Build.0 = Debug|Any CPU
+		{0BE639A1-6CE1-4BDF-A26B-BEB130F44C11}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0BE639A1-6CE1-4BDF-A26B-BEB130F44C11}.Debug|x86.Build.0 = Debug|Any CPU
+		{0BE639A1-6CE1-4BDF-A26B-BEB130F44C11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BE639A1-6CE1-4BDF-A26B-BEB130F44C11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BE639A1-6CE1-4BDF-A26B-BEB130F44C11}.Release|x64.ActiveCfg = Release|Any CPU
+		{0BE639A1-6CE1-4BDF-A26B-BEB130F44C11}.Release|x64.Build.0 = Release|Any CPU
+		{0BE639A1-6CE1-4BDF-A26B-BEB130F44C11}.Release|x86.ActiveCfg = Release|Any CPU
+		{0BE639A1-6CE1-4BDF-A26B-BEB130F44C11}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

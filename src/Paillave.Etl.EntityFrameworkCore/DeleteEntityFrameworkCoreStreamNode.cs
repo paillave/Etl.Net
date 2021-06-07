@@ -110,10 +110,10 @@ namespace Paillave.Etl.EntityFrameworkCore
                         ? this.ExecutionContext.DependencyResolver.Resolve<DbContext>()
                         : this.ExecutionContext.DependencyResolver.Resolve<DbContext>(args.KeyedConnection);
                     TValue val = args.GetValue(i);
-                    this.ExecutionContext.InvokeInDedicatedThread(ctx, () =>
+                    this.ExecutionContext.InvokeInDedicatedThreadAsync(ctx, () =>
                     {
                         ctx.Set<TEntity>().DeleteWhereAsync(args.Match.ApplyPartialLeft<TValue, TEntity, bool>(val), args.InputStream.Observable.CancellationToken).Wait();
-                    });
+                    }).Wait();
                     return i;
                 });
             return base.CreateUnsortedStream(matchingS);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,11 +37,9 @@ namespace Paillave.Etl.Core
                 _mtxWaitNewProcess.WaitOne();
             }
         }
-
-        public void Execute(Action action)
+        public Task ExecuteAsync(Action action)
         {
-            var mtxInit = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
-            Exception exception = null;
+            var tsc = new TaskCompletionSource<object>();
             lock (_lock)
             {
                 _actionQueue.Enqueue(() =>
@@ -48,50 +47,37 @@ namespace Paillave.Etl.Core
                     try
                     {
                         action();
+                        tsc.SetResult(new object());
                     }
                     catch (Exception ex)
                     {
-                        exception = ex;
+                        tsc.SetException(ex);
                     }
-                    mtxInit.Set();
                 });
+                _mtxWaitNewProcess.Set();
             }
-            _mtxWaitNewProcess.Set();
-            mtxInit.WaitOne();
-            if (exception != null)
-            {
-                throw exception;
-            }
+            return tsc.Task;
         }
-        public T Execute<T>(Func<T> action)
+        public Task<T> ExecuteAsync<T>(Func<T> action)
         {
-            var mtxInit = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
-            T ret = default;
-            Exception exception = null;
+            var tsc = new TaskCompletionSource<T>();
             lock (_lock)
             {
                 _actionQueue.Enqueue(() =>
                 {
                     try
                     {
-                        ret = action();
+                        tsc.SetResult(action());
                     }
                     catch (Exception ex)
                     {
-                        exception = ex;
+                        tsc.SetException(ex);
                     }
-                    mtxInit.Set();
                 });
+                _mtxWaitNewProcess.Set();
             }
-            _mtxWaitNewProcess.Set();
-            mtxInit.WaitOne();
-            if (exception != null)
-            {
-                throw exception;
-            }
-            return ret;
+            return tsc.Task;
         }
-
         #region IDisposable Support
         private bool disposedValue = false;
 
