@@ -1,4 +1,5 @@
 # Etl.Net [![Join the chat at https://gitter.im/Etl-Net/Lobby](https://badges.gitter.im/Etl-Net/Lobby.svg)](https://gitter.im/Etl-Net/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fpaillave%2FEtl.Net.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fpaillave%2FEtl.Net?ref=badge_shield)
 
 > **:beers: This is May 2021, Etl.Net is now ready for release to be used in production environments but we are working on a basic documentation to finally publish this release with incredible new features after 2 years and half of efforts. Still a bit of patience!**
 
@@ -385,3 +386,7 @@ namespace ComplexQuickstart
     }
 }
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fpaillave%2FEtl.Net.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fpaillave%2FEtl.Net?ref=badge_large)
