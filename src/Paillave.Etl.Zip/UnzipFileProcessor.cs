@@ -22,7 +22,7 @@ namespace Paillave.Etl.Zip
     {
         public string ParentFileName { get; set; }
         public IFileValueMetadata ParentFileMetadata { get; set; }
-        public Dictionary<string, Destination> Destinations { get; set; }
+        public Dictionary<string, List<Destination>> Destinations { get; set; }
     }
 
     public class UnzipFileProcessor : FileValueProcessorBase<object, UnzipFileProcessorParams>

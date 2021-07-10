@@ -15,6 +15,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
         protected string StagingId { get; } = Guid.NewGuid().ToString().Substring(0, 8);
         protected string Schema { get; }
         protected IEntityType BaseType { get; }
+        protected StoreObjectIdentifier StoreObject { get; }
         protected IDictionary<string, MemberInfo> PropertyGetters { get; }
         /// <summary>
         /// any column except pivot, computed
@@ -31,8 +32,9 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
         protected List<IProperty> PropertiesToBulkLoad { get; }
 
         protected DbContext Context { get; }
-        public UpdateContextQueryBase(DbContext context, string schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType, IDictionary<string, MemberInfo> propertyGetters)
+        public UpdateContextQueryBase(DbContext context, string schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType, IDictionary<string, MemberInfo> propertyGetters, StoreObjectIdentifier storeObject)
         {
+            this.StoreObject = storeObject;
             this.PropertiesToUpdate = propertiesToUpdate;
             this.PropertiesForPivot = propertiesForPivot;
             this.PropertiesToBulkLoad = propertiesToBulkLoad;

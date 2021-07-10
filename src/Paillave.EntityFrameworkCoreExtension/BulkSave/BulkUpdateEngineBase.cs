@@ -16,6 +16,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
         private List<IProperty> _propertiesToBulkLoad; // any column except computed that is not pivot
         private IDictionary<string, MemberInfo> _propertyGetters;
         private IEntityType _baseType;
+        protected StoreObjectIdentifier StoreObject { get; }
 
         private string _schema;
         private string _table;
@@ -57,8 +58,8 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
         {
             List<IProperty> computedProperties;
             this._context = context;
-
             var entityType = context.Model.FindEntityType(typeof(T));
+            this.StoreObject = StoreObjectIdentifier.Create(entityType, StoreObjectType.Table).GetValueOrDefault();
             if (entityType == null)
                 throw new InvalidOperationException("DbContext does not contain EntitySet for Type: " + typeof(T).Name);
             _schema = entityType.GetSchema();
@@ -66,7 +67,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
 
             List<IEntityType> entityTypes = GetAllRelatedEntityTypes(entityType).Distinct().ToList();
             _baseType = entityTypes.FirstOrDefault(i => i.BaseType == null);
-            var allProperties = entityTypes.SelectMany(dt => dt.GetProperties()).Distinct(new LambdaEqualityComparer<IProperty, string>(i => i.GetColumnName())).ToList();
+            var allProperties = entityTypes.SelectMany(dt => dt.GetProperties()).Distinct(new LambdaEqualityComparer<IProperty, string>(i => i.GetColumnName(this.StoreObject))).ToList();
             computedProperties = allProperties.Where(i => (i.ValueGenerated & ValueGenerated.OnAddOrUpdate) != ValueGenerated.Never).ToList();
 
             var valuesSetters = SettersExtractor.GetGetters(updateValues);
@@ -74,10 +75,9 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
             if (typeof(IMultiTenantEntity).IsAssignableFrom(typeof(T)))
             {
                 var tenantIdProp = allProperties.First(i => i.Name == nameof(IMultiTenantEntity.TenantId));
-                if (!keySetters.ContainsKey(tenantIdProp.GetColumnName()))
+                if (!keySetters.ContainsKey(tenantIdProp.GetColumnName(this.StoreObject)))
                 {
-                    // keySetters[tenantIdProp.GetColumnName()] = tenantIdProp.FieldInfo;
-                    keySetters[tenantIdProp.GetColumnName()] = tenantIdProp.PropertyInfo;
+                    keySetters[tenantIdProp.GetColumnName(this.StoreObject)] = tenantIdProp.PropertyInfo;
                 }
             }
             _propertyGetters = valuesSetters.Union(keySetters).ToDictionary(i => i.Key, i => i.Value);

@@ -16,13 +16,13 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
         private string SqlTargetTable => $"[{this.Schema}].[{this.Table}]";
         private string SqlStagingTableName => $"[{this.Schema}].[{this.Table}_temp_{this.StagingId}]";
 
-        public SqlServerUpdateContextQuery(DbContext context, string schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType, IDictionary<string, MemberInfo> propertiesGetter)
-            : base(context, schema ?? "dbo", table, propertiesToUpdate, propertiesForPivot, propertiesToBulkLoad, baseType, propertiesGetter)
+        public SqlServerUpdateContextQuery(DbContext context, string schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType, IDictionary<string, MemberInfo> propertiesGetter, StoreObjectIdentifier storeObject)
+            : base(context, schema ?? "dbo", table, propertiesToUpdate, propertiesForPivot, propertiesToBulkLoad, baseType, propertiesGetter, storeObject)
         {
         }
 
         protected virtual string CreateStagingTableSql()
-            => $@"SELECT TOP 0 { string.Join(",", PropertiesToBulkLoad.Select(i => $"T.{i.GetColumnName()}")) }
+            => $@"SELECT TOP 0 { string.Join(",", PropertiesToBulkLoad.Select(i => $"T.{i.GetColumnName(base.StoreObject)}")) }
                     INTO {SqlStagingTableName} FROM {SqlTargetTable} AS T 
                     LEFT JOIN {SqlTargetTable} AS Source ON 1 = 0;";
 
@@ -35,7 +35,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
             sqlBulkCopy.DestinationTableName = SqlStagingTableName;
             sqlBulkCopy.BatchSize = sources.Count();
             foreach (var element in PropertiesToBulkLoad)
-                sqlBulkCopy.ColumnMappings.Add(base.PropertyGetters[element.Name].Name, element.GetColumnName());
+                sqlBulkCopy.ColumnMappings.Add(base.PropertyGetters[element.Name].Name, element.GetColumnName(base.StoreObject));
 
 
             var dataReader = new ObjectDataReader(sources, new ObjectDataReaderConfig
@@ -52,7 +52,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
             => this.Context.Database.ExecuteSqlRaw(this.IndexStagingTableSql());
 
         protected virtual string IndexStagingTableSql()
-            => $@"CREATE UNIQUE CLUSTERED INDEX IX_{this.Table}_temp_{this.StagingId} ON {SqlStagingTableName} ({string.Join(", ", this.PropertiesForPivot.Select(i => i.GetColumnName()))})";
+            => $@"CREATE UNIQUE CLUSTERED INDEX IX_{this.Table}_temp_{this.StagingId} ON {SqlStagingTableName} ({string.Join(", ", this.PropertiesForPivot.Select(i => i.GetColumnName(base.StoreObject)))})";
 
         public override void DeleteStagingTable()
             => this.Context.Database.ExecuteSqlRaw(this.DeleteStagingTableSql());
@@ -73,14 +73,14 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
 
         private string CreateEqualityConditionSql(string aliasLeft, string aliasRight, IProperty property)
         {
-            string regularEquality = $"{aliasLeft}.{property.GetColumnName()} = {aliasRight}.{property.GetColumnName()}";
+            string regularEquality = $"{aliasLeft}.{property.GetColumnName(base.StoreObject)} = {aliasRight}.{property.GetColumnName(base.StoreObject)}";
             if (property.IsColumnNullable())
-                return $"({aliasLeft}.{property.GetColumnName()} is null and {regularEquality})";
+                return $"({aliasLeft}.{property.GetColumnName(base.StoreObject)} is null and {regularEquality})";
             else
                 return regularEquality;
         }
         private string CreateSetValueSql(string aliasRight, IProperty property)
-            => $"{property.GetColumnName()} = {aliasRight}.{property.GetColumnName()}";
+            => $"{property.GetColumnName(base.StoreObject)} = {aliasRight}.{property.GetColumnName(base.StoreObject)}";
 
         protected virtual string MergeFromStagingSql()
         {

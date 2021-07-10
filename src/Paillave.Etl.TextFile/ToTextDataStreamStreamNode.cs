@@ -18,7 +18,7 @@ namespace Paillave.Etl.TextFile
         public FlatFileDefinition<TRow> Mapping { get; set; }
         public string FileName { get; set; }
         public Encoding Encoding { get; set; }
-        public Dictionary<string, Destination> Destinations { get; set; }
+        public Dictionary<string, List<Destination>> Destinations { get; set; }
         public object Metadata { get; set; }
     }
     /// <summary>
@@ -52,7 +52,7 @@ namespace Paillave.Etl.TextFile
     public class FlatFileValueMetadata : FileValueMetadataBase, IFileValueWithDestinationMetadata
     {
         public Dictionary<string, string> Map { get; set; }
-        public Dictionary<string, Destination> Destinations { get; set; }
+        public Dictionary<string, List<Destination>> Destinations { get; set; }
         public object ExtraMetadata { get; set; }
     }
     public class ToTextDataStreamFileArgs<TIn, TStream>

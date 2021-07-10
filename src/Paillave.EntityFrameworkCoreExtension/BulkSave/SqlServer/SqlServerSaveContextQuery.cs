@@ -21,8 +21,8 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
         private string SqlStagingTableName => $"[{this.Schema}].[{this.Table}_temp_{this.StagingId}]";
         private string SqlOutputStagingTableName => $"[{this.Schema}].[{this.Table}_tempoutput_{this.StagingId}]";
 
-        public SqlServerSaveContextQuery(DbContext Context, string schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<List<IProperty>> propertiesForPivotSet, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes, CancellationToken cancellationToken)
-            : base(Context, schema ?? "dbo", table, propertiesToInsert, propertiesToUpdate, propertiesForPivotSet, propertiesToBulkLoad, entityTypes, cancellationToken)
+        public SqlServerSaveContextQuery(DbContext Context, string schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<List<IProperty>> propertiesForPivotSet, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes, CancellationToken cancellationToken, StoreObjectIdentifier storeObject)
+            : base(Context, schema ?? "dbo", table, propertiesToInsert, propertiesToUpdate, propertiesForPivotSet, propertiesToBulkLoad, entityTypes, cancellationToken, storeObject)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
             => this.Context.Database.ExecuteSqlRaw(this.CreateStagingTableSql());
 
         protected virtual string CreateStagingTableSql()
-            => $@"SELECT TOP 0 { string.Join(",", PropertiesToBulkLoad.Select(i => $"T.[{i.GetColumnName()}]")) }, 0 as [{TempColumnNumOrderName}]
+            => $@"SELECT TOP 0 { string.Join(",", PropertiesToBulkLoad.Select(i => $"T.[{i.GetColumnName(base.StoreObject)}]")) }, 0 as [{TempColumnNumOrderName}]
                     INTO {SqlStagingTableName} FROM {SqlTargetTable} AS T 
                     LEFT JOIN {SqlTargetTable} AS Source ON 1 = 0 option(recompile);";
 
@@ -41,8 +41,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
         }
 
         protected virtual string IndexStagingTableSql(List<IProperty> propertiesForPivot)
-            => $@"CREATE UNIQUE CLUSTERED INDEX IX_{this.Table}_temp_{this.StagingId}_PivotKey ON {SqlStagingTableName} ({string.Join(", ", propertiesForPivot.Select(i => $"[{i.GetColumnName()}]"))})";
-            // => $@"CREATE UNIQUE CLUSTERED INDEX IX_{this.Table}_temp_{this.StagingId}_{string.Join("_", propertiesForPivot.Select(p => p.GetColumnName()))} ON {SqlStagingTableName} ({string.Join(", ", propertiesForPivot.Select(i => $"[{i.GetColumnName()}]"))})";
+            => $@"CREATE UNIQUE CLUSTERED INDEX IX_{this.Table}_temp_{this.StagingId}_PivotKey ON {SqlStagingTableName} ({string.Join(", ", propertiesForPivot.Select(i => $"[{i.GetColumnName(base.StoreObject)}]"))})";
 
         protected virtual string CounterIndexStagingTableSql(List<IProperty> propertiesForPivot)
             => $@"CREATE UNIQUE INDEX IX_{this.Table}_temp_{this.StagingId}_{TempColumnNumOrderName} ON {SqlStagingTableName} ({TempColumnNumOrderName})";
@@ -79,7 +78,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
             sqlBulkCopy.DestinationTableName = SqlStagingTableName;
             sqlBulkCopy.BatchSize = entities.Count();
             foreach (var element in PropertiesToBulkLoad)
-                sqlBulkCopy.ColumnMappings.Add(element.Name, element.GetColumnName());
+                sqlBulkCopy.ColumnMappings.Add(element.Name, element.GetColumnName(base.StoreObject));
             sqlBulkCopy.ColumnMappings.Add(TempColumnNumOrderName, TempColumnNumOrderName);
 
 
@@ -112,15 +111,11 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
 
         protected virtual string GetOutputStagingSql()
             => $@"select * from {SqlOutputStagingTableName} order by [{TempColumnNumOrderName}] option(recompile)"; //the sp_execute is to prevent EF core to wrap the query into another subquery that will involve a different sorting depending in the situtation (not too proud of this solution, but I really didn't find better)
-                                                                                                  // => $@"sp_executesql N'set nocount on; select * from {SqlOutputStagingTableName} order by {TempColumnNumOrderName}';"; //the sp_execute is to prevent EF core to wrap the query into another subquery that will involve a different sorting depending in the situtation (not too proud of this solution, but I really didn't find better)
+                                                                                                                    // => $@"sp_executesql N'set nocount on; select * from {SqlOutputStagingTableName} order by {TempColumnNumOrderName}';"; //the sp_execute is to prevent EF core to wrap the query into another subquery that will involve a different sorting depending in the situtation (not too proud of this solution, but I really didn't find better)
 
 
         protected virtual string GetOutputStagingForComputedColumnsSql()
             => $@"select T.* from {SqlStagingTableName} as S left join {SqlTargetTable} as T on {string.Join(" OR ", this.PropertiesForPivotSet.Select(propertiesForPivot => string.Join(" AND ", propertiesForPivot.Select(i => CreateEqualityConditionSql("T", "S", i)))))} order by S.{TempColumnNumOrderName} option(recompile)";
-        // => $@"select T.* from {SqlStagingTableName} as S left join {SqlTargetTable} as T on {string.Join(" AND ", PropertiesForPivot.Select(i => CreateEqualityConditionSql("T", "S", i)))} order by S.{TempColumnNumOrderName}";
-
-
-        // => $@"sp_executesql N'set nocount on; select T.* from {SqlStagingTableName} as S left join {SqlTargetTable} as T on {string.Join(" AND ", PropertiesForPivot.Select(i => CreateEqualityConditionSql("T", "S", i)))} order by S.{TempColumnNumOrderName}';";
 
         public override void MergeFromStaging(bool doNotUpdateIfExists = false)
             => this.Context.Database.ExecuteSqlRaw(this.MergeFromStagingSql(doNotUpdateIfExists));
@@ -130,10 +125,9 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
 
         private string CreateEqualityConditionSql(string aliasLeft, string aliasRight, IProperty property)
         {
-            string regularEquality = $"{aliasLeft}.[{property.GetColumnName()}] = {aliasRight}.[{property.GetColumnName()}]";
+            string regularEquality = $"{aliasLeft}.[{property.GetColumnName(base.StoreObject)}] = {aliasRight}.[{property.GetColumnName(base.StoreObject)}]";
             if (property.IsColumnNullable())
-                return $"{aliasRight}.[{property.GetColumnName()}] is not null and {regularEquality}";
-            // return $"(({aliasLeft}.[{property.GetColumnName()}] is null and {aliasRight}.[{property.GetColumnName()}] is null) or ({aliasLeft}.[{property.GetColumnName()}] is not null and {aliasRight}.[{property.GetColumnName()}] is not null and {regularEquality}))";
+                return $"{aliasRight}.[{property.GetColumnName(base.StoreObject)}] is not null and {regularEquality}";
             else
                 return regularEquality;
         }
@@ -152,12 +146,12 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
             if (doNotUpdateIfExists)
             {
                 return $@"WHEN MATCHED THEN 
-                    UPDATE SET {string.Join(", ", PropertiesToUpdate.Select(i => i.GetColumnName()).Select(columnName => $"T.[{columnName}] = T.[{columnName}]").ToArray())}";
+                    UPDATE SET {string.Join(", ", PropertiesToUpdate.Select(i => i.GetColumnName(base.StoreObject)).Select(columnName => $"T.[{columnName}] = T.[{columnName}]").ToArray())}";
             }
             return $@"WHEN MATCHED THEN 
                     UPDATE SET {string.Join(", ", PropertiesToUpdate.Select(i =>
             {
-                var columnName = i.GetColumnName();
+                var columnName = i.GetColumnName(base.StoreObject);
                 if (pivotColumns.Contains(columnName) && i.IsColumnNullable())
                     return $"T.[{columnName}] = ISNULL(T.[{columnName}], S.[{columnName}])";
                 else
@@ -166,10 +160,10 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
         }
         protected virtual string MergeFromStagingSql(bool doNotUpdateIfExists = false)
         {
-            var pivotColumns = PropertiesForPivotSet.SelectMany(p => p.Select(i => i.GetColumnName())).ToHashSet();
+            var pivotColumns = PropertiesForPivotSet.SelectMany(p => p.Select(i => i.GetColumnName(base.StoreObject))).ToHashSet();
             string whenNotMatchedStatement = $@"WHEN NOT MATCHED BY TARGET THEN 
-                    INSERT ({string.Join(", ", PropertiesToInsert.Select(i => $"[{i.GetColumnName()}]"))})
-                    VALUES ({string.Join(", ", PropertiesToInsert.Select(i => $"S.[{i.GetColumnName()}]"))})";
+                    INSERT ({string.Join(", ", PropertiesToInsert.Select(i => $"[{i.GetColumnName(base.StoreObject)}]"))})
+                    VALUES ({string.Join(", ", PropertiesToInsert.Select(i => $"S.[{i.GetColumnName(base.StoreObject)}]"))})";
             string whenMatchedStatement = this.GetWhenMatchedMergeStatement(pivotColumns, doNotUpdateIfExists);
             string pivotCriteria = this.BuildPivotCriteria();
             return $@"MERGE {SqlTargetTable} AS T 
@@ -183,8 +177,8 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
         protected virtual string InsertFromStagingSql()
         {
             string whenNotMatchedStatement = $@"WHEN NOT MATCHED BY TARGET THEN 
-                    INSERT ({string.Join(", ", PropertiesToInsert.Select(i => $"[{i.GetColumnName()}]"))})
-                    VALUES ({string.Join(", ", PropertiesToInsert.Select(i => $"S.[{i.GetColumnName()}]"))})";
+                    INSERT ({string.Join(", ", PropertiesToInsert.Select(i => $"[{i.GetColumnName(base.StoreObject)}]"))})
+                    VALUES ({string.Join(", ", PropertiesToInsert.Select(i => $"S.[{i.GetColumnName(base.StoreObject)}]"))})";
             return $@"MERGE {SqlTargetTable} AS T 
                     USING {SqlStagingTableName} AS S 
                     ON 1=0

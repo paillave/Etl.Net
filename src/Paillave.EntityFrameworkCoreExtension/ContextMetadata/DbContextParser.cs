@@ -30,11 +30,11 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
                 FromName = entityType.ClrType.Name,
                 FromSchema = entityType.GetSchema(),
                 From = $"{entityType.GetSchema()}.{entityType.ClrType.Name}",
-                ToName = navigation.GetTargetType().ClrType.Name,
-                ToSchema = navigation.GetTargetType().GetSchema(),
-                To = $"{navigation.GetTargetType().GetSchema()}.{navigation.GetTargetType().ClrType.Name}",
+                ToName = navigation.TargetEntityType.ClrType.Name,
+                ToSchema = navigation.TargetEntityType.GetSchema(),
+                To = $"{navigation.TargetEntityType.GetSchema()}.{navigation.TargetEntityType.ClrType.Name}",
                 Name = navigation.Name,
-                Type = navigation.IsCollection() ? LinkType.Aggregates : LinkType.References,
+                Type = navigation.IsCollection ? LinkType.Aggregates : LinkType.References,
                 Required = navigation.ForeignKey.IsRequired
             };
         }
@@ -53,21 +53,22 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         }
         public static EntitySummary CreateEntitySummary(IEntityType entityType)
         {
+            var storeObject = StoreObjectIdentifier.Create(entityType, StoreObjectType.Table).GetValueOrDefault();
             return new EntitySummary
             {
                 IsAbstract = entityType.IsAbstract(),
-                IsView = entityType.IsIgnoredByMigrations(),
+                IsView = entityType.IsTableExcludedFromMigrations(),
                 Name = entityType.ClrType.Name,
                 Schema = entityType.GetSchema(),
-                Properties = entityType.GetDeclaredProperties().Where(i => !i.IsShadowProperty()).Select(CreatePropertySummary).ToList(),
+                Properties = entityType.GetDeclaredProperties().Where(i => !i.IsShadowProperty()).Select(i => CreatePropertySummary(i, storeObject)).ToList(),
                 Comment = entityType.GetComment()
             };
         }
-        public static PropertySummary CreatePropertySummary(IProperty property)
+        public static PropertySummary CreatePropertySummary(IProperty property, StoreObjectIdentifier storeObject)
         {
             return new PropertySummary
             {
-                Name = property.GetColumnName(),
+                Name = property.GetColumnName(storeObject),
                 Type = GetTypeLabel(property.ClrType),
                 IsForeignKey = property.IsForeignKey(),
                 IsKey = property.IsKey(),
@@ -134,11 +135,11 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
                 From = $"{entityType.GetSchema()}.{entityType.ClrType.Name}",
                 FromSchema = entityType.GetSchema(),
                 FromName = entityType.ClrType.Name,
-                To = $"{navigation.GetTargetType().GetSchema()}.{navigation.GetTargetType().ClrType.Name}",
-                ToSchema = navigation.GetTargetType().GetSchema(),
-                ToName = navigation.GetTargetType().ClrType.Name,
+                To = $"{navigation.TargetEntityType.GetSchema()}.{navigation.TargetEntityType.ClrType.Name}",
+                ToSchema = navigation.TargetEntityType.GetSchema(),
+                ToName = navigation.TargetEntityType.ClrType.Name,
                 Name = navigation.Name,
-                Type = navigation.IsCollection() ? LinkType.Aggregates : LinkType.References,
+                Type = navigation.IsCollection ? LinkType.Aggregates : LinkType.References,
                 Required = navigation.ForeignKey.IsRequired
             };
         }
@@ -157,21 +158,22 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         }
         public static EntitySummary CreateEntitySummary(IEntityType entityType)
         {
+            var storeObject = StoreObjectIdentifier.Create(entityType, StoreObjectType.Table).GetValueOrDefault();
             return new EntitySummary
             {
                 IsAbstract = entityType.IsAbstract(),
-                IsView = entityType.IsIgnoredByMigrations(),
+                IsView = entityType.IsTableExcludedFromMigrations(),
                 Name = entityType.ClrType.Name,
                 Schema = entityType.GetSchema(),
-                Properties = entityType.GetDeclaredProperties().Where(i => !i.IsShadowProperty()).Select(CreatePropertySummary).ToList(),
+                Properties = entityType.GetDeclaredProperties().Where(i => !i.IsShadowProperty()).Select(i => CreatePropertySummary(i, storeObject)).ToList(),
                 Comment = entityType.GetComment()
             };
         }
-        public static PropertySummary CreatePropertySummary(IProperty property)
+        public static PropertySummary CreatePropertySummary(IProperty property, StoreObjectIdentifier storeObject)
         {
             return new PropertySummary
             {
-                Name = property.GetColumnName(),
+                Name = property.GetColumnName(storeObject),
                 Type = GetTypeLabel(property.ClrType),
                 IsForeignKey = property.IsForeignKey(),
                 IsKey = property.IsKey(),

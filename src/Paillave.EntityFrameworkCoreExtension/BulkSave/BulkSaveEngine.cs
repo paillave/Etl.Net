@@ -19,7 +19,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
         protected override SaveContextQueryBase<T> CreateSaveContextQueryInstance(DbContext context, string schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<List<IProperty>> propertiesForPivotSet, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes, CancellationToken cancellationToken)
         {
             if (context.Database.IsSqlServer())
-                return new SqlServerSaveContextQuery<T>(context, schema, table, propertiesToInsert, propertiesToUpdate, propertiesForPivotSet, propertiesToBulkLoad, entityTypes, cancellationToken);
+                return new SqlServerSaveContextQuery<T>(context, schema, table, propertiesToInsert, propertiesToUpdate, propertiesForPivotSet, propertiesToBulkLoad, entityTypes, cancellationToken, base.StoreObject);
             // if (context.Database.IsNpgsql())
             //     return new PostgresSaveContextQuery<T>(context, schema, table, propertiesToInsert, propertiesToUpdate, propertiesForPivotSet, propertiesToBulkLoad, entityTypes);
             throw new Exception("unsupported provider");

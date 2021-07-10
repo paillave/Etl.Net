@@ -15,6 +15,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
     public abstract class SaveContextQueryBase<T> where T : class
     {
         protected string Table { get; }
+        protected StoreObjectIdentifier StoreObject { get; }
         protected string StagingId { get; } = Guid.NewGuid().ToString().Substring(0, 8);
         protected string Schema { get; }
         protected List<IEntityType> EntityTypes { get; }
@@ -40,8 +41,9 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
         protected CancellationToken CancellationToken { get; }
 
         protected DbContext Context { get; }
-        public SaveContextQueryBase(DbContext context, string schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<List<IProperty>> propertiesForPivotSet, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes, CancellationToken cancellationToken)
+        public SaveContextQueryBase(DbContext context, string schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<List<IProperty>> propertiesForPivotSet, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes, CancellationToken cancellationToken, StoreObjectIdentifier storeObject)
         {
+            this.StoreObject = storeObject;
             this.CancellationToken = cancellationToken;
             this.PropertiesToInsert = propertiesToInsert;
             this.PropertiesToUpdate = propertiesToUpdate;

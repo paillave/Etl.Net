@@ -21,7 +21,7 @@ extensions for Etl.Net to quickly read very large XML files with low memory foot
   </ItemGroup>
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
   </ItemGroup>

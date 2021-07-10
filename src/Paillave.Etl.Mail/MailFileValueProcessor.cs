@@ -10,8 +10,6 @@ using System.Net.Mail;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
-// using HtmlAgilityPack;
-
 namespace Paillave.Etl.Mail
 {
     public class MailFileValueProcessor : FileValueProcessorBase<MailAdapterConnectionParameters, MailAdapterProcessorParameters>
@@ -20,52 +18,84 @@ namespace Paillave.Etl.Mail
             : base(code, name, connectionName, connectionParameters, processorParameters) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
+        private IEnumerable<(Destination, JObject)> GetDestinations(MailAdapterProcessorParameters processorParameters, IFileValueMetadata metadata)
+        {
+            if (processorParameters.ToFromMetadata)
+            {
+                IFileValueWithDestinationMetadata destinationMetadata = metadata as IFileValueWithDestinationMetadata;
+                var tos = processorParameters.To.Split(";")
+                    .SelectMany(to => (destinationMetadata?.Destinations ?? new Dictionary<string, List<Destination>>(StringComparer.InvariantCultureIgnoreCase))
+                        .TryGetValue(to, out var destinations)
+                            ? destinations ?? new List<Destination>()
+                            : new List<Destination>())
+                    .ToList();
+                foreach (var to in tos)
+                {
+                    JObject metadataJson = metadata == null ? new JObject() : JObject.FromObject(metadata);
+                    metadataJson["Destination"] = JObject.FromObject(to);
+                    yield return (to, metadataJson);
+                }
+            }
+            else
+            {
+                var tos = processorParameters.To.Split(";");
+                var toNames = (processorParameters.ToDisplayName ?? "").Split(";");
+                JObject metadataJson = metadata == null ? new JObject() : JObject.FromObject(metadata);
+                for (int i = 0; i < tos.Length; i++)
+                {
+                    var mailAddress = FormatText(tos[i], metadataJson);
+                    if (toNames.Length == tos.Length)
+                    {
+                        yield return (new Destination
+                        {
+                            Email = mailAddress,
+                            DisplayName = FormatText(toNames[i], metadataJson)
+                        }, metadataJson);
+                    }
+                    else
+                    {
+                        yield return (new Destination
+                        {
+                            Email = mailAddress
+                        }, metadataJson);
+                    }
+                }
+            }
+
+        }
         protected override void Process(
             IFileValue fileValue, MailAdapterConnectionParameters connectionParameters, MailAdapterProcessorParameters processorParameters,
             Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
             var portNumber = connectionParameters.PortNumber == 0 ? 25 : connectionParameters.PortNumber;
 
-
-            IFileValueWithDestinationMetadata destinationMetadata = fileValue.Metadata as IFileValueWithDestinationMetadata;
-            JObject metadataJson = fileValue.Metadata == null ? new JObject() : JObject.FromObject(fileValue.Metadata);
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress(FormatText(processorParameters.From, metadataJson), FormatText(processorParameters.FromDisplayName, metadataJson));
-            var mailAddresses = processorParameters.To.Split(";");
-            var displayNames = (processorParameters.ToDisplayName ?? "").Split(";");
-
-            for (int i = 0; i < mailAddresses.Length; i++)
+            var destinations = GetDestinations(processorParameters, fileValue.Metadata).ToList();
+            foreach (var (destination, metadataJson) in destinations)
             {
-                var mailAddress = FormatText(mailAddresses[i], metadataJson);
-                if (displayNames.Length == mailAddresses.Length)
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.To.Add(new MailAddress(destination.Email, destination.DisplayName));
+                mailMessage.From = new MailAddress(FormatText(processorParameters.From, metadataJson), FormatText(processorParameters.FromDisplayName, metadataJson));
+                mailMessage.Subject = FormatText(processorParameters.Subject, metadataJson);
+                var stream = fileValue.GetContent();
+                var fileExtension = Path.GetExtension(fileValue.Name);
+                if (string.IsNullOrWhiteSpace(processorParameters.Body)
+                    && (string.Equals(fileExtension, ".html", StringComparison.InvariantCultureIgnoreCase)
+                        || string.Equals(fileExtension, ".htm", StringComparison.InvariantCultureIgnoreCase)))
                 {
-                    mailMessage.To.Add(new MailAddress(mailAddress, FormatText(displayNames[i], metadataJson)));
+                    mailMessage.IsBodyHtml = true;
+                    var content = new StreamReader(stream).ReadToEnd();
+                    mailMessage.Body = content;
+                    if (string.IsNullOrWhiteSpace(mailMessage.Subject))
+                        mailMessage.Subject = Path.GetFileNameWithoutExtension(fileValue.Name);
                 }
                 else
                 {
-                    mailMessage.To.Add(new MailAddress(mailAddress));
+                    mailMessage.Body = FormatText(processorParameters.Body, metadataJson);
+                    Attachment attachment = new Attachment(stream, fileValue.Name, MimeTypes.GetMimeType(fileValue.Name));
+                    mailMessage.Attachments.Add(attachment);
                 }
+                ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => SendSingleFile(connectionParameters, mailMessage, portNumber));
             }
-            mailMessage.Subject = FormatText(processorParameters.Subject, metadataJson);
-            var stream = fileValue.GetContent();
-            var fileExtension = Path.GetExtension(fileValue.Name);
-            if (string.IsNullOrWhiteSpace(processorParameters.Body)
-                && (string.Equals(fileExtension, ".html", StringComparison.InvariantCultureIgnoreCase)
-                    || string.Equals(fileExtension, ".htm", StringComparison.InvariantCultureIgnoreCase)))
-            {
-                mailMessage.IsBodyHtml = true;
-                var content = new StreamReader(stream).ReadToEnd();
-                mailMessage.Body = content;
-                if (string.IsNullOrWhiteSpace(mailMessage.Subject))
-                    mailMessage.Subject = Path.GetFileNameWithoutExtension(fileValue.Name);
-            }
-            else
-            {
-                mailMessage.Body = FormatText(processorParameters.Body, metadataJson);
-                Attachment attachment = new Attachment(stream, fileValue.Name, MimeTypes.GetMimeType(fileValue.Name));
-                mailMessage.Attachments.Add(attachment);
-            }
-            ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => SendSingleFile(connectionParameters, mailMessage, portNumber));
             push(fileValue);
         }
         private void SendSingleFile(MailAdapterConnectionParameters connectionParameters, MailMessage mailMessage, int portNumber)
@@ -103,7 +133,6 @@ namespace Paillave.Etl.Mail
             var subObject = metadata[property];
             return GetMetadataValue(subObject, propertyPath);
         }
-
         protected override void Test(MailAdapterConnectionParameters connectionParameters, MailAdapterProcessorParameters processorParameters)
         {
             var portNumber = connectionParameters.PortNumber == 0 ? 25 : connectionParameters.PortNumber;

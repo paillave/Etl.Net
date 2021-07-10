@@ -18,7 +18,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
         protected override UpdateContextQueryBase<TSource> CreateUpdateContextQueryInstance(DbContext context, string schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType, IDictionary<string, MemberInfo> propertiesGetter)
         {
             if (context.Database.IsSqlServer())
-                return new SqlServerUpdateContextQuery<TSource>(context, schema, table, propertiesToUpdate, propertiesForPivot, propertiesToBulkLoad, baseType, propertiesGetter);
+                return new SqlServerUpdateContextQuery<TSource>(context, schema, table, propertiesToUpdate, propertiesForPivot, propertiesToBulkLoad, baseType, propertiesGetter, base.StoreObject);
             // if (context.Database.IsNpgsql())
             //     return new PostgresUpdateContextQuery<TSource>(context, schema, table, propertiesToUpdate, propertiesForPivot, propertiesToBulkLoad, baseType, propertiesGetter);
             throw new Exception("unsupported provider");

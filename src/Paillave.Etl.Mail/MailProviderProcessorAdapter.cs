@@ -16,6 +16,7 @@ namespace Paillave.Etl.Mail
     }
     public class MailAdapterProcessorParameters
     {
+        public bool ToFromMetadata { get; set; }
         [Required]
         public string From { get; set; }
         public string FromDisplayName { get; set; }

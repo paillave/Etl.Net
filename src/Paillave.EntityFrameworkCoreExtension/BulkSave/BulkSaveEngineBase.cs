@@ -23,6 +23,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
         private List<IProperty> _propertiesToBulkLoad; // any column except computed that is not pivot
         private List<IEntityType> _entityTypes;
 
+        protected StoreObjectIdentifier StoreObject { get; }
         private string _schema;
         private string _table;
         private bool disposedValue;
@@ -64,7 +65,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
         {
             var pivotKeyNames = KeyDefinitionExtractor.GetKeys(pivotKey).Select(i => i.Name).ToList();
             if (tenantIdProp != null)
-                pivotKeyNames.Add(tenantIdProp.GetColumnName());
+                pivotKeyNames.Add(tenantIdProp.GetColumnName(StoreObject));
             return allProperties.Where(i => pivotKeyNames.Contains(i.Name)).ToList();
         }
         public BulkSaveEngineBase(DbContext context, params Expression<Func<T, object>>[] pivotKeys)
@@ -75,13 +76,14 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
             this._context = context;
 
             var entityType = context.Model.FindEntityType(typeof(T));
+            StoreObject = StoreObjectIdentifier.Create(entityType, StoreObjectType.Table).GetValueOrDefault();
             if (entityType == null)
                 throw new InvalidOperationException("DbContext does not contain EntitySet for Type: " + typeof(T).Name);
             _schema = entityType.GetSchema();
             _table = entityType.GetTableName();
 
             _entityTypes = GetAllRelatedEntityTypes(entityType).Distinct().ToList();
-            var allProperties = _entityTypes.SelectMany(dt => dt.GetProperties()).Distinct(new LambdaEqualityComparer<IProperty, string>(i => i.GetColumnName())).ToList();
+            var allProperties = _entityTypes.SelectMany(dt => dt.GetProperties()).Distinct(new LambdaEqualityComparer<IProperty, string>(i => i.GetColumnName(StoreObject))).ToList();
 
             if (pivotKeys == null || pivotKeys.Length == 0)
             {
@@ -120,7 +122,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
             _propertiesToGetAfterSetInTarget = computedProperties
                 //.Union(new[] { identityProperty })
                 .Union(defaultValuesProperties)
-                .Distinct(new LambdaEqualityComparer<IProperty, string>(i => i.GetColumnName()))
+                .Distinct(new LambdaEqualityComparer<IProperty, string>(i => i.GetColumnName(StoreObject)))
                 .ToList();
         }
         public void Save(IList<T> entities, CancellationToken cancellationToken, bool doNotUpdateIfExists = false, bool insertOnly = false)
@@ -222,7 +224,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
         }
         private object GetDataReaderValue(DataRow dataRow, Dictionary<string, DataColumn> dataColumns, IProperty property)
         {
-            var columnName = property.GetColumnName();
+            var columnName = property.GetColumnName(StoreObject);
             var dataColumn = dataColumns[columnName.ToLower()];
             var dataRowValue = dataRow.ItemArray[dataColumn.Ordinal];
             var converter = property.GetTypeMapping().Converter;
