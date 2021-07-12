@@ -5,6 +5,10 @@
             "name": "Sources"
         },
         {
+            "path": "docs",
+            "name": "Docs"
+        },
+        {
             "path": ".",
             "name": "Root"
         },
@@ -16,6 +20,9 @@
 		"telemetry.enableCrashReporter": false,
 		"telemetry.enableTelemetry": false,
 		"gitlens.advanced.telemetry.enabled": false,
-		"dotnet.enableTelemetry": false,
+        "dotnet.enableTelemetry": false,
+        "files.associations": {
+            "*.mdx": "markdown"
+        },
     }
 }

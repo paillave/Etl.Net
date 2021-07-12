@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.TextFile\Paillave.Etl.TextFile.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.Autofac\Paillave.Etl.Autofac.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.EntityFrameworkCore\Paillave.Etl.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.FromConfigurationConnectors\Paillave.Etl.FromConfigurationConnectors.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.FileSystem\Paillave.Etl.FileSystem.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.Ftp\Paillave.Etl.Ftp.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.Sftp\Paillave.Etl.Sftp.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.Mail\Paillave.Etl.Mail.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.Zip\Paillave.Etl.Zip.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.ExecutionToolkit\Paillave.Etl.ExecutionToolkit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.7">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.7" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+</Project>
