@@ -1,5 +1,6 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const remarkMermaid = require('remark-mermaid');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
@@ -101,6 +102,7 @@ module.exports = {
           // Please change this to your repo.
           editUrl:
             'https://paillave.github.io/Etl.Net/edit/master/website/',
+            remarkPlugins: [remarkMermaid],
         },
         blog: {
           showReadingTime: true,

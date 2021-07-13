@@ -75,12 +75,11 @@ namespace Paillave.Etl.SqlServer.ValuesProviders
         {
             var sqlConnection = _args.ConnectionName == null ? resolver.Resolve<SqlConnection>() : resolver.Resolve<SqlConnection>(_args.ConnectionName);
             var command = new SqlCommand(_args.SqlQuery, sqlConnection);
-            Regex getParamRegex = new Regex(@"(?<param>@\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            var allMatches = getParamRegex.Matches(_args.SqlQuery);
-            foreach (var match in allMatches)
+            Regex getParamRegex = new Regex(@"@(?<param>\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            var allMatches = getParamRegex.Matches(_args.SqlQuery).ToList().Select(match => match.Groups["param"].Value).Distinct().ToList();
+            foreach (var parameterName in allMatches)
             {
-                string parameterName = match.ToString();
-                command.Parameters.Add(new SqlParameter($"{parameterName}", _inPropertyInfos[parameterName].GetValue(input)));
+                command.Parameters.Add(new SqlParameter($"@{parameterName}", _inPropertyInfos[parameterName].GetValue(input)));
             }
 
             IList<SqlResultFieldDefinition> fieldDefinitions = _args.Mapping != null ? _args.Mapping.GetDefinitions() : null;

@@ -1,9 +1,22 @@
 {
-   // Use IntelliSense to find out which attributes exist for C# debugging
-   // Use hover for the description of the existing attributes
-   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
-   "version": "0.2.0",
-   "configurations": [
+    // Use IntelliSense to find out which attributes exist for C# debugging
+    // Use hover for the description of the existing attributes
+    // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "SimpleTutorial",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/Paillave.Etl.SimpleTutorial/bin/Debug/net5.0/Paillave.Etl.SimpleTutorial.dll",
+            "args": [
+                "/home/stephane/Documents/TestInputFile"
+            ],
+            "cwd": "${workspaceFolder}/Paillave.Etl.SimpleTutorial",
+            "stopAtEntry": false,
+            "console": "externalTerminal"
+        },
         {
             "name": ".NET Core Launch (console)",
             "type": "coreclr",

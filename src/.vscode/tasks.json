@@ -11,7 +11,7 @@
             },
             "args": [
                 "build",
-                "${workspaceFolder}/Paillave.Etl.Samples/Paillave.Etl.Samples.csproj",
+                "${workspaceFolder}/Paillave.Etl.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

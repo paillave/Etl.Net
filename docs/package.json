@@ -23,9 +23,11 @@
     "clsx": "^1.1.1",
     "file-loader": "^6.2.0",
     "mermaid": "^8.11.0",
+    "mermaid.cli": "^0.3.6",
     "prism-react-renderer": "^1.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "remark-mermaid": "^0.2.0",
     "url-loader": "^4.1.1"
   },
   "browserslist": {
