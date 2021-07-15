@@ -83,7 +83,7 @@ contextStream
 
 ## Ensure there are no duplicates based on the email
 
-The `distinct` operator, in its common usage will ignore any recurring input based on the given key (the key can be an anonymous type with several properties).
+The `Distinct` operator, in its common usage will ignore any recurring input based on the given key (the key can be an anonymous type with several properties).
 
 ```cs {12}
 contextStream
@@ -103,7 +103,7 @@ contextStream
 
 ## Upsert each occurrence in the target table
 
-By using `Paillave.Etl.SqlServer.Extensions`, save every occurrence in the database, and get updates from so that every object is exactly like it is in the table after the upsert.
+By using `Paillave.Etl.SqlServer`, save every occurrence in the database, and get updates from so that every object is exactly like it is in the table after the upsert.
 
 ```cs {13-14}
 contextStream

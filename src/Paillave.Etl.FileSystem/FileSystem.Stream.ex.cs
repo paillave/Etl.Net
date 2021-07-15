@@ -62,6 +62,14 @@ namespace Paillave.Etl.FileSystem
                 Stream = stream
             }).Output;
         }
+        public static IStream<IFileValue> WriteToFile(this IStream<IFileValue> stream, string name, Func<IFileValue, string> getOutputFilePath)
+        {
+            return new WriteToFileStreamNode(name, new WriteToFileArgs
+            {
+                Stream = stream,
+                GetOutputFilePath = getOutputFilePath
+            }).Output;
+        }
         public static IStream<IFileValue> WriteToFile<TParam>(this IStream<IFileValue> stream, string name, ISingleStream<TParam> outputFilePathStream, Func<TParam, string> getOutputFilePath)
         {
             return new WriteToFileStreamNode<TParam>(name, new WriteToFileArgs<TParam>

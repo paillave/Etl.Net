@@ -180,6 +180,15 @@ The diagram will be shown in the web browser:
 
 ![actualExecutionPlan](/img/tutorial/actualExecutionPlan.png)
 
+## Get the error if it occurs
+
+When an error occurred during the execution process (`ExecutionStatus.Failed` return by method `ExecuteAsync`) the property `ExecutionStatus.ErrorTraceEvent` informs where and what happened:
+
+```cs
+if (res.Failed)
+    Console.Write($"{res.ErrorTraceEvent.NodeName}({res.ErrorTraceEvent.NodeTypeName}):{res.ErrorTraceEvent.Content.Message}");
+```
+
 ## Trace everything that goes through nodes
 
 Before triggering the execution of the ETL process listen the event `DebugNodeStream` of the process runner.
@@ -198,3 +207,174 @@ e.NodeName == "parse file"
 ```
 
 ![trackValues](/img/tutorial/trackValues.png)
+
+## Catch main events to save them in a log file
+
+We will track each end of nodes, raised errors and save it in a log file in the current directory.
+
+For this, we must make an ETL process dedicated to handle traces:
+
+```cs
+private static void DefineTraceProcess(IStream<TraceEvent> traceStream, ISingleStream<string> contentStream)
+{
+    traceStream
+        .Where("keep only summary of node and errors", i => i.Content is CounterSummaryStreamTraceContent || i.Content is UnhandledExceptionStreamTraceContent)
+        .Select("create log entry", i => new
+        {
+            DateTime = DateTime.Now,
+            Type = i.Content switch
+            {
+                CounterSummaryStreamTraceContent => "EndOfNode",
+                UnhandledExceptionStreamTraceContent => "Error",
+                _ => "Unknown"
+            },
+            Message = i.Content switch
+            {
+                CounterSummaryStreamTraceContent counterSummary => $"{i.NodeName}: {counterSummary.Counter}",
+                UnhandledExceptionStreamTraceContent unhandledException => $"{i.NodeName}({unhandledException.Type}): [{unhandledException.Level.ToString()}] {unhandledException.Message}",
+                _ => "Unknown"
+            }
+        })
+        .ToTextFileValue("write log file", "log.csv", FlatFileDefinition.Create(i => new
+        {
+            DateTime = i.ToDateColumn("datetime", "yyyy-MM-dd hh:mm:ss:ffff"),
+            Type = i.ToColumn("event type"),
+            Message = i.ToColumn("details"),
+        }).IsColumnSeparated(','))
+        .WriteToFile("save log file", i => i.Name);
+}
+```
+
+Then we must provide this specific ETL process when executing the process by setting it in `ExecutionOptions`.
+
+```cs
+var executionOptions = new ExecutionOptions<string>
+{
+    Resolver = new SimpleDependencyResolver().Register(cnx),
+    TraceProcessDefinition = DefineTraceProcess
+};
+```
+
+The output file will contain the following:
+
+```csv
+datetime,event type,details
+2021-07-15 12:26:39:7094,EndOfNode,-ProcessRunner-: 1
+2021-07-15 12:26:39:7425,EndOfNode,list all required files: 2
+2021-07-15 12:26:39:8204,EndOfNode,extract files from zip: 9
+2021-07-15 12:26:40:2900,EndOfNode,parse file: 45
+2021-07-15 12:26:40:2900,EndOfNode,exclude duplicates: 45
+2021-07-15 12:26:40:2901,EndOfNode,save in DB: 45
+2021-07-15 12:26:40:2901,EndOfNode,display ids on console: 45
+```
+
+:::note
+
+If, for some reasons, actual values that are being issued by some nodes are needed to be accessed, `UseDetailedTraces` must be flagged in options that are transmitted to `ExecuteAsync`. To catch the content, `RowProcessStreamTraceContent` must be included in the trace ETL process.
+
+`UseDetailedTraces`  is set to `false` by default for performance purposes.
+
+```cs
+var executionOptions = new ExecutionOptions<string>
+{
+    Resolver = new SimpleDependencyResolver().Register(cnx),
+    TraceProcessDefinition = DefineTraceProcess,
+    UseDetailedTraces = true
+};
+```
+
+:::
+
+## Full source
+
+This piece of program is a typical process to make a reliable upsert of the content of every zipped csv file in a folder, with process summary and error logging... Nearly ready to deploy in production! :champagne: :beer: :cocktail: :clinking_glasses: :beers:
+
+```cs
+using System;
+using System.Threading.Tasks;
+using Paillave.Etl.Core;
+using Paillave.Etl.FileSystem;
+using Paillave.Etl.Zip;
+using Paillave.Etl.TextFile;
+using Paillave.Etl.SqlServer;
+using System.Data.SqlClient;
+
+namespace SimpleTutorial
+{
+    class Program
+    {
+        static async Task Main(string[] args)
+        {
+            var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
+            processRunner.DebugNodeStream += (sender, e) => { };
+            using (var cnx = new SqlConnection(@"Server=localhost,1433;Database=SimpleTutorial;user=SimpleTutorial;password=TestEtl.TestEtl;MultipleActiveResultSets=True"))
+            {
+                cnx.Open();
+                var executionOptions = new ExecutionOptions<string>
+                {
+                    Resolver = new SimpleDependencyResolver().Register(cnx),
+                    TraceProcessDefinition = DefineTraceProcess
+                };
+                var res = await processRunner.ExecuteAsync(args[0], executionOptions);
+                Console.Write(res.Failed ? "Failed" : "Succeeded");
+                if (res.Failed)
+                    Console.Write($"{res.ErrorTraceEvent.NodeName}({res.ErrorTraceEvent.NodeTypeName}):{res.ErrorTraceEvent.Content.Message}");
+            }
+        }
+        private class Person
+        {
+            public int Id { get; set; }
+            public string Email { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public DateTime DateOfBirth { get; set; }
+            public int? Reputation { get; set; }
+        }
+        private static void DefineProcess(ISingleStream<string> contextStream)
+        {
+            contextStream
+                .CrossApplyFolderFiles("list all required files", "*.zip", true)
+                .CrossApplyZipFiles("extract files from zip", "*.csv")
+                .CrossApplyTextFile("parse file", FlatFileDefinition.Create(i => new Person
+                {
+                    Email = i.ToColumn("email"),
+                    FirstName = i.ToColumn("first name"),
+                    LastName = i.ToColumn("last name"),
+                    DateOfBirth = i.ToDateColumn("date of birth", "yyyy-MM-dd"),
+                    Reputation = i.ToNumberColumn<int?>("reputation", ".")
+                }).IsColumnSeparated(','))
+                .Distinct("exclude duplicates", i => i.Email)
+                .SqlServerSave("save in DB", "dbo.Person", p => p.Email, p => p.Id)
+                .Do("display ids on console", i => Console.WriteLine(i.Id));
+        }
+        private static void DefineTraceProcess(IStream<TraceEvent> traceStream, ISingleStream<string> contentStream)
+        {
+            traceStream
+                .Where("keep only summary of node and errors", i => i.Content is CounterSummaryStreamTraceContent || i.Content is UnhandledExceptionStreamTraceContent)
+                .Select("create log entry", i => new
+                {
+                    DateTime = DateTime.Now,
+                    Type = i.Content switch
+                    {
+                        CounterSummaryStreamTraceContent => "EndOfNode",
+                        UnhandledExceptionStreamTraceContent => "Error",
+                        _ => "Unknown"
+                    },
+                    Message = i.Content switch
+                    {
+                        CounterSummaryStreamTraceContent counterSummary => $"{i.NodeName}: {counterSummary.Counter}",
+                        UnhandledExceptionStreamTraceContent unhandledException => $"{i.NodeName}({i.NodeTypeName}): [{unhandledException.Level.ToString()}] {unhandledException.Message}",
+                        _ => "Unknown"
+                    }
+                })
+                .ToTextFileValue("write log file", "log.csv", FlatFileDefinition.Create(i => new
+                {
+                    DateTime = i.ToDateColumn("datetime", "yyyy-MM-dd hh:mm:ss:ffff"),
+                    Type = i.ToColumn("event type"),
+                    Message = i.ToColumn("details"),
+                }).IsColumnSeparated(','))
+                .WriteToFile("save log file", i => i.Name);
+        }
+    }
+}
+```

@@ -1,0 +1,8 @@
+datetime,event type,details
+2021-07-15 12:26:39:7094,EndOfNode,-ProcessRunner-: 1
+2021-07-15 12:26:39:7425,EndOfNode,list all required files: 2
+2021-07-15 12:26:39:8204,EndOfNode,extract files from zip: 9
+2021-07-15 12:26:40:2900,EndOfNode,parse file: 45
+2021-07-15 12:26:40:2900,EndOfNode,exclude duplicates: 45
+2021-07-15 12:26:40:2901,EndOfNode,save in DB: 45
+2021-07-15 12:26:40:2901,EndOfNode,display ids on console: 45

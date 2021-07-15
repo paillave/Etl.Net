@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Core
 {

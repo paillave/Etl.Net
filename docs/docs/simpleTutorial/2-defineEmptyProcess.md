@@ -31,7 +31,7 @@ var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
 
 Once we have the runner, we can trigger it by providing the value of the single initial event.
 
-```cs {13}
+```cs
 var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
 var res = await processRunner.ExecuteAsync(args[0]);
 ```

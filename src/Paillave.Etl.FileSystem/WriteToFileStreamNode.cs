@@ -32,10 +32,41 @@ namespace Paillave.Etl.FileSystem
             {
                 var l = fileValue.GetContent();
                 l.Seek(0, SeekOrigin.Begin);
-                using (var fileStream = File.OpenWrite(r))
+                using (var fileStream = File.Open(r, FileMode.Create))
                     l.CopyTo(fileStream);
                 return fileValue;
             }, true);
+            return base.CreateUnsortedStream(outputObservable);
+        }
+    }
+    public class WriteToFileArgs
+    {
+        public IStream<IFileValue> Stream { get; set; }
+        public Func<IFileValue, string> GetOutputFilePath { get; set; }
+    }
+    /// <summary>
+    /// Write a data Stream into a file
+    /// </summary>
+    /// <typeparam name="TParams"></typeparam>
+    public class WriteToFileStreamNode : StreamNodeBase<IFileValue, IStream<IFileValue>, WriteToFileArgs>
+    {
+        public WriteToFileStreamNode(string name, WriteToFileArgs args) : base(name, args)
+        {
+        }
+
+        public override ProcessImpact PerformanceImpact => throw new NotImplementedException();
+
+        public override ProcessImpact MemoryFootPrint => throw new NotImplementedException();
+
+        protected override IStream<IFileValue> CreateOutputStream(WriteToFileArgs args)
+        {
+            var outputObservable = args.Stream.Observable.Do<IFileValue>(fileValue =>
+            {
+                var l = fileValue.GetContent();
+                l.Seek(0, SeekOrigin.Begin);
+                using (var fileStream = File.Open(args.GetOutputFilePath(fileValue), FileMode.Create))
+                    l.CopyTo(fileStream);
+            });
             return base.CreateUnsortedStream(outputObservable);
         }
     }
