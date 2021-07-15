@@ -1,10 +1,6 @@
 using System;
-using System.Collections.Generic;
-using Paillave.Etl.Core;
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.StreamNodes;
 
-namespace Paillave.Etl.Extensions
+namespace Paillave.Etl.Core
 {
     public static class SelectWithContextBagEx
     {

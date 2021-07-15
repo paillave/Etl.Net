@@ -1,6 +1,6 @@
 using System.IO;
 using Renci.SshNet;
-using Paillave.Etl.ValuesProviders;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Sftp
 {

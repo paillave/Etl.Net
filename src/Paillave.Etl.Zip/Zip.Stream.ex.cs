@@ -1,7 +1,4 @@
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.Extensions;
-using Paillave.Etl.ValuesProviders;
-using System;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Zip
 {

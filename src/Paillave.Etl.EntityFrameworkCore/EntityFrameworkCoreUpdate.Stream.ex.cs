@@ -1,4 +1,4 @@
-﻿using Paillave.Etl.Core.Streams;
+﻿using Paillave.Etl.Core;
 using System;
 using System.Linq.Expressions;
 

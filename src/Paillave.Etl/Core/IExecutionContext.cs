@@ -1,5 +1,4 @@
-﻿using Paillave.Etl.Core.TraceContents;
-using Paillave.Etl.Connector;
+﻿using Paillave.Etl.Core;
 using Paillave.Etl.Reactive.Core;
 using System;
 using System.Threading.Tasks;

@@ -1,11 +1,9 @@
 ﻿using Paillave.Etl.Core;
-using Paillave.Etl.Core.Streams;
 using Paillave.Etl.Reactive.Operators;
 using Paillave.Etl.ExcelFile.Core;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Paillave.Etl.ValuesProviders;
 
 namespace Paillave.Etl.ExcelFile
 {

@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace Paillave.Etl.SqlServer.ValuesProviders
+namespace Paillave.Etl.SqlServer
 {
     public class SqlCommandValueProviderArgsBuilder<TIn>
     {

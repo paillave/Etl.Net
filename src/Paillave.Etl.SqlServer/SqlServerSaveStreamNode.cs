@@ -1,6 +1,4 @@
 ﻿using Paillave.Etl.Core;
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.Reactive.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,10 +6,9 @@ using Paillave.Etl.Reactive.Operators;
 using System.Linq;
 using System.Data.SqlClient;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Linq.Expressions;
 
-namespace Paillave.Etl.SqlServer.StreamNodes
+namespace Paillave.Etl.SqlServer
 {
     public class SqlServerSaveCommandArgs<TIn, TStream>
         where TIn : class

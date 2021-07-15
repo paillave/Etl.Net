@@ -1,9 +1,7 @@
-﻿using Paillave.Etl.Core.Streams;
-using Paillave.Etl.Reactive.Core;
+﻿using Paillave.Etl.Reactive.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Paillave.Etl.Core

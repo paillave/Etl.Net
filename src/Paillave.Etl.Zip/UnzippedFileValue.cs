@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
-using Paillave.Etl.ValuesProviders;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Zip
 {

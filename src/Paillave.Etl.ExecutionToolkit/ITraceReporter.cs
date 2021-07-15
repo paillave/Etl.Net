@@ -1,6 +1,5 @@
 using System;
 using Paillave.Etl.Core;
-using Paillave.Etl.Core.Streams;
 
 namespace Paillave.Etl.ExecutionToolkit
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using NJsonSchema;
-using Paillave.Etl.Connector;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.FromConfigurationConnectors
 {

@@ -3,12 +3,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Paillave.Etl.Core.Streams;
 using Paillave.Etl.EntityFrameworkCore;
-using Paillave.Etl.Extensions;
+using Paillave.Etl;
 using Paillave.Etl.FileSystem;
 using Paillave.Etl.Reactive.Operators;
-using Paillave.Etl.TextFile.Core;
 using Paillave.Etl.TextFile;
 using Xunit;
 

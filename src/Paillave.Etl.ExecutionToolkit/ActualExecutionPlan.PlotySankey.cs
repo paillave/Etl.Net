@@ -1,4 +1,5 @@
 ﻿using Paillave.Etl.Core;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -7,7 +8,7 @@ namespace Paillave.Etl.ExecutionToolkit
 {
     public static partial class ExecutionStatusEx
     {
-        public static PlotlySankeyDescription GetActualExecutionPlan(this ExecutionStatus executionStatus)
+        private static PlotlySankeyDescription GetActualExecutionPlan(this ExecutionStatus executionStatus)
         {
             var nameToIdDictionary = executionStatus.JobDefinitionStructure.Nodes.Select((Structure, Idx) => new { Structure.NodeName, Idx }).ToDictionary(i => i.NodeName, i => i.Idx);
             var links = executionStatus.JobDefinitionStructure.StreamToNodeLinks.GroupJoin(
@@ -52,9 +53,10 @@ namespace Paillave.Etl.ExecutionToolkit
             html = html.Replace("'<<LINK_VALUES>>'", JsonSerializer.Serialize(stats.LinkValues));
             return html;
         }
-        public static void OpenActualExecutionPlan(this ExecutionStatus executionStatus)
+        public static void OpenActualExecutionPlan(this ExecutionStatus executionStatus, bool? forceEvenWithNoDebugger = false)
         {
-            Tools.OpenFile(executionStatus.GetActualExecutionPlanHtml(), "html");
+            if (Debugger.IsAttached && !forceEvenWithNoDebugger.Value)
+                Tools.OpenFile(executionStatus.GetActualExecutionPlanHtml(), "html");
         }
     }
 }

@@ -1,7 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using Paillave.Etl.Connector;
-using System.Net;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Dropbox
 {

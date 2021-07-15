@@ -3,8 +3,6 @@ using System.Linq;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
 using Paillave.Etl.Core;
-using Paillave.Etl.Extensions;
-using Paillave.Etl.ValuesProviders;
 using System.Threading;
 using Microsoft.Extensions.FileSystemGlobbing;
 

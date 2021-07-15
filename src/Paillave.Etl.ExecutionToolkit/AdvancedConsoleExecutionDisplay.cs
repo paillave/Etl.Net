@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 using System.Timers;
 using Paillave.Etl.ExecutionToolkit.ConsoleApp;
 using Paillave.Etl.Core;
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.Core.TraceContents;
-using Paillave.Etl.Extensions;
 using Terminal.Gui;
 
 namespace Paillave.Etl.ExecutionToolkit

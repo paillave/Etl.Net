@@ -2,9 +2,7 @@
 using System;
 using System.IO;
 using System.Text;
-using Paillave.Etl.TextFile.Core;
 using System.Threading;
-using Paillave.Etl.ValuesProviders;
 
 namespace Paillave.Etl.TextFile
 {

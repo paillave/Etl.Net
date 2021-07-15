@@ -1,8 +1,6 @@
-using Paillave.Etl.Core.Streams;
 using Paillave.Etl.EntityFrameworkCore;
-using Paillave.Etl.Extensions;
+using Paillave.Etl.Core;
 using Paillave.Etl.TextFile;
-using Paillave.Etl.TextFile.Core;
 
 namespace Paillave.Etl.Samples
 {

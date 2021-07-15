@@ -1,5 +1,5 @@
 using MailKit;
-using Paillave.Etl.ValuesProviders;
+using Paillave.Etl.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;

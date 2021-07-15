@@ -1,7 +1,4 @@
 ﻿using Paillave.Etl.Core;
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.Extensions;
-using Paillave.Etl.ValuesProviders;
 using Paillave.Etl.XmlFile.Core;
 
 namespace Paillave.Etl.XmlFile

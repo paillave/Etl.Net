@@ -1,8 +1,6 @@
 using OfficeOpenXml;
 using Paillave.Etl.Core;
-using Paillave.Etl.ValuesProviders;
 using System;
-using System.IO;
 using System.Threading;
 
 namespace Paillave.Etl.ExcelFile

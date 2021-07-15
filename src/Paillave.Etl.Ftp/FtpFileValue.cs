@@ -1,5 +1,5 @@
 using FluentFTP;
-using Paillave.Etl.ValuesProviders;
+using Paillave.Etl.Core;
 using System.IO;
 
 namespace Paillave.Etl.Ftp

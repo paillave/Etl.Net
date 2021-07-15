@@ -1,4 +1,3 @@
-using Paillave.Etl.Core.Streams;
 using System;
 
 namespace Paillave.Etl.Core

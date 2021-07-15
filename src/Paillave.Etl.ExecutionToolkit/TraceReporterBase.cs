@@ -1,7 +1,4 @@
-using System.Collections.Generic;
 using Paillave.Etl.Core;
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.Core.TraceContents;
 using Paillave.Etl.Reactive.Operators;
 
 namespace Paillave.Etl.ExecutionToolkit

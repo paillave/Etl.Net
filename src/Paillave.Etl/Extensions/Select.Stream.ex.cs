@@ -1,9 +1,6 @@
-using Paillave.Etl.Core;
-using Paillave.Etl.StreamNodes;
-using Paillave.Etl.Core.Streams;
 using System;
 
-namespace Paillave.Etl.Extensions
+namespace Paillave.Etl.Core
 {
     /// <summary>
     /// Set of extensions to transform elements of the input stream into another element.

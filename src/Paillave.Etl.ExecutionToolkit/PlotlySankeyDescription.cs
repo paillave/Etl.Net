@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Paillave.Etl;
+﻿using System.Collections.Generic;
 
 namespace Paillave.Etl.ExecutionToolkit
 {

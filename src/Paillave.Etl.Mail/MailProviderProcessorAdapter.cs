@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using Paillave.Etl.Connector;
+using Paillave.Etl.Core;
 // using HtmlAgilityPack;
 
 namespace Paillave.Etl.Mail

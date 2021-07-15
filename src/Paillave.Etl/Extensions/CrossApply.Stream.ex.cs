@@ -1,9 +1,4 @@
-using Paillave.Etl.Core;
-using Paillave.Etl.StreamNodes;
-using Paillave.Etl.Core.Streams;
-using System;
-
-namespace Paillave.Etl.Extensions
+namespace Paillave.Etl.Core
 {
     public static partial class CrossApplyEx
     {
@@ -22,7 +17,7 @@ namespace Paillave.Etl.Extensions
             {
                 NoParallelisation = noParallelisation,
                 Stream = stream,
-                ValuesProvider = new ValuesProviders.ValueProviderCorrelationWrapper<TIn, TOut>(valuesProvider)
+                ValuesProvider = new ValueProviderCorrelationWrapper<TIn, TOut>(valuesProvider)
             }).Output;
         }
     }

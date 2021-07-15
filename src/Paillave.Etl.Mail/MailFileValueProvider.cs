@@ -1,8 +1,6 @@
 using System;
 using System.Threading;
 using Paillave.Etl.Core;
-using Paillave.Etl.Connector;
-using Paillave.Etl.ValuesProviders;
 using MailKit.Search;
 using System.Linq;
 using Microsoft.Extensions.FileSystemGlobbing;

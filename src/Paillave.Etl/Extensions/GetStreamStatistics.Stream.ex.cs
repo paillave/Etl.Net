@@ -1,12 +1,10 @@
 using Paillave.Etl.Core;
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.Core.TraceContents;
 using Paillave.Etl.Reactive.Operators;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Extensions
+namespace Paillave.Etl.Core
 {
     public static partial class GetStreamStatisticsEx
     {

@@ -1,7 +1,4 @@
-using Paillave.Etl.StreamNodes;
-using Paillave.Etl.Core.Streams;
-
-namespace Paillave.Etl.Extensions
+namespace Paillave.Etl.Core
 {
     public static partial class LastEx
     {

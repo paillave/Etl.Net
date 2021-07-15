@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Paillave.Etl.Connector;
+using Paillave.Etl.Core;
 using System.Net;
 
 namespace Paillave.Etl.Sftp

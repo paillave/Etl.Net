@@ -1,6 +1,4 @@
-﻿using Paillave.Etl.Core.Streams;
-using Paillave.Etl.Extensions;
-using Paillave.Etl.ValuesProviders;
+﻿using Paillave.Etl.Core;
 using System;
 
 namespace Paillave.Etl.FileSystem

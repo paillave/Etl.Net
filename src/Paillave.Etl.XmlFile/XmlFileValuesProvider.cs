@@ -1,12 +1,7 @@
 ﻿using Paillave.Etl.Core;
-using Paillave.Etl.ValuesProviders;
 using Paillave.Etl.XmlFile.Core;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading;
-using System.Xml;
 
 namespace Paillave.Etl.XmlFile
 {

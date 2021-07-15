@@ -1,10 +1,6 @@
 using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.Extensions.FileSystemGlobbing;
-using Paillave.Etl.Connector;
 using Paillave.Etl.Core;
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.Extensions;
-using Paillave.Etl.ValuesProviders;
 using System;
 using System.Collections.Generic;
 using System.IO;

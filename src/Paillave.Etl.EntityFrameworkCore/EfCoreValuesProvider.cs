@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using Microsoft.EntityFrameworkCore;
 using Paillave.Etl.Core;
-using Paillave.Etl.Core.Streams;
 
 namespace Paillave.Etl.EntityFrameworkCore
 {

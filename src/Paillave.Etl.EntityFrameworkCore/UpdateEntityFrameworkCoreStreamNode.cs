@@ -1,15 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Paillave.Etl.Core;
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.Reactive.Core;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Paillave.Etl.Reactive.Operators;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Paillave.EntityFrameworkCoreExtension.BulkSave;
 
 namespace Paillave.Etl.EntityFrameworkCore

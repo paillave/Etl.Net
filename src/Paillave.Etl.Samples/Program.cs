@@ -1,7 +1,6 @@
 ﻿using System;
 // using Paillave.Etl.FromConfigurationConnectors;
 using Paillave.Etl.FileSystem;
-using Paillave.Etl.Connector;
 using Paillave.Etl.Core;
 using Paillave.Etl.ExecutionToolkit;
 using System.Threading.Tasks;

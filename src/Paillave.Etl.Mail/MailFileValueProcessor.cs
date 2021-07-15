@@ -3,8 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Paillave.Etl.Core;
-using Paillave.Etl.Connector;
-using Paillave.Etl.ValuesProviders;
 using System.Net;
 using System.Net.Mail;
 using System.Collections.Generic;

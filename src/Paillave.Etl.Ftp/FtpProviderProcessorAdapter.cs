@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Paillave.Etl.Connector;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Ftp
 {

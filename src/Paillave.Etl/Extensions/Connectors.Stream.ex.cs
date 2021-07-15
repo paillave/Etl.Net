@@ -1,8 +1,4 @@
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.StreamNodes;
-using Paillave.Etl.ValuesProviders;
-
-namespace Paillave.Etl.Extensions
+namespace Paillave.Etl.Core
 {
     public static class ConnectorsStreamEx
     {

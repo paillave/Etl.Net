@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Paillave.Etl.Core;
-using Paillave.Etl.Core.Streams;
 using System;
 using System.Collections.Generic;
 using Paillave.Etl.Reactive.Operators;

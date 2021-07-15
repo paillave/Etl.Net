@@ -1,6 +1,4 @@
-﻿using Paillave.Etl.Core.Streams;
-using System;
-using System.Linq.Expressions;
+﻿using System;
 using Paillave.Etl.Core;
 
 namespace Paillave.Etl.EntityFrameworkCore

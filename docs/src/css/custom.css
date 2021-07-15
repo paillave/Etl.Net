@@ -44,3 +44,36 @@
 html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+.prism-code {
+  counter-reset: line-number;
+  max-height: 600px;
+}
+
+/*
+ * Notice the chained .language-ts class name to .prism-code
+ * You can chain more languages in order to add line numbers
+ */
+/* .prism-code.language-ts .token-line::before 
+.prism-code.language-csharp .token-line::before 
+.prism-code.language-cs .token-line::before 
+.prism-code.language-sql .token-line::before 
+.prism-code.language-sh .token-line::before  */
+.prism-code[class*=language-] .token-line::before {
+  counter-increment: line-number;
+  content: counter(line-number);
+  margin-right: calc(var(--ifm-pre-padding) * 1.5);
+  text-align: right;
+  min-width: 2.5rem;
+  display: inline-block;
+  opacity: 1;
+  position: sticky;
+  left: var(--ifm-pre-padding);
+  background-color:var(--ifm-pre-background);
+  filter:brightness(95%);
+}
+
+.prism-code.language-sh .token-line::before  {
+  content: '/>' !important;
+  background-color: transparent !important;
+}

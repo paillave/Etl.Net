@@ -1,8 +1,5 @@
 ﻿using Paillave.Etl.Core;
-using Paillave.Etl.Core.Streams;
 using Paillave.Etl.Reactive.Operators;
-using Paillave.Etl.TextFile.Core;
-using Paillave.Etl.ValuesProviders;
 using System;
 using System.Collections.Generic;
 using System.IO;

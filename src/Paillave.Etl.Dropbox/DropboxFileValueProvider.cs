@@ -2,8 +2,6 @@ using System;
 using System.IO;
 using System.Threading;
 using Paillave.Etl.Core;
-using Paillave.Etl.Connector;
-using Paillave.Etl.ValuesProviders;
 using Microsoft.Extensions.FileSystemGlobbing;
 // using Renci.SshNet;
 using System.Linq;

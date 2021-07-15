@@ -1,14 +1,8 @@
-﻿using Paillave.Etl;
-using Paillave.Etl.Extensions;
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.SqlServer.StreamNodes;
-using Paillave.Etl.SqlServer.ValuesProviders;
+﻿using Paillave.Etl.Core;
 using System;
-using System.Data.SqlClient;
-using System.Linq;
 using System.Linq.Expressions;
 
-namespace Paillave.Etl.SqlServer.Extensions
+namespace Paillave.Etl.SqlServer
 {
     public static class SqlServerEx
     {

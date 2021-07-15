@@ -1,6 +1,8 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.ExecutionToolkit
 {
@@ -43,9 +45,10 @@ namespace Paillave.Etl.ExecutionToolkit
             html = html.Replace("'<<LINK_VALUES>>'", JsonSerializer.Serialize(stats.LinkValues));
             return html;
         }
-        public static void OpenEstimatedExecutionPlan(this JobDefinitionStructure jobDefinitionStructure)
+        public static void OpenEstimatedExecutionPlan(this JobDefinitionStructure jobDefinitionStructure, bool? forceEvenWithNoDebugger = false)
         {
-            Tools.OpenFile(jobDefinitionStructure.GetEstimatedExecutionPlanHtml(), "html");
+            if (Debugger.IsAttached && !forceEvenWithNoDebugger.Value)
+                Tools.OpenFile(jobDefinitionStructure.GetEstimatedExecutionPlanHtml(), "html");
         }
     }
 }

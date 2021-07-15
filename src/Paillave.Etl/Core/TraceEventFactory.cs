@@ -1,4 +1,4 @@
-﻿using Paillave.Etl.Core.TraceContents;
+﻿using Paillave.Etl.Core;
 using System;
 
 namespace Paillave.Etl.Core

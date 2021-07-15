@@ -1,13 +1,7 @@
 ﻿using Paillave.Etl.Core;
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.Reactive.Core;
 using Paillave.Etl.Reactive.Operators;
-using Paillave.Etl.ValuesProviders;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading;
 
 namespace Paillave.Etl.FileSystem
 {

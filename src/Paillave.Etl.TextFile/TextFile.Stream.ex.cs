@@ -1,12 +1,8 @@
-﻿using Paillave.Etl.Core.Streams;
-using Paillave.Etl.TextFile.Core;
-using System;
+﻿using System;
 using SystemIO = System.IO;
-using Paillave.Etl.Extensions;
-using Paillave.Etl.ValuesProviders;
+using Paillave.Etl.Core;
 using System.Text;
 using System.Collections.Generic;
-using Paillave.Etl.Core;
 
 namespace Paillave.Etl.TextFile
 {
