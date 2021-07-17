@@ -27,6 +27,10 @@
   --ifm-font-family-base: 'Open Sans';
 }
 
+.mainLogoBackground_src-pages-index-module svg {
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 1));
+}
+
 .navbar__logo svg>g {
   fill: #5212bd;
 }
@@ -62,16 +66,23 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 .prism-code[class*=language-] .token-line::before {
   counter-increment: line-number;
   content: counter(line-number);
-  margin-right: calc(var(--ifm-pre-padding) * 1.5);
+  margin-right: calc(1rem * 1.5);
   text-align: right;
   min-width: 2.5rem;
   display: inline-block;
   opacity: 1;
   position: sticky;
-  left: var(--ifm-pre-padding);
+  left: 1rem;
   background-color:var(--ifm-pre-background);
   filter:brightness(95%);
 }
+
+.frontpage .token-line::before {
+  background-color: #1c1e21 !important;
+}
+/* html[data-theme='light'] .prism-code[class*=language-] .token-line::before {
+  background-color: #1c1e21;
+} */
 
 .prism-code.language-sh .token-line::before  {
   content: '/>' !important;

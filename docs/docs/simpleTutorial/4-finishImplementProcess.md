@@ -24,7 +24,7 @@ The extension that needs to operate with the database will get its connection th
 static async Task Main(string[] args)
 {
     var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
-    using (var cnx = new SqlConnection(@"Server=localhost,1433;Database=SimpleTutorial;user=SimpleTutorial;password=TestEtl.TestEtl;MultipleActiveResultSets=True"))
+    using (var cnx = new SqlConnection(args[1]))
     {
         cnx.Open();
         var executionOptions = new ExecutionOptions<string>
@@ -143,7 +143,7 @@ namespace SimpleTutorial
         static async Task Main(string[] args)
         {
             var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
-            using (var cnx = new SqlConnection(@"Server=localhost,1433;Database=SimpleTutorial;user=SimpleTutorial;password=TestEtl.TestEtl;MultipleActiveResultSets=True"))
+            using (var cnx = new SqlConnection(args[1]))
             {
                 cnx.Open();
                 var executionOptions = new ExecutionOptions<string>

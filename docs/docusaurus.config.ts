@@ -32,6 +32,10 @@ module.exports = {
           position: 'left',
           label: 'Documentation',
         }, {
+          to: 'blog', 
+          label: 'News', 
+          position: 'left'
+        }, {
           type: 'search',
           position: 'right',
         }, {
@@ -102,7 +106,7 @@ module.exports = {
           // Please change this to your repo.
           editUrl:
             'https://paillave.github.io/Etl.Net/edit/master/website/',
-            remarkPlugins: [remarkMermaid],
+          remarkPlugins: [remarkMermaid],
         },
         blog: {
           showReadingTime: true,
@@ -131,5 +135,5 @@ module.exports = {
         // When applying `zh` in language, please install `nodejieba` in your project.
       },
     ],
-  ],  
+  ],
 };

@@ -5,6 +5,11 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
 import HomepageFeatures from '../components/HomepageFeatures';
+import HomepageExamples from '../components/HomepageExamples';
+// import Highlight, { defaultProps } from "prism-react-renderer";
+// require(`prismjs/components/prism-csharp`); // eslint-disable-line
+// import theme from "prism-react-renderer/themes/dracula";
+
 const Bot = require('../../static/img/dotnet-bot_kayaking.svg').default;
 const EtlNet = require('../../static/img/full-black-logo.svg').default
 function HomepageHeader() {
@@ -21,8 +26,18 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
+            to="/docs/intro">
+            🏁 Get Started
+          </Link>
+          <Link
+            className="button button--secondary button--lg"
             to="/docs/simpleTutorial/intro">
-            ⏱️ Tutorial in 15mn : Execute my first ETL process
+            ⏱️ Quick Presentation
+          </Link>
+          <Link
+            className="button button--secondary button--lg"
+            to="/docs/simpleTutorial/intro">
+            ⚡ First Tutorial
           </Link>
         </div>
       </div>
@@ -39,6 +54,7 @@ export default function Home() {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
+        <HomepageExamples />
       </main>
     </Layout>
   );

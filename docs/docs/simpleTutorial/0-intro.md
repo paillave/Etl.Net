@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Introduction
+# Simple: Introduction
 
 ![Quick start](/img/build-first-app-bot-tutorial.svg)
 
