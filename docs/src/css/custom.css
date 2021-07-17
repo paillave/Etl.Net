@@ -88,3 +88,21 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   content: '/>' !important;
   background-color: transparent !important;
 }
+
+@media (pointer: fine) {
+  .frontpage::-webkit-scrollbar {
+    height: 7px;
+    width: 7px;
+  }
+  .frontpage::-webkit-scrollbar-track {
+    background: #888;
+    border-radius: 10px;
+  }
+  .frontpage::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 10px;
+  }
+  .frontpage::-webkit-scrollbar-thumb:hover {
+    background: #f1f1f1;
+  }
+}

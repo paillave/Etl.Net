@@ -53,7 +53,8 @@ namespace Paillave.Etl.SqlServer
             // List<PropertyInfo> pivot = base.Args.Pivot == null ? new List<PropertyInfo>() : base.Args.Pivot.GetPropertyInfos();
             // List<PropertyInfo> computed = base.Args.Computed == null ? new List<PropertyInfo>() : base.Args.Computed.GetPropertyInfos();
             // var sqlQuery = CreateSqlQuery(base.Args.Table, typeof(TIn).GetProperties().ToList(), pivot, computed);
-            var command = new SqlCommand(GetSqlStatement(), sqlConnection);
+            var sqlStatement = GetSqlStatement();
+            var command = new SqlCommand(sqlStatement, sqlConnection);
             // Regex getParamRegex = new Regex(@"@(?<param>\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             // var allMatches = getParamRegex.Matches(base.Args.SqlQuery).ToList().Select(match => match.Groups["param"].Value).Distinct().ToList();
             foreach (var parameterName in _inPropertyInfos.Keys.Except(_computed.Select(i => i.Name)))
@@ -81,7 +82,7 @@ namespace Paillave.Etl.SqlServer
             var computedNames = computed.Select(i => i.Name).ToList();
             var allPropertyNames = allProperties.Select(i => i.Name).ToList();
             StringBuilder sb = new StringBuilder();
-            if (pivot.Count >= 0)
+            if (pivot.Count > 0)
             {
                 var pivotCondition = string.Join(" AND ", pivot.Select(p => $"p.{p.Name} = @{p.Name}"));
                 sb.AppendLine($"if(exists(select 1 from {table} as p where {pivotCondition} ))");

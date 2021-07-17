@@ -1,8 +1,10 @@
 datetime,event type,details
-2021-07-15 12:26:39:7094,EndOfNode,-ProcessRunner-: 1
-2021-07-15 12:26:39:7425,EndOfNode,list all required files: 2
-2021-07-15 12:26:39:8204,EndOfNode,extract files from zip: 9
-2021-07-15 12:26:40:2900,EndOfNode,parse file: 45
-2021-07-15 12:26:40:2900,EndOfNode,exclude duplicates: 45
-2021-07-15 12:26:40:2901,EndOfNode,save in DB: 45
-2021-07-15 12:26:40:2901,EndOfNode,display ids on console: 45
+2021-07-17 02:34:16:5322,EndOfNode,-ProcessRunner-: 1
+2021-07-17 02:34:16:6140,EndOfNode,list all required files: 2
+2021-07-17 02:34:16:7033,EndOfNode,extract files from zip: 9
+2021-07-17 02:34:17:0846,EndOfNode,parse file: 45
+2021-07-17 02:34:17:0846,EndOfNode,exclude duplicates based on the Email: 45
+2021-07-17 02:34:17:0846,EndOfNode,upsert using Email as key and ignore the Id: 45
+2021-07-17 02:34:17:0847,EndOfNode,define row to report: 45
+2021-07-17 02:34:17:0858,EndOfNode,write summary to file: 1
+2021-07-17 02:34:17:0858,EndOfNode,save log file: 1

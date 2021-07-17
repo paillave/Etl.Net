@@ -11,7 +11,8 @@
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/Paillave.Etl.SimpleTutorial/bin/Debug/net5.0/Paillave.Etl.SimpleTutorial.dll",
             "args": [
-                "/home/stephane/Documents/TestInputFile"
+                "/home/stephane/Documents/TestInputFile",
+                "Server=localhost,1433;Database=SimpleTutorial;user=SimpleTutorial;password=TestEtl.TestEtl;MultipleActiveResultSets=True"
             ],
             "cwd": "${workspaceFolder}/Paillave.Etl.SimpleTutorial",
             "stopAtEntry": false,

@@ -17,14 +17,9 @@ namespace Paillave.Etl.FileSystem
     /// <typeparam name="TParams"></typeparam>
     public class WriteToFileStreamNode<TParams> : StreamNodeBase<IFileValue, IStream<IFileValue>, WriteToFileArgs<TParams>>
     {
-        public WriteToFileStreamNode(string name, WriteToFileArgs<TParams> args) : base(name, args)
-        {
-        }
-
-        public override ProcessImpact PerformanceImpact => throw new NotImplementedException();
-
-        public override ProcessImpact MemoryFootPrint => throw new NotImplementedException();
-
+        public WriteToFileStreamNode(string name, WriteToFileArgs<TParams> args) : base(name, args) { }
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Heavy;
         protected override IStream<IFileValue> CreateOutputStream(WriteToFileArgs<TParams> args)
         {
             var outputFilePath = args.ParamStream.Observable.Map(args.GetOutputFilePath);
@@ -50,14 +45,9 @@ namespace Paillave.Etl.FileSystem
     /// <typeparam name="TParams"></typeparam>
     public class WriteToFileStreamNode : StreamNodeBase<IFileValue, IStream<IFileValue>, WriteToFileArgs>
     {
-        public WriteToFileStreamNode(string name, WriteToFileArgs args) : base(name, args)
-        {
-        }
-
-        public override ProcessImpact PerformanceImpact => throw new NotImplementedException();
-
-        public override ProcessImpact MemoryFootPrint => throw new NotImplementedException();
-
+        public WriteToFileStreamNode(string name, WriteToFileArgs args) : base(name, args) { }
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Heavy;
         protected override IStream<IFileValue> CreateOutputStream(WriteToFileArgs args)
         {
             var outputObservable = args.Stream.Observable.Do<IFileValue>(fileValue =>
