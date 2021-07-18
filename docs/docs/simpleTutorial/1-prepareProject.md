@@ -20,6 +20,7 @@ cd SimpleTutorial
 - `Etl.Net.Zip` Extension to Unzip and Zip files
 - `Etl.Net.TextFile` Extensions to serialize or deserialize text files (delimited or fixed width)
 - `Etl.Net.SqlServer` Extensions to interact with Sql Server **without** Entity Framework
+- `Etl.Net.ExecutionToolkit` Extension to view execution plans or to make console application
 
 ```sh
 dotnet add package Etl.Net
@@ -27,4 +28,5 @@ dotnet add package Etl.Net.FileSystem
 dotnet add package Etl.Net.Zip
 dotnet add package Etl.Net.TextFile
 dotnet add package Etl.Net.SqlServer
+dotnet add package Etl.Net.ExecutionToolkit
 ```

@@ -29,7 +29,7 @@ extensions for Etl.Net to query against FTP
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentFTP" Version="34.0.0" />
+    <PackageReference Include="FluentFTP" Version="34.0.1" />
     <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="5.0.0" />
   </ItemGroup>
 

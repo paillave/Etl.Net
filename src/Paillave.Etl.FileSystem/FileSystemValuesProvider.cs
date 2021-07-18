@@ -33,10 +33,14 @@ namespace Paillave.Etl.FileSystem
             var files = Directory
                 .GetFiles(rootFolder, searchPattern, _args.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
                 .ToList();
+            var isRootedPath = Path.IsPathRooted(rootFolder);
             foreach (var relativePath in files)
             {
                 if (cancellationToken.IsCancellationRequested) break;
-                pushValue(_args.GetResult(new FileSystemFileValue(new FileInfo(Path.Combine(rootFolder, relativePath ?? ""))), input));
+                if (isRootedPath)
+                    pushValue(_args.GetResult(new FileSystemFileValue(new FileInfo(Path.Combine(rootFolder, relativePath ?? ""))), input));
+                else
+                    pushValue(_args.GetResult(new FileSystemFileValue(new FileInfo(relativePath ?? "")), input));
             }
         }
     }

@@ -95,11 +95,11 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
     width: 7px;
   }
   .frontpage::-webkit-scrollbar-track {
-    background: #888;
+    background: #555;
     border-radius: 10px;
   }
   .frontpage::-webkit-scrollbar-thumb {
-    background: #555;
+    background: #888;
     border-radius: 10px;
   }
   .frontpage::-webkit-scrollbar-thumb:hover {

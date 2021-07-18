@@ -9,33 +9,28 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Paillave.Etl.SimpleTutorial/bin/Debug/net5.0/Paillave.Etl.SimpleTutorial.dll",
+            "program": "${workspaceFolder}/Tutorials/Paillave.Etl.SimpleTutorial/bin/Debug/net5.0/Paillave.Etl.SimpleTutorial.dll",
             "args": [
-                "/home/stephane/Documents/TestInputFile",
+                "data",
                 "Server=localhost,1433;Database=SimpleTutorial;user=SimpleTutorial;password=TestEtl.TestEtl;MultipleActiveResultSets=True"
             ],
-            "cwd": "${workspaceFolder}/Paillave.Etl.SimpleTutorial",
+            "cwd": "${workspaceFolder}/Tutorials/Paillave.Etl.SimpleTutorial",
             "stopAtEntry": false,
             "console": "externalTerminal"
         },
         {
-            "name": ".NET Core Launch (console)",
+            "name": "BlogTutorial",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Paillave.Etl.Samples/bin/Debug/netcoreapp3.1/Paillave.Etl.Samples.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/Paillave.Etl.Samples",
-            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "externalTerminal",
-            "stopAtEntry": false
+            "program": "${workspaceFolder}/Tutorials/Paillave.Etl.BlogTutorial/bin/Debug/net5.0/Paillave.Etl.BlogTutorial.dll",
+            "args": [
+                "data",
+                "Server=localhost,1433;Database=BlogTutorial;user=BlogTutorial;password=TestEtl.TestEtl;MultipleActiveResultSets=True"
+            ],
+            "cwd": "${workspaceFolder}/Tutorials/Paillave.Etl.BlogTutorial",
+            "stopAtEntry": false,
+            "console": "externalTerminal"
         },
-        {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
-        }
     ]
 }

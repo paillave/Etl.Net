@@ -23,15 +23,19 @@ namespace Paillave.Etl.FileSystem
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
         protected override void Provide(Action<IFileValue> pushFileValue, FileSystemAdapterConnectionParameters connectionParameters, FileSystemAdapterProviderParameters providerParameters, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
-            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
+            var rootFolder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
             var searchPattern = string.IsNullOrEmpty(providerParameters.FileNamePattern) ? "*" : providerParameters.FileNamePattern;
             var files = Directory
-                .GetFiles(folder, searchPattern, providerParameters.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
+                .GetFiles(rootFolder, searchPattern, providerParameters.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
                 .ToList();
+            var isRootedPath = Path.IsPathRooted(rootFolder);
             foreach (var file in files)
             {
                 if (cancellationToken.IsCancellationRequested) break;
-                pushFileValue(new FileSystemFileValue(new FileInfo(file), Code, Name, ConnectionName));
+                if (isRootedPath)
+                    pushFileValue(new FileSystemFileValue(new FileInfo(Path.Combine(rootFolder, file)), Code, Name, ConnectionName));
+                else
+                    pushFileValue(new FileSystemFileValue(new FileInfo(file), Code, Name, ConnectionName));
             }
         }
         protected override void Test(FileSystemAdapterConnectionParameters connectionParameters, FileSystemAdapterProviderParameters providerParameters)

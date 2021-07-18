@@ -21,7 +21,7 @@ extensions for Etl.Net to query against Dropbox
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dropbox.Api" Version="6.8.0" />
+    <PackageReference Include="Dropbox.Api" Version="6.10.3" />
     <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="5.0.0" />
   </ItemGroup>
 
