@@ -2,6 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import styles from './HomepageFeatures.module.css';
 import Highlight, { defaultProps } from "prism-react-renderer";
+import "prismjs"; // eslint-disable-line
 require(`prismjs/components/prism-csharp`); // eslint-disable-line
 import theme from "prism-react-renderer/themes/dracula";
 

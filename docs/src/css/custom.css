@@ -106,3 +106,26 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
     background: #f1f1f1;
   }
 }
+
+
+@media (pointer: fine) {
+  html::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+  /* html::-webkit-scrollbar:hover {
+    height: 17px !important;
+    width: 17px !important;
+  } */
+  html::-webkit-scrollbar-track {
+    background: #555;
+    border-radius: 10px;
+  }
+  html::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  html::-webkit-scrollbar-thumb:hover {
+    background: #f1f1f1;
+  }
+}

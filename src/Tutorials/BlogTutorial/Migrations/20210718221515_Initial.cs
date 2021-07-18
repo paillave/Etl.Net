@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Paillave.Etl.BlogTutorial.Migrations
+namespace BlogTutorial.Migrations
 {
     public partial class Initial : Migration
     {
@@ -33,6 +33,22 @@ namespace Paillave.Etl.BlogTutorial.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Category", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExecutionLog",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExecutionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EventType = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExecutionLog", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,6 +108,9 @@ namespace Paillave.Etl.BlogTutorial.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ExecutionLog");
+
             migrationBuilder.DropTable(
                 name: "Post");
 

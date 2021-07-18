@@ -9,20 +9,6 @@ GO
 ALTER ROLE [db_owner] ADD MEMBER [SimpleTutorial]
 GO
 
-IF OBJECT_ID('[dbo].[ExecutionTrace]', 'U') IS NOT NULL
-DROP TABLE [dbo].[ExecutionTrace]
-GO
-CREATE TABLE [dbo].[ExecutionTrace]
-(
-    [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY, -- Primary Key column
-    [ExecutionId] UNIQUEIDENTIFIER NOT NULL,
-    [DateTime] DATETIME2 NOT NULL,
-    [EventType] NVARCHAR(255) NOT NULL,
-    [Message] NVARCHAR(MAX) NOT NULL,
-);
-GO
-
-
 IF OBJECT_ID('[dbo].[Person]', 'U') IS NOT NULL
 DROP TABLE [dbo].[Person]
 GO

@@ -14,15 +14,43 @@ namespace BlogTutorial
         static async Task Main(string[] args)
         {
             var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
-            processRunner.DebugNodeStream += (sender, e) 
-                => { /* PLACE A CONDITIONAL BREAKPOINT HERE FOR DEBUG ex: e.NodeName == "parse file" */ };
+            processRunner.DebugNodeStream += (sender, e)
+                =>
+            { /* PLACE A CONDITIONAL BREAKPOINT HERE FOR DEBUG ex: e.NodeName == "parse file" */ };
             using (var dbCtx = new SimpleTutorialDbContext(args[1]))
             {
-                var executionOptions = new ExecutionOptions<string> { 
-                    Resolver = new SimpleDependencyResolver().Register<DbContext>(dbCtx) };
+                var executionOptions = new ExecutionOptions<string>
+                {
+                    Resolver = new SimpleDependencyResolver().Register<DbContext>(dbCtx),
+                    TraceProcessDefinition = DefineTraceProcess,
+                    // UseDetailedTraces = true // activate only if per row traces are meant to be caught
+                };
                 var res = await processRunner.ExecuteAsync(args[0], executionOptions);
                 Console.Write(res.Failed ? "Failed" : "Succeeded");
             }
+        }
+        private static void DefineTraceProcess(IStream<TraceEvent> traceStream, ISingleStream<string> contentStream)
+        {
+            traceStream
+                .Where("keep only summary of node and errors", i => i.Content is CounterSummaryStreamTraceContent || i.Content is UnhandledExceptionStreamTraceContent)
+                .Select("create log entry", i => new ExecutionLog
+                {
+                    DateTime = i.DateTime,
+                    ExecutionId = i.ExecutionId,
+                    EventType = i.Content switch
+                    {
+                        CounterSummaryStreamTraceContent => "EndOfNode",
+                        UnhandledExceptionStreamTraceContent => "Error",
+                        _ => "Unknown"
+                    },
+                    Message = i.Content switch
+                    {
+                        CounterSummaryStreamTraceContent counterSummary => $"{i.NodeName}: {counterSummary.Counter}",
+                        UnhandledExceptionStreamTraceContent unhandledException => $"{i.NodeName}({i.NodeTypeName}): [{unhandledException.Level.ToString()}] {unhandledException.Message}",
+                        _ => "Unknown"
+                    }
+                })
+              .EfCoreSave("save traces");
         }
         private static void DefineProcess(ISingleStream<string> contextStream)
         {

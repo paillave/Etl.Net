@@ -1,18 +1,52 @@
 ---
-sidebar_position: 5
+sidebar_position: 2
 ---
 
-# Save data
+# ETL process
 
 ![Read Process](/img/integrate-database-library-graphs.svg)
 
-So far, we implemented a process that shows some data on the console.
+The definition of the ETL process is done in the method `DefineProcess`. The following will be the implementation of this method.
 
-We will amend it to save everything in the database using the following and very common rules during the integration of data in a database:
+## List zip files
 
-- We will exclude duplicates on the business key (the email)
-- We will make an upsert in the target table based on the business key (the email)
-- The object that is upserted is updated with the value of every field of the table, taking in consideration all the computed values at database level like the Id
+By using extensions from `Paillave.Etl.FileSystem`, we will recursively list all the zip files in the root folder that was transmitted when triggering the execution:
+
+```cs {2-3}
+contextStream
+    .CrossApplyFolderFiles("list all required files", "*.zip", true)
+    .Do("display zip file name on console", i => Console.WriteLine(i.Name));
+```
+
+## Extract the right files from zip files
+
+By using extensions from `Paillave.Etl.Zip`, we will recursively list all the csv files contained in all the enumerated zip files:
+
+```cs {3-4}
+contextStream
+    .CrossApplyFolderFiles("list all required files", "*.zip", true)
+    .CrossApplyZipFiles("extract files from zip", "*.csv")
+    .Do("display extracted csv file name on console", i => Console.WriteLine(i.Name));
+```
+
+## Parse csv files
+
+By using extensions from `Paillave.Etl.TextFile`, we will parse every csv file that has been unzipped:
+
+```cs {4-12}
+contextStream
+    .CrossApplyFolderFiles("list all required files", "*.zip", true)
+    .CrossApplyZipFiles("extract files from zip", "*.csv")
+    .CrossApplyTextFile("parse file", FlatFileDefinition.Create(i => new
+    {
+        Email = i.ToColumn("email"),
+        FirstName = i.ToColumn("first name"),
+        LastName = i.ToColumn("last name"),
+        DateOfBirth = i.ToDateColumn("date of birth", "yyyy-MM-dd"),
+        Reputation = i.ToNumberColumn<int?>("reputation", ".")
+    }).IsColumnSeparated(','))
+    .Do("display parsed person email on console", i => Console.WriteLine(i.Email));
+```
 
 ## Setup the connection
 
@@ -103,6 +137,12 @@ contextStream
 
 ## Upsert each occurrence in the target table
 
+We will save everything in the database using the following and very common rules during the integration of data in a database:
+
+- We will exclude duplicates on the business key (the email)
+- We will make an upsert in the target table based on the business key (the email)
+- The object that is upserted is updated with the value of every field of the table, taking in consideration all the computed values at database level like the Id
+
 By using `Paillave.Etl.SqlServer`, save every occurrence in the database, and get updates from so that every object is exactly like it is in the table after the upsert.
 
 ```cs {13-14}
@@ -154,6 +194,35 @@ namespace SimpleTutorial
                 Console.Write(res.Failed ? "Failed" : "Succeeded");
             }
         }
+        private static void DefineProcess(ISingleStream<string> contextStream)
+        {
+            contextStream
+                .CrossApplyFolderFiles("list all required files", "*.zip", true)
+                .CrossApplyZipFiles("extract files from zip", "*.csv")
+                .CrossApplyTextFile("parse file", 
+                    FlatFileDefinition.Create(i => new Person
+                    {
+                        Email = i.ToColumn("email"),
+                        FirstName = i.ToColumn("first name"),
+                        LastName = i.ToColumn("last name"),
+                        DateOfBirth = i.ToDateColumn("date of birth", "yyyy-MM-dd"),
+                        Reputation = i.ToNumberColumn<int?>("reputation", ".")
+                    }).IsColumnSeparated(','))
+                .Distinct("exclude duplicates based on the Email", i => i.Email)
+                .SqlServerSave("upsert using Email as key and ignore the Id", 
+                    "dbo.Person", 
+                    p => p.Email, 
+                    p => p.Id)
+                .Select("define row to report", i => new { i.Email, i.Id })
+                .ToTextFileValue("write summary to file", 
+                    "report.csv", 
+                    FlatFileDefinition.Create(i => new
+                    {
+                        Email = i.ToColumn("Email"),
+                        Id = i.ToNumberColumn<int>("new or existing Id", ".")
+                    }).IsColumnSeparated(','))
+                .WriteToFile("save log file", i => i.Name);
+        }
         private class Person
         {
             public int Id { get; set; }
@@ -162,23 +231,6 @@ namespace SimpleTutorial
             public string LastName { get; set; }
             public DateTime DateOfBirth { get; set; }
             public int? Reputation { get; set; }
-        }
-        private static void DefineProcess(ISingleStream<string> contextStream)
-        {
-            contextStream
-                .CrossApplyFolderFiles("list all required files", "*.zip", true)
-                .CrossApplyZipFiles("extract files from zip", "*.csv")
-                .CrossApplyTextFile("parse file", FlatFileDefinition.Create(i => new Person
-                    {
-                        Email = i.ToColumn("email"),
-                        FirstName = i.ToColumn("first name"),
-                        LastName = i.ToColumn("last name"),
-                        DateOfBirth = i.ToDateColumn("date of birth", "yyyy-MM-dd"),
-                        Reputation = i.ToNumberColumn<int?>("reputation", ".")
-                    }).IsColumnSeparated(','))
-                .Distinct("exclude duplicates", i => i.Email)
-                .SqlServerSave("save in DB", "dbo.Person", p => p.Email, p => p.Id)
-                .Do("display ids on console", i => Console.WriteLine(i.Id));
         }
     }
 }

@@ -7,12 +7,13 @@ module.exports = {
   title: 'ETL.NET',
   tagline: 'ETL actually easy for .NET developers who see everything as a stream',
   url: 'https://paillave.github.io/',
-  baseUrl: '/',
+  baseUrl: '/Etl.Net/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'paillave', // Usually your GitHub org/user name.
-  projectName: 'etl.net', // Usually your repo name.
+  projectName: 'Etl.Net', // Usually your repo name.
+  trailingSlash: false,
   themeConfig: {
     colorMode: {
       defaultMode: 'light',
@@ -32,8 +33,8 @@ module.exports = {
           position: 'left',
           label: 'Documentation',
         }, {
-          to: 'blog', 
-          label: 'News', 
+          to: 'blog',
+          label: 'News',
           position: 'left'
         }, {
           type: 'search',
