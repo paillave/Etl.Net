@@ -84,6 +84,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: #1c1e21;
 } */
 
+.prism-code.language-bash .token-line::before,
 .prism-code.language-sh .token-line::before  {
   content: '/>' !important;
   background-color: transparent !important;

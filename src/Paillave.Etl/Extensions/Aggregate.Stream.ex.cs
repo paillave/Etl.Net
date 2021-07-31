@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Paillave.Etl.Core
 {
@@ -109,6 +110,58 @@ namespace Paillave.Etl.Core
                 InputStream = stream,
                 Aggregate = aggregate,
                 CreateEmptyAggregation = emptyAggregation
+            }).Output;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        public static IStream<AggregationResult<TIn, TKey, List<TIn>>> GroupBy<TIn, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey)
+        {
+            return new AggregateStreamNode<TIn, List<TIn>, TKey>(name, new AggregateArgs<TIn, List<TIn>, TKey>
+            {
+                InputStream = stream,
+                GetKey = getKey,
+                Aggregate = (a, v) => { a.Add(v); return a; },
+                CreateEmptyAggregation = _ => new List<TIn>(),
+            }).Output;
+        }
+        public static ISortedStream<AggregationResult<TIn, TKey, List<TIn>>, TKey> GroupBy<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name)
+        {
+            return new AggregateSortedStreamNode<TIn, List<TIn>, TKey>(name, new AggregateSortedArgs<TIn, List<TIn>, TKey>
+            {
+                InputStream = stream,
+                Aggregate = (a, v) => { a.Add(v); return a; },
+                CreateEmptyAggregation = _ => new List<TIn>(),
+            }).Output;
+        }
+
+        public static IStream<Correlated<AggregationResult<TIn, TKey, List<TIn>>>> GroupBy<TIn, TKey>(this IStream<Correlated<TIn>> stream, string name, Func<TIn, TKey> getKey)
+        {
+            return new AggregateCorrelatedStreamNode<TIn, List<TIn>, TKey>(name, new AggregateCorrelatedArgs<TIn, List<TIn>, TKey>
+            {
+                InputStream = stream,
+                GetKey = getKey,
+                Aggregate = (a, v) => { a.Add(v); return a; },
+                CreateEmptyAggregation = _ => new List<TIn>(),
+            }).Output;
+        }
+
+        public static ISortedStream<Correlated<AggregationResult<TIn, TKey, List<TIn>>>, TKey> GroupBy<TIn, TKey>(this ISortedStream<Correlated<TIn>, TKey> stream, string name)
+        {
+            return new AggregateCorrelatedSortedStreamNode<TIn, List<TIn>, TKey>(name, new AggregateCorrelatedSortedArgs<TIn, List<TIn>, TKey>
+            {
+                InputStream = stream,
+                Aggregate = (a, v) => { a.Add(v); return a; },
+                CreateEmptyAggregation = _ => new List<TIn>(),
             }).Output;
         }
     }

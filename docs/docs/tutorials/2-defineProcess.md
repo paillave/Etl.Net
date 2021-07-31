@@ -190,7 +190,7 @@ contextStream
 
 This piece of program is a typical process to make a reliable upsert of the content of every zipped csv file in a folder.
 
-```cs
+```cs title="Program.cs"
 using System;
 using System.Threading.Tasks;
 using Paillave.Etl.FileSystem;

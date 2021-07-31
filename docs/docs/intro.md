@@ -10,14 +10,29 @@ Let's discover **ETL.NET in less than 5 minutes**.
 
 ## What is ETL.NET?
 
-ETL.NET is a complete ETL for .net developers who need to embed SSIS-like features into their applications.
+ETL.NET is a set of .NET5 libraries that permits to embed regular business intelligence ETL features into any .NET5 application.
 
 It contains every transformation and capability of SSIS:
 
-- Data stream transformations like `derived column`, `convert`, `union`, `join`, `lookup`, `pivot`, `unpivot`, `aggregate`...
-- Data sources like Excel, flat files such as csv, SQL Server, Entity framework...
+- ETL.NET provides every operator that is necessary to make ANY transformation of any data source. Implemented operators of ETL.NET are inspired by the ones that are offered by SQL: `Map`, `Join`, `Sort`, `Distinct`, `Lookup`, `Top`, `Pivot`, `Cross Apply`, `Union`, `Group By`, `Aggregate`, ...
+- Data sources like Excel, flat files such as csv, SQL Server, Xml, Entity framework...
 - Tracing the complete activity with automatic filtering and saving capability
 - Parameterization of a process
+
+It also permits to interact out of the box with:
+
+- File system: read or write
+- FTP, FTPS: read or write
+- SFTP: read or write
+- Email: send or get attachment from received emails
+- Dropbox: read or write
+- Zip: read
+
+It permits to trace **in detail** the entire activity of a process and use theses traces in any possible way.
+
+One it is deployed, provides a very simple way for administrators to setup external connectivity.
+
+And so much more; imagination is the limit.
 
 ## The ETL reference for Microsoft developers: SSIS
 
@@ -31,7 +46,7 @@ SSIS is a great straight forward tool to process big chunks of data. It supports
 
 > Can be run on nearly any kind of computer or even portable devices.
 
-Developments are made on .NET5. This permits ETL.NET to be used on any platform that supports .net: Windows, Linux or macOS.
+Developments are made on .NET5. This permits ETL.NET to be used on any platform that supports .NET: Windows, Linux or macOS.
 
 ## It is open source
 
@@ -59,7 +74,7 @@ Just add a reference from Nuget to the core package (ETL.NET) and to some of its
 
 ## It is designed to be very simple to extend
 
-> SSIS extension is a horribly complex process compared to usual .net tool kits and frameworks.
+> SSIS extension is a horribly complex process compared to usual .NET tool kits and frameworks.
 
 When it is about SSIS extensibility, you have to swim quiet deep in the abyss of hell: after dealing with the very complex SDK to extend it and the big amount of lines of codes to implement your extension, you will have to ensure it is well deployed in the GAC of your development computer, on the GAC of every SSIS server where it will be deployed. Finally, for it to be used in developments, it must also be installed correctly on your development computer so that Sql Server Data Tools for BI recognizes it and makes it available in the visual studio toolbox.
 

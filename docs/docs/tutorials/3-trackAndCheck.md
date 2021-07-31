@@ -289,7 +289,7 @@ var executionOptions = new ExecutionOptions<string>
 
 The output file will contain the following:
 
-```csv
+```csv title="log.csv"
 datetime,event type,details
 2021-07-15 12:26:39:7094,EndOfNode,-ProcessRunner-: 1
 2021-07-15 12:26:39:7425,EndOfNode,list all required files: 2
@@ -321,7 +321,7 @@ var executionOptions = new ExecutionOptions<string>
 
 This piece of program is a typical process to make a reliable upsert of the content of every zipped csv file in a folder, with process summary and error logging... Ready to deploy in production! :champagne: :beer: :cocktail: :clinking_glasses: :beers:
 
-```cs
+```cs title="Program.cs"
 using System;
 using System.Threading.Tasks;
 using Paillave.Etl.Core;

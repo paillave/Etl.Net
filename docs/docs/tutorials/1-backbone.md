@@ -99,7 +99,7 @@ Console.Write(res.Failed ? "Failed" : "Succeeded");
 
 We now have the backbone of a console application that run an ETL process
 
-```cs
+```cs title="Program.cs"
 using System;
 using System.Threading.Tasks;
 using Paillave.Etl.Core;
