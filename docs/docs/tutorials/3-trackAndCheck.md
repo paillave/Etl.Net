@@ -36,18 +36,28 @@ For each node, an information regarding to possible performance and memory impac
     },
     {
       "InputName": "InputStream",
-      "TargetNodeName": "exclude duplicates",
+      "TargetNodeName": "exclude duplicates based on the Email",
       "SourceNodeName": "parse file"
     },
     {
       "InputName": "SourceStream",
-      "TargetNodeName": "save in DB",
-      "SourceNodeName": "exclude duplicates"
+      "TargetNodeName": "upsert using Email as key and ignore the Id",
+      "SourceNodeName": "exclude duplicates based on the Email"
     },
     {
       "InputName": "Stream",
-      "TargetNodeName": "display ids on console",
-      "SourceNodeName": "save in DB"
+      "TargetNodeName": "define row to report",
+      "SourceNodeName": "upsert using Email as key and ignore the Id"
+    },
+    {
+      "InputName": "MainStream",
+      "TargetNodeName": "write summary to file",
+      "SourceNodeName": "define row to report"
+    },
+    {
+      "InputName": "Stream",
+      "TargetNodeName": "save log file",
+      "SourceNodeName": "write summary to file"
     }
   ],
   "Nodes": [
@@ -60,7 +70,7 @@ For each node, an information regarding to possible performance and memory impac
     },
     {
       "NodeName": "list all required files",
-      "TypeName": "Cross apply FileSystemValuesProvider\u00602",
+      "TypeName": "Cross apply FileSystemValuesProvider`2",
       "PerformanceImpact": 3,
       "MemoryFootPrint": 2,
       "IsRootNode": false
@@ -74,30 +84,44 @@ For each node, an information regarding to possible performance and memory impac
     },
     {
       "NodeName": "parse file",
-      "TypeName": "Cross apply FlatFileValuesProvider\u00602",
+      "TypeName": "Cross apply FlatFileValuesProvider`2",
       "PerformanceImpact": 3,
       "MemoryFootPrint": 1,
       "IsRootNode": false
     },
     {
-      "NodeName": "exclude duplicates",
+      "NodeName": "exclude duplicates based on the Email",
       "TypeName": "Distinct",
       "PerformanceImpact": 1,
       "MemoryFootPrint": 3,
       "IsRootNode": false
     },
     {
-      "NodeName": "save in DB",
+      "NodeName": "upsert using Email as key and ignore the Id",
       "TypeName": "SqlServerSave",
       "PerformanceImpact": 3,
       "MemoryFootPrint": 1,
       "IsRootNode": false
     },
     {
-      "NodeName": "display ids on console",
-      "TypeName": "Do",
+      "NodeName": "define row to report",
+      "TypeName": "Select",
       "PerformanceImpact": 1,
       "MemoryFootPrint": 1,
+      "IsRootNode": false
+    },
+    {
+      "NodeName": "write summary to file",
+      "TypeName": "ToFileValue",
+      "PerformanceImpact": 2,
+      "MemoryFootPrint": 1,
+      "IsRootNode": false
+    },
+    {
+      "NodeName": "save log file",
+      "TypeName": "WriteToFile",
+      "PerformanceImpact": 3,
+      "MemoryFootPrint": 3,
       "IsRootNode": false
     }
   ],
@@ -155,15 +179,23 @@ var estimatedExecutionPlan = res.JobDefinitionStructure;
   },
   {
     "Counter": 45,
-    "SourceNodeName": "exclude duplicates"
+    "SourceNodeName": "exclude duplicates based on the Email"
   },
   {
     "Counter": 45,
-    "SourceNodeName": "save in DB"
+    "SourceNodeName": "upsert using Email as key and ignore the Id"
   },
   {
     "Counter": 45,
-    "SourceNodeName": "display ids on console"
+    "SourceNodeName": "define row to report"
+  },
+  {
+    "Counter": 1,
+    "SourceNodeName": "write summary to file"
+  },
+  {
+    "Counter": 1,
+    "SourceNodeName": "save log file"
   }
 ]
 ```
@@ -198,7 +230,7 @@ var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
 processRunner.DebugNodeStream += (sender, e) => { };
 ```
 
-The eventargs contains a chunk of values (max 1000 values per chunks) in the property `TraceContents`, and the name of the node that emitted it in the property `NodeName`.
+The event args `e` contains a chunk of values (max 1000 values per chunks) in the property `TraceContents`, and the name of the node that emitted it in the property `NodeName`.
 
 Placing a breakpoint in the event handler permits to see all the values that are processes within the ETL. Applying the following condition on the breakpoint will show only chunks of data issued by the node that parses csv files:
 
@@ -287,7 +319,7 @@ var executionOptions = new ExecutionOptions<string>
 
 ## Full source
 
-This piece of program is a typical process to make a reliable upsert of the content of every zipped csv file in a folder, with process summary and error logging... Nearly ready to deploy in production! :champagne: :beer: :cocktail: :clinking_glasses: :beers:
+This piece of program is a typical process to make a reliable upsert of the content of every zipped csv file in a folder, with process summary and error logging... Ready to deploy in production! :champagne: :beer: :cocktail: :clinking_glasses: :beers:
 
 ```cs
 using System;
@@ -307,7 +339,7 @@ namespace SimpleTutorial
         {
             var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
             processRunner.DebugNodeStream += (sender, e) => { };
-            using (var cnx = new SqlConnection(@"Server=localhost,1433;Database=SimpleTutorial;user=SimpleTutorial;password=TestEtl.TestEtl;MultipleActiveResultSets=True"))
+            using (var cnx = new SqlConnection(args[1]))
             {
                 cnx.Open();
                 var executionOptions = new ExecutionOptions<string>
@@ -335,17 +367,29 @@ namespace SimpleTutorial
             contextStream
                 .CrossApplyFolderFiles("list all required files", "*.zip", true)
                 .CrossApplyZipFiles("extract files from zip", "*.csv")
-                .CrossApplyTextFile("parse file", FlatFileDefinition.Create(i => new Person
-                {
-                    Email = i.ToColumn("email"),
-                    FirstName = i.ToColumn("first name"),
-                    LastName = i.ToColumn("last name"),
-                    DateOfBirth = i.ToDateColumn("date of birth", "yyyy-MM-dd"),
-                    Reputation = i.ToNumberColumn<int?>("reputation", ".")
-                }).IsColumnSeparated(','))
-                .Distinct("exclude duplicates", i => i.Email)
-                .SqlServerSave("save in DB", "dbo.Person", p => p.Email, p => p.Id)
-                .Do("display ids on console", i => Console.WriteLine(i.Id));
+                .CrossApplyTextFile("parse file", 
+                    FlatFileDefinition.Create(i => new Person
+                    {
+                        Email = i.ToColumn("email"),
+                        FirstName = i.ToColumn("first name"),
+                        LastName = i.ToColumn("last name"),
+                        DateOfBirth = i.ToDateColumn("date of birth", "yyyy-MM-dd"),
+                        Reputation = i.ToNumberColumn<int?>("reputation", ".")
+                    }).IsColumnSeparated(','))
+                .Distinct("exclude duplicates based on the Email", i => i.Email)
+                .SqlServerSave("upsert using Email as key and ignore the Id", 
+                    "dbo.Person", 
+                    p => p.Email, 
+                    p => p.Id)
+                .Select("define row to report", i => new { i.Email, i.Id })
+                .ToTextFileValue("write summary to file", 
+                    "report.csv", 
+                    FlatFileDefinition.Create(i => new
+                    {
+                        Email = i.ToColumn("Email"),
+                        Id = i.ToNumberColumn<int>("new or existing Id", ".")
+                    }).IsColumnSeparated(','))
+                .WriteToFile("save log file", i => i.Name);
         }
         private static void DefineTraceProcess(IStream<TraceEvent> traceStream, ISingleStream<string> contentStream)
         {

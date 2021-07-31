@@ -6,6 +6,7 @@ using Paillave.Etl.Zip;
 using Paillave.Etl.TextFile;
 using Paillave.Etl.SqlServer;
 using System.Data.SqlClient;
+using Paillave.Etl.ExecutionToolkit;
 
 namespace SimpleTutorial
 {
@@ -14,6 +15,13 @@ namespace SimpleTutorial
         static async Task Main(string[] args)
         {
             var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
+            var structure = processRunner.GetDefinitionStructure();
+            // System.IO.File.WriteAllText(
+            //     "execplan.json",
+            //     Newtonsoft.Json.JsonConvert.SerializeObject(structure, Newtonsoft.Json.Formatting.Indented)
+            // );
+            // var structure = processRunner.GetDefinitionStructure();
+            // structure.OpenEstimatedExecutionPlan();
             using (var cnx = new SqlConnection(args[1]))
             {
                 cnx.Open();
@@ -22,6 +30,13 @@ namespace SimpleTutorial
                     Resolver = new SimpleDependencyResolver().Register(cnx),
                 };
                 var res = await processRunner.ExecuteAsync(args[0], executionOptions);
+
+                // System.IO.File.WriteAllText(
+                //     "execplan.json",
+                //     Newtonsoft.Json.JsonConvert.SerializeObject(res.StreamStatisticCounters, Newtonsoft.Json.Formatting.Indented)
+                // );
+                // res.OpenActualExecutionPlan();
+
                 Console.Write(res.Failed ? "Failed" : "Succeeded");
                 if (res.Failed)
                     Console.Write($"{res.ErrorTraceEvent.NodeName}({res.ErrorTraceEvent.NodeTypeName}):{res.ErrorTraceEvent.Content.Message}");

@@ -36,7 +36,7 @@ function HomepageHeader() {
           </Link>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/tutorials/simple/backbone">
+            to="/docs/tutorials/backbone">
             ⚡ Tutorial
           </Link>
         </div>

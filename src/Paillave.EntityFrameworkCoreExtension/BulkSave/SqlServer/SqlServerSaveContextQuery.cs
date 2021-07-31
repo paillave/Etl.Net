@@ -76,6 +76,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
         {
             var sqlBulkCopy = new SqlBulkCopy(OpenAndGetSqlConnection(), SqlBulkCopyOptions.Default, null);
             sqlBulkCopy.DestinationTableName = SqlStagingTableName;
+            sqlBulkCopy.BulkCopyTimeout = 300;
             sqlBulkCopy.BatchSize = entities.Count();
             foreach (var element in PropertiesToBulkLoad)
                 sqlBulkCopy.ColumnMappings.Add(element.Name, element.GetColumnName(base.StoreObject));

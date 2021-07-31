@@ -36,7 +36,7 @@ private static void DefineProcess(ISingleStream<string> contextStream)
     `,
     description: (
       <>
-        Read all zip files from a folder, unzip csv files that are inside, parse them, exclude duplicates, upsert them, and report new or pre existing id corresponding to the email.
+        Read all zip files from a folder, unzip csv files that are inside, parse them, exclude duplicates, upsert them into database, and report new or pre existing id corresponding to the email.
       </>
     ),
   },
@@ -75,6 +75,10 @@ namespace SimpleTutorial
           Console.Write($"{res.ErrorTraceEvent.NodeName}({res.ErrorTraceEvent.NodeTypeName}):{res.ErrorTraceEvent.Content.Message}");
       }
     }
+    private static void DefineProcess(ISingleStream<string> contextStream)
+    {
+      // TODO: define your ELT process here
+    }
     private static void DefineTraceProcess(IStream<TraceEvent> traceStream, ISingleStream<string> contentStream)
     {
       traceStream
@@ -97,19 +101,6 @@ namespace SimpleTutorial
             }
           })
         .SqlServerSave("save traces", "dbo.ExecutionTrace");
-    }
-    private static void DefineProcess(ISingleStream<string> contextStream)
-    {
-      // TODO: define your ELT process here
-    }
-    private class Person
-    {
-      public int Id { get; set; }
-      public string Email { get; set; }
-      public string FirstName { get; set; }
-      public string LastName { get; set; }
-      public DateTime DateOfBirth { get; set; }
-      public int? Reputation { get; set; }
     }
     private class ExecutionLog
     {

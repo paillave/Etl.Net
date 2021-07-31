@@ -10,6 +10,12 @@ The definition of the ETL process is done in the method `DefineProcess`. The fol
 
 ## List zip files
 
+Add a reference to `Paillave.Etl.FileSystem`, the extensions to interact with the local file system: read a file, list files from folder, write file on the file system.
+
+```sh
+dotnet add package Etl.Net.FileSystem
+```
+
 By using extensions from `Paillave.Etl.FileSystem`, we will recursively list all the zip files in the root folder that was transmitted when triggering the execution:
 
 ```cs {2-3}
@@ -19,6 +25,12 @@ contextStream
 ```
 
 ## Extract the right files from zip files
+
+Add a reference to `Paillave.Etl.Zip`, the extension to Unzip and Zip files:
+
+```sh
+dotnet add package Paillave.Etl.Zip
+```
 
 By using extensions from `Paillave.Etl.Zip`, we will recursively list all the csv files contained in all the enumerated zip files:
 
@@ -30,6 +42,12 @@ contextStream
 ```
 
 ## Parse csv files
+
+Add a reference to `Paillave.Etl.TextFile`, the extensions to serialize or deserialize text files (delimited or fixed width):
+
+```sh
+dotnet add package Paillave.Etl.TextFile
+```
 
 By using extensions from `Paillave.Etl.TextFile`, we will parse every csv file that has been unzipped:
 
@@ -142,6 +160,12 @@ We will save everything in the database using the following and very common rule
 - We will exclude duplicates on the business key (the email)
 - We will make an upsert in the target table based on the business key (the email)
 - The object that is upserted is updated with the value of every field of the table, taking in consideration all the computed values at database level like the Id
+
+Add a reference to `Paillave.Etl.SqlServer`, the extensions to interact with Sql Server **without** Entity Framework:
+
+```sh
+dotnet add package Paillave.Etl.SqlServer
+```
 
 By using `Paillave.Etl.SqlServer`, save every occurrence in the database, and get updates from so that every object is exactly like it is in the table after the upsert.
 
