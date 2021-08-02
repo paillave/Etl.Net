@@ -6,7 +6,7 @@ sidebar_position: 2
 
 ![How it works](/img/azure-cloud-apps-scalability-rocket.svg)
 
-No actual installation is necessary. Just add a NuGet reference to the core package into a .NET project. On top of it add any NuGet reference to the necessary extensions packages depending on what is needed.
+No actual installation is necessary. Just add a NuGet reference to the core package into a .NET project. On top of it, add any NuGet reference to the necessary extensions packages depending on what is needed.
 
 The core package is `Paillave.Etl` that must be referenced into anything that deals with ETL.NET. Other packages `Paillave.Etl.*` are extensions.
 
@@ -21,8 +21,8 @@ Once references are added, the ETL process can be described in .NET and run anyw
 
 | NuGet Package | Type | Purpose |
 | - | - | - |
-| `Paillave.Etl` | Core | Contains the streaming mechanism, the runtime, and all essential operators that can be found in any regular ETL |
-| `Paillave.Etl.Autofac` | Runtime extension | Some operators like Entity Framework Core extension or Sql Server extensions may need some resources to work like a connection. This work with a Dependency Injection pattern. ETL.NET has an internal and very primitive DI implementation, but it can be replaced by autofac |
+| `Paillave.Etl` | Core | Contains the streaming mechanism, the runtime, and every essential operator that can be expected in any regular ETL |
+| `Paillave.Etl.Autofac` | Runtime extension | Some operators like Entity Framework Core extension or Sql Server extension may need some resources to work like a connection. This works using Dependency Injection. ETL.NET offers a very primitive DI implementation out of the box that can be replaced by this autofac wrapper implementation |
 | `Paillave.Etl.Dropbox` | Input/Output | Read or write file directly on dropbox |
 | `Paillave.Etl.EntityFrameworkCore` | Input/Output | Bulkload, save, upsert, read, make lookups using Entity Framework Core context |
 | `Paillave.Etl.ExcelFile` | Input/Output | Read or write Excel files tables |
@@ -42,6 +42,8 @@ Once references are added, the ETL process can be described in .NET and run anyw
 The definition will be done in a method that receives the trigger stream as a parameter.
 
 The execution will be done by calling the runtime.
+
+Traces can be handled by a process defined using the stream of events given by the runtime.
 
 Here is the simplest way to define and trigger an ETL the start using a string parameter from the command line:
 

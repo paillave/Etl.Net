@@ -17,7 +17,7 @@ const FeatureList = [
     Svg: require('../../static/img/dotnet-bot_microservices.svg').default,
     description: (
       <>
-        ETL.NET works with a similar principle than SSIS with ETL processes to be written in .NET like Linq queries.
+        ETL.NET works with a similar principle than SSIS, with ETL processes to be written in .NET like Linq queries.
       </>
     ),
   },

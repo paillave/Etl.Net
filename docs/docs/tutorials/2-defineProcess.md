@@ -26,7 +26,7 @@ contextStream
 
 ## Extract the right files from zip files
 
-Add a reference to `Paillave.Etl.Zip`, the extension to Unzip and Zip files:
+Add a reference to `Paillave.Etl.Zip`, the extension to Unzip files:
 
 ```sh
 dotnet add package Paillave.Etl.Zip
@@ -167,7 +167,7 @@ Add a reference to `Paillave.Etl.SqlServer`, the extensions to interact with Sql
 dotnet add package Paillave.Etl.SqlServer
 ```
 
-By using `Paillave.Etl.SqlServer`, save every occurrence in the database, and get updates from so that every object is exactly like it is in the table after the upsert.
+By using `Paillave.Etl.SqlServer`, save every occurrence in the database, and get updates so that every object is exactly like it is in the table after the upsert.
 
 ```cs {13-14}
 contextStream
@@ -186,7 +186,7 @@ contextStream
     .Do("display ids on console", i => Console.WriteLine(i.Id));
 ```
 
-## Full source
+## Full source code at this stage
 
 This piece of program is a typical process to make a reliable upsert of the content of every zipped csv file in a folder.
 

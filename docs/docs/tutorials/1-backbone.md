@@ -95,7 +95,7 @@ The execution returns an objects that gives information about the execution like
 Console.Write(res.Failed ? "Failed" : "Succeeded");
 ```
 
-## Full source at this stage
+## Full source code at this stage
 
 We now have the backbone of a console application that run an ETL process
 

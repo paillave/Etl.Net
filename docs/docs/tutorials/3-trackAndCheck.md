@@ -317,7 +317,7 @@ var executionOptions = new ExecutionOptions<string>
 
 :::
 
-## Full source
+## Full source code at this stage
 
 This piece of program is a typical process to make a reliable upsert of the content of every zipped csv file in a folder, with process summary and error logging... Ready to deploy in production! :champagne: :beer: :cocktail: :clinking_glasses: :beers:
 

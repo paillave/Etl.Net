@@ -6,7 +6,7 @@ sidebar_position: 1
 
 ![Quick start](/img/build-first-app-bot-tutorial.svg)
 
-Let's discover **ETL.NET in less than 5 minutes**.
+Let's discover **ETL.NET in 5 minutes**.
 
 ## What is ETL.NET?
 
@@ -18,6 +18,7 @@ It contains every transformation and capability of SSIS:
 - Data sources like Excel, flat files such as csv, SQL Server, Xml, Entity framework...
 - Tracing the complete activity with automatic filtering and saving capability
 - Parameterization of a process
+- Something missing? Not a problem! Any kind of extensions can implemented in a snap of a finger to create new types of data source/destination or any type of operator. ETL.NET has been designed for it.
 
 It also permits to interact out of the box with:
 
@@ -27,6 +28,7 @@ It also permits to interact out of the box with:
 - Email: send or get attachment from received emails
 - Dropbox: read or write
 - Zip: read
+- Something missing? Not a problem either! Extending ETL.NET for this purpose is simple and easy as well!
 
 It permits to trace **in detail** the entire activity of a process and use theses traces in any possible way.
 
@@ -81,3 +83,7 @@ When it is about SSIS extensibility, you have to swim quiet deep in the abyss of
 > An ETL.NET extension can be developed, debugged and used within in 5mn... literally.
 
 ETL.NET extensibility is based on a simple development wether it is embedded within the application, in another shared assembly or a Nuget package. It is as simple as a couple of lines of code since a set of base classes permits extensions to be easily implemented for most of typical use cases.
+
+## What to know more?
+
+Go to [How it works section](/docs/quickstart/principle) if you are interested in the way ETL.NET works behind the scenes.
