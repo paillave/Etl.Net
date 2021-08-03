@@ -21,35 +21,44 @@ namespace Paillave.Etl.Ftp
         {
             FtpClient client = new FtpClient(connectionParameters.Server, connectionParameters.PortNumber, new NetworkCredential(connectionParameters.Login, connectionParameters.Password));
             var certificateChecks = new List<Func<X509Certificate, bool>>();
-            if (!string.IsNullOrWhiteSpace(connectionParameters.FingerPrintSha1))
-                certificateChecks.Add(i => string.Equals(i.GetCertHashString(), connectionParameters.FingerPrintSha1.Replace(":", ""), StringComparison.InvariantCultureIgnoreCase));
-            if (!string.IsNullOrWhiteSpace(connectionParameters.SerialNumber))
-                certificateChecks.Add(i => string.Equals(i.GetSerialNumberString(), connectionParameters.SerialNumber.Replace(":", ""), StringComparison.InvariantCultureIgnoreCase));
-            if (!string.IsNullOrWhiteSpace(connectionParameters.PublicKey))
-                certificateChecks.Add(i => string.Equals(i.GetPublicKeyString(), connectionParameters.PublicKey.Replace(":", ""), StringComparison.InvariantCultureIgnoreCase));
-            if (connectionParameters.IssuerChecks != null && connectionParameters.IssuerChecks.Count > 0)
-                certificateChecks.Add(i =>
-                    connectionParameters.IssuerChecks.GroupJoin(
-                        GetDictionary(i.Issuer),
-                        l => l.Key,
-                        r => r.Key,
-                        (l, r) => string.Equals(l.Value, r.Select(i => i.Value).FirstOrDefault(), StringComparison.InvariantCultureIgnoreCase)
-                    , StringComparer.InvariantCultureIgnoreCase).All(i => i));
-            if (connectionParameters.SubjectChecks != null && connectionParameters.SubjectChecks.Count > 0)
-                certificateChecks.Add(i =>
-                    connectionParameters.SubjectChecks.GroupJoin(
-                        GetDictionary(i.Subject),
-                        l => l.Key,
-                        r => r.Key,
-                        (l, r) => string.Equals(l.Value, r.Select(i => i.Value).FirstOrDefault(), StringComparison.InvariantCultureIgnoreCase)
-                    , StringComparer.InvariantCultureIgnoreCase).All(i => i));
+            var makeChecks = !(connectionParameters.NoCheck ?? false);
+            if (makeChecks)
+            {
+                if (!string.IsNullOrWhiteSpace(connectionParameters.FingerPrintSha1))
+                    certificateChecks.Add(i => string.Equals(i.GetCertHashString(), connectionParameters.FingerPrintSha1.Replace(":", ""), StringComparison.InvariantCultureIgnoreCase));
+                if (!string.IsNullOrWhiteSpace(connectionParameters.SerialNumber))
+                    certificateChecks.Add(i => string.Equals(i.GetSerialNumberString(), connectionParameters.SerialNumber.Replace(":", ""), StringComparison.InvariantCultureIgnoreCase));
+                if (!string.IsNullOrWhiteSpace(connectionParameters.PublicKey))
+                    certificateChecks.Add(i => string.Equals(i.GetPublicKeyString(), connectionParameters.PublicKey.Replace(":", ""), StringComparison.InvariantCultureIgnoreCase));
+                if (connectionParameters.IssuerChecks != null && connectionParameters.IssuerChecks.Count > 0)
+                    certificateChecks.Add(i =>
+                        connectionParameters.IssuerChecks.GroupJoin(
+                            GetDictionary(i.Issuer),
+                            l => l.Key,
+                            r => r.Key,
+                            (l, r) => string.Equals(l.Value, r.Select(i => i.Value).FirstOrDefault(), StringComparison.InvariantCultureIgnoreCase)
+                        , StringComparer.InvariantCultureIgnoreCase).All(i => i));
+                if (connectionParameters.SubjectChecks != null && connectionParameters.SubjectChecks.Count > 0)
+                    certificateChecks.Add(i =>
+                        connectionParameters.SubjectChecks.GroupJoin(
+                            GetDictionary(i.Subject),
+                            l => l.Key,
+                            r => r.Key,
+                            (l, r) => string.Equals(l.Value, r.Select(i => i.Value).FirstOrDefault(), StringComparison.InvariantCultureIgnoreCase)
+                        , StringComparer.InvariantCultureIgnoreCase).All(i => i));
+            }
             if (certificateChecks.Count > 0)
             {
-                client.ValidateAnyCertificate = false;
-                client.EncryptionMode = FtpEncryptionMode.Explicit;
+                client.ValidateAnyCertificate = !makeChecks;
+
+                if (connectionParameters.Tls ?? false)
+                    client.EncryptionMode = FtpEncryptionMode.Explicit;
+                else if (connectionParameters.Ssl ?? false)
+                    client.EncryptionMode = FtpEncryptionMode.Implicit;
+
                 client.ValidateCertificate += (c, e) => e.Accept = certificateChecks.All(certificateCheck => certificateCheck(e.Certificate));
             }
-            // client.Connect();
+            client.Connect();
             return client;
         }
     }

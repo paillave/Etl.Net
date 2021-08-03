@@ -20,6 +20,9 @@ namespace Paillave.Etl.Ftp
         public Dictionary<string, string> IssuerChecks { get; set; }
         public string PublicKey { get; set; }
         public int MaxAttempts { get; set; } = 3;
+        public bool? Ssl { get; set; }
+        public bool? Tls { get; set; }
+        public bool? NoCheck { get; set; }
     }
     public class FtpAdapterProviderParameters
     {

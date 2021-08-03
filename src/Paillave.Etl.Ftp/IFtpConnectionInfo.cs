@@ -12,6 +12,9 @@ namespace Paillave.Etl.Ftp
         string SerialNumber { get; set; }
         string PublicKey { get; set; }
         int MaxAttempts { get; set; }
+        bool? Ssl { get; set; }
+        bool? Tls { get; set; }
+        bool? NoCheck { get; set; }
         Dictionary<string, string> SubjectChecks { get; set; }
         Dictionary<string, string> IssuerChecks { get; set; }
     }
