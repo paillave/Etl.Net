@@ -2,7 +2,7 @@
 sidebar_position: 9
 ---
 
-# Link or join streams
+# Combine streams
 
 ## Select
 
@@ -11,3 +11,5 @@ sidebar_position: 9
 ## Lookup
 
 ## Union
+
+## Substract
