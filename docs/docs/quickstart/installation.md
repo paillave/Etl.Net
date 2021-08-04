@@ -45,7 +45,7 @@ The execution will be done by calling the runtime.
 
 Traces can be handled by a process defined using the stream of events given by the runtime.
 
-Here is the simplest way to define and trigger an ETL the start using a string parameter from the command line:
+Here is the simplest way to define and trigger an ETL that starts using a string parameter from the command line:
 
 ```cs title="Program.cs"
 using System;
