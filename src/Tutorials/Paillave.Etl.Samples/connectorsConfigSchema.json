@@ -124,6 +124,64 @@
         "Password": {
           "type": "string",
           "minLength": 1
+        },
+        "FingerPrintSha1": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "SerialNumber": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "SubjectChecks": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "IssuerChecks": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "PublicKey": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "MaxAttempts": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "Ssl": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "Tls": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "NoCheck": {
+          "type": [
+            "boolean",
+            "null"
+          ]
         }
       }
     },
@@ -146,6 +204,9 @@
               "null",
               "string"
             ]
+          },
+          "Recursive": {
+            "type": "boolean"
           },
           "Name": {
             "type": "string",
@@ -240,6 +301,10 @@
             "null",
             "string"
           ]
+        },
+        "MaxAttempts": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
@@ -340,6 +405,67 @@
             "null",
             "string"
           ]
+        },
+        "Secured": {
+          "type": "boolean"
+        },
+        "MaxAttempts": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "Sources_Mail": {
+      "title": "Sources_Mail",
+      "type": "object",
+      "additionalProperties": {
+        "title": "MailAdapterProviderParameters",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "OnlyNotRead": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "FromContains": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "ToContains": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "SubjectContains": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "AttachmentNamePattern": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "Folder": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "SetToReadIfBatchDeletion": {
+            "type": "boolean"
+          },
+          "Name": {
+            "type": "string",
+            "additionalProperties": false
+          }
         }
       }
     },
@@ -355,6 +481,9 @@
           "To"
         ],
         "properties": {
+          "ToFromMetadata": {
+            "type": "boolean"
+          },
           "From": {
             "type": "string",
             "minLength": 1
@@ -408,61 +537,11 @@
         "Connection": {
           "$ref": "#/definitions/MailAdapterConnectionParameters"
         },
+        "Providers": {
+          "$ref": "#/definitions/Sources_Mail"
+        },
         "Processors": {
           "$ref": "#/definitions/Processes_Mail"
-        }
-      }
-    },
-    "ZipAdapterConnectionParameters": {
-      "title": "ZipAdapterConnectionParameters",
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "Password": {
-          "type": [
-            "null",
-            "string"
-          ]
-        }
-      }
-    },
-    "Processes_Zip": {
-      "title": "Processes_Zip",
-      "type": "object",
-      "additionalProperties": {
-        "title": "ZipAdapterProcessorParameters",
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "FileNamePattern": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "Name": {
-            "type": "string",
-            "additionalProperties": false
-          }
-        }
-      }
-    },
-    "Adapter_Zip": {
-      "title": "Adapter_Zip",
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "Type"
-      ],
-      "properties": {
-        "Type": {
-          "pattern": "^Zip$"
-        },
-        "Connection": {
-          "$ref": "#/definitions/ZipAdapterConnectionParameters"
-        },
-        "Processors": {
-          "$ref": "#/definitions/Processes_Zip"
         }
       }
     },
@@ -495,12 +574,6 @@
               "enum": [
                 "Mail"
               ]
-            },
-            {
-              "description": "Handle zip files",
-              "enum": [
-                "Zip"
-              ]
             }
           ]
         }
@@ -517,9 +590,6 @@
         },
         {
           "$ref": "#/definitions/Adapter_Mail"
-        },
-        {
-          "$ref": "#/definitions/Adapter_Zip"
         }
       ]
     }

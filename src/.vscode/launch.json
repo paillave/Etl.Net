@@ -32,5 +32,19 @@
             "stopAtEntry": false,
             "console": "externalTerminal"
         },
+        {
+            "name": "LargeImport",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/Tutorials/Paillave.Etl.Samples/bin/Debug/net5.0/Paillave.Etl.Samples.dll",
+            "args": [
+                "data",
+                "Server=localhost,1433;Database=BlogTutorial;user=BlogTutorial;password=TestEtl.TestEtl;MultipleActiveResultSets=True"
+            ],
+            "cwd": "${workspaceFolder}/Tutorials/Paillave.Etl.Samples",
+            "stopAtEntry": false,
+            "console": "externalTerminal"
+        },
     ]
 }

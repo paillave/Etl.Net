@@ -53,6 +53,7 @@ namespace Paillave.Etl.FileSystem
                     Recursive = recursive,
                     GetResult = selector
                 }), noParallelisation);
+        [Obsolete("KISS & YAGNI")]
         public static IStream<IFileValue> WriteToFile(this IStream<IFileValue> stream, string name, ISingleStream<string> outputFilePathStream)
         {
             return new WriteToFileStreamNode<string>(name, new WriteToFileArgs<string>
@@ -70,6 +71,7 @@ namespace Paillave.Etl.FileSystem
                 GetOutputFilePath = getOutputFilePath
             }).Output;
         }
+        [Obsolete("KISS & YAGNI")]
         public static IStream<IFileValue> WriteToFile<TParam>(this IStream<IFileValue> stream, string name, ISingleStream<TParam> outputFilePathStream, Func<TParam, string> getOutputFilePath)
         {
             return new WriteToFileStreamNode<TParam>(name, new WriteToFileArgs<TParam>

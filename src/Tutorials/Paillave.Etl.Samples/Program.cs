@@ -23,8 +23,7 @@ namespace Paillave.Etl.Samples
                 new FileSystemProviderProcessorAdapter(),
                 new FtpProviderProcessorAdapter(),
                 new SftpProviderProcessorAdapter(),
-                new MailProviderProcessorAdapter(),
-                new ZipProviderProcessorAdapter());
+                new MailProviderProcessorAdapter());
         public static void CreateConnectorConfigurationFileSchema()
             => File.WriteAllText(Path.Combine(Environment.CurrentDirectory, "connectorsConfigSchema.json"), CreateConfigurationFileValueConnectorParser().GetConnectorsSchemaJson());
 

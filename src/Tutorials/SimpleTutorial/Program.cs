@@ -65,6 +65,26 @@ namespace SimpleTutorial
               }).IsColumnSeparated(','))
               .WriteToFile("save log file", i => i.Name);
         }
+        private static void DefineProcess2(ISingleStream<string> stream)
+        {
+            var connectionParameters = new Paillave.Etl.Ftp.FtpAdapterConnectionParameters
+            {
+                Server = "my.ftp.server",
+                Login = "my.login",
+                Password = "P@SSW0RD",
+            };
+            var providerParameters = new Paillave.Etl.Ftp.FtpAdapterProviderParameters
+            {
+                SubFolder = "filesToPick"
+            };
+            stream.Select("create file", _ => FileValueWriter
+                    .Create("fileExport.csv")
+                    .Write("Here is the content of the file"))
+                .WriteToFile("write to folder", i => i.Name);
+            stream
+                .CrossApply("azeazea", new Paillave.Etl.Ftp.FtpFileValueProvider("SRC", "Misc Source files", "files from ftp", connectionParameters, providerParameters))
+                .Do("print file name to console", i => Console.WriteLine(i.Name));
+        }
         private class Person
         {
             public int Id { get; set; }

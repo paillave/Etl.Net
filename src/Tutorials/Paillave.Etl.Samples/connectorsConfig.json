@@ -1,20 +1,43 @@
 {
     "$schema": "./connectorsConfigSchema.json",
-    "inputFiles": {
-        "Type": "FileSystem",
+    "inputFilesForSomePartnerFTP": {
+        "Type": "Ftp",
         "Connection": {
-            "RootFolder": "/home/stephane/Documents/Sources/Etl.Net/src/Paillave.Etl.Samples/InputFiles"
+            "Server": "ftp.server",
+            "Login": "login",
+            "Password": "password",
+            "RootFolder": "myBusinessHere"
         },
         "Providers": {
-            "PTF": {
-                "FileNamePattern": "*.Portfolios.csv"
-            },
             "POS": {
-                "FileNamePattern": "*.Positions.csv"
+                "FileNamePattern": "*.Positions.csv",
+                "SubFolder": "exports"
             }
+        }
+    },
+    "inputFilesForSomePartnerEMail": {
+        "Type": "Mail",
+        "Connection": {
+            "Server": "sdfsdfg",
+            "Login": "login",
+            "Password": "pass"
         },
         "Processors": {
-            "OUT": {}
+            "OUT":{
+                "Body": "Hello, <br>Here is your file.",
+                "Subject": "New file",
+                "From": "noreply@dummy.com",
+                "FromDisplayName": "ETL.NET",
+                "To": "an.email@a.company.com"
+            }
+        },
+        "Providers": {
+            "PTF":{
+                "AttachmentNamePattern": "*.Portfolios.csv",
+                "SetToReadIfBatchDeletion": true,
+                "OnlyNotRead": true,
+                "FromContains": "@the.sender.com"
+            }
         }
     }
 }

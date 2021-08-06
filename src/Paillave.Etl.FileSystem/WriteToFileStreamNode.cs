@@ -5,6 +5,7 @@ using System.IO;
 
 namespace Paillave.Etl.FileSystem
 {
+    [Obsolete("KISS & YAGNI")]
     public class WriteToFileArgs<TParams>
     {
         public IStream<IFileValue> Stream { get; set; }
@@ -15,6 +16,7 @@ namespace Paillave.Etl.FileSystem
     /// Write a data Stream into a file
     /// </summary>
     /// <typeparam name="TParams"></typeparam>
+    [Obsolete("KISS & YAGNI")]
     public class WriteToFileStreamNode<TParams> : StreamNodeBase<IFileValue, IStream<IFileValue>, WriteToFileArgs<TParams>>
     {
         public WriteToFileStreamNode(string name, WriteToFileArgs<TParams> args) : base(name, args) { }
