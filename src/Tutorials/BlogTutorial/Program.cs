@@ -71,12 +71,12 @@ namespace BlogTutorial
             var authorStream = rowStream
                 .Distinct("remove author duplicates based on emails", i => i.Email)
                 .Select("create author instance", i => new Author { Email = i.Email, Name = i.Author })
-                .EfCoreSaveCorrelated("save authors", o => o.SeekOn(i => i.Email).AlternativelySeekOn(i => i.Name));
+                .EfCoreSave("save authors", o => o.SeekOn(i => i.Email).AlternativelySeekOn(i => i.Name));
 
             var categoryStream = rowStream
                 .Distinct("remove category duplicates", i => i.Category)
                 .Select("create category instance", i => new Category { Code = i.Category, Name = i.Category })
-                .EfCoreSaveCorrelated("save categories", o => o.SeekOn(i => i.Code).DoNotUpdateIfExists());
+                .EfCoreSave("save categories", o => o.SeekOn(i => i.Code).DoNotUpdateIfExists());
 
             var postStream = rowStream
                 .CorrelateToSingle("get related category", categoryStream, (l, r) => new { Row = l, Category = r })
@@ -98,7 +98,7 @@ namespace BlogTutorial
                         Title = i.Row.Title,
                         Text = i.Row.Post
                     })
-                .EfCoreSaveCorrelated("save posts", o => o.SeekOn(i => new { i.AuthorId, i.DateTime }));
+                .EfCoreSave("save posts", o => o.SeekOn(i => new { i.AuthorId, i.DateTime }));
         }
     }
 }
