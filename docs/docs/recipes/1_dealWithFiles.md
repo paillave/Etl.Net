@@ -44,7 +44,7 @@ These direct extension methods are implement only for the file system. For other
 
 ### Get files
 
-Extensions from `Paillave.Etl.FileSystem` directly contains a method to get files from teh file system: `CrossApplyFolderFiles`
+Extensions from `Paillave.Etl.FileSystem` directly contains a method to get files from the file system: `CrossApplyFolderFiles`
 
 From a stream of `string`, recursively get every zip file that is in each folder given by the source stream:
 
@@ -108,7 +108,7 @@ stream
     .Do("print file name to console", i => Console.WriteLine(i.Name));
 ```
 
-## Get or Write file on any source type
+## Get or Write file on any source type: Connectors
 
 ETL.NET provides a system for this purpose that permits to access any source type in a complete abstract way: Connectors.
 
@@ -118,8 +118,6 @@ A connector is identified by its code. And that's this code that is used in the 
 Whatever the way they are created, connector definitions are embedded into an instance of `FileValueConnectors` that must be set to the property `Connectors` of the `ExecutionOptions` that will be given to the `ExecuteAsync` of the process runner.
 
 Here we will create 2 input connectors: "PTF" and "POS", and one output connector: "OUT".
-
-### Create connectors from code
 
 An input connector is created by registering a **file value provider** taken from the necessary extension.
 An output connector is created by registering a **file value processor** taken from the necessary extension.
@@ -135,7 +133,28 @@ var executionOptions = new ExecutionOptions<string>
 var res = await processRunner.ExecuteAsync(args, executionOptions);
 ```
 
-### Create connectors from config file
+Using connectors is done the following way:
+
+```cs {2,14,16}
+contextStream
+    .FromConnector("Get portfolio files", "PTF")
+    .CrossApplyTextFile("Parse portfolio file", FlatFileDefinition.Create(i => new
+    {
+        SicavCode = i.ToColumn("SicavCode"),
+        SicavName = i.ToColumn("SicavName"),
+        SicavType = i.ToColumn("SicavType"),
+        PortfolioCode = i.ToColumn("PortfolioCode"),
+        PortfolioName = i.ToColumn("PortfolioName")
+    }).IsColumnSeparated(','))
+    .Do("print portfolio names to console", i => Console.WriteLine(i.PortfolioName));
+
+contextStream
+    .FromConnector("Get position files", "POS")
+    .Do("print position file names to console", i => Console.WriteLine(i.Name))
+    .ToConnector("Save copy of position file", "OUT");
+```
+
+## Create connectors from config file
 
 All this is possible with the runtime extension `Paillave.Etl.FromConfigurationConnectors`.
 
@@ -183,13 +202,17 @@ To have the same connectors than the ones that are hard coded above, the json de
             }
         },
         "Processors": {
-            "OUT": {
-                "SubFolder": "OutputFiles"
-            }
+            "OUT": { "SubFolder": "OutputFiles" }
         }
     }
 }
 ```
+
+:::note
+
+Properties of `connection`, `processor` and `providers` are the same than the ones of the connection parameter, the processor parameter and the provider parameter object that is given to a file value provider or processor.
+
+:::
 
 Here is a more complex definition that uses other communication types but that is supposed to be the same to the eyes of the process that will use it:
 
@@ -210,7 +233,7 @@ Here is a more complex definition that uses other communication types but that i
             }
         }
     },
-    "inputFilesForSomePartnerEMail": {
+    "someEmailsConnectors": {
         "Type": "Mail",
         "Connection": {
             "Server": "sdfsdfg",
@@ -255,16 +278,10 @@ In the json file to define connectors, just add the `$schema` directive this way
     "$schema": "./connectorsConfigSchema.json",
     "inputFiles": {
         "Type": "FileSystem",
-        "Connection": {
-            "RootFolder": "<path to the root folder of files used for some partner>"
-        },
+        "Connection": { "RootFolder": "<path to the root folder of files used for some partner>" },
         "Providers": {
-            "PTF": {
-                "FileNamePattern": "*.Portfolios.csv"
-            },
-            "POS": {
-                "FileNamePattern": "*.Positions.csv"
-            }
+            "PTF": { "FileNamePattern": "*.Portfolios.csv" },
+            "POS": { "FileNamePattern": "*.Positions.csv" }
         },
         "Processors": {
             "OUT": {}
@@ -273,9 +290,95 @@ In the json file to define connectors, just add the `$schema` directive this way
 }
 ```
 
-## Send emails to different recipients depending on the file
+## Send emails to a different recipients depending on the file
 
-As shown above, it is possible to send and receive files by emails. The example above sends email to a fixed email, but in many occasions each file potentially has a different recipient.
+As shown above, it is possible to send and receive files by emails. The example above sends email to a fixed email, but in many occasions the recipient depends on the file itself. The solution for this is to use the destination metadata.
 
-The principle here is to 
- to `IFileValueWithDestinationMetadata`
+As seen higher a `IFileValue` has a property `Metadata` of the type `IFileValueMetadata`. If this metadata inherits `IFileValueWithDestinationMetadata` instead, `Destinations` can be used by the mail processor (what sends emails).
+
+```cs title="IFileValueWithDestinationMetadata.cs"
+using System.Collections.Generic;
+
+namespace Paillave.Etl.Core
+{
+    public interface IFileValueWithDestinationMetadata : IFileValueMetadata
+    {
+        Dictionary<string, IEnumerable<Destination>> Destinations { get; set; }
+    }
+    public class Destination
+    {
+        public string DisplayName { get; set; }
+        public string Email { get; set; }
+        public string StreetAddress { get; set; }
+        public string ZipCode { get; set; }
+        public string Location { get; set; }
+        public string Country { get; set; }
+        public string Culture {get;set;}
+    }
+}
+```
+
+As an example, here is a way to create a file containing some arbitrary content and to send it by email if the connector is meant for it:
+
+```cs
+stream
+    .Select("create file", someContent => FileValueWriter
+        .Create("fileExport.txt", new Dictionary<string, IEnumerable<Destination>>
+            { 
+                ["Sale"] = new []{ new Destination { DisplayName = "The display name of the sale", Email = "sale@a.domain.com" } },
+                ["Client"] = new []{ new Destination { DisplayName = "The display name of the client", Email = "client@another.domain.com" } }
+            })
+        .Write(someContent))
+    .ToConnector("Send to sale", "SALES")
+    .ToConnector("Send to client", "CLIENTS");
+```
+
+The configuration file can be this one for test environment:
+
+```json title="connectors.test.json"
+{
+    "$schema": "./connectorsConfigSchema.json",
+    "inputFiles": {
+        "Type": "FileSystem",
+        "Connection": { "RootFolder": "<path to the root folder of output test files>" },
+        "Processors": {
+            "SALES": { "SubFolder": "SalesFiles" },
+            "CLIENTS": { "SubFolder": "ClientsFiles" }
+        }
+    }
+}
+```
+
+And it can be this one for production environment:
+
+```json title="connectors.prod.json"
+{
+    "$schema": "./connectorsConfigSchema.json",
+    "someEmailsConnectors": {
+        "Type": "Mail",
+        "Connection": {
+            "Server": "sdfsdfg",
+            "Login": "login",
+            "Password": "pass"
+        },
+        "Processors": {
+            "SALES":{
+                "Body": "Dear {Destination.DisplayName}, <br>Here is your file.",
+                "Subject": "New file",
+                "From": "noreply@dummy.com",
+                "FromDisplayName": "ETL.NET",
+                "ToFromMetadata": true,
+                "To": "Sale"
+            },
+            "CLIENTS":{
+                "Body": "Dear {Destination.DisplayName}, <br>Here is your invoice.",
+                "Subject": "Invoice",
+                "From": "invoice.service@dummy.com",
+                "FromDisplayName": "ETL.NET",
+                "ToFromMetadata": true,
+                "To": "Client"
+            }
+        },
+    }
+}
+```

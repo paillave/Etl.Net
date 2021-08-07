@@ -60,7 +60,7 @@ namespace Paillave.Etl.TextFile
         #endregion
 
         #region ToTextFile
-        public static ISingleStream<IFileValue> ToTextFileValue<TIn>(this IStream<TIn> stream, string name, string fileName, FlatFileDefinition<TIn> mapping, Dictionary<string, List<Destination>> destinations = null, object extraMetadata = null, Encoding encoding = null)
+        public static ISingleStream<IFileValue> ToTextFileValue<TIn>(this IStream<TIn> stream, string name, string fileName, FlatFileDefinition<TIn> mapping, Dictionary<string, IEnumerable<Destination>> destinations = null, object extraMetadata = null, Encoding encoding = null)
         {
             return new ToFileValueStreamNode<TIn, TIn>(name, new ToTextDataStreamArgs<TIn, TIn>
             {
@@ -73,7 +73,7 @@ namespace Paillave.Etl.TextFile
                 Destinations = destinations
             }).Output;
         }
-        public static ISingleStream<IFileValue> ToTextFileValue<TIn>(this IStream<Correlated<TIn>> stream, string name, string fileName, FlatFileDefinition<TIn> mapping, Dictionary<string, List<Destination>> destinations = null, object extraMetadata = null, Encoding encoding = null)
+        public static ISingleStream<IFileValue> ToTextFileValue<TIn>(this IStream<Correlated<TIn>> stream, string name, string fileName, FlatFileDefinition<TIn> mapping, Dictionary<string, IEnumerable<Destination>> destinations = null, object extraMetadata = null, Encoding encoding = null)
         {
             return new ToFileValueStreamNode<Correlated<TIn>, TIn>(name, new ToTextDataStreamArgs<Correlated<TIn>, TIn>
             {

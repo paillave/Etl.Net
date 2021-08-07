@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -10,6 +11,9 @@ namespace Paillave.Etl.Core
         private readonly StreamWriter _streamWriter;
         public FileValueWriter(TMetadata metadata, string name, Encoding encoding = null, int bufferSize = -1)
             => (_streamWriter, Name, Metadata) = (new StreamWriter(new MemoryStream(), encoding, bufferSize, true), name, metadata);
+
+        public FileValueWriter(TMetadata metadata, Dictionary<string, IEnumerable<Destination>> destinations, string name, Encoding encoding = null, int bufferSize = -1)
+            => (_streamWriter, Name, Metadata, Destinations) = (new StreamWriter(new MemoryStream(), encoding, bufferSize, true), name, metadata, destinations);
 
         public FileValueWriter<TMetadata> Write(string format, params object[] arg)
         {
@@ -83,10 +87,11 @@ namespace Paillave.Etl.Core
         }
 
 
+        public Dictionary<string, IEnumerable<Destination>> Destinations { get; }
         public TMetadata Metadata { get; }
         public virtual string SourceType => this.Metadata.Type;
         public Type MetadataType => typeof(TMetadata);
-        IFileValueMetadata IFileValue.Metadata => this.Metadata;
+        IFileValueMetadata IFileValue.Metadata => new MiscFileValueMetadata { ExtraMetadata = this.Metadata, Destinations = this.Destinations };
         public string Name { get; }
         public void Delete() { }
         public Stream GetContent()
@@ -103,11 +108,16 @@ namespace Paillave.Etl.Core
     {
         public static FileValueWriter<TMetadata> Create<TMetadata>(TMetadata metadata, string name, Encoding encoding = null, int bufferSize = -1)
             where TMetadata : IFileValueMetadata => new FileValueWriter<TMetadata>(metadata, name, encoding, bufferSize);
-        // public static FileValueWriter<TMetadata> Create<TMetadata>(TMetadata metadata, string name, Stream stream, Encoding encoding = null, int bufferSize = -1)
-        //     where TMetadata : IFileValueMetadata => new FileValueWriter<TMetadata>(metadata, name, stream, encoding, bufferSize);
+        public static FileValueWriter<TMetadata> Create<TMetadata>(TMetadata metadata, Dictionary<string, IEnumerable<Destination>> destinations, string name, Encoding encoding = null, int bufferSize = -1)
+            where TMetadata : IFileValueMetadata => new FileValueWriter<TMetadata>(metadata, destinations, name, encoding, bufferSize);
         public static FileValueWriter<NoSourceFileValueMetadata> Create(string name, Encoding encoding = null, int bufferSize = -1)
             => new FileValueWriter<NoSourceFileValueMetadata>(new NoSourceFileValueMetadata(""), name, encoding, bufferSize);
-        // public static FileValueWriter<NoSourceFileValueMetadata> Create<TMetadata>(string name, Stream stream, Encoding encoding = null, int bufferSize = -1)
-        //     => new FileValueWriter<NoSourceFileValueMetadata>(new NoSourceFileValueMetadata(""), name, stream, encoding, bufferSize);
+        public static FileValueWriter<NoSourceFileValueMetadata> Create(string name, Dictionary<string, IEnumerable<Destination>> destinations, Encoding encoding = null, int bufferSize = -1)
+            => new FileValueWriter<NoSourceFileValueMetadata>(new NoSourceFileValueMetadata(""), destinations, name, encoding, bufferSize);
+    }
+    public class MiscFileValueMetadata : FileValueMetadataBase, IFileValueWithDestinationMetadata
+    {
+        public Dictionary<string, IEnumerable<Destination>> Destinations { get; set; }
+        public object ExtraMetadata { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace Paillave.Etl.Mail
             {
                 IFileValueWithDestinationMetadata destinationMetadata = metadata as IFileValueWithDestinationMetadata;
                 var tos = processorParameters.To.Split(";")
-                    .SelectMany(to => (destinationMetadata?.Destinations ?? new Dictionary<string, List<Destination>>(StringComparer.InvariantCultureIgnoreCase))
+                    .SelectMany(to => (destinationMetadata?.Destinations ?? new Dictionary<string, IEnumerable<Destination>>(StringComparer.InvariantCultureIgnoreCase))
                         .TryGetValue(to, out var destinations)
                             ? destinations ?? new List<Destination>()
                             : new List<Destination>())

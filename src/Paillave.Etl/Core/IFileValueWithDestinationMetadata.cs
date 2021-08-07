@@ -4,7 +4,7 @@ namespace Paillave.Etl.Core
 {
     public interface IFileValueWithDestinationMetadata : IFileValueMetadata
     {
-        Dictionary<string, List<Destination>> Destinations { get; set; }
+        Dictionary<string, IEnumerable<Destination>> Destinations { get; set; }
     }
     public class Destination
     {
