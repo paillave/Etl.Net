@@ -7,6 +7,7 @@ using Paillave.Etl.TextFile;
 using Paillave.Etl.SqlServer;
 using System.Data.SqlClient;
 using Paillave.Etl.ExecutionToolkit;
+using System.Linq;
 
 namespace SimpleTutorial
 {
@@ -14,7 +15,7 @@ namespace SimpleTutorial
     {
         static async Task Main(string[] args)
         {
-            var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
+            var processRunner = StreamProcessRunner.Create<string>(DefineProcess4);
             var structure = processRunner.GetDefinitionStructure();
             // System.IO.File.WriteAllText(
             //     "execplan.json",
@@ -84,6 +85,71 @@ namespace SimpleTutorial
             stream
                 .CrossApply("azeazea", new Paillave.Etl.Ftp.FtpFileValueProvider("SRC", "Misc Source files", "files from ftp", connectionParameters, providerParameters))
                 .Do("print file name to console", i => Console.WriteLine(i.Name));
+        }
+        private static void DefineProcess3(ISingleStream<string> stream)
+        {
+            var streamOfRows = stream
+                .CrossApply("produce a list of dummy values for ", _ => Enumerable.Range(0, 100).Select(idx => new { Index = idx, Name = $"Index {idx}", CategoryId = idx % 3 }));
+
+            var fileStream = streamOfRows
+                .ToList("aggregate all rows")
+                .Select("create file", rows => FileValueWriter
+                    .Create("fileExport.txt")
+                    .WriteLine("this content has no specific format")
+                    .Write(String.Join(", ", rows.Select(row => row.Name).ToList())));
+
+            fileStream.WriteToFile("write to folder", i => i.Name);
+        }
+        private static void DefineProcess6(ISingleStream<string> stream)
+        {
+            var streamOfRows = stream
+                .CrossApply("produce a list of dummy values for ", _ => Enumerable.Range(0, 100).Select(idx => new { Index = idx, Name = $"Index {idx}", CategoryId = idx % 3 }));
+
+            var fileStream = streamOfRows
+                .Select("create row to save", i => new { i.Index, i.Name })
+                .ToTextFileValue("save into csv file", $"fileExport.csv", FlatFileDefinition.Create(i => new
+                {
+                    Index = i.ToNumberColumn<int>("Idx", "."),
+                    Name = i.ToColumn("Title")
+                }).IsColumnSeparated(','));
+
+            fileStream.WriteToFile("write to folder", i => i.Name);
+        }
+        private static void DefineProcess4(ISingleStream<string> stream)
+        {
+            stream
+                .CrossApply("produce a list of dummy values for ", _ => Enumerable.Range(0, 100).Select(idx => new { Index = idx, Name = $"Index {idx}", CategoryId = idx % 3 }))
+                .GroupBy("process per group", i => i.CategoryId, (subStream, firstRow) => subStream
+                    .ToList("aggregate all rows")
+                    .Select("create file", rows => FileValueWriter
+                        .Create($"fileExport{firstRow.CategoryId}.txt")
+                        .WriteLine($"here is the list of indexes in the category {firstRow.CategoryId}")
+                        .Write(String.Join(", ", rows.Select(row => row.Name).ToList()))))
+                .WriteToFile("write to folder", i => i.Name);
+        }
+        private static void DefineProcess7(ISingleStream<string> stream)
+        {
+            stream
+                .CrossApply("produce a list of dummy values for ", _ => Enumerable.Range(0, 100).Select(idx => new { Index = idx, Name = $"Index {idx}", CategoryId = idx % 3 }))
+                .GroupBy("process per group", i => i.CategoryId)
+                .Select("create file", rows => FileValueWriter
+                    .Create($"otherFileExport{rows.FirstValue.CategoryId}.txt")
+                    .WriteLine($"here is the list of indexes in the category {rows.FirstValue.CategoryId}")
+                    .Write(String.Join(", ", rows.Aggregation.Select(row => row.Name).ToList())))
+                .WriteToFile("write to folder", i => i.Name);
+        }
+        private static void DefineProcess5(ISingleStream<string> stream)
+        {
+            stream
+                .CrossApply("produce a list of dummy values for ", _ => Enumerable.Range(0, 100).Select(idx => new { Index = idx, Name = $"Index {idx}", CategoryId = idx % 3 }))
+                .GroupBy("process per group", i => i.CategoryId, (subStream, firstRow) => subStream
+                    .Select("create row to save", i => new { i.Index, i.Name })
+                    .ToTextFileValue("save into csv file", $"fileExport{firstRow?.CategoryId}.csv", FlatFileDefinition.Create(i => new
+                    {
+                        Index = i.ToNumberColumn<int>("Idx", "."),
+                        Name = i.ToColumn("Title")
+                    })))
+                .WriteToFile("write to folder", i => i.Name);
         }
         private class Person
         {

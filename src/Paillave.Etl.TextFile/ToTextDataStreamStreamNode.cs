@@ -14,6 +14,7 @@ namespace Paillave.Etl.TextFile
         public Func<TIn, TRow> GetRow { get; set; }
         public FlatFileDefinition<TRow> Mapping { get; set; }
         public string FileName { get; set; }
+        public Func<TIn, string> GetFileName { get; set; }
         public Encoding Encoding { get; set; }
         public Dictionary<string, IEnumerable<Destination>> Destinations { get; set; }
         public object Metadata { get; set; }

@@ -11,12 +11,13 @@ namespace Paillave.Etl.Reactive.Operators
         private class KeySortedGroupSubject
         {
             public TKey Key { get; set; }
+            public TIn FirstElement { get; set; }
             public IPushSubject<TIn> PushSubject { get; set; }
             public IDisposable OutputSubscription { get; set; }
         }
         private KeySortedGroupSubject _currentGroup = null;
         private readonly Func<TIn, TKey> _getKey;
-        private readonly Func<IPushObservable<TIn>, IPushObservable<TOut>> _groupedObservableTransformation;
+        private readonly Func<IPushObservable<TIn>, TIn, IPushObservable<TOut>> _groupedObservableTransformation;
         private IDisposable _sourceSubscription;
         // private IDisposableManager _outSubscriptions = new CollectionDisposableManager();
         // private Dictionary<TKey, KeySortedGroupSubject> _observableDictionary = new Dictionary<TKey, KeySortedGroupSubject>();
@@ -24,7 +25,7 @@ namespace Paillave.Etl.Reactive.Operators
         public SortedGroupSubjectSubject(
             IPushObservable<TIn> sourceS,
             Func<TIn, TKey> getKey,
-            Func<IPushObservable<TIn>, IPushObservable<TOut>> groupedObservableTransformation) : base(sourceS.CancellationToken)
+            Func<IPushObservable<TIn>, TIn, IPushObservable<TOut>> groupedObservableTransformation) : base(sourceS.CancellationToken)
         {
             _getKey = getKey;
             _groupedObservableTransformation = groupedObservableTransformation;
@@ -49,9 +50,10 @@ namespace Paillave.Etl.Reactive.Operators
                     _currentGroup = new KeySortedGroupSubject
                     {
                         Key = key,
+                        FirstElement = value,
                         PushSubject = new PushSubject<TIn>(base.CancellationToken)
                     };
-                    _currentGroup.OutputSubscription = _groupedObservableTransformation(_currentGroup.PushSubject).Subscribe(
+                    _currentGroup.OutputSubscription = _groupedObservableTransformation(_currentGroup.PushSubject, value).Subscribe(
                         i => OnOutputPushValue(_currentGroup, i),
                         () => OnOutputCompleted(_currentGroup),
                         e => OnOutputException(_currentGroup, e)
@@ -113,7 +115,7 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TOut> SortedGroup<TIn, TKey, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, TKey> getKey, Func<IPushObservable<TIn>, IPushObservable<TOut>> parallelProcess)
+        public static IPushObservable<TOut> SortedGroup<TIn, TKey, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, TKey> getKey, Func<IPushObservable<TIn>, TIn, IPushObservable<TOut>> parallelProcess)
         {
             return new SortedGroupSubjectSubject<TIn, TKey, TOut>(sourceS, getKey, parallelProcess);
         }

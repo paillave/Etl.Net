@@ -34,6 +34,12 @@ Every file, wherever it comes from is handled as an event payload that has a typ
 
 There is no need to implement this interface unless a ETL.NET file extension needs to be implemented.
 
+:::note
+
+This page explains how to get and drop files on different source types. Go to [this page](/docs/recipes/writeInFiles) to learn about actually creating a file.
+
+:::
+
 ## Get or write files on the local file system
 
 :::note

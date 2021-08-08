@@ -2,4 +2,4 @@
 sidebar_position: 4
 ---
 
-# Use Entity Framework
+# Interaction with a database

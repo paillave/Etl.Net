@@ -69,7 +69,7 @@ namespace Paillave.Etl.Core
         private void DebugTraceProcess(IStream<TraceEvent> traceStream, ISingleStream<TConfig> startStream)
             => traceStream.Observable
                 .Filter(traceEvent => traceEvent.Content is RowProcessStreamTraceContent)
-                .Group(traceEvent => traceEvent.NodeName, traceEventStream =>
+                .Group(traceEvent => traceEvent.NodeName, (traceEventStream, _) =>
                     traceEventStream
                         .Chunk(DebugChunkSize)
                         .Do(chunk => this.OnDebugNodeStream(

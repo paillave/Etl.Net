@@ -15,7 +15,8 @@ namespace Paillave.Etl.Reactive.Core
         {
             _valuesFactory = valuesFactory;
             _startSynchronizer = startSynchronizer;
-            this.Start();
+            if (startSynchronizer != null)
+                this.Start();
         }
 
         private void Start()

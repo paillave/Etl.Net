@@ -24,7 +24,7 @@ namespace Paillave.Etl.Core
             => base.CreateUnsortedStream(args.InputStream.Observable
                 .Group(
                     traceEvent => traceEvent.NodeName,
-                    traceEventStream => traceEventStream.Aggregate(
+                    (traceEventStream, _) => traceEventStream.Aggregate(
                         i => new
                         {
                             NodeName = i.NodeName,

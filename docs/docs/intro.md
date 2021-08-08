@@ -66,7 +66,7 @@ When it is about including ETL process in an application, many developers don't 
 - Executing the full solution on a development computer for debug or even simple development purpose is complex. Usually, in the world of development, once sources of an application are retrieved from source control, a hit on F5 should be sufficient to successfully execute and debug the application. With an SSIS process making part of the solution, executing and debugging the application needs an SSIS deployment with all its setups prior to run it. During debug of the application it self, it won't be possible to debug the ETL process as it is hosted in SSIS server.
 - SSIS needs to be installed on development computers. This makes the solution more complex to apprehend where normal application simply need dotnet core + visual studio code or visual studio community to be executed with a simple F5. Furthermore, depending on the context, installing SSIS on a development computer is not always easy or possible (security policies in companies).
 
-> A regular developer needs to download his sources, hit F5, and debug.
+> With ETL.NET, a regular developer needs to download his sources, hit F5, and debug.
 
 ## It is simple and easy... really
 
@@ -76,11 +76,11 @@ Just add a reference from Nuget to the core package (ETL.NET) and to some of its
 
 ## It is designed to be very simple to extend
 
-> SSIS extension is a horribly complex process compared to usual .NET tool kits and frameworks.
+> Building SSIS extension is a horribly complex process compared to usual .NET tool kits and frameworks.
 
 When it is about SSIS extensibility, you have to swim quiet deep in the abyss of hell: after dealing with the very complex SDK to extend it and the big amount of lines of codes to implement your extension, you will have to ensure it is well deployed in the GAC of your development computer, on the GAC of every SSIS server where it will be deployed. Finally, for it to be used in developments, it must also be installed correctly on your development computer so that Sql Server Data Tools for BI recognizes it and makes it available in the visual studio toolbox.
 
-> An ETL.NET extension can be developed, debugged and used within in 5mn... literally.
+> An ETL.NET extension can be developed, debugged and used within in 15mn... literally.
 
 ETL.NET extensibility is based on a simple development wether it is embedded within the application, in another shared assembly or a Nuget package. It is as simple as a couple of lines of code since a set of base classes permits extensions to be easily implemented for most of typical use cases.
 

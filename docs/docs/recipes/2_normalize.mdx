@@ -17,9 +17,9 @@ This normalization is possible thanks to two features:
 - A way to know the original row/rows that are at the source of the current row
 - The capacity to make a Select/Update/Insert for each row to save with `Paillave.Etl.EntityFrameworkCore` or `Paillave.Etl.SqlServer`
 
-The principle is to be able, for each payload issued in any operator, to know what was the initial row or rows that permitted to result to a payload.
+The normalization pattern lie on the possibility to know what was the initial row or rows that permitted to result to a payload.
 
-Behind the scenes, each row has a list of unique identifiers linked to it, and each operator is supposed to know how to combine this these list of uid regarding to its purpose. When a stream is issuing payloads that have a list unique identified under the hood is called a **correlated stream**.
+Behind the scenes, each row has a list of unique identifiers linked to it, and each operator is supposed to know how to combine these uids depending on its purpose. When a stream is issuing payloads that have a list of unique identifiers under the hood, it is called a **correlated stream**.
 Out of the box, streams are not correlated for performance and memory purpose. For a stream to be correlated, it must pass through a dedicated operator using `SetForCorrelation`. This operator simply attributes a list that contains a different single unique identifier to each row. Every operator of the core of ETL.NET knows how to handle correlated stream and issues a proper correlated stream regarding to its logic.
 
 For example, let's imagine this sequence of events:
@@ -56,7 +56,7 @@ Making a `Distinct` based on `Value2` would give this stream as a result:
 | 3 | d | `8af7348a-c004-4c4d-90db-f6fa5213cabb`, `4b1ac39f-89c0-426b-a1e2-07c63aebf938`, `338aabe0-3266-4c2d-9b0e-770b0c0b14dd`, `c131bb0b-97fa-4c63-86a5-ebcbeb0800f6` |
 | 5 | e | `c6781c10-0f6b-4668-97e6-2788627aa7a4`, `a1f13dfc-f9e4-46af-9e7a-1e64271f1691` |
 
-Then, let's this stream based on the business key (`Value2`). As the save system gets the Id wether an occurrence already exists in the database or not, we get this result:
+Then, let's save payloads of this stream based on the business key (`Value2`). As the save system gets the Id wether an occurrence already exists in the database or not, we get this result:
 
 | Value2 | Id | Correlation ids |
 | - | - | - |
@@ -64,7 +64,7 @@ Then, let's this stream based on the business key (`Value2`). As the save system
 | d | 69 | `8af7348a-c004-4c4d-90db-f6fa5213cabb`, `4b1ac39f-89c0-426b-a1e2-07c63aebf938`, `338aabe0-3266-4c2d-9b0e-770b0c0b14dd`, `c131bb0b-97fa-4c63-86a5-ebcbeb0800f6` |
 | e | 13 | `c6781c10-0f6b-4668-97e6-2788627aa7a4`, `a1f13dfc-f9e4-46af-9e7a-1e64271f1691` |
 
-Now, for each event of the first correlated stream, we can get the related event from our last stream using the operator `CorrelateToSingle`. This operator, for each event of the first stream, tries to find the first event of the second stream that contains a correlation key that exists in the current correlation keys. So that we can get something like this:
+Now, for each event of the first correlated stream, we can get the related event from our last stream using the operator `CorrelateToSingle`. This operator, for each event of the first stream, tries to find the first event of the second stream that contains a correlation key that exists in the current correlation key list. The result is the following:
 
 | Value1 | Value2 | Value2Id | Correlation ids |
 | - | - | - | - |
@@ -297,6 +297,6 @@ private static void DefineProcess(ISingleStream<string> contextStream)
 
 :::warning
 
-It can happen sometimes that, depending on the situation, C# compiler cannot resolve properly which version of `EfCoreSave` to use and take the one for non correlated streams. If so, use `EfCoreSaveCorrelated` instead to prevent the compiler to be confused.
+It can happen sometimes that, depending on the situation, C# compiler cannot resolve properly which version of `EfCoreSave` to use and takes the one for non correlated streams. If so, use `EfCoreSaveCorrelated` instead to prevent the compiler to be confused.
 
 :::
