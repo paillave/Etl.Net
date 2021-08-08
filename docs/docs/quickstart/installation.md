@@ -80,4 +80,4 @@ namespace MyEtlApplication
 
 The most essential features are explained in the [tutorial](/docs/tutorials/backbone).
 
-Other common patterns and recipes are described [here](/).
+Other common patterns and recipes are described [here](/docs/recipes/dealWithFiles).

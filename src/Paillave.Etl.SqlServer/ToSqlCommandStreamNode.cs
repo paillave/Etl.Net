@@ -9,28 +9,29 @@ using System.Text.RegularExpressions;
 
 namespace Paillave.Etl.SqlServer
 {
-    public class ToSqlCommandArgs<TIn, TStream>
+    public class ToSqlCommandArgs<TIn, TStream, TValue>
         where TIn : class
         where TStream : IStream<TIn>
     {
         public string SqlQuery { get; set; }
         public string ConnectionName { get; set; }
         public TStream SourceStream { get; set; }
+        public Func<TIn, TValue> GetValue { get; set; }
     }
-    public class ToSqlCommandStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ToSqlCommandArgs<TIn, TStream>>
+    public class ToSqlCommandStreamNode<TIn, TStream, TValue> : StreamNodeBase<TIn, TStream, ToSqlCommandArgs<TIn, TStream, TValue>>
         where TIn : class
         where TStream : IStream<TIn>
     {
         private static IDictionary<string, PropertyInfo> _inPropertyInfos = typeof(TIn).GetProperties().ToDictionary(i => i.Name, StringComparer.InvariantCultureIgnoreCase);
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-        public ToSqlCommandStreamNode(string name, ToSqlCommandArgs<TIn, TStream> args) : base(name, args) { }
-        protected override TStream CreateOutputStream(ToSqlCommandArgs<TIn, TStream> args)
+        public ToSqlCommandStreamNode(string name, ToSqlCommandArgs<TIn, TStream, TValue> args) : base(name, args) { }
+        protected override TStream CreateOutputStream(ToSqlCommandArgs<TIn, TStream, TValue> args)
         {
-            var ret = args.SourceStream.Observable.Do(i => ProcessItem(i, args.ConnectionName));
+            var ret = args.SourceStream.Observable.Do(i => ProcessItem(args.GetValue(i), args.ConnectionName));
             return base.CreateMatchingStream(ret, args.SourceStream);
         }
-        public void ProcessItem(TIn item, string connectionName)
+        public void ProcessItem(TValue item, string connectionName)
         {
             var resolver = this.ExecutionContext.DependencyResolver;
             var sqlConnection = connectionName == null ? resolver.Resolve<SqlConnection>() : resolver.Resolve<SqlConnection>(connectionName);

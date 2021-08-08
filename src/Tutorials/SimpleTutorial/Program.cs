@@ -15,8 +15,11 @@ namespace SimpleTutorial
     {
         static async Task Main(string[] args)
         {
-            var processRunner = StreamProcessRunner.Create<string>(DefineProcess4);
+            var processRunner = StreamProcessRunner.Create<string>(DefineProcess10);
             var structure = processRunner.GetDefinitionStructure();
+
+            processRunner.DebugNodeStream += (sender, e) => { };
+
             // System.IO.File.WriteAllText(
             //     "execplan.json",
             //     Newtonsoft.Json.JsonConvert.SerializeObject(structure, Newtonsoft.Json.Formatting.Indented)
@@ -46,26 +49,55 @@ namespace SimpleTutorial
         private static void DefineProcess(ISingleStream<string> contextStream)
         {
             contextStream
-              .CrossApplyFolderFiles("list all required files", "*.zip", true)
-              .CrossApplyZipFiles("extract files from zip", "*.csv")
-              .CrossApplyTextFile("parse file", FlatFileDefinition.Create(i => new Person
-              {
-                  Email = i.ToColumn("email"),
-                  FirstName = i.ToColumn("first name"),
-                  LastName = i.ToColumn("last name"),
-                  DateOfBirth = i.ToDateColumn("date of birth", "yyyy-MM-dd"),
-                  Reputation = i.ToNumberColumn<int?>("reputation", ".")
-              }).IsColumnSeparated(','))
-              .Distinct("exclude duplicates based on the Email", i => i.Email)
-              .SqlServerSave("upsert using Email as key and ignore the Id", "dbo.Person", p => p.Email, p => p.Id)
-              .Select("define row to report", i => new { i.Email, i.Id })
-              .ToTextFileValue("write summary to file", "report.csv", FlatFileDefinition.Create(i => new
-              {
-                  Email = i.ToColumn("Email"),
-                  Id = i.ToNumberColumn<int>("new or existing Id", ".")
-              }).IsColumnSeparated(','))
-              .WriteToFile("save log file", i => i.Name);
+                .CrossApplyFolderFiles("list all required files", "*.zip", true)
+                .CrossApplyZipFiles("extract files from zip", "*.csv")
+                .CrossApplyTextFile("parse file", FlatFileDefinition.Create(i => new Person
+                {
+                    Email = i.ToColumn("email"),
+                    FirstName = i.ToColumn("first name"),
+                    LastName = i.ToColumn("last name"),
+                    DateOfBirth = i.ToDateColumn("date of birth", "yyyy-MM-dd"),
+                    Reputation = i.ToNumberColumn<int?>("reputation", ".")
+                }).IsColumnSeparated(','))
+                .Distinct("exclude duplicates based on the Email", i => i.Email)
+                .SqlServerSave("upsert using Email as key and ignore the Id", "dbo.Person", p => p.Email, p => p.Id)
+                .Select("define row to report", i => new { i.Email, i.Id })
+                .ToTextFileValue("write summary to file", "report.csv", FlatFileDefinition.Create(i => new
+                {
+                    Email = i.ToColumn("Email"),
+                    Id = i.ToNumberColumn<int>("new or existing Id", ".")
+                }).IsColumnSeparated(','))
+                .WriteToFile("save log file", i => i.Name);
         }
+        private static void DefineProcess8(ISingleStream<string> contextStream)
+        {
+            contextStream
+                .CrossApplySqlServerQuery("get people", o => o.WithQuery("select * from dbo.Person as p").WithMapping<Person>())
+                .Do("show people on console", i => Console.WriteLine($"{i.FirstName} {i.LastName}: ${i.DateOfBirth:yyyy-MM-dd}"));
+        }
+        private static void DefineProcess9(ISingleStream<string> contextStream)
+        {
+            contextStream
+                .CrossApplySqlServerQuery("get people", o => o.WithQuery("select * from dbo.Person as p").WithMapping(i => new
+                {
+                    Name = i.ToColumn("FirstName"),
+                    Birthday = i.ToDateColumn("DateOfBirth")
+                }));
+        }
+        private static void DefineProcess10(ISingleStream<string> contextStream)
+        {
+            contextStream
+                .Select("build criteria", i => new { Reputation = 345 })
+                .CrossApplySqlServerQuery("get people", o => o.WithQuery("select * from dbo.Person as p where p.Reputation = @Reputation").WithMapping(i => new
+                {
+                    Name = i.ToColumn("FirstName"),
+                    Birthday = i.ToDateColumn("DateOfBirth")
+                }));
+        }
+
+
+
+
         private static void DefineProcess2(ISingleStream<string> stream)
         {
             var connectionParameters = new Paillave.Etl.Ftp.FtpAdapterConnectionParameters

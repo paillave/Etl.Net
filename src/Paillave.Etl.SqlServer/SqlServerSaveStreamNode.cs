@@ -10,27 +10,28 @@ using System.Linq.Expressions;
 
 namespace Paillave.Etl.SqlServer
 {
-    public class SqlServerSaveCommandArgs<TIn, TStream>
+    public class SqlServerSaveCommandArgs<TIn, TStream, TValue>
         where TIn : class
         where TStream : IStream<TIn>
     {
         public string Table { get; set; }
-        public Expression<Func<TIn, object>> Pivot { get; set; }
-        public Expression<Func<TIn, object>> Computed { get; set; }
+        public Expression<Func<TValue, object>> Pivot { get; set; }
+        public Expression<Func<TValue, object>> Computed { get; set; }
         public string ConnectionName { get; set; }
         public TStream SourceStream { get; set; }
+        public Func<TIn, TValue> GetValue { get; set; }
     }
-    public class SqlServerSaveStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, SqlServerSaveCommandArgs<TIn, TStream>>
+    public class SqlServerSaveStreamNode<TIn, TStream, TValue> : StreamNodeBase<TIn, TStream, SqlServerSaveCommandArgs<TIn, TStream, TValue>>
         where TIn : class
         where TStream : IStream<TIn>
     {
         private static IDictionary<string, PropertyInfo> _inPropertyInfos = typeof(TIn).GetProperties().ToDictionary(i => i.Name, StringComparer.InvariantCultureIgnoreCase);
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-        public SqlServerSaveStreamNode(string name, SqlServerSaveCommandArgs<TIn, TStream> args) : base(name, args) { }
-        protected override TStream CreateOutputStream(SqlServerSaveCommandArgs<TIn, TStream> args)
+        public SqlServerSaveStreamNode(string name, SqlServerSaveCommandArgs<TIn, TStream, TValue> args) : base(name, args) { }
+        protected override TStream CreateOutputStream(SqlServerSaveCommandArgs<TIn, TStream, TValue> args)
         {
-            var ret = args.SourceStream.Observable.Do(i => ProcessItem(i, args.ConnectionName));
+            var ret = args.SourceStream.Observable.Do(i => ProcessItem(args.GetValue(i), args.ConnectionName));
             return base.CreateMatchingStream(ret, args.SourceStream);
         }
         private string _sqlStatement = null;
@@ -46,7 +47,7 @@ namespace Paillave.Etl.SqlServer
             }
             return _sqlStatement;
         }
-        public void ProcessItem(TIn item, string connectionName)
+        private void ProcessItem(TValue item, string connectionName)
         {
             var resolver = this.ExecutionContext.DependencyResolver;
             var sqlConnection = connectionName == null ? resolver.Resolve<SqlConnection>() : resolver.Resolve<SqlConnection>(connectionName);
@@ -66,7 +67,7 @@ namespace Paillave.Etl.SqlServer
                     UpdateRecord(reader, item);
         }
 
-        private void UpdateRecord(SqlDataReader record, TIn item)
+        private void UpdateRecord(SqlDataReader record, TValue item)
         {
             IDictionary<string, object> values = new Dictionary<string, object>();
             for (int i = 0; i < record.FieldCount; i++)

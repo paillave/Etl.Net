@@ -71,7 +71,7 @@ var streamOfFile = streamOfRows
 
 ### Many files in CSV or Excel format
 
-The example right above is the only to go to produce several files by using `Paillave.Etl.TextFile` or `Paillave.Etl.ExcelFile`:
+Defining a subprocess like shown in the example right above is the only to go to produce several files by using `Paillave.Etl.TextFile` or `Paillave.Etl.ExcelFile` extensions:
 
 ```cs
 var streamOfFile = streamOfRows
@@ -89,7 +89,7 @@ var streamOfFile = streamOfRows
 
 :::warning
 
-Keep in mind that the given first row, will be null when called to evaluate the execution plan by the runtime. Therefore, ensure that no null exception is raised when using it.
+Keep in mind that the given first row will be null when called to evaluate the execution plan by the runtime. Therefore, ensure that no null exception is raised when using it.
 Of course, during the actual process, it **never** be null.
 
 :::
