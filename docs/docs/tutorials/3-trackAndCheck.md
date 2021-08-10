@@ -300,7 +300,7 @@ datetime,event type,details
 2021-07-15 12:26:40:2901,EndOfNode,display ids on console: 45
 ```
 
-:::note
+:::important
 
 If, for some reasons, actual values that are being issued by some nodes are needed to be accessed, `UseDetailedTraces` must be flagged in options that are transmitted to `ExecuteAsync`. To catch the content, `RowProcessStreamTraceContent` must be included in the trace ETL process.
 

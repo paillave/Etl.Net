@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Create files
 
-As mentioned on [this page](/docs/recipes/dealWithFiles) ETL.NET handle files through the interface `IFileValue`. Therefore, creating a file means creating instances of `IFileValue`. This is what is explained here.
+[Handling files in ETL.NET](/docs/recipes/dealWithFiles) involves manipulating streams of payloads implementing the interface `IFileValue`. But how to actually create these payloads from nothing if they are not taken from any file source?
 
 ## One file
 
@@ -57,7 +57,7 @@ var streamOfFile = streamOfRows
         .Write(String.Join(", ", rows.Aggregation.Select(row => row.Name).ToList())));
 ```
 
-The other way if to use the `GroupBy` operator by giving a subprocess along with the grouping key. The subprocess is the definition of a process from a stream that will issue every event belonging to the group. With the substream, the `GroupBy` operator will give the first element of the group as it is very likely to be useful to create the file name. The achieve this way the same than what is above, it is just necessary to reproduce the pattern described higher within the subprocess:
+The other way is to use the `GroupBy` operator by giving a subprocess along with the grouping key. The subprocess is the definition of a process from a stream that will issue every event belonging to the group. With the substream, the `GroupBy` operator will give the first element of the group as it is very likely to be useful to create the file name. To achieve the same than what is above, it is just necessary to reproduce the pattern described higher within the subprocess:
 
 ```cs
 var streamOfFile = streamOfRows
@@ -71,7 +71,7 @@ var streamOfFile = streamOfRows
 
 ### Many files in CSV or Excel format
 
-Defining a subprocess like shown in the example right above is the only to go to produce several files by using `Paillave.Etl.TextFile` or `Paillave.Etl.ExcelFile` extensions:
+Defining a subprocess like shown in the example right above is the only way to go to produce several files by using `Paillave.Etl.TextFile` or `Paillave.Etl.ExcelFile` extensions:
 
 ```cs
 var streamOfFile = streamOfRows
@@ -87,9 +87,9 @@ var streamOfFile = streamOfRows
             })));
 ```
 
-:::warning
+:::important
 
 Keep in mind that the given first row will be null when called to evaluate the execution plan by the runtime. Therefore, ensure that no null exception is raised when using it.
-Of course, during the actual process, it **never** be null.
+Of course, during the actual process, it will **never** be null.
 
 :::

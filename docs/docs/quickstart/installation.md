@@ -78,6 +78,4 @@ namespace MyEtlApplication
 
 ## Learn more
 
-The most essential features are explained in the [tutorial](/docs/tutorials/backbone).
-
-Other common patterns and recipes are described [here](/docs/recipes/dealWithFiles).
+Learn about the [most essential features](/docs/tutorials/backbone), and get it touch with [common patterns and recipes](/docs/recipes/dealWithFiles).

@@ -12,7 +12,7 @@ ETL.NET official extension to access SQL server without Entity Framework is `Pai
 
 ### Setup the connection without Entity Framework
 
-Obviously, for Sql Server operators to work, they need a connection to the database. This connection must be injected in the process when triggering the start of the `ProcessRunner`:
+Obviously, for Sql Server operators to work, they need a connection to the database. [Dependency injection](/docs/recipes/useExternalData) must be used to inject the connection in the process when triggering the process with `ProcessRunner`.
 
 ```cs
 var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
@@ -74,7 +74,7 @@ contextStream
 
 ### Lookup without Entity Framework
 
-To make a lookup, extensions for Sql Server don't provide any operator out of the box. The work around is to use the in memory lookup of ETL.NET core. 
+To make a lookup, extensions for Sql Server don't provide any operator out of the box. The work around is to use the in memory lookup of ETL.NET core.
 
 ```cs
 var authorStream = contextStream
@@ -94,6 +94,37 @@ postStream
         (l, r) => new { Post = l, Author = r })
     .Do("show value on console", i => Console.WriteLine($"{i.Post.Title} ({i.Author.Name})"));
 
+```
+
+:::warning
+
+Keep in mind that the lookup operator is compelled to wait for the whole target stream to be completed to actually start the actual lookup operation. Of course, **at the same time it is storing the full right stream in memory, it does the same with the left stream the right one is completed**. To avoid this, consider the `LeftJoin` operator, but this one need both streams to be sorted on the pivot value.
+
+:::
+
+As mentioned in the previous warning, the `Lookup` operator is not without problem, and the alternative can be the `LeftJoin` of both input stream are properly sorted. With the two stream sorted on the pivot key, just the latest row of both streams will be stored in memory. If any stream is already sorted, it makes absolutely no sense to sort it. This is where `EnsureSorted` comes. It permits to check that the stream is properly sorted. If it is not properly sorted, and error will be raised and the process will stop. For the target stream, `EnsureKeyed` will make the same but will check that there is no duplicate either.
+
+This way, the process will be as fast and memory saving as it can be, even with billions rows.
+
+```cs {3,10,13,14}
+var authorStream = contextStream
+    .CrossApplySqlServerQuery("get authors", o => o
+        .FromQuery("select a.* from dbo.Author as a order by a.Id")
+        .WithMapping(i => new
+        {
+            Id = i.ToNumberColumn<int>("Id"),
+            Name = i.ToColumn("Name"),
+            Reputation = i.ToNumberColumn<int>("Reputation")
+        }))
+    .EnsureKeyed("ensure authors are sorted by Id with no duplicate without actually sorting it", i => i.Id);
+
+postStream
+    .EnsureSorted("ensure posts are sorted by AuthorId without actually sorting it", i => i.AuthorId);
+    .LeftJoin("get related author", authorStream,
+        l => l.AuthorId,
+        r => r.Id,
+        (l, r) => new { Post = l, Author = r })
+    .Do("show value on console", i => Console.WriteLine($"{i.Post.Title} ({i.Author.Name})"));
 ```
 
 Look [here](/docs/recipes/linkStreams) for more details about how to combine streams.
@@ -150,9 +181,9 @@ If the class has the same name than the target table and that the target table i
 traceStream.SqlServerSave("insert in a trace table", o => o.DoNotSave(p => p.Id));
 ```
 
-:::warning
+:::important
 
-At the moment, behind the scenes, saving with the SQL extension executes an upsert sql statement at each row. It doesn't proceed using bulk load with one single merge statement for a full bulk of rows. To have bulkload, the extension using Entity Framework must be used instead.
+For the moment, saving with the SQL extension executes an **upsert sql statement for each row** behind the scenes. It doesn't proceed using bulk load with one single merge statement for a full bulk of rows. To have a bulkload, the extension using Entity Framework must be used instead.
 
 :::
 
@@ -311,4 +342,119 @@ postStream
     .Do("show value on console", i => Console.WriteLine($"{i.Post.Title} ({i.Author.Name})"));
 ```
 
+:::important
+
+In the context of a normalization, if all the data comes from the same source, using lookup operators like `Lookup` or `EfCoreLookup` or even `LeftJoin` is not the best way to go. Use the [correlation system](/docs/recipes/normalize) for this.
+
+:::
+
 ### Save using Entity Framework
+
+Except the fact you can she the same exact context between an application and the ETL process, except the fact no mapping is necessary as it is already done in the definition of the context, using ETL.NET Entity Framework extensions offers a very fast bulkload for any use case plus some extra features.
+
+The upsert will also get all the computed/readonly fields at database side and update the row with it.
+
+The operator `EfCoreSave` makes an upsert with Entity Framework by using the primary key that is defined in the database context:
+
+```cs {3}
+stream 
+    .Select("create author instance", i => new Author { Email = i.Email, Name = i.Author })
+    .EfCoreSave("save authors")
+    .Do("show output id on console", i => Console.WriteLine(i.Id));
+```
+
+To make an upsert using a pivot key that is different than the primary key the option `SeekOn` must be mentioned:
+
+```cs {3,4}
+stream 
+    .Select("create author instance", i => new Author { Email = i.Email, Name = i.Author })
+    .EfCoreSave("save authors", o => o
+        .SeekOn(i => i.Email))
+    .Do("show output id on console", i => Console.WriteLine(i.Id));
+```
+
+I can also be written the following way to permit the pivot key to be composed with several fields:
+
+```cs {4}
+stream 
+    .Select("create author instance", i => new Author { Email = i.Email, Name = i.Author })
+    .EfCoreSave("save authors", o => o
+        .SeekOn(i => new { i.Email }))
+    .Do("show output id on console", i => Console.WriteLine(i.Id));
+```
+
+It can happen that an object can have several several business keys. We can imagine for example, a author has a social security number as an identifier, and an author reference. We want the system to get the author based on his social security number first, and if it is not found this way, it tries to use the author reference instead. `AlternativelySeekOn` option is meant to accomplish this purpose:
+
+```cs {5}
+stream 
+    .Select("create author instance", i => new Author { Email = i.Email, Name = i.Author })
+    .EfCoreSave("save authors", o => o
+        .SeekOn(i => new { i.SocialSecurityNumber })
+        .AlternativelySeekOn(i => { i.AuthorReference }))
+    .Do("show output id on console", i => Console.WriteLine(i.Id));
+```
+
+To insert only rows that don't exist already but still by retrieving the computed/readonly fields at database side and set it on the local row, the option `DoNotUpdateIfExists` must be used:
+
+```cs {5}
+stream 
+    .Select("create author instance", i => new Author { Email = i.Email, Name = i.Author })
+    .EfCoreSave("save authors", o => o
+        .SeekOn(i => new { i.Email })
+        .DoNotUpdateIfExists())
+    .Do("show output id on console", i => Console.WriteLine(i.Id));
+```
+
+To insert ALL the rows into the database with no exception, use `InsertOnly` option:
+
+```cs {3}
+stream 
+    .EfCoreSave("save traces", o => o
+        .InsertOnly())
+    .Do("show trace id on console", i => Console.WriteLine(i.Id));
+```
+
+To save an object that is not the actual payload of events of the stream, the entity to save must be specified with the option `Entity`:
+
+```cs {3}
+stream 
+    .EfCoreSave("save authors", o => o
+        .Entity(i=> new Author { Email = i.Email, Name = i.Author })
+        .SeekOn(i => new { i.SocialSecurityNumber }))
+    .Do("show output id on console", i => Console.WriteLine(i.Id));
+```
+
+The output stream issues payload that are the entity updated accordingly to what is in the database. To get an output that is a combination of this entity and of the initial payload, use the option `Output`:
+
+```cs {5,6}
+stream 
+    .EfCoreSave("save authors", o => o
+        .Entity(i=> new Author { Email = i.Email, Name = i.Author })
+        .SeekOn(i => new { i.SocialSecurityNumber })
+        .Output((r, e) => new { AuthorRow = r, SavedEntity = e }))
+    .Do("show output id on console", i => Console.WriteLine(i.SavedEntity.Id));
+```
+
+:::important
+
+**By default, save operation of the EF Core extension doesn't fully use EF Core to make saves**. It uses metadata of the `DbContext` to inspect the mapping, computed columns, primary keys, converters and TPH inheritance specifications. With these metadata, the extension makes a bulkload and runs suitable `MERGE` or `INSERT` SQL statements. **In this default mode, the extension works only on SQL Server databases**. Of course, this is way faster that actually fully using EF Core. 
+
+This way to use the extension takes in charge every capabilities of EF Core except for 2 exceptions:
+
+- Owned object (`OwnsOne` or `OwnsMany`)
+- Table-per-Type inheritance (Table-per-Hierarchy is totally taken in charge)
+
+On this version of the extension, **this default mode needs the connection to be able to create and delete tables in the database**. Later on, temporary tables may be used instead, and this requirement won't applicable anymore.
+
+To fully use EF Core, and therefore being able to work with any database that EF Core takes in charge, set the option `WithMode` to `SaveMode.EntityFrameworkCore`
+
+```cs {5}
+stream 
+    .EfCoreSave("save authors", o => o
+        .Entity(i=> new Author { Email = i.Email, Name = i.Author })
+        .SeekOn(i => new { i.SocialSecurityNumber })
+        .WithMode(SaveMode.EntityFrameworkCore))
+    .Do("show output id on console", i => Console.WriteLine(i.Id));
+```
+
+:::

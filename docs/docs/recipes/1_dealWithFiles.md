@@ -36,7 +36,7 @@ There is no need to implement this interface unless a ETL.NET file extension nee
 
 :::note
 
-This page explains how to get and drop files on different source types. Go to [this page](/docs/recipes/writeInFiles) to learn about actually creating a file.
+This page explains how to get and drop files on different source types. Go [here](/docs/recipes/writeInFiles) to learn about actually creating a file.
 
 :::
 

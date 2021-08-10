@@ -9,3 +9,5 @@ sidebar_position: 14
 ## Ensure Sorted
 
 ## Ensure Keyed
+
+## Ensure Single

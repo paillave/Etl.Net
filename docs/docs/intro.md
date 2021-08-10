@@ -92,7 +92,7 @@ No, there is not...
 
 :::note
 
-Nevertheless, later on, a ReactJs component that works along a ASP.NET web api service might be done so that developers can permit end users to build their own simple but yet powerful ETL.NET processes within any React application. But still, it will be a high level wrapper of ETL.NET and nothing else than C# code will permit to get the full power of it.
+Nevertheless, later on, a ReactJs component that works along an ASP.NET web api service might be done so that developers can permit end users to build their own simple but yet powerful ETL.NET processes within any React application. But still, it will be a high level wrapper of ETL.NET and nothing else than C# code will permit to get the full power of it.
 
 Any team who is interested in having such a feature coming soon may consider having a look... [Here!](https://github.com/sponsors/paillave) :wink:
 
@@ -100,4 +100,4 @@ Any team who is interested in having such a feature coming soon may consider hav
 
 ## Want to know more?
 
-Go to [How it works section](/docs/quickstart/principle) if you are interested in the way ETL.NET works behind the scenes.
+Go to the [how it works section](/docs/quickstart/principle) if you are interested in the way ETL.NET works behind the scenes.

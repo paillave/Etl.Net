@@ -295,7 +295,7 @@ private static void DefineProcess(ISingleStream<string> contextStream)
 }
 ```
 
-:::warning
+:::note
 
 It can happen sometimes that, depending on the situation, C# compiler cannot resolve properly which version of `EfCoreSave` to use and takes the one for non correlated streams. If so, use `EfCoreSaveCorrelated` instead to prevent the compiler to be confused.
 

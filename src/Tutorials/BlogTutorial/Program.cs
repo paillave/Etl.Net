@@ -85,23 +85,26 @@ namespace BlogTutorial
         private static void DefineProcess(ISingleStream<string> contextStream)
         {
             var rowStream = contextStream
-              .CrossApplyFolderFiles("list all required files", "*.csv", true)
-              .CrossApplyTextFile("parse file", FlatFileDefinition.Create(i => new
-              {
-                  Author = i.ToColumn("author"),
-                  Email = i.ToColumn("email"),
-                  TimeSpan = i.ToDateColumn("timestamp", "yyyyMMddHHmmss"),
-                  Category = i.ToColumn("category"),
-                  Link = i.ToColumn("link"),
-                  Post = i.ToColumn("post"),
-                  Title = i.ToColumn("title"),
-              }).IsColumnSeparated(','))
-              .SetForCorrelation("set correlation for row");
+            .CrossApplyFolderFiles("list all required files", "*.csv", true)
+            .CrossApplyTextFile("parse file", FlatFileDefinition.Create(i => new
+            {
+                Author = i.ToColumn("author"),
+                Email = i.ToColumn("email"),
+                TimeSpan = i.ToDateColumn("timestamp", "yyyyMMddHHmmss"),
+                Category = i.ToColumn("category"),
+                Link = i.ToColumn("link"),
+                Post = i.ToColumn("post"),
+                Title = i.ToColumn("title"),
+            }).IsColumnSeparated(','))
+            .SetForCorrelation("set correlation for row");
 
             var authorStream = rowStream
                 .Distinct("remove author duplicates based on emails", i => i.Email)
-                .Select("create author instance", i => new Author { Email = i.Email, Name = i.Author })
-                .EfCoreSave("save authors", o => o.SeekOn(i => i.Email).AlternativelySeekOn(i => i.Name));
+                // .Select("create author instance", i => new Author { Email = i.Email, Name = i.Author })
+                .EfCoreSave("save authors", o => o
+                    .Entity(i=> new Author { Email = i.Email, Name = i.Author })
+                    .SeekOn(i => i.Email)
+                    .AlternativelySeekOn(i => i.Name));
 
             var categoryStream = rowStream
                 .Distinct("remove category duplicates", i => i.Category)

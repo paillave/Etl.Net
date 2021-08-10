@@ -89,7 +89,7 @@ module.exports = {
       //     ],
       //   },
       // ],
-      copyright: `Copyright © ${new Date().getFullYear()} Paillave. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Paillave.`,
     },
     prism: {
       theme: lightCodeTheme,
