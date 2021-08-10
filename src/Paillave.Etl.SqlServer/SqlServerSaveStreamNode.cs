@@ -10,6 +10,48 @@ using System.Linq.Expressions;
 
 namespace Paillave.Etl.SqlServer
 {
+
+    public class SqlServerSaveCommandArgsBuilder<TIn, TValue> where TIn : class
+    {
+        internal Func<TIn, TValue> GetValue { get; }
+        internal string ConnectionName { get; private set; }
+        internal string Table { get; private set; } = typeof(TValue).Name;
+        internal Expression<Func<TValue, object>> Pivot { get; private set; } = null;
+        internal Expression<Func<TValue, object>> Computed { get; private set; } = null;
+        internal SqlServerSaveCommandArgsBuilder(Func<TIn, TValue> getValue) => (GetValue) = (getValue);
+        public SqlServerSaveCommandArgsBuilder<TIn, TValue> ToTable(string table)
+        {
+            this.Table = table;
+            return this;
+        }
+        public SqlServerSaveCommandArgsBuilder<TIn, TValue> SeekOn(Expression<Func<TValue, object>> pivot)
+        {
+            this.Pivot = pivot;
+            return this;
+        }
+        public SqlServerSaveCommandArgsBuilder<TIn, TValue> DoNotSave(Expression<Func<TValue, object>> computed)
+        {
+            this.Computed = computed;
+            return this;
+        }
+        public SqlServerSaveCommandArgsBuilder<TIn, TValue> WithConnection(string connectionName)
+        {
+            this.ConnectionName = connectionName;
+            return this;
+        }
+        internal SqlServerSaveCommandArgs<TIn, TStream, TValue> GetArgs<TStream>(TStream sourceStream) where TStream : IStream<TIn>
+            => new SqlServerSaveCommandArgs<TIn, TStream, TValue>
+            {
+                Table = this.Table,
+                Computed = this.Computed,
+                ConnectionName = this.ConnectionName,
+                GetValue = this.GetValue,
+                Pivot = this.Pivot,
+                SourceStream = sourceStream
+            };
+    }
+
+
     public class SqlServerSaveCommandArgs<TIn, TStream, TValue>
         where TIn : class
         where TStream : IStream<TIn>

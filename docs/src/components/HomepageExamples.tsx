@@ -5,6 +5,7 @@ import Highlight, { defaultProps } from "prism-react-renderer";
 import "prismjs"; // eslint-disable-line
 require(`prismjs/components/prism-csharp`); // eslint-disable-line
 import theme from "prism-react-renderer/themes/dracula";
+// https://emojipedia.org/
 
 const FeatureList = [
   {
@@ -24,7 +25,10 @@ private static void DefineProcess(ISingleStream<string> contextStream)
       Reputation = i.ToNumberColumn<int?>("reputation", ".")
     }).IsColumnSeparated(','))
     .Distinct("exclude duplicates based on the Email", i => i.Email)
-    .SqlServerSave("upsert using Email as key and ignore the Id", "dbo.Person", p => p.Email, p => p.Id)
+    .SqlServerSave("upsert using Email as key and ignore the Id", o => o
+      .ToTable("dbo.Person")
+      .SeekOn(p => p.Email)
+      .DoNotSave(p => p.Id))
     .Select("define row to report", i => new { i.Email, i.Id })
     .ToTextFileValue("write summary to file", "report.csv", FlatFileDefinition.Create(i => new
     {
@@ -100,7 +104,7 @@ namespace SimpleTutorial
               _ => "Unknown"
             }
           })
-        .SqlServerSave("save traces", "dbo.ExecutionTrace");
+        .SqlServerSave("save traces", o => o.ToTable("dbo.ExecutionTrace"));
     }
     private class ExecutionLog
     {
@@ -187,7 +191,7 @@ function Example({ sourceCode, title, description }) {
   return (<div className={clsx('col col--10 col--offset-1')}>
     <div className='card margin--md shadow--tl'>
       <div className="card__header">
-        <h3>{title}</h3>
+        <h3>{title} 🎶</h3>
       </div>
       <div className="card__body">
         <p>{description}</p>
@@ -217,6 +221,7 @@ const WithLineNumbers = ({ sourceCode }: { sourceCode: string }) => (
     {...defaultProps}
     theme={theme}
     code={sourceCode}
+    // @ts-ignore
     language="csharp"
   >
     {({ className, style, tokens, getLineProps, getTokenProps }) => (

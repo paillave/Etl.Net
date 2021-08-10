@@ -15,7 +15,7 @@ namespace Paillave.Etl.EntityFrameworkCore
                         ConnectionKey = connectionKey
                     }), noParallelisation);
         public static IStream<TOut> EfCoreSelectSingle<TIn, TOut>(this IStream<TIn> stream, string name,
-            Func<DbContextWrapper, TIn, TOut> getQuery, string connectionKey = null, bool noParallelisation = false) where TOut : class
+            Func<DbContextWrapper, TIn, IQueryable<TOut>> getQuery, string connectionKey = null, bool noParallelisation = false) where TOut : class
                 => stream.CrossApply<TIn, TOut>(name, new EfCoreSingleValueProvider<TIn, TOut>(
                     new EfCoreSingleValueProviderArgs<TIn, TOut>
                     {

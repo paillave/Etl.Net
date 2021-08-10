@@ -14,7 +14,7 @@ namespace Paillave.Etl.EntityFrameworkCore
     public class EfCoreSingleValueProviderArgs<TIn, TOut>
     {
         public string ConnectionKey { get; set; }
-        public Func<DbContextWrapper, TIn, TOut> GetQuery { get; set; }
+        public Func<DbContextWrapper, TIn, IQueryable<TOut>> GetQuery { get; set; }
     }
     /// <summary>
     /// 
@@ -52,7 +52,7 @@ namespace Paillave.Etl.EntityFrameworkCore
             var dbContext = _args.ConnectionKey == null
                     ? resolver.Resolve<DbContext>()
                     : resolver.Resolve<DbContext>(_args.ConnectionKey);
-            var res = invoker.InvokeInDedicatedThreadAsync(dbContext, () => _args.GetQuery(new DbContextWrapper(dbContext), input)).Result;
+            var res = invoker.InvokeInDedicatedThreadAsync(dbContext, () => _args.GetQuery(new DbContextWrapper(dbContext), input).FirstOrDefault()).Result;
             push(res);
         }
     }

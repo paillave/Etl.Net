@@ -15,7 +15,7 @@ namespace SimpleTutorial
     {
         static async Task Main(string[] args)
         {
-            var processRunner = StreamProcessRunner.Create<string>(DefineProcess10);
+            var processRunner = StreamProcessRunner.Create<string>(DefineProcess11);
             var structure = processRunner.GetDefinitionStructure();
 
             processRunner.DebugNodeStream += (sender, e) => { };
@@ -60,7 +60,10 @@ namespace SimpleTutorial
                     Reputation = i.ToNumberColumn<int?>("reputation", ".")
                 }).IsColumnSeparated(','))
                 .Distinct("exclude duplicates based on the Email", i => i.Email)
-                .SqlServerSave("upsert using Email as key and ignore the Id", "dbo.Person", p => p.Email, p => p.Id)
+                .SqlServerSave("upsert using Email as key and ignore the Id", o => o
+                    .ToTable("dbo.Person")
+                    .SeekOn(p => p.Email)
+                    .DoNotSave(p => p.Id))
                 .Select("define row to report", i => new { i.Email, i.Id })
                 .ToTextFileValue("write summary to file", "report.csv", FlatFileDefinition.Create(i => new
                 {
@@ -72,13 +75,13 @@ namespace SimpleTutorial
         private static void DefineProcess8(ISingleStream<string> contextStream)
         {
             contextStream
-                .CrossApplySqlServerQuery("get people", o => o.WithQuery("select * from dbo.Person as p").WithMapping<Person>())
+                .CrossApplySqlServerQuery("get people", o => o.FromQuery("select * from dbo.Person as p").WithMapping<Person>())
                 .Do("show people on console", i => Console.WriteLine($"{i.FirstName} {i.LastName}: ${i.DateOfBirth:yyyy-MM-dd}"));
         }
         private static void DefineProcess9(ISingleStream<string> contextStream)
         {
             contextStream
-                .CrossApplySqlServerQuery("get people", o => o.WithQuery("select * from dbo.Person as p").WithMapping(i => new
+                .CrossApplySqlServerQuery("get people", o => o.FromQuery("select * from dbo.Person as p").WithMapping(i => new
                 {
                     Name = i.ToColumn("FirstName"),
                     Birthday = i.ToDateColumn("DateOfBirth")
@@ -88,15 +91,44 @@ namespace SimpleTutorial
         {
             contextStream
                 .Select("build criteria", i => new { Reputation = 345 })
-                .CrossApplySqlServerQuery("get people", o => o.WithQuery("select * from dbo.Person as p where p.Reputation = @Reputation").WithMapping(i => new
+                .CrossApplySqlServerQuery("get people", o => o.FromQuery("select * from dbo.Person as p where p.Reputation = @Reputation").WithMapping(i => new
                 {
                     Name = i.ToColumn("FirstName"),
                     Birthday = i.ToDateColumn("DateOfBirth")
                 }));
         }
+        private static void DefineProcess12(ISingleStream<string> contextStream)
+        {
+            var authorStream = contextStream
+                .CrossApplySqlServerQuery("get authors", o => o
+                    .FromQuery("select a.* from dbo.Author as a")
+                    .WithMapping(i => new
+                    {
+                        Id = i.ToNumberColumn<int>("Id"),
+                        Name = i.ToColumn("Name"),
+                        Reputation = i.ToNumberColumn<int>("Reputation")
+                    }));
 
-
-
+            contextStream
+                .CrossApply("build posts", i => new[] {
+                    new { Title = "Title 1", AuthorId = 346 },
+                    new { Title = "Title 2", AuthorId = 201 }
+                })
+                .Lookup("get related author", authorStream,
+                    l => l.AuthorId,
+                    r => r.Id,
+                    (l, r) => new { Post = l, Author = r });
+        }
+        private static void DefineProcess11(ISingleStream<string> contextStream)
+        {
+            contextStream
+                .CrossApply("build criteria", i => new[] {
+                    new { Reputation = 345, NewReputation = 346 },
+                    new { Reputation = 45, NewReputation = 201 }
+                    })
+                .ToSqlCommand("update reputation", "update p set Reputation = @NewReputation from dbo.Person as p where p.Reputation = @Reputation")
+                .ToSqlCommand("update reputation like before", "update p set Reputation = @Reputation from dbo.Person as p where p.Reputation = @NewReputation");
+        }
 
         private static void DefineProcess2(ISingleStream<string> stream)
         {

@@ -2,13 +2,32 @@
 sidebar_position: 4
 ---
 
-# Interaction with databases
+# Deal with databases
 
 ETL.NET official extensions for database permit to save correlated or not correlated using a smart upsert method.
 
 ## Without Entity Framework
 
 ETL.NET official extension to access SQL server without Entity Framework is `Paillave.Etl.SqlServer`.
+
+### Setup the connection without Entity Framework
+
+Obviously, for Sql Server operators to work, they need a connection to the database. This connection must be injected in the process when triggering the start of the `ProcessRunner`:
+
+```cs
+var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
+using (var cnx = new SqlConnection(args[1]))
+{
+    cnx.Open();
+    var executionOptions = new ExecutionOptions<string>
+    {
+        Resolver = new SimpleDependencyResolver().Register(cnx),
+    };
+    var res = await processRunner.ExecuteAsync(args[0], executionOptions);
+}
+```
+
+Check [here](/docs/recipes/useExternalData) to have more details about dependency injection.
 
 ### Read without Entity Framework
 
@@ -19,17 +38,17 @@ Get data with no criteria using a class that matches **exactly** the structure o
 ```cs
 contextStream
     .CrossApplySqlServerQuery("get people", o => o
-        .WithQuery("select * from dbo.Person as p")
+        .FromQuery("select p.* from dbo.Person as p")
         .WithMapping<Person>())
     .Do("show people on console", i => Console.WriteLine($"{i.FirstName} {i.LastName}: ${i.DateOfBirth:yyyy-MM-dd}"));
 ```
 
-To accomplish the same if working using an class that doesn't match the structure of even with an anonymous type:
+Here is how to do to accomplish the same if working using a class that doesn't match the structure of even with an anonymous type:
 
 ```cs
 contextStream
     .CrossApplySqlServerQuery("get people", o => o
-        .WithQuery("select * from dbo.Person as p")
+        .FromQuery("select p.* from dbo.Person as p")
         .WithMapping(i => new
         {
             Name = i.ToColumn("FirstName"),
@@ -44,7 +63,7 @@ To apply a criteria for each execution, the input payload must contain propertie
 contextStream
     .Select("build criteria", i => new { Reputation = 345 })
     .CrossApplySqlServerQuery("get people", o => o
-        .WithQuery("select * from dbo.Person as p where p.Reputation = @Reputation")
+        .FromQuery("select p.* from dbo.Person as p where p.Reputation = @Reputation")
         .WithMapping(i => new
         {
             Name = i.ToColumn("FirstName"),
@@ -53,10 +72,243 @@ contextStream
     .Do("show people on console", i => Console.WriteLine($"{i.Name}: ${i.Birthday:yyyy-MM-dd}"));
 ```
 
+### Lookup without Entity Framework
+
+To make a lookup, extensions for Sql Server don't provide any operator out of the box. The work around is to use the in memory lookup of ETL.NET core. 
+
+```cs
+var authorStream = contextStream
+    .CrossApplySqlServerQuery("get authors", o => o
+        .FromQuery("select a.* from dbo.Author as a")
+        .WithMapping(i => new
+        {
+            Id = i.ToNumberColumn<int>("Id"),
+            Name = i.ToColumn("Name"),
+            Reputation = i.ToNumberColumn<int>("Reputation")
+        }));
+
+postStream
+    .Lookup("get related author", authorStream,
+        l => l.AuthorId,
+        r => r.Id,
+        (l, r) => new { Post = l, Author = r })
+    .Do("show value on console", i => Console.WriteLine($"{i.Post.Title} ({i.Author.Name})"));
+
+```
+
+Look [here](/docs/recipes/linkStreams) for more details about how to combine streams.
+
 ### Save without Entity Framework
+
+Saving data in the database works with the operator `SqlServerSave`. For each row, this operator does the following:
+
+- Tries the get an occurrence with the same pivot value
+- If not found create a new row by excluding values not to save (if any). If found, update the retrieved row - in the same manner.
+- Save the updated or created row
+- Get every value as it is in the database to update the current payload with it
+
+:::note
+
+The payload to be saved must be a **class** that has a structure that must match the target table.
+
+:::
+
+Here is how to save a list of people that are identified by their `Email` in a table that has a primary key `Id` that is auto generated:
+
+```cs
+peopleStream
+    .SqlServerSave("upsert using Email as key and ignore the Id", o => o
+        .ToTable("dbo.Person")
+        .SeekOn(p => p.Email)
+        .DoNotSave(p => p.Id));
+```
+
+The property `Id` of the person will be updated with the `Id` from the update or created row.
+
+If the business key is on several field, and/or if there are several column that are computed at database level, the upsert must be done this way:
+
+```cs
+peopleStream
+    .SqlServerSave("upsert using Email as key and ignore the Id", o => o
+        .ToTable("dbo.Person")
+        .SeekOn(p => new { p.DateOfBirth, p.Number })
+        .DoNotSave(p => new { p.Id, p.Timestamp }));
+```
+
+Of course, making a regular insert with no update is possible:
+
+```cs
+traceStream
+    .SqlServerSave("insert in a trace table", o => o
+        .ToTable("dbo.Trace")
+        .DoNotSave(p => p.Id));
+```
+
+If the class has the same name than the target table and that the target table is in the default schema (in 99% of cases: `dbo`), it is not necessary to mention the target table explicitly:
+
+```cs
+traceStream.SqlServerSave("insert in a trace table", o => o.DoNotSave(p => p.Id));
+```
+
+:::warning
+
+At the moment, behind the scenes, saving with the SQL extension executes an upsert sql statement at each row. It doesn't proceed using bulk load with one single merge statement for a full bulk of rows. To have bulkload, the extension using Entity Framework must be used instead.
+
+:::
+
+### Execute a SQL process for every row
+
+Calling an arbitrary SQL statement or a stored procedure is made with the operator `ToSqlCommand`. It is given a statement with parameters that must have their equivalent in properties of the payload of the stream.
+
+Here, the goal is to change the reputation for the one who have 345 and 45 as a current reputation:
+
+```cs
+contextStream
+    .CrossApply("build criteria", i => new[] 
+    {
+        new { Reputation = 345, NewReputation = 346 },
+        new { Reputation = 45, NewReputation = 201 }
+    })
+    .ToSqlCommand("update reputation", 
+        "update p set Reputation = @NewReputation from dbo.Person as p where p.Reputation = @Reputation");
+```
+
+`ToSqlCommand` always returns the input events as is. The following can be done for example:
+
+```cs
+contextStream
+    .CrossApply("build criteria", i => new[] 
+    {
+        new { Reputation = 345, NewReputation = 346 },
+        new { Reputation = 45, NewReputation = 201 }
+    })
+    .ToSqlCommand("update reputation", 
+        "update p set Reputation = @NewReputation from dbo.Person as p where p.Reputation = @Reputation")
+    .ToSqlCommand("update reputation like before", 
+        "update p set Reputation = @Reputation from dbo.Person as p where p.Reputation = @NewReputation");
+```
 
 ## Using Entity Framework
 
+ETL.NET official extension to access databases with Entity Framework is `Paillave.Etl.EntityFrameworkCore`.
+
+Most of things related to Sql Server extension have their equivalent in the Entity Framework extension.
+
+### Setup Entity Framework connection
+
+As Entity Framework needs a connection as well, it will need to be injected in the same way than above in the process:
+
+```cs
+var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
+using (var dbCtx = new SimpleTutorialDbContext(args[1]))
+{
+    var executionOptions = new ExecutionOptions<string>
+    {
+        Resolver = new SimpleDependencyResolver().Register<DbContext>(dbCtx),
+    };
+    var res = await processRunner.ExecuteAsync(args[0], executionOptions);
+}
+```
+
+Check [here](/docs/recipes/useExternalData) to have more details about dependency injection.
+
 ### Read using Entity Framework
+
+The operator `EfCoreSelect` provides a wrapper to get an entity set along with the current value of the stream for an `IQueryable` to be returned:
+
+```cs
+contextStream
+    .EfCoreSelect("get posts", (o, row) => o
+        .Set<Post>()
+        .Where(i => i.Title.Contains(row.TitleCriteria)))
+    .Do("show value on console", i => Console.WriteLine(i.Title));
+```
+
+Getting one single value per event issued works in a similar way:
+
+```cs
+postStream
+    .EfCoreSelectSingle("get corresponding authors", (o, row) => o
+        .Set<Author>()
+        .Where(i => i.Id == row.AuthorId))
+    .Do("show value on console", i => Console.WriteLine($"{i.Name}"));
+```
+
+### Lookup with Entity Framework
+
+What is mentioned above get one item per event, but it will always run a query per event, and it is hardly possible to combine the output with the input.
+
+If all this is an issue the way to go is the proper lookup system dedicated for Entity Framework `EfCoreLookup`.
+
+```cs
+postStream
+    .EfCoreLookup("get related authors", o => o
+        .Set<Author>()
+        .On(i => i.AuthorId, i => i.Id)
+        .Select((l, r) => new { Post = l, Author = r }))
+    .Do("show value on console", i => Console.WriteLine($"{i.Post.Title} ({i.Author.Name})"));
+```
+
+By default `EfCoreLookup` takes the full target dataset and keeps it in memory after making a dictionary out of it based on the targeted key. In some situations, the target dataset is too big to be stored in memory. So the default behavior is **wrong**. There are two solution for this.
+
+The first solution can be used in case of only a subset of the target dataset is necessary. Here is how to do:
+
+```cs {3}
+postStream
+    .EfCoreLookup("get related authors", o => o
+        .Query(o => o.Set<Author>().Where(a => a.TypeId == 6))
+        .On(i => i.AuthorId, i => i.Id)
+        .Select((l, r) => new { Post = l, Author = r }))
+    .Do("show value on console", i => Console.WriteLine($"{i.Post.Title} ({i.Author.Name})"));
+```
+
+The second solution suits cases when there is not specific subset in the target dataset. The principle is that at each row, the lookup tries to get the related target item is in the cache. If it is not in the cache it will query it against the database, store in the cache, and return it. To activate this behavior, `NoCacheFullDataset` must be set after the `Select`:
+
+```cs {6}
+postStream
+    .EfCoreLookup("get related authors", o => o
+        .Set<Author>()
+        .On(i => i.AuthorId, i => i.Id)
+        .Select((l, r) => new { Post = l, Author = r })
+        .NoCacheFullDataset())
+    .Do("show value on console", i => Console.WriteLine($"{i.Post.Title} ({i.Author.Name})"));
+```
+
+Of course, both solutions can be applied together:
+
+```cs {3,6}
+postStream
+    .EfCoreLookup("get related authors", o => o
+        .Query(o => o.Set<Author>().Where(a => a.TypeId == 6))
+        .On(i => i.AuthorId, i => i.Id)
+        .Select((l, r) => new { Post = l, Author = r })
+        .NoCacheFullDataset())
+    .Do("show value on console", i => Console.WriteLine($"{i.Post.Title} ({i.Author.Name})"));
+```
+
+It is also possible to control the size of the cache:
+
+```cs {7}
+postStream
+    .EfCoreLookup("get related authors", o => o
+        .Set<Author>()
+        .On(i => i.AuthorId, i => i.Id)
+        .Select((l, r) => new { Post = l, Author = r })
+        .NoCacheFullDataset()
+        .CacheSize(500))
+    .Do("show value on console", i => Console.WriteLine($"{i.Post.Title} ({i.Author.Name})"));
+```
+
+Last but not least, in a context of a normalization, the lookup can permit to create the corresponding target item if not found in the target dataset:
+
+```cs {6}
+postStream
+    .EfCoreLookup("get related authors", o => o
+        .Set<Author>()
+        .On(i => i.AuthorId, i => i.Id)
+        .Select((l, r) => new { Post = l, Author = r })
+        .CreateIfNotFound(p => new Author { Name = $"Name {p.AuthorId}" }))
+    .Do("show value on console", i => Console.WriteLine($"{i.Post.Title} ({i.Author.Name})"));
+```
 
 ### Save using Entity Framework

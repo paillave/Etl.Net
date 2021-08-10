@@ -6,9 +6,9 @@ namespace Paillave.Etl.SqlServer
 {
     public static class SqlServerEx
     {
-        public static IStream<TOut> CrossApplySqlServerQuery<TIn, TOut>(this IStream<TIn> stream, string name, Func<SqlCommandValueProviderArgsBuilder<TIn>, SqlCommandValueProviderArgsBuilder<TIn, TOut>> buildArgs, bool noParallelisation = false)
+        public static IStream<TOut> CrossApplySqlServerQuery<TIn, TOut>(this IStream<TIn> stream, string name, Func<SqlCommandValueProviderArgsBuilder<TIn>, SqlCommandValueProviderArgsBuilder<TIn, TOut>> buildArgs, string connectionName = null, bool noParallelisation = false)
         {
-            var valuesProvider = new SqlCommandValueProvider<TIn, TOut>(buildArgs(new SqlCommandValueProviderArgsBuilder<TIn>()).GetArgs());
+            var valuesProvider = new SqlCommandValueProvider<TIn, TOut>(buildArgs(new SqlCommandValueProviderArgsBuilder<TIn>(connectionName)).GetArgs());
             return stream.CrossApply(name, valuesProvider, noParallelisation);
         }
         public static IStream<TIn> ToSqlCommand<TIn>(this IStream<TIn> stream, string name, string sqlQuery, string connectionName = null)
@@ -33,31 +33,17 @@ namespace Paillave.Etl.SqlServer
                 GetValue = i => i.Row
             }).Output;
         }
-        public static IStream<TIn> SqlServerSave<TIn>(this IStream<TIn> stream, string name, string table, Expression<Func<TIn, object>> pivot = null, Expression<Func<TIn, object>> computed = null, string connectionName = null)
+        public static IStream<TIn> SqlServerSave<TIn>(this IStream<TIn> stream, string name, Func<SqlServerSaveCommandArgsBuilder<TIn, TIn>, SqlServerSaveCommandArgsBuilder<TIn, TIn>> buildArgs = null)
             where TIn : class
         {
-            return new SqlServerSaveStreamNode<TIn, IStream<TIn>, TIn>(name, new SqlServerSaveCommandArgs<TIn, IStream<TIn>, TIn>
-            {
-                Table = table,
-                SourceStream = stream,
-                ConnectionName = connectionName,
-                Pivot = pivot,
-                Computed = computed,
-                GetValue = i => i
-            }).Output;
+            if (buildArgs == null) buildArgs = i => i;
+            return new SqlServerSaveStreamNode<TIn, IStream<TIn>, TIn>(name, buildArgs(new SqlServerSaveCommandArgsBuilder<TIn, TIn>(i => i)).GetArgs(stream)).Output;
         }
-        public static IStream<Correlated<TIn>> SqlServerSave<TIn>(this IStream<Correlated<TIn>> stream, string name, string table, Expression<Func<TIn, object>> pivot = null, Expression<Func<TIn, object>> computed = null, string connectionName = null)
+        public static IStream<Correlated<TIn>> SqlServerSave<TIn>(this IStream<Correlated<TIn>> stream, string name, Func<SqlServerSaveCommandArgsBuilder<Correlated<TIn>, TIn>, SqlServerSaveCommandArgsBuilder<Correlated<TIn>, TIn>> buildArgs = null)
             where TIn : class
         {
-            return new SqlServerSaveStreamNode<Correlated<TIn>, IStream<Correlated<TIn>>, TIn>(name, new SqlServerSaveCommandArgs<Correlated<TIn>, IStream<Correlated<TIn>>, TIn>
-            {
-                Table = table,
-                SourceStream = stream,
-                ConnectionName = connectionName,
-                Pivot = pivot,
-                Computed = computed,
-                GetValue = i => i.Row
-            }).Output;
+            if (buildArgs == null) buildArgs = i => i;
+            return new SqlServerSaveStreamNode<Correlated<TIn>, IStream<Correlated<TIn>>, TIn>(name, buildArgs(new SqlServerSaveCommandArgsBuilder<Correlated<TIn>, TIn>(i => i.Row)).GetArgs(stream)).Output;
         }
     }
 }

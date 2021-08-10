@@ -18,7 +18,7 @@ namespace Paillave.Etl.SqlServer
         public SqlCommandValueProviderArgsBuilder(string connectionName) => (_connectionName) = (connectionName);
         public SqlCommandValueProviderArgsBuilder() { }
 
-        public SqlCommandValueProviderWithQueryArgsBuilder<TIn> WithQuery(string query)
+        public SqlCommandValueProviderWithQueryArgsBuilder<TIn> FromQuery(string query)
             => new SqlCommandValueProviderWithQueryArgsBuilder<TIn>(query, _connectionName);
         public SqlCommandValueProviderArgsBuilder<TIn> WithKeyedConnection(string keyedConnection)
             => new SqlCommandValueProviderArgsBuilder<TIn>(keyedConnection);

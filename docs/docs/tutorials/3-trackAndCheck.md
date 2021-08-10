@@ -377,10 +377,10 @@ namespace SimpleTutorial
                         Reputation = i.ToNumberColumn<int?>("reputation", ".")
                     }).IsColumnSeparated(','))
                 .Distinct("exclude duplicates based on the Email", i => i.Email)
-                .SqlServerSave("upsert using Email as key and ignore the Id", 
-                    "dbo.Person", 
-                    p => p.Email, 
-                    p => p.Id)
+                .SqlServerSave("upsert using Email as key and ignore the Id", o => o
+                    .ToTable("dbo.Person")
+                    .SeekOn(p => p.Email)
+                    .DoNotSave(p => p.Id))
                 .Select("define row to report", i => new { i.Email, i.Id })
                 .ToTextFileValue("write summary to file", 
                     "report.csv", 

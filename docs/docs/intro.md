@@ -84,6 +84,20 @@ When it is about SSIS extensibility, you have to swim quiet deep in the abyss of
 
 ETL.NET extensibility is based on a simple development wether it is embedded within the application, in another shared assembly or a Nuget package. It is as simple as a couple of lines of code since a set of base classes permits extensions to be easily implemented for most of typical use cases.
 
-## What to know more?
+## Visual designer?
+
+> Hey, but... This is an ETL and... there is no visual designer?!!!
+
+No, there is not...
+
+:::note
+
+Nevertheless, later on, a ReactJs component that works along a ASP.NET web api service might be done so that developers can permit end users to build their own simple but yet powerful ETL.NET processes within any React application. But still, it will be a high level wrapper of ETL.NET and nothing else than C# code will permit to get the full power of it.
+
+Any team who is interested in having such a feature coming soon may consider having a look... [Here!](https://github.com/sponsors/paillave) :wink:
+
+:::
+
+## Want to know more?
 
 Go to [How it works section](/docs/quickstart/principle) if you are interested in the way ETL.NET works behind the scenes.

@@ -34,7 +34,7 @@ module.exports = {
           label: 'Documentation',
         }, {
           to: 'blog',
-          label: 'News',
+          label: 'Blog',
           position: 'left'
         }, {
           type: 'search',

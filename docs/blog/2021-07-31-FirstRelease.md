@@ -4,12 +4,13 @@ author: Stéphane Royer
 author_title: ETL.NET Lead developer
 author_url: https://github.com/paillave
 author_image_url: https://avatars.githubusercontent.com/paillave
-image: https://i.imgur.com/mErPwqL.png
 ---
 
 :champagne: :beer: :cocktail: :clinking_glasses: :beers:
 
 After 3 years of hard work and testing, ETL.NET is finally ready for production environment.
+
+<!--truncate-->
 
 Lot of things happened since the last alpha release:
 

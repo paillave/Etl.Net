@@ -169,7 +169,7 @@ dotnet add package Paillave.Etl.SqlServer
 
 By using `Paillave.Etl.SqlServer`, save every occurrence in the database, and get updates so that every object is exactly like it is in the table after the upsert.
 
-```cs {13-14}
+```cs {13-17}
 contextStream
     .CrossApplyFolderFiles("list all required files", "*.zip", true)
     .CrossApplyZipFiles("extract files from zip", "*.csv")
@@ -182,7 +182,10 @@ contextStream
             Reputation = i.ToNumberColumn<int?>("reputation", ".")
         }).IsColumnSeparated(','))
     .Distinct("exclude duplicates", i => i.Email)
-    .SqlServerSave("save in DB", "dbo.Person", p => p.Email, p => p.Id)
+    .SqlServerSave("save in DB", o => o
+        .ToTable("dbo.Person")
+        .SeekOn(p => p.Email)
+        .DoNotSave(p => p.Id))
     .Do("display ids on console", i => Console.WriteLine(i.Id));
 ```
 
@@ -233,10 +236,10 @@ namespace SimpleTutorial
                         Reputation = i.ToNumberColumn<int?>("reputation", ".")
                     }).IsColumnSeparated(','))
                 .Distinct("exclude duplicates based on the Email", i => i.Email)
-                .SqlServerSave("upsert using Email as key and ignore the Id", 
-                    "dbo.Person", 
-                    p => p.Email, 
-                    p => p.Id)
+                .SqlServerSave("upsert using Email as key and ignore the Id", o => o
+                    .ToTable("dbo.Person")
+                    .SeekOn(p => p.Email)
+                    .DoNotSave(p => p.Id))
                 .Select("define row to report", i => new { i.Email, i.Id })
                 .ToTextFileValue("write summary to file", 
                     "report.csv", 

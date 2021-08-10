@@ -6,6 +6,7 @@ using Paillave.Etl.TextFile;
 using Paillave.Etl.EntityFrameworkCore;
 using BlogTutorial.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace BlogTutorial
 {
@@ -13,7 +14,7 @@ namespace BlogTutorial
     {
         static async Task Main(string[] args)
         {
-            var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
+            var processRunner = StreamProcessRunner.Create<string>(DefineProcess2);
             processRunner.DebugNodeStream += (sender, e)
                 =>
             { /* PLACE A CONDITIONAL BREAKPOINT HERE FOR DEBUG ex: e.NodeName == "parse file" */ };
@@ -51,6 +52,35 @@ namespace BlogTutorial
                     }
                 })
               .EfCoreSave("save traces");
+        }
+        private static void DefineProcess2(ISingleStream<string> contextStream)
+        {
+            contextStream
+                .Select("create a criteria", i => new { Title = "pro" })
+                .EfCoreSelect("get posts", (o, row) => o
+                    .Set<Post>()
+                    .Where(i => i.Title.Contains(row.Title)));
+        }
+        private static void DefineProcess3(ISingleStream<string> contextStream)
+        {
+            contextStream
+                .EfCoreSelect("get posts", (o, row) => o.Set<Post>())
+                .EfCoreLookup("get related authors", o => o
+                    .Set<Author>()
+                    .On(i => i.AuthorId, i => i.Id)
+                    .Select((l, r) => new { Post = l, Author = r }));
+        }
+        private static void DefineProcess4(ISingleStream<string> contextStream)
+        {
+            contextStream
+                .EfCoreSelect("get posts", (o, row) => o.Set<Post>())
+                .EfCoreLookup("get related authors", o => o
+                    .Query(o => o.Set<Author>().Where(a => a.Name == "sdfsdfsd"))
+                    .On(i => i.AuthorId, i => i.Id)
+                    .Select((l, r) => new { Post = l, Author = r })
+                    .CreateIfNotFound(p=> new Author { Name = $"Name {p.AuthorId}" })
+                    .NoCacheFullDataset()
+                    .CacheSize(500));
         }
         private static void DefineProcess(ISingleStream<string> contextStream)
         {
