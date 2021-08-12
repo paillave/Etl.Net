@@ -66,7 +66,7 @@ namespace Paillave.Etl.Samples
                     .Register(new FileSystemFileValueProcessor("OUT", "Result", Path.Combine(Environment.CurrentDirectory, "InputFiles"))),
                 Resolver = new SimpleDependencyResolver()
                     .Register(new DataAccess.TestDbContext()),
-                TraceProcessDefinition = traceReporter.TraceProcessDefinition
+                TraceProcessDefinition = traceReporter.TraceProcessDefinition,
             };
             traceReporter.Initialize(structure);
 

@@ -23,7 +23,8 @@ namespace BlogTutorial
                 var executionOptions = new ExecutionOptions<string>
                 {
                     Resolver = new SimpleDependencyResolver().Register<DbContext>(dbCtx),
-                    TraceProcessDefinition = DefineTraceProcess,
+                    TraceProcessDefinition = (ts, cs) => ts.Do("Show trace on console", t => Console.WriteLine(t.ToString())),
+                    // TraceProcessDefinition = DefineTraceProcess,
                     // UseDetailedTraces = true // activate only if per row traces are meant to be caught
                 };
                 var res = await processRunner.ExecuteAsync(args[0], executionOptions);
@@ -78,7 +79,7 @@ namespace BlogTutorial
                     .Query(o => o.Set<Author>().Where(a => a.Name == "sdfsdfsd"))
                     .On(i => i.AuthorId, i => i.Id)
                     .Select((l, r) => new { Post = l, Author = r })
-                    .CreateIfNotFound(p=> new Author { Name = $"Name {p.AuthorId}" })
+                    .CreateIfNotFound(p => new Author { Name = $"Name {p.AuthorId}" })
                     .NoCacheFullDataset()
                     .CacheSize(500));
         }
@@ -102,7 +103,7 @@ namespace BlogTutorial
                 .Distinct("remove author duplicates based on emails", i => i.Email)
                 // .Select("create author instance", i => new Author { Email = i.Email, Name = i.Author })
                 .EfCoreSave("save authors", o => o
-                    .Entity(i=> new Author { Email = i.Email, Name = i.Author })
+                    .Entity(i => new Author { Email = i.Email, Name = i.Author })
                     .SeekOn(i => i.Email)
                     .AlternativelySeekOn(i => i.Name));
 
