@@ -68,20 +68,24 @@ namespace Paillave.Etl.Mail
             var portNumber = connectionParameters.PortNumber == 0 ? 25 : connectionParameters.PortNumber;
 
             var destinations = GetDestinations(processorParameters, fileValue.Metadata).ToList();
+            var stream = fileValue.GetContent();
+            MemoryStream ms = new MemoryStream();
+            stream.CopyTo(ms);
             foreach (var (destination, metadataJson) in destinations)
             {
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.To.Add(new MailAddress(destination.Email, destination.DisplayName));
                 mailMessage.From = new MailAddress(FormatText(processorParameters.From, metadataJson), FormatText(processorParameters.FromDisplayName, metadataJson));
                 mailMessage.Subject = FormatText(processorParameters.Subject, metadataJson);
-                var stream = fileValue.GetContent();
+
+                ms.Seek(0, SeekOrigin.Begin);
                 var fileExtension = Path.GetExtension(fileValue.Name);
                 if (string.IsNullOrWhiteSpace(processorParameters.Body)
                     && (string.Equals(fileExtension, ".html", StringComparison.InvariantCultureIgnoreCase)
                         || string.Equals(fileExtension, ".htm", StringComparison.InvariantCultureIgnoreCase)))
                 {
                     mailMessage.IsBodyHtml = true;
-                    var content = new StreamReader(stream).ReadToEnd();
+                    var content = new StreamReader(ms).ReadToEnd();
                     mailMessage.Body = content;
                     if (string.IsNullOrWhiteSpace(mailMessage.Subject))
                         mailMessage.Subject = Path.GetFileNameWithoutExtension(fileValue.Name);
@@ -89,7 +93,7 @@ namespace Paillave.Etl.Mail
                 else
                 {
                     mailMessage.Body = FormatText(processorParameters.Body, metadataJson);
-                    Attachment attachment = new Attachment(stream, fileValue.Name, MimeTypes.GetMimeType(fileValue.Name));
+                    Attachment attachment = new Attachment(ms, fileValue.Name, MimeTypes.GetMimeType(fileValue.Name));
                     mailMessage.Attachments.Add(attachment);
                 }
                 ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => SendSingleFile(connectionParameters, mailMessage, portNumber));

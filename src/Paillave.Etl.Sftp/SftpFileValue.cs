@@ -28,6 +28,7 @@ namespace Paillave.Etl.Sftp
             var connectionInfo = _connectionInfo.CreateConnectionInfo();
             using (var client = new SftpClient(connectionInfo))
             {
+                client.Connect();
                 client.DeleteFile(Path.Combine(_folder, Name));
             }
         }
@@ -37,6 +38,7 @@ namespace Paillave.Etl.Sftp
             var connectionInfo = _connectionInfo.CreateConnectionInfo();
             using (var client = new SftpClient(connectionInfo))
             {
+                client.Connect();
                 return new MemoryStream(client.ReadAllBytes(Path.Combine(_folder, Name)));
             }
         }

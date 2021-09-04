@@ -34,6 +34,7 @@ namespace Paillave.Etl.Sftp
             var connectionInfo = connectionParameters.CreateConnectionInfo();
             using (var client = new SftpClient(connectionInfo))
             {
+                client.Connect();
                 return client.ListDirectory(folder).ToArray();
             }
         }
@@ -45,6 +46,7 @@ namespace Paillave.Etl.Sftp
             var connectionInfo = connectionParameters.CreateConnectionInfo();
             using (var client = new SftpClient(connectionInfo))
             {
+                client.Connect();
                 client.ListDirectory(folder);
             }
         }
