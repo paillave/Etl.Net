@@ -10,12 +10,21 @@ namespace Paillave.Etl.Core
             {
                 LeftInputStream = leftStream,
                 RightInputStream = rightStream,
-
             }).Output;
         }
-        public static TStream Substract<TStream, TInLeft, TInRight, TKey>(this TStream leftStream, string name, IStream<TInRight> rightStream, Func<TInLeft, TKey> getLeftKey, Func<TInRight, TKey> getRightKey) where TStream:IStream<TInLeft>
+        // public static TStream Substract<TStream, TInLeft, TInRight, TKey>(this TStream leftStream, string name, IStream<TInRight> rightStream, Func<TInLeft, TKey> getLeftKey, Func<TInRight, TKey> getRightKey) where TStream : IStream<TInLeft>
+        // {
+        //     return new SubstractUnsortedStreamNode<TStream, TInLeft, TInRight, TKey>(name, new SubstractUnsortedArgs<TStream, TInLeft, TInRight, TKey>
+        //     {
+        //         LeftInputStream = leftStream,
+        //         RightInputStream = rightStream,
+        //         GetLeftKey = getLeftKey,
+        //         GetRightKey = getRightKey
+        //     }).Output;
+        // }
+        public static IStream<TInLeft> Substract<TInLeft, TInRight, TKey>(this IStream<TInLeft> leftStream, string name, IStream<TInRight> rightStream, Func<TInLeft, TKey> getLeftKey, Func<TInRight, TKey> getRightKey)
         {
-            return new SubstractUnsortedStreamNode<TStream, TInLeft, TInRight, TKey>(name, new SubstractUnsortedArgs<TStream, TInLeft, TInRight, TKey>
+            return new SubstractUnsortedStreamNode<IStream<TInLeft>, TInLeft, TInRight, TKey>(name, new SubstractUnsortedArgs<IStream<TInLeft>, TInLeft, TInRight, TKey>
             {
                 LeftInputStream = leftStream,
                 RightInputStream = rightStream,

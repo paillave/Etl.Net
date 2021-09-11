@@ -13,7 +13,7 @@ The ETL.NET principle is to have a set of operators that emits events based on e
 - The purpose of an ETL.NET process is to create `nodes` that we call `operators`.
 - Each operator listens one or several source of `events`.
 - Depending on source events, an operator will emit an output event. What is emitted depends on the purpose of the operator.
-- On top of broadcasting its events to all its listeners, every operator will report this event to the runtime. Events can be of two types. The first type, `content event`, contains the payload, the actual value that is the result of the operation. The other one, `end of stream event`, notifies that no content event will.
+- On top of broadcasting its events to all its listeners, every operator will report this event to the runtime. Events can be of two types. The first type, `content event`, contains the payload, the actual value that is the result of the operation. The other one, `end of stream event`, notifies that no content event will follow.
 - When an error occurs in the operator, this one emits it to the runtime.
 - When the runtime is notified of an error, it requests every operator to stop its job, then stops, and then returns a failed execution status along with the notified error.
 - When the runtime received the `end of stream event` from every operator of the process, it stops, and then returns a successful execution status.

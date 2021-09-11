@@ -22,5 +22,4 @@ namespace Paillave.Etl.Core
             return base.CreateUnsortedStream(args.Stream1.Observable.Concatenate(args.Stream2.Observable));
         }
     }
-
 }

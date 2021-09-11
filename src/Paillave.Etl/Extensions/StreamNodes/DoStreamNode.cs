@@ -45,14 +45,9 @@ namespace Paillave.Etl.Core
     }
     public class DoStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, DoArgs<TIn, TStream>> where TStream : IStream<TIn>
     {
-        public DoStreamNode(string name, DoArgs<TIn, TStream> args) : base(name, args)
-        {
-        }
-
+        public DoStreamNode(string name, DoArgs<TIn, TStream> args) : base(name, args) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
-
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-
         protected override TStream CreateOutputStream(DoArgs<TIn, TStream> args)
         {
             return base.CreateMatchingStream(args.Stream.Observable.Do(args.Processor.ProcessRow), args.Stream);
