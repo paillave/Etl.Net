@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Deal with files
+# Deal with files and protocols
 
 ETL.NET has a complete set of features to deal with files. The core concept of the file management is the interface `IFileValue`:
 
