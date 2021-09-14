@@ -12,10 +12,6 @@ namespace Paillave.Etl.Core.Mapping.Visitors
         {
             NewInstanceVisitor vis = new NewInstanceVisitor();
             vis.Visit(node.Body);
-
-            // MemberBindingVisitor vis2 = new MemberBindingVisitor();
-            // vis2.Visit(node.Body);
-
             this.MappingSetters = vis.MappingSetters;
             return null;
         }

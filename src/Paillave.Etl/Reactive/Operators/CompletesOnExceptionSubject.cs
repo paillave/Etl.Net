@@ -12,7 +12,7 @@ namespace Paillave.Etl.Reactive.Operators
         private IDisposable _subscription;
         private object lockObject = new object();
 
-        public CompletesOnExceptionSubject(IPushObservable<T> observable, Action<Exception> catchMethod)
+        public CompletesOnExceptionSubject(IPushObservable<T> observable, Action<Exception> catchMethod) : base(observable.CancellationToken)
         {
             lock (lockObject)
             {

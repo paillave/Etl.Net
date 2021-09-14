@@ -70,7 +70,7 @@ namespace Paillave.Etl.Reactive.Core
 
         public int GetHashCode(T obj)
         {
-            return this.GetKey(obj).GetHashCode();
+            return this.GetKey(obj)?.GetHashCode() ?? 0;
         }
         private List<SortStep> GetSortSteps()
         {

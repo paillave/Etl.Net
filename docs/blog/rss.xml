@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>ETL.NET Blog</title>
+        <link>https://paillave.github.io/Etl.Net/blog</link>
+        <description>ETL.NET Blog</description>
+        <lastBuildDate>Sun, 01 Aug 2021 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <item>
+            <title><![CDATA[Why ETL.NET?]]></title>
+            <link>https://paillave.github.io/Etl.Net/blog/2021/08/01/WhyETLNET</link>
+            <guid>Why ETL.NET?</guid>
+            <pubDate>Sun, 01 Aug 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Years after years, contexts I faced led me to the conclusion that ETL engines (even SSIS that is that is still one of the bests 15 years after its initial release) should now reach a next generation.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[First Release!]]></title>
+            <link>https://paillave.github.io/Etl.Net/blog/2021/07/31/FirstRelease</link>
+            <guid>First Release!</guid>
+            <pubDate>Sat, 31 Jul 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[After 3 years of hard work and testing, ETL.NET is finally ready for production environment.]]></description>
+        </item>
+    </channel>
+</rss>

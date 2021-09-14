@@ -1,24 +1,32 @@
-﻿using Paillave.Etl.Core.Streams;
+﻿using Paillave.Etl.Core;
 using Paillave.Etl.Reactive.Core;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Paillave.Etl.Core
 {
-    public interface IExecutionContext
+
+    public interface IExecutionContext : IInvoker
     {
         Guid ExecutionId { get; }
+        bool UseDetailedTraces { get; }
         string JobName { get; }
-        int NextTraceSequence();
-        IPushObservable<TraceEvent> StopProcessEvent { get; }
-        void AddNode<T>(INodeContext nodeContext, IPushObservable<T> observable, IPushObservable<TraceEvent> traceObservable);
+        bool Terminating { get; }
+        // int NextTraceSequence();
+        void AddNode<T>(INodeDescription nodeContext, IPushObservable<T> observable);
         void AddDisposable(IDisposable disposable);
         Task GetCompletionTask();
         void AddStreamToNodeLink(StreamToNodeLink link);
+
+        IDependencyResolver DependencyResolver { get; }
+        SimpleDependencyResolver ContextBag { get; }
         bool IsTracingContext { get; }
-        void InvokeInDedicatedThread(object threadOwner, Action action);
+        void AddTrace(ITraceContent traceContent, INodeContext sourceNode);
+        IFileValueConnectors Connectors { get; }
+    }
+    public interface IInvoker
+    {
+        Task InvokeInDedicatedThreadAsync(object threadOwner, Action action);
+        Task<T> InvokeInDedicatedThreadAsync<T>(object threadOwner, Func<T> action);
     }
 }

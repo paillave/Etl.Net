@@ -13,7 +13,7 @@ namespace Paillave.Etl.Reactive.Operators
         private object _lockObject = new object();
         private bool _hasLastValue = false;
         private T _lastValue;
-        public LastSubject(IPushObservable<T> observable)
+        public LastSubject(IPushObservable<T> observable) : base(observable.CancellationToken)
         {
             lock (_lockObject)
             {
@@ -23,6 +23,10 @@ namespace Paillave.Etl.Reactive.Operators
 
         private void HandleCompleteValue()
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_lockObject)
             {
                 if (_hasLastValue) PushValue(_lastValue);

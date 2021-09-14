@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Paillave.Etl.Reactive.Operators
@@ -12,7 +13,7 @@ namespace Paillave.Etl.Reactive.Operators
         private object _lockObject = new object();
         private IDisposable _disp1;
         private IDisposable _disp2;
-        public TakeUntilSubject(IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable)
+        public TakeUntilSubject(IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable) : base(CancellationTokenSource.CreateLinkedTokenSource(observable.CancellationToken, fromObservable.CancellationToken).Token)
         {
             _disp1 = observable.Subscribe(PushValue, Complete, PushException);
             _disp2 = fromObservable.Subscribe(HandleOnPushTrigger);

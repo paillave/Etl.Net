@@ -25,18 +25,11 @@ namespace Paillave.Etl.Reactive.Operators
         {
             lock (_syncValue)
             {
-                try
+                if (!_hasLastValue || !_comparer.Equals(_lastValue, value))
                 {
-                    if (!_hasLastValue || !_comparer.Equals(_lastValue, value))
-                    {
-                        _hasLastValue = true;
-                        _lastValue = value;
-                        return true;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    PushException(ex);
+                    _hasLastValue = true;
+                    _lastValue = value;
+                    return true;
                 }
                 return false;
             }

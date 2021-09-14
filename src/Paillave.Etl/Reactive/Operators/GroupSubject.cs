@@ -11,11 +11,12 @@ namespace Paillave.Etl.Reactive.Operators
         private class KeyGroup
         {
             public TKey Key { get; set; }
+            public TIn FirstElement { get; set; }
             public IPushSubject<TIn> PushSubject { get; set; }
             public IDisposable OutputSubscription { get; set; }
         }
         private readonly Func<TIn, TKey> _getKey;
-        private readonly Func<IPushObservable<TIn>, IPushObservable<TOut>> _groupedObservableTransformation;
+        private readonly Func<IPushObservable<TIn>, TIn, IPushObservable<TOut>> _groupedObservableTransformation;
         private IDisposable _sourceSubscription;
         private IDisposableManager _outSubscriptions = new CollectionDisposableManager();
         private Dictionary<TKey, KeyGroup> _observableDictionary = new Dictionary<TKey, KeyGroup>();
@@ -23,7 +24,7 @@ namespace Paillave.Etl.Reactive.Operators
         public GroupSubject(
             IPushObservable<TIn> sourceS,
             Func<TIn, TKey> getKey,
-            Func<IPushObservable<TIn>, IPushObservable<TOut>> groupedObservableTransformation)
+            Func<IPushObservable<TIn>, TIn, IPushObservable<TOut>> groupedObservableTransformation) : base(sourceS.CancellationToken)
         {
             _getKey = getKey;
             _groupedObservableTransformation = groupedObservableTransformation;
@@ -38,9 +39,10 @@ namespace Paillave.Etl.Reactive.Operators
                 grp = new KeyGroup
                 {
                     Key = key,
-                    PushSubject = new PushSubject<TIn>()
+                    FirstElement = value,
+                    PushSubject = new PushSubject<TIn>(this.CancellationToken)
                 };
-                grp.OutputSubscription = _groupedObservableTransformation(grp.PushSubject).Subscribe(
+                grp.OutputSubscription = _groupedObservableTransformation(grp.PushSubject, value).Subscribe(
                         i => OnOutputPushValue(grp, i),
                         () => OnOutputCompleted(grp),
                         e => OnOutputException(grp, e)
@@ -52,18 +54,26 @@ namespace Paillave.Etl.Reactive.Operators
         }
         private void OnSourcePush(TIn value)
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_syncLock)
             {
-                var obs = GetOrCreateObservable(value);
-                obs.PushSubject.PushValue(value);
+                try
+                {
+                    var obs = GetOrCreateObservable(value);
+                    obs.PushSubject.PushValue(value);
+                }
+                catch (Exception ex)
+                {
+                    this.PushException(ex);
+                }
             }
         }
         private void OnOutputPushValue(KeyGroup grp, TOut value)
         {
-            lock (_syncLock)
-            {
-                base.PushValue(value);
-            }
+            base.PushValue(value);
         }
         private void OnOutputException(KeyGroup grp, Exception exception)
         {
@@ -87,10 +97,20 @@ namespace Paillave.Etl.Reactive.Operators
         }
         private void OnSourceComplete()
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_syncLock)
             {
                 foreach (var item in _observableDictionary.ToList())
+                {
+                    if (CancellationToken.IsCancellationRequested)
+                    {
+                        break;
+                    }
                     item.Value.PushSubject.Complete();
+                }
                 _sourceSubscription.Dispose();
                 _sourceSubscription = null;
                 TryComplete();
@@ -112,7 +132,7 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TOut> Group<TIn, TKey, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, TKey> getKey, Func<IPushObservable<TIn>, IPushObservable<TOut>> parallelProcess)
+        public static IPushObservable<TOut> Group<TIn, TKey, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, TKey> getKey, Func<IPushObservable<TIn>, TIn, IPushObservable<TOut>> parallelProcess)
         {
             return new GroupSubject<TIn, TKey, TOut>(sourceS, getKey, parallelProcess);
         }

@@ -1,5 +1,6 @@
 using OfficeOpenXml;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
@@ -12,8 +13,10 @@ namespace Paillave.Etl.ExcelFile.Core
         private readonly TypeConverter _typeConverter;
         public PropertyInfo PropertyInfo { get; }
         public string ColumnName { get; }
-        public ExcelFilePropertySetter(PropertyInfo propertyInfo, CultureInfo cultureInfo, string columnName)
+        public string Column { get; }
+        public ExcelFilePropertySetter(PropertyInfo propertyInfo, CultureInfo cultureInfo, string columnName, string column = null)
         {
+            this.Column = column ?? columnName;
             this.ColumnName = columnName;
             this.PropertyInfo = propertyInfo;
             this._typeConverter = TypeDescriptor.GetConverter(this.PropertyInfo.PropertyType);
@@ -36,7 +39,6 @@ namespace Paillave.Etl.ExcelFile.Core
         }
 
         public object ParsedValue { get; private set; } = null;
-
         public bool SetValue(ExcelWorksheet excelWorksheet, int row, int column)
         {
             return SetValue(excelWorksheet.GetValue(row, column));

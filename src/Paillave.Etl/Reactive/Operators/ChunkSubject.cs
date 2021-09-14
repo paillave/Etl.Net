@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Paillave.Etl.Reactive.Core;
-using System.Linq.Expressions;
-using Paillave.Etl.Reactive.Disposables;
 
 namespace Paillave.Etl.Reactive.Operators
 {
@@ -16,7 +11,7 @@ namespace Paillave.Etl.Reactive.Operators
         private IList<TIn> _chunk = new List<TIn>();
         private readonly int _chunkSize;
 
-        public ChunkSubject(IPushObservable<TIn> sourceS, int chunkSize)
+        public ChunkSubject(IPushObservable<TIn> sourceS, int chunkSize) : base(sourceS.CancellationToken)
         {
             lock (syncLock)
             {
@@ -43,10 +38,14 @@ namespace Paillave.Etl.Reactive.Operators
 
         private void HandleOnPush(TIn obj)
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (syncLock)
             {
                 _chunk.Add(obj);
-                if (_chunk.Count == _chunkSize)
+                if (_chunk.Count == _chunkSize && _chunkSize != 0)
                 {
                     this.PushValue(_chunk);
                     _chunk = new List<TIn>();

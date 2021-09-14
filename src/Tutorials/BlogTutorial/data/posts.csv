@@ -1,0 +1,9 @@
+title,author,email,timestamp,category,link,post
+FundProcess features,Stéphane Royer,stephane.royer@fundprocess.lu,20210109113005,Category 2,https://www.fundprocess.lu/features/,
+ETL.NET revealed,Paillave,admroyer@hotmail.com,20210508181126,Category 2,,"This a post, about ETL.NET"
+ETL.NET page,Paillave,admroyer@hotmail.com,20210504164510,Category 1,https://paillave.github.io/Etl.Net/,
+FundProcess presentation,Stéphane Royer,stephane.royer@fundprocess.lu,20210203124051,Category 2,,"This a ""post"", about FundProcess"
+FundProcess website,Stéphane Royer,stephane.royer@fundprocess.lu,20210106103005,Category 1,http://www.fundprocess.lu,
+ETL.NET nuget,Paillave,admroyer@hotmail.com,20200504164510,Category 1,http://www.nuget.org/packages/Etl.Net,
+ETL.NET information,Paillave,admroyer@hotmail.com,20200518071024,Category 3,,"This ""another post"" about ETL.NET"
+FundProcess information,Stéphane Royer,stephane.royer@fundprocess.lu,20210819124550,Category 1,,This another post about FundProcess

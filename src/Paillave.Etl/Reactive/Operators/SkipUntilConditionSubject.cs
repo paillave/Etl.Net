@@ -14,7 +14,7 @@ namespace Paillave.Etl.Reactive.Operators
         private bool _isTriggered = false;
         private Func<TIn, bool> _condition;
         private bool _included;
-        public SkipUntilConditionSubject(IPushObservable<TIn> observable, Func<TIn, bool> condition, bool included = true)
+        public SkipUntilConditionSubject(IPushObservable<TIn> observable, Func<TIn, bool> condition, bool included = true) : base(observable.CancellationToken)
         {
             _condition = condition;
             _included = included;
@@ -39,6 +39,10 @@ namespace Paillave.Etl.Reactive.Operators
 
         private void HandleOnPush(TIn value)
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_lockObject)
             {
                 if (_isTriggered) PushValue(value);

@@ -21,6 +21,8 @@ namespace Paillave.Etl.XmlFile.Core.Mapping
         private static readonly Dictionary<Type, MethodInfo> _typeConverters;
         public int DepthScope { get; internal set; } = 0;
         public string NodePath { get; internal set; } = null;
+        public bool ForSourceName { get; internal set; } = false;
+        public bool ForRowGuid { get; internal set; } = false;
         private PropertyInfo _targetPropertyInfo = null;
         public PropertyInfo TargetPropertyInfo
         {

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Paillave.Etl.Reactive.Core;
 
 namespace Paillave.Etl.Reactive.Operators
@@ -11,33 +7,19 @@ namespace Paillave.Etl.Reactive.Operators
     {
         private IDisposable _subscription;
 
-        public MapSubject(IPushObservable<TIn> observable, Func<TIn, TOut> selector)
+        public MapSubject(IPushObservable<TIn> observable, Func<TIn, TOut> selector) : base(observable.CancellationToken)
         {
             this._subscription = observable.Subscribe(i =>
             {
-                try
-                {
-                    this.PushValue(selector(i));
-                }
-                catch (Exception ex)
-                {
-                    this.PushException(ex);
-                }
+                this.TryPushValue(() => selector(i));
             }, this.Complete, this.PushException);
         }
-        public MapSubject(IPushObservable<TIn> observable, Func<TIn, int, TOut> selector)
+        public MapSubject(IPushObservable<TIn> observable, Func<TIn, int, TOut> selector) : base(observable.CancellationToken)
         {
             int counter = 0;
             this._subscription = observable.Subscribe(i =>
             {
-                try
-                {
-                    this.PushValue(selector(i, counter++));
-                }
-                catch (Exception ex)
-                {
-                    this.PushException(ex);
-                }
+                this.TryPushValue(() => selector(i, counter++));
             }, this.Complete, this.PushException);
         }
 

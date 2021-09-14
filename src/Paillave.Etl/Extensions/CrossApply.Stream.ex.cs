@@ -1,68 +1,36 @@
-using Paillave.Etl.Core;
-using Paillave.Etl.StreamNodes;
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.Core.TraceContents;
-using Paillave.Etl.ValuesProviders;
-using Paillave.Etl.Reactive.Core;
-using Paillave.Etl.Reactive.Operators;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using SystemIO = System.IO;
+using System.Threading;
 
-namespace Paillave.Etl.Extensions
+namespace Paillave.Etl.Core
 {
     public static partial class CrossApplyEx
     {
-        public static IStream<TOut> CrossApply<TIn, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, Action<TValueIn, Action<TValueOut>> valuesProvider, Func<TIn, TValueIn> preProcessValue, Func<TValueOut, TIn, TOut> postProcessValue, bool noParallelisation = false)
+        public static IStream<TOut> CrossApply<TIn, TOut>(this IStream<TIn> stream, string name, IValuesProvider<TIn, TOut> valuesProvider, bool noParallelisation = false)
         {
-            return new CrossApplyStreamNode<TIn, TValueIn, TValueOut, TOut>(name, new CrossApplyArgs<TIn, TValueIn, TValueOut, TOut>
+            return new CrossApplyStreamNode<TIn, TOut>(name, new CrossApplyArgs<TIn, TOut>
             {
                 NoParallelisation = noParallelisation,
                 Stream = stream,
-                GetValueIn = preProcessValue,
-                GetValueOut = postProcessValue,
                 ValuesProvider = valuesProvider
             }).Output;
         }
-        public static IStream<TOut> CrossApply<TIn, TOut>(this IStream<TIn> stream, string name, Action<TIn, Action<TOut>> valuesProvider, bool noParallelisation = false)
+        public static IStream<Correlated<TOut>> CrossApply<TIn, TOut>(this IStream<Correlated<TIn>> stream, string name, IValuesProvider<TIn, TOut> valuesProvider, bool noParallelisation = false)
         {
-            return new CrossApplyStreamNode<TIn, TIn, TOut, TOut>(name, new CrossApplyArgs<TIn, TIn, TOut, TOut>
+            return new CrossApplyStreamNode<Correlated<TIn>, Correlated<TOut>>(name, new CrossApplyArgs<Correlated<TIn>, Correlated<TOut>>
             {
                 NoParallelisation = noParallelisation,
                 Stream = stream,
-                GetValueIn = i => i,
-                GetValueOut = (i, j) => i,
-                ValuesProvider = valuesProvider
+                ValuesProvider = new ValueProviderCorrelationWrapper<TIn, TOut>(valuesProvider)
             }).Output;
         }
-        public static IStream<TOut> CrossApply<TIn, TInToApply, TValueIn, TValueOut, TOut>(this IStream<TIn> stream, string name, ISingleStream<TInToApply> resourceStream, Action<TValueIn, TInToApply, Action<TValueOut>> valuesProvider, Func<TIn, TInToApply, TValueIn> preProcessValue, Func<TValueOut, TIn, TInToApply, TOut> postProcessValue, bool noParallelisation = false)
-        {
-            return new CrossApplyStreamNode<TIn, TInToApply, TValueIn, TValueOut, TOut>(name, new CrossApplyArgs<TIn, TInToApply, TValueIn, TValueOut, TOut>
-            {
-                NoParallelisation = noParallelisation,
-                MainStream = stream,
-                GetValueIn = preProcessValue,
-                GetValueOut = postProcessValue,
-                ValuesProvider = valuesProvider,
-                StreamToApply = resourceStream
-            }).Output;
-        }
-        public static IStream<TOut> CrossApply<TIn, TInToApply, TOut>(this IStream<TIn> stream, string name, ISingleStream<TInToApply> resourceStream, Action<TIn, TInToApply, Action<TOut>> valuesProvider, bool noParallelisation = false)
-        {
-            return new CrossApplyStreamNode<TIn, TInToApply, TIn, TOut, TOut>(name, new CrossApplyArgs<TIn, TInToApply, TIn, TOut, TOut>
-            {
-                NoParallelisation = noParallelisation,
-                MainStream = stream,
-                GetValueIn = (i, j) => i,
-                GetValueOut = (i, j, k) => i,
-                ValuesProvider = valuesProvider,
-                StreamToApply = resourceStream
-            }).Output;
-        }
+        public static IStream<Correlated<TOut>> CrossApply<TIn, TOut>(this IStream<Correlated<TIn>> stream, string name, Func<TIn, IEnumerable<TOut>> values, bool noParallelisation = false)
+            => stream.CrossApply<Correlated<TIn>, Correlated<TOut>>(name, new ValueProviderCorrelationWrapper<TIn, TOut>(EnumerableValuesProvider.Create(values)), noParallelisation);
+        public static IStream<Correlated<TOut>> CrossApply<TIn, TOut>(this IStream<Correlated<TIn>> stream, string name, Action<TIn, IDependencyResolver, CancellationToken, Action<TOut>> pushValues, bool noParallelisation = false)
+            => stream.CrossApply<Correlated<TIn>, Correlated<TOut>>(name, new ValueProviderCorrelationWrapper<TIn, TOut>(SimpleValuesProvider.Create(pushValues)), noParallelisation);
+        public static IStream<TOut> CrossApply<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, IEnumerable<TOut>> values, bool noParallelisation = false)
+            => stream.CrossApply<TIn, TOut>(name, EnumerableValuesProvider.Create(values), noParallelisation);
+        public static IStream<TOut> CrossApply<TIn, TOut>(this IStream<TIn> stream, string name, Action<TIn, IDependencyResolver, CancellationToken, Action<TOut>> pushValues, bool noParallelisation = false)
+            => stream.CrossApply<TIn, TOut>(name, SimpleValuesProvider.Create(pushValues), noParallelisation);
     }
 }

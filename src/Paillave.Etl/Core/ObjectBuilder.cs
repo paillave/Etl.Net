@@ -8,6 +8,7 @@ namespace Paillave.Etl.Core
 {
     public class ObjectBuilder
     {
+        public static object CreateInstance(Type type, Dictionary<string, object> values) => new ObjectBuilder(type) { Values = values }.CreateInstance();
         private readonly ParameterInfo[] _anonymousConstructorParameters;
         private readonly IDictionary<string, PropertyInfo> _nonAnonymousPropertyInfos;
         private readonly bool _isOutputAnonymous;
@@ -32,13 +33,14 @@ namespace Paillave.Etl.Core
             if (presetDefaultValues)
             {
                 if (_isOutputAnonymous)
-                    Values = _anonymousConstructorParameters.ToDictionary(i => i.Name, i => Activator.CreateInstance(i.ParameterType));
+                    Values = _anonymousConstructorParameters.ToDictionary(i => i.Name, i => CreateDefaultInstance(i.ParameterType));
                 else
-                    Values = _nonAnonymousPropertyInfos.ToDictionary(i => i.Key, i => Activator.CreateInstance(i.Value.PropertyType));
+                    Values = _nonAnonymousPropertyInfos.ToDictionary(i => i.Key, i => CreateDefaultInstance(i.Value.PropertyType));
             }
             else
                 Values = new Dictionary<string, object>();
         }
+        private object CreateDefaultInstance(Type type) => type.IsValueType ? Activator.CreateInstance(type) : null;
         public object CreateInstance()
         {
             object ret;
@@ -77,26 +79,38 @@ namespace Paillave.Etl.Core
             {
                 if (_isOutputAnonymous)
                 {
-                    Values = _anonymousConstructorParameters.ToDictionary(i => i.Name, i => Activator.CreateInstance(i.ParameterType));
+                    Values = _anonymousConstructorParameters.ToDictionary(i => i.Name, i => CreateDefaultInstance(i.ParameterType));
                 }
                 else
                 {
-                    Values = _nonAnonymousPropertyInfos.ToDictionary(i => i.Key, i => Activator.CreateInstance(i.Value.PropertyType));
+                    Values = _nonAnonymousPropertyInfos.ToDictionary(i => i.Key, i => CreateDefaultInstance(i.Value.PropertyType));
                 }
             }
             else
                 Values = new Dictionary<string, object>();
         }
+        private static object CreateDefaultInstance(Type type) => type.IsValueType ? Activator.CreateInstance(type) : null;
         public TOut CreateInstance()
         {
             return CreateInstance(this.Values);
+        }
+        public void Merge(ObjectBuilder<TOut> ob)
+        {
+            foreach (var item in ob.Values)
+            {
+                if (item.Value != null)
+                {
+                    this.Values[item.Key] = item.Value;
+                }
+            }
         }
         public static TOut CreateInstance(IDictionary<string, object> values)
         {
             TOut ret;
             if (_isOutputAnonymous)
             {
-                ret = (TOut)Activator.CreateInstance(_outType, _anonymousConstructorParameters.Select(i => values[i.Name]).ToArray());
+                ret = (TOut)Activator.CreateInstance(_outType, _anonymousConstructorParameters.Select(i =>
+                    values.TryGetValue(i.Name, out var ret) ? ret : CreateDefaultInstance(i.ParameterType)).ToArray());
             }
             else
             {
@@ -106,6 +120,5 @@ namespace Paillave.Etl.Core
             }
             return ret;
         }
-
     }
 }

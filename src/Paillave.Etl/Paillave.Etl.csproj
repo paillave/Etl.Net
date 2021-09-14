@@ -1,99 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>Etl.Net</PackageId>
-    <Version>1.0.0-alpha</Version>
+    <Version>2.0.0</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseUrl>https://github.com/paillave/Etl.Net/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive</PackageTags>
     <Product>ETL.net Core</Product>
     <Description>Mass processing data with a complete ETL for .net developers</Description>
-    <PackageIconUrl>https://paillave.github.io/Etl.Net/images/NugetIcon.png</PackageIconUrl>
-    <PackageReleaseNotes>
-ETL.net
-
-Implementation of a multi platform reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but that is used in the same way than Linq. 
-The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
-
-ETL Operators:
-* Select	Transformation
-* Where	Transformation
-* Sort	Transformation
-* Left Join	Transformation
-* Lookup	Transformation
-* Union	Transformation
-* Skip	Transformation
-* Top	Transformation
-* Distinct	Transformation
-* Pivot	Transformation
-* Unpivot	Transformation
-* Aggregate	Transformation
-* Cross Apply	Transformation
-* Ensure Sorted	Transformation
-* Ensure Keyed	Transformation
-* Script	Transformation
-* Select keeping sorted	Transformation
-* Left join keeping sorted	Transformation
-* Lookup keeping sorted	Transformation
-* List folder files	Data source
-* Read csv file	Data source
-* Read excel file	Data source
-* Write csv file	Data destination
-* Write excel file	Data destinaton (to be done)
-* Read from Entity framework core	Data source
-* Write to Entity framework core	Data destination
-* Read from Entity framework	Data source (to be done)
-* Write to Entity framework	Data destination (to be done)
-* Entity framework core upsert	Data destination
-* Entity framework upsert	Data destination (to be done)
-* SQL Server bulk load	Data destination (to be done)
-* Read from sql server command	Data source
-* Write to sql server command	Data destination
-* List files from FTP	Data source
-* List file from SFTP	Data source
-* Read files from FTP	Data source
-* Read file from SFTP	Data source
-* Write files from FTP	Data destination
-* Write file from SFTP	Data destination
-* Read data from REST service	Data source (to be done)
-* Write data to REST service	Data destination (to be done)
-* Keep section	Transformation
-* Ignore section	Transformation
-
-Runtime features:
-* Trace issued data of each node
-* Trace any error
-* Stop the entire process whenever an error is raised
-* Trace statistic result of each node at the end of the process
-* Trace time that is spent in each node at the end of the process (to be done)
-* Publish a Job as a REST web service in web api core (to be done)
-* Run any ETL operation on traces to permit to filter and save
-* Show realtime process execution statistics as a sankey graph
-* Web portal to host job definitions manage their executions (to be done)
-* Power shell command tool to execute a job (to be done)
-* Visual studio code addon to view the process as a sankey graph whenever the job definition class file is saved (to be done)
-* Raise a warning on the risky node when a performance issue or a bad practice is detected given statistics (to be done)
-* Interprets a T-SQL-like language script to build a job definition on the fly and run it (to be done)
-    </PackageReleaseNotes>
+    <PackageIcon>NugetIcon.png</PackageIcon>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
+  </ItemGroup>
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <LangVersion>7.1</LangVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <LangVersion>7.1</LangVersion>
-  </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="Extensions\obj\**" />
     <EmbeddedResource Remove="Extensions\obj\**" />
     <None Remove="Extensions\obj\**" />
   </ItemGroup>
-
 </Project>

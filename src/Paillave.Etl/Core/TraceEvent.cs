@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using Paillave.Etl.Core.TraceContents;
 
 namespace Paillave.Etl.Core
 {
@@ -17,6 +12,7 @@ namespace Paillave.Etl.Core
             this.NodeName = nodeName;
             this.Content = content;
             this.DateTime = DateTime.Now;
+            this.SequenceId = sequenceId;
         }
         public int SequenceId { get; }
         public Guid ExecutionId { get; }

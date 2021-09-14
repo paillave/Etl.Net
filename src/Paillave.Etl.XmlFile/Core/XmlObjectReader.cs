@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Xml;
 
 namespace Paillave.Etl.XmlFile.Core
@@ -43,14 +44,14 @@ namespace Paillave.Etl.XmlFile.Core
                 depthLimit = xmlReadField.Depth + depthScope;
             return depth < depthLimit;
         }
-        private void ProcessEndOfAnyNode(Stack<string> nodes)
+        private void ProcessEndOfAnyNode(Stack<NodeLevel> nodes)
         {
             foreach (var item in _inScopeReadFields.Where(i => XmlReadFieldShouldBeCleanedUp(i, nodes.Count - 1)).ToList())
                 _inScopeReadFields.Remove(item);
         }
-        private void ProcessAttributeValue(Stack<string> nodes, string stringContent)
+        private void ProcessAttributeValue(string key, Stack<NodeLevel> nodes, string stringContent)
         {
-            string key = $"/{string.Join("/", nodes.Reverse())}";
+            // string key = $"/{string.Join("/", nodes.Reverse())}";
             if (!_xmlFieldsDefinitionSearch.Contains(key)) return;
             var fds = _xmlFileDefinition.XmlNodeDefinitions.SelectMany(nd => nd.GetXmlFieldDefinitions().Select(fd => new { Fd = fd, Nd = nd })).Where(i => i.Fd.NodePath == key).ToList();
             if (string.IsNullOrWhiteSpace(stringContent))
@@ -80,12 +81,13 @@ namespace Paillave.Etl.XmlFile.Core
                 }
             }
         }
-        private void ProcessEndOfNode(Stack<string> nodes, string text, Action<XmlNodeParsed> pushResult)
+        private string ComputeKey(Stack<NodeLevel> nodes) => $"/{string.Join("/", nodes.Select(i => i.Name).Reverse())}";
+        private void ProcessEndOfNode(Stack<NodeLevel> nodes, string text, Action<XmlNodeParsed> pushResult, string sourceName)
         {
-            string key = $"/{string.Join("/", nodes.Reverse())}";
+            string key = ComputeKey(nodes);
             if (_xmlFieldsDefinitionSearch.Contains(key))
             {
-                ProcessAttributeValue(nodes, text);
+                ProcessAttributeValue(key, nodes, text);
             }
             else if (_xmlNodesDefinitionSearch.Contains(key))
             {
@@ -94,18 +96,23 @@ namespace Paillave.Etl.XmlFile.Core
                 var objectBuilder = new ObjectBuilder(nd.Type);
                 foreach (var inScopeReadField in _inScopeReadFields.Where(rf => rf.NodeDefinition.NodePath == key))
                     objectBuilder.Values[inScopeReadField.Definition.TargetPropertyInfo.Name] = inScopeReadField.Value;
-
+                foreach (var propName in nd.GetXmlFieldDefinitions().Where(i => i.ForRowGuid).Select(i => i.TargetPropertyInfo.Name).ToList())
+                    objectBuilder.Values[propName] = Guid.NewGuid();
+                foreach (var propName in nd.GetXmlFieldDefinitions().Where(i => i.ForSourceName).Select(i => i.TargetPropertyInfo.Name).ToList())
+                    objectBuilder.Values[propName] = sourceName;
                 pushResult(new XmlNodeParsed
                 {
                     NodeDefinitionName = nd.Name,
+                    SourceName = sourceName,
                     NodePath = nd.NodePath,
                     Type = nd.Type,
-                    Value = objectBuilder.CreateInstance()
+                    Value = objectBuilder.CreateInstance(),
+                    CorrelationKeys = nodes.Select(i => i.Guid).Where(i => i.HasValue).Select(i => i.Value).ToHashSet()
                 });
             }
             ProcessEndOfAnyNode(nodes);
         }
-        public void Read(Stream fileStream, Action<XmlNodeParsed> pushResult)
+        public void Read(Stream fileStream, string sourceName, Action<XmlNodeParsed> pushResult, CancellationToken cancellationToken)
         {
             XmlReaderSettings xrs = new XmlReaderSettings();
             foreach (var item in _xmlFileDefinition.PrefixToUriNameSpacesDictionary)
@@ -115,30 +122,32 @@ namespace Paillave.Etl.XmlFile.Core
             xrs.IgnoreProcessingInstructions = true;
 
             var xmlReader = XmlReader.Create(fileStream, xrs);
-            Stack<string> nodes = new Stack<string>();
+            Stack<NodeLevel> nodes = new Stack<NodeLevel>();
             string lastTextValue = null;
             while (xmlReader.Read())
             {
+                if (cancellationToken.IsCancellationRequested) break;
                 switch (xmlReader.NodeType)
                 {
                     case XmlNodeType.Element:
                         bool isEmptyElement = xmlReader.IsEmptyElement;
                         lastTextValue = null;
-                        nodes.Push(xmlReader.Name);
+                        nodes.Push(new NodeLevel { Name = xmlReader.Name, Guid = Guid.NewGuid() });
                         while (xmlReader.MoveToNextAttribute())
                         {
-                            nodes.Push($"@{xmlReader.Name}");
-                            ProcessAttributeValue(nodes, xmlReader.Value);
+                            nodes.Push(new NodeLevel { Name = $"@{xmlReader.Name}", Guid = null });
+
+                            ProcessAttributeValue(ComputeKey(nodes), nodes, xmlReader.Value);
                             nodes.Pop();
                         }
                         if (isEmptyElement)
                         {
-                            ProcessEndOfNode(nodes, null, pushResult);
+                            ProcessEndOfNode(nodes, null, pushResult, sourceName);
                             nodes.Pop();
                         }
                         break;
                     case XmlNodeType.EndElement:
-                        ProcessEndOfNode(nodes, lastTextValue, pushResult);
+                        ProcessEndOfNode(nodes, lastTextValue, pushResult, sourceName);
                         lastTextValue = null;
                         nodes.Pop();
                         break;
@@ -147,6 +156,11 @@ namespace Paillave.Etl.XmlFile.Core
                         break;
                 }
             }
+        }
+        private struct NodeLevel
+        {
+            public string Name { get; set; }
+            public Guid? Guid { get; set; }
         }
     }
 }

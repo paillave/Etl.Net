@@ -19,7 +19,7 @@ namespace Paillave.Etl.Reactive.Operators
     {
         protected Func<TIn, SwitchBehavior> SwitchToKeep { get; }
         protected Func<TIn, SwitchBehavior> SwitchToIgnore { get; }
-        protected FilterSectionSubjectBase(IPushObservable<TIn> observable, KeepingState initialState, Func<TIn, SwitchBehavior> switchToKeep, Func<TIn, SwitchBehavior> switchToIgnore)
+        protected FilterSectionSubjectBase(IPushObservable<TIn> observable, KeepingState initialState, Func<TIn, SwitchBehavior> switchToKeep, Func<TIn, SwitchBehavior> switchToIgnore) : base(observable.CancellationToken)
         {
             this.Subscription = observable.Subscribe(HandlePushValue, this.Complete, this.PushException);
             SwitchToKeep = switchToKeep;
@@ -56,6 +56,10 @@ namespace Paillave.Etl.Reactive.Operators
         protected abstract void ProcessCurrentIgnore(TIn value);
         protected void HandlePushValue(TIn value)
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_syncValue)
             {
                 try

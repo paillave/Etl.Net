@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Paillave.Etl.Core
 {
-    public interface INodeContext
+    public interface INodeContext : INodeDescription
     {
-        string NodeName { get; }
-        string TypeName { get; }
+        ITraceEventFactory Tracer { get; }
+        IExecutionContext ExecutionContext { get; }
     }
 }

@@ -1,7 +1,0 @@
-component_depth: 2
-languages:
-- csharp
-exclude:
-- /docfx_project/.*
-- /src/Samples/.*
-- .*/Extensions/[^/]*\.[Ee]x\.cs

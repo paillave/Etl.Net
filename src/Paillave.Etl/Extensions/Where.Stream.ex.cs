@@ -1,20 +1,6 @@
-using Paillave.Etl.Core;
-using Paillave.Etl.StreamNodes;
-using Paillave.Etl.Core.Streams;
-using Paillave.Etl.Core.TraceContents;
-using Paillave.Etl.ValuesProviders;
-using Paillave.Etl.Reactive.Core;
-using Paillave.Etl.Reactive.Operators;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using SystemIO = System.IO;
 
-namespace Paillave.Etl.Extensions
+namespace Paillave.Etl.Core
 {
     public static partial class WhereEx
     {
@@ -40,6 +26,38 @@ namespace Paillave.Etl.Extensions
             {
                 Input = stream,
                 Predicate = predicate
+            }).Output;
+        }
+        public static IStream<Correlated<TIn>> WhereCorrelated<TIn>(this IStream<Correlated<TIn>> stream, string name, Func<TIn, bool> predicate)
+        {
+            return new WhereStreamNode<Correlated<TIn>, IStream<Correlated<TIn>>>(name, new WhereArgs<Correlated<TIn>, IStream<Correlated<TIn>>>
+            {
+                Input = stream,
+                Predicate = i => predicate(i.Row)
+            }).Output;
+        }
+        public static IKeyedStream<Correlated<TIn>, TKey> Where<TIn, TKey>(this IKeyedStream<Correlated<TIn>, TKey> stream, string name, Func<TIn, bool> predicate)
+        {
+            return new WhereStreamNode<Correlated<TIn>, IKeyedStream<Correlated<TIn>, TKey>>(name, new WhereArgs<Correlated<TIn>, IKeyedStream<Correlated<TIn>, TKey>>
+            {
+                Input = stream,
+                Predicate = i => predicate(i.Row)
+            }).Output;
+        }
+        public static ISortedStream<Correlated<TIn>, TKey> Where<TIn, TKey>(this ISortedStream<Correlated<TIn>, TKey> stream, string name, Func<TIn, bool> predicate)
+        {
+            return new WhereStreamNode<Correlated<TIn>, ISortedStream<Correlated<TIn>, TKey>>(name, new WhereArgs<Correlated<TIn>, ISortedStream<Correlated<TIn>, TKey>>
+            {
+                Input = stream,
+                Predicate = i => predicate(i.Row)
+            }).Output;
+        }
+        public static IStream<Correlated<TIn>> Where<TIn>(this IStream<Correlated<TIn>> stream, string name, Func<TIn, bool> predicate)
+        {
+            return new WhereStreamNode<Correlated<TIn>, IStream<Correlated<TIn>>>(name, new WhereArgs<Correlated<TIn>, IStream<Correlated<TIn>>>
+            {
+                Input = stream,
+                Predicate = i => predicate(i.Row)
             }).Output;
         }
     }

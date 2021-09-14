@@ -1,9 +1,7 @@
-using Paillave.Etl.Core;
 using Paillave.Etl.XmlFile.Core.Mapping;
 using Paillave.Etl.XmlFile.Core.Mapping.Visitors;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -45,14 +43,14 @@ namespace Paillave.Etl.XmlFile.Core
             else
                 if (xmlFieldDefinition.NodePath != null) existingFieldDefinition.NodePath = xmlFieldDefinition.NodePath;
         }
-        public XmlNodeDefinition<T> MapXPathToProperty<TField>(string valueXPathQuery, Expression<Func<T, TField>> memberLamda)
-        {
-            SetFieldDefinition(new XmlFieldDefinition
-            {
-                NodePath = valueXPathQuery,
-                TargetPropertyInfo = memberLamda.GetPropertyInfo()
-            });
-            return this;
-        }
+        // public XmlNodeDefinition<T> MapXPathToProperty<TField>(string valueXPathQuery, Expression<Func<T, TField>> memberLambda)
+        // {
+        //     SetFieldDefinition(new XmlFieldDefinition
+        //     {
+        //         NodePath = valueXPathQuery,
+        //         TargetPropertyInfo = memberLambda.GetPropertyInfo()
+        //     });
+        //     return this;
+        // }
     }
 }

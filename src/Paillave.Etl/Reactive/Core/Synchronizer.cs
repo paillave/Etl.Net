@@ -5,22 +5,22 @@ namespace Paillave.Etl.Reactive.Core
 {
     public class Synchronizer
     {
-        private Semaphore _semaphore;
+        private SemaphoreSlim _semaphore;
         public IDisposable WaitBeforeProcess()
         {
             return new SemaphoreAwaiter(_semaphore);
         }
         public Synchronizer(bool noParallelisation = false)
         {
-            _semaphore = noParallelisation ? new Semaphore(1, 1) : new Semaphore(10, 10);
+            _semaphore = noParallelisation ? new SemaphoreSlim(1, 1) : new SemaphoreSlim(10, 10);
         }
         private class SemaphoreAwaiter : IDisposable
         {
-            private Semaphore _semaphore;
-            public SemaphoreAwaiter(Semaphore semaphore)
+            private SemaphoreSlim _semaphore;
+            public SemaphoreAwaiter(SemaphoreSlim semaphore)
             {
                 _semaphore = semaphore;
-                _semaphore.WaitOne();
+                _semaphore.Wait();
             }
             #region IDisposable Support
             private bool disposedValue = false;
