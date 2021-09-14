@@ -1,5 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <PackageId>Paillave.EntityFrameworkCoreExtension</PackageId>
+    <Version>2.0.0</Version>
+    <Authors>Stéphane Royer</Authors>
+    <Company></Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
+    <PackageTags>ETL .net core EF reactive</PackageTags>
+    <Product>Entity Frameworkk extensions</Product>
+    <Description>Entity Framework Extensions</Description>
+    <PackageIcon>NugetIcon.png</PackageIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
+  </ItemGroup>
+  <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
