@@ -22,11 +22,11 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - uses: NuGet/setup-nuget@v1.0.5
       with:
-        nuget-api-key: ${{ secrets.NUGET_API_KEY }}
         nuget-version: '5.x'
     - name: Publish to NuGet
       working-directory: src
-      run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json'
+      run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
+
     # - uses: actions/setup-node@v1
     #   with:
     #     node-version: '12.x'
