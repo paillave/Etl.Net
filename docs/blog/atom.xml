@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://paillave.github.io/Etl.Net/blog</id>
+    <title>ETL.NET Blog</title>
+    <updated>2021-08-01T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://paillave.github.io/Etl.Net/blog"/>
+    <subtitle>ETL.NET Blog</subtitle>
+    <icon>https://paillave.github.io/Etl.Net/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Why ETL.NET?]]></title>
+        <id>Why ETL.NET?</id>
+        <link href="https://paillave.github.io/Etl.Net/blog/2021/08/01/WhyETLNET"/>
+        <updated>2021-08-01T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Years after years, contexts I faced led me to the conclusion that ETL engines (even SSIS that is that is still one of the bests 15 years after its initial release) should now reach a next generation.]]></summary>
+        <author>
+            <name>Stéphane Royer</name>
+            <uri>https://github.com/paillave</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[First Release!]]></title>
+        <id>First Release!</id>
+        <link href="https://paillave.github.io/Etl.Net/blog/2021/07/31/FirstRelease"/>
+        <updated>2021-07-31T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[After 3 years of hard work and testing, ETL.NET is finally ready for production environment.]]></summary>
+        <author>
+            <name>Stéphane Royer</name>
+            <uri>https://github.com/paillave</uri>
+        </author>
+    </entry>
+</feed>

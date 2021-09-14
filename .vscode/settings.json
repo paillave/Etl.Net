@@ -1,6 +1,7 @@
 {
     "files.exclude": {
         "src": true, // this is a default value
+        "documentation": true, // this is a default value
         "docs": true, // this is a default value
     },
 }

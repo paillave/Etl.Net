@@ -1,0 +1,108 @@
+/* stylelint-disable docusaurus/copyright-header */
+
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.heroBanner {
+  padding: 5rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background-image: url("/static/img/streams.jpg");
+  background-size:     cover;                      /* <------ */
+  background-repeat:   no-repeat;
+  background-position: center center;
+  height: 500px;
+}
+
+.heroBanner p, .heroBanner h1 {
+  /* color:bisque; */
+  color: #FFFFFF;
+  text-shadow: 0 0 15px #000000, 0 0 10px #000000, 0 0 5px #000000;
+}
+
+.mainLogoBackground_src-pages-index-module svg {
+  filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 1));
+}
+
+@media screen and (max-width: 966px) {
+  .heroBanner {
+    padding: 2rem;
+    background-image: url("/static/img/streams.jpg");
+    background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;
+    }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttons > * {
+  margin-left: 5px;
+  margin-right: 5px;
+  box-shadow: 0 0 15px #0000007c;
+}
+
+.indexLayout {
+  background-image: url("/static/img/wallpaper-surfing.png");
+  background-size:     cover;                      /* <------ */
+  background-repeat:   repeat-y;
+  background-position: bottom center;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.mainLogoBackground{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mainLogoBackground svg{
+  background: radial-gradient(#FFFFFF, transparent 100px);
+  width: 200px;
+  height: 200px;
+}
+.kayakBot{
+  z-index: 0;
+  animation: kayak 10s infinite ease-in-out;
+  position: absolute;
+  bottom: -10px;
+  left: 400px;
+  width: 100px; 
+  height: 100px;
+}
+@keyframes kayak {
+  0%   {transform: translate(0,0) rotate(-20deg); }
+  35%  {transform: translate(300px,0) rotate(-20deg); }
+  50%  {transform: translate(350px,0) scale(-1,1) rotate(-20deg);}
+  85% {transform: translate(50px,0)  scale(-1,1) rotate(-20deg);}
+  100% {transform: translate(0,0) rotate(-20deg);}
+}
+
+
+.prismPre {
+  text-align: left;
+  margin: 1em 0;
+  padding: 0.5em;
+  overflow: scroll;
+}
+
+.prismLineNo{
+  display: table-cell;
+  text-align: right;
+  padding-right: 1em;
+  user-select: none;
+  opacity: 0.5;
+}
+
+.prismLineContent {
+  display: table-cell;
+}

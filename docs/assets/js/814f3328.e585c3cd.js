@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunketlnetdocumentation=self.webpackChunketlnetdocumentation||[]).push([[2535],{45641:function(e){e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Why ETL.NET?","permalink":"/Etl.Net/blog/2021/08/01/WhyETLNET"},{"title":"First Release!","permalink":"/Etl.Net/blog/2021/07/31/FirstRelease"}]}')}}]);
