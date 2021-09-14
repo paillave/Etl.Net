@@ -16,8 +16,10 @@ jobs:
       with:
         dotnet-version: '5.x'
     - name: Install dependencies
+      working-directory: src
       run: dotnet restore
     - name: Build
+      working-directory: src
       run: dotnet build --configuration Release --no-restore
     # - name: Test
     #   run: dotnet run --project NetLicensingClient-demo
