@@ -1,6 +1,7 @@
-# Etl.Net [![Join the chat at https://gitter.im/Etl-Net/Lobby](https://badges.gitter.im/Etl-Net/Lobby.svg)](https://gitter.im/Etl-Net/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Etl.Net
 
 ![ETL.NET](streams.jpg)
+[Go to full documentation](https://paillave.github.io/Etl.Net/)
 
 ## Presentation
 
@@ -11,25 +12,24 @@ The reactive approach for the implementation of this engine ensures parallelized
 - ETL.NET works with a similar principle than SSIS, with ETL processes to be written in .NET like Linq queries.
 - A simple and straight forward ELT.NET runtime for .NET executes ETL processes with no installation required.
 
-
 | Package | nuget version | nuget downloads |
 |-|-|-|
-| Etl.Net | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) |
-| Etl.Net.Autofac | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.Autofac.svg)](https://www.nuget.org/packages/Etl.Net.Autofac) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.Autofac.svg)](https://www.nuget.org/packages/Etl.Net.Autofac) |
-| Etl.Net.Dropbox | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.Dropbox.svg)](https://www.nuget.org/packages/Etl.Net.Dropbox) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.Dropbox.svg)](https://www.nuget.org/packages/Etl.Net.Dropbox) |
-| Etl.Net.EntityFrameworkCore | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) |
-| Etl.Net.ExcelFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) |
-| Etl.Net.ExecutionToolkit | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExecutionToolkit.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionToolkit) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExecutionToolkit.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionToolkit) |
-| Etl.Net.FileSystem | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.FileSystem.svg)](https://www.nuget.org/packages/Etl.Net.FileSystem) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.FileSystem.svg)](https://www.nuget.org/packages/Etl.Net.FileSystem) |
-| Paillave.Etl.FromConfigurationConnectors | [![NuGet](https://img.shields.io/nuget/v/Paillave.Etl.FromConfigurationConnectors.svg)](https://www.nuget.org/packages/Paillave.Etl.FromConfigurationConnectors) |[![NuGet](https://img.shields.io/nuget/dt/Paillave.Etl.FromConfigurationConnectors.svg)](https://www.nuget.org/packages/Paillave.Etl.FromConfigurationConnectors) |
-| Etl.Net.Ftp | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.Ftp.svg)](https://www.nuget.org/packages/Etl.Net.Ftp) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.Ftp.svg)](https://www.nuget.org/packages/Etl.Net.Ftp) |
-| Etl.Net.Mail | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.Mail.svg)](https://www.nuget.org/packages/Etl.Net.Mail) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.Mail.svg)](https://www.nuget.org/packages/Etl.Net.Mail) |
-| Etl.Net.Sftp | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.Sftp.svg)](https://www.nuget.org/packages/Etl.Net.Sftp) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.Sftp.svg)](https://www.nuget.org/packages/Etl.Net.Sftp) |
-| Etl.Net.SqlServer | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.SqlServer.svg)](https://www.nuget.org/packages/Etl.Net.SqlServer) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.SqlServer.svg)](https://www.nuget.org/packages/Etl.Net.SqlServer) |
-| Etl.Net.TextFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.TextFile.svg)](https://www.nuget.org/packages/Etl.Net.TextFile) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.TextFile.svg)](https://www.nuget.org/packages/Etl.Net.TextFile) |
-| Etl.Net.XmlFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.XmlFile.svg)](https://www.nuget.org/packages/Etl.Net.XmlFile) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.XmlFile.svg)](https://www.nuget.org/packages/Etl.Net.XmlFile) |
-| Etl.Net.Zip | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.Zip.svg)](https://www.nuget.org/packages/Etl.Net.Zip) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.Zip.svg)](https://www.nuget.org/packages/Etl.Net.Zip) |
-| Paillave.EntityFrameworkCoreExtension | [![NuGet](https://img.shields.io/nuget/v/Paillave.EntityFrameworkCoreExtension.svg)](https://www.nuget.org/packages/Paillave.EntityFrameworkCoreExtension) |[![NuGet](https://img.shields.io/nuget/dt/Paillave.EntityFrameworkCoreExtension.svg)](https://www.nuget.org/packages/Paillave.EntityFrameworkCoreExtension) |
+| Paillave.EtlNet.Core | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Core.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Core) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Core.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Core) |
+| Paillave.EtlNet.Autofac | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Autofac.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Autofac) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Autofac.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Autofac) |
+| Paillave.EtlNet.Dropbox | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Dropbox.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Dropbox) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Dropbox.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Dropbox) |
+| Paillave.EtlNet.EntityFrameworkCore | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Paillave.EtlNet.EntityFrameworkCore) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Paillave.EtlNet.EntityFrameworkCore) |
+| Paillave.EtlNet.ExcelFile | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.ExcelFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.ExcelFile) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.ExcelFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.ExcelFile) |
+| Paillave.EtlNet.ExecutionToolkit | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.ExecutionToolkit.svg)](https://www.nuget.org/packages/Paillave.EtlNet.ExecutionToolkit) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.ExecutionToolkit.svg)](https://www.nuget.org/packages/Paillave.EtlNet.ExecutionToolkit) |
+| Paillave.EtlNet.FileSystem | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.FileSystem.svg)](https://www.nuget.org/packages/Paillave.EtlNet.FileSystem) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.FileSystem.svg)](https://www.nuget.org/packages/Paillave.EtlNet.FileSystem) |
+| Paillave.EtlNet.FromConfigurationConnectors | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.FromConfigurationConnectors.svg)](https://www.nuget.org/packages/Paillave.EtlNet.FromConfigurationConnectors) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.FromConfigurationConnectors.svg)](https://www.nuget.org/packages/Paillave.EtlNet.FromConfigurationConnectors) |
+| Paillave.EtlNet.Ftp | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Ftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Ftp) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Ftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Ftp) |
+| Paillave.EtlNet.Mail | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Mail.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Mail) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Mail.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Mail) |
+| Paillave.EtlNet.Sftp | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Sftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Sftp) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Sftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Sftp) |
+| Paillave.EtlNet.SqlServer | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.SqlServer.svg)](https://www.nuget.org/packages/Paillave.EtlNet.SqlServer) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.SqlServer.svg)](https://www.nuget.org/packages/Paillave.EtlNet.SqlServer) |
+| Paillave.EtlNet.TextFile | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.TextFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.TextFile) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.TextFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.TextFile) |
+| Paillave.EtlNet.XmlFile | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.XmlFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.XmlFile) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.XmlFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.XmlFile) |
+| Paillave.EtlNet.Zip | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Zip.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Zip) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Zip.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Zip) |
+| Paillave.EntityFrameworkCoreExtension | [![NuGet](https://img.shields.io/nuget/v/Paillave.EntityFrameworkCoreExtension.svg)](https://www.nuget.org/packages/Paillave.EntityFrameworkCoreExtension) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EntityFrameworkCoreExtension.svg)](https://www.nuget.org/packages/Paillave.EntityFrameworkCoreExtension) |
 
 ## Examples
 

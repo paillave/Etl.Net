@@ -4,7 +4,7 @@ sidebar_position: 6
 
 # Make a console application
 
-Making a console application with ETL.NET is dramatically simple thanks to `Paillave.Etl.ExecutionToolkit` extensions.
+Making a console application with ETL.NET is dramatically simple thanks to `Paillave.EtlNet.ExecutionToolkit` extensions.
 
 This package contains 2 classes that implements the interface `ITraceReporter`
 

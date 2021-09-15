@@ -26,7 +26,7 @@ var streamOfFile = streamOfRows
 
 In many occasions, writing a file will consist in creating an excel file, or a csv file with fixed width or delimited columns
 
-File creation extensions `Paillave.Etl.TextFile` or `Paillave.Etl.ExcelFile` can change a stream into a `IFileValue` instance out of the box.
+File creation extensions `Paillave.EtlNet.TextFile` or `Paillave.EtlNet.ExcelFile` can change a stream into a `IFileValue` instance out of the box.
 
 ```cs
 var streamOfFile = streamOfRows
@@ -71,7 +71,7 @@ var streamOfFile = streamOfRows
 
 ### Many files in CSV or Excel format
 
-Defining a subprocess like shown in the example right above is the only way to go to produce several files by using `Paillave.Etl.TextFile` or `Paillave.Etl.ExcelFile` extensions:
+Defining a subprocess like shown in the example right above is the only way to go to produce several files by using `Paillave.EtlNet.TextFile` or `Paillave.EtlNet.ExcelFile` extensions:
 
 ```cs
 var streamOfFile = streamOfRows

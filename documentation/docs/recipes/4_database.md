@@ -8,7 +8,7 @@ ETL.NET official extensions for database permit to save correlated or not correl
 
 ## Without Entity Framework
 
-ETL.NET official extension to access SQL server without Entity Framework is `Paillave.Etl.SqlServer`.
+ETL.NET official extension to access SQL server without Entity Framework is `Paillave.EtlNet.SqlServer`.
 
 ### Setup the connection without Entity Framework
 
@@ -221,7 +221,7 @@ contextStream
 
 ## Using Entity Framework
 
-ETL.NET official extension to access databases with Entity Framework is `Paillave.Etl.EntityFrameworkCore`.
+ETL.NET official extension to access databases with Entity Framework is `Paillave.EtlNet.EntityFrameworkCore`.
 
 Most of things related to Sql Server extension have their equivalent in the Entity Framework extension.
 
