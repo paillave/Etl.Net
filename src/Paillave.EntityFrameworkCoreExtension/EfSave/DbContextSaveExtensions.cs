@@ -16,13 +16,13 @@ namespace Paillave.EntityFrameworkCoreExtension.EfSave
             => EfSaveAsync(context, entities, new Expression<Func<T, object>>[] { pivotKey }, cancellationToken, doNotUpdateIfExists, insertOnly);
         public static Task EfSaveAsync<T>(this DbContext context, IList<T> entities, Expression<Func<T, object>>[] pivotKeys, bool doNotUpdateIfExists = false, bool insertOnly = false) where T : class
             => EfSaveAsync<T>(context, entities, pivotKeys, CancellationToken.None, doNotUpdateIfExists, insertOnly);
-        public static async Task EfSaveAsync<T>(this DbContext context, IList<T> entities, Expression<Func<T, object>>[] pivotKeys, CancellationToken cancellationToken, bool doNotUpdateIfExists = false, bool insertOnly = false) where T : class
+        public static async Task EfSaveAsync<T>(this DbContext context, IList<T> entities, Expression<Func<T, object>>[] pivotKeys, CancellationToken? cancellationToken = null, bool doNotUpdateIfExists = false, bool insertOnly = false) where T : class
         {
             if (cancellationToken == null)
             {
                 cancellationToken = CancellationToken.None;
             }
-            EfSaveEngine<T> efSaveEngine = new EfSaveEngine<T>(context, cancellationToken, pivotKeys);
+            EfSaveEngine<T> efSaveEngine = new EfSaveEngine<T>(context, cancellationToken.Value, pivotKeys);
             await efSaveEngine.SaveAsync(entities, doNotUpdateIfExists, insertOnly);
         }
     }

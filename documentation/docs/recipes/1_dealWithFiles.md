@@ -50,7 +50,7 @@ These direct extension methods are implement only for the file system. For other
 
 ### Get files
 
-Extensions from `Paillave.Etl.FileSystem` directly contains a method to get files from the file system: `CrossApplyFolderFiles`
+Extensions from `Paillave.EtlNet.FileSystem` directly contains a method to get files from the file system: `CrossApplyFolderFiles`
 
 From a stream of `string`, recursively get every zip file that is in each folder given by the source stream:
 
@@ -162,7 +162,7 @@ contextStream
 
 ## Create connectors from config file
 
-All this is possible with the runtime extension `Paillave.Etl.FromConfigurationConnectors`.
+All this is possible with the runtime extension `Paillave.EtlNet.FromConfigurationConnectors`.
 
 Creating connectors from a config file is less straight forward for the developer, but the level of flexibility that is then delegated to the infrastructure administrator or to a user is million times worth the effort.
 
