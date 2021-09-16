@@ -12,6 +12,7 @@ import HomepageExamples from '../components/HomepageExamples';
 
 const Bot = require('../../static/img/dotnet-bot_kayaking.svg').default;
 const EtlNet = require('../../static/img/full-black-logo.svg').default
+const streamImage=require('../../static/img/SmallStreams.jpg').url;
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
   return (
@@ -50,7 +51,9 @@ export default function Home() {
   return (
     <Layout
       title={`Home`}
-      description="Description will go into a meta tag in <head />">
+      description="Fully featured ETL int .NET5 for .NET5 working with the same principle than SSIS"
+      image={streamImage}
+      keywords={["ETL", ".NET", "SSIS", "Import", "Export"]}>
       <HomepageHeader />
       <main>
         <HomepageFeatures />
