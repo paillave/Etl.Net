@@ -65,7 +65,7 @@ namespace SimpleTutorial
         static async Task Main(string[] args)
         {
             var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
-            processRunner.DebugNodeStream += (sender, e) => { };
+            processRunner.DebugNodeStream += (sender, e) => { /* place a conditional breakpoint here for debug */ };
             using (var cnx = new SqlConnection(args[1]))
             {
                 cnx.Open();
