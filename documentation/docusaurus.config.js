@@ -96,7 +96,7 @@ module.exports = {
       darkTheme: darkCodeTheme,
       additionalLanguages: ['csharp'],
     },
-    image: 'img/full-black-logo.png',
+    image: 'img/SmallStreams.jpg',
   },
   presets: [
     [
