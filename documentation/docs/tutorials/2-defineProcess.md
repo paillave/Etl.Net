@@ -13,7 +13,7 @@ The definition of the ETL process is done in the method `DefineProcess`. The fol
 Add a reference to `Paillave.EtlNet.FileSystem`, the extensions to interact with the local file system: read a file, list files from folder, write file on the file system.
 
 ```sh
-dotnet add package Etl.Net.FileSystem
+dotnet add package Paillave.EtlNet.FileSystem
 ```
 
 By using extensions from `Paillave.EtlNet.FileSystem`, we will recursively list all the zip files in the root folder that was transmitted when triggering the execution:

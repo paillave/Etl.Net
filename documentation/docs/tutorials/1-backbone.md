@@ -54,7 +54,7 @@ cd SimpleTutorial
 Add reference to `Etl.Net`, the core of ETL.NET with all its common operators:
 
 ```sh
-dotnet add package Etl.Net
+dotnet add package Paillave.EtlNet.Core
 ```
 
 ## Create an empty process
@@ -72,7 +72,7 @@ private static void DefineProcess(ISingleStream<string> contextStream)
 
 ## Create the runner
 
-We will create a runner with `StreamProcessRunner` from the assembly `Etl.Net.ExecutionToolkit` by providing the ETL process.
+We will create a runner with `StreamProcessRunner` from the package `Paillave.EtlNet.ExecutionToolkit` by providing the ETL process.
 
 ```cs
 var processRunner = StreamProcessRunner.Create<string>(DefineProcess);

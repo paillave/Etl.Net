@@ -30,9 +30,9 @@ It also permits to interact out of the box with:
 - Zip: read
 - Something missing? Not a problem either! Extending ETL.NET for this purpose is simple and easy as well!
 
-It permits to trace **in detail** the entire activity of a process and use theses traces in any possible way.
+It permits to trace **in detail** the entire activity of a process and use these traces in any possible way.
 
-One it is deployed, provides a very simple way for administrators to setup external connectivity.
+Once it is deployed, provides a very simple way for administrators to setup external connectivity.
 
 And so much more; imagination is the limit.
 
