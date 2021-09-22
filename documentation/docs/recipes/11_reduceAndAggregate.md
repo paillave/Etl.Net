@@ -80,7 +80,7 @@ contextStream
 
 ## Group By
 
-In the [create several files recipe](docs/recipes/writeInFiles) `GroupBy` was used to group payloads in a sub process per key. But the `GroupBy` operator can be used to group payload in a list per key.
+In the [create several files recipe](docs/recipes/createFiles) `GroupBy` was used to group payloads in a sub process per key. But the `GroupBy` operator can be used to group payload in a list per key.
 
 ```cs {9}
 contextStream

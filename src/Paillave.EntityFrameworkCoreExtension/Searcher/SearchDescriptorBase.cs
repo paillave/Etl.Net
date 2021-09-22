@@ -177,10 +177,11 @@ namespace Paillave.EntityFrameworkCoreExtension.Searcher
         }
         public virtual List<TId> SearchIds(Dictionary<string, List<string>> filters)
             => this.Search(filters).Select(this.GetIdExpression).ToList();
-        public virtual Dictionary<GroupingValue, List<TId>> SearchIds(Dictionary<string, List<string>> filters, string pathToGroupProperty)
+        public virtual Dictionary<GroupingValue, List<(TId id, string label)>> SearchIds(Dictionary<string, List<string>> filters, string pathToGroupProperty)
         {
             var getId = this.GetIdExpression.Compile();
-            return this.Search(filters, pathToGroupProperty).ToDictionary(i => i.Key, i => i.Value.Select(getId).ToList());
+            var defaultValue = this.DefaultValueProperty.GetValueExpression.Compile() as Func<TEntity, object>;
+            return this.Search(filters, pathToGroupProperty).ToDictionary(i => i.Key, i => i.Value.Select(j => (id: getId(j), label: defaultValue == null ? getId(j).ToString() : defaultValue(j)?.ToString())).ToList());
         }
         protected virtual IQueryable<TEntity> GetQueryable() => this.DbContext.Set<TEntity>().AsQueryable();
         private class KeyedRow<TKey>

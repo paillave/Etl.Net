@@ -41,7 +41,7 @@ namespace Paillave.Etl.Core
         public Action<IStream<TraceEvent>, ISingleStream<TConfig>> TraceProcessDefinition { get; set; } = null;
         public IDependencyResolver Resolver { get; set; } = null;
         public IDependencyResolver TraceResolver { get; set; } = null;
-        public bool NoExceptionOnError { get; set; } = false;
+        public bool NoExceptionOnError { get; set; } = true;
         public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
         public IFileValueConnectors Connectors { get; set; } = new NoFileValueConnectors();
     }
