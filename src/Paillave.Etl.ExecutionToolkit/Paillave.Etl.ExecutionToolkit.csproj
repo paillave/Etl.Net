@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>Paillave.EtlNet.ExecutionToolkit</PackageId>
-    <Version>2.0.4</Version>
+    <Version>2.0.5</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -11,8 +11,10 @@
     <Product>ETL.net Execution plan extensions</Product>
     <Description>ExecutionToolkit extensions for Etl.Net</Description>
     <PackageIcon>NugetIcon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath=""/>
     <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
   <PropertyGroup>

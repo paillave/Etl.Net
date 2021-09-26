@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>Paillave.EtlNet.XmlFile</PackageId>
-    <Version>2.0.4</Version>
+    <Version>2.0.5</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -9,14 +9,13 @@
     <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive text file xml</PackageTags>
     <Product>ETL.net XML files extensions</Product>
-    <PackageIcon>NugetIcon.png</PackageIcon>
-    <Description>XML files extensions for Etl.Net</Description>
-    <PackageReleaseNotes>
-extensions for Etl.Net to quickly read very large XML files with low memory foot print
-    </PackageReleaseNotes>
+    <Description>Extensions for Etl.Net to quickly read very large XML files with low memory foot print</Description>
     <LangVersion>latest</LangVersion>
+    <PackageIcon>NugetIcon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath=""/>
     <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
 

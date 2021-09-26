@@ -11,7 +11,7 @@ namespace BlogTutorial
     {
         static async Task Main(string[] args)
         {
-            var processRunner = StreamProcessRunner.Create<string>(DefineProcess7);
+            var processRunner = StreamProcessRunner.Create<string>(DefineProcess102);
             var executionOptions = new ExecutionOptions<string>
             {
                 // TraceProcessDefinition = DefineTraceProcess
@@ -102,12 +102,13 @@ namespace BlogTutorial
                     }))
                 .Pivot("pivot values", i => i.OutputId, i => new
                 {
+                    TheFirst = AggregationOperators.First(i.Label),
                     Count = AggregationOperators.Count(),
                     Count0 = AggregationOperators.Count().For(i.OutputId == 0),
                     Count1 = AggregationOperators.Count().For(i.OutputId == 1),
                     Count2 = AggregationOperators.Count().For(i.OutputId == 2)
                 })
-                .Do("print file name to console", i => Console.WriteLine($"{i.Key}: Count={i.Aggregation.Count}, Count0={i.Aggregation.Count0}, Count1={i.Aggregation.Count1}, Count2={i.Aggregation.Count2}"));
+                .Do("print file name to console", i => Console.WriteLine($"{i.Key}: Label={i.Aggregation.TheFirst} Count={i.Aggregation.Count}, Count0={i.Aggregation.Count0}, Count1={i.Aggregation.Count1}, Count2={i.Aggregation.Count2}"));
         }
         private static void DefineProcess103(ISingleStream<string> contextStream)
         {

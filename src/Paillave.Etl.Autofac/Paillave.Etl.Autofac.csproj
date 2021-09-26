@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>Paillave.EtlNet.Autofac</PackageId>
-    <Version>2.0.4</Version>
+    <Version>2.0.5</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -9,11 +9,12 @@
     <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive text file csv</PackageTags>
     <Product>ETL.net Autofac extensions</Product>
-    <PackageIcon>NugetIcon.png</PackageIcon>
     <Description>Autofac extensions for Etl.Net</Description>
-    <LangVersion>latest</LangVersion>
+    <PackageIcon>NugetIcon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath=""/>
     <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
 

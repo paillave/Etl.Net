@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>Paillave.EtlNet.EntityFrameworkCore</PackageId>
-    <Version>2.0.4</Version>
+    <Version>2.0.5</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -9,14 +9,13 @@
     <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive Entity Framework core</PackageTags>
     <Product>ETL.net EntityFrameworkCore extensions</Product>
-    <PackageIcon>NugetIcon.png</PackageIcon>
     <Description>EntityFrameworkCore extensions for Etl.Net</Description>
-    <PackageReleaseNotes>
-EntityFrameworkCore extensions for Etl.Net
-    </PackageReleaseNotes>
     <LangVersion>latest</LangVersion>
+    <PackageIcon>NugetIcon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath=""/>
     <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
 
