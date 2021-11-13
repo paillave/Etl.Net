@@ -11,8 +11,10 @@ namespace Paillave.Etl.Mail
         public int PortNumber { get; set; } = 25;
         public string Login { get; set; }
         public string Password { get; set; }
-        public bool Secured { get; set; }
+        public bool? Ssl { get; set; }
         public int MaxAttempts { get; set; } = 3;
+        public bool? Tls { get; set; }
+        public bool? TlsWhenAvailable { get; set; }
     }
     public class MailAdapterProcessorParameters
     {

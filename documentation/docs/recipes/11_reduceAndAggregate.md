@@ -143,3 +143,6 @@ contextStream
     })
     .Do("print file name to console", i => Console.WriteLine($"{i.Key}: Count={i.Aggregation.Count}, Count0={i.Aggregation.Count0}, Count1={i.Aggregation.Count1}, Count2={i.Aggregation.Count2}"));
 ```
+## ToList
+
+TODO

@@ -6,7 +6,7 @@ sidebar_position: 8
 
 ![CustomOperator](/img/xamarin-extends-platforms-toolbox-devices.svg)
 
-Making a custom operator involves making a `CustomStreamNode`. A stream node is an operator.
+Making a custom operator requires to understand [how ETL.NET works behind the scenes](/docs/quickstart/principle).
 
 ## Simplest operator
 
@@ -43,7 +43,7 @@ This operator processes `string` events from the only input stream by displaying
 
 How to make something more evolved than a simple `Do`?
 
-The `Do` is one of the many reactive operators that are available. These operators are mostly the very same than the one that are mentioned in [ReactiveX](http://reactivex.io/). To get more examples, check the ones that are implemented in the the source code of this project.
+The `Do` is one of the many reactive operators that are available. These operators are mostly the very same than the ones that are mentioned in [ReactiveX](http://reactivex.io/) (a nicer, visual and interactive way to understand reactive operators better can be found [on rxmarble](https://rxmarbles.com/)). To get more examples, check the ones that are implemented in the the source code of this project.
 
 :::
 
@@ -57,7 +57,7 @@ public static partial class CustomEx
 }
 ```
 
-This operator makes a simple action without actually modifying the stream it self. The problem is that if we give a sorted/single/keyed stream on the input, we get a stream that is not marked as is anymore. For this we must permit to have a strongly typed stream on t he input, ensuring it is still a stream of strings. Then we must have the output stream that is the same type of stream than the input one. The method `CreateMatchingStream` takes an observable to make a stream out of it that will match the given stream.
+This operator makes a simple action without actually modifying the stream it self. The problem is that if we give a sorted/single/keyed stream on the input, we get a stream that is not marked as it anymore. For this we must permit to have a strongly typed stream on the input, ensuring it is still a stream of strings. Then we must have the output stream that is the same type of stream than the input one. The method `CreateMatchingStream` takes an observable to make a stream out of it that will match the given stream.
 
 ```cs title="CustomStreamNode.cs" {7,9,11,13,16,17,21,22}
 using System;
@@ -88,7 +88,7 @@ namespace Demo
 
 ## Operator that issues a different stream
 
-Here, we will remake the `Select` operator that we will call `SimpleSelect`.
+Here, we will remake the `Select` operator that we will call `CustomSelect`.
 
 The operator needs the input stream, and how to transform every occurrence. We will make the arguments class to contain this:
 

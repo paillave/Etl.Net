@@ -84,6 +84,28 @@ stream
 
 :::
 
+## Get file from any Stream type
+
+It may happen that an `IFileValue` needs to be created from an instance of a `Stream` type. For this `FileValue` provides helpers:
+
+```cs
+static async Task Main3(string[] args)
+{
+    var anyArrayOfByte = new byte[] { };
+    var res = await StreamProcessRunner.CreateAndExecuteAsync<Stream>(new MemoryStream(anyArrayOfByte), DefineProcess20);
+}
+private static void DefineProcess20(ISingleStream<Stream> contextStream)
+{
+    contextStream
+        .Select("Create file value", i => FileValue.Create(i, i is FileStream fileStream ? fileStream.Name : "fileName.csv", "from stream"))
+        .CrossApplyTextFile("parse file", FlatFileDefinition.Create(i => new
+        {
+            Email = i.ToColumn("email"),
+        }).IsColumnSeparated(','))
+        .Do("write to console", i => Console.WriteLine(i.Email));
+}
+```
+
 ## Get files from different source types
 
 Every input/output extension has a file value provider. Here we are going to get files from the local file system or from an FTP server.

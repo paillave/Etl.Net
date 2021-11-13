@@ -8,6 +8,8 @@ using Paillave.Etl.SqlServer;
 using System.Data.SqlClient;
 using Paillave.Etl.ExecutionToolkit;
 using System.Linq;
+using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace SimpleTutorial
 {
@@ -46,6 +48,36 @@ namespace SimpleTutorial
                     Console.Write($"{res.ErrorTraceEvent.NodeName}({res.ErrorTraceEvent.NodeTypeName}):{res.ErrorTraceEvent.Content.Message}");
             }
         }
+        static async Task Main3(string[] args)
+        {
+            var anyArrayOfByte = new byte[] { };
+            var res = await StreamProcessRunner.CreateAndExecuteAsync<Stream>(new MemoryStream(anyArrayOfByte), DefineProcess20);
+        }
+        private static void DefineProcess20(ISingleStream<Stream> contextStream)
+        {
+            // System.Text.Json.JsonSerializer
+            // Newtonsoft.Json.JsonSerializer
+            contextStream
+                .Select("Create file value", i => FileValue.Create(i, i is FileStream fileStream ? fileStream.Name : "fileName.csv", "from stream"))
+                .CrossApply<IFileValue, Person>("parse file", (fileValue, dependencyResolver, cancellationToken, push) =>
+                {
+                    var parsedFile = Newtonsoft.Json.Linq.JObject.Parse(new StreamReader(fileValue.GetContent()).ReadToEnd());
+                    var jPeople = parsedFile["people"] as JArray;
+                    foreach (var jPerson in jPeople)
+                    {
+                        if (cancellationToken.IsCancellationRequested)
+                            return;
+                        push(new Person
+                        {
+                            FirstName = (string)jPerson["TheFirstName"],
+                            LastName = (string)jPerson["TheLastName"],
+                            Email = (string)jPerson["TheEmail"],
+                        });
+                    }
+                })
+                .Do("write to console", i => Console.WriteLine(i.Email));
+        }
+
         private static void DefineProcess(ISingleStream<string> contextStream)
         {
             contextStream
