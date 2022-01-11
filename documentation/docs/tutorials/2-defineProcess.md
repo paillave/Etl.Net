@@ -235,20 +235,12 @@ namespace SimpleTutorial
                         DateOfBirth = i.ToDateColumn("date of birth", "yyyy-MM-dd"),
                         Reputation = i.ToNumberColumn<int?>("reputation", ".")
                     }).IsColumnSeparated(','))
-                .Distinct("exclude duplicates based on the Email", i => i.Email)
-                .SqlServerSave("upsert using Email as key and ignore the Id", o => o
+                .Distinct("exclude duplicates", i => i.Email)
+                .SqlServerSave("save in DB", o => o
                     .ToTable("dbo.Person")
                     .SeekOn(p => p.Email)
                     .DoNotSave(p => p.Id))
-                .Select("define row to report", i => new { i.Email, i.Id })
-                .ToTextFileValue("write summary to file", 
-                    "report.csv", 
-                    FlatFileDefinition.Create(i => new
-                    {
-                        Email = i.ToColumn("Email"),
-                        Id = i.ToNumberColumn<int>("new or existing Id", ".")
-                    }).IsColumnSeparated(','))
-                .WriteToFile("save log file", i => i.Name);
+                .Do("display ids on console", i => Console.WriteLine(i.Id));
         }
         private class Person
         {

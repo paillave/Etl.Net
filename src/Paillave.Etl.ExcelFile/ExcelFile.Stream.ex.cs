@@ -1,6 +1,7 @@
 ﻿using Paillave.Etl.Core;
 using Paillave.Etl.ExcelFile.Core;
 using System;
+using System.Data;
 using System.IO;
 
 namespace Paillave.Etl.ExcelFile
@@ -15,6 +16,19 @@ namespace Paillave.Etl.ExcelFile
             }), noParallelisation);
         public static IStream<TOut> CrossApplyExcelSheets<TOut>(this IStream<IFileValue> stream, string name, Func<ExcelSheetSelection, TOut> selector, bool noParallelisation = false)
             => stream.CrossApply(name, new ExcelSheetsValuesProvider<TOut>(new ExcelSheetsValuesProviderArgs<TOut>
+            {
+                GetOutput = (i, j) => selector(i)
+            }), noParallelisation);
+        #endregion
+
+        #region CrossApplyExcelDatasets
+        public static IStream<DataTable> CrossApplyExcelDatasets(this IStream<IFileValue> stream, string name, bool noParallelisation = false)
+            => stream.CrossApply(name, new ExcelDatasetsValuesProvider<DataTable>(new ExcelDatasetsValuesProviderArgs<DataTable>
+            {
+                GetOutput = (i, j) => i
+            }), noParallelisation);
+        public static IStream<TOut> CrossApplyExcelDatasets<TOut>(this IStream<IFileValue> stream, string name, Func<DataTable, TOut> selector, bool noParallelisation = false)
+            => stream.CrossApply(name, new ExcelDatasetsValuesProvider<TOut>(new ExcelDatasetsValuesProviderArgs<TOut>
             {
                 GetOutput = (i, j) => selector(i)
             }), noParallelisation);

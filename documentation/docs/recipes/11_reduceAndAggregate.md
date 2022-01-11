@@ -80,7 +80,7 @@ contextStream
 
 ## Group By
 
-In the [create several files recipe](docs/recipes/createFiles) `GroupBy` was used to group payloads in a sub process per key. But the `GroupBy` operator can be used to group payload in a list per key.
+In the [create several files recipe](/docs/recipes/createFiles) `GroupBy` was used to group payloads in a sub process per key. But the `GroupBy` operator can be used to group payload in a list per key.
 
 ```cs {9}
 contextStream
@@ -124,7 +124,7 @@ contextStream
 
 `Pivot` makes several aggregation of values on a single output occurrence. Like the `PIVOT` of SQL, or the pivot table of excel.
 
-```cs
+```cs {10-16}
 contextStream
     .CrossApply("create values from enumeration", ctx => Enumerable.Range(1, 100)
         .Select(i => new
@@ -145,4 +145,11 @@ contextStream
 ```
 ## ToList
 
-TODO
+`ToList` aggregates all the payload of every events in one payload that is the list of every payload.
+
+```cs {3}
+contextStream
+    .CrossApply("create values from enumeration", ctx => Enumerable.Range(1, 100))
+    .ToList("aggregate everything")
+    .Do("print everything in one go", i => Console.WriteLine(string.Join("-", i)));
+```

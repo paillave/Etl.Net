@@ -461,4 +461,8 @@ stream
 
 ### Delete using Entity Framework
 
-TODO
+TODO: to be done
+
+### Update using Entity Framework
+
+TODO: to be done
