@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Paillave.Etl.Reactive.Core;
-using Paillave.Etl.Reactive.Disposables;
 
 namespace Paillave.Etl.Reactive.Operators
 {

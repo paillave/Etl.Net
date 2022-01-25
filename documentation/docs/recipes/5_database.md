@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # Deal with databases
@@ -458,3 +458,11 @@ stream
 ```
 
 :::
+
+### Delete using Entity Framework
+
+TODO: to be done
+
+### Update using Entity Framework
+
+TODO: to be done

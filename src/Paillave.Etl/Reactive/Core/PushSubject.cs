@@ -92,7 +92,7 @@ namespace Paillave.Etl.Reactive.Core
             this.Complete();
         }
 
-        public void PushException(Exception exception)
+        public virtual void PushException(Exception exception)
         {
             lock (LockObject)
             {

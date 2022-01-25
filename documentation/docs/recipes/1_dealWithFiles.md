@@ -36,7 +36,7 @@ There is no need to implement this interface unless a ETL.NET file extension nee
 
 :::note
 
-This page explains how to get and drop files on different source types. Go [here](/docs/recipes/writeInFiles) to learn about actually creating a file.
+This page explains how to get and drop files on different source types. Go [here](/docs/recipes/createFiles) to learn about actually creating a file.
 
 :::
 
@@ -83,6 +83,28 @@ stream
 `FileValueWriter` is the api the permits to create the content of a file in a `IFileValue`.
 
 :::
+
+## Get file from any Stream type
+
+It may happen that an `IFileValue` needs to be created from an instance of a `Stream` type. For this `FileValue` provides helpers:
+
+```cs
+static async Task Main3(string[] args)
+{
+    var anyArrayOfByte = new byte[] { };
+    var res = await StreamProcessRunner.CreateAndExecuteAsync<Stream>(new MemoryStream(anyArrayOfByte), DefineProcess20);
+}
+private static void DefineProcess20(ISingleStream<Stream> contextStream)
+{
+    contextStream
+        .Select("Create file value", i => FileValue.Create(i, i is FileStream fileStream ? fileStream.Name : "fileName.csv", "from stream"))
+        .CrossApplyTextFile("parse file", FlatFileDefinition.Create(i => new
+        {
+            Email = i.ToColumn("email"),
+        }).IsColumnSeparated(','))
+        .Do("write to console", i => Console.WriteLine(i.Email));
+}
+```
 
 ## Get files from different source types
 

@@ -7,16 +7,17 @@ using Paillave.Etl.Core;
 
 namespace BlogTutorial
 {
-    class Program2
+    class Program
     {
-        static async Task Main2(string[] args)
+        static async Task Main(string[] args)
         {
-            var processRunner = StreamProcessRunner.Create<string>(DefineProcess100);
+            var processRunner = StreamProcessRunner.Create<string>(DefineProcess102);
             var executionOptions = new ExecutionOptions<string>
             {
-                TraceProcessDefinition = DefineTraceProcess
+                // TraceProcessDefinition = DefineTraceProcess
             };
             var res = await processRunner.ExecuteAsync(args[0], executionOptions);
+            // var res2 = await processRunner.ExecuteAsync(args[0], executionOptions);
         }
         private static void DefineTraceProcess(IStream<TraceEvent> traceStream, ISingleStream<string> contentStream)
         {
@@ -27,6 +28,32 @@ namespace BlogTutorial
             contextStream
                 .CrossApply("create values from enumeration", ctx => Enumerable.Range(1, 100).Select(i => $"{ctx}{i}"))
                 .Do("print file name to console", i => Console.WriteLine(i));
+        }
+        private static void DefineProcess71(ISingleStream<string> contextStream)
+        {
+            // var tmp = 0;
+            // contextStream
+            //      .Select("zzer", i => 1 / tmp);
+            contextStream
+                .CrossApply("create values from enumeration", ctx => Enumerable
+                .Range(1, 100)
+                .Select(i => new { Id = i, OutputId = i % 10, label = $"Label{i}" }));
+
+
+        }
+        private static void DefineProcess7(ISingleStream<string> contextStream)
+        {
+            var stream1 = contextStream
+                .CrossApply("create values from enumeration", ctx => Enumerable
+                    .Range(1, 100)
+                    .Select(i => new { Id = i, OutputId = i % 10, label = $"Label{i}" }));
+
+            var streamToLookup = contextStream
+                .CrossApply("create values from enumeration2", ctx => Enumerable
+                    .Range(1, 8)
+                    .Select(i => new { Id = 1, label = $"OtherLabel{i}" }));
+
+            stream1.Lookup("join output values", streamToLookup, l => l.OutputId, r => r.Id, (l, r) => new { FromLeft = l, FromRight = r });
         }
         private static void DefineProcess100(ISingleStream<string> contextStream)
         {
@@ -75,12 +102,13 @@ namespace BlogTutorial
                     }))
                 .Pivot("pivot values", i => i.OutputId, i => new
                 {
+                    TheFirst = AggregationOperators.First(i.Label),
                     Count = AggregationOperators.Count(),
                     Count0 = AggregationOperators.Count().For(i.OutputId == 0),
                     Count1 = AggregationOperators.Count().For(i.OutputId == 1),
                     Count2 = AggregationOperators.Count().For(i.OutputId == 2)
                 })
-                .Do("print file name to console", i => Console.WriteLine($"{i.Key}: Count={i.Aggregation.Count}, Count0={i.Aggregation.Count0}, Count1={i.Aggregation.Count1}, Count2={i.Aggregation.Count2}"));
+                .Do("print file name to console", i => Console.WriteLine($"{i.Key}: Label={i.Aggregation.TheFirst} Count={i.Aggregation.Count}, Count0={i.Aggregation.Count0}, Count1={i.Aggregation.Count1}, Count2={i.Aggregation.Count2}"));
         }
         private static void DefineProcess103(ISingleStream<string> contextStream)
         {
@@ -219,20 +247,6 @@ namespace BlogTutorial
                 .EnsureKeyed("ensure it is keyed on Id2", i => new { i.Id });
 
             var res = stream1.Substract("merge with stream 2", stream2);
-        }
-        private static void DefineProcess7(ISingleStream<string> contextStream)
-        {
-            var stream1 = contextStream
-                .CrossApply("create values from enumeration", ctx => Enumerable
-                    .Range(1, 100)
-                    .Select(i => new { Id = i, OutputId = i % 10, label = $"Label{i}" }));
-
-            var streamToLookup = contextStream
-                .CrossApply("create values from enumeration2", ctx => Enumerable
-                    .Range(1, 8)
-                    .Select(i => new { Id = i, label = $"OtherLabel{i}" }));
-
-            stream1.Lookup("join output values", streamToLookup, l => l.OutputId, r => r.Id, (l, r) => new { FromLeft = l, FromRight = r });
         }
         private static void DefineProcess4(ISingleStream<string> contextStream)
         {

@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Paillave.EtlNet.Pdf</PackageId>
+    <Version>2.0.6</Version>
+    <Authors>Stéphane Royer</Authors>
+    <Company></Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
+    <PackageTags>ETL .net core SSIS reactive Pdf file</PackageTags>
+    <Product>ETL.net PDF files extensions</Product>
+    <PackageIcon>NugetIcon.png</PackageIcon>
+    <Description>Pdf files extensions for Etl.Net</Description>
+    <PackageReleaseNotes>
+extensions for Etl.Net to deal with PDF files
+    </PackageReleaseNotes>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PdfPig" Version="0.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paillave.Pdf\Paillave.Pdf.csproj" />
+    <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
+  </ItemGroup>
+
+</Project>

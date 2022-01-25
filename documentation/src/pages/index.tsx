@@ -6,13 +6,14 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
 import HomepageFeatures from '../components/HomepageFeatures';
 import HomepageExamples from '../components/HomepageExamples';
+import QuickStart from '../components/QuickStart';
 // import Highlight, { defaultProps } from "prism-react-renderer";
 // require(`prismjs/components/prism-csharp`); // eslint-disable-line
 // import theme from "prism-react-renderer/themes/dracula";
 
 const Bot = require('../../static/img/dotnet-bot_kayaking.svg').default;
 const EtlNet = require('../../static/img/full-black-logo.svg').default
-const streamImage=require('../../static/img/SmallStreams.jpg').url;
+const streamImage = require('../../static/img/SmallStreams.jpg').url;
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
   return (
@@ -56,6 +57,7 @@ export default function Home() {
       keywords={["ETL", ".NET", "SSIS", "Import", "Export"]}>
       <HomepageHeader />
       <main>
+        <QuickStart />
         <HomepageFeatures />
         <HomepageExamples />
       </main>

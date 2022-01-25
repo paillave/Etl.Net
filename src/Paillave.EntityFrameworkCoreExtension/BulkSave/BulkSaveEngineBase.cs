@@ -70,7 +70,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
         }
         public BulkSaveEngineBase(DbContext context, params Expression<Func<T, object>>[] pivotKeys)
         {
-            List<IProperty> computedProperties;
+            List<IProperty> dbComputedProperties;
             List<IProperty> defaultValuesProperties;
             List<IProperty> notPivotComputedProperties;
             this._context = context;
@@ -103,23 +103,26 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
 
             //identityProperty = entityType.GetProperties().FirstOrDefault(i => i.SqlServer().ValueGenerationStrategy == SqlServerValueGenerationStrategy.IdentityColumn);
             // string timestampDbTypeName = nameof(TimestampAttribute).Replace("Attribute", "").ToLower(); // = "timestamp";
-            computedProperties = allProperties.Where(i => (i.ValueGenerated & ValueGenerated.OnAddOrUpdate) != ValueGenerated.Never).ToList();
-            notPivotComputedProperties = computedProperties.Except(_propertiesForPivotSet.SelectMany(i => i)).ToList();
+            // dbComputedProperties = allProperties.Where(i => i.GetValueGenerationStrategy() != null).ToList();
+            // computedProperties = allProperties.Where(i => (i.ValueGenerated & ValueGenerated.OnAddOrUpdate) != ValueGenerated.Never).ToList();
+            // allProperties[0].GetDefaultValueSql()
+            dbComputedProperties = allProperties.Where(i => (i.ValueGenerated & ValueGenerated.OnAddOrUpdate) != ValueGenerated.Never).ToList();
+            notPivotComputedProperties = dbComputedProperties.Except(_propertiesForPivotSet.SelectMany(i => i)).ToList();
 
             defaultValuesProperties = allProperties.Where(i => i.GetDefaultValueSql() != null).ToList();
 
             _propertiesToBulkLoad = allProperties.Except(notPivotComputedProperties).ToList();
 
             _propertiesToInsert = allProperties
-                .Except(computedProperties)
+                .Except(dbComputedProperties)
                 //.Except(new[] { identityProperty })
                 .ToList();
             _propertiesToUpdate = allProperties
                 // .Except(_propertiesForPivot)
-                .Except(computedProperties)
+                .Except(dbComputedProperties)
                 //.Except(new[] { identityProperty })
                 .ToList();
-            _propertiesToGetAfterSetInTarget = computedProperties
+            _propertiesToGetAfterSetInTarget = dbComputedProperties
                 //.Union(new[] { identityProperty })
                 .Union(defaultValuesProperties)
                 .Distinct(new LambdaEqualityComparer<IProperty, string>(i => i.GetColumnName(StoreObject)))
@@ -209,11 +212,17 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
                 var entry = _context.Entry(inputEntity);
                 var dicoToSet = propertiesToGetAfterSetInTarget
                     .Where(j => !j.IsPrimaryKey() || string.Equals(GetDataReaderAction(resultDataRow, resultColumns), "INSERT", StringComparison.InvariantCultureIgnoreCase))
-                    .ToDictionary(p => p.Name, p => this.GetDataReaderValue(resultDataRow, resultColumns, p));
+                    .Where(j => j.DeclaringType.ClrType.IsAssignableFrom(entry.Metadata.ClrType))
+                    .Select(p => new { p.Name, Value = this.GetDataReaderValue(resultDataRow, resultColumns, p) })
+                    .Where(p => p.Value != DBNull.Value)
+                    .ToDictionary(p => p.Name, p => p.Value);
                 entry.CurrentValues.SetValues(dicoToSet); // TODO: do not update key if already exists
                 entry.OriginalValues.SetValues(dicoToSet);
-                foreach (var item in propertiesToGetAfterSetInTarget.Where(j => !j.IsShadowProperty()).ToList())
-                    item.PropertyInfo.SetValue(inputEntity, this.GetDataReaderValue(resultDataRow, resultColumns, item));
+                foreach (var item in propertiesToGetAfterSetInTarget.Where(j => !j.IsShadowProperty() && j.DeclaringType.ClrType.IsAssignableFrom(entry.Metadata.ClrType)).ToList())
+                {
+                    var value = this.GetDataReaderValue(resultDataRow, resultColumns, item);
+                    if (value != DBNull.Value) item.PropertyInfo.SetValue(inputEntity, value);
+                }
             }
         }
         private string GetDataReaderAction(DataRow dataRow, Dictionary<string, DataColumn> dataColumns)

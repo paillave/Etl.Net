@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>Paillave.EtlNet.FromConfigurationConnectors</PackageId>
-    <Version>2.0.4</Version>
+    <Version>2.0.6</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -10,19 +10,17 @@
     <PackageTags>ETL .net core SSIS reactive text file csv</PackageTags>
     <Product>ETL.net json configuration connectors</Product>
     <PackageIcon>NugetIcon.png</PackageIcon>
-    <Description>ETL.net connectors defined from json configuration</Description>
-    <PackageReleaseNotes>
-extensions for Etl.Net to get Configuration Connectors parser
-    </PackageReleaseNotes>
+    <Description>Extensions for Etl.Net to get Configuration Connectors parser from json</Description>
     <LangVersion>latest</LangVersion>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath=""/>
     <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
   </ItemGroup>
@@ -33,7 +31,7 @@ extensions for Etl.Net to get Configuration Connectors parser
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="NJsonSchema" Version="10.4.5" />
+    <PackageReference Include="NJsonSchema" Version="10.6.6" />
   </ItemGroup>
 
 </Project>

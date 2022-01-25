@@ -3,11 +3,12 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Paillave.Etl.Core;
-using System.Net;
 using System.Net.Mail;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
+using MimeKit;
+
 namespace Paillave.Etl.Mail
 {
     public class MailFileValueProcessor : FileValueProcessorBase<MailAdapterConnectionParameters, MailAdapterProcessorParameters>
@@ -77,6 +78,7 @@ namespace Paillave.Etl.Mail
                 mailMessage.To.Add(new MailAddress(destination.Email, destination.DisplayName));
                 mailMessage.From = new MailAddress(FormatText(processorParameters.From, metadataJson), FormatText(processorParameters.FromDisplayName, metadataJson));
                 mailMessage.Subject = FormatText(processorParameters.Subject, metadataJson);
+                mailMessage.IsBodyHtml = true;
 
                 ms.Seek(0, SeekOrigin.Begin);
                 var fileExtension = Path.GetExtension(fileValue.Name);
@@ -84,7 +86,6 @@ namespace Paillave.Etl.Mail
                     && (string.Equals(fileExtension, ".html", StringComparison.InvariantCultureIgnoreCase)
                         || string.Equals(fileExtension, ".htm", StringComparison.InvariantCultureIgnoreCase)))
                 {
-                    mailMessage.IsBodyHtml = true;
                     var content = new StreamReader(ms).ReadToEnd();
                     mailMessage.Body = content;
                     if (string.IsNullOrWhiteSpace(mailMessage.Subject))
@@ -96,20 +97,16 @@ namespace Paillave.Etl.Mail
                     Attachment attachment = new Attachment(ms, fileValue.Name, MimeTypes.GetMimeType(fileValue.Name));
                     mailMessage.Attachments.Add(attachment);
                 }
-                ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => SendSingleFile(connectionParameters, mailMessage, portNumber));
+                ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => SendSingleFile(connectionParameters, (MimeMessage)mailMessage, portNumber));
             }
             push(fileValue);
         }
-        private void SendSingleFile(MailAdapterConnectionParameters connectionParameters, MailMessage mailMessage, int portNumber)
+        private void SendSingleFile(MailAdapterConnectionParameters connectionParameters, MimeMessage mailMessage, int portNumber)
         {
-            using (var client = new SmtpClient(connectionParameters.Server, portNumber))
+            // using (var client = new SmtpClient(connectionParameters.Server, portNumber))
+            using (var smtpClient = connectionParameters.CreateSmtpClient())
             {
-                if (!string.IsNullOrWhiteSpace(connectionParameters.Login))
-                {
-                    client.UseDefaultCredentials = false;
-                    client.Credentials = new NetworkCredential(connectionParameters.Login, connectionParameters.Password);
-                }
-                client.Send(mailMessage);
+                smtpClient.Send(mailMessage);
             }
         }
         private static string FormatText(string text, JToken metadata)
@@ -137,15 +134,7 @@ namespace Paillave.Etl.Mail
         }
         protected override void Test(MailAdapterConnectionParameters connectionParameters, MailAdapterProcessorParameters processorParameters)
         {
-            var portNumber = connectionParameters.PortNumber == 0 ? 25 : connectionParameters.PortNumber;
-            using (var client = new SmtpClient(connectionParameters.Server, portNumber))
-            {
-                if (!string.IsNullOrWhiteSpace(connectionParameters.Login))
-                {
-                    client.UseDefaultCredentials = false;
-                    client.Credentials = new NetworkCredential(connectionParameters.Login, connectionParameters.Password);
-                }
-            }
+            using (var client = connectionParameters.CreateSmtpClient()) { }
         }
     }
 }

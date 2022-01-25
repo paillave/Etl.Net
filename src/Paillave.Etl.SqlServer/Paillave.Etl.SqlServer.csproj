@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>Paillave.EtlNet.SqlServer</PackageId>
-    <Version>2.0.4</Version>
+    <Version>2.0.6</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -9,19 +9,18 @@
     <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive SqlServer</PackageTags>
     <Product>ETL.net Sql Server extensions</Product>
-    <PackageIcon>NugetIcon.png</PackageIcon>
-    <Description>Sql Server extensions for Etl.Net</Description>
-    <PackageReleaseNotes>
-Extensions for Etl.Net to query against Sql Server
-    </PackageReleaseNotes>
+    <Description>Extensions for Etl.Net to query against Sql Server</Description>
     <LangVersion>latest</LangVersion>
+    <PackageIcon>NugetIcon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath=""/>
     <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,7 +28,7 @@ Extensions for Etl.Net to query against Sql Server
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
   </ItemGroup>
 
 </Project>
