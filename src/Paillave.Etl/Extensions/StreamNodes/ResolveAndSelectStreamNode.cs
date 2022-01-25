@@ -30,14 +30,14 @@ namespace Paillave.Etl.Core
     {
         private IDependencyResolver _dependencyResolver;
         public Resolver(IDependencyResolver dependencyResolver) => _dependencyResolver = dependencyResolver;
-        public ResolverSelector<TIn, TService> Resolve<TService>() => new ResolverSelector<TIn, TService>(this, null);
+        public ResolverSelector<TIn, TService> Resolve<TService>() where TService : class => new ResolverSelector<TIn, TService>(this, null);
         public ResolverSelector<TIn, MultiService<TService1, TService2>> Resolve<TService1, TService2>() => new ResolverSelector<TIn, MultiService<TService1, TService2>>(this, null);
         public ResolverSelector<TIn, MultiService<TService1, TService2, TService3>> Resolve<TService1, TService2, TService3>() => new ResolverSelector<TIn, MultiService<TService1, TService2, TService3>>(this, null);
         public ResolverSelector<TIn, MultiService<TService1, TService2, TService3, TService4>> Resolve<TService1, TService2, TService3, TService4>() => new ResolverSelector<TIn, MultiService<TService1, TService2, TService3, TService4>>(this, null);
         public ResolverSelector<TIn, MultiService<TService1, TService2, TService3, TService4, TService5>> Resolve<TService1, TService2, TService3, TService4, TService5>() => new ResolverSelector<TIn, MultiService<TService1, TService2, TService3, TService4, TService5>>(this, null);
         public ResolverSelector<TIn, MultiService<TService1, TService2, TService3, TService4, TService5, TService6>> Resolve<TService1, TService2, TService3, TService4, TService5, TService6>() => new ResolverSelector<TIn, MultiService<TService1, TService2, TService3, TService4, TService5, TService6>>(this, null);
-        public ResolverSelector<TIn, TService> Resolve<TService>(string serviceKey) => new ResolverSelector<TIn, TService>(this, serviceKey);
-        internal TService ResolveService<TService>()
+        public ResolverSelector<TIn, TService> Resolve<TService>(string serviceKey) where TService : class => new ResolverSelector<TIn, TService>(this, serviceKey);
+        internal TService ResolveService<TService>() where TService : class
         {
             Type type = typeof(TService);
             if (typeof(IMultiService).IsAssignableFrom(type))
@@ -50,9 +50,9 @@ namespace Paillave.Etl.Core
             else
                 return _dependencyResolver.Resolve<TService>();
         }
-        internal TService ResolveService<TService>(string serviceKey) => _dependencyResolver.Resolve<TService>(serviceKey);
+        internal TService ResolveService<TService>(string serviceKey) where TService : class => _dependencyResolver.Resolve<TService>(serviceKey);
     }
-    public class ResolverSelector<TIn, TService>
+    public class ResolverSelector<TIn, TService> where TService : class
     {
         private Resolver<TIn> _resolver;
         private string _serviceKey;
@@ -60,7 +60,7 @@ namespace Paillave.Etl.Core
         public Selector<TIn, TService, TOut> Select<TOut>(Func<TIn, TService, TOut> select) => new Selector<TIn, TService, TOut>(this, select);
         internal TService ResolveService() => _serviceKey == null ? _resolver.ResolveService<TService>() : _resolver.ResolveService<TService>(_serviceKey);
     }
-    public class Selector<TIn, TService, TOut>
+    public class Selector<TIn, TService, TOut> where TService : class
     {
         private ResolverSelector<TIn, TService> _resolverSelector;
         private Func<TIn, TService, TOut> _select;
@@ -68,13 +68,13 @@ namespace Paillave.Etl.Core
         internal TOut GetValue(TIn input) => _select(input, _resolverSelector.ResolveService());
     }
     #region Simple select
-    public class ResolveAndSelectArgs<TIn, TService, TOut>
+    public class ResolveAndSelectArgs<TIn, TService, TOut> where TService : class
     {
         public IStream<TIn> Stream { get; set; }
         public Func<Resolver<TIn>, Selector<TIn, TService, TOut>> Selection { get; set; }
         public bool WithNoDispose { get; set; }
     }
-    public class ResolveAndSelectStreamNode<TIn, TService, TOut> : StreamNodeBase<TOut, IStream<TOut>, ResolveAndSelectArgs<TIn, TService, TOut>>
+    public class ResolveAndSelectStreamNode<TIn, TService, TOut> : StreamNodeBase<TOut, IStream<TOut>, ResolveAndSelectArgs<TIn, TService, TOut>> where TService : class
     {
         public ResolveAndSelectStreamNode(string name, ResolveAndSelectArgs<TIn, TService, TOut> args) : base(name, args) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
@@ -87,13 +87,13 @@ namespace Paillave.Etl.Core
     }
     #endregion
     #region Simple Single select
-    public class ResolveAndSelectSingleArgs<TIn, TService, TOut>
+    public class ResolveAndSelectSingleArgs<TIn, TService, TOut> where TService : class
     {
         public ISingleStream<TIn> Stream { get; set; }
         public Func<Resolver<TIn>, Selector<TIn, TService, TOut>> Selection { get; set; }
         public bool WithNoDispose { get; set; }
     }
-    public class ResolveAndSelectSingleStreamNode<TIn, TService, TOut> : StreamNodeBase<TOut, ISingleStream<TOut>, ResolveAndSelectSingleArgs<TIn, TService, TOut>>
+    public class ResolveAndSelectSingleStreamNode<TIn, TService, TOut> : StreamNodeBase<TOut, ISingleStream<TOut>, ResolveAndSelectSingleArgs<TIn, TService, TOut>> where TService : class
     {
         public ResolveAndSelectSingleStreamNode(string name, ResolveAndSelectSingleArgs<TIn, TService, TOut> args) : base(name, args) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
@@ -106,13 +106,13 @@ namespace Paillave.Etl.Core
     }
     #endregion
     #region Simple correlated select
-    public class ResolveAndSelectCorrelatedArgs<TIn, TService, TOut>
+    public class ResolveAndSelectCorrelatedArgs<TIn, TService, TOut> where TService : class
     {
         public IStream<Correlated<TIn>> Stream { get; set; }
         public Func<Resolver<TIn>, Selector<TIn, TService, TOut>> Selection { get; set; }
         public bool WithNoDispose { get; set; }
     }
-    public class ResolveAndSelectCorrelatedStreamNode<TIn, TService, TOut> : StreamNodeBase<Correlated<TOut>, IStream<Correlated<TOut>>, ResolveAndSelectCorrelatedArgs<TIn, TService, TOut>>
+    public class ResolveAndSelectCorrelatedStreamNode<TIn, TService, TOut> : StreamNodeBase<Correlated<TOut>, IStream<Correlated<TOut>>, ResolveAndSelectCorrelatedArgs<TIn, TService, TOut>> where TService : class
     {
         public ResolveAndSelectCorrelatedStreamNode(string name, ResolveAndSelectCorrelatedArgs<TIn, TService, TOut> args) : base(name, args) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
@@ -129,13 +129,13 @@ namespace Paillave.Etl.Core
     }
     #endregion
     #region Simple Single correlated select
-    public class ResolveAndSelectCorrelatedSingleArgs<TIn, TService, TOut>
+    public class ResolveAndSelectCorrelatedSingleArgs<TIn, TService, TOut> where TService : class
     {
         public ISingleStream<Correlated<TIn>> Stream { get; set; }
         public Func<Resolver<TIn>, Selector<TIn, TService, TOut>> Selection { get; set; }
         public bool WithNoDispose { get; set; }
     }
-    public class ResolveAndSelectCorrelatedSingleStreamNode<TIn, TService, TOut> : StreamNodeBase<Correlated<TOut>, ISingleStream<Correlated<TOut>>, ResolveAndSelectCorrelatedSingleArgs<TIn, TService, TOut>>
+    public class ResolveAndSelectCorrelatedSingleStreamNode<TIn, TService, TOut> : StreamNodeBase<Correlated<TOut>, ISingleStream<Correlated<TOut>>, ResolveAndSelectCorrelatedSingleArgs<TIn, TService, TOut>> where TService : class
     {
         public ResolveAndSelectCorrelatedSingleStreamNode(string name, ResolveAndSelectCorrelatedSingleArgs<TIn, TService, TOut> args) : base(name, args) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
