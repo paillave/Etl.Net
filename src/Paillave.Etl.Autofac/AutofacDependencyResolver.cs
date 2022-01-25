@@ -17,7 +17,7 @@ namespace Paillave.Etl.Autofac
             _dependencyResolver.Register(type, res);
             return res;
         }
-        public T Resolve<T>()
+        public T Resolve<T>() where T : class
         {
             var res = _dependencyResolver.Resolve<T>();
             if (res != null) return res;
@@ -25,13 +25,30 @@ namespace Paillave.Etl.Autofac
             _dependencyResolver.Register<T>(res);
             return res;
         }
-        public T Resolve<T>(string key)
+        public T Resolve<T>(string key) where T : class
         {
             var res = _dependencyResolver.Resolve<T>(key);
             if (res != null) return res;
             res = _componentContext.ResolveKeyed<T>(key);
             _dependencyResolver.Register<T>(res, key);
             return res;
+        }
+
+        public bool TryResolve<T>(out T resolved) where T : class
+        {
+            resolved = default;
+            return _componentContext.TryResolve<T>(out resolved);
+        }
+
+        public bool TryResolve<T>(string key, out T resolved) where T : class
+        {
+            resolved = default;
+            return _componentContext.TryResolveKeyed<T>(key, out resolved);
+        }
+
+        public bool TryResolve(Type type, out object resolved)
+        {
+            return _componentContext.TryResolve(type, out resolved);
         }
     }
 }

@@ -4,7 +4,7 @@ namespace Paillave.Etl.Core
 {
     public static class SelectWithContextBagEx
     {
-        public static IStream<TOut> ResolveAndSelect<TIn, TService, TOut>(this IStream<TIn> stream, string name, Func<Resolver<TIn>, Selector<TIn, TService, TOut>> selection, bool withNoDispose = false)
+        public static IStream<TOut> ResolveAndSelect<TIn, TService, TOut>(this IStream<TIn> stream, string name, Func<Resolver<TIn>, Selector<TIn, TService, TOut>> selection, bool withNoDispose = false) where TService : class
         {
             return new ResolveAndSelectStreamNode<TIn, TService, TOut>(name, new ResolveAndSelectArgs<TIn, TService, TOut>
             {
@@ -13,7 +13,7 @@ namespace Paillave.Etl.Core
                 WithNoDispose = withNoDispose
             }).Output;
         }
-        public static ISingleStream<TOut> ResolveAndSelect<TIn, TService, TOut>(this ISingleStream<TIn> stream, string name, Func<Resolver<TIn>, Selector<TIn, TService, TOut>> selection, bool withNoDispose = false)
+        public static ISingleStream<TOut> ResolveAndSelect<TIn, TService, TOut>(this ISingleStream<TIn> stream, string name, Func<Resolver<TIn>, Selector<TIn, TService, TOut>> selection, bool withNoDispose = false) where TService : class
         {
             return new ResolveAndSelectSingleStreamNode<TIn, TService, TOut>(name, new ResolveAndSelectSingleArgs<TIn, TService, TOut>
             {
@@ -22,7 +22,7 @@ namespace Paillave.Etl.Core
                 WithNoDispose = withNoDispose
             }).Output;
         }
-        public static IStream<Correlated<TOut>> ResolveAndSelect<TIn, TService, TOut>(this IStream<Correlated<TIn>> stream, string name, Func<Resolver<TIn>, Selector<TIn, TService, TOut>> selection, bool withNoDispose = false)
+        public static IStream<Correlated<TOut>> ResolveAndSelect<TIn, TService, TOut>(this IStream<Correlated<TIn>> stream, string name, Func<Resolver<TIn>, Selector<TIn, TService, TOut>> selection, bool withNoDispose = false) where TService : class
         {
             return new ResolveAndSelectCorrelatedStreamNode<TIn, TService, TOut>(name, new ResolveAndSelectCorrelatedArgs<TIn, TService, TOut>
             {
@@ -31,7 +31,7 @@ namespace Paillave.Etl.Core
                 WithNoDispose = withNoDispose
             }).Output;
         }
-        public static ISingleStream<Correlated<TOut>> ResolveAndSelect<TIn, TService, TOut>(this ISingleStream<Correlated<TIn>> stream, string name, Func<Resolver<TIn>, Selector<TIn, TService, TOut>> selection, bool withNoDispose = false)
+        public static ISingleStream<Correlated<TOut>> ResolveAndSelect<TIn, TService, TOut>(this ISingleStream<Correlated<TIn>> stream, string name, Func<Resolver<TIn>, Selector<TIn, TService, TOut>> selection, bool withNoDispose = false) where TService : class
         {
             return new ResolveAndSelectCorrelatedSingleStreamNode<TIn, TService, TOut>(name, new ResolveAndSelectCorrelatedSingleArgs<TIn, TService, TOut>
             {
