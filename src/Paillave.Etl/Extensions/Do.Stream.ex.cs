@@ -37,7 +37,7 @@ namespace Paillave.Etl.Core
                 Stream = stream
             }).Output;
         }
-        public static IStream<Correlated<TIn>> Do<TIn>(this IStream<Correlated<TIn>> stream, string name, Action<TIn> processRow)
+        public static IStream<Correlated<TIn>> DoCorrelated<TIn>(this IStream<Correlated<TIn>> stream, string name, Action<TIn> processRow)
         {
             return new DoStreamNode<Correlated<TIn>, IStream<Correlated<TIn>>>(name, new DoArgs<Correlated<TIn>, IStream<Correlated<TIn>>>
             {
@@ -45,7 +45,7 @@ namespace Paillave.Etl.Core
                 Stream = stream
             }).Output;
         }
-        public static ISortedStream<Correlated<TIn>, TKey> Do<TIn, TKey>(this ISortedStream<Correlated<TIn>, TKey> stream, string name, Action<TIn> processRow)
+        public static ISortedStream<Correlated<TIn>, TKey> DoCorrelated<TIn, TKey>(this ISortedStream<Correlated<TIn>, TKey> stream, string name, Action<TIn> processRow)
         {
             return new DoStreamNode<Correlated<TIn>, ISortedStream<Correlated<TIn>, TKey>>(name, new DoArgs<Correlated<TIn>, ISortedStream<Correlated<TIn>, TKey>>
             {
@@ -53,7 +53,7 @@ namespace Paillave.Etl.Core
                 Stream = stream
             }).Output;
         }
-        public static IKeyedStream<Correlated<TIn>, TKey> Do<TIn, TKey>(this IKeyedStream<Correlated<TIn>, TKey> stream, string name, Action<TIn> processRow)
+        public static IKeyedStream<Correlated<TIn>, TKey> DoCorrelated<TIn, TKey>(this IKeyedStream<Correlated<TIn>, TKey> stream, string name, Action<TIn> processRow)
         {
             return new DoStreamNode<Correlated<TIn>, IKeyedStream<Correlated<TIn>, TKey>>(name, new DoArgs<Correlated<TIn>, IKeyedStream<Correlated<TIn>, TKey>>
             {
@@ -61,7 +61,7 @@ namespace Paillave.Etl.Core
                 Stream = stream
             }).Output;
         }
-        public static ISingleStream<Correlated<TIn>> Do<TIn>(this ISingleStream<Correlated<TIn>> stream, string name, Action<TIn> processRow)
+        public static ISingleStream<Correlated<TIn>> DoCorrelated<TIn>(this ISingleStream<Correlated<TIn>> stream, string name, Action<TIn> processRow)
         {
             return new DoStreamNode<Correlated<TIn>, ISingleStream<Correlated<TIn>>>(name, new DoArgs<Correlated<TIn>, ISingleStream<Correlated<TIn>>>
             {
@@ -106,7 +106,7 @@ namespace Paillave.Etl.Core
                 Stream = stream
             }).Output;
         }
-        public static IStream<Correlated<TIn>> Do<TIn>(this IStream<Correlated<TIn>> stream, string name, Func<DoWithResolutionProcessorBuilder<Correlated<TIn>, TIn>, IDoProcessor<Correlated<TIn>>> o)
+        public static IStream<Correlated<TIn>> DoCorrelated<TIn>(this IStream<Correlated<TIn>> stream, string name, Func<DoWithResolutionProcessorBuilder<Correlated<TIn>, TIn>, IDoProcessor<Correlated<TIn>>> o)
         {
             return new DoStreamNode<Correlated<TIn>, IStream<Correlated<TIn>>>(name, new DoArgs<Correlated<TIn>, IStream<Correlated<TIn>>>
             {
@@ -114,7 +114,7 @@ namespace Paillave.Etl.Core
                 Stream = stream
             }).Output;
         }
-        public static ISortedStream<Correlated<TIn>, TKey> Do<TIn, TKey>(this ISortedStream<Correlated<TIn>, TKey> stream, string name, Func<DoWithResolutionProcessorBuilder<Correlated<TIn>, TIn>, IDoProcessor<Correlated<TIn>>> o)
+        public static ISortedStream<Correlated<TIn>, TKey> DoCorrelated<TIn, TKey>(this ISortedStream<Correlated<TIn>, TKey> stream, string name, Func<DoWithResolutionProcessorBuilder<Correlated<TIn>, TIn>, IDoProcessor<Correlated<TIn>>> o)
         {
             return new DoStreamNode<Correlated<TIn>, ISortedStream<Correlated<TIn>, TKey>>(name, new DoArgs<Correlated<TIn>, ISortedStream<Correlated<TIn>, TKey>>
             {
@@ -122,7 +122,7 @@ namespace Paillave.Etl.Core
                 Stream = stream
             }).Output;
         }
-        public static IKeyedStream<Correlated<TIn>, TKey> Do<TIn, TKey>(this IKeyedStream<Correlated<TIn>, TKey> stream, string name, Func<DoWithResolutionProcessorBuilder<Correlated<TIn>, TIn>, IDoProcessor<Correlated<TIn>>> o)
+        public static IKeyedStream<Correlated<TIn>, TKey> DoCorrelated<TIn, TKey>(this IKeyedStream<Correlated<TIn>, TKey> stream, string name, Func<DoWithResolutionProcessorBuilder<Correlated<TIn>, TIn>, IDoProcessor<Correlated<TIn>>> o)
         {
             return new DoStreamNode<Correlated<TIn>, IKeyedStream<Correlated<TIn>, TKey>>(name, new DoArgs<Correlated<TIn>, IKeyedStream<Correlated<TIn>, TKey>>
             {
@@ -130,7 +130,7 @@ namespace Paillave.Etl.Core
                 Stream = stream
             }).Output;
         }
-        public static ISingleStream<Correlated<TIn>> Do<TIn>(this ISingleStream<Correlated<TIn>> stream, string name, Func<DoWithResolutionProcessorBuilder<Correlated<TIn>, TIn>, IDoProcessor<Correlated<TIn>>> o)
+        public static ISingleStream<Correlated<TIn>> DoCorrelated<TIn>(this ISingleStream<Correlated<TIn>> stream, string name, Func<DoWithResolutionProcessorBuilder<Correlated<TIn>, TIn>, IDoProcessor<Correlated<TIn>>> o)
         {
             return new DoStreamNode<Correlated<TIn>, ISingleStream<Correlated<TIn>>>(name, new DoArgs<Correlated<TIn>, ISingleStream<Correlated<TIn>>>
             {
