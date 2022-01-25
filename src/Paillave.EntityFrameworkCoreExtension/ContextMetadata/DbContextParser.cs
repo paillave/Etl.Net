@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
@@ -15,7 +16,9 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         public ModelStructure GetModelStructure(TCtx dbContext)
         {
             var modelStructure = new ModelStructure();
-            var entityTypes = dbContext.Model.GetEntityTypes().ToList();
+            var model = dbContext.GetService<IDesignTimeModel>().Model;
+            // var model = dbContext.Model;
+            var entityTypes = model.GetEntityTypes().OrderBy(i => i.Name).ToList();
 
             modelStructure.Entities = entityTypes.Select(CreateEntitySummary).ToDictionary(i => i.Name);
             modelStructure.Links = entityTypes
