@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Paillave.Pdf</PackageId>
+    <Version>2.0.5</Version>
+    <Authors>Stéphane Royer</Authors>
+    <Company></Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
+    <PackageTags>Pdf file</PackageTags>
+    <Product>PDF files extensions</Product>
+    <PackageIcon>NugetIcon.png</PackageIcon>
+    <Description>Pdf files extensions</Description>
+    <PackageReleaseNotes>
+extensions to deal with PDF files
+    </PackageReleaseNotes>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PdfPig" Version="0.1.5" />
+  </ItemGroup>
+
+</Project>

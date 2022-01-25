@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageId>Paillave.EtlNet.TextFile</PackageId>
+    <PackageId>Paillave.EtlNet.Bloomberg</PackageId>
     <Version>2.0.5</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
-    <PackageTags>ETL .net core SSIS reactive text file csv</PackageTags>
-    <Product>ETL.net text files extensions</Product>
+    <PackageTags>ETL .net core SSIS reactive text file bloomberg</PackageTags>
+    <Product>ETL.net bloomberg files extensions</Product>
     <PackageIcon>NugetIcon.png</PackageIcon>
-    <Description>Extensions for Etl.Net to read and write csv and fixed column width files</Description>
+    <Description>Extensions for Etl.Net to read bloomberg response files</Description>
     <LangVersion>latest</LangVersion>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.TextFile\Paillave.Etl.TextFile.csproj" />
   </ItemGroup>
 
 </Project>

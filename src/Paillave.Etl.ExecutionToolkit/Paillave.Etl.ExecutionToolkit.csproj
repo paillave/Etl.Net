@@ -18,7 +18,7 @@
     <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
@@ -47,8 +47,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="5.0.2" />
-    <PackageReference Include="Terminal.Gui" Version="1.1.1" />
+    <PackageReference Include="System.Text.Json" Version="6.0.1" />
+    <PackageReference Include="Terminal.Gui" Version="1.4.0" />
   </ItemGroup>
 
 </Project>

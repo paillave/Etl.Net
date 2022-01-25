@@ -7,8 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using Paillave.Etl.TextFile;
+using System.Linq.Expressions;
+using Paillave.Etl.Core.Mapping;
 
-namespace Paillave.Etl.TextFile
+namespace Paillave.Etl.Bloomberg
 {
     public class BloombergResult<TParsed>
     {
@@ -23,11 +26,11 @@ namespace Paillave.Etl.TextFile
     }
     public static class BloombergValuesProvider
     {
-        public static BloombergValuesProvider<TParsed> Create<TParsed>(FlatFileDefinition<TParsed> mapping)
+        public static BloombergValuesProvider<TParsed> Create<TParsed>(Expression<Func<IFieldMapper, TParsed>> expression)
         {
             return new BloombergValuesProvider<TParsed>(new BloombergValuesProviderArgs<TParsed>
             {
-                Mapping = mapping,
+                Mapping = new FlatFileDefinition<TParsed>().WithMap(expression).IsColumnSeparated('|'),
             });
         }
     }
@@ -35,7 +38,7 @@ namespace Paillave.Etl.TextFile
     {
         private readonly BloombergValuesProviderArgs<TParsed> _args;
         public BloombergValuesProvider(BloombergValuesProviderArgs<TParsed> args) => _args = args;
-        public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
         private enum FileReadState
         {
@@ -71,7 +74,7 @@ namespace Paillave.Etl.TextFile
                             else if (line == "START-OF-DATA")
                             {
                                 currentState = FileReadState.Data;
-                                lineSerializer = _args.Mapping.IsColumnSeparated('|').GetSerializer(columnCollection);
+                                lineSerializer = _args.Mapping.GetSerializer(columnCollection);
                             }
                             break;
                         case FileReadState.Fields:

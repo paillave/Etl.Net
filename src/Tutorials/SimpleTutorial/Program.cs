@@ -7,6 +7,7 @@ using Paillave.Etl.TextFile;
 using Paillave.Etl.SqlServer;
 using System.Data.SqlClient;
 using System.Linq;
+using Paillave.Etl.Bloomberg;
 
 namespace SimpleTutorial
 {
@@ -25,7 +26,7 @@ namespace SimpleTutorial
         {
             contextStream
                 .CrossApplyFolderFiles("get files", "*.txt")
-                .CrossApply("parse file", BloombergValuesProvider.Create(FlatFileDefinition.Create(i => new
+                .CrossApply("parse file", BloombergValuesProvider.Create(i => new
                 {
                     CountryFullName = i.ToColumn("COUNTRY_FULL_NAME"),
                     IndustrySector = i.ToColumn("INDUSTRY_SECTOR"),
@@ -45,7 +46,7 @@ namespace SimpleTutorial
                     SecurityTyp = i.ToColumn("SECURITY_TYP"),
                     PeRatio = i.ToNumberColumn<double?>("PE_RATIO", "."),
                     EqyDvdYld12m = i.ToNumberColumn<double?>("EQY_DVD_YLD_12M", "."),
-                })))
+                }))
                 .Do("write to console", i =>
                 {
 
