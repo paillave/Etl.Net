@@ -75,7 +75,7 @@ namespace Paillave.Etl.Core
     {
         private readonly Func<TIn, TInnerIn> _getInner;
         public DoWithResolutionProcessorBuilder(Func<TIn, TInnerIn> getInner) => _getInner = getInner;
-        public void ThenDo(Action<TInnerIn, TService, CancellationToken, IInvoker> actionFull) => new DoWithResolutionProcessor<TIn, TInnerIn, TService>(actionFull, _getInner);
-        public void ThenDo(Action<TInnerIn, TService> actionSimple) => new DoWithResolutionProcessor<TIn, TInnerIn, TService>(actionSimple, _getInner);
+        public IDoProcessor<TIn> ThenDo(Action<TInnerIn, TService, CancellationToken, IInvoker> actionFull) => new DoWithResolutionProcessor<TIn, TInnerIn, TService>(actionFull, _getInner);
+        public IDoProcessor<TIn> ThenDo(Action<TInnerIn, TService> actionSimple) => new DoWithResolutionProcessor<TIn, TInnerIn, TService>(actionSimple, _getInner);
     }
 }
