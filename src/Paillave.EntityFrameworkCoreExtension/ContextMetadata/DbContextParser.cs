@@ -35,10 +35,10 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
             {
                 FromName = from.Name,
                 FromSchema = from.Schema,
-                From = $"{from.Schema}.{from.TargetName}",
+                From = $"{from.Schema}.{from.Name}",
                 ToName = to.Name,
                 ToSchema = to.Schema,
-                To = $"{to.Schema}.{to.TargetName}",
+                To = $"{to.Schema}.{to.Name}",
                 Name = navigation.Name,
                 Type = navigation.IsCollection ? LinkType.Aggregates : LinkType.References,
                 Required = navigation.ForeignKey.IsRequired
@@ -52,10 +52,10 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
             {
                 FromName = fromMapping.Name,
                 FromSchema = fromMapping.Schema,
-                From = $"{fromMapping.Schema}.{fromMapping.TargetName}",
+                From = $"{fromMapping.Schema}.{fromMapping.Name}",
                 ToName = toMapping.Name,
                 ToSchema = toMapping.Schema,
-                To = $"{toMapping.Schema}.{toMapping.TargetName}",
+                To = $"{toMapping.Schema}.{toMapping.Name}",
                 Type = LinkType.Inherits
             };
         }
@@ -137,10 +137,10 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
             var to = navigation.TargetEntityType.GetEntityEssentials();
             return new LinkSummary
             {
-                From = $"{from.Schema}.{from.TargetName}",
+                From = $"{from.Schema}.{from.Name}",
                 FromSchema = from.Schema,
                 FromName = from.Name,
-                To = $"{to.Schema}.{to.TargetName}",
+                To = $"{to.Schema}.{to.Name}",
                 ToSchema = to.Schema,
                 ToName = to.Name,
                 Name = navigation.Name,
@@ -154,10 +154,10 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
             var toSummary = to.GetEntityEssentials();
             return new LinkSummary
             {
-                From = $"{fromSummary.Schema}.{fromSummary.TargetName}",
+                From = $"{fromSummary.Schema}.{fromSummary.Name}",
                 FromSchema = fromSummary.Schema,
                 FromName = fromSummary.Name,
-                To = $"{toSummary.Schema}.{toSummary.TargetName}",
+                To = $"{toSummary.Schema}.{toSummary.Name}",
                 ToSchema = toSummary.Schema,
                 ToName = toSummary.Name,
                 Type = LinkType.Inherits
