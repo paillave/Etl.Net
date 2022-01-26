@@ -7,7 +7,7 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         public bool IsNullable { get; set; }
         public bool IsKey { get; set; }
         public bool IsForeignKey { get; set; }
-        public int? MaxLength { get; internal set; }
+        public int? MaxLength { get; set; }
         public override string ToString() => $"{this.Name}:{this.Type}";
     }
 }

@@ -28,14 +28,17 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         }
         public static LinkSummary CreateLinkSummary(IEntityType entityType, INavigation navigation)
         {
+            var from = entityType.GetEntityEssentials();
+            var to = navigation.TargetEntityType.GetEntityEssentials();
+
             return new LinkSummary
             {
-                FromName = entityType.ClrType.Name,
-                FromSchema = entityType.GetSchema(),
-                From = $"{entityType.GetSchema()}.{entityType.ClrType.Name}",
-                ToName = navigation.TargetEntityType.ClrType.Name,
-                ToSchema = navigation.TargetEntityType.GetSchema(),
-                To = $"{navigation.TargetEntityType.GetSchema()}.{navigation.TargetEntityType.ClrType.Name}",
+                FromName = from.Name,
+                FromSchema = from.Schema,
+                From = $"{from.Schema}.{from.TargetName}",
+                ToName = to.Name,
+                ToSchema = to.Schema,
+                To = $"{to.Schema}.{to.TargetName}",
                 Name = navigation.Name,
                 Type = navigation.IsCollection ? LinkType.Aggregates : LinkType.References,
                 Required = navigation.ForeignKey.IsRequired
@@ -43,29 +46,26 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         }
         public static LinkSummary CreateInheritLinkSummary(IEntityType from, IEntityType to)
         {
+            var fromMapping = from.GetEntityEssentials();
+            var toMapping = to.GetEntityEssentials();
             return new LinkSummary
             {
-                FromName = from.ClrType.Name,
-                FromSchema = from.GetSchema(),
-                From = $"{from.GetSchema()}.{from.ClrType.Name}",
-                ToName = to.ClrType.Name,
-                ToSchema = to.GetSchema(),
-                To = $"{to.GetSchema()}.{to.ClrType.Name}",
+                FromName = fromMapping.Name,
+                FromSchema = fromMapping.Schema,
+                From = $"{fromMapping.Schema}.{fromMapping.TargetName}",
+                ToName = toMapping.Name,
+                ToSchema = toMapping.Schema,
+                To = $"{toMapping.Schema}.{toMapping.TargetName}",
                 Type = LinkType.Inherits
             };
         }
         public static EntitySummary CreateEntitySummary(IEntityType entityType)
         {
-            var storeObject = StoreObjectIdentifier.Create(entityType, StoreObjectType.Table).GetValueOrDefault();
-            return new EntitySummary
-            {
-                IsAbstract = entityType.IsAbstract(),
-                IsView = entityType.IsTableExcludedFromMigrations(),
-                Name = entityType.ClrType.Name,
-                Schema = entityType.GetSchema(),
-                Properties = entityType.GetDeclaredProperties().Where(i => !i.IsShadowProperty()).Select(i => CreatePropertySummary(i, storeObject)).ToList(),
-                Comment = entityType.GetComment()
-            };
+            var mapping = entityType.GetEntityEssentials();
+            mapping.Comment = entityType.GetComment();
+            var storeObject = StoreObjectIdentifier.Create(entityType, mapping.IsView ? StoreObjectType.View : StoreObjectType.Table).GetValueOrDefault();
+            mapping.Properties = entityType.GetDeclaredProperties().Where(i => !i.IsShadowProperty()).Select(i => CreatePropertySummary(i, storeObject)).ToList();
+            return mapping;
         }
         public static PropertySummary CreatePropertySummary(IProperty property, StoreObjectIdentifier storeObject)
         {
@@ -133,14 +133,16 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         }
         public static LinkSummary CreateLinkSummary(IEntityType entityType, INavigation navigation)
         {
+            var from = entityType.GetEntityEssentials();
+            var to = navigation.TargetEntityType.GetEntityEssentials();
             return new LinkSummary
             {
-                From = $"{entityType.GetSchema()}.{entityType.ClrType.Name}",
-                FromSchema = entityType.GetSchema(),
-                FromName = entityType.ClrType.Name,
-                To = $"{navigation.TargetEntityType.GetSchema()}.{navigation.TargetEntityType.ClrType.Name}",
-                ToSchema = navigation.TargetEntityType.GetSchema(),
-                ToName = navigation.TargetEntityType.ClrType.Name,
+                From = $"{from.Schema}.{from.TargetName}",
+                FromSchema = from.Schema,
+                FromName = from.Name,
+                To = $"{to.Schema}.{to.TargetName}",
+                ToSchema = to.Schema,
+                ToName = to.Name,
                 Name = navigation.Name,
                 Type = navigation.IsCollection ? LinkType.Aggregates : LinkType.References,
                 Required = navigation.ForeignKey.IsRequired
@@ -148,14 +150,16 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         }
         public static LinkSummary CreateInheritLinkSummary(IEntityType from, IEntityType to)
         {
+            var fromSummary = from.GetEntityEssentials();
+            var toSummary = to.GetEntityEssentials();
             return new LinkSummary
             {
-                From = $"{from.GetSchema()}.{from.ClrType.Name}",
-                FromSchema = from.GetSchema(),
-                FromName = from.ClrType.Name,
-                To = $"{to.GetSchema()}.{to.ClrType.Name}",
-                ToSchema = to.GetSchema(),
-                ToName = to.ClrType.Name,
+                From = $"{fromSummary.Schema}.{fromSummary.TargetName}",
+                FromSchema = fromSummary.Schema,
+                FromName = fromSummary.Name,
+                To = $"{toSummary.Schema}.{toSummary.TargetName}",
+                ToSchema = toSummary.Schema,
+                ToName = toSummary.Name,
                 Type = LinkType.Inherits
             };
         }
@@ -221,5 +225,24 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         }
         private static bool IsDatabaseContextFactoryType(Type type)
             => type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IDesignTimeDbContextFactory<>));
+    }
+    public static class EntityTypeEx
+    {
+        public static EntitySummary GetEntityEssentials(this IEntityType entityType)
+        {
+            ITableMappingBase viewMapping = entityType.GetViewMappings().FirstOrDefault();
+            ITableMappingBase tableMapping = entityType.GetTableMappings().FirstOrDefault();
+            var isView = viewMapping != null;
+            var schemaName = isView ? entityType.GetViewSchema() : entityType.GetSchema();
+            var tableName = isView ? entityType.GetViewName() : entityType.GetTableName();
+            return new EntitySummary
+            {
+                IsAbstract = entityType.IsAbstract(),
+                IsView = isView,
+                Name = entityType.ClrType.Name,
+                Schema = schemaName,
+                TargetName = tableName
+            };
+        }
     }
 }
