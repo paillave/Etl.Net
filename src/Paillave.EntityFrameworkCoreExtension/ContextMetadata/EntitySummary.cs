@@ -8,7 +8,7 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         public bool IsView { get; set; }
         public string Schema { get; set; }
         public List<PropertySummary> Properties { get; set; }
-        public string Comment { get; internal set; }
+        public string Comment { get; set; }
 
         public override string ToString() => $"{this.Name} ({this.Properties.Count} Properties)";
     }

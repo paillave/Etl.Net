@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Paillave.EntityFrameworkCoreExtension.ContextMetadata;
 using Paillave.EntityFrameworkCoreExtension.Core;
 
 namespace Paillave.EntityFrameworkCoreExtension.BulkSave
@@ -62,7 +63,8 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
             this.StoreObject = StoreObjectIdentifier.Create(entityType, StoreObjectType.Table).GetValueOrDefault();
             if (entityType == null)
                 throw new InvalidOperationException("DbContext does not contain EntitySet for Type: " + typeof(T).Name);
-            _schema = entityType.GetSchema();
+            var summary = entityType.GetEntityEssentials();
+            _schema = summary.Schema;
             _table = entityType.GetTableName();
 
             List<IEntityType> entityTypes = GetAllRelatedEntityTypes(entityType).Distinct().ToList();
