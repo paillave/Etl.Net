@@ -19,6 +19,11 @@ namespace Paillave.Etl.ExcelFile
             {
                 GetOutput = (i, j) => selector(i)
             }), noParallelisation);
+        public static IStream<TOut> CrossApplyExcelDatasets<TOut>(this IStream<IFileValue> stream, string name, Func<DataTable, IFileValue, TOut> selector, bool noParallelisation = false)
+            => stream.CrossApply(name, new ExcelDatasetsValuesProvider<TOut>(new ExcelDatasetsValuesProviderArgs<TOut>
+            {
+                GetOutput = selector
+            }), noParallelisation);
         #endregion
 
         #region CrossApplyExcelDatasets

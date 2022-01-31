@@ -20,8 +20,12 @@ namespace Paillave.Etl.ExcelFile
         public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
             using (var reader = ExcelReaderFactory.CreateReader(input.GetContent()))
-                foreach (var item in reader.AsDataSet().Tables.Cast<DataTable>())
+            {
+                var dataset = reader.AsDataSet();
+                dataset.DataSetName = input.Name;
+                foreach (var item in dataset.Tables.Cast<DataTable>())
                     push(_args.GetOutput(item, input));
+            }
         }
     }
 }
