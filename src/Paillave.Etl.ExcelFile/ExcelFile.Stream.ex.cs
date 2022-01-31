@@ -22,12 +22,18 @@ namespace Paillave.Etl.ExcelFile
         #endregion
 
         #region CrossApplyExcelDatasets
+        [Obsolete("use CrossApplyExcelDatatables instead")]
         public static IStream<DataTable> CrossApplyExcelDatasets(this IStream<IFileValue> stream, string name, bool noParallelisation = false)
+            => stream.CrossApplyExcelDatatables(name, noParallelisation);
+        [Obsolete("use CrossApplyExcelDatatables instead")]
+        public static IStream<TOut> CrossApplyExcelDatasets<TOut>(this IStream<IFileValue> stream, string name, Func<DataTable, TOut> selector, bool noParallelisation = false)
+            => stream.CrossApplyExcelDatatables(name, selector, noParallelisation);
+        public static IStream<DataTable> CrossApplyExcelDatatables(this IStream<IFileValue> stream, string name, bool noParallelisation = false)
             => stream.CrossApply(name, new ExcelDatasetsValuesProvider<DataTable>(new ExcelDatasetsValuesProviderArgs<DataTable>
             {
                 GetOutput = (i, j) => i
             }), noParallelisation);
-        public static IStream<TOut> CrossApplyExcelDatasets<TOut>(this IStream<IFileValue> stream, string name, Func<DataTable, TOut> selector, bool noParallelisation = false)
+        public static IStream<TOut> CrossApplyExcelDatatables<TOut>(this IStream<IFileValue> stream, string name, Func<DataTable, TOut> selector, bool noParallelisation = false)
             => stream.CrossApply(name, new ExcelDatasetsValuesProvider<TOut>(new ExcelDatasetsValuesProviderArgs<TOut>
             {
                 GetOutput = (i, j) => selector(i)
