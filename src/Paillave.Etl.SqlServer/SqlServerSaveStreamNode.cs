@@ -102,7 +102,7 @@ namespace Paillave.Etl.SqlServer
             // var allMatches = getParamRegex.Matches(base.Args.SqlQuery).ToList().Select(match => match.Groups["param"].Value).Distinct().ToList();
             foreach (var parameterName in _inPropertyInfos.Keys.Except(_computed.Select(i => i.Name)))
             {
-                command.Parameters.Add(new SqlParameter($"@{parameterName}", _inPropertyInfos[parameterName].GetValue(item)));
+                command.Parameters.Add(new SqlParameter($"@{parameterName}", _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value));
             }
             using (var reader = command.ExecuteReader())
                 if (reader.Read())
