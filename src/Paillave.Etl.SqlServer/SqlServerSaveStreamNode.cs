@@ -116,7 +116,16 @@ namespace Paillave.Etl.SqlServer
                 values[record.GetName(i)] = Convert.ChangeType(record.GetValue(i), record.GetFieldType(i));
             var updates = _inPropertyInfos.Join(values, i => i.Key, i => i.Key, (l, r) => new { Target = l.Value, NewValue = r.Value }, StringComparer.InvariantCultureIgnoreCase).ToList();
             foreach (var update in updates)
-                update.Target.SetValue(item, update.NewValue);
+            {
+                if (update.NewValue == DBNull.Value)
+                {
+                    update.Target.SetValue(null, update.NewValue);
+                }
+                else
+                {
+                    update.Target.SetValue(item, update.NewValue);
+                }
+            }
         }
 
         private string CreateSqlQuery(string table, List<PropertyInfo> allProperties, List<PropertyInfo> pivot, List<PropertyInfo> computed)
