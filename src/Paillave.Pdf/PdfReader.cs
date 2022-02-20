@@ -206,14 +206,27 @@ namespace Paillave.Pdf
                 {
                     if (block.KeepTogether)
                     {
-                        if (_structureReader.ProcessLine(new TextLine(block.TextBlock.TextLines.SelectMany(i => i.Words).ToList()), page, gridExtractionResult.OutOfScopeHorizontalLines))
+                        bool inGrid = false;
+                        foreach (var textLine in block.TextBlock.TextLines.Where(i => !IgnoreLine(i, page, gridExtractionResult.OutOfScopeHorizontalLines)))
                         {
-                            lineNumberInParagraph = 0;
-                            pdfProcessor.ProcessHeader(_structureReader.Current, page.Number);
+                            var grid = this.TryAddInGrid(textLine, gridExtractionResult.Grids);
+                            if (grid != null)
+                            {
+                                inGrid = true;
+                                gridSections[grid] = _structureReader.Current;
+                            }
                         }
-                        else
+                        if (!inGrid)
                         {
-                            pdfProcessor.ProcessLine(string.Join('\t', block.TextBlock.TextLines.Select(i => i.Text)), page.Number, ++lineNumber, ++lineNumberInParagraph, ++lineNumberInPage, _structureReader.Current);
+                            if (_structureReader.ProcessLine(new TextLine(block.TextBlock.TextLines.SelectMany(i => i.Words).ToList()), page, gridExtractionResult.OutOfScopeHorizontalLines))
+                            {
+                                lineNumberInParagraph = 0;
+                                pdfProcessor.ProcessHeader(_structureReader.Current, page.Number);
+                            }
+                            else
+                            {
+                                pdfProcessor.ProcessLine(string.Join('\t', block.TextBlock.TextLines.Select(i => i.Text)), page.Number, ++lineNumber, ++lineNumberInParagraph, ++lineNumberInPage, _structureReader.Current);
+                            }
                         }
                     }
                     else

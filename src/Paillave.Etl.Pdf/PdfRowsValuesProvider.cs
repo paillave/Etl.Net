@@ -22,6 +22,11 @@ namespace Paillave.Etl.Pdf
             this.PatternsToIgnore.Add(templateBuilder(new TextTemplate()));
             return this;
         }
+        public PdfRowsValuesProviderArgs SetExtractMethod(ExtractMethod extractMethod)
+        {
+            this.ExtractMethod = extractMethod;
+            return this;
+        }
     }
     public abstract class PdfContent
     {
