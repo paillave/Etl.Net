@@ -11,6 +11,7 @@ namespace Paillave.Etl.Pdf
     {
         public IList<TextTemplate> PatternsToIgnore { get; } = new List<TextTemplate>();
         public IList<HeadersSetup> HeadersSetups { get; } = new List<HeadersSetup>();
+        public ExtractMethod ExtractMethod { get; set; } = null;
         public PdfRowsValuesProviderArgs AddHeadersSetup(HeadersSetup headersSetup)
         {
             this.HeadersSetups.Add(headersSetup);
@@ -55,14 +56,14 @@ namespace Paillave.Etl.Pdf
         {
             var stream = input.GetContent();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
-            using (var pdfReader = new PdfReader(stream, this._args.PatternsToIgnore, this._args.HeadersSetups))
-                pdfReader.Read(new PdfProcessor(push, input));
+            using (var pdfReader = new PdfReader(stream, this._args.PatternsToIgnore, this._args.HeadersSetups, this._args.ExtractMethod))
+                pdfReader.Read(new PdfVisitor(push, input));
         }
-        private class PdfProcessor : IPdfProcessor
+        private class PdfVisitor : IPdfVisitor
         {
             private readonly Action<PdfContent> _push;
             private readonly IFileValue _fileValue;
-            public PdfProcessor(Action<PdfContent> push, IFileValue fileValue) => (_push, _fileValue) = (push, fileValue);
+            public PdfVisitor(Action<PdfContent> push, IFileValue fileValue) => (_push, _fileValue) = (push, fileValue);
             public void ProcessLine(string text, int pageNumber, int lineNumber, int lineNumberInParagraph, int lineNumberInPage, List<string> section)
                 => _push(new PdfTextLine(_fileValue, section, pageNumber, lineNumber, text));
             public void ProcessTable(List<List<List<string>>> table, int pageNumber, List<string> section)

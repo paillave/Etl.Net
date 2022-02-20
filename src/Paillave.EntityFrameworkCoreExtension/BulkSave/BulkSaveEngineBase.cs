@@ -183,14 +183,14 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
 
         private void SetDiscriminatorValue(IList<T> entities)
         {
-            if (_entityTypes.All(i => i.GetDiscriminatorProperty() == null)) return;
+            if (_entityTypes.All(i => i.FindDiscriminatorProperty() == null)) return;
             var discriminatorsDictionary = _entityTypes
                 .Select(i => new
                 {
                     i.ClrType,
                     EntityType = i,
-                    DiscriminatorProperty = i.GetDiscriminatorProperty(),
-                    DiscriminatorValue = i.GetDiscriminatorProperty() != null ? i.GetDiscriminatorValue() : null
+                    DiscriminatorProperty = i.FindDiscriminatorProperty(),
+                    DiscriminatorValue = i.FindDiscriminatorProperty() != null ? i.GetDiscriminatorValue() : null
                     // RelationalProperty = i.Relational()
                 })
                 .Where(i => i.DiscriminatorProperty != null)

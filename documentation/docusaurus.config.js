@@ -106,14 +106,14 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.ts'),
           // Please change this to your repo.
           editUrl:
-            'https://paillave.github.io/Etl.Net/edit/master/website/',
+            'https://github.com/paillave/Etl.Net/blob/develop/documentation/',
           remarkPlugins: [remarkMermaid],
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://paillave.github.io/Etl.Net/edit/master/website/blog/',
+            'https://github.com/paillave/Etl.Net/blob/develop/documentation/blog/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

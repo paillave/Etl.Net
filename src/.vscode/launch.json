@@ -5,11 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Samples",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/Tutorials/Paillave.Etl.Samples/bin/Debug/net6.0/Paillave.Etl.Samples.dll",
+            "args": [            ],
+            "cwd": "${workspaceFolder}/Tutorials/Paillave.Etl.Samples",
+            "stopAtEntry": false,
+            "console": "externalTerminal"
+        },
+        {
             "name": "SimpleTutorial",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Tutorials/SimpleTutorial/bin/Debug/net5.0/SimpleTutorial.dll",
+            "program": "${workspaceFolder}/Tutorials/SimpleTutorial/bin/Debug/net6.0/SimpleTutorial.dll",
             "args": [
                 "data",
                 "Server=localhost,1433;Database=SimpleTutorial;user=SimpleTutorial;password=TestEtl.TestEtl;MultipleActiveResultSets=True"
@@ -23,7 +34,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Tutorials/BlogTutorial/bin/Debug/net5.0/BlogTutorial.dll",
+            "program": "${workspaceFolder}/Tutorials/BlogTutorial/bin/Debug/net6.0/BlogTutorial.dll",
             "args": [
                 "data",
                 "Server=localhost,1433;Database=BlogTutorial;user=BlogTutorial;password=TestEtl.TestEtl;MultipleActiveResultSets=True"
@@ -37,7 +48,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Tutorials/Paillave.Etl.Samples/bin/Debug/net5.0/Paillave.Etl.Samples.dll",
+            "program": "${workspaceFolder}/Tutorials/Paillave.Etl.Samples/bin/Debug/net6.0/Paillave.Etl.Samples.dll",
             "args": [
                 "data",
                 "Server=localhost,1433;Database=BlogTutorial;user=BlogTutorial;password=TestEtl.TestEtl;MultipleActiveResultSets=True"

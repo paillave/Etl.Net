@@ -97,7 +97,7 @@ namespace Paillave.Etl.Mail
         }
         protected override void Test(MailAdapterConnectionParameters connectionParameters, MailAdapterProviderParameters providerParameters)
         {
-            using (connectionParameters.CreateIMapClient()) ;
+            using (connectionParameters.CreateIMapClient()) { }
         }
     }
 }
