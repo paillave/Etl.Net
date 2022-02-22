@@ -10,9 +10,9 @@ namespace Paillave.Etl.Zip
         private readonly IFileValue _underlyingFileValue;
         private readonly HashSet<string> _pathsNotFlaggedForDelete;
         private readonly string _innerPath;
+        public override string Name { get; }
         public UnzippedFileValue(Stream stream, string name, TMetadata metadata, IFileValue underlyingFileValue, HashSet<string> pathsNotFlaggedForDelete, string innerPath)
             : base(metadata) => (_stream, Name, _underlyingFileValue, _pathsNotFlaggedForDelete, _innerPath) = (stream, name, underlyingFileValue, pathsNotFlaggedForDelete, innerPath);
-        public override string Name { get; }
         public override Stream GetContent() => _stream;
         protected override void DeleteFile()
         {

@@ -25,9 +25,9 @@ namespace Paillave.Etl.Samples
     {
         static void Main(string[] args)
         {
-            using (var stream = File.OpenRead("TestPbLines.pdf"))
-            using (var pdfReader = new PdfReader(stream, null, null, ExtractMethod.SimpleLines()))
+            using (var stream = File.OpenRead("SCAN - Orion Constellation Sicav-RAIF SCA - SPRO-Searchable.pdf"))
             {
+                var pdfReader = new PdfReader(stream, null, null, ExtractMethod.SimpleLines());
                 pdfReader.Read(new PdfVisitor());
             }
         }

@@ -62,18 +62,18 @@ namespace Paillave.Pdf
             private readonly List<double> _heights = new List<double>();
             private double _lastTop;
             private double _lastBottom;
-            public ProcessingLine(Word word)
+            public ProcessingLine(Word word, double height)
             {
-                (_lastTop, _lastBottom) = (word.BoundingBox.Top, word.BoundingBox.Bottom);
-                _heights.Add(word.BoundingBox.Height);
+                (_lastTop, _lastBottom) = (word.BoundingBox.Top, Math.Min(word.BoundingBox.Bottom, word.BoundingBox.Top - height));
+                _heights.Add(height);
                 _words.Add(word);
             }
-            public bool IsSameLine(Word word) => _lastBottom < word.BoundingBox.Top && _lastTop > word.BoundingBox.Bottom;
-            public void AddWord(Word word)
+            public bool IsSameLine(Word word, double height) => _lastBottom < word.BoundingBox.Top && _lastTop > Math.Min(word.BoundingBox.Bottom, word.BoundingBox.Top - height);
+            public void AddWord(Word word, double height)
             {
                 _lastTop = word.BoundingBox.Top;
-                _lastBottom = word.BoundingBox.Bottom;
-                _heights.Add(word.BoundingBox.Height);
+                _lastBottom = Math.Min(word.BoundingBox.Bottom, word.BoundingBox.Top - height);
+                _heights.Add(height);
                 _words.Add(word);
             }
             public IEnumerable<TextLine> GetTextLines()
@@ -81,7 +81,7 @@ namespace Paillave.Pdf
                 var maxSpace = _heights.Average();
                 Word previousWord = null;
                 List<Word> currentBlock = new List<Word>();
-                foreach (var word in _words.OrderBy(w => w.BoundingBox.Left).ToList())
+                foreach (var word in _words.OrderBy(w => w.BoundingBox.Left).ThenByDescending(w => w.BoundingBox.Top).ToList())
                 {
                     if (previousWord != null)
                     {
@@ -109,18 +109,18 @@ namespace Paillave.Pdf
         private class ProcessingLines
         {
             private readonly List<ProcessingLine> _processingLines = new List<ProcessingLine>();
-            public void AddWord(Word word)
+            public void AddWord(Word word, double height)
             {
                 if (string.IsNullOrWhiteSpace(word.Text)) return;
-                var processingLine = _processingLines.FirstOrDefault(i => i.IsSameLine(word));
+                var processingLine = _processingLines.FirstOrDefault(i => i.IsSameLine(word, height));
                 if (processingLine == null)
                 {
-                    processingLine = new ProcessingLine(word);
+                    processingLine = new ProcessingLine(word, height);
                     _processingLines.Add(processingLine);
                 }
                 else
                 {
-                    processingLine.AddWord(word);
+                    processingLine.AddWord(word, height);
                 }
             }
             public List<TextBlock> GetTextLines() => _processingLines.Select(i =>
@@ -132,10 +132,14 @@ namespace Paillave.Pdf
         internal override List<ProcessedBlock> ExtractTextBlocks(Page page)
         {
             var processingLines = new ProcessingLines();
-            var words = page.GetWords(this.WordExtractor).OrderByDescending(i => i.BoundingBox.Top).ThenBy(i => i.BoundingBox.Left).ToList();
+            var words = page.GetWords(this.WordExtractor).Where(i => !string.IsNullOrWhiteSpace(i.Text)).OrderBy(i => i.BoundingBox.Left).ThenByDescending(i => i.BoundingBox.Top).ToList();
             foreach (var word in words)
-                processingLines.AddWord(word);
-            return processingLines.GetTextLines().Select(i => new ProcessedBlock { KeepTogether = true, TextBlock = i }).ToList();
+            {
+                var height = word.BoundingBox.Height;
+                height = Math.Max(height, word.Letters[0].PointSize);
+                processingLines.AddWord(word, height);
+            }
+            return processingLines.GetTextLines().OrderByDescending(i => i.BoundingBox.Top).Select(i => new ProcessedBlock { KeepTogether = true, TextBlock = i }).ToList();
         }
     }
     public class RecursiveXYSegmentMethod : ExtractMethod
