@@ -61,8 +61,8 @@ namespace Paillave.Etl.Pdf
         {
             var stream = input.GetContent();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
-            using (var pdfReader = new PdfReader(stream, this._args.PatternsToIgnore, this._args.HeadersSetups, this._args.ExtractMethod))
-                pdfReader.Read(new PdfVisitor(push, input));
+            var pdfReader = new PdfReader(stream, this._args.PatternsToIgnore, this._args.HeadersSetups, this._args.ExtractMethod);
+            pdfReader.Read(new PdfVisitor(push, input));
         }
         private class PdfVisitor : IPdfVisitor
         {
