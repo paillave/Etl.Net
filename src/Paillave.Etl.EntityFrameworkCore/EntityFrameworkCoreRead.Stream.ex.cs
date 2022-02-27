@@ -7,12 +7,13 @@ namespace Paillave.Etl.EntityFrameworkCore
     public static class EntityFrameworkCoreReadEx
     {
         public static IStream<TOut> EfCoreSelect<TIn, TOut>(this IStream<TIn> stream, string name,
-            Func<DbContextWrapper, TIn, IQueryable<TOut>> getQuery, string connectionKey = null, bool noParallelisation = false) where TOut : class
+            Func<DbContextWrapper, TIn, IQueryable<TOut>> getQuery, bool streamMode = false, string connectionKey = null, bool noParallelisation = false) where TOut : class
                 => stream.CrossApply<TIn, TOut>(name, new EfCoreValuesProvider<TIn, TOut>(
                     new EfCoreValuesProviderArgs<TIn, TOut>
                     {
                         GetQuery = getQuery,
-                        ConnectionKey = connectionKey
+                        ConnectionKey = connectionKey,
+                        StreamMode = streamMode
                     }), noParallelisation);
         public static IStream<TOut> EfCoreSelectSingle<TIn, TOut>(this IStream<TIn> stream, string name,
             Func<DbContextWrapper, TIn, IQueryable<TOut>> getQuery, string connectionKey = null, bool noParallelisation = false) where TOut : class

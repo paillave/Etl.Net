@@ -10,6 +10,7 @@ namespace Paillave.Etl.EntityFrameworkCore
     {
         public string ConnectionKey { get; set; }
         public Func<DbContextWrapper, TIn, IQueryable<TOut>> GetQuery { get; set; }
+        public bool StreamMode { get; set; } = false;
     }
     public class EfCoreSingleValueProviderArgs<TIn, TOut>
     {
@@ -32,8 +33,19 @@ namespace Paillave.Etl.EntityFrameworkCore
             var dbContext = _args.ConnectionKey == null
                     ? resolver.Resolve<DbContext>()
                     : resolver.Resolve<DbContext>(_args.ConnectionKey);
-            var lsts = invoker.InvokeInDedicatedThreadAsync(dbContext, () => _args.GetQuery(new DbContextWrapper(dbContext), input).ToList()).Result;
-            lsts.ForEach(push);
+            if (_args.StreamMode)
+            {
+                invoker.InvokeInDedicatedThreadAsync(dbContext, () =>
+                {
+                    var lsts = _args.GetQuery(new DbContextWrapper(dbContext), input).AsQueryable();
+                    foreach (var elt in lsts) push(elt);
+                }).Wait();
+            }
+            else
+            {
+                var lsts = invoker.InvokeInDedicatedThreadAsync(dbContext, () => _args.GetQuery(new DbContextWrapper(dbContext), input).ToList()).Result;
+                lsts.ForEach(push);
+            }
         }
     }
     /// <summary>
