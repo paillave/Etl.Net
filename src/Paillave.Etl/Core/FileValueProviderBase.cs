@@ -11,7 +11,7 @@ namespace Paillave.Etl.Core
         protected string ConnectionName { get; }
         protected string Name { get; }
 
-        public string TypeName => throw new NotImplementedException();
+        public virtual string TypeName => this.GetType().Name;
 
         private readonly TConnectionParameters _connectionParameters;
         private readonly TProviderParameters _providerParameters;
