@@ -10,7 +10,7 @@ namespace Paillave.Etl.EntityFrameworkCore
     {
         public string ConnectionKey { get; set; }
         public Func<DbContextWrapper, TIn, IQueryable<TOut>> GetQuery { get; set; }
-        public bool StreamMode { get; set; }
+        public bool StreamMode { get; set; } = false;
     }
     public class EfCoreSingleValueProviderArgs<TIn, TOut>
     {
