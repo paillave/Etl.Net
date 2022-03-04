@@ -12,12 +12,6 @@ namespace Paillave.Etl.ExecutionToolkit
         private Dictionary<string, TaskUnit> _taskUnits;
         private Stopwatch _stopwatch = new Stopwatch();
 
-        public SimpleConsoleExecutionDisplay(Dictionary<string, TaskUnit> taskUnits, Stopwatch stopwatch)
-        {
-            _taskUnits = taskUnits;
-            _stopwatch = stopwatch;
-        }
-
         protected override void HandleCounterSummary(TraceEvent traceEvent, CounterSummaryStreamTraceContent counterSummary)
         {
             var taskUnit = this._taskUnits[traceEvent.NodeName];

@@ -45,9 +45,9 @@ namespace Paillave.Etl.Core
         public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
         public IFileValueConnectors Connectors { get; set; } = new NoFileValueConnectors();
     }
-    public class StreamProcessRunner<TConfig>
+    public delegate void DebugNodeStreamEventHandler(object sender, DebugNodeStreamEventArgs e);
+    public class StreamProcessRunner<TConfig> : IStreamProcessObserver
     {
-        public delegate void DebugNodeStreamEventHandler(object sender, DebugNodeStreamEventArgs e);
         public event DebugNodeStreamEventHandler DebugNodeStream = null;
 
         protected virtual void OnDebugNodeStream(DebugNodeStreamEventArgs e)
