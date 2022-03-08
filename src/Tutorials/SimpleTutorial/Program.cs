@@ -13,7 +13,22 @@ namespace SimpleTutorial
 {
     class Program
     {
-        static async Task Main(string[] args)
+        public class BaseClass
+        {
+
+        }
+        public class TopClass : BaseClass
+        {
+
+        }
+        static void Main(string[] args)
+        {
+            var resolver = new SimpleDependencyResolver();
+            var elt = new TopClass();
+            resolver.Register(elt);
+            var resolved = resolver.Resolve<BaseClass>();
+        }
+        static async Task Main2(string[] args)
         {
             var processRunner = StreamProcessRunner.Create<string>(DefineProcess1);
             processRunner.DebugNodeStream += (sender, e) => { };
