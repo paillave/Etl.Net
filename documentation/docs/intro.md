@@ -10,7 +10,7 @@ Let's discover **ETL.NET in 5 minutes**.
 
 ## What is ETL.NET?
 
-ETL.NET is a set of .NET5 libraries that permits to embed regular business intelligence ETL features into any .NET5 application.
+ETL.NET is a set of .NET libraries that permits to embed regular business intelligence ETL features into any .NET application.
 
 It contains every transformation and capability of SSIS:
 
@@ -18,7 +18,7 @@ It contains every transformation and capability of SSIS:
 - Data sources like Excel, flat files such as csv, SQL Server, Xml, Entity framework...
 - Tracing the complete activity with automatic filtering and saving capability
 - Parameterization of a process
-- Something missing? Not a problem! Any kind of extensions can implemented in a snap of a finger to create new types of data source/destination or any type of operator. ETL.NET has been designed for it.
+- Something missing? Not a problem! Any kind of extension can implemented in a snap of a finger to create new types of data source/destination or any type of operator. ETL.NET has been designed for it.
 
 It also permits to interact out of the box with:
 
@@ -48,7 +48,7 @@ SSIS is a great straight forward tool to process big chunks of data. It supports
 
 > Can be run on nearly any kind of computer or even portable devices.
 
-Developments are made on .NET5. This permits ETL.NET to be used on any platform that supports .NET: Windows, Linux or macOS.
+Developments are made on .NET. This permits ETL.NET to be used on any platform that supports .NET: Windows, Linux or macOS.
 
 ## It is open source
 
