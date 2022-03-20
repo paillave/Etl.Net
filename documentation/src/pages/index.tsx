@@ -7,6 +7,7 @@ import styles from './index.module.css';
 import HomepageFeatures from '../components/HomepageFeatures';
 import HomepageExamples from '../components/HomepageExamples';
 import QuickStart from '../components/QuickStart';
+import Presentation from '../components/Presentation';
 // import Highlight, { defaultProps } from "prism-react-renderer";
 // require(`prismjs/components/prism-csharp`); // eslint-disable-line
 // import theme from "prism-react-renderer/themes/dracula";
@@ -52,13 +53,14 @@ export default function Home() {
   return (
     <Layout
       title={`Home`}
-      description="Fully featured ETL int .NET5 for .NET5 working with the same principle than SSIS"
+      description="Fully featured ETL int .NET for .NET working with the same principle than SSIS"
       image={streamImage}
-      keywords={["ETL", ".NET", "SSIS", "Import", "Export"]}>
+      keywords={["ETL", ".NET", "SSIS", "Import", "Export", "Dataprocess", "Export"]}>
       <HomepageHeader />
       <main>
-        <QuickStart />
+        <Presentation />
         <HomepageFeatures />
+        <QuickStart />
         <HomepageExamples />
       </main>
     </Layout>

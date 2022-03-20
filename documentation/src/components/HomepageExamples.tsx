@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import styles from './HomepageFeatures.module.css';
+import styles from './HomepageExamples.module.css';
 import Highlight, { defaultProps } from "prism-react-renderer";
 import "prismjs"; // eslint-disable-line
 require(`prismjs/components/prism-csharp`); // eslint-disable-line
@@ -8,42 +8,42 @@ import theme from "prism-react-renderer/themes/dracula";
 // https://emojipedia.org/
 
 const FeatureList = [
-  {
-    title: 'Unzip it, read it, save it, report it',
-    sourceCode: `
-private static void DefineProcess(ISingleStream<string> contextStream)
-{
-  contextStream
-    .CrossApplyFolderFiles("list all required files", "*.zip", true)
-    .CrossApplyZipFiles("extract files from zip", "*.csv")
-    .CrossApplyTextFile("parse file", FlatFileDefinition.Create(i => new Person
-    {
-      Email = i.ToColumn("email"),
-      FirstName = i.ToColumn("first name"),
-      LastName = i.ToColumn("last name"),
-      DateOfBirth = i.ToDateColumn("date of birth", "yyyy-MM-dd"),
-      Reputation = i.ToNumberColumn<int?>("reputation", ".")
-    }).IsColumnSeparated(','))
-    .Distinct("exclude duplicates based on the Email", i => i.Email)
-    .SqlServerSave("upsert using Email as key and ignore the Id", o => o
-      .ToTable("dbo.Person")
-      .SeekOn(p => p.Email)
-      .DoNotSave(p => p.Id))
-    .Select("define row to report", i => new { i.Email, i.Id })
-    .ToTextFileValue("write summary to file", "report.csv", FlatFileDefinition.Create(i => new
-    {
-      Email = i.ToColumn("Email"),
-      Id = i.ToNumberColumn<int>("new or existing Id", ".")
-    }).IsColumnSeparated(','))
-    .WriteToFile("save log file", i => i.Name);
-}
-    `,
-    description: (
-      <>
-        Read all zip files from a folder, unzip csv files that are inside, parse them, exclude duplicates, upsert them into database, and report new or pre existing id corresponding to the email.
-      </>
-    ),
-  },
+//   {
+//     title: 'Unzip it, read it, save it, report it',
+//     sourceCode: `
+// private static void DefineProcess(ISingleStream<string> contextStream)
+// {
+//   contextStream
+//     .CrossApplyFolderFiles("list all required files", "*.zip", true)
+//     .CrossApplyZipFiles("extract files from zip", "*.csv")
+//     .CrossApplyTextFile("parse file", FlatFileDefinition.Create(i => new Person
+//     {
+//       Email = i.ToColumn("email"),
+//       FirstName = i.ToColumn("first name"),
+//       LastName = i.ToColumn("last name"),
+//       DateOfBirth = i.ToDateColumn("date of birth", "yyyy-MM-dd"),
+//       Reputation = i.ToNumberColumn<int?>("reputation", ".")
+//     }).IsColumnSeparated(','))
+//     .Distinct("exclude duplicates based on the Email", i => i.Email)
+//     .SqlServerSave("upsert using Email as key and ignore the Id", o => o
+//       .ToTable("dbo.Person")
+//       .SeekOn(p => p.Email)
+//       .DoNotSave(p => p.Id))
+//     .Select("define row to report", i => new { i.Email, i.Id })
+//     .ToTextFileValue("write summary to file", "report.csv", FlatFileDefinition.Create(i => new
+//     {
+//       Email = i.ToColumn("Email"),
+//       Id = i.ToNumberColumn<int>("new or existing Id", ".")
+//     }).IsColumnSeparated(','))
+//     .WriteToFile("save log file", i => i.Name);
+// }
+//     `,
+//     description: (
+//       <>
+//         Read all zip files from a folder, unzip csv files that are inside, parse them, exclude duplicates, upsert them into database, and report new or pre existing id corresponding to the email.
+//       </>
+//     ),
+//   },
   {
     title: 'Run it, debug it, track it, log it',
     sourceCode: `
@@ -206,6 +206,7 @@ export default function HomepageExamples() {
   return (
     <section className={styles.features}>
       <div className="container">
+        {/* <h1>Examples</h1> */}
         <div className="row">
           {FeatureList.map((props, idx) => (
             <Example key={idx} {...props} />

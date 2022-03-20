@@ -5,7 +5,7 @@
 
 ## Presentation
 
-Implementation of a multi platform reactive ETL for .NET5 working with a similar principle than SSIS, but that is used in the same way than Linq.
+Implementation of a multi platform reactive ETL for .NET working with a similar principle than SSIS, but that is used in the same way than Linq.
 The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
 
 - ETL.NET is fully written in .NET for a multi platform usage and for a straight forward integration in any application. Extend it takes 5mn... literally.

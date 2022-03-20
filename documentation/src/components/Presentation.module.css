@@ -1,0 +1,44 @@
+/* stylelint-disable docusaurus/copyright-header */
+
+.features {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  /* padding: 2rem 0; */
+  width: 100%;
+  /* align-items: flex-start; */
+  /* gap: 50px; */
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.featureSvg {
+  width: 40%;
+}
+
+.paragraphDescription {
+  width: 40%;
+}
+
+
+/* .prismPre {
+  text-align: left;
+  margin: 1em 0;
+  padding: 0.5em;
+  overflow: scroll;
+} */
+
+/* 
+.prismLineNo{
+  display: table-cell;
+  text-align: right;
+  padding-right: 1em;
+  user-select: none;
+  opacity: 0.5;
+}
+
+.prismLineContent {
+  display: table-cell;
+} */
