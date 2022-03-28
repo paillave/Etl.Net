@@ -47,6 +47,7 @@ namespace Paillave.Pdf
         {
             var words = page.GetWords(this.WordExtractor);
             var blocks = GetTextGroups(page, words)
+                .Where(i => i.BoundingBox.Rotation < 10 || i.BoundingBox.Rotation > 350)
                 // .OrderByDescending(i => /*i.TextOrientation==Tex*/  i.BoundingBox.Top)
                 .ToList();
             return blocks.Select(i => new ProcessedBlock { KeepTogether = false, TextBlock = i }).ToList();//.SelectMany(i => i.TextLines).ToList();
