@@ -15,7 +15,7 @@ export default function Presentation() {
         </div> */}
       <div className={styles.paragraphDescription}>
         <h1>Data processing</h1>
-        <p>ETL.NET is a framework for .NET to <b>implement with no effort fast and easy to maintain data processes</b>. All the tooling for <b>normalization</b>, <b>upsert</b>, <b>lookup</b> or <b>join</b> dramatically reduces the effort for any import and transformation purpose. Everything to handle <b>tracing</b>, <b>error tracking</b> is done automatically for the developer.</p>
+        <p>ETL.NET is a framework for .NET to <b>implement with no effort fast, low memory impact and easy to maintain data processes</b>. All the tooling for <b>normalization</b>, <b>upsert</b>, <b>lookup</b> or <b>join</b> dramatically reduces the effort for any import and transformation purpose. Everything to handle <b>tracing</b>, <b>error tracking</b> is done automatically for the developer.</p>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <p>Read or write <b>any file type</b> and any data source
             <ul>
