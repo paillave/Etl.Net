@@ -17,6 +17,7 @@ namespace Paillave.EntityFrameworkCoreExtension.Searcher
         // \.(?=(?:[^"]*"[^"]*")*(?![^"]*"))
         //private static Regex _regexSplitter = new Regex("\\.(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))", RegexOptions.Singleline);
         protected DbContext DbContext { get; }
+        private Func<IQueryable<TEntity>, IQueryable<TEntity>> _include = null;
         public SearchDescriptorBase(DbContext dbContext)
         {
             this.DbContext = dbContext;
@@ -44,6 +45,11 @@ namespace Paillave.EntityFrameworkCoreExtension.Searcher
         }
         public SearchDescriptorBase<TEntity, TId> AddValue(string name, bool isOnKey, Expression<Func<TEntity, string>> getValue)
             => this.AddValue(name, isOnKey, getValue, i => i);
+        public SearchDescriptorBase<TEntity, TId> SetIncludes(Func<IQueryable<TEntity>, IQueryable<TEntity>> include)
+        {
+            _include = include;
+            return this;
+        }
         public SearchDescriptorBase<TEntity, TId> AddNavigation<TTarget, TTargetId>(string name, SearchDescriptorBase<TTarget, TTargetId> levelDescriptor, Expression<Func<TEntity, TTarget>> getTargetExpression) where TTarget : class
         {
             var navigationProperty = new NavigationSelector<TEntity, TTarget, TTargetId>(name, getTargetExpression, levelDescriptor);
@@ -157,8 +163,7 @@ namespace Paillave.EntityFrameworkCoreExtension.Searcher
         private Dictionary<GroupingValue, List<TEntity>> GroupQueryable<TKey>(IQueryable<TEntity> queryable, Expression<Func<TEntity, TKey>> groupingExpression)
         {
             var entityParameterExpression = Expression.Parameter(typeof(TEntity), "entity");
-
-            var keyedRowType = typeof(KeyedRow<>).MakeGenericType(typeof(TEntity), typeof(TId) ,typeof(TKey));
+            var keyedRowType = typeof(KeyedRow<>).MakeGenericType(typeof(TEntity), typeof(TId), typeof(TKey));
             var constructorInfo = keyedRowType.GetConstructor(new Type[] { });
             var callConstructor = Expression.New(constructorInfo);
             var initializedObject = Expression.MemberInit(callConstructor,
@@ -181,9 +186,23 @@ namespace Paillave.EntityFrameworkCoreExtension.Searcher
         {
             var getId = this.GetIdExpression.Compile();
             var defaultValue = this.DefaultValueProperty.GetValueExpression.Compile() as Func<TEntity, object>;
-            return this.Search(filters, pathToGroupProperty).ToDictionary(i => i.Key, i => i.Value.Select(j => (id: getId(j), label: defaultValue == null ? getId(j).ToString() : defaultValue(j)?.ToString())).ToList());
+            return this.Search(filters, pathToGroupProperty).ToDictionary(i => i.Key, i => i.Value.Select(j =>
+            {
+                var id = getId(j);
+                string label = getId(j).ToString();
+                try { label = defaultValue(j)?.ToString(); }
+                catch { }
+                return (id, label);
+            }).ToList());
         }
-        protected virtual IQueryable<TEntity> GetQueryable() => this.DbContext.Set<TEntity>().AsQueryable();
+        protected virtual IQueryable<TEntity> GetQueryable() => Include(this.DbContext.Set<TEntity>().AsQueryable());
+
+        protected IQueryable<TEntity> Include(IQueryable<TEntity> query)
+        {
+            if (_include == null)
+                return query;
+            return _include(query);
+        }
         private class KeyedRow<TKey>
         {
             public TKey Key { get; set; }
