@@ -70,7 +70,7 @@ namespace Paillave.Etl.Pdf
         private readonly Action<PdfContent> _push;
         private readonly IFileValue _fileValue;
         public PdfVisitor(Action<PdfContent> push, IFileValue fileValue) => (_push, _fileValue) = (push, fileValue);
-        public void ProcessLine(string text, int pageNumber, int lineNumber, int lineNumberInParagraph, int lineNumberInPage, List<string> section)
+        public void ProcessLine(string text, int pageNumber, int lineNumber, int lineNumberInParagraph, int lineNumberInPage, List<string> section, string area)
             => _push(new PdfTextLine(_fileValue, section, pageNumber, lineNumber, text));
         public void ProcessTable(List<List<List<string>>> table, int pageNumber, List<string> section)
             => _push(new PdfTable(_fileValue, section, pageNumber, table));
