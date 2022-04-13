@@ -12,9 +12,22 @@ namespace Paillave.Etl.Pdf
         public IList<TextTemplate> PatternsToIgnore { get; } = new List<TextTemplate>();
         public IList<HeadersSetup> HeadersSetups { get; } = new List<HeadersSetup>();
         public ExtractMethod ExtractMethod { get; set; } = null;
+        public Areas Areas { get; set; } = new Areas();
         public PdfRowsValuesProviderArgs AddHeadersSetup(HeadersSetup headersSetup)
         {
             this.HeadersSetups.Add(headersSetup);
+            return this;
+        }
+        public PdfRowsValuesProviderArgs SetArea(string code, double left, double width, double top, double height, int? pageNumber = null)
+        {
+            this.Areas[code] = new PdfZone
+            {
+                Left = left,
+                Width = width,
+                Top = top,
+                Height = height,
+                PageNumber = pageNumber
+            };
             return this;
         }
         public PdfRowsValuesProviderArgs AddIgnore(Func<TextTemplate, TextTemplate> templateBuilder)
