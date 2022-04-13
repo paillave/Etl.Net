@@ -20,10 +20,22 @@ namespace Paillave.Pdf
     {
         public TextBlock TextBlock { get; set; }
         public bool KeepTogether { get; set; }
+        public string AreaCode { get; set; }
     }
-
+    public class Areas : Dictionary<string, PdfZone>
+    {
+        public string GetAreaCode(UglyToad.PdfPig.Core.PdfRectangle rectangle, Page page)
+                => this.FirstOrDefault(a =>
+                {
+                    if (a.Value.PageNumber != null && page.Number != a.Value.PageNumber.Value)
+                        return false;
+                    var percentageRectangle = new UglyToad.PdfPig.Core.PdfRectangle(rectangle.Left / page.Width, 1 - rectangle.Top / page.Height, rectangle.Right / page.Width, 1 - rectangle.Bottom / page.Height);
+                    return a.Value.IsInZone(percentageRectangle);
+                }).Key;
+    }
     public abstract class ExtractMethod
     {
+        internal Areas Areas { get; set; }
         public ExtractMethod(WordExtractionType wordExtractionType)
         {
             switch (wordExtractionType)
@@ -36,40 +48,58 @@ namespace Paillave.Pdf
                     break;
             }
         }
-        public static ExtractMethod RecursiveXY(WordExtractionType wordExtractionType = WordExtractionType.NearestNeighbour) => new RecursiveXYSegmentMethod(wordExtractionType);
-        public static ExtractMethod Docstrum(WordExtractionType wordExtractionType = WordExtractionType.NearestNeighbour) => new DocstrumSegmentMethod(wordExtractionType);
-        public static ExtractMethod SimpleLines(WordExtractionType wordExtractionType = WordExtractionType.NearestNeighbour) => new SimpleLinesMethod(wordExtractionType);
+        public static ExtractMethod RecursiveXY(WordExtractionType wordExtractionType = WordExtractionType.NearestNeighbour, Areas areas = null) => new RecursiveXYSegmentMethod(wordExtractionType, areas ?? new Areas());
+        public static ExtractMethod Docstrum(WordExtractionType wordExtractionType = WordExtractionType.NearestNeighbour, Areas areas = null) => new DocstrumSegmentMethod(wordExtractionType, areas ?? new Areas());
+        public static ExtractMethod SimpleLines(WordExtractionType wordExtractionType = WordExtractionType.NearestNeighbour, Areas areas = null) => new SimpleLinesMethod(wordExtractionType, areas ?? new Areas());
         protected virtual IEnumerable<TextBlock> GetTextGroups(Page page, IEnumerable<Word> words)
         {
             yield break;
         }
         internal virtual List<ProcessedBlock> ExtractTextBlocks(Page page)
         {
-            var words = page.GetWords(this.WordExtractor);
-            var blocks = GetTextGroups(page, words)
+            return page
+                .GetWords(this.WordExtractor)
                 .Where(i => i.BoundingBox.Rotation < 10 || i.BoundingBox.Rotation > 350)
-                // .OrderByDescending(i => /*i.TextOrientation==Tex*/  i.BoundingBox.Top)
+                .Select(word => new
+                {
+                    Area = this.Areas.GetAreaCode(word.BoundingBox, page),
+                    Word = word
+                })
+                .GroupBy(i => i.Area)
+                .SelectMany(i => GetTextGroups(page, i.Select(i => i.Word).ToList()).Select(j => new ProcessedBlock { KeepTogether = false, AreaCode = i.Key, TextBlock = j }))
+                .OrderByDescending(i=>i.TextBlock.BoundingBox.Top)
                 .ToList();
-            return blocks.Select(i => new ProcessedBlock { KeepTogether = false, TextBlock = i }).ToList();//.SelectMany(i => i.TextLines).ToList();
+
+
+
+            // var words = page
+            //     .GetWords(this.WordExtractor)
+            //     .Where(i => i.BoundingBox.Rotation < 10 || i.BoundingBox.Rotation > 350)
+            //     .ToList();
+            // var blocks = GetTextGroups(page, words)
+            //     .ToList();
+            // return blocks.Select(i => new ProcessedBlock { KeepTogether = false, TextBlock = i }).ToList();//.SelectMany(i => i.TextLines).ToList();
         }
         protected IWordExtractor WordExtractor { get; }
     }
     public class SimpleLinesMethod : ExtractMethod
     {
-        public SimpleLinesMethod(WordExtractionType wordExtractionType) : base(wordExtractionType) { }
+        public SimpleLinesMethod(WordExtractionType wordExtractionType, Areas areas) : base(wordExtractionType) { }
         private class ProcessingLine
         {
             private readonly List<Word> _words = new List<Word>();
             private readonly List<double> _heights = new List<double>();
             private double _lastTop;
             private double _lastBottom;
-            public ProcessingLine(Word word, double height)
+            public string Area { get; }
+            public ProcessingLine(Word word, double height, string area)
             {
+                Area = area;
                 (_lastTop, _lastBottom) = (word.BoundingBox.Top, Math.Min(word.BoundingBox.Bottom, word.BoundingBox.Top - height));
                 _heights.Add(height);
                 _words.Add(word);
             }
-            public bool IsSameLine(Word word, double height) => _lastBottom < word.BoundingBox.Top && _lastTop > Math.Min(word.BoundingBox.Bottom, word.BoundingBox.Top - height);
+            public bool IsSameLine(Word word, double height, string area) => _lastBottom < word.BoundingBox.Top && _lastTop > Math.Min(word.BoundingBox.Bottom, word.BoundingBox.Top - height) && Area == area;
             public void AddWord(Word word, double height)
             {
                 _lastTop = word.BoundingBox.Top;
@@ -110,13 +140,16 @@ namespace Paillave.Pdf
         private class ProcessingLines
         {
             private readonly List<ProcessingLine> _processingLines = new List<ProcessingLine>();
-            public void AddWord(Word word, double height)
+            private readonly Areas _areas;
+            public ProcessingLines(Areas areas) => _areas = areas;
+            public void AddWord(Word word, double height, Page page)
             {
                 if (string.IsNullOrWhiteSpace(word.Text)) return;
-                var processingLine = _processingLines.FirstOrDefault(i => i.IsSameLine(word, height));
+                var area = _areas.GetAreaCode(word.BoundingBox, page);
+                var processingLine = _processingLines.FirstOrDefault(i => i.IsSameLine(word, height, area));
                 if (processingLine == null)
                 {
-                    processingLine = new ProcessingLine(word, height);
+                    processingLine = new ProcessingLine(word, height, area);
                     _processingLines.Add(processingLine);
                 }
                 else
@@ -124,35 +157,37 @@ namespace Paillave.Pdf
                     processingLine.AddWord(word, height);
                 }
             }
-            public List<TextBlock> GetTextLines() => _processingLines.Select(i =>
+            public List<(TextBlock, string)> GetTextLines() => _processingLines.Select(i =>
             {
                 var lines = i.GetTextLines().ToList();
-                return new TextBlock(lines, "\t");
+                return (new TextBlock(lines, "\t"), i.Area);
             }).ToList();
         }
         internal override List<ProcessedBlock> ExtractTextBlocks(Page page)
         {
-            var processingLines = new ProcessingLines();
-            var words = page.GetWords(this.WordExtractor).Where(i => !string.IsNullOrWhiteSpace(i.Text)).OrderBy(i => i.BoundingBox.Left).ThenByDescending(i => i.BoundingBox.Top).ToList();
+            var processingLines = new ProcessingLines(this.Areas);
+            var words = page.GetWords(this.WordExtractor).Where(i => !string.IsNullOrWhiteSpace(i.Text))
+                .Where(i => i.BoundingBox.Rotation < 10 || i.BoundingBox.Rotation > 350)
+                .OrderBy(i => i.BoundingBox.Left).ThenByDescending(i => i.BoundingBox.Top).ToList();
             foreach (var word in words)
             {
                 var height = word.BoundingBox.Height;
                 height = Math.Max(height, word.Letters[0].PointSize);
-                processingLines.AddWord(word, height);
+                processingLines.AddWord(word, height, page);
             }
-            return processingLines.GetTextLines().OrderByDescending(i => i.BoundingBox.Top).Select(i => new ProcessedBlock { KeepTogether = true, TextBlock = i }).ToList();
+            return processingLines.GetTextLines().OrderByDescending(i => i.Item1.BoundingBox.Top).Select(i => new ProcessedBlock { KeepTogether = true, TextBlock = i.Item1, AreaCode = i.Item2 }).ToList();
         }
     }
     public class RecursiveXYSegmentMethod : ExtractMethod
     {
-        public RecursiveXYSegmentMethod(WordExtractionType wordExtractionType) : base(wordExtractionType) { }
+        public RecursiveXYSegmentMethod(WordExtractionType wordExtractionType, Areas areas) : base(wordExtractionType) { }
 
         protected override IEnumerable<TextBlock> GetTextGroups(Page page, IEnumerable<Word> words)
             => RecursiveXYCut.Instance.GetBlocks(words, new RecursiveXYCut.RecursiveXYCutOptions { MinimumWidth = page.Width / 3 });
     }
     public class DocstrumSegmentMethod : ExtractMethod
     {
-        public DocstrumSegmentMethod(WordExtractionType wordExtractionType) : base(wordExtractionType) { }
+        public DocstrumSegmentMethod(WordExtractionType wordExtractionType, Areas areas) : base(wordExtractionType) { }
 
         protected override IEnumerable<TextBlock> GetTextGroups(Page page, IEnumerable<Word> words)
             => DocstrumBoundingBoxes.Instance.GetBlocks(words,
@@ -163,19 +198,35 @@ namespace Paillave.Pdf
                     BetweenLineMultiplier = 1.5
                 });
     }
+    public class PdfZone
+    {
+        public double Left { get; set; }
+        public double Width { get; set; }
+        public double Top { get; set; }
+        public double Height { get; set; }
+        public int? PageNumber { get; set; }
+        public bool IsInZone(UglyToad.PdfPig.Core.PdfRectangle rectangle) => rectangle.Bottom > this.Top
+            && rectangle.Top < (this.Top + this.Height)
+            && rectangle.Left < (this.Left + this.Width)
+            && rectangle.Right > this.Left;
+    }
     public class PdfReader : IDisposable
     {
         private readonly ExtractMethod _extractMethod;
         private readonly PdfDocument _pdfDocument;
         private IList<TextTemplate> _patternsToIgnore;
         private readonly StructureReader _structureReader;
+        private readonly Areas _areas;
 
-        public PdfReader(Stream pdfStream, IList<TextTemplate> patternsToIgnore = null, IList<HeadersSetup> titleSetups = null, ExtractMethod extractMethod = null)
+        public PdfReader(Stream pdfStream, IList<TextTemplate> patternsToIgnore = null, IList<HeadersSetup> titleSetups = null, ExtractMethod extractMethod = null, Areas areas = null)
         {
+
             _extractMethod = extractMethod ?? ExtractMethod.RecursiveXY();
+            _extractMethod.Areas = areas ?? new Areas();
             _patternsToIgnore = patternsToIgnore;
             _pdfDocument = PdfDocument.Open(pdfStream);
             _structureReader = new StructureReader(_pdfDocument, titleSetups);
+            _areas = areas ?? new Areas();
         }
         public void Dispose()
         {
@@ -230,7 +281,7 @@ namespace Paillave.Pdf
                             }
                             else
                             {
-                                pdfProcessor.ProcessLine(string.Join('\t', block.TextBlock.TextLines.Select(i => i.Text)), page.Number, ++lineNumber, ++lineNumberInParagraph, ++lineNumberInPage, _structureReader.Current);
+                                pdfProcessor.ProcessLine(string.Join('\t', block.TextBlock.TextLines.Select(i => i.Text)), page.Number, ++lineNumber, ++lineNumberInParagraph, ++lineNumberInPage, _structureReader.Current, block.AreaCode);
                             }
                         }
                     }
@@ -249,54 +300,10 @@ namespace Paillave.Pdf
                             }
                             else
                             {
-                                pdfProcessor.ProcessLine(textLine.Text, page.Number, ++lineNumber, ++lineNumberInParagraph, ++lineNumberInPage, _structureReader.Current);
+                                pdfProcessor.ProcessLine(textLine.Text, page.Number, ++lineNumber, ++lineNumberInParagraph, ++lineNumberInPage, _structureReader.Current, block.AreaCode);
                             }
                         }
                 }
-
-
-                // foreach (var textLine in _extractMethod.ExtractTextBlocks(page).SelectMany(i => i.TextLines).Where(i => !IgnoreLine(i, page, gridExtractionResult.OutOfScopeHorizontalLines)))
-                // {
-                //     var grid = this.TryAddInGrid(textLine, gridExtractionResult.Grids);
-                //     if (grid != null)
-                //     {
-                //         gridSections[grid] = _structureReader.Current;
-                //     }
-                //     else if (_structureReader.ProcessLine(textLine, page, gridExtractionResult.OutOfScopeHorizontalLines))
-                //     {
-                //         lineNumberInParagraph = 0;
-                //         pdfProcessor.ProcessHeader(_structureReader.Current, page.Number);
-                //     }
-                //     else
-                //     {
-                //         pdfProcessor.ProcessLine(textLine.Text, page.Number, ++lineNumber, ++lineNumberInParagraph, ++lineNumberInPage, _structureReader.Current);
-                //     }
-                // }
-                // var blocks = RecursiveXYCut.Instance
-                //     .GetBlocks(words, new RecursiveXYCut.RecursiveXYCutOptions { MinimumWidth = page.Width / 3 })
-                //     .OrderByDescending(i => /*i.TextOrientation==Tex*/  i.BoundingBox.Top)
-                //     .ToList();
-                // Dictionary<Grid, List<string>> gridSections = new Dictionary<Grid, List<string>>();
-                // foreach (var block in blocks)
-                // {
-                //     foreach (var textLine in block.TextLines.Where(i => !IgnoreLine(i, page, gridExtractionResult.OutOfScopeHorizontalLines)))
-                //     {
-                //         var grid = this.TryAddInGrid(textLine, gridExtractionResult.Grids);
-                //         if (grid != null)
-                //         {
-                //             gridSections[grid] = _structureReader.Current;
-                //         }
-                //         else if (_structureReader.ProcessLine(textLine, page, gridExtractionResult.OutOfScopeHorizontalLines))
-                //         {
-                //             lineNumberInParagraph = 0;
-                //             pdfProcessor.ProcessHeader(_structureReader.Current, page.Number);
-                //         }
-                //         else
-                //         {
-                //             pdfProcessor.ProcessLine(textLine.Text, page.Number, ++lineNumber, ++lineNumberInParagraph, ++lineNumberInPage, _structureReader.Current);
-                //         }
-                //     }
-                // }
                 foreach (var grid in gridExtractionResult.Grids.OrderByDescending(i => i.Top))
                 {
                     var rows = grid.GetContent();

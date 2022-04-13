@@ -10,9 +10,9 @@ using Paillave.Pdf;
 
 namespace Paillave.Etl.Samples
 {
-    class Program
+    class Program4
     {
-        static async Task Main(string[] args)
+        static async Task Main4(string[] args)
         {
             using (var dbCtx = new TestDbContext())
             {
