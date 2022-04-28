@@ -48,6 +48,7 @@ namespace Paillave.Etl.ExcelFile.Core
         }
         public ExcelFileDefinition<T> WithDataset(string stringAddress)
         {
+            ArgumentNullException.ThrowIfNull(stringAddress);
             _dataRange = new ExcelAddressBase(stringAddress);
             return this;
         }
@@ -84,6 +85,10 @@ namespace Paillave.Etl.ExcelFile.Core
         public ExcelFileReader GetExcelReader(ExcelWorksheet excelWorksheet = null)
         {
             if ((_fieldDefinitions?.Count ?? 0) == 0) SetDefaultMapping();
+            if (_dataRange == null)
+            {
+                throw new NullReferenceException($"Dataset is null and has not been specified. Please call {nameof(ExcelFileDefinition)}.{nameof(WithDataset)}.");
+            }
             IEnumerable<string> columnNames;
             if (excelWorksheet == null) columnNames = GetDefaultColumnNames().ToList();
             else columnNames = GetColumnNames(excelWorksheet);

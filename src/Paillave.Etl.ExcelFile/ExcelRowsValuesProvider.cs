@@ -49,6 +49,10 @@ namespace Paillave.Etl.ExcelFile
         private bool ReadRow(ExcelWorksheet excelWorksheet, ExcelFileReader reader, int lineIndex, IDictionary<string, object> row)
         {
             //TODO: better exception handling here
+            if (reader.DataRange==null)
+            {
+                throw new ArgumentNullException(nameof(reader.DataRange));
+            }
             bool isEmptyRow = true;
             switch (reader.DatasetOrientation)
             {
