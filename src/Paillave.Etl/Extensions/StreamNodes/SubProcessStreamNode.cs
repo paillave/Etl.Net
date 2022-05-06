@@ -25,7 +25,7 @@ namespace Paillave.Etl.Core
         {
             if (this.ExecutionContext is GetDefinitionExecutionContext)
             {
-                var inputStream = new SingleStream<TIn>(new SubNodeWrapper(this), PushObservable.FromSingle(default(TIn), args.Stream.Observable.CancellationToken));
+                var inputStream = new SingleStream<TIn>(new ChildNodeWrapper(this), PushObservable.FromSingle(default(TIn), args.Stream.Observable.CancellationToken));
                 var outputStream = args.SubProcess(inputStream);
                 // this.ExecutionContext.AddNode(this, outputStream.Observable);
             }
@@ -33,19 +33,21 @@ namespace Paillave.Etl.Core
             var outputObservable = args.Stream.Observable
                 .FlatMap((i, ct) =>
                 {
-                    // TODO: Solve bug here (this operator makes the process freezing))
+                    // TODO: Solve bug here (this operator makes the process freezing)
 
                     EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-                    var inputStream = new SingleStream<TIn>(new SubNodeWrapper(this), PushObservable.FromSingle(i, waitHandle, ct));
+                    var singleObservable = PushObservable.FromSingle(i, waitHandle, ct);
+                    var inputStream = new SingleStream<TIn>(new ChildNodeWrapper(this), singleObservable);
                     var outputStream = args.SubProcess(inputStream);
                     // this.ExecutionContext.AddNode(this, outputStream.Observable);
                     IDisposable awaiter = null;
                     outputStream.Observable.Subscribe(j => { }, () => awaiter?.Dispose());
-                    return new DeferredWrapperPushObservable<TOut>(outputStream.Observable, () =>
+                    var obs = new DeferredWrapperPushObservable<TOut>(outputStream.Observable, () =>
                     {
                         awaiter = synchronizer.WaitBeforeProcess();
                         waitHandle.Set();
                     }, null, ct);
+                    return obs;
                 });
             return base.CreateUnsortedStream(outputObservable);
         }

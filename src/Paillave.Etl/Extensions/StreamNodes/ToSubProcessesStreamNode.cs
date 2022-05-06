@@ -31,7 +31,7 @@ namespace Paillave.Etl.Core
 
             if (this.ExecutionContext is GetDefinitionExecutionContext)
             {
-                var inputStream = new SingleStream<TIn>(new SubNodeWrapper( this), PushObservable.FromSingle(default(TIn), args.Stream.Observable.CancellationToken));
+                var inputStream = new SingleStream<TIn>(new ChildNodeWrapper( this), PushObservable.FromSingle(default(TIn), args.Stream.Observable.CancellationToken));
                 foreach (var subProcess in args.SubProcesses)
                 {
                     var outputStream = subProcess(inputStream);
@@ -48,7 +48,7 @@ namespace Paillave.Etl.Core
                 .FlatMap((i, ct) =>
                 {
                     EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-                    var inputStream = new SingleStream<TIn>(new SubNodeWrapper( this), PushObservable.FromSingle(i.config, waitHandle, ct));
+                    var inputStream = new SingleStream<TIn>(new ChildNodeWrapper( this), PushObservable.FromSingle(i.config, waitHandle, ct));
                     var outputStream = i.subProc(inputStream);
                     IDisposable awaiter = null;
                     outputStream.Observable.Subscribe(j => { }, () => awaiter?.Dispose());

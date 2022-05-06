@@ -26,25 +26,9 @@ namespace Paillave.Etl.Reactive.Core
                 using (_synchronizer.WaitBeforeProcess())
                     _start();
         }
-
-        public IDisposable Subscribe(Action<T> onPush)
-        {
-            return _observable.Subscribe(onPush);
-        }
-
-        public IDisposable Subscribe(Action<T> onPush, Action onComplete)
-        {
-            return _observable.Subscribe(onPush, onComplete);
-        }
-
-        public IDisposable Subscribe(Action<T> onPush, Action onComplete, Action<Exception> onException)
-        {
-            return _observable.Subscribe(onPush, onComplete, onException);
-        }
-
-        public IDisposable Subscribe(ISubscription<T> subscription)
-        {
-            return _observable.Subscribe(subscription);
-        }
+        public IDisposable Subscribe(Action<T> onPush) => _observable.Subscribe(onPush);
+        public IDisposable Subscribe(Action<T> onPush, Action onComplete) => _observable.Subscribe(onPush, onComplete);
+        public IDisposable Subscribe(Action<T> onPush, Action onComplete, Action<Exception> onException) => _observable.Subscribe(onPush, onComplete, onException);
+        public IDisposable Subscribe(ISubscription<T> subscription) => _observable.Subscribe(subscription);
     }
 }

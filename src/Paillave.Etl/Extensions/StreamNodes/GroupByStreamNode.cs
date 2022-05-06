@@ -23,11 +23,11 @@ namespace Paillave.Etl.Core
         {
             if (this.ExecutionContext is GetDefinitionExecutionContext)
             {
-                var inputStream = new SingleStream<TIn>(new SubNodeWrapper(this), PushObservable.FromSingle(default(TIn), null, args.Stream.Observable.CancellationToken));
+                var inputStream = new SingleStream<TIn>(new ChildNodeWrapper(this), PushObservable.FromSingle(default(TIn), null, args.Stream.Observable.CancellationToken));
                 var outputStream = args.SubProcess(inputStream, default);
                 this.ExecutionContext.AddNode(this, outputStream.Observable);
             }
-            var outputObservable = args.Stream.Observable.Group(args.GetKey, (iS, firstElement) => args.SubProcess(new Stream<TIn>(new SubNodeWrapper(this), iS), firstElement).Observable);
+            var outputObservable = args.Stream.Observable.Group(args.GetKey, (iS, firstElement) => args.SubProcess(new Stream<TIn>(new ChildNodeWrapper(this), iS), firstElement).Observable);
             return base.CreateUnsortedStream(outputObservable);
         }
     }
@@ -51,11 +51,11 @@ namespace Paillave.Etl.Core
         {
             if (this.ExecutionContext is GetDefinitionExecutionContext)
             {
-                var inputStream = new SingleStream<TIn>(new SubNodeWrapper(this), PushObservable.FromSingle(default(TIn), null, args.Stream.Observable.CancellationToken));
+                var inputStream = new SingleStream<TIn>(new ChildNodeWrapper(this), PushObservable.FromSingle(default(TIn), null, args.Stream.Observable.CancellationToken));
                 var outputStream = args.SubProcess(inputStream, default);
                 this.ExecutionContext.AddNode(this, outputStream.Observable);
             }
-            var outputObservable = args.Stream.Observable.SortedGroup(args.Stream.SortDefinition.GetKey, (iS, firstElement) => args.SubProcess(new Stream<TIn>(new SubNodeWrapper(this), iS), firstElement).Observable);
+            var outputObservable = args.Stream.Observable.SortedGroup(args.Stream.SortDefinition.GetKey, (iS, firstElement) => args.SubProcess(new Stream<TIn>(new ChildNodeWrapper(this), iS), firstElement).Observable);
             return base.CreateUnsortedStream(outputObservable);
         }
     }
@@ -89,11 +89,11 @@ namespace Paillave.Etl.Core
         {
             if (this.ExecutionContext is GetDefinitionExecutionContext)
             {
-                var inputStream = new SingleStream<Correlated<TIn>>(new SubNodeWrapper(this), PushObservable.FromSingle(default(Correlated<TIn>), null, args.Stream.Observable.CancellationToken));
+                var inputStream = new SingleStream<Correlated<TIn>>(new ChildNodeWrapper(this), PushObservable.FromSingle(default(Correlated<TIn>), null, args.Stream.Observable.CancellationToken));
                 var outputStream = args.SubProcess(inputStream, default);
                 this.ExecutionContext.AddNode(this, outputStream.Observable);
             }
-            var outputObservable = args.Stream.Observable.Group(i => args.GetKey(i.Row), (iS, firstElement) => args.SubProcess(new Stream<Correlated<TIn>>(new SubNodeWrapper(this), iS), firstElement.Row).Observable);
+            var outputObservable = args.Stream.Observable.Group(i => args.GetKey(i.Row), (iS, firstElement) => args.SubProcess(new Stream<Correlated<TIn>>(new ChildNodeWrapper(this), iS), firstElement.Row).Observable);
             return base.CreateUnsortedStream(outputObservable);
         }
     }
@@ -120,11 +120,11 @@ namespace Paillave.Etl.Core
         {
             if (this.ExecutionContext is GetDefinitionExecutionContext)
             {
-                var inputStream = new SingleStream<Correlated<TIn>>(new SubNodeWrapper(this), PushObservable.FromSingle(default(Correlated<TIn>), null, args.Stream.Observable.CancellationToken));
+                var inputStream = new SingleStream<Correlated<TIn>>(new ChildNodeWrapper(this), PushObservable.FromSingle(default(Correlated<TIn>), null, args.Stream.Observable.CancellationToken));
                 var outputStream = args.SubProcess(inputStream, default);
                 this.ExecutionContext.AddNode(this, outputStream.Observable);
             }
-            var outputObservable = args.Stream.Observable.SortedGroup(args.Stream.SortDefinition.GetKey, (iS, firstElement) => args.SubProcess(new Stream<Correlated<TIn>>(new SubNodeWrapper(this), iS), firstElement.Row).Observable);
+            var outputObservable = args.Stream.Observable.SortedGroup(args.Stream.SortDefinition.GetKey, (iS, firstElement) => args.SubProcess(new Stream<Correlated<TIn>>(new ChildNodeWrapper(this), iS), firstElement.Row).Observable);
             return base.CreateUnsortedStream(outputObservable);
         }
     }

@@ -11,7 +11,6 @@ namespace Paillave.Etl.Core
     {
         public Guid IdNode { get; } = Guid.NewGuid();
         public IExecutionContext ExecutionContext { get; }
-        public ITraceEventFactory Tracer { get; private set; }
         public abstract ProcessImpact PerformanceImpact { get; }
         public abstract ProcessImpact MemoryFootPrint { get; }
         public string NodeName { get; }
@@ -25,9 +24,7 @@ namespace Paillave.Etl.Core
         }
         public TOutStream Output { get; }
         protected TArgs Args { get; }
-
-        public bool IsRootNode => false;
-
+        public INodeDescription Parent => null;
         public StreamNodeBase(string name, TArgs args)
         {
             // System.Diagnostics.StackFrame CallStack = new System.Diagnostics.StackFrame(3, true);
@@ -40,10 +37,12 @@ namespace Paillave.Etl.Core
             {
                 throw new ArgumentNullException(nameof(args));
             }
+            var nodeContext = this.GetNodeContext(args);
+            if (!string.IsNullOrWhiteSpace(nodeContext?.Parent?.NodeName))
+                name = $"{nodeContext.Parent?.NodeName}>{name}";
             this.Args = args;
             this.NodeName = name;
             this.ExecutionContext = this.GetExecutionContext(args);
-            this.Tracer = new TraceEventFactory(this.ExecutionContext, this);
             this.Output = CreateOutputStream(args);
             this.Output.Observable.Subscribe(i => { }, PostProcess);
             this.ExecutionContext.AddNode(this, this.Output.Observable);
@@ -80,6 +79,15 @@ namespace Paillave.Etl.Core
                 .Select(i => i.SourceNode.ExecutionContext)
                 .OrderBy(i => !i.IsTracingContext)
                 .FirstOrDefault();
+        }
+        private INodeContext GetNodeContext(TArgs args)
+        {
+            return args.GetType()
+                .GetProperties()
+                .Select(propertyInfo => propertyInfo.GetValue(args))
+                .OfType<IStream>()
+                .Select(i => i.SourceNode)
+                .FirstOrDefault(i => !i.ExecutionContext.IsTracingContext);
         }
 
         protected abstract TOutStream CreateOutputStream(TArgs args);
@@ -197,5 +205,8 @@ namespace Paillave.Etl.Core
             else
                 return creator;
         }
+
+        public TraceEvent CreateTraceEvent(ITraceContent content, int sequenceId)
+            => new TraceEvent(this.ExecutionContext.JobName, this.ExecutionContext.ExecutionId, this.TypeName, this.NodeName, content, sequenceId);
     }
 }
