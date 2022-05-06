@@ -15,20 +15,15 @@ namespace Paillave.Etl.Core
                 this.PerformanceImpact = nodeContext.PerformanceImpact;
                 this.MemoryFootPrint = nodeContext.MemoryFootPrint;
             }
-
             public string NodeName { get; }
-
             public string TypeName { get; }
-
             public ProcessImpact PerformanceImpact { get; }
-
             public ProcessImpact MemoryFootPrint { get; }
-
-            public bool IsRootNode => false;
+            public INodeDescription Parent => null;
         }
         public JobDefinitionStructure(List<StreamToNodeLink> streamToNodeLinks, List<INodeDescription> nodes, string sourceNodeName)
         {
-            this.Nodes = nodes.Select(i => (INodeDescription)new NodeDescription(i)).Where(i => !i.IsRootNode).ToList();
+            this.Nodes = nodes.Select(i => (INodeDescription)new NodeDescription(i))/*.Where(i => i.Parent != null)*/.ToList();
             this.StreamToNodeLinks = streamToNodeLinks
                 .Join(this.Nodes, i => i.SourceNodeName, i => i.NodeName, (i, j) => i)
                 .Join(this.Nodes, i => i.TargetNodeName, i => i.NodeName, (i, j) => i)
