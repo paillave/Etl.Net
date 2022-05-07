@@ -32,7 +32,7 @@ namespace Paillave.Etl.Core
                 return (int)(_stopwatch.ElapsedMilliseconds / _count);
             }
         }
-        public Stream(INodeContext sourceNode, IPushObservable<T> observable)
+        public Stream(INodeContext sourceNode, IPushObservable<T> observable, bool trace = true)
         {
             this.SourceNode = sourceNode;
             var rowTracer = new RowTracer();
@@ -40,7 +40,7 @@ namespace Paillave.Etl.Core
 
             this.Observable = observable.Filter(i => !executionContext.Terminating);
 
-            if (!this.SourceNode.ExecutionContext.IsTracingContext)
+            if (!this.SourceNode.ExecutionContext.IsTracingContext && trace)
             {
                 if (executionContext.UseDetailedTraces)
                     PushObservable.Merge<ITraceContent>(

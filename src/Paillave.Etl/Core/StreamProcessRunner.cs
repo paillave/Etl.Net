@@ -115,7 +115,7 @@ namespace Paillave.Etl.Core
             var rootNode = new CurrentExecutionNodeContext(this.JobName, jobExecutionContext);
             var traceStream = new Stream<TraceEvent>(new NotTraceExecutionNodeContext(traceExecutionContext), traceSubject);
             IPushSubject<TConfig> traceStartupSubject = new PushSubject<TConfig>(CancellationToken.None);
-            var startupStream = new SingleStream<TConfig>(rootNode, startupSubject.First());
+            var startupStream = new SingleStream<TConfig>(rootNode, startupSubject.First(), false);
             var traceStartupStream = new SingleStream<TConfig>(new NotTraceExecutionNodeContext(traceExecutionContext), traceStartupSubject.First());
             options?.TraceProcessDefinition?.Invoke(traceStream, traceStartupStream);
             if (Debugger.IsAttached)

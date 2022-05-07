@@ -7,6 +7,7 @@ using Autofac;
 using Autofac.Core;
 using Paillave.Etl.Autofac;
 using Paillave.Etl.Core;
+using Paillave.Etl.ExecutionToolkit;
 using Paillave.Pdf;
 
 namespace Paillave.Etl.Samples
@@ -38,15 +39,20 @@ namespace Paillave.Etl.Samples
             // etlResolver.TryResolve<IPdfVisitor>(out var tmp);
             // etlResolver.TryResolve<IPdfVisitor>(out tmp);
 
+
             var processRunner = StreamProcessRunner.Create<string>(Import);
-            var tmp = processRunner.GetDefinitionStructure();
+            ITraceReporter traceReporter = new AdvancedConsoleExecutionDisplay();
+            traceReporter.Initialize(processRunner.GetDefinitionStructure());
+
+            // var tmp = processRunner.GetDefinitionStructure();
             var res = await processRunner.ExecuteAsync("a", new ExecutionOptions<string>
             {
                 UseDetailedTraces = true,
-                TraceProcessDefinition = (teStream, cStream) =>
-                {
-                    // teStream.Do("trace", i => Console.WriteLine(i));
-                }
+                TraceProcessDefinition = traceReporter.TraceProcessDefinition
+                // TraceProcessDefinition = (teStream, cStream) =>
+                // {
+                //     // teStream.Do("trace", i => Console.WriteLine(i));
+                // }
             });
 
             // using (var stream = File.OpenRead("TestPbLines.pdf"))
@@ -67,22 +73,22 @@ namespace Paillave.Etl.Samples
         }
         public static void Import(ISingleStream<string> contextStream)
         {
-            // contextStream
-            //     .Select("get string length", str => str.Length)
-            //     .Do("show on screen", i => Console.WriteLine($"length: {i}"));
+            contextStream
+                .Select("get string length", str => str.Length)
+                .Do("show on screen", i => Console.WriteLine($"length: {i}"));
             // contextStream
             //     .SubProcess("sub process", stringStream => stringStream
             //         .Select("get string length", str => str.Length))
             //     .Do("show on screen", i => Console.WriteLine($"length: {i}"));
             // contextStream.SubProcess("sub process", stringStream => stringStream);
-            var stream1 = contextStream
-                .CrossApply("create values from enumeration", ctx => Enumerable.Range(1, 100)
-                    .Select(i => new { Id = i, Label = $"Label{i}" }));
-            var stream2 = contextStream
-                .CrossApply("create values from enumeration2", ctx => Enumerable.Range(1, 8)
-                    .Select(i => new { Id = i, Label = $"OtherLabel{i}" }));
-            var res = stream1.Substract("merge with stream 2", stream2, i => i.Id, i => i.Id)
-               .Do("print console", i => Console.WriteLine(i.Label));
+            // var stream1 = contextStream
+            //     .CrossApply("create values from enumeration", ctx => Enumerable.Range(1, 100)
+            //         .Select(i => new { Id = i, Label = $"Label{i}" }));
+            // var stream2 = contextStream
+            //     .CrossApply("create values from enumeration2", ctx => Enumerable.Range(1, 8)
+            //         .Select(i => new { Id = i, Label = $"OtherLabel{i}" }));
+            // var res = stream1.Substract("merge with stream 2", stream2, i => i.Id, i => i.Id)
+            //    .Do("print console", i => Console.WriteLine(i.Label));
         }
     }
 }
