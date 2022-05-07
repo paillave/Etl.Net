@@ -12,8 +12,8 @@ namespace Paillave.Etl.Core
 {
     public class KeyedStream<T, TKey> : Stream<T>, IKeyedStream<T, TKey>
     {
-        public KeyedStream(INodeContext sourceNode, IPushObservable<T> observable, SortDefinition<T, TKey> sortDefinition)
-        : base(sourceNode, observable)
+        public KeyedStream(INodeContext sourceNode, IPushObservable<T> observable, SortDefinition<T, TKey> sortDefinition, bool trace = true)
+        : base(sourceNode, observable, trace)
         {
             this.SortDefinition = sortDefinition ?? throw new ArgumentOutOfRangeException(nameof(sortDefinition), "key criteria list cannot be empty");
         }

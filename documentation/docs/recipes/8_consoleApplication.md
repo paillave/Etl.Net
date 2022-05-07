@@ -22,7 +22,7 @@ var executionOptions = new ExecutionOptions<string[]>
 {
     TraceProcessDefinition = traceReporter.TraceProcessDefinition,
 };
-traceReporter.Initialize(structure);
+traceReporter.Initialize(processRunner.GetDefinitionStructure());
 var res = await processRunner.ExecuteAsync(args, executionOptions);
 ```
 
@@ -36,6 +36,6 @@ var executionOptions = new ExecutionOptions<string[]>
     TraceProcessDefinition = traceReporter.TraceProcessDefinition,
     UseDetailedTraces = true
 };
-traceReporter.Initialize(structure);
+traceReporter.Initialize(processRunner.GetDefinitionStructure());
 var res = await processRunner.ExecuteAsync(args, executionOptions);
 ```
