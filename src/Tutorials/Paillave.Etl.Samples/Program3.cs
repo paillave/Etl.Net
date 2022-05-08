@@ -41,14 +41,14 @@ namespace Paillave.Etl.Samples
 
 
             var processRunner = StreamProcessRunner.Create<string>(Import);
-            ITraceReporter traceReporter = new AdvancedConsoleExecutionDisplay();
-            traceReporter.Initialize(processRunner.GetDefinitionStructure());
+            // ITraceReporter traceReporter = new AdvancedConsoleExecutionDisplay();
+            // traceReporter.Initialize(processRunner.GetDefinitionStructure());
 
             // var tmp = processRunner.GetDefinitionStructure();
             var res = await processRunner.ExecuteAsync("a", new ExecutionOptions<string>
             {
                 UseDetailedTraces = true,
-                TraceProcessDefinition = traceReporter.TraceProcessDefinition
+                // TraceProcessDefinition = traceReporter.TraceProcessDefinition
                 // TraceProcessDefinition = (teStream, cStream) =>
                 // {
                 //     // teStream.Do("trace", i => Console.WriteLine(i));
@@ -74,8 +74,8 @@ namespace Paillave.Etl.Samples
         public static void Import(ISingleStream<string> contextStream)
         {
             contextStream
-                .Select("get string length", str => str.Length)
-                .Do("show on screen", i => Console.WriteLine($"length: {i}"));
+                .CrossApply("ca", i => Enumerable.Range(0, 5).Select(j => $"{i}-{j}"))
+                .SubProcess("sub", i => i.Do("show on screen", i => Console.WriteLine($"length: {i}")));
             // contextStream
             //     .SubProcess("sub process", stringStream => stringStream
             //         .Select("get string length", str => str.Length))
