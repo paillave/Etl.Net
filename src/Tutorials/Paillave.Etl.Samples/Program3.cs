@@ -41,7 +41,7 @@ namespace Paillave.Etl.Samples
 
 
             var processRunner = StreamProcessRunner.Create<string>(Import);
-            ITraceReporter traceReporter = new AdvancedConsoleExecutionDisplay();
+            // ITraceReporter traceReporter = new AdvancedConsoleExecutionDisplay();
             // traceReporter.Initialize(processRunner.GetDefinitionStructure());
 
             // var tmp = processRunner.GetDefinitionStructure();
