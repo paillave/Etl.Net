@@ -67,7 +67,7 @@ namespace Paillave.Pdf
                 })
                 .GroupBy(i => i.Area)
                 .SelectMany(i => GetTextGroups(page, i.Select(i => i.Word).ToList()).Select(j => new ProcessedBlock { KeepTogether = false, AreaCode = i.Key, TextBlock = j }))
-                .OrderByDescending(i=>i.TextBlock.BoundingBox.Top)
+                .OrderByDescending(i => i.TextBlock.BoundingBox.Top)
                 .ToList();
 
 
@@ -112,7 +112,7 @@ namespace Paillave.Pdf
                 var maxSpace = _heights.Average();
                 Word previousWord = null;
                 List<Word> currentBlock = new List<Word>();
-                foreach (var word in _words.OrderBy(w => w.BoundingBox.Left).ThenByDescending(w => w.BoundingBox.Top).ToList())
+                foreach (var word in _words.OrderBy(w => w.BoundingBox.Left).ThenByDescending(w => w.BoundingBox.Top).Select(i => CloneWord(i)).ToList())
                 {
                     if (previousWord != null)
                     {
@@ -136,6 +136,27 @@ namespace Paillave.Pdf
                     yield return new TextLine(currentBlock);
                 }
             }
+            private Word CloneWord(Word word)
+            {
+                var ret = new Word(word.Letters.Select(l => CloneLetter(l)).ToList());
+                return ret;
+            }
+            private Letter CloneLetter(Letter letter)
+                => new Letter(
+                    letter.Value,
+                    new UglyToad.PdfPig.Core.PdfRectangle(
+                        letter.GlyphRectangle.Left,
+                        letter.GlyphRectangle.Bottom,
+                        letter.GlyphRectangle.Right,
+                        letter.GlyphRectangle.Height > 1 ? letter.GlyphRectangle.Top : letter.GlyphRectangle.Bottom + letter.PointSize),
+                    letter.StartBaseLine,
+                    letter.EndBaseLine,
+                    letter.Width,
+                    letter.FontSize,
+                    letter.Font,
+                    letter.Color,
+                    letter.PointSize,
+                    letter.TextSequence);
         }
         private class ProcessingLines
         {
