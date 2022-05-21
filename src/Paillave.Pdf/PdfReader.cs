@@ -99,7 +99,14 @@ namespace Paillave.Pdf
                 _heights.Add(height);
                 _words.Add(word);
             }
-            public bool IsSameLine(Word word, double height, string area) => _lastBottom < word.BoundingBox.Top && _lastTop > Math.Min(word.BoundingBox.Bottom, word.BoundingBox.Top - height) && Area == area;
+            public bool IsSameLine(Word word, double height, string area)
+            {
+                if (area != Area) return false;
+                var bottom = Math.Min(word.BoundingBox.Bottom, word.BoundingBox.Top - height);
+                var middle = (word.BoundingBox.Top - bottom) / 2;
+                var lastMiddle = (_lastTop - _lastBottom) / 2;
+                return (middle < _lastTop && middle > _lastBottom) || (lastMiddle < word.BoundingBox.Top && lastMiddle > bottom);
+            }
             public void AddWord(Word word, double height)
             {
                 _lastTop = word.BoundingBox.Top;
@@ -138,8 +145,9 @@ namespace Paillave.Pdf
             }
             private Word CloneWord(Word word)
             {
-                var ret = new Word(word.Letters.Select(l => CloneLetter(l)).ToList());
-                return ret;
+                return word;
+                // var ret = new Word(word.Letters.Select(l => CloneLetter(l)).ToList());
+                // return ret;
             }
             private Letter CloneLetter(Letter letter)
                 => new Letter(
