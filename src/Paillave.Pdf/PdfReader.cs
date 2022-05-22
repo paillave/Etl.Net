@@ -103,8 +103,8 @@ namespace Paillave.Pdf
             {
                 if (area != Area) return false;
                 var bottom = Math.Min(word.BoundingBox.Bottom, word.BoundingBox.Top - height);
-                var middle = (word.BoundingBox.Top - bottom) / 2;
-                var lastMiddle = (_lastTop - _lastBottom) / 2;
+                var middle = (word.BoundingBox.Top + bottom) / 2;
+                var lastMiddle = (_lastTop + _lastBottom) / 2;
                 return (middle < _lastTop && middle > _lastBottom) || (lastMiddle < word.BoundingBox.Top && lastMiddle > bottom);
             }
             public void AddWord(Word word, double height)
