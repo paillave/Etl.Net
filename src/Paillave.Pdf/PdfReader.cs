@@ -8,6 +8,8 @@ using UglyToad.PdfPig.DocumentLayoutAnalysis;
 using UglyToad.PdfPig.DocumentLayoutAnalysis.PageSegmenter;
 using UglyToad.PdfPig.DocumentLayoutAnalysis.WordExtractor;
 using UglyToad.PdfPig.Util;
+using static UglyToad.PdfPig.DocumentLayoutAnalysis.PageSegmenter.DocstrumBoundingBoxes;
+using static UglyToad.PdfPig.DocumentLayoutAnalysis.PageSegmenter.RecursiveXYCut;
 
 namespace Paillave.Pdf
 {
@@ -212,20 +214,19 @@ namespace Paillave.Pdf
         public RecursiveXYSegmentMethod(WordExtractionType wordExtractionType, Areas areas) : base(wordExtractionType) { }
 
         protected override IEnumerable<TextBlock> GetTextGroups(Page page, IEnumerable<Word> words)
-            => RecursiveXYCut.Instance.GetBlocks(words, new RecursiveXYCut.RecursiveXYCutOptions { MinimumWidth = page.Width / 3 });
+            => new RecursiveXYCut(new RecursiveXYCutOptions { MinimumWidth = page.Width / 3 }).GetBlocks(words);
     }
     public class DocstrumSegmentMethod : ExtractMethod
     {
         public DocstrumSegmentMethod(WordExtractionType wordExtractionType, Areas areas) : base(wordExtractionType) { }
 
         protected override IEnumerable<TextBlock> GetTextGroups(Page page, IEnumerable<Word> words)
-            => DocstrumBoundingBoxes.Instance.GetBlocks(words,
-                new DocstrumBoundingBoxes.DocstrumBoundingBoxesOptions()
+            => new DocstrumBoundingBoxes(new DocstrumBoundingBoxesOptions()
                 {
                     // WithinLineBounds = new DocstrumBoundingBoxes.AngleBounds(-45, 45),
                     // BetweenLineBounds = new DocstrumBoundingBoxes.AngleBounds(35, 170),
                     BetweenLineMultiplier = 1.5
-                });
+                }).GetBlocks(words);
     }
     public class PdfZone
     {
