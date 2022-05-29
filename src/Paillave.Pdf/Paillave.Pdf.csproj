@@ -25,7 +25,7 @@ extensions to deal with PDF files
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="PdfPig" Version="0.1.5" />
+    <PackageReference Include="PdfPig" Version="0.1.7-alpha-20220525-559f3" />
   </ItemGroup>
 
 </Project>
