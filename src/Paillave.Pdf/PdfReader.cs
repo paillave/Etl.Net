@@ -8,6 +8,8 @@ using UglyToad.PdfPig.DocumentLayoutAnalysis;
 using UglyToad.PdfPig.DocumentLayoutAnalysis.PageSegmenter;
 using UglyToad.PdfPig.DocumentLayoutAnalysis.WordExtractor;
 using UglyToad.PdfPig.Util;
+using static UglyToad.PdfPig.DocumentLayoutAnalysis.PageSegmenter.DocstrumBoundingBoxes;
+using static UglyToad.PdfPig.DocumentLayoutAnalysis.PageSegmenter.RecursiveXYCut;
 
 namespace Paillave.Pdf
 {
@@ -67,7 +69,7 @@ namespace Paillave.Pdf
                 })
                 .GroupBy(i => i.Area)
                 .SelectMany(i => GetTextGroups(page, i.Select(i => i.Word).ToList()).Select(j => new ProcessedBlock { KeepTogether = false, AreaCode = i.Key, TextBlock = j }))
-                .OrderByDescending(i=>i.TextBlock.BoundingBox.Top)
+                .OrderByDescending(i => i.TextBlock.BoundingBox.Top)
                 .ToList();
 
 
@@ -99,7 +101,14 @@ namespace Paillave.Pdf
                 _heights.Add(height);
                 _words.Add(word);
             }
-            public bool IsSameLine(Word word, double height, string area) => _lastBottom < word.BoundingBox.Top && _lastTop > Math.Min(word.BoundingBox.Bottom, word.BoundingBox.Top - height) && Area == area;
+            public bool IsSameLine(Word word, double height, string area)
+            {
+                if (area != Area) return false;
+                var bottom = Math.Min(word.BoundingBox.Bottom, word.BoundingBox.Top - height);
+                var middle = (word.BoundingBox.Top + bottom) / 2;
+                var lastMiddle = (_lastTop + _lastBottom) / 2;
+                return (middle < _lastTop && middle > _lastBottom) || (lastMiddle < word.BoundingBox.Top && lastMiddle > bottom);
+            }
             public void AddWord(Word word, double height)
             {
                 _lastTop = word.BoundingBox.Top;
@@ -112,7 +121,7 @@ namespace Paillave.Pdf
                 var maxSpace = _heights.Average();
                 Word previousWord = null;
                 List<Word> currentBlock = new List<Word>();
-                foreach (var word in _words.OrderBy(w => w.BoundingBox.Left).ThenByDescending(w => w.BoundingBox.Top).ToList())
+                foreach (var word in _words.OrderBy(w => w.BoundingBox.Left).ThenByDescending(w => w.BoundingBox.Top).Select(i => CloneWord(i)).ToList())
                 {
                     if (previousWord != null)
                     {
@@ -136,6 +145,28 @@ namespace Paillave.Pdf
                     yield return new TextLine(currentBlock);
                 }
             }
+            private Word CloneWord(Word word)
+            {
+                return word;
+                // var ret = new Word(word.Letters.Select(l => CloneLetter(l)).ToList());
+                // return ret;
+            }
+            private Letter CloneLetter(Letter letter)
+                => new Letter(
+                    letter.Value,
+                    new UglyToad.PdfPig.Core.PdfRectangle(
+                        letter.GlyphRectangle.Left,
+                        letter.GlyphRectangle.Bottom,
+                        letter.GlyphRectangle.Right,
+                        letter.GlyphRectangle.Height > 1 ? letter.GlyphRectangle.Top : letter.GlyphRectangle.Bottom + letter.PointSize),
+                    letter.StartBaseLine,
+                    letter.EndBaseLine,
+                    letter.Width,
+                    letter.FontSize,
+                    letter.Font,
+                    letter.Color,
+                    letter.PointSize,
+                    letter.TextSequence);
         }
         private class ProcessingLines
         {
@@ -183,20 +214,19 @@ namespace Paillave.Pdf
         public RecursiveXYSegmentMethod(WordExtractionType wordExtractionType, Areas areas) : base(wordExtractionType) { }
 
         protected override IEnumerable<TextBlock> GetTextGroups(Page page, IEnumerable<Word> words)
-            => RecursiveXYCut.Instance.GetBlocks(words, new RecursiveXYCut.RecursiveXYCutOptions { MinimumWidth = page.Width / 3 });
+            => new RecursiveXYCut(new RecursiveXYCutOptions { MinimumWidth = page.Width / 3 }).GetBlocks(words);
     }
     public class DocstrumSegmentMethod : ExtractMethod
     {
         public DocstrumSegmentMethod(WordExtractionType wordExtractionType, Areas areas) : base(wordExtractionType) { }
 
         protected override IEnumerable<TextBlock> GetTextGroups(Page page, IEnumerable<Word> words)
-            => DocstrumBoundingBoxes.Instance.GetBlocks(words,
-                new DocstrumBoundingBoxes.DocstrumBoundingBoxesOptions()
+            => new DocstrumBoundingBoxes(new DocstrumBoundingBoxesOptions()
                 {
                     // WithinLineBounds = new DocstrumBoundingBoxes.AngleBounds(-45, 45),
                     // BetweenLineBounds = new DocstrumBoundingBoxes.AngleBounds(35, 170),
                     BetweenLineMultiplier = 1.5
-                });
+                }).GetBlocks(words);
     }
     public class PdfZone
     {

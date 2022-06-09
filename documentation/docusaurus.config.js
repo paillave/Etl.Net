@@ -5,7 +5,7 @@ const remarkMermaid = require('remark-mermaid');
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: 'ETL.NET',
-  tagline: 'ETL actually easy for .NET developers who see everything as a stream',
+  tagline: 'Mass processing data finally easy for .NET developers',
   url: 'https://paillave.github.io/',
   baseUrl: '/Etl.Net/',
   onBrokenLinks: 'throw',

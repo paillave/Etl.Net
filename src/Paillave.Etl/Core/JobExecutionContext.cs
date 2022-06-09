@@ -67,7 +67,7 @@ namespace Paillave.Etl.Core
         public Task<T> InvokeInDedicatedThreadAsync<T>(object threadOwner, Func<T> action) => this._jobPoolDispatcher.InvokeAsync(threadOwner, action);
         public void AddTrace(ITraceContent traceContent, INodeContext sourceNode)
         {
-            var traceEvent = sourceNode.Tracer.CreateTraceEvent(traceContent, this.NextTraceSequence());
+            var traceEvent = sourceNode.CreateTraceEvent(traceContent, this.NextTraceSequence());
             _traceSubject?.PushValue(traceEvent);
             if (traceContent.Level == TraceLevel.Error && EndOfProcessTraceEvent == null)
             {

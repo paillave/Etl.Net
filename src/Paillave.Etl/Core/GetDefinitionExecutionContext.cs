@@ -12,19 +12,19 @@ namespace Paillave.Etl.Core
         private List<StreamToNodeLink> _streamToNodeLinks = new List<StreamToNodeLink>();
         private List<INodeDescription> _nodes = new List<INodeDescription>();
         public JobDefinitionStructure GetDefinitionStructure() => new JobDefinitionStructure(_streamToNodeLinks, _nodes, this.JobName);
-        private class RootNode : INodeDescription
-        {
-            public string NodeName => "-ProcessRunner-";
-            public string TypeName => "-ProcessRunner-";
-            public ProcessImpact PerformanceImpact => ProcessImpact.Light;
-            public ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-            public bool IsRootNode => true;
-        }
+        // private class RootNode : INodeDescription
+        // {
+        //     public string NodeName => "-ProcessRunner-";
+        //     public string TypeName => "-ProcessRunner-";
+        //     public ProcessImpact PerformanceImpact => ProcessImpact.Light;
+        //     public ProcessImpact MemoryFootPrint => ProcessImpact.Light;
+        //     public INodeDescription Parent => null;
+        // }
         public GetDefinitionExecutionContext(string jobName, IFileValueConnectors connectors)
         {
             this.JobName = jobName;
             this.Connectors = connectors;
-            _nodes.Add(new RootNode());
+            // _nodes.Add(new RootNode());
         }
         public void AddStreamToNodeLink(StreamToNodeLink link) => _streamToNodeLinks.Add(link);
         public Guid ExecutionId => Guid.Empty;

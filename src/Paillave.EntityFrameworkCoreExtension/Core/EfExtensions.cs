@@ -64,6 +64,7 @@ namespace Paillave.EntityFrameworkCoreExtension.Core
                 dbCtx.Open();
             }
             string deleteSql = regex.Replace(command.CommandText, "DELETE $1 FROM", 1);
+            // dbCommand.Transaction = relationQueryContext.Context.Database.CurrentTransaction as System.Data.Common.DbTransaction;
             dbCommand.CommandText = deleteSql;
             dbCommand.CommandType = CommandType.Text;
             dbCommand.CommandTimeout = 3000;

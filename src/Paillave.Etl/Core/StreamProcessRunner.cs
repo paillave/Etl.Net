@@ -58,7 +58,7 @@ namespace Paillave.Etl.Core
         private Action<ISingleStream<TConfig>> _jobDefinition;
         // private INodeContext _rootNode;
         // private Func<IPushObservable<TraceEvent>, IPushObservable<TraceEvent>> _defaultStopCondition = traces => traces.Filter(i => i.Content.Level == TraceLevel.Error).First();
-        public StreamProcessRunner(Action<ISingleStream<TConfig>> jobDefinition, string jobName = "Job")
+        public StreamProcessRunner(Action<ISingleStream<TConfig>> jobDefinition, string jobName = null)
         {
             _jobDefinition = jobDefinition ?? (_jobDefinition => { });
             JobName = jobName;
@@ -97,14 +97,25 @@ namespace Paillave.Etl.Core
             JobExecutionContext jobExecutionContext = new JobExecutionContext(this.JobName, executionId, traceSubject, jobPoolDispatcher, options?.Resolver ?? new DummyDependencyResolver(), internalCancellationTokenSource, connectors, (options?.UseDetailedTraces ?? false) || (this.DebugNodeStream != null && Debugger.IsAttached));
             if (options?.CancellationToken != null)
             {
-                options.CancellationToken.Register(() => traceSubject.PushValue(new TraceEventFactory(jobExecutionContext).CreateTraceEvent(new CancellationTraceContent(CancellationCause.CancelledFromOutside), jobExecutionContext.NextTraceSequence())));
+                options.CancellationToken.Register(() => traceSubject.PushValue(new TraceEvent(
+                jobExecutionContext.JobName,
+                jobExecutionContext.ExecutionId,
+                "Job",
+                "Job",
+                new CancellationTraceContent(CancellationCause.CancelledFromOutside),
+                jobExecutionContext.NextTraceSequence())));
             }
-            internalCancellationToken.Register(() => traceSubject.PushValue(new TraceEventFactory(jobExecutionContext).CreateTraceEvent(new CancellationTraceContent(CancellationCause.CancelledBecauseOfError), jobExecutionContext.NextTraceSequence())));
-            var rootNode = new CurrentExecutionNodeContext(this.JobName, new TraceEventFactory(jobExecutionContext), jobExecutionContext);
+            internalCancellationToken.Register(() => traceSubject.PushValue(new TraceEvent(
+                jobExecutionContext.JobName,
+                jobExecutionContext.ExecutionId,
+                "Job",
+                "Job",
+                new CancellationTraceContent(CancellationCause.CancelledFromOutside),
+                jobExecutionContext.NextTraceSequence())));
+            var rootNode = new CurrentExecutionNodeContext(this.JobName, jobExecutionContext);
             var traceStream = new Stream<TraceEvent>(new NotTraceExecutionNodeContext(traceExecutionContext), traceSubject);
             IPushSubject<TConfig> traceStartupSubject = new PushSubject<TConfig>(CancellationToken.None);
-            // IPushSubject<TConfig> traceStartupSubject = new PushSubject<TConfig>(combinedCancellationToken);
-            var startupStream = new SingleStream<TConfig>(rootNode, startupSubject.First());
+            var startupStream = new SingleStream<TConfig>(rootNode, startupSubject.First(), false);
             var traceStartupStream = new SingleStream<TConfig>(new NotTraceExecutionNodeContext(traceExecutionContext), traceStartupSubject.First());
             options?.TraceProcessDefinition?.Invoke(traceStream, traceStartupStream);
             if (Debugger.IsAttached)
@@ -136,7 +147,7 @@ namespace Paillave.Etl.Core
         public JobDefinitionStructure GetDefinitionStructure(IFileValueConnectors connectors = null)
         {
             GetDefinitionExecutionContext jobExecutionContext = new GetDefinitionExecutionContext(this.JobName, connectors ?? new NoFileValueConnectors());
-            var rootNode = new CurrentExecutionNodeContext(this.JobName, new TraceEventFactory(jobExecutionContext), jobExecutionContext);
+            var rootNode = new CurrentExecutionNodeContext(this.JobName, jobExecutionContext);
             var startupStream = new SingleStream<TConfig>(rootNode, PushObservable.Empty<TConfig>(CancellationToken.None));
             _jobDefinition(startupStream);
             return jobExecutionContext.GetDefinitionStructure();

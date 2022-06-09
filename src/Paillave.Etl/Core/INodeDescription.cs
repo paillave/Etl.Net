@@ -6,6 +6,6 @@ namespace Paillave.Etl.Core
         string TypeName { get; }
         ProcessImpact PerformanceImpact { get; }
         ProcessImpact MemoryFootPrint { get; }
-        bool IsRootNode { get; }
+        INodeDescription Parent { get; }
     }
 }

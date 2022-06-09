@@ -23,10 +23,14 @@ namespace Paillave.Etl.Core
         {
             lock (_lock)
             {
+                if (instance == null) return this;
                 foreach (var item in type.GetInterfaces())
                     this._typedDictionary[item] = instance;
-                for (var inher = type.BaseType; inher != typeof(object); inher = inher.BaseType)
-                    this._typedDictionary[inher] = instance;
+                for (var inher = type.BaseType; inher != typeof(object) && inher != null; inher = inher.BaseType)
+                {
+                    if (inher != null)
+                        this._typedDictionary[inher] = instance;
+                }
                 this._typedDictionary[type] = instance;
                 return this;
             }
