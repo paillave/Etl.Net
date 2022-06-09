@@ -51,7 +51,9 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
 
             _accessorsByType = config.Types.ToDictionary(i => i.ClrType, i => new ValueAccessor(i.ClrType));
             _tempColumnNumOrderName = config.TempColumnNumOrderName;
-            _shadowProperties = new HashSet<string>(config.EfProperties.Where(i => i.IsShadowProperty()).Select(i => i.Name));
+            var sp = config.EfProperties.Where(i => i.IsShadowProperty());
+            // var tmp=
+            _shadowProperties = new HashSet<string>(sp.Select(i => i.Name));
             _convertibleProperties = config.EfProperties.Select(i => new { ValueConverter = i.GetValueConverter(), i.Name }).Where(i => i.ValueConverter != null).ToDictionary(i => i.Name, i => i.ValueConverter);
             _context = config.Context;
 
@@ -178,6 +180,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
         {
             throw new NotImplementedException();
         }
+        private Dictionary<string, Dictionary<string, bool>> _shadowOfEntityDico = new Dictionary<string, Dictionary<string, bool>>();
         public object this[string name]
         {
             get
@@ -189,7 +192,28 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
                 else if (_shadowProperties.Contains(name))
                 {
                     var etr = _context.Entry(Current);
-                    return etr.Property(name).CurrentValue;
+                    if (_shadowOfEntityDico.TryGetValue(etr.Metadata.Name, out var subDic))
+                    {
+                        if (subDic.TryGetValue(name, out var hasIt))
+                        {
+                            if (hasIt)
+                                return etr.Property(name).CurrentValue;
+                            else
+                                return null;
+                        }
+                        var elt = etr.Properties.FirstOrDefault(i => i.Metadata.Name == name);
+                        subDic[name] = elt != null;
+                        if (elt != null)
+                            return elt.CurrentValue;
+                        else
+                            return null;
+                    }
+                    var elt2 = etr.Properties.FirstOrDefault(i => i.Metadata.Name == name);
+                    _shadowOfEntityDico[etr.Metadata.Name] = new Dictionary<string, bool> { [name] = elt2 != null };
+                    if (elt2 == null) return null;
+                    return elt2.CurrentValue;
+                    // if(etr.Properties.FirstOrDefault())
+                    // return etr.Property(name).CurrentValue;
                 }
                 else
                 {

@@ -15,11 +15,13 @@ import Presentation from '../components/Presentation';
 const Bot = require('../../static/img/dotnet-bot_kayaking.svg').default;
 const EtlNet = require('../../static/img/full-black-logo.svg').default
 const streamImage = require('../../static/img/SmallStreams.jpg').url;
+const SponsorImage = require('../../static/img/Sponsor.svg').default;
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
+        <div className={clsx(styles.sponsor)}><a href='https://www.fundprocess.lu' ><SponsorImage /></a></div>
         <Bot className={clsx(styles.kayakBot)} />
         <div className={clsx(styles.mainLogoBackground)}>
           <EtlNet />

@@ -77,7 +77,7 @@ namespace Paillave.Etl.Reactive.Operators
         {
             if (this._sourceSubscription == null && this._outSubscriptions.IsDisposed)
             {
-                base.Complete();
+                this.Complete();
             }
         }
 
@@ -91,7 +91,7 @@ namespace Paillave.Etl.Reactive.Operators
         }
         private void OnSourceException(Exception ex)
         {
-            base.PushException(ex);
+            this.PushException(ex);
         }
 
         public override void Dispose()

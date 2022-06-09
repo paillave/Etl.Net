@@ -53,7 +53,7 @@ namespace Paillave.Etl.Core
                     {
                         Value = l,
                         MustExclude = r.Contains(args.GetLeftKey(l))
-                    })
+                    }, true)
                 .Filter(i => !i.MustExclude)
                 .Map(i => i.Value);
             return base.CreateMatchingStream(outObservable, args.LeftInputStream);

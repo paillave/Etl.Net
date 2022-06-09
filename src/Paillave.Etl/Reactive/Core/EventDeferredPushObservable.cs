@@ -32,6 +32,10 @@ namespace Paillave.Etl.Reactive.Core
                 {
                     PushException(ex);
                 }
+                finally
+                {
+                    Complete();
+                }
             });
         }
     }

@@ -70,7 +70,7 @@ namespace Paillave.Etl.Reactive.Core
                     return _isComplete;
             }
         }
-        public void Complete()
+        public void  Complete()
         {
             lock (LockObject)
             {
