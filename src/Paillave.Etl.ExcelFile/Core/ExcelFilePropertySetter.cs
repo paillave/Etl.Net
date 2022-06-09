@@ -43,7 +43,7 @@ namespace Paillave.Etl.ExcelFile.Core
                 return _typeConverter.ConvertFromString(null, _cultureInfo, text.Trim());
             } catch (Exception ex)
             {
-                throw new Exception($"Error reading field '{ColumnName}' with value '{text}' for Type {PropertyInfo.PropertyType}", ex);
+                throw new Exception($"Error reading field '{Column}' with value '{text}' for Type {PropertyInfo.PropertyType}", ex);
             }
         }
 
