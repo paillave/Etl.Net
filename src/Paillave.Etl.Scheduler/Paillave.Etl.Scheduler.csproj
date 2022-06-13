@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="chronos" Version="0.0.154" />
+    <PackageReference Include="cronos" Version="0.7.1" />
   </ItemGroup>
 
 </Project>
