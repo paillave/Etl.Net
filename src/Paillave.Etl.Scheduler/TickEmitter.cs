@@ -53,14 +53,13 @@ public class TickEmitter<TEmitter> : IDisposable
         {
             if (_timer != null && this._runningContext != null)
             {
-                _timer.Stop();
-                Task.Run(() => this.ScheduleNext(this._runningContext.CancellationToken), this._runningContext.CancellationToken);
+                Task.Run(() => this.IterateJob(this._runningContext.CancellationToken), this._runningContext.CancellationToken);
             }
         }
     }
     private bool disposedValue;
     private readonly object _syncObject = new Object();
-    private System.Timers.Timer? _timer = null;
+    // private System.Timers.Timer? _timer = null;
     public TEmitter Emitter { get; private set; }
     private readonly List<TickSubscription> _subscriptions = new List<TickSubscription>();
     private Func<TEmitter, string> _getCronExpression;
@@ -82,27 +81,35 @@ public class TickEmitter<TEmitter> : IDisposable
         {
             if (Running) throw new Exception("Running already");
             this._runningContext = new TickRunningContext(cancellationToken, this.Stop);
-            Task.Run(() => this.ScheduleNext(this._runningContext.CancellationToken), this._runningContext.CancellationToken);
+            Task.Run(() => this.IterateJob(this._runningContext.CancellationToken), this._runningContext.CancellationToken);
         }
     }
-    private void ScheduleNext(CancellationToken cancellationToken)
+    private void IterateJob(CancellationToken cancellationToken)
     {
         lock (this._syncObject)
         {
-            var next = CronExpression.Parse(this._getCronExpression(this.Emitter)).GetNextOccurrence(DateTimeOffset.Now, TimeZoneInfo.Local);
-            if (next == null) return;
-            var totalMilliseconds = (next.Value - DateTimeOffset.Now).TotalMilliseconds;
-            _timer = new System.Timers.Timer(Math.Max(totalMilliseconds, 0));
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var next = CronExpression.Parse(this._getCronExpression(this.Emitter)).GetNextOccurrence(DateTimeOffset.Now, TimeZoneInfo.Local);
+                if (next == null) return;
+                var totalMilliseconds = (next.Value - DateTimeOffset.Now).TotalMilliseconds;
+                totalMilliseconds = Math.Max(totalMilliseconds, 0);
+                Thread.Sleep((int)totalMilliseconds);
+                if (totalMilliseconds > 100)
+                    foreach (var subscription in _subscriptions)
+                        Task.Run(() => subscription.Push(this.Emitter), cancellationToken);
+            }
         }
-        _timer.Elapsed += (sender, args) =>
-           {
-               _timer.Stop();
-               _timer.Dispose();
-               _timer = null;
-               _subscriptions.ForEach(subscription => subscription.Push(this.Emitter));
-               this.ScheduleNext(cancellationToken);
-           };
-        _timer.Start();
+        // var guid = Guid.NewGuid();
+        // _timer.Elapsed += (sender, args) =>
+        //    {
+        //        _timer.Stop();
+        //        _timer.Dispose();
+        //        _timer = null;
+        //        Thread.Sleep(500);
+        //        this.IterateJob(cancellationToken);
+        //    };
+        // _timer.Start();
     }
     public void Stop()
     {
@@ -112,7 +119,7 @@ public class TickEmitter<TEmitter> : IDisposable
             this._runningContext.Stop();
             this._runningContext.Dispose();
             this._runningContext = null;
-            this._timer?.Stop();
+            // this._timer?.Stop();
         }
     }
     protected virtual void Dispose(bool disposing)
@@ -129,11 +136,11 @@ public class TickEmitter<TEmitter> : IDisposable
                 this._runningContext.Dispose();
                 this._runningContext = null;
             }
-            if (this._timer != null)
-            {
-                this._timer.Stop();
-                this._timer.Dispose();
-            }
+            // if (this._timer != null)
+            // {
+            //     this._timer.Stop();
+            //     this._timer.Dispose();
+            // }
             disposedValue = true;
         }
     }
