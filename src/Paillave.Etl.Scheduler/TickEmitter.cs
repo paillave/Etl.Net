@@ -54,7 +54,7 @@ public class TickEmitter<TEmitter> : IDisposable
             if (_timer != null && this._runningContext != null)
             {
                 _timer.Stop();
-                Task.Run(() => this.IterateJob(this._runningContext.CancellationToken), this._runningContext.CancellationToken);
+                Task.Run(() => this.ScheduleNextTick(this._runningContext.CancellationToken, DateTime.Now), this._runningContext.CancellationToken);
             }
         }
     }
@@ -82,26 +82,24 @@ public class TickEmitter<TEmitter> : IDisposable
         {
             if (Running) throw new Exception("Running already");
             this._runningContext = new TickRunningContext(cancellationToken, this.Stop);
-            Task.Run(() => this.IterateJob(this._runningContext.CancellationToken), this._runningContext.CancellationToken);
+            Task.Run(() => this.ScheduleNextTick(this._runningContext.CancellationToken, DateTime.Now), this._runningContext.CancellationToken);
         }
     }
-    private void IterateJob(CancellationToken cancellationToken)
+    private void ScheduleNextTick(CancellationToken cancellationToken, DateTime now)
     {
         lock (this._syncObject)
         {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                var next = CronExpression.Parse(this._getCronExpression(this.Emitter)).GetNextOccurrence(DateTimeOffset.Now, TimeZoneInfo.Local);
-                if (next == null) return;
-                var totalMilliseconds = (next.Value - DateTimeOffset.Now).TotalMilliseconds;
-                totalMilliseconds = Math.Max(totalMilliseconds, 0);
-                _timer = new System.Timers.Timer(Math.Max(totalMilliseconds, 0));
-                _timer.Elapsed += (sender, args) => PushTicks(cancellationToken);
-                _timer.Start();
-            }
+            var next = CronExpression.Parse(this._getCronExpression(this.Emitter)).GetNextOccurrence(now.ToUniversalTime(), TimeZoneInfo.Local);
+            // Console.WriteLine($"{now:hh mm ss fff} -> {next:hh mm ss fff}");
+            if (next == null) return;
+            var totalMilliseconds = (next.Value - DateTimeOffset.Now).TotalMilliseconds;
+            totalMilliseconds = Math.Max(totalMilliseconds, 1);
+            _timer = new System.Timers.Timer(totalMilliseconds);
+            _timer.Elapsed += (sender, args) => PushTicks(cancellationToken, next.Value);
+            _timer.Start();
         }
     }
-    private void PushTicks(CancellationToken cancellationToken)
+    private void PushTicks(CancellationToken cancellationToken, DateTime now)
     {
         lock (this._syncObject)
         {
@@ -111,7 +109,7 @@ public class TickEmitter<TEmitter> : IDisposable
             _timer = null;
             foreach (var subscription in _subscriptions)
                 Task.Run(() => subscription.Push(this.Emitter), cancellationToken);
-            this.IterateJob(cancellationToken);
+            this.ScheduleNextTick(cancellationToken, now);
         }
     }
     public void Stop()

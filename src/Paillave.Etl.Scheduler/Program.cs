@@ -2,12 +2,13 @@
 using Paillave.Etl.Scheduler;
 Console.WriteLine("Starting...");
 using (var emitter = TickEmitter.Create(new { CronExpression = @"@every_second", BatchId = 15 }, i => i.CronExpression))
-using (var subscription = emitter.Subscribe(i => Console.WriteLine($"{DateTime.Now: ss}")))
+using (var subscription = emitter.Subscribe(i => Console.WriteLine($"{DateTime.Now: ss fff}")))
 {
     emitter.Start();
     // Thread.Sleep(5000);
     // emitter.UpdateEmitter(new { CronExpression = "* * * * *", BatchId = 16 });
-    Thread.Sleep(3 * 60 * 1000);
+    Console.WriteLine("Press any key to stop...");
+    Console.ReadKey();
 }
 
 // using (var emitter = TickEmitter.Create(new { CronExpression = @"@every_second", BatchId = 15 }, i => i.CronExpression))
