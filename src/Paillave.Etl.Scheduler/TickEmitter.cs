@@ -53,13 +53,14 @@ public class TickEmitter<TEmitter> : IDisposable
         {
             if (_timer != null && this._runningContext != null)
             {
+                _timer.Stop();
                 Task.Run(() => this.IterateJob(this._runningContext.CancellationToken), this._runningContext.CancellationToken);
             }
         }
     }
     private bool disposedValue;
     private readonly object _syncObject = new Object();
-    // private System.Timers.Timer? _timer = null;
+    private System.Timers.Timer? _timer = null;
     public TEmitter Emitter { get; private set; }
     private readonly List<TickSubscription> _subscriptions = new List<TickSubscription>();
     private Func<TEmitter, string> _getCronExpression;
@@ -94,22 +95,24 @@ public class TickEmitter<TEmitter> : IDisposable
                 if (next == null) return;
                 var totalMilliseconds = (next.Value - DateTimeOffset.Now).TotalMilliseconds;
                 totalMilliseconds = Math.Max(totalMilliseconds, 0);
-                Thread.Sleep((int)totalMilliseconds);
-                if (totalMilliseconds > 100)
-                    foreach (var subscription in _subscriptions)
-                        Task.Run(() => subscription.Push(this.Emitter), cancellationToken);
+                _timer = new System.Timers.Timer(Math.Max(totalMilliseconds, 0));
+                _timer.Elapsed += (sender, args) => PushTicks(cancellationToken);
+                _timer.Start();
             }
         }
-        // var guid = Guid.NewGuid();
-        // _timer.Elapsed += (sender, args) =>
-        //    {
-        //        _timer.Stop();
-        //        _timer.Dispose();
-        //        _timer = null;
-        //        Thread.Sleep(500);
-        //        this.IterateJob(cancellationToken);
-        //    };
-        // _timer.Start();
+    }
+    private void PushTicks(CancellationToken cancellationToken)
+    {
+        lock (this._syncObject)
+        {
+            if (_timer == null) return;
+            _timer.Stop();
+            _timer.Dispose();
+            _timer = null;
+            foreach (var subscription in _subscriptions)
+                Task.Run(() => subscription.Push(this.Emitter), cancellationToken);
+            this.IterateJob(cancellationToken);
+        }
     }
     public void Stop()
     {
@@ -119,7 +122,7 @@ public class TickEmitter<TEmitter> : IDisposable
             this._runningContext.Stop();
             this._runningContext.Dispose();
             this._runningContext = null;
-            // this._timer?.Stop();
+            this._timer?.Stop();
         }
     }
     protected virtual void Dispose(bool disposing)
@@ -136,11 +139,11 @@ public class TickEmitter<TEmitter> : IDisposable
                 this._runningContext.Dispose();
                 this._runningContext = null;
             }
-            // if (this._timer != null)
-            // {
-            //     this._timer.Stop();
-            //     this._timer.Dispose();
-            // }
+            if (this._timer != null)
+            {
+                this._timer.Stop();
+                this._timer.Dispose();
+            }
             disposedValue = true;
         }
     }
