@@ -1,5 +1,4 @@
-﻿// https://codeburst.io/schedule-cron-jobs-using-hostedservice-in-asp-net-core-e17c47ba06
-using Cronos;
+﻿using Cronos;
 
 namespace Paillave.Etl.Scheduler;
 public class TickEmitter : TickEmitter<string>

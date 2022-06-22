@@ -11,4 +11,8 @@
     <PackageReference Include="cronos" Version="0.7.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
+  </ItemGroup>
+
 </Project>

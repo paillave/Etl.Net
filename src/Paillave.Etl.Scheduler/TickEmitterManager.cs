@@ -4,7 +4,8 @@ public static class TickEmitterManager
     public static TickEmitterManager<TEmitter, TKey> Create<TEmitter, TKey>(Func<TEmitter, TKey> getKey, Action<TEmitter> push, Func<TEmitter, string> getCronExpression) where TKey : IEquatable<TKey>
         => new TickEmitterManager<TEmitter, TKey>(getKey, push, getCronExpression);
 }
-public class TickEmitterManager<TEmitter, TKey> : IDisposable where TKey : IEquatable<TKey>
+
+public class TickEmitterManager<TEmitter, TKey> : IDisposable, ITickEmitterManager<TEmitter, TKey> where TKey : IEquatable<TKey>
 {
     private class EmitterOccurrence : IDisposable
     {
@@ -26,7 +27,7 @@ public class TickEmitterManager<TEmitter, TKey> : IDisposable where TKey : IEqua
     private readonly Dictionary<TKey, EmitterOccurrence> _tickEmitters = new Dictionary<TKey, EmitterOccurrence>();
     private bool disposedValue;
 
-    public void SetEmitter(TEmitter emitter)
+    public void ResetEmitter(TEmitter emitter)
     {
         lock (_lock)
         {
@@ -62,7 +63,7 @@ public class TickEmitterManager<TEmitter, TKey> : IDisposable where TKey : IEqua
             _tickEmitters.Remove(_getKey(occurrence.TickEmitter.Emitter));
         }
     }
-    public void SynchronizeEmitters(IEnumerable<TEmitter> newEmitters)
+    public void ResetEmitters(IEnumerable<TEmitter> newEmitters)
     {
         lock (_lock)
         {

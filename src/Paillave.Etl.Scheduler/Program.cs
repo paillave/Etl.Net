@@ -19,19 +19,19 @@ using (var subscription = emitter.Subscribe(i => Console.WriteLine($"{DateTime.N
 //     emitter.UpdateEmitter(new { CronExpression = "* * * * *", BatchId = 16 });
 //     Thread.Sleep(3 * 60 * 1000);
 // }
-// using (var manager = TickEmitterManager.Create((Element i) => i.Id, i => Console.WriteLine($"{DateTime.Now: mm ss} - {i.Id}"), i => i.CronExpression))
-// {
-//     manager.SynchronizeEmitters(new[]{
-//         new Element{ CronExpression="@every_second", Id=1},
-//         new Element{ CronExpression="@every_second", Id=2},
-//         new Element{ CronExpression="@every_second", Id=3},
-//         new Element{ CronExpression="@every_second", Id=4},
-//         new Element{ CronExpression="@every_second", Id=5},
-//      });
-//     Thread.Sleep(3 * 60 * 1000);
-// }
+using (var manager = TickEmitterManager.Create((Element i) => i.Id, i => Console.WriteLine($"{DateTime.Now: mm ss} - {i.Id}"), i => i.CronExpression))
+{
+    manager.ResetEmitters(new[]{
+        new Element{ CronExpression="@every_second", Id=1},
+        new Element{ CronExpression="@every_second", Id=2},
+        new Element{ CronExpression="@every_second", Id=3},
+        new Element{ CronExpression="@every_second", Id=4},
+        new Element{ CronExpression="@every_second", Id=5},
+     });
+    Thread.Sleep(3 * 60 * 1000);
+}
 public class Element
 {
     public int Id { get; set; }
-    public string CronExpression { get; set; }
+    public string? CronExpression { get; set; }
 }
