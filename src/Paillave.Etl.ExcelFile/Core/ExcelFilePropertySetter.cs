@@ -26,16 +26,24 @@ namespace Paillave.Etl.ExcelFile.Core
         private object Deserialize(string text)
         {
             //TODO: Better exception handleling here
-            if (PropertyInfo.PropertyType == typeof(DateTime))
+            try
             {
-                return DateTime.ParseExact(text.Trim(), _cultureInfo.DateTimeFormat.LongDatePattern, _cultureInfo);
-            }
-            if (PropertyInfo.PropertyType == typeof(DateTime?))
+                
+                if (PropertyInfo.PropertyType == typeof(DateTime) || PropertyInfo.PropertyType == typeof(DateTime?))
+                {
+                    if (string.IsNullOrWhiteSpace(text) && PropertyInfo.PropertyType == typeof(DateTime?)) return (DateTime?)null;
+                    Double outDouble;
+                    if (Double.TryParse(text, out outDouble))
+                    {
+                        return DateTime.FromOADate(outDouble);
+                    }
+                    return DateTime.ParseExact(text.Trim(), _cultureInfo.DateTimeFormat.LongDatePattern, _cultureInfo);
+                }
+                return _typeConverter.ConvertFromString(null, _cultureInfo, text.Trim());
+            } catch (Exception ex)
             {
-                if (string.IsNullOrWhiteSpace(text)) return (DateTime?)null;
-                return DateTime.ParseExact(text.Trim(), _cultureInfo.DateTimeFormat.LongDatePattern, _cultureInfo);
+                throw new Exception($"Error reading field '{Column}' with value '{text}' for Type {PropertyInfo.PropertyType}", ex);
             }
-            return _typeConverter.ConvertFromString(null, _cultureInfo, text.Trim());
         }
 
         public object ParsedValue { get; private set; } = null;
