@@ -1,12 +1,12 @@
 ﻿using Cronos;
 
 namespace Paillave.Etl.Scheduler;
-public class TickEmitter : TickEmitter<string>
+public class TickSource : TickSource<string>
 {
-    public TickEmitter(string cronExpression) : base(cronExpression, i => i) { }
-    public static TickEmitter<TEmitter> Create<TEmitter>(TEmitter sourceMetadata, Func<TEmitter, string> getCronExpression) => new TickEmitter<TEmitter>(sourceMetadata, getCronExpression);
+    public TickSource(string cronExpression) : base(cronExpression, i => i) { }
+    public static TickSource<TSource> Create<TSource>(TSource sourceMetadata, Func<TSource, string> getCronExpression) => new TickSource<TSource>(sourceMetadata, getCronExpression);
 }
-public class TickEmitter<TEmitter> : IDisposable
+public class TickSource<TSource> : IDisposable
 {
     private class TickRunningContext : IDisposable
     {
@@ -32,17 +32,17 @@ public class TickEmitter<TEmitter> : IDisposable
     }
     private class TickSubscription : IDisposable
     {
-        public TickSubscription(Action<TEmitter> push, Action<TickSubscription> unsubscribe) => (Push, _unsubscribe) = (push, unsubscribe);
+        public TickSubscription(Action<TSource> push, Action<TickSubscription> unsubscribe) => (Push, _unsubscribe) = (push, unsubscribe);
         public void Dispose() => _unsubscribe(this);
         private readonly Action<TickSubscription> _unsubscribe;
-        public Action<TEmitter> Push { get; }
+        public Action<TSource> Push { get; }
     }
-    public void UpdateEmitter(TEmitter? emitter = default)
+    public void UpdateSource(TSource? source = default)
     {
-        emitter ??= this.Emitter;
+        source ??= this.Source;
         lock (this._syncObject)
         {
-            this.Emitter = emitter;
+            this.Source = source;
             if (Running) Restart();
         }
     }
@@ -60,14 +60,14 @@ public class TickEmitter<TEmitter> : IDisposable
     private bool disposedValue;
     private readonly object _syncObject = new Object();
     private System.Timers.Timer? _timer = null;
-    public TEmitter Emitter { get; private set; }
+    public TSource Source { get; private set; }
     private readonly List<TickSubscription> _subscriptions = new List<TickSubscription>();
-    private Func<TEmitter, string> _getCronExpression;
+    private Func<TSource, string> _getCronExpression;
     private TickRunningContext? _runningContext = null;
     public bool Running => _runningContext != null;
-    public TickEmitter(TEmitter sourceMetadata, Func<TEmitter, string> getCronExpression)
-        => (Emitter, _getCronExpression) = (sourceMetadata, getCronExpression);
-    public IDisposable Subscribe(Action<TEmitter> push)
+    public TickSource(TSource sourceMetadata, Func<TSource, string> getCronExpression)
+        => (Source, _getCronExpression) = (sourceMetadata, getCronExpression);
+    public IDisposable Subscribe(Action<TSource> push)
     {
         var tickSubscription = new TickSubscription(push, ts => _subscriptions.Remove(ts));
         _subscriptions.Add(tickSubscription);
@@ -88,7 +88,7 @@ public class TickEmitter<TEmitter> : IDisposable
     {
         lock (this._syncObject)
         {
-            var next = CronExpression.Parse(this._getCronExpression(this.Emitter)).GetNextOccurrence(now.ToUniversalTime(), TimeZoneInfo.Local);
+            var next = CronExpression.Parse(this._getCronExpression(this.Source)).GetNextOccurrence(now.ToUniversalTime(), TimeZoneInfo.Local);
             // Console.WriteLine($"{now:hh mm ss fff} -> {next:hh mm ss fff}");
             if (next == null) return;
             var totalMilliseconds = (next.Value - DateTimeOffset.Now).TotalMilliseconds;
@@ -107,7 +107,7 @@ public class TickEmitter<TEmitter> : IDisposable
             _timer.Dispose();
             _timer = null;
             foreach (var subscription in _subscriptions)
-                Task.Run(() => subscription.Push(this.Emitter), cancellationToken);
+                Task.Run(() => subscription.Push(this.Source), cancellationToken);
             this.ScheduleNextTick(cancellationToken, now);
         }
     }
