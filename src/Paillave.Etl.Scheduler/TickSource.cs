@@ -62,10 +62,10 @@ public class TickSource<TSource> : IDisposable
     private System.Timers.Timer? _timer = null;
     public TSource Source { get; private set; }
     private readonly List<TickSubscription> _subscriptions = new List<TickSubscription>();
-    private Func<TSource, string> _getCronExpression;
+    private Func<TSource, string?> _getCronExpression;
     private TickRunningContext? _runningContext = null;
     public bool Running => _runningContext != null;
-    public TickSource(TSource sourceMetadata, Func<TSource, string> getCronExpression)
+    public TickSource(TSource sourceMetadata, Func<TSource, string?> getCronExpression)
         => (Source, _getCronExpression) = (sourceMetadata, getCronExpression);
     public IDisposable Subscribe(Action<TSource> push)
     {
@@ -88,8 +88,9 @@ public class TickSource<TSource> : IDisposable
     {
         lock (this._syncObject)
         {
-            var next = CronExpression.Parse(this._getCronExpression(this.Source)).GetNextOccurrence(now.ToUniversalTime(), TimeZoneInfo.Local);
-            // Console.WriteLine($"{now:hh mm ss fff} -> {next:hh mm ss fff}");
+            var cronExpression = this._getCronExpression(this.Source);
+            if (cronExpression == null) return;
+            var next = CronExpression.Parse(cronExpression).GetNextOccurrence(now.ToUniversalTime(), TimeZoneInfo.Local);
             if (next == null) return;
             var totalMilliseconds = (next.Value - DateTimeOffset.Now).TotalMilliseconds;
             totalMilliseconds = Math.Max(totalMilliseconds, 1);

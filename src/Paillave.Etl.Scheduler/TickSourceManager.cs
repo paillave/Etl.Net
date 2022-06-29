@@ -19,9 +19,19 @@ public class TickSourceManager<TSource, TKey> : IDisposable where TKey : IEquata
             this.TickSource.Dispose();
         }
     }
+    public void Start()
+    {
+        foreach (var item in _tickSources)
+            item.Value.TickSource.Start();
+    }
+    public void Stop()
+    {
+        foreach (var item in _tickSources)
+            item.Value.TickSource.Stop();
+    }
     private readonly object _lock = new object();
     public readonly ITickSourceConnection<TSource, TKey> _sourceConnection;
-    public event EventHandler<TSource> Tick;
+    public event EventHandler<TSource>? Tick = null;
     protected virtual void OnPushTick(TSource source)
         => this.Tick?.Invoke(this, source);
     public TickSourceManager(ITickSourceConnection<TSource, TKey> sourceConnection)
@@ -64,7 +74,7 @@ public class TickSourceManager<TSource, TKey> : IDisposable where TKey : IEquata
             var releaser = tickSource.Subscribe(OnPushTick);
             var occurrence = new SourceOccurrence(tickSource, releaser);
             _tickSources[_sourceConnection.GetKey(source)] = occurrence;
-            tickSource.Start();
+            // tickSource.Start();
         }
     }
     private void RemoveSource(TKey sourceKey)
