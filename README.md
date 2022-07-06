@@ -5,12 +5,12 @@
 
 ## Presentation
 
-Implementation of a multi platform reactive ETL for .NET working with a similar principle than SSIS, but that is used in the same way than Linq.
+Implementation of a mass processing engine to use in a similar way than Linq with every SSIS features and much more.
 The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
 
-- ETL.NET is fully written in .NET for a multi platform usage and for a straight forward integration in any application. Extend it takes 5mn... literally.
-- ETL.NET works with a similar principle than SSIS, with ETL processes to be written in .NET like Linq queries.
-- A simple and straight forward ELT.NET runtime for .NET executes ETL processes with no installation required.
+ETL.NET is fully written in .NET for a multi platform usage and for a straight forward integration in any application. 
+
+Extend it takes 5mn... literally.
 
 | Package | nuget version | nuget downloads |
 |-|-|-|
@@ -27,8 +27,11 @@ The reactive approach for the implementation of this engine ensures parallelized
 | Paillave.EtlNet.Sftp | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Sftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Sftp) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Sftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Sftp) |
 | Paillave.EtlNet.SqlServer | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.SqlServer.svg)](https://www.nuget.org/packages/Paillave.EtlNet.SqlServer) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.SqlServer.svg)](https://www.nuget.org/packages/Paillave.EtlNet.SqlServer) |
 | Paillave.EtlNet.TextFile | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.TextFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.TextFile) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.TextFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.TextFile) |
+| Paillave.EtlNet.Bloomberg | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Bloomberg.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Bloomberg) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Bloomberg.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Bloomberg) |
 | Paillave.EtlNet.XmlFile | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.XmlFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.XmlFile) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.XmlFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.XmlFile) |
 | Paillave.EtlNet.Zip | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Zip.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Zip) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Zip.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Zip) |
+| Paillave.EtlNet.Pdf | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Pdf.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Pdf) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Pdf.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Pdf) |
+| Paillave.EtlNet.Scheduler | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Scheduler.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Scheduler) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Scheduler.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Scheduler) |
 | Paillave.EntityFrameworkCoreExtension | [![NuGet](https://img.shields.io/nuget/v/Paillave.EntityFrameworkCoreExtension.svg)](https://www.nuget.org/packages/Paillave.EntityFrameworkCoreExtension) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EntityFrameworkCoreExtension.svg)](https://www.nuget.org/packages/Paillave.EntityFrameworkCoreExtension) |
 
 ## Examples

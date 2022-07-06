@@ -34,8 +34,11 @@ Once references are added, the ETL process can be described in .NET and run anyw
 | `Paillave.EtlNet.Sftp` | Input/Output | Read or write files on SFTP |
 | `Paillave.EtlNet.SqlServer` | Input/Output | Upsert, read into Sql Server directly using drivers |
 | `Paillave.EtlNet.TextFile` | Input/Output | Parse or create text files in csv (separated or fixed size columns) |
+| `Paillave.EtlNet.Bloomberg` | Input/Output | Parse bloomberg response files. Note: creating a request file is not implemented at the moment |
 | `Paillave.EtlNet.XmlFile` | Input/Output | Parse XML files. Note: writing XML is not implemented at the moment |
 | `Paillave.EtlNet.Zip` | Input/Output | Read files from zipped files. Note: creating a zip file is not implemented at the moment |
+| `Paillave.EtlNet.Pdf` | Input/Output | Read pdf files, by telling the structure of paragraphs. |
+| `Paillave.EtlNet.Scheduler` | Input/Output | Submit ticks depending based on cron setups. |
 
 ## Definition of the ETL process and its execution
 
