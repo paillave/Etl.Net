@@ -4,7 +4,7 @@ namespace Paillave.Etl.Scheduler;
 
 public static partial class CustomEx
 {
-    public static IStream<TOut> EmitEvents<TOut, TKey>(this SingleStream<object> stream, string name, ITickSourceConnection<TOut, TKey> tickSourceConnection) where TKey : IEquatable<TKey>
+    public static IStream<TOut> EmitEvents<TOut, TKey>(this ISingleStream<object> stream, string name, ITickSourceConnection<TOut, TKey> tickSourceConnection) where TKey : IEquatable<TKey>
         => stream.CrossApply(name, new TicksProvider<TOut, TKey>(tickSourceConnection));
 }
 internal class TicksProvider<TOut, TKey> : IValuesProvider<object, TOut> where TKey : IEquatable<TKey>
@@ -17,7 +17,7 @@ internal class TicksProvider<TOut, TKey> : IValuesProvider<object, TOut> where T
     public ProcessImpact MemoryFootPrint => ProcessImpact.Light;
     public void PushValues(object input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
     {
-        EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
+        using (EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset))
         using (var tickSourceManager = TickSourceManager.Create(this._tickSourceConnection))
         {
             tickSourceManager.Tick += (sender, e) => push(e);

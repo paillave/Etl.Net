@@ -8,7 +8,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive Mail</PackageTags>
-    <Product>ETL.net SFTP extensions</Product>
+    <Product>ETL.net Mail extensions</Product>
     <Description>Extensions for Etl.Net to send of read EMails</Description>
     <LangVersion>latest</LangVersion>
     <PackageIcon>NugetIcon.png</PackageIcon>
@@ -20,9 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MailKit" Version="3.1.0" />
+    <PackageReference Include="MailKit" Version="3.3.0" />
     <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="6.0.0" />
-    <PackageReference Include="MimeTypes" Version="2.2.1">
+    <PackageReference Include="MimeTypes" Version="2.4.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

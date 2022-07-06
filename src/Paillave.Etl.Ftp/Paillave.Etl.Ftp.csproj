@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentFTP" Version="36.1.0" />
+    <PackageReference Include="FluentFTP" Version="37.0.5" />
     <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="6.0.0" />
   </ItemGroup>
 

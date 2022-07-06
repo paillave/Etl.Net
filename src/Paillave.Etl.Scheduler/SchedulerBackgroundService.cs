@@ -1,36 +1,41 @@
-// using Microsoft.Extensions.Hosting;
-// using Paillave.Etl.Core;
+using Microsoft.Extensions.Hosting;
+using Paillave.Etl.Core;
 
-// namespace Paillave.Etl.Scheduler;
+// https://medium.com/@daniel.sagita/backgroundservice-for-a-long-running-work-3debe8f8d25b
+// https://docs.microsoft.com/en-us/dotnet/core/extensions/queue-service
+// https://docs.microsoft.com/en-us/dotnet/core/extensions/scoped-service
+namespace Paillave.Etl.Scheduler;
+public class SchedulerBackgroundService<TSource, TKey> : BackgroundService where TKey : IEquatable<TKey>
+{
+    private readonly ISchedulerBackgroundServiceOptions<TSource, TKey> _schedulerBackgroundServiceOptions;
+    public SchedulerBackgroundService(ISchedulerBackgroundServiceOptions<TSource, TKey> schedulerBackgroundServiceOptions)
+        => (_schedulerBackgroundServiceOptions) = (schedulerBackgroundServiceOptions);
+    protected async override Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        var executionOptions = new ExecutionOptions<object>
+        {
+            Resolver = _schedulerBackgroundServiceOptions.Resolver,
+            CancellationToken = stoppingToken,
+            Connectors = _schedulerBackgroundServiceOptions.Connectors,
+            NoExceptionOnError = true,
+            TraceProcessDefinition = (a, b) => _schedulerBackgroundServiceOptions.TraceProcessDefinition(a),
+            TraceResolver = _schedulerBackgroundServiceOptions.TraceResolver,
+            UseDetailedTraces = _schedulerBackgroundServiceOptions.UseDetailedTraces
+        };
 
-// public class SchedulerBackgroundService<TSource, TKey> : BackgroundService where TKey : IEquatable<TKey>
-// {
-//     private readonly ITickSourceConnection<TSource, TKey> _tickSourceConnection;
-//     private readonly TickSourceManager<TSource, TKey> _tickSourceManager;
-
-//     public SchedulerBackgroundService(ITickSourceConnection<TSource, TKey> tickSourceConnection)
-//     {
-//         _tickSourceConnection = tickSourceConnection;
-//     }
-
-//     protected override Task ExecuteAsync(CancellationToken stoppingToken)
-//     {
-//         throw new NotImplementedException();
-//     }
-//     public override Task StartAsync(CancellationToken cancellationToken)
-//     {
-//             var executionOptions = new ExecutionOptions<List<Security>>
-//             {
-//                 Resolver = new SimpleDependencyResolver().Register<DbContext>(context),
-//             };
-
-//             var processRunner = StreamProcessRunner.Create<List<Security>>(i =>
-//             {
-//                 i.CrossApply("zser", i => i)
-//                 .EfCoreSave("qsdf", i => i.SeekOn(j => j.InternalCode));
-//             });
-//             var res = processRunner.ExecuteAsync(secus, executionOptions).Result;
-
-//         return base.StartAsync(cancellationToken);
-//     }
-// }
+        var processRunner = StreamProcessRunner.Create<object>(i => i
+            .EmitEvents("Emit events", _schedulerBackgroundServiceOptions.TickSourceConnection)
+            .SubProcess("Execute Sub Process", i => _schedulerBackgroundServiceOptions.CreateProcess(i)));
+        await processRunner.ExecuteAsync(null, executionOptions);
+    }
+}
+public interface ISchedulerBackgroundServiceOptions<TSource, TKey> where TKey : IEquatable<TKey>
+{
+    bool UseDetailedTraces { get; set; }
+    Action<IStream<TraceEvent>> TraceProcessDefinition { get; set; }
+    IDependencyResolver Resolver { get; set; }
+    IDependencyResolver TraceResolver { get; set; }
+    IFileValueConnectors Connectors { get; set; }
+    IStream<object> CreateProcess(ISingleStream<TSource> sourceStream);
+    ITickSourceConnection<TSource, TKey> TickSourceConnection { get; set; }
+}
