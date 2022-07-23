@@ -5,6 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Scheduler",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/Paillave.Etl.Scheduler/bin/Debug/net6.0/Paillave.Etl.Scheduler.dll",
+            "args": [            ],
+            "cwd": "${workspaceFolder}/Paillave.Etl.Scheduler",
+            "stopAtEntry": false,
+            "console": "externalTerminal"
+        },
+        {
             "name": "Samples",
             "type": "coreclr",
             "request": "launch",

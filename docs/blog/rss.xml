@@ -7,6 +7,7 @@
         <lastBuildDate>Sun, 01 Aug 2021 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
         <item>
             <title><![CDATA[Why ETL.NET?]]></title>
             <link>https://paillave.github.io/Etl.Net/blog/2021/08/01/WhyETLNET</link>

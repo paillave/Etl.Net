@@ -29,8 +29,9 @@ namespace Paillave.Etl.Dropbox
         }
         private void UploadSingleTime(DropboxAdapterConnectionParameters connectionParameters, byte[] fileContents, string filePath)
         {
+            // var commitInfo=new CommitInfo(filePath);
             using (var client = connectionParameters.CreateConnectionInfo())
-                client.Files.UploadAsync(new CommitInfo(filePath), new MemoryStream(fileContents)).Wait();
+                client.Files.UploadAsync(new UploadArg(filePath) , new MemoryStream(fileContents)).Wait();
         }
         protected override void Test(DropboxAdapterConnectionParameters connectionParameters, DropboxAdapterProcessorParameters processorParameters)
         {
@@ -40,7 +41,7 @@ namespace Paillave.Etl.Dropbox
             using (var client = connectionParameters.CreateConnectionInfo())
             {
                 var stream = new MemoryStream();
-                client.Files.UploadAsync(new CommitInfo(path), stream).Wait();
+                client.Files.UploadAsync(new UploadArg(path), stream).Wait();
             }
             using (var client = connectionParameters.CreateConnectionInfo())
                 client.Files.DeleteV2Async(path).Wait();

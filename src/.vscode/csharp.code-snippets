@@ -1,0 +1,49 @@
+{
+    // Place your snippets for csharp here. Each snippet is defined under a snippet name and has a prefix, body and 
+    // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+    // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+    // same ids are connected.
+    // Example:
+    // "Print to console": {
+    // 	"prefix": "log",
+    // 	"body": [
+    // 		"console.log('$1');",
+    // 		"$2"
+    // 	],
+    // 	"description": "Log output to console"
+    // }
+    // https://snippet-generator.app/
+    "ETL.NET Stream Operator": {
+        "prefix": "EtlNetOperator",
+        "body": [
+            "using Paillave.Etl.Core;",
+            "using Paillave.Etl.Reactive.Operators;",
+            "",
+            "namespace ${1:Namespace};",
+            "public class ${TM_FILENAME_BASE}Args<TIn, TOut>",
+            "{",
+            "    public Stream<TIn> Stream { get; set; }",
+            "}",
+            "public class ${TM_FILENAME_BASE}StreamNode<TIn, TOut>",
+            "    : StreamNodeBase<TOut, IStream<TOut>, ${TM_FILENAME_BASE}Args<TIn, TOut>>",
+            "{",
+            "    public ${TM_FILENAME_BASE}StreamNode(string name, ${TM_FILENAME_BASE}Args<TIn, TOut> args)",
+            "        : base(name, args) { }",
+            "    public override ProcessImpact PerformanceImpact => ProcessImpact.Light;",
+            "    public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;",
+            "    protected override IStream<TOut> CreateOutputStream(${TM_FILENAME_BASE}Args<TIn, TOut> args)",
+            "        => base.CreateUnsortedStream(args.Stream.Observable/*${2:Reactive Process}*/);",
+            "}",
+            "public static partial class CustomEx",
+            "{",
+            "    public static IStream<TOut> ${TM_FILENAME_BASE}<TIn, TOut>(this Stream<TIn> stream, string name)",
+            "        => new ${TM_FILENAME_BASE}StreamNode<TIn, TOut>(name,",
+            "            new ${TM_FILENAME_BASE}Args<TIn, TOut>",
+            "            {",
+            "                Stream = stream",
+            "            }).Output;",
+            "}"
+        ],
+        "description": "ETL.NET Stream Operator"
+    }
+}

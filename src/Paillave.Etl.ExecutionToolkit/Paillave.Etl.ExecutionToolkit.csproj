@@ -47,8 +47,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="6.0.1" />
-    <PackageReference Include="Terminal.Gui" Version="1.4.0" />
+    <PackageReference Include="System.Text.Json" Version="6.0.5" />
+    <PackageReference Include="Terminal.Gui" Version="1.6.4" />
   </ItemGroup>
 
 </Project>
