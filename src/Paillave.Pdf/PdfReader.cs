@@ -31,8 +31,8 @@ namespace Paillave.Pdf
                 {
                     if (a.Value.PageNumber != null && page.Number != a.Value.PageNumber.Value)
                         return false;
-                    var percentageRectangle = new UglyToad.PdfPig.Core.PdfRectangle(rectangle.Left / page.Width, 1 - rectangle.Top / page.Height, rectangle.Right / page.Width, 1 - rectangle.Bottom / page.Height);
-                    return a.Value.IsInZone(percentageRectangle);
+                    // var percentageRectangle = new UglyToad.PdfPig.Core.PdfRectangle(rectangle.Left / page.Width, 1 - rectangle.Top / page.Height, rectangle.Right / page.Width, 1 - rectangle.Bottom / page.Height);
+                    return a.Value.IsInZone(rectangle);
                 }).Key;
     }
     public abstract class ExtractMethod
@@ -222,11 +222,17 @@ namespace Paillave.Pdf
 
         protected override IEnumerable<TextBlock> GetTextGroups(Page page, IEnumerable<Word> words)
             => new DocstrumBoundingBoxes(new DocstrumBoundingBoxesOptions()
-                {
-                    // WithinLineBounds = new DocstrumBoundingBoxes.AngleBounds(-45, 45),
-                    // BetweenLineBounds = new DocstrumBoundingBoxes.AngleBounds(35, 170),
-                    BetweenLineMultiplier = 1.5
-                }).GetBlocks(words);
+            {
+                // WithinLineBounds = new DocstrumBoundingBoxes.AngleBounds(-45, 45),
+                // BetweenLineBounds = new DocstrumBoundingBoxes.AngleBounds(35, 170),
+                BetweenLineMultiplier = 1.5
+            }).GetBlocks(words);
+    }
+    public enum Units
+    {
+        Millimeters = 1,
+        Centimeters = 2,
+        Inches = 3
     }
     public class PdfZone
     {
@@ -234,11 +240,30 @@ namespace Paillave.Pdf
         public double Width { get; set; }
         public double Top { get; set; }
         public double Height { get; set; }
+        public Units Units { get; set; } = Units.Centimeters;
         public int? PageNumber { get; set; }
-        public bool IsInZone(UglyToad.PdfPig.Core.PdfRectangle rectangle) => rectangle.Bottom > this.Top
-            && rectangle.Top < (this.Top + this.Height)
-            && rectangle.Left < (this.Left + this.Width)
-            && rectangle.Right > this.Left;
+        private UglyToad.PdfPig.Core.PdfRectangle? _rectangle = null;
+        private UglyToad.PdfPig.Core.PdfRectangle Rectangle
+        {
+            get
+            {
+                if (_rectangle != null) return _rectangle.Value;
+                _rectangle = new UglyToad.PdfPig.Core.PdfRectangle(ToPdfUnits(this.Left), ToPdfUnits(this.Top), ToPdfUnits(this.Left + this.Width), ToPdfUnits(this.Top - this.Height));
+                return _rectangle.Value;
+            }
+        }
+        private double ToPdfUnits(double value) => this.Units switch
+        {
+            Units.Millimeters => (72 / 25.4) * value,
+            Units.Centimeters => (72 / 2.54) * value,
+            Units.Inches => 72 * value,
+            _ => throw new Exception("unknown unit")
+        };
+        internal bool IsInZone(UglyToad.PdfPig.Core.PdfRectangle rectangle) =>
+            rectangle.Bottom > this.Rectangle.Top
+            && rectangle.Top < this.Rectangle.Bottom
+            && rectangle.Left < this.Rectangle.Width
+            && rectangle.Right > this.Rectangle.Left;
     }
     public class PdfReader : IDisposable
     {

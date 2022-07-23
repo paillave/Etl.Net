@@ -14,7 +14,7 @@ import Presentation from '../components/Presentation';
 
 const Bot = require('../../static/img/dotnet-bot_kayaking.svg').default;
 const EtlNet = require('../../static/img/full-black-logo.svg').default
-const streamImage = require('../../static/img/SmallStreams.jpg').url;
+// const streamImage = require('../../static/img/SmallStreams.jpg').url;
 const SponsorImage = require('../../static/img/Sponsor.svg').default;
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
@@ -55,9 +55,7 @@ export default function Home() {
   return (
     <Layout
       title={`Home`}
-      description="Fully featured ETL int .NET for .NET working with the same principle than SSIS"
-      image={streamImage}
-      keywords={["ETL", ".NET", "SSIS", "Import", "Export", "Dataprocess", "Export"]}>
+      description="Fully featured ETL int .NET for .NET working with the same principle than SSIS">
       <HomepageHeader />
       <main>
         <Presentation />
