@@ -34,7 +34,7 @@ namespace Paillave.Etl.Ftp
             var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
             using (FtpClient client = connectionParameters.CreateFtpClient())
             {
-                return (providerParameters.Recursive ? client.GetListing(folder, FtpListOption.Recursive) : client.GetListing(folder)).Where(i => i.Type == FtpFileSystemObjectType.File).ToArray();
+                return (providerParameters.Recursive ? client.GetListing(folder, FtpListOption.Recursive) : client.GetListing(folder)).Where(i => i.Type == FtpObjectType.File).ToArray();
             }
         }
         protected override void Test(FtpAdapterConnectionParameters connectionParameters, FtpAdapterProviderParameters providerParameters)
