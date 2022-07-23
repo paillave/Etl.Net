@@ -32,7 +32,7 @@ namespace Paillave.Etl.Ftp
         private void UploadSingleTime(FtpAdapterConnectionParameters connectionParameters, byte[] fileContents, string filePath)
         {
             using (FtpClient client = connectionParameters.CreateFtpClient())
-                client.Upload(fileContents, filePath);
+                client.UploadBytes(fileContents, filePath);
         }
 
         protected override void Test(FtpAdapterConnectionParameters connectionParameters, FtpAdapterProcessorParameters processorParameters)
@@ -49,7 +49,7 @@ namespace Paillave.Etl.Ftp
                     stream.CopyTo(ms);
                     fileContents = ms.ToArray();
                 }
-                client.Upload(stream, testFilePath);
+                client.UploadStream(stream, testFilePath);
                 client.DeleteFile(testFilePath);
             }
         }
