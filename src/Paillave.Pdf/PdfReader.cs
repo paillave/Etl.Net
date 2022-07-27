@@ -5,11 +5,7 @@ using System.Linq;
 using UglyToad.PdfPig;
 using UglyToad.PdfPig.Content;
 using UglyToad.PdfPig.DocumentLayoutAnalysis;
-using UglyToad.PdfPig.DocumentLayoutAnalysis.PageSegmenter;
 using UglyToad.PdfPig.DocumentLayoutAnalysis.WordExtractor;
-using UglyToad.PdfPig.Util;
-using static UglyToad.PdfPig.DocumentLayoutAnalysis.PageSegmenter.DocstrumBoundingBoxes;
-using static UglyToad.PdfPig.DocumentLayoutAnalysis.PageSegmenter.RecursiveXYCut;
 
 namespace Paillave.Pdf
 {
@@ -22,248 +18,7 @@ namespace Paillave.Pdf
     {
         public TextBlock TextBlock { get; set; }
         public bool KeepTogether { get; set; }
-        public string AreaCode { get; set; }
-    }
-    public class Areas : Dictionary<string, PdfZone>
-    {
-        public string GetAreaCode(UglyToad.PdfPig.Core.PdfRectangle rectangle, Page page)
-                => this.FirstOrDefault(a =>
-                {
-                    if (a.Value.PageNumber != null && page.Number != a.Value.PageNumber.Value)
-                        return false;
-                    // var percentageRectangle = new UglyToad.PdfPig.Core.PdfRectangle(rectangle.Left / page.Width, 1 - rectangle.Top / page.Height, rectangle.Right / page.Width, 1 - rectangle.Bottom / page.Height);
-                    return a.Value.IsInZone(rectangle);
-                }).Key;
-    }
-    public abstract class ExtractMethod
-    {
-        internal Areas Areas { get; set; }
-        public ExtractMethod(WordExtractionType wordExtractionType)
-        {
-            switch (wordExtractionType)
-            {
-                case WordExtractionType.Default:
-                    this.WordExtractor = DefaultWordExtractor.Instance;
-                    break;
-                case WordExtractionType.NearestNeighbour:
-                    this.WordExtractor = NearestNeighbourWordExtractor.Instance;
-                    break;
-            }
-        }
-        public static ExtractMethod RecursiveXY(WordExtractionType wordExtractionType = WordExtractionType.NearestNeighbour, Areas areas = null) => new RecursiveXYSegmentMethod(wordExtractionType, areas ?? new Areas());
-        public static ExtractMethod Docstrum(WordExtractionType wordExtractionType = WordExtractionType.NearestNeighbour, Areas areas = null) => new DocstrumSegmentMethod(wordExtractionType, areas ?? new Areas());
-        public static ExtractMethod SimpleLines(WordExtractionType wordExtractionType = WordExtractionType.NearestNeighbour, Areas areas = null) => new SimpleLinesMethod(wordExtractionType, areas ?? new Areas());
-        protected virtual IEnumerable<TextBlock> GetTextGroups(Page page, IEnumerable<Word> words)
-        {
-            yield break;
-        }
-        internal virtual List<ProcessedBlock> ExtractTextBlocks(Page page)
-        {
-            return page
-                .GetWords(this.WordExtractor)
-                .Where(i => i.BoundingBox.Rotation < 10 || i.BoundingBox.Rotation > 350)
-                .Select(word => new
-                {
-                    Area = this.Areas.GetAreaCode(word.BoundingBox, page),
-                    Word = word
-                })
-                .GroupBy(i => i.Area)
-                .SelectMany(i => GetTextGroups(page, i.Select(i => i.Word).ToList()).Select(j => new ProcessedBlock { KeepTogether = false, AreaCode = i.Key, TextBlock = j }))
-                .OrderByDescending(i => i.TextBlock.BoundingBox.Top)
-                .ToList();
-
-
-
-            // var words = page
-            //     .GetWords(this.WordExtractor)
-            //     .Where(i => i.BoundingBox.Rotation < 10 || i.BoundingBox.Rotation > 350)
-            //     .ToList();
-            // var blocks = GetTextGroups(page, words)
-            //     .ToList();
-            // return blocks.Select(i => new ProcessedBlock { KeepTogether = false, TextBlock = i }).ToList();//.SelectMany(i => i.TextLines).ToList();
-        }
-        protected IWordExtractor WordExtractor { get; }
-    }
-    public class SimpleLinesMethod : ExtractMethod
-    {
-        public SimpleLinesMethod(WordExtractionType wordExtractionType, Areas areas) : base(wordExtractionType) { }
-        private class ProcessingLine
-        {
-            private readonly List<Word> _words = new List<Word>();
-            private readonly List<double> _heights = new List<double>();
-            private double _lastTop;
-            private double _lastBottom;
-            public string Area { get; }
-            public ProcessingLine(Word word, double height, string area)
-            {
-                Area = area;
-                (_lastTop, _lastBottom) = (word.BoundingBox.Top, Math.Min(word.BoundingBox.Bottom, word.BoundingBox.Top - height));
-                _heights.Add(height);
-                _words.Add(word);
-            }
-            public bool IsSameLine(Word word, double height, string area)
-            {
-                if (area != Area) return false;
-                var bottom = Math.Min(word.BoundingBox.Bottom, word.BoundingBox.Top - height);
-                var middle = (word.BoundingBox.Top + bottom) / 2;
-                var lastMiddle = (_lastTop + _lastBottom) / 2;
-                return (middle < _lastTop && middle > _lastBottom) || (lastMiddle < word.BoundingBox.Top && lastMiddle > bottom);
-            }
-            public void AddWord(Word word, double height)
-            {
-                _lastTop = word.BoundingBox.Top;
-                _lastBottom = Math.Min(word.BoundingBox.Bottom, word.BoundingBox.Top - height);
-                _heights.Add(height);
-                _words.Add(word);
-            }
-            public IEnumerable<TextLine> GetTextLines()
-            {
-                var maxSpace = _heights.Average();
-                Word previousWord = null;
-                List<Word> currentBlock = new List<Word>();
-                foreach (var word in _words.OrderBy(w => w.BoundingBox.Left).ThenByDescending(w => w.BoundingBox.Top).Select(i => CloneWord(i)).ToList())
-                {
-                    if (previousWord != null)
-                    {
-                        if (previousWord.BoundingBox.Right + maxSpace < word.BoundingBox.Left)
-                        {
-                            if (currentBlock.Count > 0)
-                                yield return new TextLine(currentBlock);
-                            currentBlock = new List<Word>();
-                        }
-                        currentBlock.Add(word);
-                        previousWord = word;
-                    }
-                    else
-                    {
-                        previousWord = word;
-                        currentBlock.Add(word);
-                    }
-                }
-                if (currentBlock.Count > 0)
-                {
-                    yield return new TextLine(currentBlock);
-                }
-            }
-            private Word CloneWord(Word word)
-            {
-                return word;
-                // var ret = new Word(word.Letters.Select(l => CloneLetter(l)).ToList());
-                // return ret;
-            }
-            private Letter CloneLetter(Letter letter)
-                => new Letter(
-                    letter.Value,
-                    new UglyToad.PdfPig.Core.PdfRectangle(
-                        letter.GlyphRectangle.Left,
-                        letter.GlyphRectangle.Bottom,
-                        letter.GlyphRectangle.Right,
-                        letter.GlyphRectangle.Height > 1 ? letter.GlyphRectangle.Top : letter.GlyphRectangle.Bottom + letter.PointSize),
-                    letter.StartBaseLine,
-                    letter.EndBaseLine,
-                    letter.Width,
-                    letter.FontSize,
-                    letter.Font,
-                    letter.Color,
-                    letter.PointSize,
-                    letter.TextSequence);
-        }
-        private class ProcessingLines
-        {
-            private readonly List<ProcessingLine> _processingLines = new List<ProcessingLine>();
-            private readonly Areas _areas;
-            public ProcessingLines(Areas areas) => _areas = areas;
-            public void AddWord(Word word, double height, Page page)
-            {
-                if (string.IsNullOrWhiteSpace(word.Text)) return;
-                var area = _areas.GetAreaCode(word.BoundingBox, page);
-                var processingLine = _processingLines.FirstOrDefault(i => i.IsSameLine(word, height, area));
-                if (processingLine == null)
-                {
-                    processingLine = new ProcessingLine(word, height, area);
-                    _processingLines.Add(processingLine);
-                }
-                else
-                {
-                    processingLine.AddWord(word, height);
-                }
-            }
-            public List<(TextBlock, string)> GetTextLines() => _processingLines.Select(i =>
-            {
-                var lines = i.GetTextLines().ToList();
-                return (new TextBlock(lines, "\t"), i.Area);
-            }).ToList();
-        }
-        internal override List<ProcessedBlock> ExtractTextBlocks(Page page)
-        {
-            var processingLines = new ProcessingLines(this.Areas);
-            var words = page.GetWords(this.WordExtractor).Where(i => !string.IsNullOrWhiteSpace(i.Text))
-                .Where(i => i.BoundingBox.Rotation < 10 || i.BoundingBox.Rotation > 350)
-                .OrderBy(i => i.BoundingBox.Left).ThenByDescending(i => i.BoundingBox.Top).ToList();
-            foreach (var word in words)
-            {
-                var height = word.BoundingBox.Height;
-                height = Math.Max(height, word.Letters[0].PointSize);
-                processingLines.AddWord(word, height, page);
-            }
-            return processingLines.GetTextLines().OrderByDescending(i => i.Item1.BoundingBox.Top).Select(i => new ProcessedBlock { KeepTogether = true, TextBlock = i.Item1, AreaCode = i.Item2 }).ToList();
-        }
-    }
-    public class RecursiveXYSegmentMethod : ExtractMethod
-    {
-        public RecursiveXYSegmentMethod(WordExtractionType wordExtractionType, Areas areas) : base(wordExtractionType) { }
-
-        protected override IEnumerable<TextBlock> GetTextGroups(Page page, IEnumerable<Word> words)
-            => new RecursiveXYCut(new RecursiveXYCutOptions { MinimumWidth = page.Width / 3 }).GetBlocks(words);
-    }
-    public class DocstrumSegmentMethod : ExtractMethod
-    {
-        public DocstrumSegmentMethod(WordExtractionType wordExtractionType, Areas areas) : base(wordExtractionType) { }
-
-        protected override IEnumerable<TextBlock> GetTextGroups(Page page, IEnumerable<Word> words)
-            => new DocstrumBoundingBoxes(new DocstrumBoundingBoxesOptions()
-            {
-                // WithinLineBounds = new DocstrumBoundingBoxes.AngleBounds(-45, 45),
-                // BetweenLineBounds = new DocstrumBoundingBoxes.AngleBounds(35, 170),
-                BetweenLineMultiplier = 1.5
-            }).GetBlocks(words);
-    }
-    public enum Units
-    {
-        Millimeters = 1,
-        Centimeters = 2,
-        Inches = 3
-    }
-    public class PdfZone
-    {
-        public double Left { get; set; }
-        public double Width { get; set; }
-        public double Top { get; set; }
-        public double Height { get; set; }
-        public Units Units { get; set; } = Units.Centimeters;
-        public int? PageNumber { get; set; }
-        private UglyToad.PdfPig.Core.PdfRectangle? _rectangle = null;
-        private UglyToad.PdfPig.Core.PdfRectangle Rectangle
-        {
-            get
-            {
-                if (_rectangle != null) return _rectangle.Value;
-                _rectangle = new UglyToad.PdfPig.Core.PdfRectangle(ToPdfUnits(this.Left), ToPdfUnits(this.Top), ToPdfUnits(this.Left + this.Width), ToPdfUnits(this.Top - this.Height));
-                return _rectangle.Value;
-            }
-        }
-        private double ToPdfUnits(double value) => this.Units switch
-        {
-            Units.Millimeters => (72 / 25.4) * value,
-            Units.Centimeters => (72 / 2.54) * value,
-            Units.Inches => 72 * value,
-            _ => throw new Exception("unknown unit")
-        };
-        internal bool IsInZone(UglyToad.PdfPig.Core.PdfRectangle rectangle) =>
-            rectangle.Bottom > this.Rectangle.Top
-            && rectangle.Top < this.Rectangle.Bottom
-            && rectangle.Left < this.Rectangle.Width
-            && rectangle.Right > this.Rectangle.Left;
+        public HashSet<string> AreaCodes { get; set; }
     }
     public class PdfReader : IDisposable
     {
@@ -336,7 +91,7 @@ namespace Paillave.Pdf
                             }
                             else
                             {
-                                pdfProcessor.ProcessLine(string.Join('\t', block.TextBlock.TextLines.Select(i => i.Text)), page.Number, ++lineNumber, ++lineNumberInParagraph, ++lineNumberInPage, _structureReader.Current, block.AreaCode);
+                                pdfProcessor.ProcessLine(string.Join('\t', block.TextBlock.TextLines.Select(i => i.Text)), page.Number, ++lineNumber, ++lineNumberInParagraph, ++lineNumberInPage, _structureReader.Current, block.AreaCodes);
                             }
                         }
                     }
@@ -355,7 +110,7 @@ namespace Paillave.Pdf
                             }
                             else
                             {
-                                pdfProcessor.ProcessLine(textLine.Text, page.Number, ++lineNumber, ++lineNumberInParagraph, ++lineNumberInPage, _structureReader.Current, block.AreaCode);
+                                pdfProcessor.ProcessLine(textLine.Text, page.Number, ++lineNumber, ++lineNumberInParagraph, ++lineNumberInPage, _structureReader.Current, block.AreaCodes);
                             }
                         }
                 }
