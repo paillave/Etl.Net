@@ -62,8 +62,9 @@ namespace Paillave.Etl.Pdf
     {
         public string Text { get; }
         public int LineNumber { get; }
-        public string AreaCode { get; }
-        public PdfTextLine(IFileValue fileValue, List<string> section, int pageNumber, int lineNumber, string text, string areaCode) : base(section, pageNumber, fileValue) => (Text, LineNumber, AreaCode) = (text, lineNumber, areaCode);
+        public HashSet<string> AreaCodes { get; }
+        public PdfTextLine(IFileValue fileValue, List<string> section, int pageNumber, int lineNumber, string text, HashSet<string> areaCodes) : base(section, pageNumber, fileValue) 
+            => (Text, LineNumber, AreaCodes) = (text, lineNumber, areaCodes);
     }
     public class PdfRowsValuesProvider : ValuesProviderBase<IFileValue, PdfContent>
     {
@@ -84,7 +85,7 @@ namespace Paillave.Etl.Pdf
         private readonly Action<PdfContent> _push;
         private readonly IFileValue _fileValue;
         public PdfVisitor(Action<PdfContent> push, IFileValue fileValue) => (_push, _fileValue) = (push, fileValue);
-        public void ProcessLine(string text, int pageNumber, int lineNumber, int lineNumberInParagraph, int lineNumberInPage, List<string> section, string area)
+        public void ProcessLine(string text, int pageNumber, int lineNumber, int lineNumberInParagraph, int lineNumberInPage, List<string> section, HashSet<string> area)
             => _push(new PdfTextLine(_fileValue, section, pageNumber, lineNumber, text, area));
         public void ProcessTable(List<List<List<string>>> table, int pageNumber, List<string> section)
             => _push(new PdfTable(_fileValue, section, pageNumber, table));

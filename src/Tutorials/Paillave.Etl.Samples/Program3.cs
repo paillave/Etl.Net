@@ -18,22 +18,30 @@ using UglyToad.PdfPig.Graphics.Colors;
 
 namespace Paillave.Etl.Samples
 {
-    // class PdfVisitor : IPdfVisitor
-    // {
-    //     public void ProcessHeader(List<string> section, int pageNumber)
-    //     {
-    //     }
+    class PdfVisitor : IPdfVisitor
+    {
+        public Dictionary<string, List<string>> Lines { get; } = new Dictionary<string, List<string>>();
+        private List<string> GetLines(string area)
+        {
+            if (Lines.TryGetValue(area, out var lines)) return lines;
+            lines = new List<string>();
+            Lines[area] = lines;
+            return lines;
+        }
+        public void ProcessHeader(List<string> section, int pageNumber)
+        {
+        }
 
-    //     public void ProcessLine(string text, int pageNumber, int lineNumber, int lineNumberInParagraph, int lineNumberInPage, List<string> section, string areaCode)
-    //     {
-    //         Console.WriteLine("-----------------------------------------------------------------------");
-    //         Console.WriteLine(text);
-    //     }
+        public void ProcessLine(string text, int pageNumber, int lineNumber, int lineNumberInParagraph, int lineNumberInPage, List<string> section, HashSet<string> areas)
+        {
+            foreach (var area in areas)
+                GetLines(area).Add(text);
+        }
 
-    //     public void ProcessTable(List<List<List<string>>> table, int pageNumber, List<string> section)
-    //     {
-    //     }
-    // }
+        public void ProcessTable(List<List<List<string>>> table, int pageNumber, List<string> section)
+        {
+        }
+    }
     class Program5
     {
         static void Main(string[] args)
@@ -99,15 +107,20 @@ namespace Paillave.Etl.Samples
             //     // }
             // });
 
-            // using (var stream = File.OpenRead("AM Stadtpark Holdings Sarl  - 20220426_ACD correspondence.pdf"))
-            // {
-            //     var pdfReader = new PdfReader(stream, null, null, ExtractMethod.SimpleLines());
-            //     pdfReader.Read(new PdfVisitor());
-            // }
+            using (var stream = File.OpenRead("InputFiles/TestPdf.pdf"))
+            {
+                var pdfReader = new PdfReader(stream, null, null, ExtractMethod.SimpleLines(), new Areas
+                {
+                    ["1"] = new PdfZone { Left = 11.67, Width = 6.43, Top = 29.7 - 2.123, Height = 3.3 },
+                    ["2"] = new PdfZone { Left = 11.67, Width = 6.43, Top = 29.7 - 3.962, Height = 3.3 }
+                });
+                var pdfVisitor = new PdfVisitor();
+                pdfReader.Read(pdfVisitor);
+            }
 
-            var dpis = new DirectoryInfo("/home/stephane/Downloads/IN").EnumerateFiles("*.pdf").Select(fileInfo => new { FileName = fileInfo.Name, Dpi = GetDpi(fileInfo.OpenRead()) }).ToList();
-            foreach (var dpi in dpis)
-                Console.WriteLine($"{dpi.FileName}\t{dpi.Dpi}");
+            // var dpis = new DirectoryInfo("/home/stephane/Downloads/IN").EnumerateFiles("*.pdf").Select(fileInfo => new { FileName = fileInfo.Name, Dpi = GetDpi(fileInfo.OpenRead()) }).ToList();
+            // foreach (var dpi in dpis)
+            //     Console.WriteLine($"{dpi.FileName}\t{dpi.Dpi}");
         }
         private static int GetDpi(Stream stream)
         {
