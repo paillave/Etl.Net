@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace Paillave.Etl.Core
@@ -60,11 +61,19 @@ namespace Paillave.Etl.Core
             public string InputName { get; set; }
             public string SourceNodeName { get; set; }
         }
+        private object GetMemberInfoValue(MemberInfo mi, object obj) => mi switch
+        {
+            PropertyInfo pi => pi.GetValue(obj),
+            FieldInfo fi => fi.GetValue(obj),
+            _ => throw new Exception("")
+        };
+        private IEnumerable<MemberInfo> GetMemberInfos(Type type)
+            => type.GetProperties().Cast<MemberInfo>().Union(type.GetFields());
+        private IEnumerable<MemberInfo> GetMemberInfos<T>() => GetMemberInfos(typeof(T));
         private List<InputStream> GetInputStreams(TArgs args)
         {
-            return args.GetType()
-                .GetProperties()
-                .Select(propertyInfo => new { propertyInfo.Name, Value = propertyInfo.GetValue(args) as IStream })
+            return GetMemberInfos(args.GetType())
+                .Select(propertyInfo => new { propertyInfo.Name, Value = GetMemberInfoValue(propertyInfo, args) as IStream })
                 .Where(i => i.Value != null)
                 .Select(i => new InputStream { SourceNodeName = i.Value.SourceNode.NodeName, InputName = i.Name })
                 .ToList();
@@ -72,9 +81,8 @@ namespace Paillave.Etl.Core
 
         private IExecutionContext GetExecutionContext(TArgs args)
         {
-            return args.GetType()
-                .GetProperties()
-                .Select(propertyInfo => propertyInfo.GetValue(args))
+            return GetMemberInfos(args.GetType())
+                .Select(propertyInfo => GetMemberInfoValue(propertyInfo, args))
                 .OfType<IStream>()
                 .Select(i => i.SourceNode.ExecutionContext)
                 .OrderBy(i => !i.IsTracingContext)
@@ -82,9 +90,8 @@ namespace Paillave.Etl.Core
         }
         private INodeContext GetNodeContext(TArgs args)
         {
-            return args.GetType()
-                .GetProperties()
-                .Select(propertyInfo => propertyInfo.GetValue(args))
+            return GetMemberInfos(args.GetType())
+                .Select(propertyInfo => GetMemberInfoValue(propertyInfo, args))
                 .OfType<IStream>()
                 .Select(i => i.SourceNode)
                 .FirstOrDefault(i => !i.ExecutionContext.IsTracingContext);
