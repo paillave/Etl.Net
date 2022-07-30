@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using Microsoft.EntityFrameworkCore;
 using Paillave.Etl.Core;
+using Paillave.Etl.Reactive.Operators;
 
 namespace Paillave.Etl.EntityFrameworkCore
 {
@@ -14,6 +15,7 @@ namespace Paillave.Etl.EntityFrameworkCore
     }
     public class EfCoreSingleValueProviderArgs<TIn, TOut>
     {
+        public IStream<TIn> Stream { get; set; }
         public string ConnectionKey { get; set; }
         public Func<DbContextWrapper, TIn, IQueryable<TOut>> GetQuery { get; set; }
     }
@@ -68,4 +70,33 @@ namespace Paillave.Etl.EntityFrameworkCore
             push(res);
         }
     }
+
+
+
+    public class EfCoreSelectSingleStreamNode<TIn, TOut> : StreamNodeBase<TOut, ISingleStream<TOut>, EfCoreSingleValueProviderArgs<TIn, TOut>>
+    {
+        public EfCoreSelectSingleStreamNode(string name, EfCoreSingleValueProviderArgs<TIn, TOut> args) : base(name, args)
+        {
+        }
+
+        public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+
+        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
+
+        protected override ISingleStream<TOut> CreateOutputStream(EfCoreSingleValueProviderArgs<TIn, TOut> args)
+        {
+            var obs = args.Stream.Observable.Map(input =>
+            {
+                var resolver = args.Stream.SourceNode.ExecutionContext.DependencyResolver;
+                var invoker = args.Stream.SourceNode.ExecutionContext;
+                var dbContext = args.ConnectionKey == null
+                        ? resolver.Resolve<DbContext>()
+                        : resolver.Resolve<DbContext>(args.ConnectionKey);
+                var res = invoker.InvokeInDedicatedThreadAsync(dbContext, () => args.GetQuery(new DbContextWrapper(dbContext), input).FirstOrDefault()).Result;
+                return res;
+            });
+            return base.CreateSingleStream(obs);
+        }
+    }
+
 }

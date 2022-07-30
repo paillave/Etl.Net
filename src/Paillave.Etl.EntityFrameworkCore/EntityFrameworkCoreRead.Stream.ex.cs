@@ -15,6 +15,13 @@ namespace Paillave.Etl.EntityFrameworkCore
                         ConnectionKey = connectionKey,
                         StreamMode = streamMode
                     }), noParallelisation);
+        public static ISingleStream<TOut> EfCoreSelectSingle<TIn, TOut>(this ISingleStream<TIn> stream, string name,
+            Func<DbContextWrapper, TIn, IQueryable<TOut>> getQuery, string connectionKey = null) where TOut : class
+                => new EfCoreSelectSingleStreamNode<TIn, TOut>(name, new EfCoreSingleValueProviderArgs<TIn, TOut>
+                {
+                    GetQuery = getQuery,
+                    ConnectionKey = connectionKey
+                }).Output;
         public static IStream<TOut> EfCoreSelectSingle<TIn, TOut>(this IStream<TIn> stream, string name,
             Func<DbContextWrapper, TIn, IQueryable<TOut>> getQuery, string connectionKey = null, bool noParallelisation = false) where TOut : class
                 => stream.CrossApply<TIn, TOut>(name, new EfCoreSingleValueProvider<TIn, TOut>(
