@@ -230,16 +230,16 @@ namespace Paillave.Etl.EntityFrameworkCore
         {
             var entities = items.Select(i => i.Item2).ToArray();
             var pivotKeys = Args.PivotKeys == null ? (Expression<Func<TInEf, object>>[])null : Args.PivotKeys.ToArray();
-            switch (bulkLoadMode)
+            if (bulkLoadMode == SaveMode.EntityFrameworkCore)
             {
-                case SaveMode.EntityFrameworkCore:
-                    dbContext.EfSaveAsync(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly).Wait();
-                    break;
-                case SaveMode.SqlServerBulk:
+                dbContext.EfSaveAsync(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly).Wait();
+            }
+            else
+            {
+                if (dbContext.Database.IsSqlServer())
                     dbContext.BulkSave(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly);
-                    break;
-                default:
-                    break;
+                else
+                    dbContext.EfSaveAsync(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly).Wait();
             }
             DetachAllEntities(dbContext);
         }
