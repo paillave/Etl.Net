@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>Paillave.EtlNet.Scheduler</PackageId>
-    <Version>2.0.45</Version>
+    <Version>2.0.46</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
