@@ -11,7 +11,7 @@ namespace Paillave.Pdf
                 {
                     if (a.Value.PageNumber != null && page.Number != a.Value.PageNumber.Value)
                         return false;
-                    return a.Value.IsInZone(rectangle);
+                    return a.Value.IsInZone(rectangle, page.Width, page.Height);
                 }).Select(i => i.Key).ToHashSet();
     }
 }

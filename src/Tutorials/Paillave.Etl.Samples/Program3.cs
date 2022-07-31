@@ -20,7 +20,10 @@ namespace Paillave.Etl.Samples
 {
     class PdfVisitor : IPdfVisitor
     {
-        public Dictionary<string, List<string>> Lines { get; } = new Dictionary<string, List<string>>();
+        public Dictionary<string, List<string>> Lines { get; } = new Dictionary<string, List<string>>
+        {
+            [""] = new List<string>()
+        };
         private List<string> GetLines(string area)
         {
             if (Lines.TryGetValue(area, out var lines)) return lines;
@@ -34,6 +37,7 @@ namespace Paillave.Etl.Samples
 
         public void ProcessLine(string text, int pageNumber, int lineNumber, int lineNumberInParagraph, int lineNumberInPage, List<string> section, HashSet<string> areas)
         {
+            GetLines("").Add(text);
             foreach (var area in areas)
                 GetLines(area).Add(text);
         }
@@ -91,10 +95,9 @@ namespace Paillave.Etl.Samples
             // etlResolver.TryResolve<IPdfVisitor>(out var tmp);
             // etlResolver.TryResolve<IPdfVisitor>(out tmp);
 
-
-            var processRunner = StreamProcessRunner.Create<string>(i => i.EfCoreSelectSingle("dfgfsd", (ctx, j) => ctx.Set<Tmp>()));
-            var ds = processRunner.GetDefinitionStructure();
-            processRunner.ExecuteAsync("ezer").Wait();
+            // var processRunner = StreamProcessRunner.Create<string>(i => i.EfCoreSelectSingle("dfgfsd", (ctx, j) => ctx.Set<Tmp>()));
+            // var ds = processRunner.GetDefinitionStructure();
+            // processRunner.ExecuteAsync("ezer").Wait();
             // // ITraceReporter traceReporter = new AdvancedConsoleExecutionDisplay();
             // // traceReporter.Initialize(processRunner.GetDefinitionStructure());
 
@@ -109,16 +112,15 @@ namespace Paillave.Etl.Samples
             //     // }
             // });
 
-            // using (var stream = File.OpenRead("InputFiles/TestPdf.pdf"))
-            // {
-            //     var pdfReader = new PdfReader(stream, null, null, ExtractMethod.SimpleLines(), new Areas
-            //     {
-            //         ["1"] = new PdfZone { Left = 11.67, Width = 6.43, Top = 29.7 - 2.123, Height = 3.3 },
-            //         ["2"] = new PdfZone { Left = 11.67, Width = 6.43, Top = 29.7 - 3.962, Height = 3.3 }
-            //     });
-            //     var pdfVisitor = new PdfVisitor();
-            //     pdfReader.Read(pdfVisitor);
-            // }
+            using (var stream = File.OpenRead("InputFiles/testFile.pdf"))
+            {
+                var pdfReader = new PdfReader(stream, null, null, ExtractMethod.SimpleLines(), new Areas
+                {
+                    ["ADDRESS"] = new PdfZone { Left = 9.2, Width = 11, Top = 29.7, Height = 9, PageNumber = 1 },
+                });
+                var pdfVisitor = new PdfVisitor();
+                pdfReader.Read(pdfVisitor);
+            }
 
             // var dpis = new DirectoryInfo("/home/stephane/Downloads/IN").EnumerateFiles("*.pdf").Select(fileInfo => new { FileName = fileInfo.Name, Dpi = GetDpi(fileInfo.OpenRead()) }).ToList();
             // foreach (var dpi in dpis)
