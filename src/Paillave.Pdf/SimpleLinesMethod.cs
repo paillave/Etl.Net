@@ -25,7 +25,7 @@ namespace Paillave.Pdf
             }
             public bool IsSameLine(Word word, double height, HashSet<string> areas)
             {
-                if (!areas.Intersect(Areas).Any()) return false;
+                if ((Areas.Any() && areas.Any()) && !areas.Intersect(Areas).Any()) return false;
                 var bottom = Math.Min(word.BoundingBox.Bottom, word.BoundingBox.Top - height);
                 var middle = (word.BoundingBox.Top + bottom) / 2;
                 var lastMiddle = (_lastTop + _lastBottom) / 2;
