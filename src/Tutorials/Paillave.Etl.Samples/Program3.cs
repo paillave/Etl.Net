@@ -92,17 +92,7 @@ namespace Paillave.Etl.Samples
             // etlResolver.TryResolve<IPdfVisitor>(out tmp);
 
 
-            var processRunner = StreamProcessRunner.Create<string>(i =>
-            i.SubProcess("sdf", s =>
-            {
-                var s1 = s.Select("s1", x => x);
-                var s2 = s.Select("s2", x => x);
-                var s3 = s.Select("s3", x => x);
-                var s4 = s.Select("s4", x => x);
-                var s5 = s.Select("s5", x => x);
-                var s6 = s.Select("s6", x => x);
-                return s.Combine("c", s1, s2, s3, s4, s5, s6, (a, b, c, d, e, f, g) => (a, b));
-            }).Do("Show on console", i => Console.WriteLine($"{i.Item1}-{i.Item2}")));
+            var processRunner = StreamProcessRunner.Create<string>(i => i.EfCoreSelectSingle("dfgfsd", (ctx, j) => ctx.Set<Tmp>()));
             var ds = processRunner.GetDefinitionStructure();
             processRunner.ExecuteAsync("ezer").Wait();
             // // ITraceReporter traceReporter = new AdvancedConsoleExecutionDisplay();
@@ -160,4 +150,8 @@ namespace Paillave.Etl.Samples
         //     //    .Do("print console", i => Console.WriteLine(i.Label));
         // }
     }
+}
+public class Tmp
+{
+
 }
