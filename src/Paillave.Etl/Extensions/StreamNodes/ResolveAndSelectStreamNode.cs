@@ -57,7 +57,7 @@ namespace Paillave.Etl.Core
         private Resolver<TIn> _resolver;
         private string _serviceKey;
         internal ResolverSelector(Resolver<TIn> resolver, string serviceKey) => (_resolver, _serviceKey) = (resolver, serviceKey);
-        public Selector<TIn, TService, TOut> Select<TOut>(Func<TIn, TService, TOut> select) => new Selector<TIn, TService, TOut>(this, select);
+        public Selector<TIn, TService, TOut> ThenSelect<TOut>(Func<TIn, TService, TOut> select) => new Selector<TIn, TService, TOut>(this, select);
         internal TService ResolveService() => _serviceKey == null ? _resolver.ResolveService<TService>() : _resolver.ResolveService<TService>(_serviceKey);
     }
     public class Selector<TIn, TService, TOut> where TService : class

@@ -82,7 +82,7 @@ namespace Paillave.Etl.ExcelFile.Core
             }
             return this;
         }
-        public ExcelFileReader GetExcelReader(ExcelWorksheet excelWorksheet = null)
+        internal ExcelFileReader GetExcelReader(ExcelWorksheet excelWorksheet = null)
         {
             if ((_fieldDefinitions?.Count ?? 0) == 0) SetDefaultMapping();
             if (_dataRange == null)
@@ -161,7 +161,7 @@ namespace Paillave.Etl.ExcelFile.Core
             this._cultureInfo = CultureInfo.GetCultureInfo(name);
             return this;
         }
-        public ExcelFileDefinition<T> MapColumnToProperty<TField>(int index, Expression<Func<T, TField>> memberLambda, CultureInfo cultureInfo = null)
+        internal ExcelFileDefinition<T> MapColumnToProperty<TField>(int index, Expression<Func<T, TField>> memberLambda, CultureInfo cultureInfo = null)
         {
             SetFieldDefinition(new ExcelFileFieldDefinition
             {
@@ -171,7 +171,7 @@ namespace Paillave.Etl.ExcelFile.Core
             });
             return this;
         }
-        public ExcelFileDefinition<T> MapColumnToProperty<TField>(int index, Expression<Func<T, TField>> memberLambda, string cultureInfo)
+        internal ExcelFileDefinition<T> MapColumnToProperty<TField>(int index, Expression<Func<T, TField>> memberLambda, string cultureInfo)
         {
             SetFieldDefinition(new ExcelFileFieldDefinition
             {

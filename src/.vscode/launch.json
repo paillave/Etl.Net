@@ -21,7 +21,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/Tutorials/Paillave.Etl.Samples/bin/Debug/net6.0/Paillave.Etl.Samples.dll",
-            "args": [            ],
+            "args": [
+                "/home/stephane/Desktop/"
+            ],
             "cwd": "${workspaceFolder}/Tutorials/Paillave.Etl.Samples",
             "stopAtEntry": false,
             "console": "externalTerminal"

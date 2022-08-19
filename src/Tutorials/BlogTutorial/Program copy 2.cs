@@ -29,7 +29,7 @@ namespace BlogTutorial
             contextStream
                 .ResolveAndSelect("get some values", o => o
                     .Resolve<SomeExternalValue>()
-                    .Select((context, injected) => $"{context}-{injected.AStringValue}:{injected.AnIntValue}"));
+                    .ThenSelect((context, injected) => $"{context}-{injected.AStringValue}:{injected.AnIntValue}"));
         }
     }
 }
