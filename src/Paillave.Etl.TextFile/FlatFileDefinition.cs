@@ -24,6 +24,28 @@ namespace Paillave.Etl.TextFile
         private bool _respectHeaderCase = false;
 
         public int FirstLinesToIgnore { get; private set; }
+        private IEnumerable<string> GetDefaultColumnNames()
+        {
+            return _fieldDefinitions.Select((i, idx) => new { Name = i.ColumnName ?? i.PropertyInfo.Name, DefinedPosition = i.Position, FallbackPosition = idx })
+                .OrderBy(i => i.DefinedPosition)
+                .ThenBy(i => i.FallbackPosition)
+                .Select(i => i.Name);
+        }
+        private void SetFieldDefinition(FlatFileFieldDefinition fieldDefinition)
+        {
+            var existingFieldDefinition = _fieldDefinitions.FirstOrDefault(i => i.PropertyInfo.Name == fieldDefinition.PropertyInfo.Name);
+            if (existingFieldDefinition == null)
+            {
+                if (fieldDefinition.Position == null)
+                    fieldDefinition.Position = (_fieldDefinitions.Max(i => i.Position) ?? 0) + 1;
+                _fieldDefinitions.Add(fieldDefinition);
+            }
+            else
+            {
+                if (fieldDefinition.ColumnName != null) existingFieldDefinition.ColumnName = fieldDefinition.ColumnName;
+                if (fieldDefinition.Position != null) existingFieldDefinition.Position = fieldDefinition.Position;
+            }
+        }
         public FlatFileDefinition<T> IgnoreFirstLines(int firstLinesToIgnore)
         {
             FirstLinesToIgnore = firstLinesToIgnore;
@@ -55,7 +77,7 @@ namespace Paillave.Etl.TextFile
             }
             return this;
         }
-        public FlatFileDefinition<T> SetDefaultMapping(bool withColumnHeader = true, CultureInfo cultureInfo = null)
+        private FlatFileDefinition<T> SetDefaultMapping(bool withColumnHeader = true, CultureInfo cultureInfo = null)
         {
             foreach (var item in typeof(T).GetProperties().Select((propertyInfo, index) => new { propertyInfo = propertyInfo, Position = index }))
             {
@@ -108,13 +130,6 @@ namespace Paillave.Etl.TextFile
                 return new LineSerializer<T>(_lineSplitter, indexToPropertySerializerDictionary, fileNamePropertyNames, rowNumberPropertyNames, rowGuidPropertyNames);
             }
         }
-        private IEnumerable<string> GetDefaultColumnNames()
-        {
-            return _fieldDefinitions.Select((i, idx) => new { Name = i.ColumnName ?? i.PropertyInfo.Name, DefinedPosition = i.Position, FallbackPosition = idx })
-                .OrderBy(i => i.DefinedPosition)
-                .ThenBy(i => i.FallbackPosition)
-                .Select(i => i.Name);
-        }
         public string GenerateDefaultHeaderLine()
         {
             return _lineSplitter.Join(GetDefaultColumnNames());
@@ -148,21 +163,6 @@ namespace Paillave.Etl.TextFile
         {
             this._cultureInfo = CultureInfo.GetCultureInfo(name);
             return this;
-        }
-        private void SetFieldDefinition(FlatFileFieldDefinition fieldDefinition)
-        {
-            var existingFieldDefinition = _fieldDefinitions.FirstOrDefault(i => i.PropertyInfo.Name == fieldDefinition.PropertyInfo.Name);
-            if (existingFieldDefinition == null)
-            {
-                if (fieldDefinition.Position == null)
-                    fieldDefinition.Position = (_fieldDefinitions.Max(i => i.Position) ?? 0) + 1;
-                _fieldDefinitions.Add(fieldDefinition);
-            }
-            else
-            {
-                if (fieldDefinition.ColumnName != null) existingFieldDefinition.ColumnName = fieldDefinition.ColumnName;
-                if (fieldDefinition.Position != null) existingFieldDefinition.Position = fieldDefinition.Position;
-            }
         }
     }
 }

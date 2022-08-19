@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Paillave.Etl\Paillave.Etl.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.TextFile\Paillave.Etl.TextFile.csproj" />
+    <ProjectReference Include="..\..\Paillave.Etl.ExcelFile\Paillave.Etl.ExcelFile.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.Autofac\Paillave.Etl.Autofac.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.EntityFrameworkCore\Paillave.Etl.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.FromConfigurationConnectors\Paillave.Etl.FromConfigurationConnectors.csproj" />
