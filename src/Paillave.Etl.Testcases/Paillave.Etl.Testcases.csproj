@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paillave.Etl.ExcelFile\Paillave.Etl.ExcelFile.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.FileSystem\Paillave.Etl.FileSystem.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.SqlServer\Paillave.Etl.SqlServer.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.TextFile\Paillave.Etl.TextFile.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.XmlFile\Paillave.Etl.XmlFile.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.Zip\Paillave.Etl.Zip.csproj" />
+    <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
+  </ItemGroup>
+
+</Project>
