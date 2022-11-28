@@ -18,28 +18,16 @@
     <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources/*" />
-    <!-- <None Remove="ActualExecutionPlan.D3Sankey.html" />
-    <None Remove="ActualExecutionPlan.PlotySankey.html" />
-    <None Remove="ActualExecutionPlan.VisNetwork.html" />
-    <None Remove="EstimatedExecutionPlan.D3Sankey.html" />
-    <None Remove="EstimatedExecutionPlan.PlotySankey.html" />
-    <None Remove="EstimatedExecutionPlan.VisNetwork.html" /> -->
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources/*" />
-    <!-- <EmbeddedResource Include="EstimatedExecutionPlan.PlotySankey.html" />
-    <EmbeddedResource Include="EstimatedExecutionPlan.D3Sankey.html" />
-    <EmbeddedResource Include="EstimatedExecutionPlan.VisNetwork.html" />
-    <EmbeddedResource Include="ActualExecutionPlan.VisNetwork.html" />
-    <EmbeddedResource Include="ActualExecutionPlan.PlotySankey.html" />
-    <EmbeddedResource Include="ActualExecutionPlan.D3Sankey.html" /> -->
   </ItemGroup>
 
   <ItemGroup>
@@ -47,8 +35,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="6.0.5" />
-    <PackageReference Include="Terminal.Gui" Version="1.6.4" />
+    <PackageReference Include="System.Text.Json" Version="6.0.7" />
+    <PackageReference Include="Terminal.Gui" Version="1.8.2" />
   </ItemGroup>
 
 </Project>

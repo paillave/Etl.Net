@@ -19,7 +19,7 @@ namespace Paillave.Etl.Ftp
         }
         public static FtpClient CreateFtpClient(this IFtpConnectionInfo connectionParameters)
         {
-            FtpClient client = new FtpClient(connectionParameters.Server, connectionParameters.PortNumber, new NetworkCredential(connectionParameters.Login, connectionParameters.Password));
+            FtpClient client = new FtpClient(connectionParameters.Server, connectionParameters.Login, connectionParameters.Password, connectionParameters.PortNumber);
             var certificateChecks = new List<Func<X509Certificate, bool>>();
             var makeChecks = !(connectionParameters.NoCheck ?? false);
             if (makeChecks)
@@ -49,12 +49,12 @@ namespace Paillave.Etl.Ftp
             }
             if (certificateChecks.Count > 0)
             {
-                client.ValidateAnyCertificate = !makeChecks;
+                client.Config.ValidateAnyCertificate = !makeChecks;
 
                 if (connectionParameters.Tls ?? false)
-                    client.EncryptionMode = FtpEncryptionMode.Explicit;
+                    client.Config.EncryptionMode = FtpEncryptionMode.Explicit;
                 else if (connectionParameters.Ssl ?? false)
-                    client.EncryptionMode = FtpEncryptionMode.Implicit;
+                    client.Config.EncryptionMode = FtpEncryptionMode.Implicit;
 
                 client.ValidateCertificate += (c, e) => e.Accept = certificateChecks.All(certificateCheck => certificateCheck(e.Certificate));
             }

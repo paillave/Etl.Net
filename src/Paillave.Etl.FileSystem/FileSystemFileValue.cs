@@ -1,7 +1,6 @@
 using Paillave.Etl.Reactive.Disposables;
 using Paillave.Etl.Core;
 using System.IO;
-using System.Text.Json;
 
 namespace Paillave.Etl.FileSystem
 {

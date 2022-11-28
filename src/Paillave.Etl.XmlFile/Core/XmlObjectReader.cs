@@ -1,12 +1,9 @@
 ﻿using Paillave.Etl.Core;
-using Paillave.Etl.Reactive.Core;
 using Paillave.Etl.XmlFile.Core.Mapping;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Xml;
 
@@ -91,27 +88,33 @@ namespace Paillave.Etl.XmlFile.Core
             }
             else if (_xmlNodesDefinitionSearch.Contains(key))
             {
-                var nd = _xmlFileDefinition.XmlNodeDefinitions.FirstOrDefault(i => i.NodePath == key);
-
-                var objectBuilder = new ObjectBuilder(nd.Type);
-                foreach (var inScopeReadField in _inScopeReadFields.Where(rf => rf.NodeDefinition.NodePath == key))
-                    objectBuilder.Values[inScopeReadField.Definition.TargetPropertyInfo.Name] = inScopeReadField.Value;
-                foreach (var propName in nd.GetXmlFieldDefinitions().Where(i => i.ForRowGuid).Select(i => i.TargetPropertyInfo.Name).ToList())
-                    objectBuilder.Values[propName] = Guid.NewGuid();
-                foreach (var propName in nd.GetXmlFieldDefinitions().Where(i => i.ForSourceName).Select(i => i.TargetPropertyInfo.Name).ToList())
-                    objectBuilder.Values[propName] = sourceName;
+                var (value, nd) = CreateValue(sourceName, key);
                 pushResult(new XmlNodeParsed
                 {
                     NodeDefinitionName = nd.Name,
                     SourceName = sourceName,
                     NodePath = nd.NodePath,
                     Type = nd.Type,
-                    Value = objectBuilder.CreateInstance(),
+                    Value = value,
                     CorrelationKeys = nodes.Select(i => i.Guid).Where(i => i.HasValue).Select(i => i.Value).ToHashSet()
                 });
             }
             ProcessEndOfAnyNode(nodes);
         }
+
+        private (object value, IXmlNodeDefinition nd) CreateValue(string sourceName, string key)
+        {
+            var nd = _xmlFileDefinition.XmlNodeDefinitions.FirstOrDefault(i => i.NodePath == key);
+            var objectBuilder = new ObjectBuilder(nd.Type);
+            foreach (var inScopeReadField in _inScopeReadFields.Where(rf => rf.NodeDefinition.NodePath == key))
+                objectBuilder.Values[inScopeReadField.Definition.TargetPropertyInfo.Name] = inScopeReadField.Value;
+            foreach (var propName in nd.GetXmlFieldDefinitions().Where(i => i.ForRowGuid).Select(i => i.TargetPropertyInfo.Name).ToList())
+                objectBuilder.Values[propName] = Guid.NewGuid();
+            foreach (var propName in nd.GetXmlFieldDefinitions().Where(i => i.ForSourceName).Select(i => i.TargetPropertyInfo.Name).ToList())
+                objectBuilder.Values[propName] = sourceName;
+            return (objectBuilder.CreateInstance(), nd);
+        }
+
         public void Read(Stream fileStream, string sourceName, Action<XmlNodeParsed> pushResult, CancellationToken cancellationToken)
         {
             XmlReaderSettings xrs = new XmlReaderSettings();
@@ -136,7 +139,6 @@ namespace Paillave.Etl.XmlFile.Core
                         while (xmlReader.MoveToNextAttribute())
                         {
                             nodes.Push(new NodeLevel { Name = $"@{xmlReader.Name}", Guid = null });
-
                             ProcessAttributeValue(ComputeKey(nodes), nodes, xmlReader.Value);
                             nodes.Pop();
                         }

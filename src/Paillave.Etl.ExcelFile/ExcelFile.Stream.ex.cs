@@ -56,7 +56,7 @@ namespace Paillave.Etl.ExcelFile
             => stream.CrossApply(name, new ExcelDataTablesValuesProvider(), noParallelisation);
         public static IStream<TOut> CrossApplyExcelDataTables<TOut>(
             this IStream<IFileValue> stream,
-            string name, 
+            string name,
             Func<DataTable, IEnumerable<TOut>> selector,
             bool noParallelisation = false)
             => stream.CrossApply(name, new ExcelDatasetsValuesProvider<TOut>(new ExcelDatasetsValuesProviderArgs<TOut>
@@ -165,6 +165,7 @@ namespace Paillave.Etl.ExcelFile
         #endregion
 
         #region ThroughExcelFile
+        [Obsolete]
         public static IStream<TIn> ToExcelFile<TIn>(
             this IStream<TIn> stream,
             string name,
@@ -176,6 +177,7 @@ namespace Paillave.Etl.ExcelFile
                 TargetStream = resourceStream,
                 Mapping = mapping
             }).Output;
+        [Obsolete]
         public static ISortedStream<TIn, TKey> ToExcelFile<TIn, TKey>(
             this ISortedStream<TIn, TKey> stream,
             string name,
@@ -187,6 +189,7 @@ namespace Paillave.Etl.ExcelFile
                 TargetStream = resourceStream,
                 Mapping = mapping
             }).Output;
+        [Obsolete]
         public static IKeyedStream<TIn, TKey> ToExcelFile<TIn, TKey>(
             this IKeyedStream<TIn, TKey> stream,
             string name,
@@ -211,6 +214,17 @@ namespace Paillave.Etl.ExcelFile
             {
                 MainStream = stream,
                 Mapping = mapping,
+                FileName = fileName
+            }).Output;
+        public static IStream<IFileValue> ToExcelFile<TIn>(
+            this IStream<TIn> stream,
+            string name,
+            string fileName,
+            Func<ExcelFileArgBuilder, ExcelFileDefinition<TIn>> mapBuilder = null)
+            => new ToExcelFileStreamNode<TIn>(name, new ToExcelFileArgs<TIn>
+            {
+                MainStream = stream,
+                Mapping = mapBuilder == null ? null : mapBuilder(new()),
                 FileName = fileName
             }).Output;
         #endregion

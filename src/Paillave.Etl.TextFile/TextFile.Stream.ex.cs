@@ -1,5 +1,4 @@
 ﻿using System;
-using SystemIO = System.IO;
 using Paillave.Etl.Core;
 using System.Text;
 using System.Collections.Generic;
@@ -46,36 +45,6 @@ namespace Paillave.Etl.TextFile
             return stream.CrossApply<IFileValue, TOut>(name, valuesProvider, noParallelisation);
         }
         #endregion
-
-        // #region ThroughTextFile
-        // public static IStream<TIn> ToTextDataStream<TIn>(this IStream<TIn> stream, string name, ISingleStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
-        // {
-        //     return new ToTextDataStreamStreamNode<TIn, IStream<TIn>>(name, new ToTextDataStreamFileArgs<TIn, IStream<TIn>>
-        //     {
-        //         MainStream = stream,
-        //         Mapping = mapping,
-        //         TargetDataStream = resourceStream
-        //     }).Output;
-        // }
-        // public static ISortedStream<TIn, TKey> ToTextDataStream<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, ISingleStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
-        // {
-        //     return new ToTextDataStreamStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new ToTextDataStreamFileArgs<TIn, ISortedStream<TIn, TKey>>
-        //     {
-        //         MainStream = stream,
-        //         Mapping = mapping,
-        //         TargetDataStream = resourceStream
-        //     }).Output;
-        // }
-        // public static IKeyedStream<TIn, TKey> ToTextDataStream<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, ISingleStream<SystemIO.Stream> resourceStream, FlatFileDefinition<TIn> mapping)
-        // {
-        //     return new ToTextDataStreamStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new ToTextDataStreamFileArgs<TIn, IKeyedStream<TIn, TKey>>
-        //     {
-        //         MainStream = stream,
-        //         Mapping = mapping,
-        //         TargetDataStream = resourceStream
-        //     }).Output;
-        // }
-        // #endregion
 
         #region ToTextFile
         public static ISingleStream<IFileValue> ToTextFileValue<TIn>(this IStream<TIn> stream, string name, string fileName, FlatFileDefinition<TIn> mapping, Dictionary<string, IEnumerable<Destination>> destinations = null, object extraMetadata = null, Encoding encoding = null)
