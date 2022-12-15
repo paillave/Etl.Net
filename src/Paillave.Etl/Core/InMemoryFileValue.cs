@@ -1,6 +1,4 @@
 using System.IO;
-using System.Text;
-using System.Text.Json;
 namespace Paillave.Etl.Core
 {
     public class InMemoryFileValue<TMetadata> : FileValueBase<TMetadata> where TMetadata : IFileValueMetadata

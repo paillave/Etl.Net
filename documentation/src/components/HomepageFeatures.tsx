@@ -32,7 +32,7 @@ const FeatureList = [
   },
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({ Svg, title, description }) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
@@ -59,3 +59,6 @@ export default function HomepageFeatures() {
     </section>
   );
 }
+<section className={styles.features}>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ivts2qvSats" title="YouTube video player" frameBorder={0} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+</section>
