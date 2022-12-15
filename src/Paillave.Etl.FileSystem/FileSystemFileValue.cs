@@ -27,6 +27,7 @@ namespace Paillave.Etl.FileSystem
             var stream = new MemoryStream();
             using (var fileStream = _fileInfo.OpenRead())
                 fileStream.CopyTo(stream);
+            stream.Seek(0, SeekOrigin.Begin);
             return stream;
         }
     }
