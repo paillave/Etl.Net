@@ -20,13 +20,13 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus" Version="4.5.3.3" />
-    <PackageReference Include="ExcelDataReader" Version="3.6.0" />
-    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
+    <PackageReference Include="EPPlus" Version="4.5.3.3" allowedVersions=""/>
+    <PackageReference Include="ExcelDataReader" Version="3.6.0" allowedVersions="3.6.0"/>
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" allowedVersions="3.6.0" />
   </ItemGroup>
 
   <ItemGroup>

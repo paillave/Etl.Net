@@ -35,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="6.0.7" />
+    <PackageReference Include="System.Text.Json" Version="7.0.1" allowedVersions="6.0.0" />
     <PackageReference Include="Terminal.Gui" Version="1.8.2" />
   </ItemGroup>
 

@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dropbox.Api" Version="6.36.0" />
-    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="6.0.0" />
+    <PackageReference Include="Dropbox.Api" Version="6.36.0" allowedVersions="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="6.0.0" allowedVersions="6.0.0" />
   </ItemGroup>
 
   <PropertyGroup>
