@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>Paillave.EtlNet.ExcelFile</PackageId>
-    <Version>2.0.49</Version>
+    <Version>2.0.50</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -20,13 +20,13 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus" Version="4.5.3.3" />
-    <PackageReference Include="ExcelDataReader" Version="3.6.0" />
-    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
+    <PackageReference Include="EPPlus" Version="4.5.3.3" allowedVersions=""/>
+    <PackageReference Include="ExcelDataReader" Version="3.6.0" allowedVersions="3.6.0"/>
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" allowedVersions="3.6.0" />
   </ItemGroup>
 
   <ItemGroup>

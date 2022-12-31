@@ -40,10 +40,13 @@ namespace Paillave.Etl.Mail
                     var folder = string.IsNullOrWhiteSpace(_folder)
                         ? client.Inbox
                         : client.GetFolder(_folder);
-                    var flag = _setToReadIfBatchDeletion ? MessageFlags.Seen : MessageFlags.Deleted;
-                    folder.AddFlags(new UniqueId(_messageId), flag, true);
-                    if (flag == MessageFlags.Deleted)
-                        folder.Expunge();
+                    using (var openedFolder = new OpenedMailFolder(folder, FolderAccess.ReadWrite))
+                    {
+                        var flag = _setToReadIfBatchDeletion ? MessageFlags.Seen : MessageFlags.Deleted;
+                        openedFolder.AddFlags(new UniqueId(_messageId), flag, true);
+                        if (flag == MessageFlags.Deleted)
+                            openedFolder.Expunge();
+                    }
                 }
             }
         }
@@ -55,13 +58,16 @@ namespace Paillave.Etl.Mail
                 var folder = string.IsNullOrWhiteSpace(_folder)
                     ? client.Inbox
                     : client.GetFolder(_folder);
-                var message = folder.GetMessage(new UniqueId(_messageId));
-                var attachment = message.Attachments.Single(i => i.ContentDisposition.FileName == this.Name);
+                using (var openedFolder = new OpenedMailFolder(folder))
+                {
+                    var message = openedFolder.GetMessage(new UniqueId(_messageId));
+                    var attachment = message.Attachments.Single(i => i.ContentDisposition.FileName == this.Name);
 
-                MemoryStream ms = new MemoryStream();
-                attachment.WriteTo(ms, true);
-                ms.Seek(0, SeekOrigin.Begin);
-                return ms;
+                    MemoryStream ms = new MemoryStream();
+                    attachment.WriteTo(ms, true);
+                    ms.Seek(0, SeekOrigin.Begin);
+                    return ms;
+                }
             }
         }
     }

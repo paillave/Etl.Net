@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>Paillave.EtlNet.Pdf</PackageId>
-    <Version>2.0.49</Version>
+    <Version>2.0.50</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -20,12 +20,12 @@ extensions for Etl.Net to deal with PDF files
   </ItemGroup>
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="PdfPig" Version="0.1.7-alpha-20220525-559f3" />
+    <PackageReference Include="PdfPig" Version="0.1.7" allowedVersions="0.1.7-alpha-20220525-559f3" />
   </ItemGroup>
 
   <ItemGroup>

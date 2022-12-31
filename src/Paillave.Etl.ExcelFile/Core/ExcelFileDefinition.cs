@@ -48,7 +48,8 @@ namespace Paillave.Etl.ExcelFile.Core
         }
         public ExcelFileDefinition<T> WithDataset(string stringAddress)
         {
-            ArgumentNullException.ThrowIfNull(stringAddress);
+            if (string.IsNullOrWhiteSpace(stringAddress))
+                throw new ArgumentNullException(nameof(stringAddress));
             _dataRange = new ExcelAddressBase(stringAddress);
             return this;
         }
