@@ -18,7 +18,7 @@ namespace Paillave.Etl.Mail
         public string Folder { get; set; }
         public bool SetToReadIfBatchDeletion { get; set; }
     }
-    public class MailFileValueProvider : FileValueProviderBase<MailAdapterConnectionParameters, MailAdapterProviderParameters>
+    public partial class MailFileValueProvider : FileValueProviderBase<MailAdapterConnectionParameters, MailAdapterProviderParameters>
     {
         public MailFileValueProvider(string code, string name, string connectionName, MailAdapterConnectionParameters connectionParameters, MailAdapterProviderParameters providerParameters)
             : base(code, name, connectionName, connectionParameters, providerParameters) { }
@@ -42,32 +42,35 @@ namespace Paillave.Etl.Mail
                     ? client.Inbox
                     : client.GetFolder(providerParameters.Folder);
                 var query = CreateQuery(providerParameters);
-                var searchResult = folder.Search(query);
-                var matcher = string.IsNullOrWhiteSpace(providerParameters.AttachmentNamePattern) ? null : new Matcher().AddInclude(providerParameters.AttachmentNamePattern);
-                foreach (var item in searchResult)
+                using (var openedFolder = new OpenedMailFolder(folder))
                 {
-                    var message = folder.GetMessage(item);
-                    var attachments = message.Attachments.ToList();
-                    var deletionDico = attachments.ToDictionary(i => i.ContentDisposition.FileName, i => false);
-                    foreach (var attachment in message.Attachments)
+                    var searchResult = openedFolder.Search(query);
+                    var matcher = string.IsNullOrWhiteSpace(providerParameters.AttachmentNamePattern) ? null : new Matcher().AddInclude(providerParameters.AttachmentNamePattern);
+                    foreach (var item in searchResult)
                     {
-                        if (matcher == null || matcher.Match(attachment.ContentDisposition.FileName).HasMatches)
+                        var message = openedFolder.GetMessage(item);
+                        var attachments = message.Attachments.ToList();
+                        var deletionDico = attachments.ToDictionary(i => i.ContentDisposition.FileName, i => false);
+                        foreach (var attachment in message.Attachments)
                         {
-                            var fileValue = new MailFileValue(
-                                connectionParameters,
-                                providerParameters.Folder,
-                                attachment.ContentDisposition.FileName,
-                                this.Code,
-                                this.Name,
-                                this.ConnectionName,
-                                providerParameters.SetToReadIfBatchDeletion,
-                                message.Subject,
-                                message.Date.DateTime,
-                                message.From.First().Name,
-                                item.Id,
-                                deletionDico
-                            );
-                            fileValues.Add(fileValue);
+                            if (matcher == null || matcher.Match(attachment.ContentDisposition.FileName).HasMatches)
+                            {
+                                var fileValue = new MailFileValue(
+                                    connectionParameters,
+                                    providerParameters.Folder,
+                                    attachment.ContentDisposition.FileName,
+                                    this.Code,
+                                    this.Name,
+                                    this.ConnectionName,
+                                    providerParameters.SetToReadIfBatchDeletion,
+                                    message.Subject,
+                                    message.Date.DateTime,
+                                    message.From.First().Name,
+                                    item.Id,
+                                    deletionDico
+                                );
+                                fileValues.Add(fileValue);
+                            }
                         }
                     }
                 }
