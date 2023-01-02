@@ -47,8 +47,5 @@ namespace Paillave.Etl.Ftp
         public string Server { get; set; }
         public string Folder { get; set; }
         public string Name { get; set; }
-        public string ConnectorCode { get; set; }
-        public string ConnectionName { get; set; }
-        public string ConnectorName { get; set; }
     }
 }

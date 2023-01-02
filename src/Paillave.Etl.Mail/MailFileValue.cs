@@ -76,9 +76,6 @@ namespace Paillave.Etl.Mail
         public string Server { get; set; }
         public string Folder { get; set; }
         public string Name { get; set; }
-        public string ConnectorCode { get; set; }
-        public string ConnectionName { get; set; }
-        public string ConnectorName { get; set; }
         public string MailSubject { get; set; }
         public DateTime ReceivedDate { get; set; }
         public string Sender { get; set; }

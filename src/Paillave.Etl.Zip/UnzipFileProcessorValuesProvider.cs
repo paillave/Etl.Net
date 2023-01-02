@@ -40,7 +40,10 @@ namespace Paillave.Etl.Zip
                         {
                             ParentFileName = input.Name,
                             ParentFileMetadata = input.Metadata,
-                            Destinations = destinations
+                            Destinations = destinations,
+                            ConnectorCode=input.Metadata.ConnectorCode,
+                            ConnectionName=input.Metadata.ConnectionName,
+                            ConnectorName=input.Metadata.ConnectorName
                         }, input, fileNames, zipEntry.Name));
                     }
                 }
