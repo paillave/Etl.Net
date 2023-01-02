@@ -15,5 +15,8 @@ namespace Paillave.Etl.Core
     public interface IFileValueMetadata
     {
         string Type { get; }
+        string? ConnectorCode { get; set; }
+        string? ConnectionName { get; set; }
+        string? ConnectorName { get; set; }
     }
 }

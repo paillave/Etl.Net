@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Paillave.Etl.Core
 {
-    public abstract class FileValueBase<TMetadata> : IFileValue 
+    public abstract class FileValueBase<TMetadata> : IFileValue
         where TMetadata : IFileValueMetadata
     {
         public FileValueBase(TMetadata metadata) => Metadata = metadata;
@@ -31,6 +31,10 @@ namespace Paillave.Etl.Core
     public abstract class FileValueMetadataBase : IFileValueMetadata
     {
         public virtual string Type => this.GetType().Name.Replace("FileValueMetadata", "", StringComparison.InvariantCultureIgnoreCase);
+
+        public string? ConnectorCode { get; set; }
+        public string? ConnectionName { get; set; }
+        public string? ConnectorName { get; set; }
     }
     public class NoSourceFileValueMetadata : FileValueMetadataBase
     {

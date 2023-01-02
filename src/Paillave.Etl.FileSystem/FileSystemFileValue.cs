@@ -34,8 +34,5 @@ namespace Paillave.Etl.FileSystem
     public class FileSystemFileValueMetadata : FileValueMetadataBase
     {
         public string Folder { get; set; }
-        public string ConnectorCode { get; set; }
-        public string ConnectionName { get; set; }
-        public string ConnectorName { get; set; }
     }
 }

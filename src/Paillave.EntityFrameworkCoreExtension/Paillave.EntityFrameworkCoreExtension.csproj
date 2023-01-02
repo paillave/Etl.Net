@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>Paillave.EntityFrameworkCoreExtension</PackageId>
-    <Version>2.0.50</Version>
+    <Version>2.0.51</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -20,6 +20,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FastMember" Version="1.5.0" allowedVersions="1.1.0" />
