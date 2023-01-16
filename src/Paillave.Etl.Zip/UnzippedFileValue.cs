@@ -13,7 +13,13 @@ namespace Paillave.Etl.Zip
         public override string Name { get; }
         public UnzippedFileValue(Stream stream, string name, TMetadata metadata, IFileValue underlyingFileValue, HashSet<string> pathsNotFlaggedForDelete, string innerPath)
             : base(metadata) => (_stream, Name, _underlyingFileValue, _pathsNotFlaggedForDelete, _innerPath) = (stream, name, underlyingFileValue, pathsNotFlaggedForDelete, innerPath);
-        public override Stream GetContent() => _stream;
+        public override Stream GetContent()
+        {
+            var ms = new MemoryStream();
+            _stream.CopyTo(ms);
+            ms.Seek(0, SeekOrigin.Begin);
+            return ms;
+        }
         protected override void DeleteFile()
         {
             if (_pathsNotFlaggedForDelete.Contains(_innerPath))
