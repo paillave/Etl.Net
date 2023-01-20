@@ -54,31 +54,35 @@ namespace Paillave.Etl.FileSystem
                     GetResult = selector
                 }), noParallelisation);
         [Obsolete("KISS & YAGNI")]
-        public static IStream<IFileValue> WriteToFile(this IStream<IFileValue> stream, string name, ISingleStream<string> outputFilePathStream)
+        public static IStream<IFileValue> WriteToFile(this IStream<IFileValue> stream, string name,
+        ISingleStream<string> outputFilePathStream, bool useStreamCopy = false)
         {
             return new WriteToFileStreamNode<string>(name, new WriteToFileArgs<string>
             {
                 GetOutputFilePath = i => i,
                 ParamStream = outputFilePathStream,
-                Stream = stream
+                Stream = stream,
+                UseStreamCopy = useStreamCopy
             }).Output;
         }
-        public static IStream<IFileValue> WriteToFile(this IStream<IFileValue> stream, string name, Func<IFileValue, string> getOutputFilePath)
+        public static IStream<IFileValue> WriteToFile(this IStream<IFileValue> stream, string name, Func<IFileValue, string> getOutputFilePath, bool useStreamCopy = false)
         {
             return new WriteToFileStreamNode(name, new WriteToFileArgs
             {
                 Stream = stream,
-                GetOutputFilePath = getOutputFilePath
+                GetOutputFilePath = getOutputFilePath,
+                UseStreamCopy = useStreamCopy
             }).Output;
         }
         [Obsolete("KISS & YAGNI")]
-        public static IStream<IFileValue> WriteToFile<TParam>(this IStream<IFileValue> stream, string name, ISingleStream<TParam> outputFilePathStream, Func<TParam, string> getOutputFilePath)
+        public static IStream<IFileValue> WriteToFile<TParam>(this IStream<IFileValue> stream, string name, ISingleStream<TParam> outputFilePathStream, Func<TParam, string> getOutputFilePath, bool useStreamCopy = false)
         {
             return new WriteToFileStreamNode<TParam>(name, new WriteToFileArgs<TParam>
             {
                 GetOutputFilePath = getOutputFilePath,
                 ParamStream = outputFilePathStream,
-                Stream = stream
+                Stream = stream,
+                UseStreamCopy = useStreamCopy
             }).Output;
         }
     }

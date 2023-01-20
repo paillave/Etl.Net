@@ -1,4 +1,4 @@
-namespace Paillave.Etl.Scheduler;
+namespace Paillave.Scheduler;
 public static class TickSourceManager
 {
     public static TickSourceManager<TSource, TKey> Create<TSource, TKey>(ITickSourceConnection<TSource, TKey> tickSourceConnection) where TKey : IEquatable<TKey>

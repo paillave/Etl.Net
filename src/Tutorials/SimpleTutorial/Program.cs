@@ -29,7 +29,7 @@ var res = await StreamProcessRunner.CreateAndExecuteAsync("dummy", baseStream =>
         .Do("write file name", i =>
         {
             Console.WriteLine(i.Name);
-            Console.WriteLine(i.GetContent().Length);
+            Console.WriteLine(i.Get().Length);
         })
         .Do("delete", i => i.Delete());
 }, new ExecutionOptions<string>

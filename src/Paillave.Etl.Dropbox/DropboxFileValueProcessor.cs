@@ -15,8 +15,8 @@ namespace Paillave.Etl.Dropbox
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
         protected override void Process(IFileValue fileValue, DropboxAdapterConnectionParameters connectionParameters, DropboxAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
-            var path = $"/{Path.Combine(connectionParameters.RootFolder ?? "", processorParameters.SubFolder ?? "", fileValue.Name)}".Replace("\\","/").Replace("//","/");
-            var stream = fileValue.GetContent();
+            var path = $"/{Path.Combine(connectionParameters.RootFolder ?? "", processorParameters.SubFolder ?? "", fileValue.Name)}".Replace("\\", "/").Replace("//", "/");
+            using var stream = fileValue.Get(processorParameters.UseStreamCopy);
             byte[] fileContents;
             stream.Position = 0;
             using (MemoryStream ms = new MemoryStream())
@@ -31,12 +31,12 @@ namespace Paillave.Etl.Dropbox
         {
             // var commitInfo=new CommitInfo(filePath);
             using (var client = connectionParameters.CreateConnectionInfo())
-                client.Files.UploadAsync(new UploadArg(filePath) , new MemoryStream(fileContents)).Wait();
+                client.Files.UploadAsync(new UploadArg(filePath), new MemoryStream(fileContents)).Wait();
         }
         protected override void Test(DropboxAdapterConnectionParameters connectionParameters, DropboxAdapterProcessorParameters processorParameters)
         {
             var fileName = Guid.NewGuid().ToString();
-            var path = $"/{Path.Combine(connectionParameters.RootFolder ?? "", processorParameters.SubFolder ?? "", fileName)}".Replace("\\","/").Replace("//","/");
+            var path = $"/{Path.Combine(connectionParameters.RootFolder ?? "", processorParameters.SubFolder ?? "", fileName)}".Replace("\\", "/").Replace("//", "/");
             // var path = Path.Combine(connectionParameters.RootFolder ?? "", processorParameters.SubFolder ?? "", fileName);
             using (var client = connectionParameters.CreateConnectionInfo())
             {

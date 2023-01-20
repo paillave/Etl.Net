@@ -13,6 +13,7 @@ namespace Paillave.Etl.Zip
     {
         public string Password { get; set; }
         public string FileNamePattern { get; set; }
+        public bool UseStreamCopy { get; set; }
     }
     public class UnzippedFileValueMetadata : FileValueMetadataBase, IFileValueWithDestinationMetadata
     {
@@ -34,30 +35,29 @@ namespace Paillave.Etl.Zip
         {
             var destinations = (fileValue.Metadata as IFileValueWithDestinationMetadata)?.Destinations;
             if (cancellationToken.IsCancellationRequested) return;
-            using (var zf = new ZipFile(fileValue.GetContent()))
-            {
-                var searchPattern = string.IsNullOrEmpty(processorParameters.FileNamePattern) ? "*" : processorParameters.FileNamePattern;
-                var matcher = new Matcher().AddInclude(searchPattern);
+            using var stream = fileValue.Get(processorParameters.UseStreamCopy);
+            using var zf = new ZipFile(stream);
+            var searchPattern = string.IsNullOrEmpty(processorParameters.FileNamePattern) ? "*" : processorParameters.FileNamePattern;
+            var matcher = new Matcher().AddInclude(searchPattern);
 
-                if (!String.IsNullOrEmpty(processorParameters.Password))
-                    zf.Password = processorParameters.Password;
-                var fileNames = zf.OfType<ZipEntry>().Where(i => i.IsFile && matcher.Match(Path.GetFileName(i.Name)).HasMatches).Select(i => i.Name).ToHashSet();
-                foreach (ZipEntry zipEntry in zf)
+            if (!String.IsNullOrEmpty(processorParameters.Password))
+                zf.Password = processorParameters.Password;
+            var fileNames = zf.OfType<ZipEntry>().Where(i => i.IsFile && matcher.Match(Path.GetFileName(i.Name)).HasMatches).Select(i => i.Name).ToHashSet();
+            foreach (ZipEntry zipEntry in zf)
+            {
+                if (cancellationToken.IsCancellationRequested) break;
+                if (zipEntry.IsFile && matcher.Match(Path.GetFileName(zipEntry.Name)).HasMatches)
                 {
-                    if (cancellationToken.IsCancellationRequested) break;
-                    if (zipEntry.IsFile && matcher.Match(Path.GetFileName(zipEntry.Name)).HasMatches)
+                    MemoryStream outputStream = new MemoryStream();
+                    using (var zipStream = zf.GetInputStream(zipEntry))
+                        zipStream.CopyTo(outputStream, 4096);
+                    outputStream.Seek(0, SeekOrigin.Begin);
+                    push(new UnzippedFileValue<UnzippedFileValueMetadata>(outputStream, zipEntry.Name, new UnzippedFileValueMetadata
                     {
-                        MemoryStream outputStream = new MemoryStream();
-                        using (var zipStream = zf.GetInputStream(zipEntry))
-                            zipStream.CopyTo(outputStream, 4096);
-                        outputStream.Seek(0, SeekOrigin.Begin);
-                        push(new UnzippedFileValue<UnzippedFileValueMetadata>(outputStream, zipEntry.Name, new UnzippedFileValueMetadata
-                        {
-                            ParentFileName = fileValue.Name,
-                            ParentFileMetadata = fileValue.Metadata,
-                            Destinations = destinations
-                        }, fileValue, fileNames, zipEntry.Name));
-                    }
+                        ParentFileName = fileValue.Name,
+                        ParentFileMetadata = fileValue.Metadata,
+                        Destinations = destinations
+                    }, fileValue, fileNames, zipEntry.Name));
                 }
             }
         }

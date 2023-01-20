@@ -23,19 +23,29 @@ namespace Paillave.Etl.Dropbox
         protected override void DeleteFile() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, DeleteFileSingleTime);
         protected void DeleteFileSingleTime()
         {
-            var path = $"/{Path.Combine(_folder ?? "", Name ?? "")}".Replace("\\","/").Replace("//","/");
+            var path = $"/{Path.Combine(_folder ?? "", Name ?? "")}".Replace("\\", "/").Replace("//", "/");
             using (var client = _connectionInfo.CreateConnectionInfo())
                 client.Files.DeleteV2Async(path).Wait();
         }
         public override Stream GetContent() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, GetContentSingleTime);
+        public override Stream OpenContent() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, OpenContentSingleTime);
         private Stream GetContentSingleTime()
         {
             using (var client = _connectionInfo.CreateConnectionInfo())
             {
-                var path = $"/{Path.Combine(_folder ?? "", Name ?? "")}".Replace("\\","/").Replace("//","/");
+                var path = $"/{Path.Combine(_folder ?? "", Name ?? "")}".Replace("\\", "/").Replace("//", "/");
                 var response = client.Files.DownloadAsync(path).Result;
                 var dl = response.GetContentAsByteArrayAsync().Result;
                 return new MemoryStream(dl);
+            }
+        }
+        private Stream OpenContentSingleTime()
+        {
+            using (var client = _connectionInfo.CreateConnectionInfo())
+            {
+                var path = $"/{Path.Combine(_folder ?? "", Name ?? "")}".Replace("\\", "/").Replace("//", "/");
+                var response = client.Files.DownloadAsync(path).Result;
+                return response.GetContentAsStreamAsync().Result;
             }
         }
     }

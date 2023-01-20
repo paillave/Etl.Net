@@ -14,7 +14,7 @@ namespace Paillave.Pdf
         private readonly HeadersSetup _rootHeaderLevel = new HeadersSetup();
         private List<HeadersSetup> _currentHeaderPath = new List<HeadersSetup>();
 
-        public StructureReader(PdfDocument pdfDocument, IList<HeadersSetup> levelHeader)
+        public StructureReader(PdfDocument pdfDocument, IList<HeadersSetup>? levelHeader)
         {
             _currentHeaderPath = new List<HeadersSetup> { _rootHeaderLevel };
             if (levelHeader != null)
@@ -105,7 +105,7 @@ namespace Paillave.Pdf
             => (Template, DirectSubLevels) = (null, directSubLevels.ToList());
         public HeadersSetup(Func<TextTemplate, TextTemplate> templateBuilder, params HeadersSetup[] directSubLevels)
             => (Template, DirectSubLevels) = (templateBuilder(new TextTemplate()), directSubLevels.ToList());
-        public TextTemplate Template { get; }
+        public TextTemplate? Template { get; }
         public List<HeadersSetup> DirectSubLevels { get; }
     }
 }

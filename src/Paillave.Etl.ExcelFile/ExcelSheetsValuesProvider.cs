@@ -17,6 +17,7 @@ namespace Paillave.Etl.ExcelFile
     public class ExcelSheetsValuesProviderArgs<TOut>
     {
         public Func<ExcelSheetSelection, IFileValue, TOut> GetOutput { get; set; }
+        public bool UseStreamCopy { get; set; }
     }
     public class ExcelSheetsValuesProvider<TOut> : ValuesProviderBase<IFileValue, TOut>
     {
@@ -26,7 +27,8 @@ namespace Paillave.Etl.ExcelFile
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
         public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
-            var pck = new ExcelPackage(input.GetContent());
+            using var stream = input.Get(_args.UseStreamCopy);
+            var pck = new ExcelPackage(stream);
             foreach (var worksheet in pck.Workbook.Worksheets)
             {
                 if (cancellationToken.IsCancellationRequested) break;

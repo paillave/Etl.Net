@@ -69,7 +69,7 @@ namespace Paillave.Etl.Mail
             var portNumber = connectionParameters.PortNumber == 0 ? 25 : connectionParameters.PortNumber;
 
             var destinations = GetDestinations(processorParameters, fileValue.Metadata).ToList();
-            var stream = fileValue.GetContent();
+            using var stream = fileValue.Get(processorParameters.UseStreamCopy);
             MemoryStream ms = new MemoryStream();
             stream.CopyTo(ms);
             foreach (var (destination, metadataJson) in destinations)

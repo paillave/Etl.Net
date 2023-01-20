@@ -11,6 +11,7 @@ namespace Paillave.Etl.ExcelFile
     public class ExcelDatasetsValuesProviderArgs<TOut>
     {
         public Func<DataTable, IFileValue, IEnumerable<TOut>> GetOutput { get; set; }
+        public bool UseStreamCopy { get; set; }
     }
     public class ExcelDatasetsValuesProvider<TOut> : ValuesProviderBase<IFileValue, TOut>
     {
@@ -20,23 +21,31 @@ namespace Paillave.Etl.ExcelFile
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
         public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
-            using (var reader = ExcelReaderFactory.CreateReader(input.GetContent()))
-            {
-                var dataset = reader.AsDataSet();
-                dataset.DataSetName = input.Name;
-                foreach (var item in dataset.Tables.Cast<DataTable>())
-                    _args.GetOutput(item, input).ToList().ForEach(push);
-            }
+            using var stream = input.Get(_args.UseStreamCopy);
+            using var reader = ExcelReaderFactory.CreateReader(stream);
+            var dataset = reader.AsDataSet();
+            dataset.DataSetName = input.Name;
+            foreach (var item in dataset.Tables.Cast<DataTable>())
+                _args.GetOutput(item, input).ToList().ForEach(push);
         }
     }
 
+    public class ExcelDataTablesValuesProviderArgs
+    {
+        public bool UseStreamCopy { get; set; }
+    }
     public class ExcelDataTablesValuesProvider : ValuesProviderBase<IFileValue, DataTable>
     {
+        private readonly ExcelDataTablesValuesProviderArgs _args;
+
+        public ExcelDataTablesValuesProvider(ExcelDataTablesValuesProviderArgs? args = null)
+            => (_args) = (args ?? new());
+
         public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
         public override void PushValues(IFileValue input, Action<DataTable> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
-            using (var reader = ExcelReaderFactory.CreateReader(input.GetContent()))
+            using (var reader = ExcelReaderFactory.CreateReader(input.Get(_args.UseStreamCopy)))
             {
                 var dataset = reader.AsDataSet();
                 dataset.DataSetName = input.Name;

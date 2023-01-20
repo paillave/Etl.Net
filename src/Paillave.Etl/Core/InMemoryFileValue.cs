@@ -14,6 +14,9 @@ namespace Paillave.Etl.Core
             ms.Seek(0, SeekOrigin.Begin);
             return ms;
         }
+
+        public override Stream OpenContent() => _stream;
+
         protected override void DeleteFile() { }
     }
     public static class FileValue

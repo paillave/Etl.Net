@@ -20,6 +20,7 @@ namespace Paillave.Etl.Dropbox
     public class DropboxAdapterProcessorParameters
     {
         public string SubFolder { get; set; }
+        public bool UseStreamCopy { get; set; }
     }
     public class DropboxProviderProcessorAdapter : ProviderProcessorAdapterBase<DropboxAdapterConnectionParameters, DropboxAdapterProviderParameters, DropboxAdapterProcessorParameters>
     {

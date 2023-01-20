@@ -17,30 +17,33 @@ namespace Paillave.Etl.TextFile
     public static class TextFileEx
     {
         #region CrossApplyTextFile
-        public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<IFileValue> stream, string name, Func<FlatFileArgBuilder, FlatFileDefinition<TOut>> mapBuilder, bool noParallelisation = false)
+        public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<IFileValue> stream, string name, Func<FlatFileArgBuilder, FlatFileDefinition<TOut>> mapBuilder, bool noParallelisation = false, bool useStreamCopy = false)
         {
             var valuesProvider = new FlatFileValuesProvider<TOut, TOut>(new FlatFileValuesProviderArgs<TOut, TOut>()
             {
                 Mapping = mapBuilder(new()),
-                ResultSelector = (i, o) => o
+                ResultSelector = (i, o) => o,
+                UseStreamCopy = useStreamCopy
             });
             return stream.CrossApply<IFileValue, TOut>(name, valuesProvider, noParallelisation);
         }
-        public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<IFileValue> stream, string name, FlatFileDefinition<TOut> args, bool noParallelisation = false)
+        public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<IFileValue> stream, string name, FlatFileDefinition<TOut> args, bool noParallelisation = false, bool useStreamCopy = false)
         {
             var valuesProvider = new FlatFileValuesProvider<TOut, TOut>(new FlatFileValuesProviderArgs<TOut, TOut>()
             {
                 Mapping = args,
-                ResultSelector = (i, o) => o
+                ResultSelector = (i, o) => o,
+                UseStreamCopy = useStreamCopy
             });
             return stream.CrossApply<IFileValue, TOut>(name, valuesProvider, noParallelisation);
         }
-        public static IStream<TOut> CrossApplyTextFile<TParsed, TOut>(this IStream<IFileValue> stream, string name, FlatFileDefinition<TParsed> args, Func<IFileValue, TParsed, TOut> resultSelector, bool noParallelisation = false)
+        public static IStream<TOut> CrossApplyTextFile<TParsed, TOut>(this IStream<IFileValue> stream, string name, FlatFileDefinition<TParsed> args, Func<IFileValue, TParsed, TOut> resultSelector, bool noParallelisation = false, bool useStreamCopy = false)
         {
             var valuesProvider = new FlatFileValuesProvider<TParsed, TOut>(new FlatFileValuesProviderArgs<TParsed, TOut>()
             {
                 Mapping = args,
-                ResultSelector = resultSelector
+                ResultSelector = resultSelector,
+                UseStreamCopy = useStreamCopy
             });
             return stream.CrossApply<IFileValue, TOut>(name, valuesProvider, noParallelisation);
         }

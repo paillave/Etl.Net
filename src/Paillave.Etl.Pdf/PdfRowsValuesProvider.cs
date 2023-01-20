@@ -11,11 +11,17 @@ namespace Paillave.Etl.Pdf
     {
         public IList<TextTemplate> PatternsToIgnore { get; } = new List<TextTemplate>();
         public IList<HeadersSetup> HeadersSetups { get; } = new List<HeadersSetup>();
-        public ExtractMethod ExtractMethod { get; set; } = null;
+        public ExtractMethod? ExtractMethod { get; set; } = null;
         public Areas Areas { get; set; } = new Areas();
+        public bool UseStreamCopy { get; set; }
         public PdfRowsValuesProviderArgs AddHeadersSetup(HeadersSetup headersSetup)
         {
             this.HeadersSetups.Add(headersSetup);
+            return this;
+        }
+        public PdfRowsValuesProviderArgs WithSourceStream(bool useStreamCopy = false)
+        {
+            this.UseStreamCopy = useStreamCopy;
             return this;
         }
         public PdfRowsValuesProviderArgs SetArea(string code, double left, double width, double top, double height, int? pageNumber = null)
@@ -63,7 +69,7 @@ namespace Paillave.Etl.Pdf
         public string Text { get; }
         public int LineNumber { get; }
         public HashSet<string> AreaCodes { get; }
-        public PdfTextLine(IFileValue fileValue, List<string> section, int pageNumber, int lineNumber, string text, HashSet<string> areaCodes) : base(section, pageNumber, fileValue) 
+        public PdfTextLine(IFileValue fileValue, List<string> section, int pageNumber, int lineNumber, string text, HashSet<string> areaCodes) : base(section, pageNumber, fileValue)
             => (Text, LineNumber, AreaCodes) = (text, lineNumber, areaCodes);
     }
     public class PdfRowsValuesProvider : ValuesProviderBase<IFileValue, PdfContent>
@@ -74,7 +80,7 @@ namespace Paillave.Etl.Pdf
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Heavy;
         public override void PushValues(IFileValue input, Action<PdfContent> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
-            var stream = input.GetContent();
+            using var stream = input.Get(_args.UseStreamCopy);
             stream.Seek(0, System.IO.SeekOrigin.Begin);
             var pdfReader = new PdfReader(stream, this._args.PatternsToIgnore, this._args.HeadersSetups, this._args.ExtractMethod);
             pdfReader.Read(new PdfVisitor(push, input));

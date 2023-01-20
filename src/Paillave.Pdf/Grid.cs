@@ -116,7 +116,7 @@ namespace Paillave.Pdf
             }
             return false;
         }
-        public List<List<List<string>>> GetContent()
+        public List<List<List<string>>> GetDataContent()
             => _content.Select(row => row.Select(cell => ReflowText(cell).ToList()).ToList()).ToList();
         public void AddLine(GridLine gridLine) => _relatedLines.Add(gridLine);
         public bool TryGetRelatedCell(Word textLine, out (int row, int column) cell)

@@ -1,6 +1,6 @@
 ﻿using Cronos;
 
-namespace Paillave.Etl.Scheduler;
+namespace Paillave.Scheduler;
 public class TickSource : TickSource<string>
 {
     public TickSource(string cronExpression) : base(cronExpression, i => i) { }

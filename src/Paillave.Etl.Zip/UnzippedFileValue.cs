@@ -16,6 +16,7 @@ namespace Paillave.Etl.Zip
         public override Stream GetContent()
         {
             var ms = new MemoryStream();
+            _stream.Seek(0, SeekOrigin.Begin);
             _stream.CopyTo(ms);
             ms.Seek(0, SeekOrigin.Begin);
             return ms;
@@ -30,6 +31,12 @@ namespace Paillave.Etl.Zip
             {
                 _underlyingFileValue.Delete();
             }
+        }
+
+        public override Stream OpenContent()
+        {
+            _stream.Seek(0, SeekOrigin.Begin);
+            return _stream;
         }
     }
 }
