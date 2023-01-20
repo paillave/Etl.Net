@@ -10,6 +10,7 @@ namespace Paillave.Etl.TextFile
     {
         public Encoding Encoding { get; set; } = null;
         public Func<string, TOut> GetResult { get; set; }
+        public bool UseStreamCopy { get; set; } = false;
     }
     public class TextFileValuesProvider<TOut> : ValuesProviderBase<IFileValue, TOut>
     {
@@ -26,13 +27,13 @@ namespace Paillave.Etl.TextFile
 
         public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
-            var sr = _args.Encoding == null ? new StreamReader(input.GetContent(), true) : new StreamReader(input.GetContent(), _args.Encoding);
-            using (sr)
-                while (!sr.EndOfStream)
-                {
-                    if (cancellationToken.IsCancellationRequested) break;
-                    push(_args.GetResult(sr.ReadLine()));
-                }
+            using var stream = input.Get(_args.UseStreamCopy);
+            using var sr = _args.Encoding == null ? new StreamReader(stream, true) : new StreamReader(stream, _args.Encoding);
+            while (!sr.EndOfStream)
+            {
+                if (cancellationToken.IsCancellationRequested) break;
+                push(_args.GetResult(sr.ReadLine()));
+            }
         }
     }
 }

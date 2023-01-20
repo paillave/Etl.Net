@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <PackageId>Paillave.EtlNet.Scheduler</PackageId>
-    <Version>2.0.51</Version>
+    <Version>2.0.52-beta</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive Scheduler</PackageTags>
-    <Product>ETL.net SFTP extensions</Product>
+    <Product>ETL.net scheduling extensions</Product>
     <Description>Extensions for Etl.Net to Schedule events</Description>
     <LangVersion>latest</LangVersion>
     <PackageIcon>NugetIcon.png</PackageIcon>
@@ -17,23 +17,23 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="../../README.md" Pack="true" PackagePath=""/>
+    <None Include="../../README.md" Pack="true" PackagePath="" />
     <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="cronos" Version="0.7.1" allowedVersions="0.7.1"/>
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" allowedVersions="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
+    <ProjectReference Include="..\Paillave.Scheduler\Paillave.Scheduler.csproj" />
   </ItemGroup>
 
 </Project>

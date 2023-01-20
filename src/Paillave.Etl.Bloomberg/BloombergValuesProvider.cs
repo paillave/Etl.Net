@@ -22,7 +22,8 @@ namespace Paillave.Etl.Bloomberg
     public class BloombergValuesProviderArgs<TParsed>
     {
         public FlatFileDefinition<TParsed> Mapping { get; set; }
-        public Encoding Encoding { get; set; } = null;
+        public Encoding? Encoding { get; set; } = null;
+        public bool UseStreamCopy { get; set; }
     }
     public static class BloombergValuesProvider
     {
@@ -48,7 +49,7 @@ namespace Paillave.Etl.Bloomberg
         }
         public override void PushValues(IFileValue input, Action<BloombergResult<TParsed>> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
-            var stream = input.GetContent();
+            using var stream = input.Get(_args.UseStreamCopy);
             string sourceName = input.Name;
             var encoding = _args.Encoding ?? _args.Mapping.Encoding;
             var sr = encoding == null ? new StreamReader(stream, true) : new StreamReader(stream, encoding);

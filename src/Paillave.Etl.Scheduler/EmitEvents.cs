@@ -1,5 +1,5 @@
 using Paillave.Etl.Core;
-
+using Paillave.Scheduler;
 namespace Paillave.Etl.Scheduler;
 
 public static partial class CustomEx

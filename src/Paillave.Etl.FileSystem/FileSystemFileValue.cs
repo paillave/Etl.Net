@@ -12,7 +12,7 @@ namespace Paillave.Etl.FileSystem
         public FileSystemFileValue(FileInfo fileInfo, string connectorCode, string connectorName, string connectionName)
             : base(new FileSystemFileValueMetadata
             {
-                Folder = fileInfo.Directory.FullName,
+                Folder = fileInfo.Directory?.FullName,
                 ConnectorCode = connectorCode,
                 ConnectionName = connectionName,
                 ConnectorName = connectorName
@@ -30,9 +30,10 @@ namespace Paillave.Etl.FileSystem
             stream.Seek(0, SeekOrigin.Begin);
             return stream;
         }
+        public override Stream OpenContent() => _fileInfo.OpenRead();
     }
     public class FileSystemFileValueMetadata : FileValueMetadataBase
     {
-        public string Folder { get; set; }
+        public string? Folder { get; set; }
     }
 }

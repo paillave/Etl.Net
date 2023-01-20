@@ -22,28 +22,34 @@ namespace Paillave.Etl.ExcelFile
         public static IStream<ExcelSheetSelection> CrossApplyExcelSheets(
             this IStream<IFileValue> stream,
             string name,
-            bool noParallelisation = false)
+            bool noParallelisation = false,
+            bool useStreamCopy = false)
             => stream.CrossApply(name, new ExcelSheetsValuesProvider<ExcelSheetSelection>(new ExcelSheetsValuesProviderArgs<ExcelSheetSelection>
             {
-                GetOutput = (i, j) => i
+                GetOutput = (i, j) => i,
+                UseStreamCopy = useStreamCopy
             }), noParallelisation);
         public static IStream<TOut> CrossApplyExcelSheets<TOut>(
             this IStream<IFileValue> stream,
             string name,
             Func<ExcelSheetSelection, TOut> selector,
-            bool noParallelisation = false)
+            bool noParallelisation = false,
+            bool useStreamCopy = false)
             => stream.CrossApply(name, new ExcelSheetsValuesProvider<TOut>(new ExcelSheetsValuesProviderArgs<TOut>
             {
-                GetOutput = (i, j) => selector(i)
+                GetOutput = (i, j) => selector(i),
+                UseStreamCopy = useStreamCopy
             }), noParallelisation);
         public static IStream<TOut> CrossApplyExcelDatasets<TOut>(
             this IStream<IFileValue> stream,
             string name,
             Func<DataTable, IFileValue, IEnumerable<TOut>> selector,
-            bool noParallelisation = false)
+            bool noParallelisation = false,
+            bool useStreamCopy = false)
             => stream.CrossApply(name, new ExcelDatasetsValuesProvider<TOut>(new ExcelDatasetsValuesProviderArgs<TOut>
             {
-                GetOutput = selector
+                GetOutput = selector,
+                UseStreamCopy = useStreamCopy
             }), noParallelisation);
         #endregion
 

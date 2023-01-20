@@ -24,11 +24,11 @@ namespace Paillave.Pdf
     {
         private readonly ExtractMethod _extractMethod;
         private readonly PdfDocument _pdfDocument;
-        private IList<TextTemplate> _patternsToIgnore;
+        private IList<TextTemplate>? _patternsToIgnore;
         private readonly StructureReader _structureReader;
         private readonly Areas _areas;
 
-        public PdfReader(Stream pdfStream, IList<TextTemplate> patternsToIgnore = null, IList<HeadersSetup> titleSetups = null, ExtractMethod extractMethod = null, Areas areas = null)
+        public PdfReader(Stream pdfStream, IList<TextTemplate>? patternsToIgnore = null, IList<HeadersSetup>? titleSetups = null, ExtractMethod? extractMethod = null, Areas? areas = null)
         {
 
             _extractMethod = extractMethod ?? ExtractMethod.RecursiveXY();
@@ -116,7 +116,7 @@ namespace Paillave.Pdf
                 }
                 foreach (var grid in gridExtractionResult.Grids.OrderByDescending(i => i.Top))
                 {
-                    var rows = grid.GetContent();
+                    var rows = grid.GetDataContent();
                     gridSections.TryGetValue(grid, out var section);
                     pdfProcessor.ProcessTable(rows, page.Number, section);
                 }

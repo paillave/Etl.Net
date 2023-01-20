@@ -15,7 +15,7 @@ namespace Paillave.Etl.Sftp
         protected override void Process(IFileValue fileValue, SftpAdapterConnectionParameters connectionParameters, SftpAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
             var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
-            var stream = fileValue.GetContent();
+            using var stream = fileValue.Get(processorParameters.UseStreamCopy);
             byte[] fileContents;
             stream.Position = 0;
             using (MemoryStream ms = new MemoryStream())

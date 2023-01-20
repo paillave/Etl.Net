@@ -1,9 +1,9 @@
-namespace Paillave.Etl.Scheduler;
+namespace Paillave.Scheduler;
 
 public interface ITickSourceConnection<TSource, TKey> : IDisposable where TKey : IEquatable<TKey>
 {
-    public event EventHandler<ITickSourceChange<TSource, TKey>> Changed;
-    public event EventHandler Stopped;
+    event EventHandler<ITickSourceChange<TSource, TKey>> Changed;
+    event EventHandler Stopped;
     IEnumerable<TSource> GetAll();
     TKey GetKey(TSource source);
     string? GetCronExpression(TSource source);

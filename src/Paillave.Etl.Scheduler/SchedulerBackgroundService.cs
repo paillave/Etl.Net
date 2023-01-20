@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Hosting;
 using Paillave.Etl.Core;
+using Paillave.Scheduler;
 
 // https://medium.com/@daniel.sagita/backgroundservice-for-a-long-running-work-3debe8f8d25b
 // https://docs.microsoft.com/en-us/dotnet/core/extensions/queue-service

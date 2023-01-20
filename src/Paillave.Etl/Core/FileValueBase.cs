@@ -27,6 +27,8 @@ namespace Paillave.Etl.Core
         }
         protected abstract void DeleteFile();
         public abstract Stream GetContent();
+        public abstract Stream OpenContent();
+        public Stream Get(bool useStreamCopy = false) => useStreamCopy ? GetContent() : OpenContent();
     }
     public abstract class FileValueMetadataBase : IFileValueMetadata
     {

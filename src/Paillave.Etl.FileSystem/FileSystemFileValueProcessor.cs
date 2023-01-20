@@ -16,10 +16,10 @@ namespace Paillave.Etl.FileSystem
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
         protected override void Process(IFileValue fileValue, FileSystemAdapterConnectionParameters connectionParameters, FileSystemAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
         {
-            var l = fileValue.GetContent();
+            using var l = fileValue.Get(processorParameters.UseStreamCopy);
             l.Seek(0, SeekOrigin.Begin);
             var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
-            var outputFilePath=Path.Combine(folder, fileValue.Name);
+            var outputFilePath = Path.Combine(folder, fileValue.Name);
             using (var fileStream = File.OpenWrite(outputFilePath))
                 l.CopyTo(fileStream);
             push(fileValue);
