@@ -34,8 +34,6 @@ namespace Paillave.Etl.ExcelFile
                 if (cancellationToken.IsCancellationRequested) break;
                 push(_args.GetOutput(new ExcelSheetSelection(worksheet), input));
             }
-            foreach (var item in stream.UnderlyingDisposables)
-                item.Dispose();
         }
     }
 }

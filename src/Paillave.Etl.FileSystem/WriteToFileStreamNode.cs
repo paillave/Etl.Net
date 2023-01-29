@@ -29,8 +29,6 @@ namespace Paillave.Etl.FileSystem
             var outputObservable = args.Stream.Observable.CombineWithLatest(outputFilePath, (fileValue, r) =>
             {
                 using var l = fileValue.Get(args.UseStreamCopy);
-                args.Stream.SourceNode.ExecutionContext.AddUnderlyingDisposables(l);
-                l.Seek(0, SeekOrigin.Begin);
                 using (var fileStream = File.Open(r, FileMode.Create))
                     l.CopyTo(fileStream);
                 return fileValue;
@@ -58,8 +56,6 @@ namespace Paillave.Etl.FileSystem
             var outputObservable = args.Stream.Observable.Do<IFileValue>(fileValue =>
             {
                 using var l = fileValue.Get(args.UseStreamCopy);
-                args.Stream.SourceNode.ExecutionContext.AddUnderlyingDisposables(l);
-                l.Seek(0, SeekOrigin.Begin);
                 using (var fileStream = File.Open(args.GetOutputFilePath(fileValue), FileMode.Create))
                     l.CopyTo(fileStream);
             });

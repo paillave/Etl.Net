@@ -19,9 +19,7 @@ namespace Paillave.Etl.Ftp
             // var folder = Path.Combine(connectionParameters.RootFolder ?? "", processorParameters.SubFolder ?? "");
             var filePath = Path.Combine(folder, fileValue.Name);
             using var stream = fileValue.Get(processorParameters.UseStreamCopy);
-            context.AddUnderlyingDisposables(stream);
             byte[] fileContents;
-            stream.Position = 0;
             using (MemoryStream ms = new MemoryStream())
             {
                 stream.CopyTo(ms);

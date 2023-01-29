@@ -36,7 +36,6 @@ namespace Paillave.Etl.Zip
             var destinations = (fileValue.Metadata as IFileValueWithDestinationMetadata)?.Destinations;
             if (cancellationToken.IsCancellationRequested) return;
             using var stream = fileValue.Get(processorParameters.UseStreamCopy);
-            context.AddUnderlyingDisposables(stream);
             using var zf = new ZipFile(stream);
             var searchPattern = string.IsNullOrEmpty(processorParameters.FileNamePattern) ? "*" : processorParameters.FileNamePattern;
             var matcher = new Matcher().AddInclude(searchPattern);

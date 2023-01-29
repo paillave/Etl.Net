@@ -20,7 +20,6 @@ namespace Paillave.Etl.Zip
             var destinations = (input.Metadata as IFileValueWithDestinationMetadata)?.Destinations;
             if (cancellationToken.IsCancellationRequested) return;
             using var stream = input.Get(_args.UseStreamCopy);
-            context.AddUnderlyingDisposables(stream);
             using var zf = new ZipFile(stream);
             var searchPattern = string.IsNullOrEmpty(_args.FileNamePattern) ? "*" : _args.FileNamePattern;
             var matcher = new Matcher().AddInclude(searchPattern);

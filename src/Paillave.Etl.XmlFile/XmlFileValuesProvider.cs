@@ -23,8 +23,6 @@ namespace Paillave.Etl.XmlFile
             using var stream = input.Get(_args.UseStreamCopy);
             XmlObjectReader xmlObjectReader = new XmlObjectReader(_args.XmlFileDefinition);
             xmlObjectReader.Read(stream, input.Name, push, cancellationToken);
-            foreach (var item in stream.UnderlyingDisposables)
-                item.Dispose();
         }
     }
 }
