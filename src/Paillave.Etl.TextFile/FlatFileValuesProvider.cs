@@ -11,7 +11,7 @@ namespace Paillave.Etl.TextFile
         public FlatFileDefinition<TParsed> Mapping { get; set; }
         public Func<IFileValue, TParsed, TOut> ResultSelector { get; set; }
         public Encoding Encoding { get; set; } = null;
-        public bool UseStreamCopy { get; set; }
+        public bool UseStreamCopy { get; set; } = true;
     }
     public class FlatFileValuesProvider<TParsed, TOut> : ValuesProviderBase<IFileValue, TOut>
     {
@@ -19,9 +19,10 @@ namespace Paillave.Etl.TextFile
         public FlatFileValuesProvider(FlatFileValuesProviderArgs<TParsed, TOut> args) => _args = args;
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-        public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             using var stream = input.Get(_args.UseStreamCopy);
+            context.AddUnderlyingDisposables(stream);
             string sourceName = input.Name;
             var encoding = _args.Encoding ?? _args.Mapping.Encoding;
             using var sr = encoding == null ? new StreamReader(stream, true) : new StreamReader(stream, encoding);

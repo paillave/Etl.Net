@@ -17,7 +17,7 @@ namespace Paillave.Etl.TextFile
     public static class TextFileEx
     {
         #region CrossApplyTextFile
-        public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<IFileValue> stream, string name, Func<FlatFileArgBuilder, FlatFileDefinition<TOut>> mapBuilder, bool noParallelisation = false, bool useStreamCopy = false)
+        public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<IFileValue> stream, string name, Func<FlatFileArgBuilder, FlatFileDefinition<TOut>> mapBuilder, bool noParallelisation = false, bool useStreamCopy = true)
         {
             var valuesProvider = new FlatFileValuesProvider<TOut, TOut>(new FlatFileValuesProviderArgs<TOut, TOut>()
             {
@@ -27,7 +27,7 @@ namespace Paillave.Etl.TextFile
             });
             return stream.CrossApply<IFileValue, TOut>(name, valuesProvider, noParallelisation);
         }
-        public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<IFileValue> stream, string name, FlatFileDefinition<TOut> args, bool noParallelisation = false, bool useStreamCopy = false)
+        public static IStream<TOut> CrossApplyTextFile<TOut>(this IStream<IFileValue> stream, string name, FlatFileDefinition<TOut> args, bool noParallelisation = false, bool useStreamCopy = true)
         {
             var valuesProvider = new FlatFileValuesProvider<TOut, TOut>(new FlatFileValuesProviderArgs<TOut, TOut>()
             {
@@ -37,7 +37,7 @@ namespace Paillave.Etl.TextFile
             });
             return stream.CrossApply<IFileValue, TOut>(name, valuesProvider, noParallelisation);
         }
-        public static IStream<TOut> CrossApplyTextFile<TParsed, TOut>(this IStream<IFileValue> stream, string name, FlatFileDefinition<TParsed> args, Func<IFileValue, TParsed, TOut> resultSelector, bool noParallelisation = false, bool useStreamCopy = false)
+        public static IStream<TOut> CrossApplyTextFile<TParsed, TOut>(this IStream<IFileValue> stream, string name, FlatFileDefinition<TParsed> args, Func<IFileValue, TParsed, TOut> resultSelector, bool noParallelisation = false, bool useStreamCopy = true)
         {
             var valuesProvider = new FlatFileValuesProvider<TParsed, TOut>(new FlatFileValuesProviderArgs<TParsed, TOut>()
             {

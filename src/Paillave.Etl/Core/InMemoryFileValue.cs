@@ -15,7 +15,7 @@ namespace Paillave.Etl.Core
             return ms;
         }
 
-        public override Stream OpenContent() => _stream;
+        public override StreamWithResource OpenContent() => new StreamWithResource(_stream);
 
         protected override void DeleteFile() { }
     }

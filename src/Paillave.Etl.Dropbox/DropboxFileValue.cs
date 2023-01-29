@@ -28,10 +28,10 @@ namespace Paillave.Etl.Dropbox
                 client.Files.DeleteV2Async(path).Wait();
         }
         public override Stream GetContent() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, GetContentSingleTime);
-        public override Stream OpenContent() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, OpenContentSingleTime);
+        public override StreamWithResource OpenContent() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, OpenContentSingleTime);
         private Stream GetContentSingleTime()
         {
-            using (var client = _connectionInfo.CreateConnectionInfo())
+            var client = _connectionInfo.CreateConnectionInfo();
             {
                 var path = $"/{Path.Combine(_folder ?? "", Name ?? "")}".Replace("\\", "/").Replace("//", "/");
                 var response = client.Files.DownloadAsync(path).Result;
@@ -39,14 +39,12 @@ namespace Paillave.Etl.Dropbox
                 return new MemoryStream(dl);
             }
         }
-        private Stream OpenContentSingleTime()
+        private StreamWithResource OpenContentSingleTime()
         {
-            using (var client = _connectionInfo.CreateConnectionInfo())
-            {
-                var path = $"/{Path.Combine(_folder ?? "", Name ?? "")}".Replace("\\", "/").Replace("//", "/");
-                var response = client.Files.DownloadAsync(path).Result;
-                return response.GetContentAsStreamAsync().Result;
-            }
+            var client = _connectionInfo.CreateConnectionInfo();
+            var path = $"/{Path.Combine(_folder ?? "", Name ?? "")}".Replace("\\", "/").Replace("//", "/");
+            var response = client.Files.DownloadAsync(path).Result;
+            return new StreamWithResource(response.GetContentAsStreamAsync().Result, client);
         }
     }
     public class DropboxFileValueMetadata : FileValueMetadataBase

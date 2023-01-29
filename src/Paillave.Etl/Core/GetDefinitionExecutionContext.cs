@@ -32,6 +32,7 @@ namespace Paillave.Etl.Core
         public string JobName { get; }
         public bool IsTracingContext => false;
         public void AddDisposable(IDisposable disposable) { }
+        public void AddUnderlyingDisposables(StreamWithResource disposable) { }
         public void AddNode<T>(INodeDescription nodeContext, IPushObservable<T> observable) => _nodes.Add(nodeContext);
         public SimpleDependencyResolver ContextBag => new SimpleDependencyResolver();
         public IFileValueConnectors Connectors { get; }

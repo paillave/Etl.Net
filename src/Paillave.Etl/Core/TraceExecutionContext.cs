@@ -4,6 +4,7 @@ using Paillave.Etl.Reactive.Disposables;
 using Paillave.Etl.Reactive.Operators;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -46,5 +47,6 @@ namespace Paillave.Etl.Core
         public object GetOrCreateFromContextBag(string key, Func<object> creator) => throw new NotImplementedException();
         public T GetOrCreateFromContextBag<T>(Func<T> creator) => throw new NotImplementedException();
         public void AddTrace(ITraceContent traceContent, INodeContext sourceNode) { }
+        public void AddUnderlyingDisposables(StreamWithResource disposable) => _disposables.AddRange(disposable.UnderlyingDisposables.ToArray());
     }
 }

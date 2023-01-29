@@ -15,7 +15,7 @@ internal class TicksProvider<TOut, TKey> : IValuesProvider<object, TOut> where T
     public string TypeName => nameof(TicksProvider<TOut, TKey>);
     public ProcessImpact PerformanceImpact => ProcessImpact.Light;
     public ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-    public void PushValues(object input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+    public void PushValues(object input, Action<TOut> push, CancellationToken cancellationToken, IExecutionContext context)
     {
         using (EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset))
         using (var tickSourceManager = TickSourceManager.Create(this._tickSourceConnection))

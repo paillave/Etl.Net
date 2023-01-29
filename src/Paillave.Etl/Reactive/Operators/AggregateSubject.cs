@@ -35,7 +35,7 @@ namespace Paillave.Etl.Reactive.Operators
                             aggr = new DicoAggregateElement<TIn, TAggr> { CurrentAggregation = createInitialValue(i), InValue = i };
                             //aggr.CurrentAggregation = createInitialValue(i);
                             _dictionary[key] = aggr;
-                            if (_isAggrDisposable) _disposable.Set(aggr as IDisposable);
+                            if (_isAggrDisposable) _disposable.AddRange(aggr as IDisposable);
                         }
                         aggr.CurrentAggregation = reducer(aggr.CurrentAggregation, i);
                         _dictionary[key] = aggr;

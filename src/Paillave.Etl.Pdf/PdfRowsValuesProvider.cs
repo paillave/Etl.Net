@@ -13,13 +13,13 @@ namespace Paillave.Etl.Pdf
         public IList<HeadersSetup> HeadersSetups { get; } = new List<HeadersSetup>();
         public ExtractMethod? ExtractMethod { get; set; } = null;
         public Areas Areas { get; set; } = new Areas();
-        public bool UseStreamCopy { get; set; }
+        public bool UseStreamCopy { get; set; } = true;
         public PdfRowsValuesProviderArgs AddHeadersSetup(HeadersSetup headersSetup)
         {
             this.HeadersSetups.Add(headersSetup);
             return this;
         }
-        public PdfRowsValuesProviderArgs WithSourceStream(bool useStreamCopy = false)
+        public PdfRowsValuesProviderArgs WithSourceStream(bool useStreamCopy = true)
         {
             this.UseStreamCopy = useStreamCopy;
             return this;
@@ -78,9 +78,10 @@ namespace Paillave.Etl.Pdf
         public PdfRowsValuesProvider(PdfRowsValuesProviderArgs args) => _args = args;
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Heavy;
-        public override void PushValues(IFileValue input, Action<PdfContent> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        public override void PushValues(IFileValue input, Action<PdfContent> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             using var stream = input.Get(_args.UseStreamCopy);
+            context.AddUnderlyingDisposables(stream);
             stream.Seek(0, System.IO.SeekOrigin.Begin);
             var pdfReader = new PdfReader(stream, this._args.PatternsToIgnore, this._args.HeadersSetups, this._args.ExtractMethod);
             pdfReader.Read(new PdfVisitor(push, input));

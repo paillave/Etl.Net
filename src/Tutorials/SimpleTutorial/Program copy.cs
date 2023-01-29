@@ -61,7 +61,7 @@ namespace SimpleTutorial
                 .Select("Create file value", i => FileValue.Create(i, i is FileStream fileStream ? fileStream.Name : "fileName.csv", "from stream"))
                 .CrossApply<IFileValue, Person>("parse file", (fileValue, dependencyResolver, cancellationToken, push) =>
                 {
-                    using var stream=fileValue.Get();
+                    using var stream = fileValue.Get();
                     var parsedFile = Newtonsoft.Json.Linq.JObject.Parse(new StreamReader(stream).ReadToEnd());
                     var jPeople = parsedFile["people"] as JArray;
                     foreach (var jPerson in jPeople)

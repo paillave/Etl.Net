@@ -33,6 +33,15 @@ namespace Paillave.Etl.Reactive.Disposables
                 return disposable;
             }
         }
+        public void AddRange(params IDisposable[] disposables)
+        {
+            lock (syncLock)
+            {
+                if (disposables != null)
+                    foreach (var disposable in disposables)
+                        _disposables.Add(disposable);
+            }
+        }
         public void TryDispose(IDisposable disposable)
         {
             lock (syncLock)
