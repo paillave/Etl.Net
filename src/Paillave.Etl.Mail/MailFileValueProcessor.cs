@@ -70,7 +70,6 @@ namespace Paillave.Etl.Mail
 
             var destinations = GetDestinations(processorParameters, fileValue.Metadata).ToList();
             using var stream = fileValue.Get(processorParameters.UseStreamCopy);
-            context.AddUnderlyingDisposables(stream);
             MemoryStream ms = new MemoryStream();
             stream.CopyTo(ms);
             foreach (var (destination, metadataJson) in destinations)

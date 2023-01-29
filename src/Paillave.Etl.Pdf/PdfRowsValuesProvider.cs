@@ -81,8 +81,6 @@ namespace Paillave.Etl.Pdf
         public override void PushValues(IFileValue input, Action<PdfContent> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             using var stream = input.Get(_args.UseStreamCopy);
-            context.AddUnderlyingDisposables(stream);
-            stream.Seek(0, System.IO.SeekOrigin.Begin);
             var pdfReader = new PdfReader(stream, this._args.PatternsToIgnore, this._args.HeadersSetups, this._args.ExtractMethod);
             pdfReader.Read(new PdfVisitor(push, input));
         }

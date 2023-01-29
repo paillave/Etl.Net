@@ -17,9 +17,7 @@ namespace Paillave.Etl.Dropbox
         {
             var path = $"/{Path.Combine(connectionParameters.RootFolder ?? "", processorParameters.SubFolder ?? "", fileValue.Name)}".Replace("\\", "/").Replace("//", "/");
             using var stream = fileValue.Get(processorParameters.UseStreamCopy);
-            context.AddUnderlyingDisposables(stream);
             byte[] fileContents;
-            stream.Position = 0;
             using (MemoryStream ms = new MemoryStream())
             {
                 stream.CopyTo(ms);

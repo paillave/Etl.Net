@@ -127,8 +127,6 @@ namespace Paillave.Etl.Bloomberg
                     }
                 }
             }
-            foreach (var item in stream.UnderlyingDisposables)
-                item.Dispose();
         }
     }
 }

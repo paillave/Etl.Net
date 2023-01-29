@@ -79,8 +79,6 @@ namespace Paillave.Etl.TextFile
                     index++;
                 }
             }
-            foreach (var item in stream.UnderlyingDisposables)
-                item.Dispose();
         }
     }
 }

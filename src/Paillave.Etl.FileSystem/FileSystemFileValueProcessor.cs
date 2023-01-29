@@ -17,8 +17,6 @@ namespace Paillave.Etl.FileSystem
         protected override void Process(IFileValue fileValue, FileSystemAdapterConnectionParameters connectionParameters, FileSystemAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             using var l = fileValue.Get(processorParameters.UseStreamCopy);
-            context.AddUnderlyingDisposables(l);
-            l.Seek(0, SeekOrigin.Begin);
             var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
             var outputFilePath = Path.Combine(folder, fileValue.Name);
             using (var fileStream = File.OpenWrite(outputFilePath))

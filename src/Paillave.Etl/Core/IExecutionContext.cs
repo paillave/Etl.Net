@@ -24,7 +24,6 @@ namespace Paillave.Etl.Core
         Task InvokeInDedicatedThreadAsync(object threadOwner, Action action);
         Task<T> InvokeInDedicatedThreadAsync<T>(object threadOwner, Func<T> action);
         void AddDisposable(IDisposable disposable);
-        void AddUnderlyingDisposables(StreamWithResource disposable);
         IDependencyResolver DependencyResolver { get; }
     }
 }

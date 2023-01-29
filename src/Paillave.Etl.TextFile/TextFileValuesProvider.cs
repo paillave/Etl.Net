@@ -34,8 +34,6 @@ namespace Paillave.Etl.TextFile
                 if (cancellationToken.IsCancellationRequested) break;
                 push(_args.GetResult(sr.ReadLine()));
             }
-            foreach (var item in stream.UnderlyingDisposables)
-                item.Dispose();
         }
     }
 }

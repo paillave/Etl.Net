@@ -55,7 +55,6 @@ namespace Paillave.Etl.Core
         public void ReleaseResources() => _disposables.Dispose();
         public Task GetCompletionTask() => Task.WhenAll(_tasksToWait.ToArray());
         public void AddDisposable(IDisposable disposable) => _disposables.Set(disposable);
-        public void AddUnderlyingDisposables(StreamWithResource disposable) => _disposables.AddRange(disposable.UnderlyingDisposables.ToArray());
         public void AddStreamToNodeLink(StreamToNodeLink link) => _streamToNodeLinks.Add(link);
         private int _currentTraceSequence = 0;
         private object _traceSequenceLock = new object();

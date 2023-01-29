@@ -27,8 +27,6 @@ namespace Paillave.Etl.ExcelFile
             dataset.DataSetName = input.Name;
             foreach (var item in dataset.Tables.Cast<DataTable>())
                 _args.GetOutput(item, input).ToList().ForEach(push);
-            foreach (var item in stream.UnderlyingDisposables)
-                item.Dispose();
         }
     }
 
@@ -52,8 +50,6 @@ namespace Paillave.Etl.ExcelFile
             var dataset = reader.AsDataSet();
             dataset.DataSetName = input.Name;
             dataset.Tables.Cast<DataTable>().ToList().ForEach(push);
-            foreach (var item in stream.UnderlyingDisposables)
-                item.Dispose();
         }
     }
 }
