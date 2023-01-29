@@ -15,11 +15,12 @@ namespace Paillave.Etl.Zip
             => _args = args;
         public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-        public override void PushValues(IFileValue input, Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        public override void PushValues(IFileValue input, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             var destinations = (input.Metadata as IFileValueWithDestinationMetadata)?.Destinations;
             if (cancellationToken.IsCancellationRequested) return;
             using var stream = input.Get(_args.UseStreamCopy);
+            context.AddUnderlyingDisposables(stream);
             using var zf = new ZipFile(stream);
             var searchPattern = string.IsNullOrEmpty(_args.FileNamePattern) ? "*" : _args.FileNamePattern;
             var matcher = new Matcher().AddInclude(searchPattern);

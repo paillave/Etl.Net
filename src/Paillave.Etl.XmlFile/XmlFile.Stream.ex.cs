@@ -6,7 +6,7 @@ namespace Paillave.Etl.XmlFile
 {
     public static class XmlFileEx
     {
-        public static IStream<XmlNodeParsed> CrossApplyXmlFile(this IStream<IFileValue> stream, string name, Func<XmlFileDefinition, XmlFileDefinition> map, bool noParallelisation = false, bool useStreamCopy = false)
+        public static IStream<XmlNodeParsed> CrossApplyXmlFile(this IStream<IFileValue> stream, string name, Func<XmlFileDefinition, XmlFileDefinition> map, bool noParallelisation = false, bool useStreamCopy = true)
         {
             var valuesProvider = new XmlFileValuesProvider(new XmlFileValuesProviderArgs
             {
@@ -15,7 +15,7 @@ namespace Paillave.Etl.XmlFile
             });
             return stream.CrossApply<IFileValue, XmlNodeParsed>(name, valuesProvider, noParallelisation);
         }
-        public static IStream<XmlNodeParsed> CrossApplyXmlFile(this IStream<IFileValue> stream, string name, XmlFileDefinition xmlFileDefinition, bool noParallelisation = false, bool useStreamCopy = false)
+        public static IStream<XmlNodeParsed> CrossApplyXmlFile(this IStream<IFileValue> stream, string name, XmlFileDefinition xmlFileDefinition, bool noParallelisation = false, bool useStreamCopy = true)
         {
             var valuesProvider = new XmlFileValuesProvider(new XmlFileValuesProviderArgs
             {

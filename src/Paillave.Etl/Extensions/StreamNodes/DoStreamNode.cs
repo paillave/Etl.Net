@@ -7,7 +7,7 @@ namespace Paillave.Etl.Core
     #region Actions Without Resources
     public interface IDoProcessor<TIn>
     {
-        void ProcessRow(TIn value, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker);
+        void ProcessRow(TIn value, CancellationToken cancellationToken, IExecutionContext context);
     }
     public class SimpleDoProcessor<TIn, TInnerIn> : IDoProcessor<TIn>
     {
@@ -15,7 +15,7 @@ namespace Paillave.Etl.Core
         private readonly Action<TInnerIn> _processRow;
         public SimpleDoProcessor(Func<TIn, TInnerIn> getInner, Action<TInnerIn> processRow)
             => (_processRow, _getInner) = (processRow, getInner);
-        public void ProcessRow(TIn value, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        public void ProcessRow(TIn value, CancellationToken cancellationToken, IExecutionContext context)
         {
             _processRow(_getInner(value));
         }
@@ -32,32 +32,32 @@ namespace Paillave.Etl.Core
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
         protected override TStream CreateOutputStream(DoArgs<TIn, TStream> args)
         {
-            return base.CreateMatchingStream(args.Stream.Observable.Do(i => args.Processor.ProcessRow(i, CancellationToken.None, args.Stream.SourceNode.ExecutionContext.DependencyResolver, args.Stream.SourceNode.ExecutionContext)), args.Stream);
+            return base.CreateMatchingStream(args.Stream.Observable.Do(i => args.Processor.ProcessRow(i, CancellationToken.None, args.Stream.SourceNode.ExecutionContext)), args.Stream);
         }
     }
     #endregion
     public class DoWithResolutionProcessor<TIn, TInnerIn, TService> : IDoProcessor<TIn> where TService : class
     {
-        private readonly Action<TInnerIn, TService, CancellationToken, IInvoker> _actionFull = null;
+        private readonly Action<TInnerIn, TService, CancellationToken, IExecutionContext> _actionFull = null;
         private readonly Action<TInnerIn, TService> _actionSimple = null;
         private readonly Func<TIn, TInnerIn> _getInner;
         private TService _service = null;
         private readonly object _lock = new Object();
-        public DoWithResolutionProcessor(Action<TInnerIn, TService, CancellationToken, IInvoker> actionFull, Func<TIn, TInnerIn> getInner) => (_actionFull, _getInner) = (actionFull, getInner);
+        public DoWithResolutionProcessor(Action<TInnerIn, TService, CancellationToken, IExecutionContext> actionFull, Func<TIn, TInnerIn> getInner) => (_actionFull, _getInner) = (actionFull, getInner);
         public DoWithResolutionProcessor(Action<TInnerIn, TService> actionSimple, Func<TIn, TInnerIn> getInner) => (_actionSimple, _getInner) = (actionSimple, getInner);
 
-        public void ProcessRow(TIn value, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        public void ProcessRow(TIn value, CancellationToken cancellationToken, IExecutionContext context)
         {
             lock (_lock)
             {
                 if (_service == null)
                 {
-                    _service = resolver.Resolve<TService>();
+                    _service = context.DependencyResolver.Resolve<TService>();
                 }
             }
             if (_actionFull != null)
             {
-                _actionFull(_getInner(value), _service, cancellationToken, invoker);
+                _actionFull(_getInner(value), _service, cancellationToken, context);
             }
             else if (_actionSimple != null)
             {
@@ -75,7 +75,7 @@ namespace Paillave.Etl.Core
     {
         private readonly Func<TIn, TInnerIn> _getInner;
         public DoWithResolutionProcessorBuilder(Func<TIn, TInnerIn> getInner) => _getInner = getInner;
-        public IDoProcessor<TIn> ThenDo(Action<TInnerIn, TService, CancellationToken, IInvoker> actionFull) => new DoWithResolutionProcessor<TIn, TInnerIn, TService>(actionFull, _getInner);
+        public IDoProcessor<TIn> ThenDo(Action<TInnerIn, TService, CancellationToken, IExecutionContext> actionFull) => new DoWithResolutionProcessor<TIn, TInnerIn, TService>(actionFull, _getInner);
         public IDoProcessor<TIn> ThenDo(Action<TInnerIn, TService> actionSimple) => new DoWithResolutionProcessor<TIn, TInnerIn, TService>(actionSimple, _getInner);
     }
 }

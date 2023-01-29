@@ -23,7 +23,7 @@ namespace Paillave.Etl.ExcelFile
             this IStream<IFileValue> stream,
             string name,
             bool noParallelisation = false,
-            bool useStreamCopy = false)
+            bool useStreamCopy = true)
             => stream.CrossApply(name, new ExcelSheetsValuesProvider<ExcelSheetSelection>(new ExcelSheetsValuesProviderArgs<ExcelSheetSelection>
             {
                 GetOutput = (i, j) => i,
@@ -34,7 +34,7 @@ namespace Paillave.Etl.ExcelFile
             string name,
             Func<ExcelSheetSelection, TOut> selector,
             bool noParallelisation = false,
-            bool useStreamCopy = false)
+            bool useStreamCopy = true)
             => stream.CrossApply(name, new ExcelSheetsValuesProvider<TOut>(new ExcelSheetsValuesProviderArgs<TOut>
             {
                 GetOutput = (i, j) => selector(i),
@@ -45,7 +45,7 @@ namespace Paillave.Etl.ExcelFile
             string name,
             Func<DataTable, IFileValue, IEnumerable<TOut>> selector,
             bool noParallelisation = false,
-            bool useStreamCopy = false)
+            bool useStreamCopy = true)
             => stream.CrossApply(name, new ExcelDatasetsValuesProvider<TOut>(new ExcelDatasetsValuesProviderArgs<TOut>
             {
                 GetOutput = selector,

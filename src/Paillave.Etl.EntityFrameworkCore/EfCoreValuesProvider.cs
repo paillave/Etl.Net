@@ -30,14 +30,14 @@ namespace Paillave.Etl.EntityFrameworkCore
         public EfCoreValuesProvider(EfCoreValuesProviderArgs<TIn, TOut> args) => _args = args;
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-        public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             var dbContext = _args.ConnectionKey == null
-                    ? resolver.Resolve<DbContext>()
-                    : resolver.Resolve<DbContext>(_args.ConnectionKey);
+                    ? context.DependencyResolver.Resolve<DbContext>()
+                    : context.DependencyResolver.Resolve<DbContext>(_args.ConnectionKey);
             if (_args.StreamMode)
             {
-                invoker.InvokeInDedicatedThreadAsync(dbContext, () =>
+                context.InvokeInDedicatedThreadAsync(dbContext, () =>
                 {
                     var lsts = _args.GetQuery(new DbContextWrapper(dbContext), input).AsQueryable();
                     foreach (var elt in lsts) push(elt);
@@ -45,7 +45,7 @@ namespace Paillave.Etl.EntityFrameworkCore
             }
             else
             {
-                var lsts = invoker.InvokeInDedicatedThreadAsync(dbContext, () => _args.GetQuery(new DbContextWrapper(dbContext), input).ToList()).Result;
+                var lsts = context.InvokeInDedicatedThreadAsync(dbContext, () => _args.GetQuery(new DbContextWrapper(dbContext), input).ToList()).Result;
                 lsts.ForEach(push);
             }
         }
@@ -61,12 +61,12 @@ namespace Paillave.Etl.EntityFrameworkCore
         public EfCoreSingleValueProvider(EfCoreSingleValueProviderArgs<TIn, TOut> args) => _args = args;
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-        public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             var dbContext = _args.ConnectionKey == null
-                    ? resolver.Resolve<DbContext>()
-                    : resolver.Resolve<DbContext>(_args.ConnectionKey);
-            var res = invoker.InvokeInDedicatedThreadAsync(dbContext, () => _args.GetQuery(new DbContextWrapper(dbContext), input).FirstOrDefault()).Result;
+                    ? context.DependencyResolver.Resolve<DbContext>()
+                    : context.DependencyResolver.Resolve<DbContext>(_args.ConnectionKey);
+            var res = context.InvokeInDedicatedThreadAsync(dbContext, () => _args.GetQuery(new DbContextWrapper(dbContext), input).FirstOrDefault()).Result;
             push(res);
         }
     }

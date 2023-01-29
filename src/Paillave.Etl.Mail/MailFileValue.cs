@@ -71,7 +71,7 @@ namespace Paillave.Etl.Mail
             }
         }
 
-        public override Stream OpenContent() => GetContent();
+        public override StreamWithResource OpenContent() => new StreamWithResource(GetContent());
     }
     public class MailFileValueMetadata : FileValueMetadataBase
     {

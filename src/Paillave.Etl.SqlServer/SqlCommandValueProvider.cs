@@ -71,9 +71,9 @@ namespace Paillave.Etl.SqlServer
             return ObjectBuilder<TOut>.CreateInstance(values);
         }
 
-        public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IExecutionContext context)
         {
-            var sqlConnection = _args.ConnectionName == null ? resolver.Resolve<SqlConnection>() : resolver.Resolve<SqlConnection>(_args.ConnectionName);
+            var sqlConnection = _args.ConnectionName == null ? context.DependencyResolver.Resolve<SqlConnection>() : context.DependencyResolver.Resolve<SqlConnection>(_args.ConnectionName);
             var command = new SqlCommand(_args.SqlQuery, sqlConnection);
             Regex getParamRegex = new Regex(@"@(?<param>\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             var allMatches = getParamRegex.Matches(_args.SqlQuery).ToList().Select(match => match.Groups["param"].Value).Distinct().ToList();

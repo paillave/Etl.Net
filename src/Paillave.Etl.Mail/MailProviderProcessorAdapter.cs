@@ -27,7 +27,7 @@ namespace Paillave.Etl.Mail
         public string ToDisplayName { get; set; }
         public string Body { get; set; }
         public string Subject { get; set; }
-        public bool UseStreamCopy { get; set; }
+        public bool UseStreamCopy { get; set; } = true;
     }
     public class MailProviderProcessorAdapter : ProviderProcessorAdapterBase<MailAdapterConnectionParameters, MailAdapterProviderParameters, MailAdapterProcessorParameters>
     {

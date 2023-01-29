@@ -8,7 +8,7 @@ namespace Paillave.Etl.XmlFile
     public class XmlFileValuesProviderArgs
     {
         public XmlFileDefinition XmlFileDefinition { get; set; }
-        public bool UseStreamCopy { get; set; } = false;
+        public bool UseStreamCopy { get; set; } = true;
     }
     public class XmlFileValuesProvider : ValuesProviderBase<IFileValue, XmlNodeParsed>
     {
@@ -18,11 +18,12 @@ namespace Paillave.Etl.XmlFile
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
-        public override void PushValues(IFileValue input, Action<XmlNodeParsed> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        public override void PushValues(IFileValue input, Action<XmlNodeParsed> push, CancellationToken cancellationToken, IExecutionContext context)
         {
-            using var s = input.Get(_args.UseStreamCopy);
+            using var stream = input.Get(_args.UseStreamCopy);
+            context.AddUnderlyingDisposables(stream);
             XmlObjectReader xmlObjectReader = new XmlObjectReader(_args.XmlFileDefinition);
-            xmlObjectReader.Read(s, input.Name, push, cancellationToken);
+            xmlObjectReader.Read(stream, input.Name, push, cancellationToken);
         }
     }
 }

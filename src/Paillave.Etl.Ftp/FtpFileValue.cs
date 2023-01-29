@@ -42,16 +42,14 @@ namespace Paillave.Etl.Ftp
             }
         }
 
-        public override Stream OpenContent()
+        public override StreamWithResource OpenContent()
         {
-            using (FtpClient client = _connectionInfo.CreateFtpClient())
-            {
-                var pathToDownload = Path.Combine(_folder, this.Name).Replace('\\', '/');
-                var targetPath = Path.GetTempFileName();
-                if (client.DownloadFile(targetPath, pathToDownload) != FtpStatus.Success)
-                    throw new System.Exception($"File {pathToDownload} failed to be downloaded");
-                return new DeletetableFileStream(targetPath);
-            }
+            FtpClient client = _connectionInfo.CreateFtpClient();
+            var pathToDownload = Path.Combine(_folder, this.Name).Replace('\\', '/');
+            var targetPath = Path.GetTempFileName();
+            if (client.DownloadFile(targetPath, pathToDownload) != FtpStatus.Success)
+                throw new System.Exception($"File {pathToDownload} failed to be downloaded");
+            return new StreamWithResource(new DeletetableFileStream(targetPath), client);
         }
         private class DeletetableFileStream : Stream
         {

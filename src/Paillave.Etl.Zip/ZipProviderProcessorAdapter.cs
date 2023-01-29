@@ -27,13 +27,13 @@ namespace Paillave.Etl.Zip
             : base(code, name, connectionName, connectionParameters, processorParameters) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-        protected override void Process(IFileValue fileValue, ZipAdapterConnectionParameters connectionParameters, ZipAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        protected override void Process(IFileValue fileValue, ZipAdapterConnectionParameters connectionParameters, ZipAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             new UnzipFileProcessorValuesProvider(new UnzipFileProcessorParams
             {
                 FileNamePattern = processorParameters.FileNamePattern,
                 Password = connectionParameters.Password
-            }).PushValues(fileValue, push, cancellationToken, resolver, invoker);
+            }).PushValues(fileValue, push, cancellationToken, context);
         }
 
         protected override void Test(ZipAdapterConnectionParameters connectionParameters, ZipAdapterProcessorParameters processorParameters) { }

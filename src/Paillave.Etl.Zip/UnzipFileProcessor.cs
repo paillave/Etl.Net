@@ -13,7 +13,7 @@ namespace Paillave.Etl.Zip
     {
         public string Password { get; set; }
         public string FileNamePattern { get; set; }
-        public bool UseStreamCopy { get; set; }
+        public bool UseStreamCopy { get; set; } = true;
     }
     public class UnzippedFileValueMetadata : FileValueMetadataBase, IFileValueWithDestinationMetadata
     {
@@ -31,11 +31,12 @@ namespace Paillave.Etl.Zip
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
 
-        protected override void Process(IFileValue fileValue, object connectionParameters, UnzipFileProcessorParams processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        protected override void Process(IFileValue fileValue, object connectionParameters, UnzipFileProcessorParams processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             var destinations = (fileValue.Metadata as IFileValueWithDestinationMetadata)?.Destinations;
             if (cancellationToken.IsCancellationRequested) return;
             using var stream = fileValue.Get(processorParameters.UseStreamCopy);
+            context.AddUnderlyingDisposables(stream);
             using var zf = new ZipFile(stream);
             var searchPattern = string.IsNullOrEmpty(processorParameters.FileNamePattern) ? "*" : processorParameters.FileNamePattern;
             var matcher = new Matcher().AddInclude(searchPattern);

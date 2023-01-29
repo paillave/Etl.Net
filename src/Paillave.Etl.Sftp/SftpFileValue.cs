@@ -42,17 +42,15 @@ namespace Paillave.Etl.Sftp
                 return new MemoryStream(client.ReadAllBytes(Path.Combine(_folder, Name)));
             }
         }
-        private Stream OpenContentSingleTime()
+        private StreamWithResource OpenContentSingleTime()
         {
             var connectionInfo = _connectionInfo.CreateConnectionInfo();
-            using (var client = new SftpClient(connectionInfo))
-            {
-                client.Connect();
-                return client.OpenRead(Path.Combine(_folder, Name));
-            }
+            var client = new SftpClient(connectionInfo);
+            client.Connect();
+            return new StreamWithResource(client.OpenRead(Path.Combine(_folder, Name)), client);
         }
 
-        public override Stream OpenContent() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, OpenContentSingleTime);
+        public override StreamWithResource OpenContent() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, OpenContentSingleTime);
     }
     public class SftpFileValueMetadata : FileValueMetadataBase
     {

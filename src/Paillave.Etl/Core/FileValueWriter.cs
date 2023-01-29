@@ -102,12 +102,12 @@ namespace Paillave.Etl.Core
             ms.Seek(0, SeekOrigin.Begin);
             return ms;
         }
-        public Stream OpenContent()
+        public StreamWithResource OpenContent()
         {
             this._streamWriter.BaseStream.Seek(0, SeekOrigin.Begin);
-            return _streamWriter.BaseStream;
+            return new StreamWithResource(_streamWriter.BaseStream);
         }
-        public Stream Get(bool useStreamCopy = false) => useStreamCopy ? GetContent() : OpenContent();
+        public StreamWithResource Get(bool useStreamCopy = true) => useStreamCopy ? new(GetContent()) : OpenContent();
     }
     public static class FileValueWriter
     {

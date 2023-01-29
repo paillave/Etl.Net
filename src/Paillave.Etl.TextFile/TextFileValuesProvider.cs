@@ -10,7 +10,7 @@ namespace Paillave.Etl.TextFile
     {
         public Encoding Encoding { get; set; } = null;
         public Func<string, TOut> GetResult { get; set; }
-        public bool UseStreamCopy { get; set; } = false;
+        public bool UseStreamCopy { get; set; } = true;
     }
     public class TextFileValuesProvider<TOut> : ValuesProviderBase<IFileValue, TOut>
     {
@@ -25,9 +25,10 @@ namespace Paillave.Etl.TextFile
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
-        public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             using var stream = input.Get(_args.UseStreamCopy);
+            context.AddUnderlyingDisposables(stream);
             using var sr = _args.Encoding == null ? new StreamReader(stream, true) : new StreamReader(stream, _args.Encoding);
             while (!sr.EndOfStream)
             {

@@ -1,4 +1,3 @@
-using Paillave.Etl.Reactive.Disposables;
 using Paillave.Etl.Core;
 using System.IO;
 
@@ -30,7 +29,7 @@ namespace Paillave.Etl.FileSystem
             stream.Seek(0, SeekOrigin.Begin);
             return stream;
         }
-        public override Stream OpenContent() => _fileInfo.OpenRead();
+        public override StreamWithResource OpenContent() => new StreamWithResource(_fileInfo.OpenRead());
     }
     public class FileSystemFileValueMetadata : FileValueMetadataBase
     {

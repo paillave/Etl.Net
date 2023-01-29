@@ -55,7 +55,7 @@ namespace Paillave.Etl.FileSystem
                 }), noParallelisation);
         [Obsolete("KISS & YAGNI")]
         public static IStream<IFileValue> WriteToFile(this IStream<IFileValue> stream, string name,
-        ISingleStream<string> outputFilePathStream, bool useStreamCopy = false)
+        ISingleStream<string> outputFilePathStream, bool useStreamCopy = true)
         {
             return new WriteToFileStreamNode<string>(name, new WriteToFileArgs<string>
             {
@@ -65,7 +65,7 @@ namespace Paillave.Etl.FileSystem
                 UseStreamCopy = useStreamCopy
             }).Output;
         }
-        public static IStream<IFileValue> WriteToFile(this IStream<IFileValue> stream, string name, Func<IFileValue, string> getOutputFilePath, bool useStreamCopy = false)
+        public static IStream<IFileValue> WriteToFile(this IStream<IFileValue> stream, string name, Func<IFileValue, string> getOutputFilePath, bool useStreamCopy = true)
         {
             return new WriteToFileStreamNode(name, new WriteToFileArgs
             {
@@ -75,7 +75,7 @@ namespace Paillave.Etl.FileSystem
             }).Output;
         }
         [Obsolete("KISS & YAGNI")]
-        public static IStream<IFileValue> WriteToFile<TParam>(this IStream<IFileValue> stream, string name, ISingleStream<TParam> outputFilePathStream, Func<TParam, string> getOutputFilePath, bool useStreamCopy = false)
+        public static IStream<IFileValue> WriteToFile<TParam>(this IStream<IFileValue> stream, string name, ISingleStream<TParam> outputFilePathStream, Func<TParam, string> getOutputFilePath, bool useStreamCopy = true)
         {
             return new WriteToFileStreamNode<TParam>(name, new WriteToFileArgs<TParam>
             {
