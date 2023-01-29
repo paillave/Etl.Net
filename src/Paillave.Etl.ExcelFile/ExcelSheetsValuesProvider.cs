@@ -28,13 +28,14 @@ namespace Paillave.Etl.ExcelFile
         public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             using var stream = input.Get(_args.UseStreamCopy);
-            context.AddUnderlyingDisposables(stream);
             var pck = new ExcelPackage(stream);
             foreach (var worksheet in pck.Workbook.Worksheets)
             {
                 if (cancellationToken.IsCancellationRequested) break;
                 push(_args.GetOutput(new ExcelSheetSelection(worksheet), input));
             }
+            foreach (var item in stream.UnderlyingDisposables)
+                item.Dispose();
         }
     }
 }

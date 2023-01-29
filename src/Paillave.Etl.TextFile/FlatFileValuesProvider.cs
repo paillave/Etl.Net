@@ -22,7 +22,6 @@ namespace Paillave.Etl.TextFile
         public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             using var stream = input.Get(_args.UseStreamCopy);
-            context.AddUnderlyingDisposables(stream);
             string sourceName = input.Name;
             var encoding = _args.Encoding ?? _args.Mapping.Encoding;
             using var sr = encoding == null ? new StreamReader(stream, true) : new StreamReader(stream, encoding);
@@ -80,6 +79,8 @@ namespace Paillave.Etl.TextFile
                     index++;
                 }
             }
+            foreach (var item in stream.UnderlyingDisposables)
+                item.Dispose();
         }
     }
 }
