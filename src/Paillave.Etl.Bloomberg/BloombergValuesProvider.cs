@@ -50,7 +50,6 @@ namespace Paillave.Etl.Bloomberg
         public override void PushValues(IFileValue input, Action<BloombergResult<TParsed>> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             using var stream = input.Get(_args.UseStreamCopy);
-            context.AddUnderlyingDisposables(stream);
             string sourceName = input.Name;
             var encoding = _args.Encoding ?? _args.Mapping.Encoding;
             var sr = encoding == null ? new StreamReader(stream, true) : new StreamReader(stream, encoding);
@@ -128,6 +127,8 @@ namespace Paillave.Etl.Bloomberg
                     }
                 }
             }
+            foreach (var item in stream.UnderlyingDisposables)
+                item.Dispose();
         }
     }
 }

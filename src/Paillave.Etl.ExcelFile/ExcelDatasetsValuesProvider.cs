@@ -22,12 +22,13 @@ namespace Paillave.Etl.ExcelFile
         public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             using var stream = input.Get(_args.UseStreamCopy);
-            context.AddUnderlyingDisposables(stream);
             using var reader = ExcelReaderFactory.CreateReader(stream);
             var dataset = reader.AsDataSet();
             dataset.DataSetName = input.Name;
             foreach (var item in dataset.Tables.Cast<DataTable>())
                 _args.GetOutput(item, input).ToList().ForEach(push);
+            foreach (var item in stream.UnderlyingDisposables)
+                item.Dispose();
         }
     }
 
@@ -47,11 +48,12 @@ namespace Paillave.Etl.ExcelFile
         public override void PushValues(IFileValue input, Action<DataTable> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             using var stream = input.Get(_args.UseStreamCopy);
-            context.AddUnderlyingDisposables(stream);
             using var reader = ExcelReaderFactory.CreateReader(stream);
             var dataset = reader.AsDataSet();
             dataset.DataSetName = input.Name;
             dataset.Tables.Cast<DataTable>().ToList().ForEach(push);
+            foreach (var item in stream.UnderlyingDisposables)
+                item.Dispose();
         }
     }
 }

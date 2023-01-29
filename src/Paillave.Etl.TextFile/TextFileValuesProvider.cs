@@ -28,13 +28,14 @@ namespace Paillave.Etl.TextFile
         public override void PushValues(IFileValue input, Action<TOut> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             using var stream = input.Get(_args.UseStreamCopy);
-            context.AddUnderlyingDisposables(stream);
             using var sr = _args.Encoding == null ? new StreamReader(stream, true) : new StreamReader(stream, _args.Encoding);
             while (!sr.EndOfStream)
             {
                 if (cancellationToken.IsCancellationRequested) break;
                 push(_args.GetResult(sr.ReadLine()));
             }
+            foreach (var item in stream.UnderlyingDisposables)
+                item.Dispose();
         }
     }
 }
