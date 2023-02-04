@@ -5,9 +5,10 @@ import Highlight, { defaultProps } from "prism-react-renderer";
 import "prismjs"; // eslint-disable-line
 require(`prismjs/components/prism-csharp`); // eslint-disable-line
 import theme from "prism-react-renderer/themes/dracula";
+import { WithLineNumbers } from './WithLineNumbers';
 // https://emojipedia.org/
 
-const FeatureList = [
+const features: IExample[]  = [
 //   {
 //     title: 'Unzip it, read it, save it, report it',
 //     sourceCode: `
@@ -186,6 +187,11 @@ private static void DefineProcess(ISingleStream<string> contextStream)
     ),
   }
 ];
+interface IExample {
+  title: string;
+  sourceCode: string;
+  description: JSX.Element;
+}
 
 function Example({ sourceCode, title, description }) {
   return (<div className={clsx('col col--10 col--offset-1')}>
@@ -203,12 +209,13 @@ function Example({ sourceCode, title, description }) {
 }
 
 export default function HomepageExamples() {
+  if (!features?.length) return null;
   return (
     <section className={styles.features}>
       <div className="container">
         {/* <h1>Examples</h1> */}
         <div className="row">
-          {FeatureList.map((props, idx) => (
+          {features.map((props, idx) => (
             <Example key={idx} {...props} />
           ))}
         </div>
@@ -216,27 +223,3 @@ export default function HomepageExamples() {
     </section>
   );
 }
-
-const WithLineNumbers = ({ sourceCode }: { sourceCode: string }) => (
-  <Highlight
-    {...defaultProps}
-    theme={theme}
-    code={sourceCode}
-    // @ts-ignore
-    language="csharp"
-  >
-    {({ className, style, tokens, getLineProps, getTokenProps }) => (
-      <pre className={className + " language-csharp frontpage"} style={style}>
-        {tokens.map((line, i) => (
-          <div key={i} {...getLineProps({ line, key: i })}>
-            <span>
-              {line.map((token, key) => (
-                <span key={key} {...getTokenProps({ token, key })} />
-              ))}
-            </span>
-          </div>
-        ))}
-      </pre>
-    )}
-  </Highlight>
-); // eslint-disable-line
