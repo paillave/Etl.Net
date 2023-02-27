@@ -31,7 +31,6 @@ Extend it takes 5mn... literally.
 | Paillave.EtlNet.XmlFile | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.XmlFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.XmlFile) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.XmlFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.XmlFile) |
 | Paillave.EtlNet.Zip | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Zip.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Zip) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Zip.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Zip) |
 | Paillave.EtlNet.Pdf | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Pdf.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Pdf) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Pdf.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Pdf) |
-| Paillave.EtlNet.Scheduler | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Scheduler.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Scheduler) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Scheduler.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Scheduler) |
 | Paillave.EntityFrameworkCoreExtension | [![NuGet](https://img.shields.io/nuget/v/Paillave.EntityFrameworkCoreExtension.svg)](https://www.nuget.org/packages/Paillave.EntityFrameworkCoreExtension) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EntityFrameworkCoreExtension.svg)](https://www.nuget.org/packages/Paillave.EntityFrameworkCoreExtension) |
 
 ## Examples

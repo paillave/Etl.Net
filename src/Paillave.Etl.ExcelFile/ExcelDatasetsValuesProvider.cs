@@ -10,7 +10,7 @@ namespace Paillave.Etl.ExcelFile
 {
     public class ExcelDatasetsValuesProviderArgs<TOut>
     {
-        public Func<DataTable, IFileValue, IEnumerable<TOut>> GetOutput { get; set; }
+        public Func<DataTable, IFileValue, IEnumerable<TOut>?> GetOutput { get; set; }
         public bool UseStreamCopy { get; set; } = true;
     }
     public class ExcelDatasetsValuesProvider<TOut> : ValuesProviderBase<IFileValue, TOut>
@@ -26,7 +26,11 @@ namespace Paillave.Etl.ExcelFile
             var dataset = reader.AsDataSet();
             dataset.DataSetName = input.Name;
             foreach (var item in dataset.Tables.Cast<DataTable>())
-                _args.GetOutput(item, input).ToList().ForEach(push);
+            {
+                var ret = _args.GetOutput(item, input);
+                if (ret != null)
+                    ret.ToList().ForEach(push);
+            }
         }
     }
 
