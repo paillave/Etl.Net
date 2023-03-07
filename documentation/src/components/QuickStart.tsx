@@ -1,33 +1,30 @@
 import React from 'react';
 // import clsx from 'clsx';
 import styles from './HomepageFeatures.module.css';
-import Highlight, { defaultProps } from "prism-react-renderer";
 import "prismjs"; // eslint-disable-line
 require(`prismjs/components/prism-csharp`); // eslint-disable-line
-import theme from "prism-react-renderer/themes/dracula";
+import { WithLineNumbers } from './WithLineNumbers';
 // https://emojipedia.org/
 
-
-export default function QuickStart() {
-  return <section className={styles.features}>
-    <div className="container">
-      <div className="row">
-        <div className="col col--10 col--offset-1">
-          <div className='card margin--md shadow--tl'>
-            <div className="card__header">
-              <h3>Very Quick Start ⚡</h3>
-            </div>
-            <div className="card__body">
-              <p>Create the project</p>
-              <WithLineNumbers sourceCode={`dotnet new console -o MyFirstEtl
+interface IQuickStart {
+  title: string;
+  code: {
+    batch: string;
+    program: string;
+  }
+}
+const quickStarts: IQuickStart[] = [
+  {
+    title: "Very Quick Start ⚡",
+    code: {
+      batch: `dotnet new console -o MyFirstEtl
 cd MyFirstEtl
 dotnet add package Paillave.EtlNet.Core
 dotnet add package Paillave.EtlNet.FileSystem
 dotnet add package Paillave.EtlNet.Zip
 dotnet add package Paillave.EtlNet.TextFile
-dotnet add package Paillave.EtlNet.SqlServer`} />
-              <p>Create and call the ETL</p>
-              <WithLineNumbers sourceCode={`using System;
+dotnet add package Paillave.EtlNet.SqlServer`,
+      program: `using System;
 using System.Threading.Tasks;
 using Paillave.Etl.Core;
 using Paillave.Etl.FileSystem;
@@ -90,35 +87,35 @@ namespace SimpleTutorial
             public int? Reputation { get; set; }
         }
     }
-}`} />
-            </div>
-          </div>
+}`
+    }
+  }
+]
+
+export default function QuickStarts() {
+  if (!quickStarts?.length) return null;
+  return <section className={styles.features}>
+    <div className="container">
+      <div className="row">
+        <div className="col col--10 col--offset-1">
+          {quickStarts.map(quickStart => <QuickStart key={quickStart.title} quickStart={quickStart} />)}
         </div>
       </div>
     </div>
   </section>
 }
 
-const WithLineNumbers = ({ sourceCode }: { sourceCode: string }) => (
-  <Highlight
-    {...defaultProps}
-    theme={theme}
-    code={sourceCode}
-    // @ts-ignore
-    language="csharp"
-  >
-    {({ className, style, tokens, getLineProps, getTokenProps }) => (
-      <pre className={className + " language-csharp frontpage"} style={style}>
-        {tokens.map((line, i) => (
-          <div key={i} {...getLineProps({ line, key: i })}>
-            <span>
-              {line.map((token, key) => (
-                <span key={key} {...getTokenProps({ token, key })} />
-              ))}
-            </span>
-          </div>
-        ))}
-      </pre>
-    )}
-  </Highlight>
-); // eslint-disable-line
+
+function QuickStart({ quickStart }: { quickStart: IQuickStart }) {
+  return <div className='card margin--md shadow--tl'>
+    <div className="card__header">
+      <h3>{quickStart.title}</h3>
+    </div>
+    <div className="card__body">
+      <p>Create the project</p>
+      <WithLineNumbers sourceCode={quickStart.code.batch} />
+      <p>Program.cs</p>
+      <WithLineNumbers sourceCode={quickStart.code.program} />
+    </div>
+  </div>
+}
