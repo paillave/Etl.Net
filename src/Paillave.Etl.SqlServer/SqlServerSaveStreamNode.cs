@@ -7,6 +7,7 @@ using System.Linq;
 using System.Data.SqlClient;
 using System.Reflection;
 using System.Linq.Expressions;
+using System.Data;
 
 namespace Paillave.Etl.SqlServer
 {
@@ -92,12 +93,15 @@ namespace Paillave.Etl.SqlServer
         private void ProcessItem(TValue item, string connectionName)
         {
             var resolver = this.ExecutionContext.DependencyResolver;
-            var sqlConnection = connectionName == null ? resolver.Resolve<SqlConnection>() : resolver.Resolve<SqlConnection>(connectionName);
+            var sqlConnection = connectionName == null ? resolver.Resolve<IDbConnection>() : resolver.Resolve<IDbConnection>(connectionName);
             // List<PropertyInfo> pivot = base.Args.Pivot == null ? new List<PropertyInfo>() : base.Args.Pivot.GetPropertyInfos();
             // List<PropertyInfo> computed = base.Args.Computed == null ? new List<PropertyInfo>() : base.Args.Computed.GetPropertyInfos();
             // var sqlQuery = CreateSqlQuery(base.Args.Table, typeof(TIn).GetProperties().ToList(), pivot, computed);
             var sqlStatement = GetSqlStatement();
-            var command = new SqlCommand(sqlStatement, sqlConnection);
+            var command=sqlConnection.CreateCommand();
+            command.CommandText = sqlStatement;
+            command.CommandType = CommandType.Text;
+            // var command = new SqlCommand(sqlStatement, sqlConnection);
             // Regex getParamRegex = new Regex(@"@(?<param>\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             // var allMatches = getParamRegex.Matches(base.Args.SqlQuery).ToList().Select(match => match.Groups["param"].Value).Distinct().ToList();
             foreach (var parameterName in _inPropertyInfos.Keys.Except(_computed.Select(i => i.Name)))
@@ -109,7 +113,7 @@ namespace Paillave.Etl.SqlServer
                     UpdateRecord(reader, item);
         }
 
-        private void UpdateRecord(SqlDataReader record, TValue item)
+        private void UpdateRecord(IDataReader record, TValue item)
         {
             IDictionary<string, object> values = new Dictionary<string, object>();
             for (int i = 0; i < record.FieldCount; i++)
