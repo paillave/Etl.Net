@@ -2,6 +2,7 @@
 using Paillave.Etl.SqlServer.Core;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
@@ -61,7 +62,7 @@ namespace Paillave.Etl.SqlServer
         public SqlCommandValueProvider(SqlCommandValueProviderArgs<TIn, TOut> args) => (_args) = (args);
         public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-        private TOut CreateRecord(SqlDataReader record, IList<SqlResultFieldDefinition> fieldDefinitions)
+        private TOut CreateRecord(IDataReader record, IList<SqlResultFieldDefinition> fieldDefinitions)
         {
             IDictionary<string, object> values = new Dictionary<string, object>();
             for (int i = 0; i < record.FieldCount; i++)
@@ -73,8 +74,11 @@ namespace Paillave.Etl.SqlServer
 
         public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IExecutionContext context)
         {
-            var sqlConnection = _args.ConnectionName == null ? context.DependencyResolver.Resolve<SqlConnection>() : context.DependencyResolver.Resolve<SqlConnection>(_args.ConnectionName);
-            var command = new SqlCommand(_args.SqlQuery, sqlConnection);
+            var sqlConnection = _args.ConnectionName == null ? context.DependencyResolver.Resolve<IDbConnection>() : context.DependencyResolver.Resolve<IDbConnection>(_args.ConnectionName);
+            var command = sqlConnection.CreateCommand();
+            command.CommandText = _args.SqlQuery;
+            command.CommandType = CommandType.Text;
+            // var command = new SqlCommand(_args.SqlQuery, sqlConnection);
             Regex getParamRegex = new Regex(@"@(?<param>\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             var allMatches = getParamRegex.Matches(_args.SqlQuery).ToList().Select(match => match.Groups["param"].Value).Distinct().ToList();
             foreach (var parameterName in allMatches)
