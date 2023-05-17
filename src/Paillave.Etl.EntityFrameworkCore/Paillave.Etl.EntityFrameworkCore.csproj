@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>Paillave.EtlNet.EntityFrameworkCore</PackageId>
-    <Version>2.1.3-beta</Version>
+    <Version>2.1.4-beta</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -20,15 +20,15 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="FastMember" Version="1.5.0" allowedVersions="1.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.11" allowedVersions="6.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.11" allowedVersions="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" allowedVersions="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" allowedVersions="6.0.0" />
     <PackageReference Include="system.data.sqlclient" Version="4.8.5" allowedVersions="4.8.0" />
   </ItemGroup>
 

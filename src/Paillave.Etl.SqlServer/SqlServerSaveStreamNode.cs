@@ -98,7 +98,7 @@ namespace Paillave.Etl.SqlServer
             // List<PropertyInfo> computed = base.Args.Computed == null ? new List<PropertyInfo>() : base.Args.Computed.GetPropertyInfos();
             // var sqlQuery = CreateSqlQuery(base.Args.Table, typeof(TIn).GetProperties().ToList(), pivot, computed);
             var sqlStatement = GetSqlStatement();
-            var command=sqlConnection.CreateCommand();
+            var command = sqlConnection.CreateCommand();
             command.CommandText = sqlStatement;
             command.CommandType = CommandType.Text;
             // var command = new SqlCommand(sqlStatement, sqlConnection);
@@ -106,7 +106,11 @@ namespace Paillave.Etl.SqlServer
             // var allMatches = getParamRegex.Matches(base.Args.SqlQuery).ToList().Select(match => match.Groups["param"].Value).Distinct().ToList();
             foreach (var parameterName in _inPropertyInfos.Keys.Except(_computed.Select(i => i.Name)))
             {
-                command.Parameters.Add(new SqlParameter($"@{parameterName}", _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value));
+                var parameter = command.CreateParameter();
+                parameter.ParameterName = $"@{parameterName}";
+                parameter.Value = _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value;
+                command.Parameters.Add(parameter);
+                // command.Parameters.Add(new SqlParameter($"@{parameterName}", _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value));
             }
             using (var reader = command.ExecuteReader())
                 if (reader.Read())
