@@ -45,7 +45,11 @@ namespace Paillave.Etl.SqlServer
             var allMatches = getParamRegex.Matches(base.Args.SqlQuery).ToList().Select(match => match.Groups["param"].Value).Distinct().ToList();
             foreach (var parameterName in allMatches)
             {
-                command.Parameters.Add(new SqlParameter($"@{parameterName}", _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value));
+                var parameter = command.CreateParameter();
+                parameter.ParameterName = $"@{parameterName}";
+                parameter.Value = _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value;
+                command.Parameters.Add(parameter);
+                // command.Parameters.Add(new SqlParameter($"@{parameterName}", _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value));
             }
             command.ExecuteNonQuery();
         }
