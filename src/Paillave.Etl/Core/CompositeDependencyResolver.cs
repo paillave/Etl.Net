@@ -74,6 +74,30 @@ namespace Paillave.Etl.Core
             return false;
         }
 
+        public object Resolve(Type type, string key)
+        {
+            lock (_lock)
+            {
+                object resolved = default;
+                foreach (var dependencyResolver in _dependencyResolvers)
+                    if (dependencyResolver.TryResolve(type, key, out resolved))
+                        return resolved;
+            }
+            return default;
+        }
+
+        public bool TryResolve(Type type, string key, out object resolved)
+        {
+            lock (_lock)
+            {
+                resolved = default;
+                foreach (var dependencyResolver in _dependencyResolvers)
+                    if (dependencyResolver.TryResolve(type, key, out resolved))
+                        return true;
+            }
+            return false;
+        }
+
         public bool TryResolve(Type type, out object resolved)
         {
             lock (_lock)

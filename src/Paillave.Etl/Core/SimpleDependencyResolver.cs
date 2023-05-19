@@ -60,7 +60,7 @@ namespace Paillave.Etl.Core
         {
             lock (_lock)
             {
-                return (T)Resolve(key);
+                return (T)Resolve(typeof(T), key);
             }
         }
         public T Resolve<T>() where T : class
@@ -79,7 +79,7 @@ namespace Paillave.Etl.Core
             }
         }
 
-        public object Resolve(string key)
+        public object Resolve(Type type, string key)
         {
             lock (_lock)
             {
@@ -112,6 +112,23 @@ namespace Paillave.Etl.Core
                 if (this._namedDictionary.TryGetValue(key, out var res))
                 {
                     resolved = (T)res;
+                    return true;
+                }
+                else
+                {
+                    resolved = default;
+                }
+                return false;
+            }
+        }
+
+        public bool TryResolve(Type type, string key, out object resolved)
+        {
+            lock (_lock)
+            {
+                if (this._namedDictionary.TryGetValue(key, out var res))
+                {
+                    resolved = res;
                     return true;
                 }
                 else

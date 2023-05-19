@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using Paillave.Etl.Reactive.Operators;
 using System.Linq;
-using System.Data.SqlClient;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Data;

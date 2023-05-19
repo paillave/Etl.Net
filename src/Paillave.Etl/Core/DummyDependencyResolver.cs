@@ -9,6 +9,14 @@ namespace Paillave.Etl.Core
         public T Resolve<T>() where T : class => default;
         public T Resolve<T>(string key) where T : class => default;
 
+        public object Resolve(Type type, string key) => default;
+
+        public bool TryResolve(Type type, string key, out object resolved)
+        {
+            resolved = default;
+            return false;
+        }
+
         public bool TryResolve<T>(out T resolved) where T : class
         {
             resolved = default;
