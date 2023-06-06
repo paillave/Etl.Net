@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Text;
 using Paillave.Etl.Reactive.Operators;
 using System.Linq;
-using System.Data.SqlClient;
 using System.Reflection;
 using System.Linq.Expressions;
 using System.Data;
+using System.Data.Odbc;
+using System.Data.OleDb;
+using System.Text.RegularExpressions;
 
 namespace Paillave.Etl.SqlServer
 {
@@ -112,11 +114,40 @@ namespace Paillave.Etl.SqlServer
                 command.Parameters.Add(parameter);
                 // command.Parameters.Add(new SqlParameter($"@{parameterName}", _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value));
             }
+            
+            if (sqlConnection is OdbcConnection or OleDbConnection)
+            {
+                command = AdjustCommandForOdbcOrOleDb(sqlConnection, command);
+            }
+            
             using (var reader = command.ExecuteReader())
                 if (reader.Read())
                     UpdateRecord(reader, item);
         }
 
+        private static IDbCommand AdjustCommandForOdbcOrOleDb(IDbConnection connection, IDbCommand command)
+        {
+           var adjustedCommand = connection.CreateCommand();
+           adjustedCommand.CommandType = CommandType.Text;
+           
+           var regex = new Regex(@"@\w+");
+           adjustedCommand.CommandText = regex.Replace(command.CommandText, "?");
+
+           var parameterUsages = regex
+               .Matches(command.CommandText)
+               .Select(match => match.Value);
+
+           foreach (var parameterName in parameterUsages)
+           {
+               var parameter = adjustedCommand.CreateParameter();
+               parameter.ParameterName = parameterName;
+               parameter.Value = ((IDataParameter)command.Parameters[parameterName]).Value;
+               adjustedCommand.Parameters.Add(parameter);
+           }
+
+           return adjustedCommand;
+        }
+        
         private void UpdateRecord(IDataReader record, TValue item)
         {
             IDictionary<string, object> values = new Dictionary<string, object>();
