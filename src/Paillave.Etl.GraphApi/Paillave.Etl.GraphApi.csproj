@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageId>Paillave.EtlNet.Mail</PackageId>
-    <Version>2.1.7-beta</Version>
+    <PackageId>Paillave.EtlNet.GraphApi</PackageId>
+    <Version>2.1.8-beta</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
-    <PackageTags>ETL .net core SSIS reactive Mail</PackageTags>
+    <PackageTags>ETL .net core SSIS reactive GraphApi Mail</PackageTags>
     <Product>ETL.net Mail extensions</Product>
-    <Description>Extensions for Etl.Net to send of read EMails</Description>
+    <Description>Extensions for Etl.Net to send of read EMails using GraphApi</Description>
     <LangVersion>latest</LangVersion>
     <PackageIcon>NugetIcon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
