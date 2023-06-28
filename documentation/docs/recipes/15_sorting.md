@@ -4,7 +4,7 @@ sidebar_position: 15
 
 # Sorting
 
-For ETL.ET streams can have specific characteristics. These characteristics are sometimes required by some operators. There are some operator to issue streams with there characteristics.
+For ETL.NET streams can have specific characteristics. These characteristics are sometimes required by some operators. There are some operator to issue streams with there characteristics.
 
 ## SortedStream
 
