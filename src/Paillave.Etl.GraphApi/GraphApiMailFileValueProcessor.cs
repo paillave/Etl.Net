@@ -10,9 +10,9 @@ using Microsoft.Graph.Models;
 
 namespace Paillave.Etl.GraphApi;
 
-public class MailFileValueProcessor : FileValueProcessorBase<GraphApiAdapterConnectionParameters, GraphApiAdapterProcessorParameters>
+public class GraphApiMailFileValueProcessor : FileValueProcessorBase<GraphApiAdapterConnectionParameters, GraphApiAdapterProcessorParameters>
 {
-    public MailFileValueProcessor(string code, string name, string connectionName, GraphApiAdapterConnectionParameters connectionParameters, GraphApiAdapterProcessorParameters processorParameters)
+    public GraphApiMailFileValueProcessor(string code, string name, string connectionName, GraphApiAdapterConnectionParameters connectionParameters, GraphApiAdapterProcessorParameters processorParameters)
         : base(code, name, connectionName, connectionParameters, processorParameters) { }
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;

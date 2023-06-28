@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Graph;
 using Microsoft.Graph.Models;
@@ -10,10 +11,10 @@ namespace Paillave.Etl.GraphApi;
 
 public static class BaseGraphServiceClientEx
 {
-    public static async Task<MailFolder> GetFolderAsync(this BaseGraphServiceClient graphClient, string userId, string path)
+    public static async Task<MailFolder> GetFolderAsync(this BaseGraphServiceClient graphClient, string userId, string path, CancellationToken cancellationToken)
     {
         var segments = path.Split(new char[] { '/', '\\' });
-        var folder = await GetRootFolderAsync(graphClient, userId, segments[0]);
+        var folder = await GetRootFolderAsync(graphClient, userId, segments[0], cancellationToken);
         if (folder == null)
             throw new Exception("folder does not exist");
         foreach (var segment in segments.Skip(1))
@@ -29,7 +30,7 @@ public static class BaseGraphServiceClientEx
         return folder;
     }
 
-    public static async Task<MailFolder?> GetRootFolderAsync(this BaseGraphServiceClient graphClient, string userId, string rootFolderName)
+    public static async Task<MailFolder?> GetRootFolderAsync(this BaseGraphServiceClient graphClient, string userId, string rootFolderName, CancellationToken cancellationToken)
     {
         MailFoldersRequestBuilder mailFoldersRequestBuilder = graphClient.Users[userId].MailFolders;
         var response = await mailFoldersRequestBuilder.GetAsync(i =>
@@ -37,7 +38,7 @@ public static class BaseGraphServiceClientEx
             i.QueryParameters.Filter = ODataExpression<MailFolder>.ToString(j => j.DisplayName == rootFolderName);
             i.QueryParameters.Expand = ProjectionProcessor<MailFolder>.ToString(j => j.ChildFolders);
             i.QueryParameters.Top = 1;
-        });
+        }, cancellationToken);
         return response.Value.FirstOrDefault();
     }
 }

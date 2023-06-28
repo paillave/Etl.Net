@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Paillave.Etl.GraphApi;
 
-public class MailFileValue : FileValueBase<GraphApiMailFileValueMetadata>
+public class GraphApiMailFileValue : FileValueBase<GraphApiMailFileValueMetadata>
 {
     public override string Name { get; }
     private readonly string _userId;
@@ -17,7 +17,7 @@ public class MailFileValue : FileValueBase<GraphApiMailFileValueMetadata>
     private bool _setToReadIfBatchDeletion;
     private readonly IGraphApiConnectionInfo _connectionInfo;
     private readonly Dictionary<string, bool> _deleted;
-    internal MailFileValue(
+    internal GraphApiMailFileValue(
         IGraphApiConnectionInfo connectionInfo,
         string messageId, string attachmentId,
         string folder, string mailSubject, string attachmentName,
@@ -48,7 +48,7 @@ public class MailFileValue : FileValueBase<GraphApiMailFileValueMetadata>
     protected override void DeleteFile() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, DeleteFileSingleTime);
     protected void DeleteFileSingleTime()
     {
-        _deleted[this.Name] = true;
+        _deleted[this._attachmentId] = true;
         if (_deleted.Values.All(v => v))
         {
             using (var client = _connectionInfo.CreateGraphApiClient())
@@ -78,7 +78,7 @@ public class MailFileValue : FileValueBase<GraphApiMailFileValueMetadata>
             var fullMessageRequestBuilder = graphClient.Users[_userId].Messages[_messageId];
 
             var attachment = (FileAttachment)fullMessageRequestBuilder.Attachments[_attachmentId].GetAsync().Result;
-            using var ms = new MemoryStream();
+            var ms = new MemoryStream();
             ms.Write(attachment?.ContentBytes ?? new byte[] { });
             ms.Seek(0, SeekOrigin.Begin);
             return ms;

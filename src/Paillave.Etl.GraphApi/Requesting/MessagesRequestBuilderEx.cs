@@ -14,8 +14,7 @@ namespace Paillave.Etl.GraphApi.Requesting;
 public static class MessagesRequestBuilderEx
 {
     public static MessagesRequestBuilderGetBuilder Where(this MessagesRequestBuilder builder, Expression<Func<Message, bool>> filter)
-    {
-        return new MessagesRequestBuilderGetBuilder
+    {        return new MessagesRequestBuilderGetBuilder
         {
             Filter = ODataExpression<Message>.ToString(filter),
             MessagesRequestBuilder = builder
@@ -52,6 +51,19 @@ public static class MessagesRequestBuilderEx
 
         await pageIterator.IterateAsync(cancellationToken ?? CancellationToken.None);
     }
+    // public static async Task FetchAsync(this Microsoft.Graph.Users.Item.MailFolders.Item.Messages.Item.Attachments.AttachmentsRequestBuilder builder, IBaseClient graphClient, Func<Attachment, Task<bool>> processMessage, CancellationToken? cancellationToken = null)
+    // {
+    //     var withAttachmentMessagesPage = await builder.GetAsync(i =>
+    //         {
+    //             i.QueryParameters.Filter = builder.Filter;
+    //             i.QueryParameters.Select = builder.Select;
+    //             i.QueryParameters.Expand = builder.Expand;
+    //         });
+
+    //     var pageIterator = Microsoft.Graph.PageIterator<Message, MessageCollectionResponse>.CreatePageIterator(graphClient, withAttachmentMessagesPage, processMessage);
+
+    //     await pageIterator.IterateAsync(cancellationToken ?? CancellationToken.None);
+    // }
     public static Task<List<Message>> SelectAsync(this MessagesRequestBuilderGetBuilder builder, IBaseClient graphClient, CancellationToken? cancellationToken = null)
         => builder.SelectAsync(graphClient, i => i, cancellationToken);
     public static async Task<List<TOut>> SelectAsync<TOut>(this MessagesRequestBuilderGetBuilder builder, IBaseClient graphClient, Func<Message, TOut> selectMessage, CancellationToken? cancellationToken = null)

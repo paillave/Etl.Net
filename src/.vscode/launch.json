@@ -40,7 +40,7 @@
             ],
             "cwd": "${workspaceFolder}/Tutorials/SimpleTutorial",
             "stopAtEntry": false,
-            "console": "externalTerminal"
+            "console": "integratedTerminal"
         },
         {
             "name": "BlogTutorial",

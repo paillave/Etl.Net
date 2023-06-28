@@ -29,13 +29,13 @@ public class GraphApiAdapterProcessorParameters
     public bool UseStreamCopy { get; set; } = true;
     public bool SaveToSentItems { get; set; } = true;
 }
-public class GraphApiProviderProcessorAdapter : ProviderProcessorAdapterBase<GraphApiAdapterConnectionParameters, GraphApiAdapterProviderParameters, GraphApiAdapterProcessorParameters>
+public class GraphApiProviderProcessorAdapter : ProviderProcessorAdapterBase<GraphApiAdapterConnectionParameters, GraphApiMailAdapterProviderParameters, GraphApiAdapterProcessorParameters>
 {
     public override string Description => "Get and save files on an MAIL server";
     public override string Name => "Mail";
     // https://github.com/jstedfast/MailKit
-    protected override IFileValueProvider CreateProvider(string code, string name, string connectionName, GraphApiAdapterConnectionParameters connectionParameters, GraphApiAdapterProviderParameters inputParameters)
-        => new MailFileValueProvider(code, name, connectionName, connectionParameters, inputParameters);
+    protected override IFileValueProvider CreateProvider(string code, string name, string connectionName, GraphApiAdapterConnectionParameters connectionParameters, GraphApiMailAdapterProviderParameters inputParameters)
+        => new GraphApiMailFileValueProvider(code, name, connectionName, connectionParameters, inputParameters);
     protected override IFileValueProcessor CreateProcessor(string code, string name, string connectionName, GraphApiAdapterConnectionParameters connectionParameters, GraphApiAdapterProcessorParameters outputParameters)
-        => new MailFileValueProcessor(code, name, connectionName, connectionParameters, outputParameters);
+        => new GraphApiMailFileValueProcessor(code, name, connectionName, connectionParameters, outputParameters);
 }
