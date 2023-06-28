@@ -1,27 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Paillave.Etl.Core
 {
-    public class JobPool : IDisposable
+    public abstract class JobPoolBase : IDisposable
     {
         private object _lock = new object();
         private bool _isStopped = false;
 
         private Queue<Action> _actionQueue = new Queue<Action>();
         private int _delayBetweenCall = 0;
-
-        public JobPool(int delayBetweenCall = 0)
+        public JobPoolBase(int delayBetweenCall = 0)
         {
             _delayBetweenCall = delayBetweenCall;
-            Task.Run(() => BackgroundProcess());
         }
         private System.Threading.EventWaitHandle _mtxWaitNewProcess = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
 
-        private void BackgroundProcess()
+        protected void BackgroundProcess()
         {
             while (!_isStopped)
             {
@@ -99,5 +95,19 @@ namespace Paillave.Etl.Core
             Dispose(true);
         }
         #endregion
+    }
+
+    public class JobPool : JobPoolBase
+    {
+        public JobPool(int delayBetweenCall = 0) : base(delayBetweenCall) => Task.Run(() => BackgroundProcess());
+    }
+    public class InThreadJobPool : JobPoolBase
+    {
+        public InThreadJobPool(int delayBetweenCall = 0) : base(delayBetweenCall) { }
+        public void Listen(Task task)
+        {
+            task.ContinueWith(t => this.Dispose());
+            base.BackgroundProcess();
+        }
     }
 }

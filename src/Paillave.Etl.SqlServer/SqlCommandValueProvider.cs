@@ -66,7 +66,7 @@ public class SqlCommandValueProvider<TIn, TOut> : ValuesProviderBase<TIn, TOut>
     {
         IDictionary<string, object> values = new Dictionary<string, object>();
         for (int i = 0; i < record.FieldCount; i++)
-            values[record.GetName(i)] = Convert.ChangeType(record.GetValue(i), record.GetFieldType(i));
+            values[record.GetName(i)] = record.GetValue(i) != DBNull.Value ? Convert.ChangeType(record.GetValue(i), record.GetFieldType(i)) : null;
         if (fieldDefinitions != null)
             values = fieldDefinitions.Join(values, l => l.ColumnName, r => r.Key, (l, r) => new { PropertyName = l.PropertyInfo.Name, r.Value }).ToDictionary(i => i.PropertyName, i => i.Value);
         return ObjectBuilder<TOut>.CreateInstance(values);

@@ -1,4 +1,4 @@
-﻿using Paillave.Etl.Core;
+using Paillave.Etl.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
