@@ -47,7 +47,7 @@ namespace Paillave.EntityFrameworkCoreExtension.Core
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Reviewed")]
         public static async Task DeleteWhereAsync<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> filter, CancellationToken cancellationToken) where T : class
         {
-            // await dbSet.Where(filter).ExecuteDeleteAsync();
+            await dbSet.Where(filter).ExecuteDeleteAsync();
         }
 
         public static Expression<Func<T1, TResult>> ApplyPartialRight<T1, T2, TResult>(this Expression<Func<T1, T2, TResult>> expression, Expression expressionValue)
