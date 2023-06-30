@@ -31,8 +31,8 @@ public class GraphApiAdapterProcessorParameters
 }
 public class GraphApiProviderProcessorAdapter : ProviderProcessorAdapterBase<GraphApiAdapterConnectionParameters, GraphApiMailAdapterProviderParameters, GraphApiAdapterProcessorParameters>
 {
-    public override string Description => "Get and save files on an MAIL server";
-    public override string Name => "Mail";
+    public override string Description => "Get and save files on an MAIL server via GraphAPI";
+    public override string Name => "GraphApiMail";
     // https://github.com/jstedfast/MailKit
     protected override IFileValueProvider CreateProvider(string code, string name, string connectionName, GraphApiAdapterConnectionParameters connectionParameters, GraphApiMailAdapterProviderParameters inputParameters)
         => new GraphApiMailFileValueProvider(code, name, connectionName, connectionParameters, inputParameters);
