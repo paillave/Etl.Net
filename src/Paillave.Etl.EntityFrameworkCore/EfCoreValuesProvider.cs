@@ -45,7 +45,7 @@ namespace Paillave.Etl.EntityFrameworkCore
             }
             else
             {
-                var lsts = context.InvokeInDedicatedThreadAsync(dbContext, () => _args.GetQuery(new DbContextWrapper(dbContext), input).ToList()).Result;
+                var lsts = context.InvokeInDedicatedThreadAsync(dbContext, async () => await _args.GetQuery(new DbContextWrapper(dbContext), input).ToListAsync()).Result;
                 lsts.ForEach(push);
             }
         }
@@ -66,7 +66,7 @@ namespace Paillave.Etl.EntityFrameworkCore
             var dbContext = _args.ConnectionKey == null
                     ? context.DependencyResolver.Resolve<DbContext>()
                     : context.DependencyResolver.Resolve<DbContext>(_args.ConnectionKey);
-            var res = context.InvokeInDedicatedThreadAsync(dbContext, () => _args.GetQuery(new DbContextWrapper(dbContext), input).FirstOrDefault()).Result;
+            var res = context.InvokeInDedicatedThreadAsync(dbContext, async () => await _args.GetQuery(new DbContextWrapper(dbContext), input).FirstOrDefaultAsync()).Result;
             push(res);
         }
     }
@@ -92,7 +92,7 @@ namespace Paillave.Etl.EntityFrameworkCore
                 var dbContext = args.ConnectionKey == null
                         ? resolver.Resolve<DbContext>()
                         : resolver.Resolve<DbContext>(args.ConnectionKey);
-                var res = invoker.InvokeInDedicatedThreadAsync(dbContext, () => args.GetQuery(new DbContextWrapper(dbContext), input).FirstOrDefault()).Result;
+                var res = invoker.InvokeInDedicatedThreadAsync(dbContext, async () => await args.GetQuery(new DbContextWrapper(dbContext), input).FirstOrDefaultAsync()).Result;
                 return res;
             });
             return base.CreateSingleStream(obs);

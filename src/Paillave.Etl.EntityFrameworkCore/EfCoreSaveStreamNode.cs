@@ -240,7 +240,7 @@ public class EfCoreSaveStreamNode<TInEf, TIn, TOut> : StreamNodeBase<TOut, IStre
     private void ProcessChunk(List<(TIn Input, TInEf Entity)> i)
     {
         using var dbContextWrapper = this.ResolveDbContext();
-        this.ExecutionContext.InvokeInDedicatedThreadAsync(dbContextWrapper.Object, () => ProcessBatch(i, dbContextWrapper.Object, this.Args.BulkLoadMode)).Wait();
+        this.ExecutionContext.InvokeInDedicatedThreadAsync(dbContextWrapper.Object, async () => await ProcessBatchAsync(i, dbContextWrapper.Object, this.Args.BulkLoadMode)).Wait();
     }
     private DisposeWrapper<DbContext> ResolveDbContext()
     {
@@ -276,7 +276,7 @@ public class EfCoreSaveStreamNode<TInEf, TIn, TOut> : StreamNodeBase<TOut, IStre
             return null;
         }
     }
-    public async Task ProcessBatch(List<(TIn Input, TInEf Entity)> items, DbContext dbContext, SaveMode bulkLoadMode)
+    public async Task ProcessBatchAsync(List<(TIn Input, TInEf Entity)> items, DbContext dbContext, SaveMode bulkLoadMode)
     {
         var entities = items.Select(i => i.Item2).ToArray();
         var pivotKeys = Args.PivotKeys == null ? (Expression<Func<TInEf, object>>[])null : Args.PivotKeys.ToArray();
