@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Xml;
+using Paillave.Etl.XmlFile.Core.Mapping;
 
 namespace Paillave.Etl.XmlFile.Core
 {
@@ -26,6 +28,11 @@ namespace Paillave.Etl.XmlFile.Core
         public XmlFileDefinition AddNodeDefinition(IXmlNodeDefinition xmlNodeDefinition)
         {
             this.XmlNodeDefinitions.Add(xmlNodeDefinition);
+            return this;
+        }
+        public XmlFileDefinition AddNodeDefinition<T>(string name, string nodeXPath, Expression<Func<IXmlFieldMapper, T>> expression)
+        {
+            this.XmlNodeDefinitions.Add(XmlNodeDefinition.Create<T>(name, nodeXPath, expression));
             return this;
         }
     }

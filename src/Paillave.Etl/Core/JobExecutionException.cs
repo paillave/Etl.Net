@@ -1,5 +1,5 @@
 using System;
-using Paillave.Etl.Core.TraceContents;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Core
 {

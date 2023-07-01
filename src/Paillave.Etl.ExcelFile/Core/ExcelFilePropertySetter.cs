@@ -1,5 +1,6 @@
 using OfficeOpenXml;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
@@ -12,8 +13,10 @@ namespace Paillave.Etl.ExcelFile.Core
         private readonly TypeConverter _typeConverter;
         public PropertyInfo PropertyInfo { get; }
         public string ColumnName { get; }
-        public ExcelFilePropertySetter(PropertyInfo propertyInfo, CultureInfo cultureInfo, string columnName)
+        public string Column { get; }
+        public ExcelFilePropertySetter(PropertyInfo propertyInfo, CultureInfo cultureInfo, string columnName, string column = null)
         {
+            this.Column = column ?? columnName;
             this.ColumnName = columnName;
             this.PropertyInfo = propertyInfo;
             this._typeConverter = TypeDescriptor.GetConverter(this.PropertyInfo.PropertyType);
@@ -23,20 +26,27 @@ namespace Paillave.Etl.ExcelFile.Core
         private object Deserialize(string text)
         {
             //TODO: Better exception handleling here
-            if (PropertyInfo.PropertyType == typeof(DateTime))
+            try
             {
-                return DateTime.ParseExact(text.Trim(), _cultureInfo.DateTimeFormat.LongDatePattern, _cultureInfo);
-            }
-            if (PropertyInfo.PropertyType == typeof(DateTime?))
+                
+                if (PropertyInfo.PropertyType == typeof(DateTime) || PropertyInfo.PropertyType == typeof(DateTime?))
+                {
+                    if (string.IsNullOrWhiteSpace(text) && PropertyInfo.PropertyType == typeof(DateTime?)) return (DateTime?)null;
+                    Double outDouble;
+                    if (Double.TryParse(text, out outDouble))
+                    {
+                        return DateTime.FromOADate(outDouble);
+                    }
+                    return DateTime.ParseExact(text.Trim(), _cultureInfo.DateTimeFormat.LongDatePattern, _cultureInfo);
+                }
+                return _typeConverter.ConvertFromString(null, _cultureInfo, text.Trim());
+            } catch (Exception ex)
             {
-                if (string.IsNullOrWhiteSpace(text)) return (DateTime?)null;
-                return DateTime.ParseExact(text.Trim(), _cultureInfo.DateTimeFormat.LongDatePattern, _cultureInfo);
+                throw new Exception($"Error reading field '{Column}' with value '{text}' for Type {PropertyInfo.PropertyType}", ex);
             }
-            return _typeConverter.ConvertFromString(null, _cultureInfo, text.Trim());
         }
 
         public object ParsedValue { get; private set; } = null;
-
         public bool SetValue(ExcelWorksheet excelWorksheet, int row, int column)
         {
             return SetValue(excelWorksheet.GetValue(row, column));

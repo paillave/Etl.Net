@@ -13,7 +13,7 @@ namespace Paillave.Etl.Reactive.Operators
         private IDisposable _disp1;
         private Func<TIn, bool> _condition;
         private bool _included;
-        public TakeUntilConditionSubject(IPushObservable<TIn> observable, Func<TIn, bool> condition, bool included = false)
+        public TakeUntilConditionSubject(IPushObservable<TIn> observable, Func<TIn, bool> condition, bool included = false) : base(observable.CancellationToken)
         {
             _condition = condition;
             _included = included;
@@ -22,6 +22,10 @@ namespace Paillave.Etl.Reactive.Operators
 
         private void HandleOnPush(TIn obj)
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_lockObject)
             {
                 if (!this.IsComplete)

@@ -19,12 +19,13 @@ namespace Paillave.Etl.Reactive.Disposables
                 _disposable = null;
             }
         }
-        public void Set(IDisposable disposable)
+        public T Set<T>(T disposable) where T:IDisposable
         {
             lock (syncLock)
             {
                 _disposable?.Dispose();
                 _disposable = disposable;
+                return disposable;
             }
         }
         public void TryDispose(IDisposable disposable)

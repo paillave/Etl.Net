@@ -15,12 +15,16 @@ namespace Paillave.Etl.Reactive.Operators
         private bool _isAggrDisposable = false;
         private Dictionary<TKey, DicoAggregateElement<TIn, TAggr>> _dictionary = new Dictionary<TKey, DicoAggregateElement<TIn, TAggr>>();
         private object _lockSync = new object();
-        public AggregateSubject(IPushObservable<TIn> observable, Func<TAggr, TIn, TAggr> reducer, Func<TIn, TKey> getKey, Func<TIn, TAggr> createInitialValue, Func<TIn, TKey, TAggr, TOut> resultSelector)
+        public AggregateSubject(IPushObservable<TIn> observable, Func<TAggr, TIn, TAggr> reducer, Func<TIn, TKey> getKey, Func<TIn, TAggr> createInitialValue, Func<TIn, TKey, TAggr, TOut> resultSelector) : base(observable.CancellationToken)
         {
             _resultSelector = resultSelector;
             _isAggrDisposable = typeof(IDisposable).IsAssignableFrom(typeof(TAggr));
             _subscription = observable.Subscribe(i =>
             {
+                if (CancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
                 lock (_lockSync)
                 {
                     TKey key = getKey(i);
@@ -31,7 +35,7 @@ namespace Paillave.Etl.Reactive.Operators
                             aggr = new DicoAggregateElement<TIn, TAggr> { CurrentAggregation = createInitialValue(i), InValue = i };
                             //aggr.CurrentAggregation = createInitialValue(i);
                             _dictionary[key] = aggr;
-                            if (_isAggrDisposable) _disposable.Set(aggr as IDisposable);
+                            if (_isAggrDisposable) _disposable.AddRange(aggr as IDisposable);
                         }
                         aggr.CurrentAggregation = reducer(aggr.CurrentAggregation, i);
                         _dictionary[key] = aggr;
@@ -45,7 +49,7 @@ namespace Paillave.Etl.Reactive.Operators
             lock (_lockSync)
             {
                 foreach (var item in _dictionary)
-                    PushValue(_resultSelector(item.Value.InValue, item.Key, item.Value.CurrentAggregation));
+                    TryPushValue(() => _resultSelector(item.Value.InValue, item.Key, item.Value.CurrentAggregation));
                 _disposable.Dispose();
                 base.Complete();
             }

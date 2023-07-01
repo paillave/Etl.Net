@@ -10,37 +10,47 @@ namespace Paillave.Etl.Reactive.Operators
 {
     public class PushObservable
     {
-        public static IPushObservable<TOut> FromEnumerable<TOut>(IEnumerable<TOut> enumerable, WaitHandle startSynchronizer)
+        public static IPushObservable<TOut> FromEnumerable<TOut>(IEnumerable<TOut> enumerable, WaitHandle startSynchronizer, CancellationToken cancellationToken)
         {
-            return new EventDeferredPushObservable<TOut>(pushValue =>
+            return new EventDeferredPushObservable<TOut>((pushValue, ct) =>
             {
                 foreach (var item in enumerable)
+                {
+                    if (ct.IsCancellationRequested) break;
                     pushValue(item);
-            }, startSynchronizer);
+                }
+            }, startSynchronizer, cancellationToken);
         }
-        public static IDeferredPushObservable<TOut> FromEnumerable<TOut>(IEnumerable<TOut> enumerable)
+        public static IDeferredPushObservable<TOut> FromEnumerable<TOut>(IEnumerable<TOut> enumerable, CancellationToken cancellationToken)
         {
-            return new DeferredPushObservable<TOut>(pushValue =>
+            return new DeferredPushObservable<TOut>((pushValue, ct) =>
             {
                 foreach (var item in enumerable)
+                {
+                    if (ct.IsCancellationRequested) break;
                     pushValue(item);
-            });
+                }
+            }, cancellationToken);
         }
-        public static IPushObservable<TOut> FromSingle<TOut>(TOut item, WaitHandle startSynchronizer)
+        public static IPushObservable<TOut> FromSingle<TOut>(TOut item, WaitHandle startSynchronizer, CancellationToken cancellationToken)
         {
-            return new EventDeferredPushObservable<TOut>(pushValue => pushValue(item), startSynchronizer);
+            return new EventDeferredPushObservable<TOut>((pushValue, ct) =>
+            {
+                if (!ct.IsCancellationRequested)
+                    pushValue(item);
+            }, startSynchronizer, cancellationToken);
         }
-        public static IDeferredPushObservable<TOut> FromSingle<TOut>(TOut item)
+        public static IDeferredPushObservable<TOut> FromSingle<TOut>(TOut item, CancellationToken cancellationToken)
         {
-            return new DeferredPushObservable<TOut>(pushValue => pushValue(item));
+            return new DeferredPushObservable<TOut>((pushValue, ct) => pushValue(item), cancellationToken);
         }
-        public static IPushObservable<int> Range(int from, int count, WaitHandle startSynchronizer)
+        public static IPushObservable<int> Range(int from, int count, WaitHandle startSynchronizer, CancellationToken cancellationToken)
         {
-            return FromEnumerable(Enumerable.Range(from, count), startSynchronizer);
+            return FromEnumerable(Enumerable.Range(from, count), startSynchronizer, cancellationToken);
         }
-        public static IDeferredPushObservable<int> Range(int from, int count)
+        public static IDeferredPushObservable<int> Range(int from, int count, CancellationToken cancellationToken)
         {
-            return FromEnumerable(Enumerable.Range(from, count));
+            return FromEnumerable(Enumerable.Range(from, count), cancellationToken);
         }
         public static IPushObservable<T> Merge<T>(params IPushObservable<T>[] pushObservables)
         {
@@ -50,13 +60,13 @@ namespace Paillave.Etl.Reactive.Operators
         {
             return new CombineWithLatestSubject<TIn1, TIn2, TOut>(pushObservable1, pushObservable2, selector);
         }
-        public static IPushObservable<TOut> Empty<TOut>(WaitHandle startSynchronizer)
+        public static IPushObservable<TOut> Empty<TOut>(WaitHandle startSynchronizer, CancellationToken cancellationToken)
         {
-            return new EventDeferredPushObservable<TOut>(i => { }, startSynchronizer);
+            return new EventDeferredPushObservable<TOut>((i, ct) => { }, startSynchronizer, cancellationToken);
         }
-        public static IDeferredPushObservable<TOut> Empty<TOut>()
+        public static IDeferredPushObservable<TOut> Empty<TOut>(CancellationToken cancellationToken)
         {
-            return new DeferredPushObservable<TOut>(i => { });
+            return new DeferredPushObservable<TOut>((i, ct) => { }, cancellationToken);
         }
     }
 }

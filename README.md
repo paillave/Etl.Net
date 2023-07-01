@@ -1,382 +1,265 @@
-# Etl.Net [![Join the chat at https://gitter.im/Etl-Net/Lobby](https://badges.gitter.im/Etl-Net/Lobby.svg)](https://gitter.im/Etl-Net/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Etl.Net
 
-|develop|master|
-|-|-|
-| ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/develop.svg) | ![GitHub last commit](https://img.shields.io/github/last-commit/paillave/etl.net/master.svg) |
-| [![Build status](https://ci.appveyor.com/api/projects/status/n0ok6xrd7d5s176b/branch/develop?svg=true)](https://ci.appveyor.com/project/paillave/etl-net-vyqub) | [![Build status](https://ci.appveyor.com/api/projects/status/sqjh6f6cwadxfoou/branch/master?svg=true)](https://ci.appveyor.com/project/paillave/etl-net) |
-| [![Better Code Hub status](https://bettercodehub.com/edge/badge/paillave/Etl.Net?branch=develop)](https://bettercodehub.com) |[![Better Code Hub status](https://bettercodehub.com/edge/badge/paillave/Etl.Net?branch=master)](https://bettercodehub.com) |
+[![ETL.NET](streams.jpg)](https://paillave.github.io/Etl.Net/)
+[Go to full documentation](https://paillave.github.io/Etl.Net/)
 
-Implementation of a multi platform reactive ETL for .net standard 2.0 working with a similar principle than SSIS, but that is used in the same way than Linq.
+## :rotating_light: I need some help!!!  :ambulance:
+
+I need some serious help for the following subject:
+- :books: Documentation. The [website of ETL.NET](https://paillave.github.io/Etl.Net/) needs to be completed. It contains the essential to start and get in touch, but a dramatic amount of serious features is not documented in there.
+- :heavy_check_mark: Unit tests. A proper test code coverage is the only real way to be taken seriously when it is about selecting the right open source library. There was a time when some units tests existed only for the reactive engine of the core (Paillave.EtlNet.Core). But it happened I had to decommission it in the even of the V2 release.
+
+:envelope_with_arrow:	 Anybody who is keen to participate to the project in these regards is very welcome to contact me at admroyer@hotmail.com.
+
+## Presentation
+
+Implementation of a mass processing engine to use in a similar way than Linq with every SSIS features and much more.
 The reactive approach for the implementation of this engine ensures parallelized multi streams, high performances and low memory foot print even with million rows to process.
+
+ETL.NET is fully written in .NET for a multi platform usage and for a straight forward integration in any application. 
+
+Extend it takes 5mn... literally.
 
 | Package | nuget version | nuget downloads |
 |-|-|-|
-| Etl.Net | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.svg)](https://www.nuget.org/packages/Etl.Net) |
-| Etl.Net.EntityFrameworkCore | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Etl.Net.EntityFrameworkCore) |
-| Etl.Net.TextFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.TextFile.svg)](https://www.nuget.org/packages/Etl.Net.TextFile) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.TextFile.svg)](https://www.nuget.org/packages/Etl.Net.TextFile) |
-| Etl.Net.XmlFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.XmlFile.svg)](https://www.nuget.org/packages/Etl.Net.XmlFile) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.XmlFile.svg)](https://www.nuget.org/packages/Etl.Net.XmlFile) |
-| Etl.Net.Ftp | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.Ftp.svg)](https://www.nuget.org/packages/Etl.Net.Ftp) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.Ftp.svg)](https://www.nuget.org/packages/Etl.Net.Ftp) |
-| Etl.Net.Sftp | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.Sftp.svg)](https://www.nuget.org/packages/Etl.Net.Sftp) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.Sftp.svg)](https://www.nuget.org/packages/Etl.Net.Sftp) |
-| Etl.Net.ExcelFile | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExcelFile.svg)](https://www.nuget.org/packages/Etl.Net.ExcelFile) |
-| Etl.Net.SqlServer | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.SqlServer.svg)](https://www.nuget.org/packages/Etl.Net.SqlServer) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.SqlServer.svg)](https://www.nuget.org/packages/Etl.Net.SqlServer) |
-| Etl.Net.ExecutionPlan | [![NuGet](https://img.shields.io/nuget/v/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) |[![NuGet](https://img.shields.io/nuget/dt/Etl.Net.ExecutionPlan.svg)](https://www.nuget.org/packages/Etl.Net.ExecutionPlan) |
+| Paillave.EtlNet.Core | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Core.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Core) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Core.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Core) |
+| Paillave.EtlNet.Autofac | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Autofac.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Autofac) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Autofac.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Autofac) |
+| Paillave.EtlNet.Dropbox | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Dropbox.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Dropbox) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Dropbox.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Dropbox) |
+| Paillave.EtlNet.EntityFrameworkCore | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Paillave.EtlNet.EntityFrameworkCore) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Paillave.EtlNet.EntityFrameworkCore) |
+| Paillave.EtlNet.ExcelFile | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.ExcelFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.ExcelFile) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.ExcelFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.ExcelFile) |
+| Paillave.EtlNet.ExecutionToolkit | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.ExecutionToolkit.svg)](https://www.nuget.org/packages/Paillave.EtlNet.ExecutionToolkit) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.ExecutionToolkit.svg)](https://www.nuget.org/packages/Paillave.EtlNet.ExecutionToolkit) |
+| Paillave.EtlNet.FileSystem | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.FileSystem.svg)](https://www.nuget.org/packages/Paillave.EtlNet.FileSystem) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.FileSystem.svg)](https://www.nuget.org/packages/Paillave.EtlNet.FileSystem) |
+| Paillave.EtlNet.FromConfigurationConnectors | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.FromConfigurationConnectors.svg)](https://www.nuget.org/packages/Paillave.EtlNet.FromConfigurationConnectors) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.FromConfigurationConnectors.svg)](https://www.nuget.org/packages/Paillave.EtlNet.FromConfigurationConnectors) |
+| Paillave.EtlNet.Ftp | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Ftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Ftp) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Ftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Ftp) |
+| Paillave.EtlNet.Mail | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Mail.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Mail) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Mail.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Mail) |
+| Paillave.EtlNet.GraphApi | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.GraphApi.svg)](https://www.nuget.org/packages/Paillave.EtlNet.GraphApi) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.GraphApi.svg)](https://www.nuget.org/packages/Paillave.EtlNet.GraphApi) |
+| Paillave.EtlNet.Sftp | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Sftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Sftp) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Sftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Sftp) |
+| Paillave.EtlNet.SqlServer | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.SqlServer.svg)](https://www.nuget.org/packages/Paillave.EtlNet.SqlServer) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.SqlServer.svg)](https://www.nuget.org/packages/Paillave.EtlNet.SqlServer) |
+| Paillave.EtlNet.TextFile | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.TextFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.TextFile) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.TextFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.TextFile) |
+| Paillave.EtlNet.Bloomberg | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Bloomberg.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Bloomberg) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Bloomberg.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Bloomberg) |
+| Paillave.EtlNet.XmlFile | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.XmlFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.XmlFile) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.XmlFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.XmlFile) |
+| Paillave.EtlNet.Zip | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Zip.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Zip) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Zip.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Zip) |
+| Paillave.EtlNet.Pdf | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Pdf.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Pdf) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Pdf.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Pdf) |
+| Paillave.EntityFrameworkCoreExtension | [![NuGet](https://img.shields.io/nuget/v/Paillave.EntityFrameworkCoreExtension.svg)](https://www.nuget.org/packages/Paillave.EntityFrameworkCoreExtension) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EntityFrameworkCoreExtension.svg)](https://www.nuget.org/packages/Paillave.EntityFrameworkCoreExtension) |
 
-## Development status :construction:
+## Examples
 
-> :warning: This library is still under development, don't use it on production environment yet as its api structure is subject for changes. This explains its alpha version.
-> The first beta release is expected once it starts to be a decent candidate to replace SSIS for common use cases, and when common bugs are solved.
+### Unzip it, read it, save it, report it
 
-## Documentation :construction:
+Read all zip files from a folder, unzip csv files that are inside, parse them, exclude duplicates, upsert them into database, and report new or pre existing id corresponding to the email.
 
-The full (ongoing) documentation is on the website of Etl.Net: https://paillave.github.io/Etl.Net/
-
-Main recipes are on the page https://paillave.github.io/Etl.Net/recipes.
-
-> :warning: Documentation is still under construction.
-
-## ETL features
-
-### Implemented
-
-Select, Where, Sort, Left Join, Lookup, Union, Union All, Skip, Top, Distinct, Pivot, Unpivot, Aggregate, Cross Apply, Ensure Sorted, Ensure Keyed, Script, Run subprocess, Keep section, Ignore section, List folder files, Read csv file, Read excel file, Write csv file, Write excel file, Read from Entity framework core, Write to Entity framework core, Entity framework core upsert, SQL Server bulk load, Read from sql server command, Write to sql server command, List files from FTP, Read file from FTP, Write file to FTP, List file from SFTP, Read file from SFTP, Write file to SFTP, read very large xml file, ...
-
-Check evolution of developments in [the projects section](https://github.com/paillave/Etl.Net/projects)
-
-### To be coming
-
-Read very large json file, Read from Entity framework, Write to Entity framework, Read from MongoDb, Write to MongoDb, MongoDb upsert, Entity framework upsert, Read data from REST service, Write data to REST service...
-
-> [!NOTE]
-> Follow the status in the issue section
-> 
-> New requests are very welcome in the issue section
-
-## Runtime features
-
-### Implemented
-
-Trace issued data by each node, Trace any error, Stop the entire process whenever an error is raised, Trace statistic result of each node at the end of the process, Execute any ETL process on traces to filter and save them, Show real time process execution statistics...
-
-### To be coming
-
-Trace time that is spent in each node at the end of the process, Publish a Job as a REST web service in web api core, Execute a job using reference to native .net core configuration, Web portal to host job definitions and manage their executions, Power shell command tool to execute a job, Visual studio code addon to view the process whenever the job definition class file is saved, Raise a warning on the risky node when a performance issue or a bad practice is detected given statistics, Interprets a T-SQL-like language script to build a job definition on the fly and run it...
-
-> [!NOTE]
-> New requests are very welcome in the [issue section](https://github.com/paillave/Etl.Net/issues)
-
-## Debugger
-
-The debugger show the process as a sankey graph to visually represent what it makes. This debugger will permit to run a process and see in detail data went through process nodes.
-
-[Download the debugger](https://github.com/paillave/Etl.Net-Debugger/releases)
-
-[Learn how to use the debugger](https://github.com/paillave/Etl.Net-Debugger)
-
-![Debugger](./README/Debugger.PNG "Debugger")
-
-## Simple Quickstart :suspect:
+```
+dotnet new console -o SimpleTutorial
+cd SimpleTutorial
+dotnet add package Paillave.EtlNet.Core
+dotnet add package Paillave.EtlNet.FileSystem
+dotnet add package Paillave.EtlNet.Zip
+dotnet add package Paillave.EtlNet.TextFile
+dotnet add package Paillave.EtlNet.SqlServer
+```
 
 ```csharp
-using Paillave.Etl;
 using System;
-using System.IO;
+using System.Threading.Tasks;
 using Paillave.Etl.Core;
-using Paillave.Etl.TextFile.Core;
-using Paillave.Etl.Core.Streams;
+using Paillave.Etl.FileSystem;
+using Paillave.Etl.Zip;
+using Paillave.Etl.TextFile;
+using Paillave.Etl.SqlServer;
+using System.Data.SqlClient;
+using System.Linq;
 
-namespace SimpleQuickstart
+namespace SimpleTutorial
 {
-    public class SimpleConfig
+    class Program
     {
-        public string InputFilePath { get; set; }
-        public string OutputFilePath { get; set; }
-    }
-
-    public class SimpleQuickstartJob
-    {
-        public static void DefineProcess(IStream<SimpleConfig> rootStream)
+        static async Task Main(string[] args)
         {
-            var outputFileS = rootStream.Select("open output file", i => new StreamWriter(i.OutputFilePath));
-            rootStream
-                .CrossApplyTextFile("read input file",
-                    FileDefinition.Create(
-                        i =>
-                        {
-                            Id = i.ToColumn<int>("#"),
-                            Name = i.ToColumn<string>("Label"),
-                            CategoryCode = i.ToColumn<string>("Category")
-                        }).IsColumnSeparated('\t'),
-                    i => i.InputFilePath)
-                .ToAction("Write input file to console", i => Console.WriteLine($"{i.Id}-{i.Name}-{i.CategoryCode}"))
-                .Pivot("group and count", i => i.CategoryCode, i => new { Count = AggregationOperators.Count() })
-                .Select("create output row", i => new CategoryStatisticFileRow { CategoryCode = i.Key, Count = i.Aggregation.Count })
-                .Sort("sort output values", i => new { i.CategoryCode })
-                .ToTextFile("write to text file", outputFileS, FileDefinition.Create(i =>
+            var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
+            processRunner.DebugNodeStream += (sender, e) => { /* place a conditional breakpoint here for debug */ };
+            using (var cnx = new SqlConnection(args[1]))
+            {
+                cnx.Open();
+                var executionOptions = new ExecutionOptions<string>
                 {
-                    CategoryCode = i.ToColumn<string>("Category"),
-                    Count = i.ToColumn<int>("Total")
-                }));
+                    Resolver = new SimpleDependencyResolver().Register(cnx),
+                };
+                var res = await processRunner.ExecuteAsync(args[0], executionOptions);
+                Console.Write(res.Failed ? "Failed" : "Succeeded");
+                if (res.Failed)
+                    Console.Write($"{res.ErrorTraceEvent.NodeName}({res.ErrorTraceEvent.NodeTypeName}):{res.ErrorTraceEvent.Content.Message}");
+            }
         }
-    }
-    class Program
-    {
-        static void Main(string[] args)
+        private static void DefineProcess(ISingleStream<string> contextStream)
         {
-            var testFilesDirectory = @"XXXXXXXXXXXX\Etl.Net\src\TestFiles";
-
-            StreamProcessRunner.Create<SimpleConfig>(SimpleQuickstartJob.DefineProcess).ExecuteAsync(new SimpleConfig
-            {
-                InputFilePath = Path.Combine(testFilesDirectory, "simpleinputfile.csv"),
-                OutputFilePath = Path.Combine(testFilesDirectory, "simpleoutputfile.csv")
-            }, null).Wait();
-            Console.WriteLine("Press a key...");
-            Console.ReadKey();
+            contextStream
+                .CrossApplyFolderFiles("list all required files", "*.zip", true)
+                .CrossApplyZipFiles("extract files from zip", "*.csv")
+                .CrossApplyTextFile("parse file", FlatFileDefinition.Create(i => new Person
+                {
+                    Email = i.ToColumn("email"),
+                    FirstName = i.ToColumn("first name"),
+                    LastName = i.ToColumn("last name"),
+                    DateOfBirth = i.ToDateColumn("date of birth", "yyyy-MM-dd"),
+                    Reputation = i.ToNumberColumn<int?>("reputation", ".")
+                }).IsColumnSeparated(','))
+                .Distinct("exclude duplicates based on the Email", i => i.Email)
+                .SqlServerSave("upsert using Email as key and ignore the Id", o => o
+                    .ToTable("dbo.Person")
+                    .SeekOn(p => p.Email)
+                    .DoNotSave(p => p.Id))
+                .Select("define row to report", i => new { i.Email, i.Id })
+                .ToTextFileValue("write summary to file", "report.csv", FlatFileDefinition.Create(i => new
+                {
+                    Email = i.ToColumn("Email"),
+                    Id = i.ToNumberColumn<int>("new or existing Id", ".")
+                }).IsColumnSeparated(','))
+                .WriteToFile("save log file", i => i.Name);
+        }
+        private class Person
+        {
+            public int Id { get; set; }
+            public string Email { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public DateTime DateOfBirth { get; set; }
+            public int? Reputation { get; set; }
         }
     }
 }
 ```
 
-## Complex Quickstart :feelsgood:
+### Run it, debug it, track it, log it
 
-### Create configuration type
+Execute an ETL process, debug it by tracking debug events using the IDE debugger, catch execution events and log it into database.
 
-```csharp
+```cs
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
-namespace ComplexQuickstart.StreamTypes
-{
-    public class MyConfig
-    {
-        public string InputFolderPath { get; set; }
-        public string InputFilesSearchPattern { get; set; }
-        public string TypeFilePath { get; set; }
-        public string DestinationFilePath { get; internal set; }
-        public string CategoryDestinationFilePath { get; internal set; }
-    }
-}
-```
-
-### Create input and output stream structures
-
-```csharp
-using System;
-using System.Globalization;
-using Paillave.Etl.TextFile.Core;
-
-namespace ComplexQuickstart.StreamTypes
-{
-    public class InputFileRow
-    {
-        public int Id { get; set; }
-        public DateTime Col1 { get; set; }
-        public decimal Col2 { get; set; }
-        public int Col3 { get; set; }
-        public string Col4 { get; set; }
-        public int TypeId { get; set; }
-        public string FileName { get; set; }
-    }
-
-    public class InputFileRowMapper : FileDefinition<InputFileRow>
-    {
-        public InputFileRowMapper()
-        {
-            CultureInfo ci = CultureInfo.CreateSpecificCulture("en-GB");
-            ci.DateTimeFormat.FullDateTimePattern = "yyyy-MM-dd HH:mm:ss";
-            ci.DateTimeFormat.LongDatePattern = "yyyy-MM-dd";
-            ci.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
-
-            ci.DateTimeFormat.FullDateTimePattern = "yyyy-MM-dd HH:mm:ss";
-            ci.DateTimeFormat.LongDatePattern = "yyyy-MM-dd";
-            ci.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
-
-            ci.NumberFormat.NumberDecimalSeparator = ",";
-            ci.NumberFormat.CurrencyDecimalSeparator = ",";
-            ci.NumberFormat.PercentDecimalSeparator = ",";
-
-            this.WithCultureInfo(ci);
-            this.MapColumnToProperty("#", i => i.Id);
-            this.MapColumnToProperty("DateTime", i => i.Col1);
-            this.MapColumnToProperty("Value", i => i.Col2);
-            this.MapColumnToProperty("Rank", i => i.Col3);
-            this.MapColumnToProperty("Comment", i => i.Col4);
-            this.MapColumnToProperty("TypeId", i => i.TypeId);
-            this.IsColumnSeparated('\t');
-        }
-    }
-}
-```
-
-```csharp
-using System.Globalization;
-using Paillave.Etl.TextFile.Core;
-
-namespace ComplexQuickstart.StreamTypes
-{
-    public class TypeFileRow
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Category { get; set; }
-        public string FileName { get; set; }
-    }
-
-    public class TypeFileRowMapper : FileDefinition<TypeFileRow>
-    {
-        public TypeFileRowMapper()
-        {
-            CultureInfo ci = CultureInfo.CreateSpecificCulture("en-GB");
-            ci.DateTimeFormat.FullDateTimePattern = "yyyy-MM-dd HH:mm:ss";
-            ci.DateTimeFormat.LongDatePattern = "yyyy-MM-dd";
-            ci.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
-
-            ci.DateTimeFormat.FullDateTimePattern = "yyyy-MM-dd HH:mm:ss";
-            ci.DateTimeFormat.LongDatePattern = "yyyy-MM-dd";
-            ci.DateTimeFormat.ShortDatePattern = "yyyy-MM-dd";
-
-            ci.NumberFormat.NumberDecimalSeparator = ",";
-            ci.NumberFormat.CurrencyDecimalSeparator = ",";
-            ci.NumberFormat.PercentDecimalSeparator = ",";
-
-            this.WithCultureInfo(ci);
-            this.MapColumnToProperty("#", i => i.Id);
-            this.MapColumnToProperty("Label", i => i.Name);
-            this.MapColumnToProperty("Category", i => i.Category);
-            this.IsColumnSeparated('\t');
-        }
-    }
-}
-```
-
-```csharp
-
-using Paillave.Etl.TextFile.Core;
-
-namespace ComplexQuickstart.StreamTypes
-{
-    public class OutputFileRow
-    {
-        public string FileName { get; set; }
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class OutputFileRowMapper : FileDefinition<OutputFileRow>
-    {
-        public OutputFileRowMapper()
-        {
-            this.MapColumnToProperty("Id", i => i.Id);
-            this.MapColumnToProperty("Name", i => i.Name);
-            this.MapColumnToProperty("FileName", i => i.FileName);
-            this.IsColumnSeparated(',');
-        }
-    }
-}
-```
-
-```csharp
-
-using Paillave.Etl.TextFile.Core;
-
-namespace ComplexQuickstart.StreamTypes
-{
-    public class OutputCategoryRow
-    {
-        public string Category { get; set; }
-        public int TotalAmount { get; set; }
-        public int AmountOfEntries { get; set; }
-    }
-    public class OutputCategoryRowMapper : FileDefinition<OutputCategoryRow>
-    {
-        public OutputCategoryRowMapper()
-        {
-            this.MapColumnToProperty("Category", i => i.Category);
-            this.MapColumnToProperty("Nb", i => i.AmountOfEntries);
-            this.MapColumnToProperty("Tot", i => i.TotalAmount);
-            this.IsColumnSeparated(',');
-        }
-    }
-}
-```
-
-### Define the ETL job
-
-```csharp
-using ComplexQuickstart.StreamTypes;
-using System.IO;
-using Paillave.Etl;
-using Paillave.Etl.Core.Streams;
-using System;
-
-namespace ComplexQuickstart.Jobs
-{
-    public class ComplexQuickstartJob
-    {
-        public static void DefineProcess(IStream<MyConfig> rootStream)
-        {
-            var outputFileResourceS = rootStream.Select("open output file", i => new StreamWriter(i.DestinationFilePath));
-            var outputCategoryResourceS = rootStream.Select("open output category file", i => new StreamWriter(i.CategoryDestinationFilePath));
-
-            var parsedLineS = rootStream
-                .CrossApplyFolderFiles("get folder files", i => i.InputFolderPath, i => i.InputFilesSearchPattern)
-                .CrossApplyTextFile("parse input file", new InputFileRowMapper(), (i, p) => { p.FileName = i; return p; });
-
-            var parsedTypeLineS = rootStream
-                .Select("get input file type path", i => i.TypeFilePath)
-                .CrossApplyTextFile("parse type input file", new TypeFileRowMapper());
-
-            var joinedLineS = parsedLineS
-                .Lookup("join types to file", parsedTypeLineS, i => i.TypeId, i => i.Id, (l, r) => new { l.Id, r.Name, l.FileName, r.Category });
-
-            var categoryStatistics = joinedLineS
-                .Pivot("create statistic for categories", i => i.Category, i => new { Count = AggregationOperators.Count(), Total = AggregationOperators.Sum(i.Id) })
-                .Select("create output category data", i => new OutputCategoryRow { Category = i.Key, AmountOfEntries = i.Aggregation.Count, TotalAmount = i.Aggregation.Total })
-                .ToTextFile("write category statistics to file", outputCategoryResourceS, new OutputCategoryRowMapper());
-
-            joinedLineS.Select("create output data", i => new OutputFileRow { Id = i.Id, Name = i.Name, FileName = i.FileName })
-                .ToTextFile("write to output file", outputFileResourceS, new OutputFileRowMapper())
-                .ToAction("write to console", i => Console.WriteLine($"{i.FileName}:{i.Id}-{i.Name}"));
-        }
-    }
-}
-```
-
-### Execute the ETL job
-
-```csharp
-using Paillave.Etl;
-using System.IO;
-using Paillave.Etl.Core.Streams;
-using System;
-using Paillave.Etl.TextFile.Core;
-using ComplexQuickstart.Jobs;
-using ComplexQuickstart.StreamTypes;
+using System.Threading.Tasks;
 using Paillave.Etl.Core;
+using Paillave.Etl.FileSystem;
+using Paillave.Etl.Zip;
+using Paillave.Etl.TextFile;
+using Paillave.Etl.SqlServer;
+using System.Data.SqlClient;
 
-namespace ComplexQuickstart
+namespace SimpleTutorial
 {
-    class Program
+  class Program
+  {
+    static async Task Main(string[] args)
     {
-        static void Main(string[] args)
+      var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
+      processRunner.DebugNodeStream += (sender, e) => { /* PLACE A CONDITIONAL BREAKPOINT HERE FOR DEBUG */ };
+      using (var cnx = new SqlConnection(args[1]))
+      {
+        cnx.Open();
+        var executionOptions = new ExecutionOptions<string>
         {
-            var runner = StreamProcessRunner.Create<MyConfig>(ComplexQuickstartJob.DefineProcess);
-            Action<IStream<TraceEvent>> traceStreamProcessDefinition = traceStream => traceStream.ThroughAction("logs to console", Console.WriteLine);
-            var testFilesDirectory = @"XXXXXXXXXXXXXXXX\Etl.Net\src\TestFiles";
-            var task = runner.ExecuteAsync(new MyConfig
-            {
-                InputFolderPath = Path.Combine(testFilesDirectory, @"."),
-                InputFilesSearchPattern = "testin.*.csv",
-                TypeFilePath = Path.Combine(testFilesDirectory, @"ref - Copy.csv"),
-                DestinationFilePath = Path.Combine(testFilesDirectory, @"outfile.csv"),
-                CategoryDestinationFilePath = Path.Combine(testFilesDirectory, @"categoryStats.csv")
-            }, traceStreamProcessDefinition);
-
-            Console.WriteLine("Done");
-            Console.WriteLine("Press a key...");
-            Console.ReadKey();
-        }
+          Resolver = new SimpleDependencyResolver().Register(cnx),
+          TraceProcessDefinition = DefineTraceProcess,
+          // UseDetailedTraces = true // activate only if per row traces are meant to be caught
+        };
+        var res = await processRunner.ExecuteAsync(args[0], executionOptions);
+        Console.Write(res.Failed ? "Failed" : "Succeeded");
+        if (res.Failed)
+          Console.Write($"{res.ErrorTraceEvent.NodeName}({res.ErrorTraceEvent.NodeTypeName}):{res.ErrorTraceEvent.Content.Message}");
+      }
     }
+    private static void DefineProcess(ISingleStream<string> contextStream)
+    {
+      // TODO: define your ELT process here
+    }
+    private static void DefineTraceProcess(IStream<TraceEvent> traceStream, ISingleStream<string> contentStream)
+    {
+      traceStream
+        .Where("keep only summary of node and errors", i => i.Content is CounterSummaryStreamTraceContent || i.Content is UnhandledExceptionStreamTraceContent)
+        .Select("create log entry", i => new ExecutionLog
+          {
+            DateTime = i.DateTime,
+            ExecutionId = i.ExecutionId,
+            EventType = i.Content switch
+            {
+              CounterSummaryStreamTraceContent => "EndOfNode",
+              UnhandledExceptionStreamTraceContent => "Error",
+              _ => "Unknown"
+            },
+            Message = i.Content switch
+            {
+              CounterSummaryStreamTraceContent counterSummary => $"{i.NodeName}: {counterSummary.Counter}",
+              UnhandledExceptionStreamTraceContent unhandledException => $"{i.NodeName}({i.NodeTypeName}): [{unhandledException.Level.ToString()}] {unhandledException.Message}",
+              _ => "Unknown"
+            }
+          })
+        .SqlServerSave("save traces", o => o.ToTable("dbo.ExecutionTrace"));
+    }
+    private class ExecutionLog
+    {
+      public DateTime DateTime { get; set; }
+      public Guid ExecutionId { get; set; }
+      public string EventType { get; set; }
+      public string Message { get; set; }
+    }
+  }
+}
+```
+
+### Normalize it
+
+Dispatch rows from a flat file into several tables to normalize data thanks to the correlation mechanism.
+
+```cs
+private static void DefineProcess(ISingleStream<string> contextStream)
+{
+  var rowStream = contextStream
+    .CrossApplyFolderFiles("list all required files", "*.csv", true)
+    .CrossApplyTextFile("parse file", FlatFileDefinition.Create(i => new
+    {
+      Author = i.ToColumn("author"),
+      Email = i.ToColumn("email"),
+      TimeSpan = i.ToDateColumn("timestamp", "yyyyMMddHHmmss"),
+      Category = i.ToColumn("category"),
+      Link = i.ToColumn("link"),
+      Post = i.ToColumn("post"),
+      Title = i.ToColumn("title"),
+    }).IsColumnSeparated(','))
+    .SetForCorrelation("set correlation for row");
+
+  var authorStream = rowStream
+    .Distinct("remove author duplicates based on emails", i => i.Email)
+    .Select("create author instance", i => new Author { Email = i.Email, Name = i.Author })
+    .EfCoreSaveCorrelated("save or update authors", o => o
+      .SeekOn(i => i.Email)
+      .AlternativelySeekOn(i => i.Name));
+
+  var categoryStream = rowStream
+    .Distinct("remove category duplicates", i => i.Category)
+    .Select("create category instance", i => new Category { Code = i.Category, Name = i.Category })
+    .EfCoreSaveCorrelated("insert categories if doesn't exist, get it otherwise", o => o
+      .SeekOn(i => i.Code)
+      .DoNotUpdateIfExists());
+
+  var postStream = rowStream
+    .CorrelateToSingle("get related category", categoryStream, (l, r) => new { Row = l, Category = r })
+    .CorrelateToSingle("get related author", authorStream, (l, r) => new { l.Row, l.Category, Author = r })
+    .Select("create post instance", i => string.IsNullOrWhiteSpace(i.Row.Post)
+      ? new LinkPost
+      {
+        AuthorId = i.Author.Id,
+        CategoryId = i.Category.Id,
+        DateTime = i.Row.TimeSpan,
+        Title = i.Row.Title,
+        Url = new Uri(i.Row.Link)
+      } as Post
+      : new TextPost
+      {
+        AuthorId = i.Author.Id,
+        CategoryId = i.Category.Id,
+        DateTime = i.Row.TimeSpan,
+        Title = i.Row.Title,
+        Text = i.Row.Post
+      })
+    .EfCoreSaveCorrelated("save or update posts", o => o
+      .SeekOn(i => new { i.AuthorId, i.DateTime }));
 }
 ```

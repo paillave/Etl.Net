@@ -8,7 +8,7 @@ namespace Paillave.Etl.Reactive.Disposables
 {
     public interface IDisposableManager : IDisposable
     {
-        void Set(IDisposable disposable);
+        T Set<T>(T disposable) where T:IDisposable;
         void TryDispose(IDisposable disposable);
         bool IsDisposed { get; }
     }

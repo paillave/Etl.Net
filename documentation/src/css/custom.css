@@ -1,0 +1,132 @@
+/* stylelint-disable docusaurus/copyright-header */
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+:root {
+  --ifm-color-primary: #5212bd;
+  --ifm-color-primary-dark: #2B0B98;
+  --ifm-color-primary-darker: #460fa1;
+  --ifm-color-primary-darkest: #390d84;
+  --ifm-color-primary-light: #7014E8;
+  --ifm-color-primary-lighter: #4931DE;
+  --ifm-color-primary-lightest: #DFD8F7;
+  /* --ifm-color-primary: #8a7a4e;
+  --ifm-color-primary-dark: #7c6e46;
+  --ifm-color-primary-darker: #756842;
+  --ifm-color-primary-darkest: #615537;
+  --ifm-color-primary-light: #988656;
+  --ifm-color-primary-lighter: #9f8c5a;
+  --ifm-color-primary-lightest: #ac9b6d; */
+  --ifm-code-font-size: 95%;
+  --ifm-font-family-base: 'Open Sans';
+}
+
+.mainLogoBackground_src-pages-index-module svg {
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 1));
+}
+
+.navbar__logo svg>g {
+  fill: #5212bd;
+}
+.navbar__logo {
+  color: #5212bd;
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+html[data-theme='dark'] .docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.prism-code {
+  counter-reset: line-number;
+  max-height: 600px;
+}
+
+/*
+ * Notice the chained .language-ts class name to .prism-code
+ * You can chain more languages in order to add line numbers
+ */
+/* .prism-code.language-ts .token-line::before 
+.prism-code.language-csharp .token-line::before 
+.prism-code.language-cs .token-line::before 
+.prism-code.language-sql .token-line::before 
+.prism-code.language-sh .token-line::before  */
+.prism-code[class*=language-] .token-line::before {
+  counter-increment: line-number;
+  content: counter(line-number);
+  margin-right: calc(1rem * 1.5);
+  text-align: right;
+  min-width: 2.5rem;
+  display: inline-block;
+  opacity: 1;
+  position: sticky;
+  left: 1rem;
+  background-color:var(--ifm-pre-background);
+  filter:brightness(95%);
+}
+
+.frontpage .token-line::before {
+  background-color: #1c1e21 !important;
+}
+/* html[data-theme='light'] .prism-code[class*=language-] .token-line::before {
+  background-color: #1c1e21;
+} */
+
+.prism-code.language-bash .token-line::before,
+.prism-code.language-sh .token-line::before  {
+  content: '/>' !important;
+  background-color: transparent !important;
+}
+
+@media (pointer: fine) {
+  .frontpage::-webkit-scrollbar {
+    height: 7px;
+    width: 7px;
+  }
+  .frontpage::-webkit-scrollbar-track {
+    background: #555;
+    border-radius: 10px;
+  }
+  .frontpage::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  .frontpage::-webkit-scrollbar-thumb:hover {
+    background: #f1f1f1;
+  }
+}
+
+
+@media (pointer: fine) {
+  html::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+  /* html::-webkit-scrollbar:hover {
+    height: 17px !important;
+    width: 17px !important;
+  } */
+  html::-webkit-scrollbar-track {
+    background: #555;
+    border-radius: 10px;
+  }
+  html::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  html::-webkit-scrollbar-thumb:hover {
+    background: #f1f1f1;
+  }
+}

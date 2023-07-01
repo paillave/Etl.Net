@@ -1,0 +1,597 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Document",
+  "type": "object",
+  "additionalProperties": {
+    "$ref": "#/definitions/Connection"
+  },
+  "definitions": {
+    "FileSystemAdapterConnectionParameters": {
+      "title": "FileSystemAdapterConnectionParameters",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "RootFolder"
+      ],
+      "properties": {
+        "RootFolder": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "Sources_FileSystem": {
+      "title": "Sources_FileSystem",
+      "type": "object",
+      "additionalProperties": {
+        "title": "FileSystemAdapterProviderParameters",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "SubFolder": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "FileNamePattern": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "Recursive": {
+            "type": "boolean"
+          },
+          "Name": {
+            "type": "string",
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    "Processes_FileSystem": {
+      "title": "Processes_FileSystem",
+      "type": "object",
+      "additionalProperties": {
+        "title": "FileSystemAdapterProcessorParameters",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "SubFolder": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "Name": {
+            "type": "string",
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    "Adapter_FileSystem": {
+      "title": "Adapter_FileSystem",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "Type"
+      ],
+      "properties": {
+        "Type": {
+          "pattern": "^FileSystem$"
+        },
+        "Connection": {
+          "$ref": "#/definitions/FileSystemAdapterConnectionParameters"
+        },
+        "Providers": {
+          "$ref": "#/definitions/Sources_FileSystem"
+        },
+        "Processors": {
+          "$ref": "#/definitions/Processes_FileSystem"
+        }
+      }
+    },
+    "FtpAdapterConnectionParameters": {
+      "title": "FtpAdapterConnectionParameters",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "Server",
+        "Login",
+        "Password"
+      ],
+      "properties": {
+        "RootFolder": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "Server": {
+          "type": "string",
+          "minLength": 1
+        },
+        "PortNumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "Login": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Password": {
+          "type": "string",
+          "minLength": 1
+        },
+        "FingerPrintSha1": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "SerialNumber": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "SubjectChecks": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "IssuerChecks": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "PublicKey": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "MaxAttempts": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "Ssl": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "Tls": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "NoCheck": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    },
+    "Sources_Ftp": {
+      "title": "Sources_Ftp",
+      "type": "object",
+      "additionalProperties": {
+        "title": "FtpAdapterProviderParameters",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "SubFolder": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "FileNamePattern": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "Recursive": {
+            "type": "boolean"
+          },
+          "Name": {
+            "type": "string",
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    "Processes_Ftp": {
+      "title": "Processes_Ftp",
+      "type": "object",
+      "additionalProperties": {
+        "title": "FtpAdapterProcessorParameters",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "SubFolder": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "Name": {
+            "type": "string",
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    "Adapter_Ftp": {
+      "title": "Adapter_Ftp",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "Type"
+      ],
+      "properties": {
+        "Type": {
+          "pattern": "^Ftp$"
+        },
+        "Connection": {
+          "$ref": "#/definitions/FtpAdapterConnectionParameters"
+        },
+        "Providers": {
+          "$ref": "#/definitions/Sources_Ftp"
+        },
+        "Processors": {
+          "$ref": "#/definitions/Processes_Ftp"
+        }
+      }
+    },
+    "SftpAdapterConnectionParameters": {
+      "title": "SftpAdapterConnectionParameters",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "Server",
+        "Login",
+        "Password"
+      ],
+      "properties": {
+        "RootFolder": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "Server": {
+          "type": "string",
+          "minLength": 1
+        },
+        "PortNumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "Login": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Password": {
+          "type": "string",
+          "minLength": 1
+        },
+        "PrivateKeyPassPhrase": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "PrivateKey": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "MaxAttempts": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "Sources_Sftp": {
+      "title": "Sources_Sftp",
+      "type": "object",
+      "additionalProperties": {
+        "title": "SftpAdapterProviderParameters",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "SubFolder": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "FileNamePattern": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "Name": {
+            "type": "string",
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    "Processes_Sftp": {
+      "title": "Processes_Sftp",
+      "type": "object",
+      "additionalProperties": {
+        "title": "SftpAdapterProcessorParameters",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "SubFolder": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "Name": {
+            "type": "string",
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    "Adapter_Sftp": {
+      "title": "Adapter_Sftp",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "Type"
+      ],
+      "properties": {
+        "Type": {
+          "pattern": "^Sftp$"
+        },
+        "Connection": {
+          "$ref": "#/definitions/SftpAdapterConnectionParameters"
+        },
+        "Providers": {
+          "$ref": "#/definitions/Sources_Sftp"
+        },
+        "Processors": {
+          "$ref": "#/definitions/Processes_Sftp"
+        }
+      }
+    },
+    "MailAdapterConnectionParameters": {
+      "title": "MailAdapterConnectionParameters",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "Server"
+      ],
+      "properties": {
+        "Server": {
+          "type": "string",
+          "minLength": 1
+        },
+        "PortNumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "Login": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "Password": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "Secured": {
+          "type": "boolean"
+        },
+        "MaxAttempts": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "Sources_Mail": {
+      "title": "Sources_Mail",
+      "type": "object",
+      "additionalProperties": {
+        "title": "MailAdapterProviderParameters",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "OnlyNotRead": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "FromContains": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "ToContains": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "SubjectContains": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "AttachmentNamePattern": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "Folder": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "SetToReadIfBatchDeletion": {
+            "type": "boolean"
+          },
+          "Name": {
+            "type": "string",
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    "Processes_Mail": {
+      "title": "Processes_Mail",
+      "type": "object",
+      "additionalProperties": {
+        "title": "MailAdapterProcessorParameters",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "From",
+          "To"
+        ],
+        "properties": {
+          "ToFromMetadata": {
+            "type": "boolean"
+          },
+          "From": {
+            "type": "string",
+            "minLength": 1
+          },
+          "FromDisplayName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "To": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ToDisplayName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "Body": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "Subject": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "Name": {
+            "type": "string",
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    "Adapter_Mail": {
+      "title": "Adapter_Mail",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "Type"
+      ],
+      "properties": {
+        "Type": {
+          "pattern": "^Mail$"
+        },
+        "Connection": {
+          "$ref": "#/definitions/MailAdapterConnectionParameters"
+        },
+        "Providers": {
+          "$ref": "#/definitions/Sources_Mail"
+        },
+        "Processors": {
+          "$ref": "#/definitions/Processes_Mail"
+        }
+      }
+    },
+    "Connection": {
+      "title": "Connection",
+      "type": "object",
+      "properties": {
+        "Type": {
+          "anyOf": [
+            {
+              "description": "Get and save files on the local file system",
+              "enum": [
+                "FileSystem"
+              ]
+            },
+            {
+              "description": "Get and save files on an FTP server",
+              "enum": [
+                "Ftp"
+              ]
+            },
+            {
+              "description": "Get and save files on an SFTP server",
+              "enum": [
+                "Sftp"
+              ]
+            },
+            {
+              "description": "Get and save files on an MAIL server",
+              "enum": [
+                "Mail"
+              ]
+            }
+          ]
+        }
+      },
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Adapter_FileSystem"
+        },
+        {
+          "$ref": "#/definitions/Adapter_Ftp"
+        },
+        {
+          "$ref": "#/definitions/Adapter_Sftp"
+        },
+        {
+          "$ref": "#/definitions/Adapter_Mail"
+        }
+      ]
+    }
+  }
+}

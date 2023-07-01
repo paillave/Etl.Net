@@ -1,77 +1,46 @@
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "label": "build",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "build",
-        "Paillave.Etl.sln"
-      ],
-      "problemMatcher": "$msCompile",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      }
-    },
-    {
-      "label": "clean",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "clean",
-        "Paillave.Etl.sln"
-      ],
-      "problemMatcher": "$msCompile",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      }
-    },
-    {
-      "label": "test",
-      "command": "dotnet",
-      "type": "shell",
-      "args": [
-        "test",
-        "-p:CollectCoverage=true",
-        "-p:CoverletOutputFormat=lcov",
-        "-p:CoverletOutput=./lcov.info",
-        "-p:Exclude=\"[xunit*]*\""
-      ],
-      "options": {
-        "cwd": "${workspaceFolder}"
-      }
-    },
-    {
-      "label": "buildApp",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "build",
-        "FundProcess.Pms.Processes.sln"
-      ],
-      "problemMatcher": "$msCompile",
-      "options": {
-        "cwd": "${workspaceFolder}/FundProcess.Pms.Processes"
-      },
-      "group": "build"
-    },
-    {
-      "label": "cleanApp",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "clean",
-        "FundProcess.Pms.Processes.sln"
-      ],
-      "problemMatcher": "$msCompile",
-      "options": {
-        "cwd": "${workspaceFolder}/FundProcess.Pms.Processes"
-      }
-    },
-  ]
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "args": [
+                "build",
+                "${workspaceFolder}/Paillave.Etl.sln",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/Paillave.Etl.Samples/Paillave.Etl.Samples.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "${workspaceFolder}/Paillave.Etl.Samples/Paillave.Etl.Samples.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
 }

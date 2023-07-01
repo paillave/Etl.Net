@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Paillave.Etl.Reactive.Operators
@@ -13,7 +14,7 @@ namespace Paillave.Etl.Reactive.Operators
         private IDisposable _disp1;
         private IDisposable _disp2;
         private bool _isTriggered = false;
-        public SkipUntilSubject(IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable)
+        public SkipUntilSubject(IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable) : base(CancellationTokenSource.CreateLinkedTokenSource(observable.CancellationToken, fromObservable.CancellationToken).Token)
         {
             _disp1 = observable.Subscribe(HandleOnPush, HandleOnComplete, HandleOnError);
             _disp2 = fromObservable.Subscribe(HandleOnPushTrigger, HandleOnCompleteTrigger);

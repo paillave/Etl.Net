@@ -27,6 +27,7 @@ namespace Paillave.Etl.ExcelFile.Core
         private ExcelAddressBase _columnHeaderRange = null;
         private ExcelAddressBase _dataRange = null;
         private DataOrientation _datasetOrientation = DataOrientation.Vertical;
+        private bool _respectHeaderCase = false;
 
         public ExcelFileDefinition<T> WithHorizontalDataset()
         {
@@ -47,6 +48,8 @@ namespace Paillave.Etl.ExcelFile.Core
         }
         public ExcelFileDefinition<T> WithDataset(string stringAddress)
         {
+            if (string.IsNullOrWhiteSpace(stringAddress))
+                throw new ArgumentNullException(nameof(stringAddress));
             _dataRange = new ExcelAddressBase(stringAddress);
             return this;
         }
@@ -80,9 +83,13 @@ namespace Paillave.Etl.ExcelFile.Core
             }
             return this;
         }
-        public ExcelFileReader GetExcelReader(ExcelWorksheet excelWorksheet = null)
+        internal ExcelFileReader GetExcelReader(ExcelWorksheet excelWorksheet = null)
         {
             if ((_fieldDefinitions?.Count ?? 0) == 0) SetDefaultMapping();
+            if (_dataRange == null)
+            {
+                throw new NullReferenceException($"Dataset is null and has not been specified. Please call {nameof(ExcelFileDefinition)}.{nameof(WithDataset)}.");
+            }
             IEnumerable<string> columnNames;
             if (excelWorksheet == null) columnNames = GetDefaultColumnNames().ToList();
             else columnNames = GetColumnNames(excelWorksheet);
@@ -90,8 +97,8 @@ namespace Paillave.Etl.ExcelFile.Core
             {
                 var dico = _fieldDefinitions.Join(
                     columnNames.Select((ColumnName, Position) => new { ColumnName, Position }),
-                    i => i.ColumnName.Trim(),
-                    i => i.ColumnName.Trim(),
+                    i => _respectHeaderCase ? i?.ColumnName?.Trim() : i?.ColumnName?.ToLowerInvariant()?.Trim(),
+                    i => _respectHeaderCase ? i.ColumnName.Trim() : i.ColumnName.ToLowerInvariant().Trim(),
                     (fd, po) => new
                     {
                         Position = po.Position,
@@ -107,7 +114,7 @@ namespace Paillave.Etl.ExcelFile.Core
                     .Select((fd, idx) => new
                     {
                         Position = idx,
-                        PropertySerializer = new ExcelFilePropertySetter(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo, fd.ColumnName)
+                        PropertySerializer = new ExcelFilePropertySetter(fd.PropertyInfo, fd.CultureInfo ?? _cultureInfo, fd.ColumnName, $"<{idx}>")
                     })
                     .ToDictionary(i => i.Position, i => i.PropertySerializer);
                 return new ExcelFileReader(dico, _columnHeaderRange, _dataRange, _datasetOrientation);
@@ -133,6 +140,11 @@ namespace Paillave.Etl.ExcelFile.Core
             }
             return new string[] { };
         }
+        public ExcelFileDefinition<T> RespectHeaderCase(bool respectHeaderCase = true)
+        {
+            this._respectHeaderCase = respectHeaderCase;
+            return this;
+        }
         private IEnumerable<string> GetDefaultColumnNames()
         {
             return _fieldDefinitions.Select((i, idx) => new { Name = i.ColumnName ?? i.PropertyInfo.Name, DefinedPosition = i.Position, FallbackPosition = idx })
@@ -150,23 +162,23 @@ namespace Paillave.Etl.ExcelFile.Core
             this._cultureInfo = CultureInfo.GetCultureInfo(name);
             return this;
         }
-        public ExcelFileDefinition<T> MapColumnToProperty<TField>(int index, Expression<Func<T, TField>> memberLamda, CultureInfo cultureInfo = null)
+        internal ExcelFileDefinition<T> MapColumnToProperty<TField>(int index, Expression<Func<T, TField>> memberLambda, CultureInfo cultureInfo = null)
         {
             SetFieldDefinition(new ExcelFileFieldDefinition
             {
                 CultureInfo = cultureInfo,
                 Position = index,
-                PropertyInfo = memberLamda.GetPropertyInfo()
+                PropertyInfo = memberLambda.GetPropertyInfo()
             });
             return this;
         }
-        public ExcelFileDefinition<T> MapColumnToProperty<TField>(int index, Expression<Func<T, TField>> memberLamda, string cultureInfo)
+        internal ExcelFileDefinition<T> MapColumnToProperty<TField>(int index, Expression<Func<T, TField>> memberLambda, string cultureInfo)
         {
             SetFieldDefinition(new ExcelFileFieldDefinition
             {
                 CultureInfo = CultureInfo.GetCultureInfo(cultureInfo),
                 Position = index,
-                PropertyInfo = memberLamda.GetPropertyInfo()
+                PropertyInfo = memberLambda.GetPropertyInfo()
             });
             return this;
         }
@@ -185,45 +197,45 @@ namespace Paillave.Etl.ExcelFile.Core
                 if (fieldDefinition.Position != null) existingFieldDefinition.Position = fieldDefinition.Position;
             }
         }
-        public ExcelFileDefinition<T> MapColumnToProperty<TField>(string columnName, Expression<Func<T, TField>> memberLamda, CultureInfo cultureInfo = null)
+        public ExcelFileDefinition<T> MapColumnToProperty<TField>(string columnName, Expression<Func<T, TField>> memberLambda, CultureInfo cultureInfo = null)
         {
             SetFieldDefinition(new ExcelFileFieldDefinition
             {
                 CultureInfo = cultureInfo,
                 ColumnName = columnName,
-                PropertyInfo = memberLamda.GetPropertyInfo()
+                PropertyInfo = memberLambda.GetPropertyInfo()
             });
             return this;
         }
-        public ExcelFileDefinition<T> MapColumnToProperty<TField>(string columnName, Expression<Func<T, TField>> memberLamda, string cultureInfo)
+        public ExcelFileDefinition<T> MapColumnToProperty<TField>(string columnName, Expression<Func<T, TField>> memberLambda, string cultureInfo)
         {
             SetFieldDefinition(new ExcelFileFieldDefinition
             {
                 CultureInfo = CultureInfo.GetCultureInfo(cultureInfo),
                 ColumnName = columnName,
-                PropertyInfo = memberLamda.GetPropertyInfo()
+                PropertyInfo = memberLambda.GetPropertyInfo()
             });
             return this;
         }
-        public ExcelFileDefinition<T> MapColumnToProperty<TField>(string columnName, int position, Expression<Func<T, TField>> memberLamda, CultureInfo cultureInfo = null)
+        public ExcelFileDefinition<T> MapColumnToProperty<TField>(string columnName, int position, Expression<Func<T, TField>> memberLambda, CultureInfo cultureInfo = null)
         {
             SetFieldDefinition(new ExcelFileFieldDefinition
             {
                 CultureInfo = cultureInfo,
                 ColumnName = columnName,
                 Position = position,
-                PropertyInfo = memberLamda.GetPropertyInfo()
+                PropertyInfo = memberLambda.GetPropertyInfo()
             });
             return this;
         }
-        public ExcelFileDefinition<T> MapColumnToProperty<TField>(string columnName, int position, Expression<Func<T, TField>> memberLamda, string cultureInfo)
+        public ExcelFileDefinition<T> MapColumnToProperty<TField>(string columnName, int position, Expression<Func<T, TField>> memberLambda, string cultureInfo)
         {
             SetFieldDefinition(new ExcelFileFieldDefinition
             {
                 CultureInfo = CultureInfo.GetCultureInfo(cultureInfo),
                 ColumnName = columnName,
                 Position = position,
-                PropertyInfo = memberLamda.GetPropertyInfo()
+                PropertyInfo = memberLambda.GetPropertyInfo()
             });
             return this;
         }

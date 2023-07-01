@@ -2,19 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace Paillave.Etl.Reactive.Operators
 {
     public class CombineWithLatestSubject<TIn1, TIn2, TOut> : PushSubject<TOut>
     {
         private readonly object _lockObject = new object();
-        private ObservableElement<TIn1> _obsel1;
-        private ObservableElement<TIn2> _obsel2;
+        private readonly ObservableElement<TIn1> _obsel1;
+        private readonly ObservableElement<TIn2> _obsel2;
         private readonly Func<TIn1, TIn2, TOut> _selector;
         private readonly bool _bufferTillFirstMatch;
-        public CombineWithLatestSubject(IPushObservable<TIn1> observable1, IPushObservable<TIn2> observable2, Func<TIn1, TIn2, TOut> selector, bool bufferTillFirstMatch = false)
+        public CombineWithLatestSubject(IPushObservable<TIn1> observable1, IPushObservable<TIn2> observable2, Func<TIn1, TIn2, TOut> selector, bool bufferTillFirstMatch = false) : base(CancellationTokenSource.CreateLinkedTokenSource(observable1.CancellationToken, observable2.CancellationToken).Token)
         {
             lock (_lockObject)
             {
@@ -45,6 +44,10 @@ namespace Paillave.Etl.Reactive.Operators
         }
         private void TryPushCombination(int inputNumber)
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_lockObject)
             {
                 if (_obsel1.HasLastValue && _obsel2.HasLastValue)
@@ -54,13 +57,25 @@ namespace Paillave.Etl.Reactive.Operators
                         if (inputNumber == 1 && _obsel2.Buffer.Any())
                         {
                             while (_obsel2.Buffer.Any())
+                            {
+                                if (this.CancellationToken.IsCancellationRequested)
+                                {
+                                    break;
+                                }
                                 PushValues(_obsel1.LastValue, _obsel2.Buffer.Dequeue());
+                            }
                             _obsel1.Buffer.Clear();
                         }
                         else if (inputNumber == 2 && _obsel1.Buffer.Any())
                         {
                             while (_obsel1.Buffer.Any())
+                            {
+                                if (this.CancellationToken.IsCancellationRequested)
+                                {
+                                    break;
+                                }
                                 PushValues(_obsel1.Buffer.Dequeue(), _obsel2.LastValue);
+                            }
                             _obsel2.Buffer.Clear();
                         }
                         else
@@ -96,7 +111,8 @@ namespace Paillave.Etl.Reactive.Operators
         {
             lock (_lockObject)
             {
-                _obsel1.IsComplete = true;
+                if (_obsel1 != null)
+                    _obsel1.IsComplete = true;
                 TryComplete();
             }
         }

@@ -28,7 +28,7 @@ namespace Paillave.Etl.Reactive.Operators
 
         protected override void InternalPushValue(TIn value)
         {
-            this.PushValue(this._resultSelector(value, _sectionIndex));
+            this.TryPushValue(() => this._resultSelector(value, _sectionIndex));
         }
         protected override void ProcessCurrentIgnore(TIn value)
         {

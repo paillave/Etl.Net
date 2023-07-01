@@ -1,14 +1,19 @@
 {
     "cSpell.words": [
+        "Autofac",
+        "Iodc",
         "Isin",
-        "Paillave",
-        "Sankey",
-        "Upsert"
+        "Sicav",
+        "autobind",
+        "immer",
+        "manco",
+        "navs",
+        "oidc",
+        "signin",
+        "signout"
     ],
     "files.exclude": {
         "*/bin": true,
-        "*/obj": true, 
-        "FundProcess.Pms.Processes/*/bin": true,
-        "FundProcess.Pms.Processes/*/obj": true
+        "*/obj": true,
     }
 }

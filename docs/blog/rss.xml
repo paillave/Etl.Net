@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>ETL.NET Blog</title>
+        <link>https://paillave.github.io/Etl.Net/blog</link>
+        <description>ETL.NET Blog</description>
+        <lastBuildDate>Sun, 01 Aug 2021 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
+        <item>
+            <title><![CDATA[Why ETL.NET?]]></title>
+            <link>https://paillave.github.io/Etl.Net/blog/2021/08/01/WhyETLNET</link>
+            <guid>/2021/08/01/WhyETLNET</guid>
+            <pubDate>Sun, 01 Aug 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Years after years, contexts I faced led me to the conclusion that ETL engines (even SSIS that is that is still one of the bests 15 years after its initial release) should now reach a next generation.]]></description>
+            <content:encoded><![CDATA[<p>Years after years, contexts I faced led me to the conclusion that ETL engines (even SSIS that is that is still one of the bests 15 years after its initial release) should now reach a next generation.</p><p>😲 SSIS for instance, misses so many out of the box features that make <em>a lot</em> of developers very frustrated. Just to mention one typical example among many I could enumerate: the terrible absence of an efficient and fast upsert.</p><p>😕 As most of ETL engines are nearly exclusively focused on performance, I noticed that in real life, they are mostly used to integrate relatively small volumes of data. This reveals a wrong alignment between offer and demand. Most developers need to process between thousands and hundreds thousands rows, but editors keep on advertising how good they are in the integration of billions rows! At the end of the day, the sad fact is... indeed, ETL engines are monsters of performance when it is about to import billions of records... but for real life usual use cases, it is too heavy and very unproductive to develop with it. Not even to mention their integration in an application architecture.</p><p>😏 Here, many BI specialists would answer the following:</p><blockquote><p>BI is a discipline of IT that is different, with a specific architecture that must be followed to get the best results. Ralph Kimball or Bill Inmon approaches shall be studied. Your vision is too much biased by your development approach.</p></blockquote><p>😔 My personal belief is that the world changed; now it is this vision that is biased by an old fashioned BI approach. Computers are, like always, way more powerful than before: extracting, transforming and loading hundreds thousands rows of data is now a problem for nearly nobody anymore. Nowadays, the main problem is this one:</p><blockquote><p>Can we implement <strong>with an acceptable effort</strong> an efficient, maintainable and complex ETL process in any simple architecture?</p></blockquote><p>💡 ETL.NET Is meant to solve this problem.
+For BI developers, it will look like... a simple .NET library. Nothing to do with heavy weighed tools with visual designers!</p><p>ETL.NET has been done in the context of a <a href="https://www.fundprocess.lu" target="_blank" rel="noopener noreferrer">financial solution</a> and it would be fantastic to see it being used by a larger community than myself and the team of <a href="https://www.fundprocess.lu" target="_blank" rel="noopener noreferrer">FundProcess</a>.</p>]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[First Release!]]></title>
+            <link>https://paillave.github.io/Etl.Net/blog/2021/07/31/FirstRelease</link>
+            <guid>/2021/07/31/FirstRelease</guid>
+            <pubDate>Sat, 31 Jul 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[After 3 years of hard work and testing, ETL.NET is finally ready for production environment.]]></description>
+            <content:encoded><![CDATA[<p>🍾 🍺 🍸 🥂 🍻</p><p>After 3 years of hard work and testing, ETL.NET is finally ready for production environment.</p><p>Lot of things happened since the last alpha release:</p><ul><li>So many bugs solved!!!</li><li>Every feature that SSIS offers is implemented</li><li>Lot of new features, for example:<ul><li>The fantastic Correlation system to normalize in a snap of a finger a flat file into several tables.</li><li>A great Connector system for an ETL to have sources and destinations of files changed in seconds by any infrastructure administrator</li><li>EMail extension to read files from a SMTP or to send emails using embedded metadata of a file</li></ul></li><li>The library is now the foundation of a generic and advanced batch system for very sensitive data of a financial solution: <a href="https://FundProcess.lu" target="_blank" rel="noopener noreferrer">FundProcess</a></li></ul><p>I hope this first production ready release will be as appreciated as I appreciated to make it for developers!</p>]]></content:encoded>
+        </item>
+    </channel>
+</rss>

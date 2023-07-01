@@ -12,7 +12,7 @@ namespace Paillave.Etl.Reactive.Operators
         private IDisposable _subscription;
         private List<TIn> _accumulator;
         private object _lockSync = new object();
-        public ToListSubject(IPushObservable<TIn> observable)
+        public ToListSubject(IPushObservable<TIn> observable) : base(observable.CancellationToken)
         {
             lock (_lockSync)
             {
@@ -22,6 +22,10 @@ namespace Paillave.Etl.Reactive.Operators
         }
         private void HandlePushValue(TIn value)
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_lockSync)
             {
                 _accumulator.Add(value);

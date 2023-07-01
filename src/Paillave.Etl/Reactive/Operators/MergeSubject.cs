@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Paillave.Etl.Reactive.Core;
 
@@ -17,7 +18,7 @@ namespace Paillave.Etl.Reactive.Operators
         }
         private IList<SubscriptionItem> _subscriptions = new List<SubscriptionItem>();
 
-        public MergeSubject(params IPushObservable<T>[] observables)
+        public MergeSubject(params IPushObservable<T>[] observables) : base(CancellationTokenSource.CreateLinkedTokenSource(observables.Select(i => i.CancellationToken).ToArray()).Token)
         {
             foreach (var observable in observables)
                 _subscriptions.Add(new SubscriptionItem

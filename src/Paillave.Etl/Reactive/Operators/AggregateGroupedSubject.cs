@@ -16,19 +16,23 @@ namespace Paillave.Etl.Reactive.Operators
         private object _lockSync = new object();
         private Func<TIn, TKey, TAggr, TOut> _resultSelector;
 
-        public AggregateGroupedSubject(IPushObservable<TIn> observable, Func<TAggr, TIn, TAggr> reducer, Func<TIn, TKey> getKey, Func<TIn, TAggr> createInitialValue, Func<TIn, TKey, TAggr, TOut> resultSelector)
+        public AggregateGroupedSubject(IPushObservable<TIn> observable, Func<TAggr, TIn, TAggr> reducer, Func<TIn, TKey> getKey, Func<TIn, TAggr> createInitialValue, Func<TIn, TKey, TAggr, TOut> resultSelector) : base(observable.CancellationToken)
         {
             _resultSelector = resultSelector;
             var _isAggrDisposable = typeof(IDisposable).IsAssignableFrom(typeof(TAggr));
             _subscription = observable.Subscribe(i =>
             {
+                if (CancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
                 lock (_lockSync)
                 {
                     TKey key = getKey(i);
                     if (key != null)
                     {
                         if (_hasValue && !key.Equals(_currentAggregation.Key))
-                            PushValue(_resultSelector(_currentAggregation.Value.InValue, _currentAggregation.Key, _currentAggregation.Value.CurrentAggregation));
+                            TryPushValue(() => _resultSelector(_currentAggregation.Value.InValue, _currentAggregation.Key, _currentAggregation.Value.CurrentAggregation));
                         if (!_hasValue || !key.Equals(_currentAggregation.Key))
                         {
                             var aggr = createInitialValue(i);
@@ -46,7 +50,7 @@ namespace Paillave.Etl.Reactive.Operators
             lock (_lockSync)
             {
                 if (_hasValue)
-                    PushValue(_resultSelector(_currentAggregation.Value.InValue, _currentAggregation.Key, _currentAggregation.Value.CurrentAggregation));
+                    TryPushValue(() => _resultSelector(_currentAggregation.Value.InValue, _currentAggregation.Key, _currentAggregation.Value.CurrentAggregation));
                 _disposable.Dispose();
                 base.Complete();
             }

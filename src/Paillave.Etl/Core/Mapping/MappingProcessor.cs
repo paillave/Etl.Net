@@ -1,3 +1,4 @@
+
 using Paillave.Etl.Core.Mapping.Visitors;
 using System;
 using System.Collections.Generic;
@@ -7,13 +8,13 @@ namespace Paillave.Etl.Core.Mapping
 {
     public class MappingProcessor<T>
     {
-        public readonly List<MappingSetterDefinition> _mappingSetters;
+        public readonly List<MappingSetterDefinition> MappingSetters;
 
         public MappingProcessor(Expression<Func<IFieldMapper, T>> expression)
         {
             MapperVisitor vis = new MapperVisitor();
             vis.Visit(expression);
-            this._mappingSetters = vis.MappingSetters;
+            this.MappingSetters = vis.MappingSetters;
         }
     }
     //public static class MappingProcessor

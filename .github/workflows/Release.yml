@@ -1,0 +1,52 @@
+name: ETL.NET - Release
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  publish-nuget:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '7.x'
+    - name: Install dependencies
+      working-directory: src
+      run: dotnet restore
+    - name: Build
+      working-directory: src
+      run: dotnet build --configuration Release --no-restore
+    - name: Publish to NuGet
+      working-directory: src
+      run: dotnet nuget push **\*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+
+    # - uses: actions/setup-node@v1
+    #   with:
+    #     node-version: '12.x'
+    # run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
+    # - name: Publish to NuGet
+    #   uses: brandedoutcast/publish-nuget@v2
+    #   with:
+    #     PROJECT_FILE_PATH: NetLicensingClient/NetLicensingClient.csproj
+    #     VERSION_REGEX: '^\s*<Version>(.*)<\/Version>\s*$'
+    #     TAG_FORMAT: '*'
+    #     NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+#${{ github.event.release.tag_name }}
+
+
+
+
+# Etl.Net
+# Etl.Net.EntityFrameworkCore
+# Etl.Net.ExcelFile
+# Etl.Net.ExecutionPlan
+# Etl.Net.Ftp
+# Etl.Net.Sftp
+# Etl.Net.SqlServer
+# Etl.Net.TextFile
+# Etl.Net.XmlFile
+# Paillave.EntityFrameworkCoreExtension
