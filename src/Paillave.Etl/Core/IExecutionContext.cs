@@ -21,6 +21,8 @@ namespace Paillave.Etl.Core
         bool IsTracingContext { get; }
         void AddTrace(ITraceContent traceContent, INodeContext sourceNode);
         IFileValueConnectors Connectors { get; }
+        Task InvokeInDedicatedThreadAsync(object threadOwner, Func<Task> action);
+        Task<T> InvokeInDedicatedThreadAsync<T>(object threadOwner, Func<Task<T>> action);
         Task InvokeInDedicatedThreadAsync(object threadOwner, Action action);
         Task<T> InvokeInDedicatedThreadAsync<T>(object threadOwner, Func<T> action);
         void AddDisposable(IDisposable disposable);
