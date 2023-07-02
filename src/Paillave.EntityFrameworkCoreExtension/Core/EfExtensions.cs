@@ -42,13 +42,37 @@ namespace Paillave.EntityFrameworkCoreExtension.Core
             return (EntityEntry<TEntity>)entryWithoutDetectChangesMethodInfo.Invoke(context, new object[] { entity });
         }
         private static Regex regex = new Regex(@"SELECT\s+(?<ref>[[]?.+?[]]?)[.].+?\sFROM", RegexOptions.Singleline & RegexOptions.IgnoreCase);
-        public static Task DeleteWhereAsync<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> filter) where T : class
-            => DeleteWhereAsync(dbSet, filter, CancellationToken.None);
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Reviewed")]
-        public static async Task DeleteWhereAsync<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> filter, CancellationToken cancellationToken) where T : class
-        {
-            await dbSet.Where(filter).ExecuteDeleteAsync();
-        }
+        // public static Task DeleteWhereAsync<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> filter) where T : class
+        //     => DeleteWhereAsync(dbSet, filter, CancellationToken.None);
+        // [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Reviewed")]
+        // public static async Task DeleteWhereAsync<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> filter, CancellationToken cancellationToken) where T : class
+        // {
+        //     await dbSet.Where(filter).ExecuteDeleteAsync(); //return type exception because of unexpected joins EF core makes for some reason I don't get
+        //     // var query = dbSet.Where(filter);
+        //     // var enumerator = query.Provider.Execute<IEnumerable<T>>(query.Expression).GetEnumerator();
+        //     // var relationalCommandCache = enumerator.Private("_relationalCommandCache");
+        //     // var relationQueryContext = enumerator.Private<RelationalQueryContext>("_relationalQueryContext");
+        //     // var selectExpression = relationalCommandCache.Private<SelectExpression>("_selectExpression");
+        //     // var factory = relationalCommandCache.Private<IQuerySqlGeneratorFactory>("_querySqlGeneratorFactory");
+
+        //     // var sqlGenerator = factory.Create();
+        //     // var command = sqlGenerator.GetCommand(selectExpression);
+        //     // var parameterValues = relationQueryContext.ParameterValues;
+        //     // var dbCtx = relationQueryContext.Context.Database.GetDbConnection();
+        //     // var dbCommand = dbCtx.CreateCommand();
+        //     // if (dbCtx.State == ConnectionState.Closed)
+        //     // {
+        //     //     dbCtx.Open();
+        //     // }
+        //     // string deleteSql = regex.Replace(command.CommandText, "DELETE $1 FROM", 1);
+        //     // // dbCommand.Transaction = relationQueryContext.Context.Database.CurrentTransaction as System.Data.Common.DbTransaction;
+        //     // dbCommand.CommandText = deleteSql;
+        //     // dbCommand.CommandType = CommandType.Text;
+        //     // dbCommand.CommandTimeout = 3000;
+        //     // foreach (var parameter in command.Parameters)
+        //     //     parameter.AddDbParameter(dbCommand, parameterValues[parameter.InvariantName]);
+        //     // await dbCommand.ExecuteNonQueryAsync(cancellationToken);
+        // }
 
         public static Expression<Func<T1, TResult>> ApplyPartialRight<T1, T2, TResult>(this Expression<Func<T1, T2, TResult>> expression, Expression expressionValue)
         {

@@ -16,7 +16,7 @@ namespace Paillave.Etl.Samples
         {
             using (var dbCtx = new TestDbContext())
             {
-                await dbCtx.Set<Position>().DeleteWhereAsync(i => i.CompositionId == 10);
+                // await dbCtx.Set<Position>().DeleteWhereAsync(i => i.CompositionId == 10);
             }
             // var processRunner = StreamProcessRunner.Create<string[]>(Import);
             // var res = await processRunner.ExecuteAsync(args);
