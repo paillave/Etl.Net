@@ -1,52 +1,57 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl", "Paillave.Etl\Paillave.Etl.csproj", "{3D8C1E7B-CE02-4120-8F9E-FF3869645E27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl", "Paillave.Etl\Paillave.Etl.csproj", "{3D8C1E7B-CE02-4120-8F9E-FF3869645E27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.EntityFrameworkCore", "Paillave.Etl.EntityFrameworkCore\Paillave.Etl.EntityFrameworkCore.csproj", "{46CEEF00-633E-41B3-A473-766917BEF723}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.EntityFrameworkCore", "Paillave.Etl.EntityFrameworkCore\Paillave.Etl.EntityFrameworkCore.csproj", "{46CEEF00-633E-41B3-A473-766917BEF723}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.TextFile", "Paillave.Etl.TextFile\Paillave.Etl.TextFile.csproj", "{98C38DC0-61BD-4D9D-98FF-4E5C30E0B05F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.TextFile", "Paillave.Etl.TextFile\Paillave.Etl.TextFile.csproj", "{98C38DC0-61BD-4D9D-98FF-4E5C30E0B05F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.XmlFile", "Paillave.Etl.XmlFile\Paillave.Etl.XmlFile.csproj", "{1DE438A4-1ECF-4C7E-8ACD-F77A593E8832}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.XmlFile", "Paillave.Etl.XmlFile\Paillave.Etl.XmlFile.csproj", "{1DE438A4-1ECF-4C7E-8ACD-F77A593E8832}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.ExcelFile", "Paillave.Etl.ExcelFile\Paillave.Etl.ExcelFile.csproj", "{10931DC9-D068-4286-9577-E4D6CCECAC8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.ExcelFile", "Paillave.Etl.ExcelFile\Paillave.Etl.ExcelFile.csproj", "{10931DC9-D068-4286-9577-E4D6CCECAC8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.EntityFrameworkCoreExtension", "Paillave.EntityFrameworkCoreExtension\Paillave.EntityFrameworkCoreExtension.csproj", "{B1D7BA52-0A01-418E-8EB2-FC51E8BEA558}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.EntityFrameworkCoreExtension", "Paillave.EntityFrameworkCoreExtension\Paillave.EntityFrameworkCoreExtension.csproj", "{B1D7BA52-0A01-418E-8EB2-FC51E8BEA558}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Ftp", "Paillave.Etl.Ftp\Paillave.Etl.Ftp.csproj", "{A0E143D9-0468-4DB9-929B-97D00001E779}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.Ftp", "Paillave.Etl.Ftp\Paillave.Etl.Ftp.csproj", "{A0E143D9-0468-4DB9-929B-97D00001E779}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Sftp", "Paillave.Etl.Sftp\Paillave.Etl.Sftp.csproj", "{ED8C367D-AEFD-4AF7-9B27-157EDCF9E87A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.Sftp", "Paillave.Etl.Sftp\Paillave.Etl.Sftp.csproj", "{ED8C367D-AEFD-4AF7-9B27-157EDCF9E87A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.FileSystem", "Paillave.Etl.FileSystem\Paillave.Etl.FileSystem.csproj", "{5F41E12B-8B32-447C-98E6-8382020EBFCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.FileSystem", "Paillave.Etl.FileSystem\Paillave.Etl.FileSystem.csproj", "{5F41E12B-8B32-447C-98E6-8382020EBFCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.FromConfigurationConnectors", "Paillave.Etl.FromConfigurationConnectors\Paillave.Etl.FromConfigurationConnectors.csproj", "{F96D7C02-A0DD-4FAF-8A1C-98CA550E1841}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.FromConfigurationConnectors", "Paillave.Etl.FromConfigurationConnectors\Paillave.Etl.FromConfigurationConnectors.csproj", "{F96D7C02-A0DD-4FAF-8A1C-98CA550E1841}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Mail", "Paillave.Etl.Mail\Paillave.Etl.Mail.csproj", "{43AD98CF-4220-4A88-953C-D3322B93599B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.Mail", "Paillave.Etl.Mail\Paillave.Etl.Mail.csproj", "{43AD98CF-4220-4A88-953C-D3322B93599B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Autofac", "Paillave.Etl.Autofac\Paillave.Etl.Autofac.csproj", "{8C5BB7A4-025C-4CA0-9A94-9DAA5F35443C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.Autofac", "Paillave.Etl.Autofac\Paillave.Etl.Autofac.csproj", "{8C5BB7A4-025C-4CA0-9A94-9DAA5F35443C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Samples", "Tutorials\Paillave.Etl.Samples\Paillave.Etl.Samples.csproj", "{D4F4EF5F-A760-43CF-BDA2-673266AEA225}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.Samples", "Tutorials\Paillave.Etl.Samples\Paillave.Etl.Samples.csproj", "{D4F4EF5F-A760-43CF-BDA2-673266AEA225}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.ExecutionToolkit", "Paillave.Etl.ExecutionToolkit\Paillave.Etl.ExecutionToolkit.csproj", "{43CCC8DC-25DF-4D01-83B5-7B4E697CDB8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.ExecutionToolkit", "Paillave.Etl.ExecutionToolkit\Paillave.Etl.ExecutionToolkit.csproj", "{43CCC8DC-25DF-4D01-83B5-7B4E697CDB8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Zip", "Paillave.Etl.Zip\Paillave.Etl.Zip.csproj", "{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.Zip", "Paillave.Etl.Zip\Paillave.Etl.Zip.csproj", "{8F7C3193-EAD6-4FD1-B9DF-07DF19E5A5CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.SqlServer", "Paillave.Etl.SqlServer\Paillave.Etl.SqlServer.csproj", "{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.SqlServer", "Paillave.Etl.SqlServer\Paillave.Etl.SqlServer.csproj", "{1FB73BF3-529E-4CC8-A1C7-DA3D422BC656}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Dropbox", "Paillave.Etl.Dropbox\Paillave.Etl.Dropbox.csproj", "{0BE639A1-6CE1-4BDF-A26B-BEB130F44C11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.Dropbox", "Paillave.Etl.Dropbox\Paillave.Etl.Dropbox.csproj", "{0BE639A1-6CE1-4BDF-A26B-BEB130F44C11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.SimpleTutorial", "Tutorials\SimpleTutorial\SimpleTutorial.csproj", "{59203BB5-60EE-41E3-B166-E54E584C1807}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTutorial", "Tutorials\SimpleTutorial\SimpleTutorial.csproj", "{59203BB5-60EE-41E3-B166-E54E584C1807}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.BlogTutorial", "Tutorials\BlogTutorial\BlogTutorial.csproj", "{191DFF01-0BA8-4345-AC4E-C94E8245F007}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlogTutorial", "Tutorials\BlogTutorial\BlogTutorial.csproj", "{191DFF01-0BA8-4345-AC4E-C94E8245F007}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Bloomberg", "Paillave.Etl.Bloomberg\Paillave.Etl.Bloomberg.csproj", "{4DBE1730-6E96-43FF-A36E-FBBB16617775}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.Bloomberg", "Paillave.Etl.Bloomberg\Paillave.Etl.Bloomberg.csproj", "{4DBE1730-6E96-43FF-A36E-FBBB16617775}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Pdf", "Paillave.Pdf\Paillave.Pdf.csproj", "{8FD75A3B-6726-4F19-A82E-D67DE6539901}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Pdf", "Paillave.Pdf\Paillave.Pdf.csproj", "{8FD75A3B-6726-4F19-A82E-D67DE6539901}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Pdf", "Paillave.Etl.Pdf\Paillave.Etl.Pdf.csproj", "{471FE8AD-1A89-41E4-B39D-773A82FBAA0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.Pdf", "Paillave.Etl.Pdf\Paillave.Etl.Pdf.csproj", "{471FE8AD-1A89-41E4-B39D-773A82FBAA0A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Scheduler", "Paillave.Etl.Scheduler\Paillave.Etl.Scheduler.csproj", "{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.GraphApi", "Paillave.Etl.GraphApi\Paillave.Etl.GraphApi.csproj", "{54B581C3-AE38-4971-B957-33CE151AB9EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Json", "Paillave.Etl.Json\Paillave.Etl.Json.csproj", "{FEEAA450-AD8E-462F-A010-4052787E3411}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -322,6 +327,7 @@ Global
 		{471FE8AD-1A89-41E4-B39D-773A82FBAA0A}.Release|x64.Build.0 = Release|Any CPU
 		{471FE8AD-1A89-41E4-B39D-773A82FBAA0A}.Release|x86.ActiveCfg = Release|Any CPU
 		{471FE8AD-1A89-41E4-B39D-773A82FBAA0A}.Release|x86.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -334,6 +340,32 @@ Global
 		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Release|x64.Build.0 = Release|Any CPU
 		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Release|x86.ActiveCfg = Release|Any CPU
 		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Release|x86.Build.0 = Release|Any CPU
+=======
+		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Debug|x64.Build.0 = Debug|Any CPU
+		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Debug|x86.Build.0 = Debug|Any CPU
+		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Release|x64.ActiveCfg = Release|Any CPU
+		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Release|x64.Build.0 = Release|Any CPU
+		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Release|x86.ActiveCfg = Release|Any CPU
+		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Release|x86.Build.0 = Release|Any CPU
+		{FEEAA450-AD8E-462F-A010-4052787E3411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEEAA450-AD8E-462F-A010-4052787E3411}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEEAA450-AD8E-462F-A010-4052787E3411}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FEEAA450-AD8E-462F-A010-4052787E3411}.Debug|x64.Build.0 = Debug|Any CPU
+		{FEEAA450-AD8E-462F-A010-4052787E3411}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FEEAA450-AD8E-462F-A010-4052787E3411}.Debug|x86.Build.0 = Debug|Any CPU
+		{FEEAA450-AD8E-462F-A010-4052787E3411}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEEAA450-AD8E-462F-A010-4052787E3411}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEEAA450-AD8E-462F-A010-4052787E3411}.Release|x64.ActiveCfg = Release|Any CPU
+		{FEEAA450-AD8E-462F-A010-4052787E3411}.Release|x64.Build.0 = Release|Any CPU
+		{FEEAA450-AD8E-462F-A010-4052787E3411}.Release|x86.ActiveCfg = Release|Any CPU
+		{FEEAA450-AD8E-462F-A010-4052787E3411}.Release|x86.Build.0 = Release|Any CPU
+>>>>>>> 18e334f (Adding a Json provider in the same vein as the Xml provider.)
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
