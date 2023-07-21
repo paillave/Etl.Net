@@ -106,16 +106,16 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
             // dbComputedProperties = allProperties.Where(i => i.GetValueGenerationStrategy() != null).ToList();
             // computedProperties = allProperties.Where(i => (i.ValueGenerated & ValueGenerated.OnAddOrUpdate) != ValueGenerated.Never).ToList();
             // allProperties[0].GetDefaultValueSql()
-            dbComputedProperties = allProperties.Where(i => i.GetComputedColumnSql() != null).ToList();
+            dbComputedProperties = allProperties.Where(i => i.GetComputedColumnSql() != null ).ToList();
 
             defaultValuesProperties = allProperties.Where(i => i.GetDefaultValueSql() != null).ToList();
 
             _propertiesToBulkLoad = allProperties
-                .Except(dbComputedProperties)
+                .Except( dbComputedProperties )
                 .ToList();
 
             _propertiesToInsert = allProperties
-                .Except(dbComputedProperties)
+                .Except( dbComputedProperties )
                 .ToList();
 
             _propertiesToUpdate = allProperties
@@ -162,7 +162,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
                 }
                 else
                     contextQuery.MergeFromStaging(doNotUpdateIfExists);
-
+                    
                 if (this.ShouldIndexStagingTable(entities.Count()))
                     contextQuery.IndexOutputStagingTable();
 
@@ -174,11 +174,6 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
                 UpdateInputEntities(_propertiesToGetAfterSetInTarget, entities, resultEntities);
 
                 _context.ChangeTracker.AutoDetectChangesEnabled = previousAutoDetect;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                throw;
             }
             finally
             {
