@@ -15,10 +15,10 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
             BulkSaveEngineBase<T> bulkSaveEngine = new BulkSaveEngine<T>(context, pivotKey);
             bulkSaveEngine.Save(entities, cancellationToken, doNotUpdateIfExists, insertOnly);
         }
-        public static void BulkSave<T>(this DbContext context, IList<T> entities, Expression<Func<T, object>>[] pivotKeys, CancellationToken cancellationToken, bool doNotUpdateIfExists = false, bool insertOnly = false, bool identityInsert = false ) where T : class
+        public static void BulkSave<T>(this DbContext context, IList<T> entities, Expression<Func<T, object>>[] pivotKeys, CancellationToken cancellationToken, bool doNotUpdateIfExists = false, bool insertOnly = false) where T : class
         {
             BulkSaveEngineBase<T> bulkSaveEngine = new BulkSaveEngine<T>(context, pivotKeys);
-            bulkSaveEngine.Save(entities, cancellationToken, doNotUpdateIfExists, insertOnly, identityInsert );
+            bulkSaveEngine.Save(entities, cancellationToken, doNotUpdateIfExists, insertOnly);
         }
         public static void BulkUpdate<TEntity, TSource>(this DbContext context, IList<TSource> sources, Expression<Func<TSource, TEntity>> updateKey, Expression<Func<TSource, TEntity>> updateValues) where TEntity : class
         {
