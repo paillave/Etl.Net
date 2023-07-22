@@ -4,7 +4,7 @@
     {
         protected readonly BloggingContext Context;
 
-        public SqlDatabaseTests(MsSqlDatabaseFixture fixture)
+        protected SqlDatabaseTests(MsSqlDatabaseFixture fixture)
         {
             Context = new BloggingContext(fixture.GenerateDatabaseConnectionString());
         }

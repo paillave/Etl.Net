@@ -9,7 +9,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Tests
 
         public MsSqlDatabaseFixture()
         {
-            _dbContainer = new MsSqlBuilder().WithPassword("P@ssw0rd").Build();
+            _dbContainer = new MsSqlBuilder().Build();
         }
 
         public Task InitializeAsync() => _dbContainer.StartAsync();

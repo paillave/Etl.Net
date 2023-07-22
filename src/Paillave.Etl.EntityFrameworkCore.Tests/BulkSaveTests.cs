@@ -1,3 +1,4 @@
+using Paillave.Etl.EntityFrameworkCore.Tests.Entities;
 using Paillave.Etl.Reactive.Operators;
 
 namespace Paillave.Etl.EntityFrameworkCore.Tests
@@ -5,9 +6,7 @@ namespace Paillave.Etl.EntityFrameworkCore.Tests
     public class BulkSaveTests : SqlDatabaseTests
     {
         public BulkSaveTests(MsSqlDatabaseFixture fixture) : base(fixture)
-        {
-
-        }
+        { }
 
         [Fact]
         public async Task GivenTable_WhenEfCoreSave_ThenItemSavedWithId()
