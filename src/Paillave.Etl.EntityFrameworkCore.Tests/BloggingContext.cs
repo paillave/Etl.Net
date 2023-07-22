@@ -1,17 +1,7 @@
-﻿namespace Paillave.Etl.EntityFrameworkCore.Tests
+﻿using Paillave.Etl.EntityFrameworkCore.Tests.Entities;
+
+namespace Paillave.Etl.EntityFrameworkCore.Tests
 {
-    public class Blog
-    {
-        public int BlogId { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class Post
-    {
-        public int PostId { get; set; }
-        public string Name { get; set; }
-    }
-
     public class BloggingContext : DbContext
     {
         private readonly string _connectionString;
