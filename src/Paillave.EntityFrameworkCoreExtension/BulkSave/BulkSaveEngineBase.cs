@@ -175,11 +175,6 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
 
                 _context.ChangeTracker.AutoDetectChangesEnabled = previousAutoDetect;
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                throw;
-            }
             finally
             {
                 contextQuery.DeleteStagingTable();
