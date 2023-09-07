@@ -94,6 +94,7 @@ namespace Paillave.Etl.Core.Mapping.Visitors
             this.MappingSetter.DecimalSeparator = decimalSeparator;
             this.MappingSetter.GroupSeparator = groupSeparator;
             this.MappingSetter.ColumnIndex = columnIndex;
+            this.MappingSetter.Size = size;
             return default;
         }
 
@@ -118,6 +119,7 @@ namespace Paillave.Etl.Core.Mapping.Visitors
             this.MappingSetter.DecimalSeparator = decimalSeparator;
             this.MappingSetter.GroupSeparator = null;
             this.MappingSetter.ColumnIndex = columnIndex;
+            this.MappingSetter.Size = size;
             return default;
         }
         #endregion
