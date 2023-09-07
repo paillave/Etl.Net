@@ -72,7 +72,10 @@ namespace Paillave.Etl.TextFile
             }
             if (vis.MappingSetters.Any(i => i.Size.HasValue))
             {
-                if (!vis.MappingSetters.All(i => i.Size.HasValue)) throw new InvalidOperationException("if a size is given, all sizes must be given");
+                if (!vis.MappingSetters.All(i => i.Size.HasValue))
+                    throw new InvalidOperationException(
+                        $"if a size is given, all sizes must be given: missing size for columns with indexes: {string.Join(", ", vis.MappingSetters.Where(i => !i.Size.HasValue).Select(i => i.ColumnIndex))}.");
+
                 this.HasFixedColumnWidth(vis.MappingSetters.OrderBy(i => i.ColumnIndex).Select(i => i.Size.Value).ToArray());
             }
             return this;
