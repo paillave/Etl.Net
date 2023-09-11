@@ -2,14 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Text.Json;
 namespace Paillave.Etl.Core
 {
     public class FileValueWriter<TMetadata> : IFileValue
         where TMetadata : IFileValueMetadata
     {
         private readonly StreamWriter _streamWriter;
-        public FileValueWriter(TMetadata metadata, string name, Encoding encoding = null, int bufferSize = -1)
+        public FileValueWriter(TMetadata metadata, string name, Encoding? encoding = null, int bufferSize = -1)
             => (_streamWriter, Name, Metadata) = (new StreamWriter(new MemoryStream(), encoding, bufferSize, true), name, metadata);
 
         public FileValueWriter(TMetadata metadata, Dictionary<string, IEnumerable<Destination>> destinations, string name, Encoding encoding = null, int bufferSize = -1)
@@ -103,6 +102,12 @@ namespace Paillave.Etl.Core
             ms.Seek(0, SeekOrigin.Begin);
             return ms;
         }
+        public StreamWithResource OpenContent()
+        {
+            this._streamWriter.BaseStream.Seek(0, SeekOrigin.Begin);
+            return new StreamWithResource(_streamWriter.BaseStream);
+        }
+        public StreamWithResource Get(bool useStreamCopy = true) => useStreamCopy ? new(GetContent()) : OpenContent();
     }
     public static class FileValueWriter
     {

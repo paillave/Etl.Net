@@ -4,6 +4,7 @@ using Paillave.Etl.Core;
 using Paillave.Etl.Reactive.Operators;
 using Microsoft.EntityFrameworkCore;
 using Paillave.EntityFrameworkCoreExtension.Core;
+using System.Linq;
 
 namespace Paillave.Etl.EntityFrameworkCore
 {
@@ -107,9 +108,9 @@ namespace Paillave.Etl.EntityFrameworkCore
                         ? this.ExecutionContext.DependencyResolver.Resolve<DbContext>()
                         : this.ExecutionContext.DependencyResolver.Resolve<DbContext>(args.KeyedConnection);
                     TValue val = args.GetValue(i);
-                    this.ExecutionContext.InvokeInDedicatedThreadAsync(ctx, () =>
+                    this.ExecutionContext.InvokeInDedicatedThreadAsync(ctx, async () =>
                     {
-                        ctx.Set<TEntity>().DeleteWhereAsync(args.Match.ApplyPartialLeft<TValue, TEntity, bool>(val), args.InputStream.Observable.CancellationToken).Wait();
+                        await ctx.Set<TEntity>().Where(args.Match.ApplyPartialLeft<TValue, TEntity, bool>(val)).ExecuteDeleteAsync(args.InputStream.Observable.CancellationToken);
                     }).Wait();
                     return i;
                 });

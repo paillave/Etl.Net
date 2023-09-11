@@ -1,6 +1,4 @@
 using System.IO;
-using System.Text;
-using System.Text.Json;
 namespace Paillave.Etl.Core
 {
     public class InMemoryFileValue<TMetadata> : FileValueBase<TMetadata> where TMetadata : IFileValueMetadata
@@ -9,7 +7,16 @@ namespace Paillave.Etl.Core
         public InMemoryFileValue(Stream stream, string name, TMetadata metadata)
             : base(metadata) => (_stream, Name) = (stream, name);
         public override string Name { get; }
-        public override Stream GetContent() => _stream;
+        public override Stream GetContent()
+        {
+            var ms = new MemoryStream();
+            _stream.CopyTo(ms);
+            ms.Seek(0, SeekOrigin.Begin);
+            return ms;
+        }
+
+        public override StreamWithResource OpenContent() => new StreamWithResource(_stream);
+
         protected override void DeleteFile() { }
     }
     public static class FileValue

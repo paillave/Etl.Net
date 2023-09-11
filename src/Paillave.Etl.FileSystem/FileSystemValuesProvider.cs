@@ -26,7 +26,7 @@ namespace Paillave.Etl.FileSystem
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
 
-        public override void PushValues(TIn input, Action<TOut> pushValue, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        public override void PushValues(TIn input, Action<TOut> pushValue, CancellationToken cancellationToken, IExecutionContext context)
         {
             var rootFolder = _args.GetFolderPath(input);
             var searchPattern = _args.GetSearchPattern == null ? "*" : _args.GetSearchPattern(input);

@@ -23,28 +23,33 @@ namespace Paillave.Etl.Dropbox
         protected override void DeleteFile() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, DeleteFileSingleTime);
         protected void DeleteFileSingleTime()
         {
-            var path = $"/{Path.Combine(_folder ?? "", Name ?? "")}".Replace("\\","/").Replace("//","/");
+            var path = $"/{Path.Combine(_folder ?? "", Name ?? "")}".Replace("\\", "/").Replace("//", "/");
             using (var client = _connectionInfo.CreateConnectionInfo())
                 client.Files.DeleteV2Async(path).Wait();
         }
         public override Stream GetContent() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, GetContentSingleTime);
+        public override StreamWithResource OpenContent() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, OpenContentSingleTime);
         private Stream GetContentSingleTime()
         {
-            using (var client = _connectionInfo.CreateConnectionInfo())
+            var client = _connectionInfo.CreateConnectionInfo();
             {
-                var path = $"/{Path.Combine(_folder ?? "", Name ?? "")}".Replace("\\","/").Replace("//","/");
+                var path = $"/{Path.Combine(_folder ?? "", Name ?? "")}".Replace("\\", "/").Replace("//", "/");
                 var response = client.Files.DownloadAsync(path).Result;
                 var dl = response.GetContentAsByteArrayAsync().Result;
                 return new MemoryStream(dl);
             }
+        }
+        private StreamWithResource OpenContentSingleTime()
+        {
+            var client = _connectionInfo.CreateConnectionInfo();
+            var path = $"/{Path.Combine(_folder ?? "", Name ?? "")}".Replace("\\", "/").Replace("//", "/");
+            var response = client.Files.DownloadAsync(path).Result;
+            return new StreamWithResource(response.GetContentAsStreamAsync().Result, client);
         }
     }
     public class DropboxFileValueMetadata : FileValueMetadataBase
     {
         public string Folder { get; set; }
         public string Name { get; set; }
-        public string ConnectorCode { get; set; }
-        public string ConnectionName { get; set; }
-        public string ConnectorName { get; set; }
     }
 }

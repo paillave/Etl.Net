@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.Extensions.FileProviders;
 
 namespace Paillave.EntityFrameworkCoreExtension.MigrationOperations
@@ -13,7 +14,8 @@ namespace Paillave.EntityFrameworkCoreExtension.MigrationOperations
     public class CustomMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
     {
         private Assembly _assembly = null;
-        public CustomMigrationsSqlGenerator(MigrationsSqlGeneratorDependencies dependencies, IRelationalAnnotationProvider migrationsAnnotations) : base(dependencies, migrationsAnnotations)
+        public CustomMigrationsSqlGenerator(MigrationsSqlGeneratorDependencies dependencies, ICommandBatchPreparer commandBatchPreparer) : base(dependencies, commandBatchPreparer)
+        // public CustomMigrationsSqlGenerator(MigrationsSqlGeneratorDependencies dependencies, IRelationalAnnotationProvider migrationsAnnotations) : base(dependencies, migrationsAnnotations)
         {
             this._assembly = dependencies.CurrentContext.Context.GetType().Assembly;
         }

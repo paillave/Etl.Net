@@ -1,10 +1,9 @@
 using System;
 using System.IO;
-using System.Text.Json;
 
 namespace Paillave.Etl.Core
 {
-    public abstract class FileValueBase<TMetadata> : IFileValue 
+    public abstract class FileValueBase<TMetadata> : IFileValue
         where TMetadata : IFileValueMetadata
     {
         public FileValueBase(TMetadata metadata) => Metadata = metadata;
@@ -28,10 +27,16 @@ namespace Paillave.Etl.Core
         }
         protected abstract void DeleteFile();
         public abstract Stream GetContent();
+        public abstract StreamWithResource OpenContent();
+        public StreamWithResource Get(bool useStreamCopy = true) => useStreamCopy ? new StreamWithResource(GetContent()) : OpenContent();
     }
     public abstract class FileValueMetadataBase : IFileValueMetadata
     {
         public virtual string Type => this.GetType().Name.Replace("FileValueMetadata", "", StringComparison.InvariantCultureIgnoreCase);
+
+        public string? ConnectorCode { get; set; }
+        public string? ConnectionName { get; set; }
+        public string? ConnectorName { get; set; }
     }
     public class NoSourceFileValueMetadata : FileValueMetadataBase
     {

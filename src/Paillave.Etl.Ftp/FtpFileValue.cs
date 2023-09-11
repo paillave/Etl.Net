@@ -41,14 +41,71 @@ namespace Paillave.Etl.Ftp
                 return ms;
             }
         }
+
+        public override StreamWithResource OpenContent()
+        {
+            FtpClient client = _connectionInfo.CreateFtpClient();
+            var pathToDownload = Path.Combine(_folder, this.Name).Replace('\\', '/');
+            var targetPath = Path.GetTempFileName();
+            if (client.DownloadFile(targetPath, pathToDownload) != FtpStatus.Success)
+                throw new System.Exception($"File {pathToDownload} failed to be downloaded");
+            return new StreamWithResource(new DeletetableFileStream(targetPath), client);
+        }
+        private class DeletetableFileStream : Stream
+        {
+            private readonly FileStream _fileStream;
+            public DeletetableFileStream(string path) : this(File.OpenRead(path)) { }
+            public DeletetableFileStream(FileStream fileStream) : base() => (_fileStream) = (fileStream);
+
+            public override bool CanRead => _fileStream.CanRead;
+
+            public override bool CanSeek => _fileStream.CanSeek;
+
+            public override bool CanWrite => _fileStream.CanWrite;
+
+            public override long Length => _fileStream.Length;
+
+            public override long Position { get => _fileStream.Position; set => _fileStream.Position = value; }
+
+            public override void Flush()
+            {
+                _fileStream.Flush();
+            }
+
+            public override int Read(byte[] buffer, int offset, int count)
+            {
+                return _fileStream.Read(buffer, offset, count);
+            }
+
+            public override long Seek(long offset, SeekOrigin origin)
+            {
+                return _fileStream.Seek(offset, origin);
+            }
+
+            public override void SetLength(long value)
+            {
+                _fileStream.SetLength(value);
+            }
+
+            public override void Write(byte[] buffer, int offset, int count)
+            {
+                _fileStream.Write(buffer, offset, count);
+            }
+            protected override void Dispose(bool disposing)
+            {
+                _fileStream.Dispose();
+                try
+                {
+                    File.Delete(_fileStream.Name);
+                }
+                catch { }
+            }
+        }
     }
     public class FtpFileValueMetadata : FileValueMetadataBase
     {
         public string Server { get; set; }
         public string Folder { get; set; }
         public string Name { get; set; }
-        public string ConnectorCode { get; set; }
-        public string ConnectionName { get; set; }
-        public string ConnectorName { get; set; }
     }
 }

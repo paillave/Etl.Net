@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using Paillave.Etl.Reactive.Operators;
 using System.Linq;
-using System.Data.SqlClient;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Data;
 
 namespace Paillave.Etl.SqlServer
 {
@@ -34,13 +34,21 @@ namespace Paillave.Etl.SqlServer
         public void ProcessItem(TValue item, string connectionName)
         {
             var resolver = this.ExecutionContext.DependencyResolver;
-            var sqlConnection = connectionName == null ? resolver.Resolve<SqlConnection>() : resolver.Resolve<SqlConnection>(connectionName);
-            var command = new SqlCommand(base.Args.SqlQuery, sqlConnection);
+            var sqlConnection = connectionName == null ? resolver.Resolve<IDbConnection>() : resolver.Resolve<IDbConnection>(connectionName);
+            var command = sqlConnection.CreateCommand();
+            command.CommandText = base.Args.SqlQuery;
+            command.CommandType = CommandType.Text;
+
+            // var command = new SqlCommand(base.Args.SqlQuery, sqlConnection);
             Regex getParamRegex = new Regex(@"@(?<param>\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             var allMatches = getParamRegex.Matches(base.Args.SqlQuery).ToList().Select(match => match.Groups["param"].Value).Distinct().ToList();
             foreach (var parameterName in allMatches)
             {
-                command.Parameters.Add(new SqlParameter($"@{parameterName}", _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value));
+                var parameter = command.CreateParameter();
+                parameter.ParameterName = $"@{parameterName}";
+                parameter.Value = _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value;
+                command.Parameters.Add(parameter);
+                // command.Parameters.Add(new SqlParameter($"@{parameterName}", _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value));
             }
             command.ExecuteNonQuery();
         }

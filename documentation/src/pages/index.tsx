@@ -7,6 +7,7 @@ import styles from './index.module.css';
 import HomepageFeatures from '../components/HomepageFeatures';
 import HomepageExamples from '../components/HomepageExamples';
 import QuickStart from '../components/QuickStart';
+import Videos from '../components/Videos';
 import Presentation from '../components/Presentation';
 // import Highlight, { defaultProps } from "prism-react-renderer";
 // require(`prismjs/components/prism-csharp`); // eslint-disable-line
@@ -60,6 +61,7 @@ export default function Home() {
       <main>
         <Presentation />
         <HomepageFeatures />
+        <Videos/>
         <QuickStart />
         <HomepageExamples />
       </main>

@@ -277,7 +277,7 @@ namespace BlogTutorial
             public string TypeName => "Range of values provider";
             public ProcessImpact PerformanceImpact => ProcessImpact.Light;
             public ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-            public void PushValues(string input, Action<string> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+            public void PushValues(string input, Action<string> push, CancellationToken cancellationToken, IExecutionContext context)
             {
                 for (int i = 1; i <= 100; i++)
                     push($"{input}{i}");

@@ -3,6 +3,14 @@
 [![ETL.NET](streams.jpg)](https://paillave.github.io/Etl.Net/)
 [Go to full documentation](https://paillave.github.io/Etl.Net/)
 
+## :rotating_light: I need some help!!!  :ambulance:
+
+I need some serious help for the following subject:
+- :books: Documentation. The [website of ETL.NET](https://paillave.github.io/Etl.Net/) needs to be completed. It contains the essential to start and get in touch, but a dramatic amount of serious features is not documented in there.
+- :heavy_check_mark: Unit tests. A proper test code coverage is the only real way to be taken seriously when it is about selecting the right open source library. There was a time when some units tests existed only for the reactive engine of the core (Paillave.EtlNet.Core). But it happened I had to decommission it in the even of the V2 release.
+
+:envelope_with_arrow:	 Anybody who is keen to participate to the project in these regards is very welcome to contact me at admroyer@hotmail.com.
+
 ## Presentation
 
 Implementation of a mass processing engine to use in a similar way than Linq with every SSIS features and much more.
@@ -24,6 +32,7 @@ Extend it takes 5mn... literally.
 | Paillave.EtlNet.FromConfigurationConnectors | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.FromConfigurationConnectors.svg)](https://www.nuget.org/packages/Paillave.EtlNet.FromConfigurationConnectors) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.FromConfigurationConnectors.svg)](https://www.nuget.org/packages/Paillave.EtlNet.FromConfigurationConnectors) |
 | Paillave.EtlNet.Ftp | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Ftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Ftp) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Ftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Ftp) |
 | Paillave.EtlNet.Mail | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Mail.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Mail) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Mail.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Mail) |
+| Paillave.EtlNet.GraphApi | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.GraphApi.svg)](https://www.nuget.org/packages/Paillave.EtlNet.GraphApi) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.GraphApi.svg)](https://www.nuget.org/packages/Paillave.EtlNet.GraphApi) |
 | Paillave.EtlNet.Sftp | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Sftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Sftp) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Sftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Sftp) |
 | Paillave.EtlNet.SqlServer | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.SqlServer.svg)](https://www.nuget.org/packages/Paillave.EtlNet.SqlServer) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.SqlServer.svg)](https://www.nuget.org/packages/Paillave.EtlNet.SqlServer) |
 | Paillave.EtlNet.TextFile | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.TextFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.TextFile) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.TextFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.TextFile) |
@@ -31,7 +40,6 @@ Extend it takes 5mn... literally.
 | Paillave.EtlNet.XmlFile | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.XmlFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.XmlFile) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.XmlFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.XmlFile) |
 | Paillave.EtlNet.Zip | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Zip.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Zip) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Zip.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Zip) |
 | Paillave.EtlNet.Pdf | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Pdf.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Pdf) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Pdf.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Pdf) |
-| Paillave.EtlNet.Scheduler | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Scheduler.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Scheduler) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Scheduler.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Scheduler) |
 | Paillave.EntityFrameworkCoreExtension | [![NuGet](https://img.shields.io/nuget/v/Paillave.EntityFrameworkCoreExtension.svg)](https://www.nuget.org/packages/Paillave.EntityFrameworkCoreExtension) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EntityFrameworkCoreExtension.svg)](https://www.nuget.org/packages/Paillave.EntityFrameworkCoreExtension) |
 
 ## Examples

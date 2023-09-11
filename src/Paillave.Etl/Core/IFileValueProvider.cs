@@ -8,7 +8,7 @@ namespace Paillave.Etl.Core
         string Code { get; }
         ProcessImpact PerformanceImpact { get; }
         ProcessImpact MemoryFootPrint { get; }
-        void Provide(Action<IFileValue> pushFileValue, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker);
+        void Provide(Action<IFileValue> pushFileValue, CancellationToken cancellationToken, IExecutionContext context);
         void Test();
     }
 }

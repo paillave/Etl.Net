@@ -22,28 +22,34 @@ namespace Paillave.Etl.ExcelFile
         public static IStream<ExcelSheetSelection> CrossApplyExcelSheets(
             this IStream<IFileValue> stream,
             string name,
-            bool noParallelisation = false)
+            bool noParallelisation = false,
+            bool useStreamCopy = true)
             => stream.CrossApply(name, new ExcelSheetsValuesProvider<ExcelSheetSelection>(new ExcelSheetsValuesProviderArgs<ExcelSheetSelection>
             {
-                GetOutput = (i, j) => i
+                GetOutput = (i, j) => i,
+                UseStreamCopy = useStreamCopy
             }), noParallelisation);
         public static IStream<TOut> CrossApplyExcelSheets<TOut>(
             this IStream<IFileValue> stream,
             string name,
             Func<ExcelSheetSelection, TOut> selector,
-            bool noParallelisation = false)
+            bool noParallelisation = false,
+            bool useStreamCopy = true)
             => stream.CrossApply(name, new ExcelSheetsValuesProvider<TOut>(new ExcelSheetsValuesProviderArgs<TOut>
             {
-                GetOutput = (i, j) => selector(i)
+                GetOutput = (i, j) => selector(i),
+                UseStreamCopy = useStreamCopy
             }), noParallelisation);
         public static IStream<TOut> CrossApplyExcelDatasets<TOut>(
             this IStream<IFileValue> stream,
             string name,
             Func<DataTable, IFileValue, IEnumerable<TOut>> selector,
-            bool noParallelisation = false)
+            bool noParallelisation = false,
+            bool useStreamCopy = true)
             => stream.CrossApply(name, new ExcelDatasetsValuesProvider<TOut>(new ExcelDatasetsValuesProviderArgs<TOut>
             {
-                GetOutput = selector
+                GetOutput = selector,
+                UseStreamCopy = useStreamCopy
             }), noParallelisation);
         #endregion
 
@@ -56,7 +62,7 @@ namespace Paillave.Etl.ExcelFile
             => stream.CrossApply(name, new ExcelDataTablesValuesProvider(), noParallelisation);
         public static IStream<TOut> CrossApplyExcelDataTables<TOut>(
             this IStream<IFileValue> stream,
-            string name, 
+            string name,
             Func<DataTable, IEnumerable<TOut>> selector,
             bool noParallelisation = false)
             => stream.CrossApply(name, new ExcelDatasetsValuesProvider<TOut>(new ExcelDatasetsValuesProviderArgs<TOut>
@@ -165,6 +171,7 @@ namespace Paillave.Etl.ExcelFile
         #endregion
 
         #region ThroughExcelFile
+        [Obsolete]
         public static IStream<TIn> ToExcelFile<TIn>(
             this IStream<TIn> stream,
             string name,
@@ -176,6 +183,7 @@ namespace Paillave.Etl.ExcelFile
                 TargetStream = resourceStream,
                 Mapping = mapping
             }).Output;
+        [Obsolete]
         public static ISortedStream<TIn, TKey> ToExcelFile<TIn, TKey>(
             this ISortedStream<TIn, TKey> stream,
             string name,
@@ -187,6 +195,7 @@ namespace Paillave.Etl.ExcelFile
                 TargetStream = resourceStream,
                 Mapping = mapping
             }).Output;
+        [Obsolete]
         public static IKeyedStream<TIn, TKey> ToExcelFile<TIn, TKey>(
             this IKeyedStream<TIn, TKey> stream,
             string name,
@@ -211,6 +220,17 @@ namespace Paillave.Etl.ExcelFile
             {
                 MainStream = stream,
                 Mapping = mapping,
+                FileName = fileName
+            }).Output;
+        public static IStream<IFileValue> ToExcelFile<TIn>(
+            this IStream<TIn> stream,
+            string name,
+            string fileName,
+            Func<ExcelFileArgBuilder, ExcelFileDefinition<TIn>> mapBuilder = null)
+            => new ToExcelFileStreamNode<TIn>(name, new ToExcelFileArgs<TIn>
+            {
+                MainStream = stream,
+                Mapping = mapBuilder == null ? null : mapBuilder(new()),
                 FileName = fileName
             }).Output;
         #endregion

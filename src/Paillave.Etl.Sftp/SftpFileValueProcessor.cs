@@ -12,12 +12,11 @@ namespace Paillave.Etl.Sftp
             : base(code, name, connectionName, connectionParameters, processorParameters) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-        protected override void Process(IFileValue fileValue, SftpAdapterConnectionParameters connectionParameters, SftpAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        protected override void Process(IFileValue fileValue, SftpAdapterConnectionParameters connectionParameters, SftpAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
-            var stream = fileValue.GetContent();
+            using var stream = fileValue.Get(processorParameters.UseStreamCopy);
             byte[] fileContents;
-            stream.Position = 0;
             using (MemoryStream ms = new MemoryStream())
             {
                 stream.CopyTo(ms);

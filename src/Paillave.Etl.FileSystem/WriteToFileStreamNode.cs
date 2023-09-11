@@ -11,6 +11,7 @@ namespace Paillave.Etl.FileSystem
         public IStream<IFileValue> Stream { get; set; }
         public ISingleStream<TParams> ParamStream { get; set; }
         public Func<TParams, string> GetOutputFilePath { get; set; }
+        public bool UseStreamCopy { get; set; } = true;
     }
     /// <summary>
     /// Write a data Stream into a file
@@ -27,8 +28,7 @@ namespace Paillave.Etl.FileSystem
             var outputFilePath = args.ParamStream.Observable.Map(args.GetOutputFilePath);
             var outputObservable = args.Stream.Observable.CombineWithLatest(outputFilePath, (fileValue, r) =>
             {
-                var l = fileValue.GetContent();
-                l.Seek(0, SeekOrigin.Begin);
+                using var l = fileValue.Get(args.UseStreamCopy);
                 using (var fileStream = File.Open(r, FileMode.Create))
                     l.CopyTo(fileStream);
                 return fileValue;
@@ -40,6 +40,7 @@ namespace Paillave.Etl.FileSystem
     {
         public IStream<IFileValue> Stream { get; set; }
         public Func<IFileValue, string> GetOutputFilePath { get; set; }
+        public bool UseStreamCopy { get; set; } = true;
     }
     /// <summary>
     /// Write a data Stream into a file
@@ -54,8 +55,7 @@ namespace Paillave.Etl.FileSystem
         {
             var outputObservable = args.Stream.Observable.Do<IFileValue>(fileValue =>
             {
-                var l = fileValue.GetContent();
-                l.Seek(0, SeekOrigin.Begin);
+                using var l = fileValue.Get(args.UseStreamCopy);
                 using (var fileStream = File.Open(args.GetOutputFilePath(fileValue), FileMode.Create))
                     l.CopyTo(fileStream);
             });

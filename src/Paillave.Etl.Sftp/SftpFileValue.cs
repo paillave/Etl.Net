@@ -42,14 +42,20 @@ namespace Paillave.Etl.Sftp
                 return new MemoryStream(client.ReadAllBytes(Path.Combine(_folder, Name)));
             }
         }
+        private StreamWithResource OpenContentSingleTime()
+        {
+            var connectionInfo = _connectionInfo.CreateConnectionInfo();
+            var client = new SftpClient(connectionInfo);
+            client.Connect();
+            return new StreamWithResource(client.OpenRead(Path.Combine(_folder, Name)), client);
+        }
+
+        public override StreamWithResource OpenContent() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, OpenContentSingleTime);
     }
     public class SftpFileValueMetadata : FileValueMetadataBase
     {
         public string Server { get; set; }
         public string Folder { get; set; }
         public string Name { get; set; }
-        public string ConnectorCode { get; set; }
-        public string ConnectionName { get; set; }
-        public string ConnectorName { get; set; }
     }
 }

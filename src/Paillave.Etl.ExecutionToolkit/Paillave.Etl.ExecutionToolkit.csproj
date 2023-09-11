@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>Paillave.EtlNet.ExecutionToolkit</PackageId>
-    <Version>2.0.47</Version>
+    <Version>2.1.17-beta</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -18,28 +18,17 @@
     <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources/*" />
-    <!-- <None Remove="ActualExecutionPlan.D3Sankey.html" />
-    <None Remove="ActualExecutionPlan.PlotySankey.html" />
-    <None Remove="ActualExecutionPlan.VisNetwork.html" />
-    <None Remove="EstimatedExecutionPlan.D3Sankey.html" />
-    <None Remove="EstimatedExecutionPlan.PlotySankey.html" />
-    <None Remove="EstimatedExecutionPlan.VisNetwork.html" /> -->
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources/*" />
-    <!-- <EmbeddedResource Include="EstimatedExecutionPlan.PlotySankey.html" />
-    <EmbeddedResource Include="EstimatedExecutionPlan.D3Sankey.html" />
-    <EmbeddedResource Include="EstimatedExecutionPlan.VisNetwork.html" />
-    <EmbeddedResource Include="ActualExecutionPlan.VisNetwork.html" />
-    <EmbeddedResource Include="ActualExecutionPlan.PlotySankey.html" />
-    <EmbeddedResource Include="ActualExecutionPlan.D3Sankey.html" /> -->
   </ItemGroup>
 
   <ItemGroup>
@@ -47,8 +36,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="6.0.5" />
-    <PackageReference Include="Terminal.Gui" Version="1.6.4" />
+    <PackageReference Include="System.Text.Json" Version="7.0.2" allowedVersions="6.0.0" />
+    <PackageReference Include="Terminal.Gui" Version="1.10.1" />
   </ItemGroup>
 
 </Project>

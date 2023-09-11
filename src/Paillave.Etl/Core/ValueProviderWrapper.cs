@@ -22,7 +22,7 @@ namespace Paillave.Etl.Core
 
         public ProcessImpact MemoryFootPrint => _innerValueProvider.MemoryFootPrint;
 
-        public void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
-            => _innerValueProvider.PushValues(_getInnerIn(input), i => push(_getOut(i, input)), cancellationToken, resolver, invoker);
+        public void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IExecutionContext context)
+            => _innerValueProvider.PushValues(_getInnerIn(input), i => push(_getOut(i, input)), cancellationToken, context);
     }
 }

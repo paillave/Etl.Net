@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Paillave.Etl\Paillave.Etl.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.TextFile\Paillave.Etl.TextFile.csproj" />
+    <ProjectReference Include="..\..\Paillave.Etl.XmlFile\Paillave.Etl.XmlFile.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.Bloomberg\Paillave.Etl.Bloomberg.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.Autofac\Paillave.Etl.Autofac.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.EntityFrameworkCore\Paillave.Etl.EntityFrameworkCore.csproj" />
@@ -11,22 +12,25 @@
     <ProjectReference Include="..\..\Paillave.Etl.Ftp\Paillave.Etl.Ftp.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.Sftp\Paillave.Etl.Sftp.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.Mail\Paillave.Etl.Mail.csproj" />
+    <ProjectReference Include="..\..\Paillave.Etl.Dropbox\Paillave.Etl.Dropbox.csproj" />
+    <ProjectReference Include="..\..\Paillave.Etl.GraphApi\Paillave.Etl.GraphApi.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.Zip\Paillave.Etl.Zip.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.SqlServer\Paillave.Etl.SqlServer.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.ExecutionToolkit\Paillave.Etl.ExecutionToolkit.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.8">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.8" />
   </ItemGroup>
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
 </Project>

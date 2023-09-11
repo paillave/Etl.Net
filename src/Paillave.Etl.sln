@@ -47,7 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Pdf", "Paillave.Pd
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.Pdf", "Paillave.Etl.Pdf\Paillave.Etl.Pdf.csproj", "{471FE8AD-1A89-41E4-B39D-773A82FBAA0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Scheduler", "Paillave.Etl.Scheduler\Paillave.Etl.Scheduler.csproj", "{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.GraphApi", "Paillave.Etl.GraphApi\Paillave.Etl.GraphApi.csproj", "{54B581C3-AE38-4971-B957-33CE151AB9EA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paillave.Etl.GraphApi", "Paillave.Etl.GraphApi\Paillave.Etl.GraphApi.csproj", "{54B581C3-AE38-4971-B957-33CE151AB9EA}"
 EndProject
@@ -327,20 +327,7 @@ Global
 		{471FE8AD-1A89-41E4-B39D-773A82FBAA0A}.Release|x64.Build.0 = Release|Any CPU
 		{471FE8AD-1A89-41E4-B39D-773A82FBAA0A}.Release|x86.ActiveCfg = Release|Any CPU
 		{471FE8AD-1A89-41E4-B39D-773A82FBAA0A}.Release|x86.Build.0 = Release|Any CPU
-<<<<<<< HEAD
-		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Debug|x64.Build.0 = Debug|Any CPU
-		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Debug|x86.Build.0 = Debug|Any CPU
-		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Release|x64.ActiveCfg = Release|Any CPU
-		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Release|x64.Build.0 = Release|Any CPU
-		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Release|x86.ActiveCfg = Release|Any CPU
-		{38195BEF-9DE2-4F8F-BDDA-ACA7699C4AD4}.Release|x86.Build.0 = Release|Any CPU
-=======
+
 		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -353,7 +340,8 @@ Global
 		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Release|x64.Build.0 = Release|Any CPU
 		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Release|x86.ActiveCfg = Release|Any CPU
 		{54B581C3-AE38-4971-B957-33CE151AB9EA}.Release|x86.Build.0 = Release|Any CPU
-		{FEEAA450-AD8E-462F-A010-4052787E3411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+
+    {FEEAA450-AD8E-462F-A010-4052787E3411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FEEAA450-AD8E-462F-A010-4052787E3411}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEEAA450-AD8E-462F-A010-4052787E3411}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{FEEAA450-AD8E-462F-A010-4052787E3411}.Debug|x64.Build.0 = Debug|Any CPU
@@ -365,8 +353,8 @@ Global
 		{FEEAA450-AD8E-462F-A010-4052787E3411}.Release|x64.Build.0 = Release|Any CPU
 		{FEEAA450-AD8E-462F-A010-4052787E3411}.Release|x86.ActiveCfg = Release|Any CPU
 		{FEEAA450-AD8E-462F-A010-4052787E3411}.Release|x86.Build.0 = Release|Any CPU
->>>>>>> 18e334f (Adding a Json provider in the same vein as the Xml provider.)
-	EndGlobalSection
+
+EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection

@@ -1,12 +1,15 @@
-﻿using Paillave.Etl.Core;
+using Paillave.Etl.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Paillave.Etl.Reactive.Operators;
 using System.Linq;
-using System.Data.SqlClient;
 using System.Reflection;
 using System.Linq.Expressions;
+using System.Data;
+using System.Data.Odbc;
+using System.Data.OleDb;
+using System.Text.RegularExpressions;
 
 namespace Paillave.Etl.SqlServer
 {
@@ -92,24 +95,60 @@ namespace Paillave.Etl.SqlServer
         private void ProcessItem(TValue item, string connectionName)
         {
             var resolver = this.ExecutionContext.DependencyResolver;
-            var sqlConnection = connectionName == null ? resolver.Resolve<SqlConnection>() : resolver.Resolve<SqlConnection>(connectionName);
+            var sqlConnection = connectionName == null ? resolver.Resolve<IDbConnection>() : resolver.Resolve<IDbConnection>(connectionName);
             // List<PropertyInfo> pivot = base.Args.Pivot == null ? new List<PropertyInfo>() : base.Args.Pivot.GetPropertyInfos();
             // List<PropertyInfo> computed = base.Args.Computed == null ? new List<PropertyInfo>() : base.Args.Computed.GetPropertyInfos();
             // var sqlQuery = CreateSqlQuery(base.Args.Table, typeof(TIn).GetProperties().ToList(), pivot, computed);
             var sqlStatement = GetSqlStatement();
-            var command = new SqlCommand(sqlStatement, sqlConnection);
+            var command = sqlConnection.CreateCommand();
+            command.CommandText = sqlStatement;
+            command.CommandType = CommandType.Text;
+            // var command = new SqlCommand(sqlStatement, sqlConnection);
             // Regex getParamRegex = new Regex(@"@(?<param>\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             // var allMatches = getParamRegex.Matches(base.Args.SqlQuery).ToList().Select(match => match.Groups["param"].Value).Distinct().ToList();
             foreach (var parameterName in _inPropertyInfos.Keys.Except(_computed.Select(i => i.Name)))
             {
-                command.Parameters.Add(new SqlParameter($"@{parameterName}", _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value));
+                var parameter = command.CreateParameter();
+                parameter.ParameterName = $"@{parameterName}";
+                parameter.Value = _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value;
+                command.Parameters.Add(parameter);
+                // command.Parameters.Add(new SqlParameter($"@{parameterName}", _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value));
             }
+            
+            if (sqlConnection is OdbcConnection or OleDbConnection)
+            {
+                command = AdjustCommandForOdbcOrOleDb(sqlConnection, command);
+            }
+            
             using (var reader = command.ExecuteReader())
                 if (reader.Read())
                     UpdateRecord(reader, item);
         }
 
-        private void UpdateRecord(SqlDataReader record, TValue item)
+        private static IDbCommand AdjustCommandForOdbcOrOleDb(IDbConnection connection, IDbCommand command)
+        {
+           var adjustedCommand = connection.CreateCommand();
+           adjustedCommand.CommandType = CommandType.Text;
+           
+           var regex = new Regex(@"@\w+");
+           adjustedCommand.CommandText = regex.Replace(command.CommandText, "?");
+
+           var parameterUsages = regex
+               .Matches(command.CommandText)
+               .Select(match => match.Value);
+
+           foreach (var parameterName in parameterUsages)
+           {
+               var parameter = adjustedCommand.CreateParameter();
+               parameter.ParameterName = parameterName;
+               parameter.Value = ((IDataParameter)command.Parameters[parameterName]).Value;
+               adjustedCommand.Parameters.Add(parameter);
+           }
+
+           return adjustedCommand;
+        }
+        
+        private void UpdateRecord(IDataReader record, TValue item)
         {
             IDictionary<string, object> values = new Dictionary<string, object>();
             for (int i = 0; i < record.FieldCount; i++)

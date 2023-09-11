@@ -5,6 +5,7 @@ using Paillave.Etl.Reactive.Operators;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -76,5 +77,9 @@ namespace Paillave.Etl.Core
                 // _traceSubject?.PushValue(traceEvent);
             }
         }
+
+        public Task InvokeInDedicatedThreadAsync(object threadOwner, Func<Task> action) => this._jobPoolDispatcher.InvokeAsync(threadOwner, action);
+
+        public Task<T> InvokeInDedicatedThreadAsync<T>(object threadOwner, Func<Task<T>> action) => this._jobPoolDispatcher.InvokeAsync(threadOwner, action);
     }
 }

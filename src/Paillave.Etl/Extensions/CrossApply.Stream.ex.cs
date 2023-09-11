@@ -26,15 +26,15 @@ namespace Paillave.Etl.Core
         }
         public static IStream<Correlated<TOut>> CrossApply<TIn, TOut>(this IStream<Correlated<TIn>> stream, string name, Func<TIn, IEnumerable<TOut>> values, bool noParallelisation = false)
             => stream.CrossApply<Correlated<TIn>, Correlated<TOut>>(name, new ValueProviderCorrelationWrapper<TIn, TOut>(EnumerableValuesProvider.Create(values)), noParallelisation);
-        public static IStream<Correlated<TOut>> CrossApply<TIn, TOut>(this IStream<Correlated<TIn>> stream, string name, Action<TIn, IDependencyResolver, CancellationToken, Action<TOut>> pushValues, bool noParallelisation = false)
+        public static IStream<Correlated<TOut>> CrossApply<TIn, TOut>(this IStream<Correlated<TIn>> stream, string name, Action<TIn, IExecutionContext, CancellationToken, Action<TOut>> pushValues, bool noParallelisation = false)
             => stream.CrossApply<Correlated<TIn>, Correlated<TOut>>(name, new ValueProviderCorrelationWrapper<TIn, TOut>(SimpleValuesProvider.Create(pushValues)), noParallelisation);
         public static IStream<TOut> CrossApply<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, IEnumerable<TOut>> values, bool noParallelisation = false)
             => stream.CrossApply<TIn, TOut>(name, EnumerableValuesProvider.Create(values), noParallelisation);
-        public static IStream<TOut> CrossApply<TIn, TOut>(this IStream<TIn> stream, string name, Action<TIn, IDependencyResolver, CancellationToken, Action<TOut>> pushValues, bool noParallelisation = false)
+        public static IStream<TOut> CrossApply<TIn, TOut>(this IStream<TIn> stream, string name, Action<TIn, IExecutionContext, CancellationToken, Action<TOut>> pushValues, bool noParallelisation = false)
             => stream.CrossApply<TIn, TOut>(name, SimpleValuesProvider.Create(pushValues), noParallelisation);
         public static IStream<TOut> CrossApplyNonCorrelated<TIn, TOut>(this IStream<TIn> stream, string name, Func<TIn, IEnumerable<TOut>> values, bool noParallelisation = false)
             => stream.CrossApply<TIn, TOut>(name, EnumerableValuesProvider.Create(values), noParallelisation);
-        public static IStream<TOut> CrossApplyNonCorrelated<TIn, TOut>(this IStream<TIn> stream, string name, Action<TIn, IDependencyResolver, CancellationToken, Action<TOut>> pushValues, bool noParallelisation = false)
+        public static IStream<TOut> CrossApplyNonCorrelated<TIn, TOut>(this IStream<TIn> stream, string name, Action<TIn, IExecutionContext, CancellationToken, Action<TOut>> pushValues, bool noParallelisation = false)
             => stream.CrossApply<TIn, TOut>(name, SimpleValuesProvider.Create(pushValues), noParallelisation);
     }
 }

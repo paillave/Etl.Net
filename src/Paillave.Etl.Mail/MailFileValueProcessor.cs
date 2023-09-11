@@ -64,12 +64,12 @@ namespace Paillave.Etl.Mail
         }
         protected override void Process(
             IFileValue fileValue, MailAdapterConnectionParameters connectionParameters, MailAdapterProcessorParameters processorParameters,
-            Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+            Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             var portNumber = connectionParameters.PortNumber == 0 ? 25 : connectionParameters.PortNumber;
 
             var destinations = GetDestinations(processorParameters, fileValue.Metadata).ToList();
-            var stream = fileValue.GetContent();
+            using var stream = fileValue.Get(processorParameters.UseStreamCopy);
             MemoryStream ms = new MemoryStream();
             stream.CopyTo(ms);
             foreach (var (destination, metadataJson) in destinations)

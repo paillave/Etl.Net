@@ -32,6 +32,7 @@ namespace Paillave.Etl.Core
         public string JobName { get; }
         public bool IsTracingContext => false;
         public void AddDisposable(IDisposable disposable) { }
+        public void AddUnderlyingDisposables(StreamWithResource disposable) { }
         public void AddNode<T>(INodeDescription nodeContext, IPushObservable<T> observable) => _nodes.Add(nodeContext);
         public SimpleDependencyResolver ContextBag => new SimpleDependencyResolver();
         public IFileValueConnectors Connectors { get; }
@@ -48,5 +49,7 @@ namespace Paillave.Etl.Core
         public object GetOrCreateFromContextBag(string key, Func<object> creator) => throw new NotImplementedException();
         public T GetOrCreateFromContextBag<T>(Func<T> creator) => throw new NotImplementedException();
         public void AddTrace(ITraceContent traceContent, INodeContext sourceNode) { }
+        public Task InvokeInDedicatedThreadAsync(object threadOwner, Func<Task> action) => throw new NotImplementedException();
+        public Task<T> InvokeInDedicatedThreadAsync<T>(object threadOwner, Func<Task<T>> action) => throw new NotImplementedException();
     }
 }

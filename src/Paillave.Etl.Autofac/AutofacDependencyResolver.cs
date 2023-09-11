@@ -50,5 +50,20 @@ namespace Paillave.Etl.Autofac
         {
             return _componentContext.TryResolve(type, out resolved);
         }
+
+        public object Resolve(Type type, string key)
+        {
+            var res = _dependencyResolver.Resolve(type, key);
+            if (res != null) return res;
+            res = _componentContext.ResolveKeyed(key, type);
+            _dependencyResolver.Register(type, res, key);
+            return res;
+        }
+
+        public bool TryResolve(Type type, string key, out object resolved)
+        {
+            resolved = default;
+            return _componentContext.TryResolveKeyed(key, type, out resolved);
+        }
     }
 }

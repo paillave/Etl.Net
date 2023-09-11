@@ -21,7 +21,7 @@ namespace Paillave.Etl.Core
             if (args.NoParallelisation)
             {
                 return base.CreateUnsortedStream(args.Stream.Observable.MultiMap<TIn, TOut>(
-                    (TIn i, Action<TOut> push) => args.ValuesProvider.PushValues(i, push, args.Stream.Observable.CancellationToken, base.ExecutionContext.DependencyResolver, base.ExecutionContext)));
+                    (TIn i, Action<TOut> push) => args.ValuesProvider.PushValues(i, push, args.Stream.Observable.CancellationToken, base.ExecutionContext)));
             }
             else
             {
@@ -31,7 +31,7 @@ namespace Paillave.Etl.Core
                     return new DeferredPushObservable<TOut>((push, c) =>
                     {
                         using (synchronizer.WaitBeforeProcess())
-                            args.ValuesProvider.PushValues(i, push, c, base.ExecutionContext.DependencyResolver, base.ExecutionContext);
+                            args.ValuesProvider.PushValues(i, push, c, base.ExecutionContext);
                     }, ct);
                 }));
             }

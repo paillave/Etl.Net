@@ -27,6 +27,7 @@ namespace Paillave.Etl.Sftp
     public class SftpAdapterProcessorParameters
     {
         public string SubFolder { get; set; }
+        public bool UseStreamCopy { get; set; } = true;
     }
     public class SftpProviderProcessorAdapter : ProviderProcessorAdapterBase<SftpAdapterConnectionParameters, SftpAdapterProviderParameters, SftpAdapterProcessorParameters>
     {

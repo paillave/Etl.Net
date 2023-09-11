@@ -1,22 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using Autofac;
-using Autofac.Core;
-using Microsoft.EntityFrameworkCore;
-using Paillave.Etl.Autofac;
 using Paillave.Etl.Core;
 using Paillave.Etl.ExcelFile;
 using Paillave.Etl.FileSystem;
-using Paillave.Etl.EntityFrameworkCore;
-using Paillave.Etl.ExecutionToolkit;
-using Paillave.Pdf;
-using UglyToad.PdfPig;
-using UglyToad.PdfPig.Content;
-using UglyToad.PdfPig.Filters;
-using UglyToad.PdfPig.Graphics.Colors;
 using System.Data;
 
 namespace Paillave.Etl.Samples

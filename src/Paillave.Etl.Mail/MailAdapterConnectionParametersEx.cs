@@ -11,6 +11,7 @@ namespace Paillave.Etl.Mail
                 ? (connectionInfo.Ssl != null && connectionInfo.Ssl.Value) ? 993 : 143
                 : connectionInfo.PortNumber;
             var client = new ImapClient();
+            client.ServerCertificateValidationCallback = (s, c, h, e) => true;
             if (connectionInfo.Ssl != null)
             {
                 client.Connect(connectionInfo.Server, portNumber, connectionInfo.Ssl.Value);
@@ -27,7 +28,8 @@ namespace Paillave.Etl.Mail
             {
                 client.Connect(connectionInfo.Server, portNumber);
             }
-            client.Authenticate(connectionInfo.Login, connectionInfo.Password);
+            if (!string.IsNullOrWhiteSpace(connectionInfo.Login))
+                client.Authenticate(connectionInfo.Login, connectionInfo.Password);
             return client;
         }
         public static SmtpClient CreateSmtpClient(this IMailConnectionInfo connectionInfo)

@@ -9,7 +9,7 @@ namespace Paillave.Etl.Core
         public string Code { get; }
         public ProcessImpact PerformanceImpact => ProcessImpact.Light;
         public ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-        public void Process(IFileValue fileValue, Action<IFileValue> push, CancellationToken cancellationToken, IDependencyResolver resolver, IInvoker invoker)
+        public void Process(IFileValue fileValue, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             throw new Exception($"{Code}: this file value provider does not exist");
         }
