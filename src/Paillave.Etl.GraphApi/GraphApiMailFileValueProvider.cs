@@ -9,7 +9,6 @@ using Paillave.Etl.GraphApi.Requesting;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 using Microsoft.Graph.Models;
-using Paillave.Etl.GraphApi.Provider;
 
 namespace Paillave.Etl.GraphApi;
 

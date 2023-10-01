@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using Paillave.EntityFrameworkCoreExtension.Core;
 using Paillave.Etl.Core;
 using Paillave.Etl.Ftp;
 using Paillave.Etl.Samples.DataAccess;
-using Paillave.Pdf;
 
 namespace Paillave.Etl.Samples
 {
