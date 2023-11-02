@@ -14,6 +14,7 @@ namespace Paillave.Etl.Core
         public virtual string SourceType => this.Metadata.Type;
         public Type MetadataType => typeof(TMetadata);
         IFileValueMetadata IFileValue.Metadata => this.Metadata;
+
         public void Delete()
         {
             lock (_lock)
@@ -25,19 +26,32 @@ namespace Paillave.Etl.Core
                 }
             }
         }
+
         protected abstract void DeleteFile();
         public abstract Stream GetContent();
         public abstract StreamWithResource OpenContent();
-        public StreamWithResource Get(bool useStreamCopy = true) => useStreamCopy ? new StreamWithResource(GetContent()) : OpenContent();
+
+        public StreamWithResource Get(bool useStreamCopy = true)
+        {
+            if (!useStreamCopy)
+                return OpenContent();
+
+            var stream = new StreamWithResource(GetContent());
+            stream.Position = 0;
+            return stream;
+        }
     }
+
     public abstract class FileValueMetadataBase : IFileValueMetadata
     {
-        public virtual string Type => this.GetType().Name.Replace("FileValueMetadata", "", StringComparison.InvariantCultureIgnoreCase);
+        public virtual string Type => this.GetType().Name
+            .Replace("FileValueMetadata", "", StringComparison.InvariantCultureIgnoreCase);
 
         public string? ConnectorCode { get; set; }
         public string? ConnectionName { get; set; }
         public string? ConnectorName { get; set; }
     }
+
     public class NoSourceFileValueMetadata : FileValueMetadataBase
     {
         public NoSourceFileValueMetadata(string type) => Type = type;
