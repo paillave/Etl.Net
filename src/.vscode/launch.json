@@ -13,7 +13,7 @@
             "args": [            ],
             "cwd": "${workspaceFolder}/Paillave.Etl.Scheduler",
             "stopAtEntry": false,
-            "console": "externalTerminal"
+            "console": "integratedTerminal"
         },
         {
             "name": "Samples",
@@ -26,7 +26,7 @@
             ],
             "cwd": "${workspaceFolder}/Tutorials/Paillave.Etl.Samples",
             "stopAtEntry": false,
-            "console": "externalTerminal"
+            "console": "integratedTerminal"
         },
         {
             "name": "SimpleTutorial",
@@ -54,7 +54,7 @@
             ],
             "cwd": "${workspaceFolder}/Tutorials/BlogTutorial",
             "stopAtEntry": false,
-            "console": "externalTerminal"
+            "console": "integratedTerminal"
         },
         {
             "name": "LargeImport",
@@ -68,7 +68,7 @@
             ],
             "cwd": "${workspaceFolder}/Tutorials/Paillave.Etl.Samples",
             "stopAtEntry": false,
-            "console": "externalTerminal"
+            "console": "integratedTerminal"
         },
     ]
 }

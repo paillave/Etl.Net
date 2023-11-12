@@ -1,35 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <PackageId>Paillave.EtlNet.XmlFile</PackageId>
-    <Version>2.1.18-beta</Version>
-    <Authors>Stéphane Royer</Authors>
-    <Company></Company>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive text file xml</PackageTags>
     <Product>ETL.net XML files extensions</Product>
     <Description>Extensions for Etl.Net to quickly read very large XML files with low memory foot print</Description>
-    <LangVersion>latest</LangVersion>
-    <PackageIcon>NugetIcon.png</PackageIcon>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
-  <ItemGroup>
-    <None Include="../../README.md" Pack="true" PackagePath=""/>
-    <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
-  </ItemGroup>
-
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-  <ItemGroup>
-  </ItemGroup>
-
-
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
   </ItemGroup>
-
 </Project>

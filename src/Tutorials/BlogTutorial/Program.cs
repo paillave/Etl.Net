@@ -28,6 +28,10 @@ namespace BlogTutorial
                     // UseDetailedTraces = true // activate only if per row traces are meant to be caught
                 };
                 var res = await processRunner.ExecuteAsync(args[0], executionOptions);
+                if (res.ErrorTraceEvent.Content is UnhandledExceptionStreamTraceContent unhandledExceptionStreamTraceContent)
+                {
+                    Console.WriteLine($"Error occurred in node {res.ErrorTraceEvent.NodeName}(type {res.ErrorTraceEvent.NodeTypeName}): {unhandledExceptionStreamTraceContent.Message} (exception: {unhandledExceptionStreamTraceContent.Exception})");
+                }
                 Console.Write(res.Failed ? "Failed" : "Succeeded");
             }
         }

@@ -1,35 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <PackageId>Paillave.EtlNet.Bloomberg</PackageId>
-    <Version>2.1.18-beta</Version>
-    <Authors>Stéphane Royer</Authors>
-    <Company></Company>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
-    <PackageTags>ETL .net core SSIS reactive text file bloomberg</PackageTags>
-    <Product>ETL.net bloomberg files extensions</Product>
-    <PackageIcon>NugetIcon.png</PackageIcon>
-    <Description>Extensions for Etl.Net to read bloomberg response files</Description>
-    <LangVersion>latest</LangVersion>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Include="../../README.md" Pack="true" PackagePath=""/>
-    <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
-  </ItemGroup>
-
+  <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <PackageId>Paillave.EtlNet.Bloomberg</PackageId>
+    <PackageTags>ETL .net core SSIS reactive text file bloomberg</PackageTags>
+    <Product>ETL.net bloomberg files extensions</Product>
+    <Description>Extensions for Etl.Net to read bloomberg response files</Description>
   </PropertyGroup>
-  <ItemGroup>
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
     <ProjectReference Include="..\Paillave.Etl.TextFile\Paillave.Etl.TextFile.csproj" />
   </ItemGroup>
-
 </Project>

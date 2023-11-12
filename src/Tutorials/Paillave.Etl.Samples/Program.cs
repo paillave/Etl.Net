@@ -1,38 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using Paillave.EntityFrameworkCoreExtension.Core;
 using Paillave.Etl.Core;
-using Paillave.Etl.Ftp;
-using Paillave.Etl.Samples.DataAccess;
-using Paillave.Pdf;
+using Paillave.Etl.FileSystem;
 
-namespace Paillave.Etl.Samples
+var executionOptions = new ExecutionOptions<string>
 {
-    class Program4
-    {
-        static async Task Main4(string[] args)
-        {
-            using (var dbCtx = new TestDbContext())
-            {
-                // await dbCtx.Set<Position>().DeleteWhereAsync(i => i.CompositionId == 10);
-            }
-            // var processRunner = StreamProcessRunner.Create<string[]>(Import);
-            // var res = await processRunner.ExecuteAsync(args);
-        }
-        public static void Import(ISingleStream<string[]> contextStream)
-        {
-            var portfolioFileStream = contextStream.CrossApply("Get Files", new FtpFileValueProvider("SRC", "Solar exports", "files from ftp", new FtpAdapterConnectionParameters
-            {
-                Server = "localhost",
-                Login = "stephane",
-                Password = "xxxxxxxx"
-            }, new FtpAdapterProviderParameters
-            {
+    Connectors = new FileValueConnectors()
+        .Register(new FileSystemFileValueProvider("IN", "Input", Path.Combine(Environment.CurrentDirectory, "InputFiles"), "*.docx"))
+        .Register(new FileSystemFileValueProcessor("OUT1", "Output", Path.Combine(Environment.CurrentDirectory, "Output", "A")))
+        .Register(new FileSystemFileValueProcessor("OUT2", "Output", Path.Combine(Environment.CurrentDirectory, "Output", "B"))),
+};
 
-            }))
-        .Do("print files to console", i => Console.WriteLine(i.Name));
-        }
-    }
-}
+var result = await StreamProcessRunner.CreateAndExecuteAsync("", triggerStream =>
+{
+    triggerStream.FromConnector("get input", "IN")
+        .ToConnector("write output", "OUT1")
+        .ToConnector("write output2", "OUT2");
+}, executionOptions);
