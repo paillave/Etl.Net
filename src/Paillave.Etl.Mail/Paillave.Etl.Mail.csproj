@@ -1,24 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
     <PackageId>Paillave.EtlNet.Mail</PackageId>
-    <Version>2.1.18-beta</Version>
-    <Authors>Stéphane Royer</Authors>
-    <Company></Company>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive Mail</PackageTags>
     <Product>ETL.net Mail extensions</Product>
     <Description>Extensions for Etl.Net to send of read EMails</Description>
-    <LangVersion>latest</LangVersion>
-    <PackageIcon>NugetIcon.png</PackageIcon>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
-  <ItemGroup>
-    <None Include="../../README.md" Pack="true" PackagePath=""/>
-    <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="MailKit" Version="4.0.0" allowedVersions="2.10.0"/>
     <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="7.0.0" allowedVersions="6.0.0" />
@@ -28,15 +16,7 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" allowedVersions="13.0.1"/>
   </ItemGroup>
-
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
   </ItemGroup>
-
 </Project>

@@ -37,7 +37,7 @@ namespace Paillave.Etl.Samples
     // }
     class Program5
     {
-        static void Main(string[] args)
+        static void MainOld(string[] args)
         {
             // The most convenient way
             StreamProcessRunner.Create<string>(triggerStream

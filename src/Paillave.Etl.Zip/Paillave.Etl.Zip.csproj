@@ -1,36 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <PackageId>Paillave.EtlNet.Zip</PackageId>
-    <Version>2.1.18-beta</Version>
-    <Authors>Stéphane Royer</Authors>
-    <Company></Company>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive zip</PackageTags>
     <Product>ETL.net ZIP extensions</Product>
     <Description>Extensions for Etl.Net to extract zip</Description>
-    <LangVersion>latest</LangVersion>
-    <PackageIcon>NugetIcon.png</PackageIcon>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
-  <ItemGroup>
-    <None Include="../../README.md" Pack="true" PackagePath=""/>
-    <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
-  </ItemGroup>
-
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="SharpZipLib" Version="1.4.2" />
     <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="7.0.0" allowedVersions="6.0.0" />
   </ItemGroup>
-
 </Project>

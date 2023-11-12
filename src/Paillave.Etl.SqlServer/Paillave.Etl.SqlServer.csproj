@@ -1,38 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <PackageId>Paillave.EtlNet.SqlServer</PackageId>
-    <Version>2.1.18-beta</Version>
-    <Authors>Stéphane Royer</Authors>
-    <Company></Company>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
     <PackageTags>ETL .net core SSIS reactive SqlServer</PackageTags>
     <Product>ETL.net Sql Server extensions</Product>
     <Description>Extensions for Etl.Net to query against Sql Server</Description>
-    <LangVersion>latest</LangVersion>
-    <PackageIcon>NugetIcon.png</PackageIcon>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
-  <ItemGroup>
-    <None Include="../../README.md" Pack="true" PackagePath="" />
-    <None Include="../NugetIcon.png" Pack="true" Visible="false" PackagePath="" />
-  </ItemGroup>
-
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="System.Data.OleDb" Version="7.0.0" />
     <PackageReference Include="system.data.sqlclient" Version="4.8.5" allowedVersions="4.8.0" />
     <PackageReference Include="system.data.odbc" Version="7.0.0" allowedVersions="6.0.0" />
   </ItemGroup>
-
 </Project>
