@@ -88,6 +88,13 @@ public class EfCoreSaveArgsBuilder<TInEf, TIn, TOut>
         this.Args.InsertOnly = insertOnly;
         return this;
     }
+
+    public EfCoreSaveArgsBuilder<TInEf, TIn, TOut> WithIdentityInsert()
+    {
+        this.Args.IdentityInsert = true;
+        return this;
+    }
+
     public EfCoreSaveArgsBuilder<TInEf, TIn, TOut> WithContextType<TContext>() where TContext : DbContext
     {
         this.Args.DbContextType = typeof(TContext);
@@ -193,6 +200,7 @@ internal interface IThroughEntityFrameworkCoreArgs<TIn>
     SaveMode BulkLoadMode { get; set; }
     bool DoNotUpdateIfExists { get; set; }
     bool InsertOnly { get; set; }
+    bool IdentityInsert { get; set; }
     string KeyedConnection { get; set; }
     Type? DbContextType { get; set; }
 }
@@ -207,6 +215,7 @@ public class EfCoreSaveArgs<TInEf, TIn, TOut> : IThroughEntityFrameworkCoreArgs<
     public List<Expression<Func<TInEf, object>>> PivotKeys { get; set; }
     public bool DoNotUpdateIfExists { get; set; } = false;
     public bool InsertOnly { get; set; } = false;
+    public bool IdentityInsert { get; set; } = false;
     public string? KeyedConnection { get; set; } = null;
     public bool KeepChangeTracker { get; set; } = false;
     public Type? DbContextType { get; set; } = null;
@@ -287,7 +296,7 @@ public class EfCoreSaveStreamNode<TInEf, TIn, TOut> : StreamNodeBase<TOut, IStre
         else
         {
             if (dbContext.Database.IsSqlServer())
-                dbContext.BulkSave(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly);
+                dbContext.BulkSave(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly, Args.IdentityInsert );
             else
                 dbContext.EfSaveAsync(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly).Wait();
         }

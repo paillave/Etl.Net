@@ -73,6 +73,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
         /// </summary>
         public abstract void MergeFromStaging(bool doNotUpdateIfExists = false);
         public abstract void InsertFromStaging();
+        public abstract void InsertFromStagingWithIdentityInsert();
         public abstract void IndexStagingTable(List<IProperty> propertiesForPivot);
         public abstract void IndexOutputStagingTable();
         public abstract DataTable GetOutputStaging();
