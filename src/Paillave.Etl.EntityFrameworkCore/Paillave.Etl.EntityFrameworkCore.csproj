@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageId>Paillave.EtlNet.EntityFrameworkCore</PackageId>
+    <PackageId>Paillave.Etl.EntityFrameworkCore</PackageId>
     <Version>3.0.0-copibec</Version>
     <Authors>Stéphane Royer</Authors>
     <Company></Company>
