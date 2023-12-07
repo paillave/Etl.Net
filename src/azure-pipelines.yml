@@ -1,0 +1,29 @@
+name: Pull Requests
+
+pool:
+  name: Azure Pipelines
+
+trigger: none
+
+variables:
+  buildConfiguration: Release
+
+stages:
+  - stage: BuildTestStage
+    displayName: 'Building the project and run tests'
+    jobs:
+      - job: BuildTestJob
+        displayName: 'Building the project and run tests'
+        steps:
+          - task: DotNetCoreCLI@2
+            displayName: 'Restore nuget packages'
+            inputs:
+              command: restore
+              feedsToUse: select
+              feedRestore: 'Savia 2.0/Copibec.Savia.Etl'
+              
+          - task: DotNetCoreCLI@2
+            displayName: 'Compile all projects'
+            inputs:
+              command: build
+              arguments: '--configuration ${{ parameters.buildConfiguration }} --no-restore'
