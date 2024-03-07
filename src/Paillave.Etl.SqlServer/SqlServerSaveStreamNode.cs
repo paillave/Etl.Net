@@ -169,14 +169,14 @@ namespace Paillave.Etl.SqlServer
             StringBuilder sb = new StringBuilder();
             if (pivot.Count > 0)
             {
-                var pivotCondition = string.Join(" AND ", pivot.Select(p => $"p.{p.Name} = @{p.Name}"));
+                var pivotCondition = string.Join(" AND ", pivot.Select(p => $"p.[{p.Name}] = @{p.Name}"));
                 sb.AppendLine($"if(exists(select 1 from {table} as p where {pivotCondition} ))");
-                var setStatement = string.Join(", ", allPropertyNames.Except(pivotsNames).Except(computedNames).Select(i => $"{i} = @{i}").ToList());
+                var setStatement = string.Join(", ", allPropertyNames.Except(pivotsNames).Except(computedNames).Select(i => $"[{i}] = @{i}").ToList());
                 sb.AppendLine($"update p set {setStatement} output inserted.* from {table} as p where {pivotCondition};");
                 sb.AppendLine("else");
             }
             var propsToInsert = allPropertyNames.Except(computedNames).ToList();
-            sb.AppendLine($"insert into {table} ({string.Join(", ", propsToInsert)}) output inserted.*");
+            sb.AppendLine($"insert into {table} ({string.Join(", ", propsToInsert.Select(o => $"[{o}]"))}) output inserted.*");
             sb.AppendLine($"values ({string.Join(", ", propsToInsert.Select(i => $"@{i}"))});");
             return sb.ToString();
         }
