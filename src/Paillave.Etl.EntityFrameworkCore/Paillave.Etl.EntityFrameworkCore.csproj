@@ -11,7 +11,7 @@
     <PackageReference Include="FastMember" Version="1.5.0" allowedVersions="1.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.8" allowedVersions="6.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.8" allowedVersions="6.0.0" />
-    <PackageReference Include="system.data.sqlclient" Version="4.8.5" allowedVersions="4.8.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" allowedVersions="5.2.0"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
