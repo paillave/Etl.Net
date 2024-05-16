@@ -21,16 +21,17 @@ namespace Paillave.Etl.EntityFrameworkCore.Tests
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Blog>(entity =>
-            {
-                entity.HasKey(e => e.BlogId);
-                entity.Property(e => e.Name).HasMaxLength(20);
-            });
-
             modelBuilder.Entity<Post>(entity =>
             {
                 entity.HasKey(e => e.PostId);
                 entity.Property(e => e.PostId).ValueGeneratedNever();
+                entity.Property(e => e.Name).HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<Blog>(entity =>
+            {
+                entity.HasKey(e => e.BlogId);
+                entity.Property(e => e.BlogId).ValueGeneratedOnAdd().UseIdentityColumn(1);
                 entity.Property(e => e.Name).HasMaxLength(20);
             });
         }
