@@ -23,8 +23,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.8">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.8" />
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.8" />
   </ItemGroup>
 
   <PropertyGroup>
