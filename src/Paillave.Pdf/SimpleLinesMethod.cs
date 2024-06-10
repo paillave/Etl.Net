@@ -95,7 +95,9 @@ namespace Paillave.Pdf
                     letter.Width,
                     letter.FontSize,
                     letter.Font,
-                    letter.Color,
+                    letter.RenderingMode,
+                    letter.StrokeColor,
+                    letter.FillColor,
                     letter.PointSize,
                     letter.TextSequence);
         }

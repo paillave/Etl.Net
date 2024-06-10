@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <PackageId>Paillave.EtlNet.FileSystem</PackageId>
     <PackageTags>ETL .net core SSIS reactive text file csv</PackageTags>
     <Product>ETL.net file system extensions</Product>

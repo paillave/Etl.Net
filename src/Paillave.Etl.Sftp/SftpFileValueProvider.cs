@@ -28,7 +28,7 @@ namespace Paillave.Etl.Sftp
                     pushFileValue(new SftpFileValue(connectionParameters, folder, file.Name, this.Code, this.Name, this.ConnectionName));
             }
         }
-        private Renci.SshNet.Sftp.SftpFile[] GetFileList(SftpAdapterConnectionParameters connectionParameters, SftpAdapterProviderParameters providerParameters)
+        private Renci.SshNet.Sftp.ISftpFile[] GetFileList(SftpAdapterConnectionParameters connectionParameters, SftpAdapterProviderParameters providerParameters)
         {
             var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
             var connectionInfo = connectionParameters.CreateConnectionInfo();
