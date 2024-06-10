@@ -12,7 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Data.OleDb" Version="7.0.0" />
-    <PackageReference Include="system.data.sqlclient" Version="4.8.5" allowedVersions="4.8.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" allowedVersions="5.2.0"/>
     <PackageReference Include="system.data.odbc" Version="7.0.0" allowedVersions="6.0.0" />
   </ItemGroup>
 </Project>
