@@ -41,7 +41,6 @@ namespace Paillave.Etl.Ftp
                 return ms;
             }
         }
-
         public override StreamWithResource OpenContent()
         {
             FtpClient client = _connectionInfo.CreateFtpClient();
