@@ -1288,4 +1288,44 @@ internal class OpenedMailFolder : IDisposable, IMailFolder
     {
         return ((IEnumerable)_mailFolder).GetEnumerator();
     }
+
+    public Stream GetStream(UniqueId uid, CancellationToken cancellationToken = default, ITransferProgress progress = null)
+    {
+        return _mailFolder.GetStream(uid, cancellationToken, progress);
+    }
+
+    public Task<Stream> GetStreamAsync(UniqueId uid, CancellationToken cancellationToken = default, ITransferProgress progress = null)
+    {
+        return _mailFolder.GetStreamAsync(uid, cancellationToken, progress);
+    }
+
+    public Stream GetStream(int index, CancellationToken cancellationToken = default, ITransferProgress progress = null)
+    {
+        return _mailFolder.GetStream(index, cancellationToken, progress);
+    }
+
+    public Task<Stream> GetStreamAsync(int index, CancellationToken cancellationToken = default, ITransferProgress progress = null)
+    {
+        return _mailFolder.GetStreamAsync(index, cancellationToken, progress);
+    }
+
+    public Stream GetStream(UniqueId uid, BodyPart part, CancellationToken cancellationToken = default, ITransferProgress progress = null)
+    {
+        return _mailFolder.GetStream(uid, part, cancellationToken, progress);
+    }
+
+    public Task<Stream> GetStreamAsync(UniqueId uid, BodyPart part, CancellationToken cancellationToken = default, ITransferProgress progress = null)
+    {
+        return _mailFolder.GetStreamAsync(uid, part, cancellationToken, progress);
+    }
+
+    public Stream GetStream(int index, BodyPart part, CancellationToken cancellationToken = default, ITransferProgress progress = null)
+    {
+        return _mailFolder.GetStream(index, part, cancellationToken, progress);
+    }
+
+    public Task<Stream> GetStreamAsync(int index, BodyPart part, CancellationToken cancellationToken = default, ITransferProgress progress = null)
+    {
+        return _mailFolder.GetStreamAsync(index, part, cancellationToken, progress);
+    }
 }

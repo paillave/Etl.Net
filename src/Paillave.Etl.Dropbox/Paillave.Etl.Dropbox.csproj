@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <PackageId>Paillave.EtlNet.Dropbox</PackageId>
     <PackageTags>ETL .net core SSIS reactive Dropbox</PackageTags>
     <Product>ETL.net Dropbox extensions</Product>
     <Description>Extensions for Etl.Net to query against Dropbox</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Dropbox.Api" Version="6.37.0" allowedVersions="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="7.0.0" allowedVersions="6.0.0" />
+    <PackageReference Include="Dropbox.Api" Version="7.0.0" allowedVersions="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="8.0.0" allowedVersions="6.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
