@@ -1,15 +1,11 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 // using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
 {
@@ -30,7 +26,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
             => this.Context.Database.ExecuteSqlRaw(this.CreateStagingTableSql());
 
         protected virtual string CreateStagingTableSql()
-            => $@"SELECT TOP 0 { string.Join(",", PropertiesToBulkLoad.Select(i => $"T.[{i.GetColumnName(base.StoreObject)}]")) }, 0 as [{TempColumnNumOrderName}]
+            => $@"SELECT TOP 0 {string.Join(",", PropertiesToBulkLoad.Select(i => $"T.[{i.GetColumnName(base.StoreObject)}]"))}, 0 as [{TempColumnNumOrderName}]
                     INTO {SqlStagingTableName} FROM {SqlTargetTable} AS T 
                     LEFT JOIN {SqlTargetTable} AS Source ON 1 = 0 option(recompile);";
 
@@ -123,6 +119,13 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
 
         public override void InsertFromStaging()
             => this.Context.Database.ExecuteSqlRaw(this.InsertFromStagingSql());
+
+        public override void InsertFromStagingWithIdentityInsert()
+        {
+            Context.Database.ExecuteSqlRaw($"Set Identity_Insert {SqlTargetTable} On;");
+            InsertFromStaging();
+            Context.Database.ExecuteSqlRaw($"Set Identity_Insert {SqlTargetTable} Off;");
+        }
 
         private string CreateEqualityConditionSql(string aliasLeft, string aliasRight, IProperty property)
         {

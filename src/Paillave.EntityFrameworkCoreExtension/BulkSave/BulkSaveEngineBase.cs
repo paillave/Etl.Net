@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Paillave.EntityFrameworkCoreExtension.ContextMetadata;
 using Paillave.EntityFrameworkCoreExtension.Core;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading;
 
 namespace Paillave.EntityFrameworkCoreExtension.BulkSave
 {
@@ -108,29 +106,31 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
             // dbComputedProperties = allProperties.Where(i => i.GetValueGenerationStrategy() != null).ToList();
             // computedProperties = allProperties.Where(i => (i.ValueGenerated & ValueGenerated.OnAddOrUpdate) != ValueGenerated.Never).ToList();
             // allProperties[0].GetDefaultValueSql()
-            dbComputedProperties = allProperties.Where(i => (i.ValueGenerated & ValueGenerated.OnAddOrUpdate) != ValueGenerated.Never).ToList();
-            notPivotComputedProperties = dbComputedProperties.Except(_propertiesForPivotSet.SelectMany(i => i)).ToList();
+            dbComputedProperties = allProperties.Where(i => i.GetComputedColumnSql() != null).ToList();
 
             defaultValuesProperties = allProperties.Where(i => i.GetDefaultValueSql() != null).ToList();
 
-            _propertiesToBulkLoad = allProperties.Except(notPivotComputedProperties).ToList();
+            _propertiesToBulkLoad = allProperties
+                .Except(dbComputedProperties)
+                .ToList();
 
             _propertiesToInsert = allProperties
                 .Except(dbComputedProperties)
-                //.Except(new[] { identityProperty })
                 .ToList();
+
             _propertiesToUpdate = allProperties
                 // .Except(_propertiesForPivot)
                 .Except(dbComputedProperties)
                 //.Except(new[] { identityProperty })
                 .ToList();
+
             _propertiesToGetAfterSetInTarget = dbComputedProperties
                 //.Union(new[] { identityProperty })
                 .Union(defaultValuesProperties)
                 .Distinct(new LambdaEqualityComparer<IProperty, string>(i => i.GetColumnName(StoreObject)))
                 .ToList();
         }
-        public void Save(IList<T> entities, CancellationToken cancellationToken, bool doNotUpdateIfExists = false, bool insertOnly = false)
+        public void Save(IList<T> entities, CancellationToken cancellationToken, bool doNotUpdateIfExists = false, bool insertOnly = false, bool identityInsert = false)
         {
             if (entities.Count == 0) return;
             var previousAutoDetect = _context.ChangeTracker.AutoDetectChangesEnabled;
@@ -150,9 +150,19 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
                 contextQuery.CreateOutputStagingTable();
                 outputStagingTableCreated = true;
                 if (insertOnly)
-                    contextQuery.InsertFromStaging();
+                {
+                    if (identityInsert)
+                    {
+                        contextQuery.InsertFromStagingWithIdentityInsert();
+                    }
+                    else
+                    {
+                        contextQuery.InsertFromStaging();
+                    }
+                }
                 else
                     contextQuery.MergeFromStaging(doNotUpdateIfExists);
+
                 if (this.ShouldIndexStagingTable(entities.Count()))
                     contextQuery.IndexOutputStagingTable();
 
