@@ -59,7 +59,6 @@ public class GraphApiMailFileValueProcessor : FileValueProcessorBase<GraphApiAda
                 }
             }
         }
-
     }
     protected override void Process(
         IFileValue fileValue, GraphApiAdapterConnectionParameters connectionParameters, GraphApiAdapterProcessorParameters processorParameters,
