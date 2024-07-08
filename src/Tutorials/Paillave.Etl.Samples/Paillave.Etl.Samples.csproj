@@ -14,6 +14,7 @@
     <ProjectReference Include="..\..\Paillave.Etl.Zip\Paillave.Etl.Zip.csproj" />
     <ProjectReference Include="..\..\Paillave.Pdf\Paillave.Pdf.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.ExecutionToolkit\Paillave.Etl.ExecutionToolkit.csproj" />
+    <ProjectReference Include="..\..\Paillave.Etl.S3\Paillave.Etl.S3.csproj" />
   </ItemGroup>
 
   <ItemGroup>
