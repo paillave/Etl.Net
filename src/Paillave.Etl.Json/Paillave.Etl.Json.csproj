@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+
+    <PackageId>Paillave.EtlNet.Json</PackageId>
+    <Version>2.0.47</Version>
+    <Authors>Stéphane Royer, Pete Fullergreen</Authors>
+    <Company></Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>
+    <PackageTags>ETL .net core SSIS reactive text file json</PackageTags>
+    <Product>ETL.net json files extensions</Product>
+    <Description>Extensions for Etl.Net to read JSON files</Description>
+    <LangVersion>latest</LangVersion>
+    <PackageIcon>NugetIcon.png</PackageIcon>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
+  </ItemGroup>
+
+</Project>
