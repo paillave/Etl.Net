@@ -34,6 +34,7 @@ namespace Paillave.Etl.Ftp
     {
         public string SubFolder { get; set; }
         public bool UseStreamCopy { get; set; } = true;
+        public bool BuildMissingSubFolders { get; set; } = false;
     }
     public class FtpProviderProcessorAdapter : ProviderProcessorAdapterBase<FtpAdapterConnectionParameters, FtpAdapterProviderParameters, FtpAdapterProcessorParameters>
     {

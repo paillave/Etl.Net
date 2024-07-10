@@ -18,6 +18,7 @@ namespace Paillave.Etl.FileSystem
     {
         public string SubFolder { get; set; }
         public bool UseStreamCopy { get; set; } = true;
+        public bool BuildMissingSubFolders { get; set; } = false;
     }
     public class FileSystemProviderProcessorAdapter : ProviderProcessorAdapterBase<FileSystemAdapterConnectionParameters, FileSystemAdapterProviderParameters, FileSystemAdapterProcessorParameters>
     {
