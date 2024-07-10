@@ -3,10 +3,6 @@ using Paillave.Etl.FileSystem;
 using Paillave.Etl.GraphApi;
 var graphApiConnectionParameters = new GraphApiAdapterConnectionParameters
 {
-    ClientId = "c458617d-4a95-464f-bba5-b29e97578e61",
-    ClientSecret = "T2U8Q~3AQc-Ul6IY.Fs8YBFL~n3AWXdp3AfCRcPR",
-    TenantId = "50e16dbd-f56c-4e6e-a5ed-802e570a08c2",
-    UserId = "b15b5ca6-43fd-48ef-bc2b-a56ef4ddd605"
 };
 var executionOptions = new ExecutionOptions<string>
 {
@@ -23,8 +19,6 @@ var executionOptions = new ExecutionOptions<string>
         {
             Body = "Body",
             Subject = "Subject",
-            From = "stephane.royer@fundprocess.lu",
-            To = "stephane.royer@fundprocess.lu"
         }))
         .Register(new FileSystemFileValueProvider("IN", "Input", Path.Combine(Environment.CurrentDirectory, "InputFiles"), "*"))
         .Register(new FileSystemFileValueProcessor("OUT1", "Output", Path.Combine(Environment.CurrentDirectory, "Output")))
