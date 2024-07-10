@@ -50,6 +50,7 @@ namespace Paillave.Etl.Core
         public string? ConnectorCode { get; set; }
         public string? ConnectionName { get; set; }
         public string? ConnectorName { get; set; }
+        public object? Properties { get; set; }
     }
 
     public class NoSourceFileValueMetadata : FileValueMetadataBase

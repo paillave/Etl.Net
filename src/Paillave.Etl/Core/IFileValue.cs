@@ -20,6 +20,7 @@ public interface IFileValueMetadata
     string? ConnectorCode { get; }
     string? ConnectionName { get; }
     string? ConnectorName { get; }
+    object? Properties { get; }
 }
 public class StreamWithResource : Stream
 {

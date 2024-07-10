@@ -18,6 +18,7 @@ namespace Paillave.Etl.Ftp
 
             // var folder = Path.Combine(connectionParameters.RootFolder ?? "", processorParameters.SubFolder ?? "");
             var filePath = Path.Combine(folder, fileValue.Name);
+            filePath = SmartFormat.Smart.Format(filePath, fileValue.Metadata);
             using var stream = fileValue.Get(processorParameters.UseStreamCopy);
             byte[] fileContents;
             using (MemoryStream ms = new MemoryStream())
@@ -25,13 +26,22 @@ namespace Paillave.Etl.Ftp
                 stream.CopyTo(ms);
                 fileContents = ms.ToArray();
             }
-            ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => UploadSingleTime(connectionParameters, fileContents, filePath));
+            ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => UploadSingleTime(connectionParameters, fileContents, filePath, processorParameters.BuildMissingSubFolders));
             push(fileValue);
         }
-        private void UploadSingleTime(FtpAdapterConnectionParameters connectionParameters, byte[] fileContents, string filePath)
+        private void UploadSingleTime(FtpAdapterConnectionParameters connectionParameters, byte[] fileContents, string filePath, bool buildMissingSubFolders)
         {
             using (FtpClient client = connectionParameters.CreateFtpClient())
+            {
+                if (buildMissingSubFolders)
+                {
+                    var directory = Path.GetDirectoryName(filePath);
+                    if (!string.IsNullOrWhiteSpace(directory))
+                        client.CreateDirectory(directory);
+                }
+
                 client.UploadBytes(fileContents, filePath);
+            }
         }
 
         protected override void Test(FtpAdapterConnectionParameters connectionParameters, FtpAdapterProcessorParameters processorParameters)
