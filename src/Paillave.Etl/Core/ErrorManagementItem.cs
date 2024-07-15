@@ -7,14 +7,10 @@ namespace Paillave.Etl.Core
     public class ErrorManagementItem<TIn1, TIn2, TOut> : ErrorManagementItem<TIn1, TOut>, IErrorManagementItem<TIn1, TIn2>
     {
         public TIn2 Input2 { get; }
-        public ErrorManagementItem(TIn1 input, TIn2 input2, Exception exception) : base(input, exception)
-        {
+        public ErrorManagementItem(TIn1 input, TIn2 input2, Exception exception) : base(input, exception) => 
             this.Input2 = Input2;
-        }
-        public ErrorManagementItem(TIn1 input, TIn2 input2, TOut output) : base(input, output)
-        {
+        public ErrorManagementItem(TIn1 input, TIn2 input2, TOut output) : base(input, output) =>
             this.Input2 = Input2;
-        }
     }
     public class ErrorManagementItem<TIn, TOut> : IErrorManagementItem<TIn>
     {

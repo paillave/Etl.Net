@@ -9,12 +9,8 @@ namespace Paillave.Etl.Core
         public Func<TIn, TKey> GetKey { get; set; }
         public Func<IStream<TIn>, TIn, IStream<TOut>> SubProcess { get; set; }
     }
-    public class GroupByStreamNode<TIn, TKey, TOut> : StreamNodeBase<TOut, IStream<TOut>, GroupByArgs<TIn, TKey, TOut>>
+    public class GroupByStreamNode<TIn, TKey, TOut>(string name, GroupByArgs<TIn, TKey, TOut> args) : StreamNodeBase<TOut, IStream<TOut>, GroupByArgs<TIn, TKey, TOut>>(name, args)
     {
-        public GroupByStreamNode(string name, GroupByArgs<TIn, TKey, TOut> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
@@ -37,12 +33,8 @@ namespace Paillave.Etl.Core
         public ISortedStream<TIn, TKey> Stream { get; set; }
         public Func<IStream<TIn>, TIn, IStream<TOut>> SubProcess { get; set; }
     }
-    public class GroupBySortedStreamNode<TIn, TKey, TOut> : StreamNodeBase<TOut, IStream<TOut>, GroupBySortedArgs<TIn, TKey, TOut>>
+    public class GroupBySortedStreamNode<TIn, TKey, TOut>(string name, GroupBySortedArgs<TIn, TKey, TOut> args) : StreamNodeBase<TOut, IStream<TOut>, GroupBySortedArgs<TIn, TKey, TOut>>(name, args)
     {
-        public GroupBySortedStreamNode(string name, GroupBySortedArgs<TIn, TKey, TOut> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;

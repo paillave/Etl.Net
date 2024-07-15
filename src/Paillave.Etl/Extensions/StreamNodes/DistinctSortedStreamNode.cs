@@ -8,20 +8,14 @@ namespace Paillave.Etl.Core
     {
         public ISortedStream<TIn, TSortingKey> InputStream { get; set; }
     }
-    public class DistinctSortedStreamNode<TIn, TSortingKey> : StreamNodeBase<TIn, IKeyedStream<TIn, TSortingKey>, DistinctSortedArgs<TIn, TSortingKey>>
+    public class DistinctSortedStreamNode<TIn, TSortingKey>(string name, DistinctSortedArgs<TIn, TSortingKey> args) : StreamNodeBase<TIn, IKeyedStream<TIn, TSortingKey>, DistinctSortedArgs<TIn, TSortingKey>>(name, args)
     {
-        public DistinctSortedStreamNode(string name, DistinctSortedArgs<TIn, TSortingKey> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
-        protected override IKeyedStream<TIn, TSortingKey> CreateOutputStream(DistinctSortedArgs<TIn, TSortingKey> args)
-        {
-            return base.CreateKeyedStream(args.InputStream.Observable.DistinctUntilChanged(args.InputStream.SortDefinition), args.InputStream.SortDefinition);
-        }
+        protected override IKeyedStream<TIn, TSortingKey> CreateOutputStream(DistinctSortedArgs<TIn, TSortingKey> args) => 
+            base.CreateKeyedStream(args.InputStream.Observable.DistinctUntilChanged(args.InputStream.SortDefinition), args.InputStream.SortDefinition);
     }
 
 
@@ -29,19 +23,14 @@ namespace Paillave.Etl.Core
     {
         public ISortedStream<Correlated<TIn>, TSortingKey> InputStream { get; set; }
     }
-    public class DistinctCorrelatedSortedStreamNode<TIn, TSortingKey> : StreamNodeBase<Correlated<TIn>, IKeyedStream<Correlated<TIn>, TSortingKey>, DistinctCorrelatedSortedArgs<TIn, TSortingKey>>
+    public class DistinctCorrelatedSortedStreamNode<TIn, TSortingKey>(string name, DistinctCorrelatedSortedArgs<TIn, TSortingKey> args) : StreamNodeBase<Correlated<TIn>, IKeyedStream<Correlated<TIn>, TSortingKey>, DistinctCorrelatedSortedArgs<TIn, TSortingKey>>(name, args)
     {
-        public DistinctCorrelatedSortedStreamNode(string name, DistinctCorrelatedSortedArgs<TIn, TSortingKey> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
-        protected override IKeyedStream<Correlated<TIn>, TSortingKey> CreateOutputStream(DistinctCorrelatedSortedArgs<TIn, TSortingKey> args)
-        {
-            return base.CreateKeyedStream(
+        protected override IKeyedStream<Correlated<TIn>, TSortingKey> CreateOutputStream(DistinctCorrelatedSortedArgs<TIn, TSortingKey> args) => 
+            base.CreateKeyedStream(
                 args.InputStream.Observable.AggregateGrouped(
                     i => new HashSet<Guid>(),
                     args.InputStream.SortDefinition, (a, i) =>
@@ -50,6 +39,5 @@ namespace Paillave.Etl.Core
                         return a;
                     },
                     (i, a) => new Correlated<TIn> { Row = i.Row, CorrelationKeys = a }), args.InputStream.SortDefinition);
-        }
     }
 }

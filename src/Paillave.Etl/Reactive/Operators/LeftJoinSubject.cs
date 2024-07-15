@@ -135,13 +135,9 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TOut> LeftJoin<TInLeft, TInRight, TOut>(this IPushObservable<TInLeft> observable, IPushObservable<TInRight> rightS, IComparer<TInLeft, TInRight> comparer, Func<TInLeft, TInRight, TOut> selector)
-        {
-            return new LeftJoinSubject<TInLeft, TInRight, TOut>(observable, rightS, new LeftJoinParams<TInLeft, TInRight, TOut> { comparer = comparer, selector = selector });
-        }
-        public static IPushObservable<TOut> LeftJoin<TInLeft, TInRight, TOut, TKey>(this IPushObservable<TInLeft> observable, IPushObservable<TInRight> rightS, Func<TInLeft, TKey> leftKey, Func<TInRight, TKey> rightKey, object keyPositions, Func<TInLeft, TInRight, TOut> selector)
-        {
-            return new LeftJoinSubject<TInLeft, TInRight, TOut>(
+        public static IPushObservable<TOut> LeftJoin<TInLeft, TInRight, TOut>(this IPushObservable<TInLeft> observable, IPushObservable<TInRight> rightS, IComparer<TInLeft, TInRight> comparer, Func<TInLeft, TInRight, TOut> selector) => new LeftJoinSubject<TInLeft, TInRight, TOut>(observable, rightS, new LeftJoinParams<TInLeft, TInRight, TOut> { comparer = comparer, selector = selector });
+        public static IPushObservable<TOut> LeftJoin<TInLeft, TInRight, TOut, TKey>(this IPushObservable<TInLeft> observable, IPushObservable<TInRight> rightS, Func<TInLeft, TKey> leftKey, Func<TInRight, TKey> rightKey, object keyPositions, Func<TInLeft, TInRight, TOut> selector) =>
+            new LeftJoinSubject<TInLeft, TInRight, TOut>(
                 observable,
                 rightS,
                 new LeftJoinParams<TInLeft, TInRight, TOut>
@@ -152,6 +148,5 @@ namespace Paillave.Etl.Reactive.Operators
                     ),
                     selector = selector
                 });
-        }
     }
 }

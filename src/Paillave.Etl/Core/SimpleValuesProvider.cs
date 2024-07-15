@@ -15,14 +15,10 @@ namespace Paillave.Etl.Core
         private Action<TIn, IExecutionContext, CancellationToken, Action<TOut>> _pushValuesWithResolver = null;
         private Action<TIn, CancellationToken, Action<TOut>> _pushValues = null;
 
-        public SimpleValuesProvider(Action<TIn, CancellationToken, Action<TOut>> pushValues)
-        {
+        public SimpleValuesProvider(Action<TIn, CancellationToken, Action<TOut>> pushValues) =>
             _pushValues = pushValues;
-        }
-        public SimpleValuesProvider(Action<TIn, IExecutionContext, CancellationToken, Action<TOut>> pushValues)
-        {
+        public SimpleValuesProvider(Action<TIn, IExecutionContext, CancellationToken, Action<TOut>> pushValues) => 
             _pushValuesWithResolver = pushValues;
-        }
 
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 

@@ -16,12 +16,8 @@ namespace Paillave.Etl.Core
         public IStream<object> Input10ToWait { get; set; }
         public TOutStream Input { get; set; }
     }
-    public class WaitWhenDoneStreamNode<TOut, TOutStream> : StreamNodeBase<TOut, TOutStream, WaitWhenDoneArgs<TOut, TOutStream>> where TOutStream : IStream<TOut>
+    public class WaitWhenDoneStreamNode<TOut, TOutStream>(string name, WaitWhenDoneArgs<TOut, TOutStream> args) : StreamNodeBase<TOut, TOutStream, WaitWhenDoneArgs<TOut, TOutStream>>(name, args) where TOutStream : IStream<TOut>
     {
-        public WaitWhenDoneStreamNode(string name, WaitWhenDoneArgs<TOut, TOutStream> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;

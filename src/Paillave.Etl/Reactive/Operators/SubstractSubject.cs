@@ -183,13 +183,7 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TLeft> Substract<TLeft, TRight, TKey>(this IPushObservable<TLeft> observable, IPushObservable<TRight> observableToRemove, IComparer<TLeft, TRight> comparer)
-        {
-            return new SubstractSubject<TLeft, TRight, TKey>(observable, observableToRemove, comparer);
-        }
-        public static IPushObservable<TLeft> Substract<TLeft, TRight, TKey>(this IPushObservable<TLeft> observable, IPushObservable<TRight> observableToRemove, Func<TLeft, TKey> getLeftKey, Func<TRight, TKey> getRightKey, object keyPosition = null)
-        {
-            return new SubstractSubject<TLeft, TRight, TKey>(observable, observableToRemove, new SortDefinitionComparer<TLeft, TRight, TKey>(SortDefinition.Create(getLeftKey, keyPosition), SortDefinition.Create(getRightKey, keyPosition)));
-        }
+        public static IPushObservable<TLeft> Substract<TLeft, TRight, TKey>(this IPushObservable<TLeft> observable, IPushObservable<TRight> observableToRemove, IComparer<TLeft, TRight> comparer) => new SubstractSubject<TLeft, TRight, TKey>(observable, observableToRemove, comparer);
+        public static IPushObservable<TLeft> Substract<TLeft, TRight, TKey>(this IPushObservable<TLeft> observable, IPushObservable<TRight> observableToRemove, Func<TLeft, TKey> getLeftKey, Func<TRight, TKey> getRightKey, object keyPosition = null) => new SubstractSubject<TLeft, TRight, TKey>(observable, observableToRemove, new SortDefinitionComparer<TLeft, TRight, TKey>(SortDefinition.Create(getLeftKey, keyPosition), SortDefinition.Create(getRightKey, keyPosition)));
     }
 }

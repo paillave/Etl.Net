@@ -7,17 +7,11 @@ using Paillave.Etl.Reactive.Core;
 
 namespace Paillave.Etl.Reactive.Operators
 {
-    public class FilterSectionSubject<TIn, TOut> : FilterSectionSubjectBase<TIn, TOut>
+    public class FilterSectionSubject<TIn, TOut>(IPushObservable<TIn> observable, KeepingState initialState, Func<TIn, SwitchBehavior> switchToKeep, Func<TIn, SwitchBehavior> switchToIgnore, Func<TIn, int, TOut> resultSelector) : FilterSectionSubjectBase<TIn, TOut>(observable, initialState, switchToKeep, switchToIgnore)
     {
-        private int _sectionIndex = 0;
+        private int _sectionIndex = initialState == KeepingState.Ignore ? -1 : 0;
 
-        private readonly Func<TIn, int, TOut> _resultSelector = null;
-        public FilterSectionSubject(IPushObservable<TIn> observable, KeepingState initialState, Func<TIn, SwitchBehavior> switchToKeep, Func<TIn, SwitchBehavior> switchToIgnore, Func<TIn, int, TOut> resultSelector)
-            : base(observable, initialState, switchToKeep, switchToIgnore)
-        {
-            _resultSelector = resultSelector;
-            _sectionIndex = initialState == KeepingState.Ignore ? -1 : 0;
-        }
+        private readonly Func<TIn, int, TOut> _resultSelector = resultSelector;
 
         public FilterSectionSubject(IPushObservable<TIn> observable, KeepingState initialState, Func<TIn, SwitchBehavior> switcher, Func<TIn, int, TOut> resultSelector)
             : this(observable, initialState, switcher, switcher, resultSelector) { }
@@ -26,10 +20,7 @@ namespace Paillave.Etl.Reactive.Operators
         public FilterSectionSubject(IPushObservable<TIn> observable, Func<TIn, SwitchBehavior> switchToKeep, Func<TIn, SwitchBehavior> switchToIgnore, Func<TIn, int, TOut> resultSelector)
             : this(observable, KeepingState.Ignore, switchToKeep, switchToIgnore, resultSelector) { }
 
-        protected override void InternalPushValue(TIn value)
-        {
-            this.TryPushValue(() => this._resultSelector(value, _sectionIndex));
-        }
+        protected override void InternalPushValue(TIn value) => this.TryPushValue(() => this._resultSelector(value, _sectionIndex));
         protected override void ProcessCurrentIgnore(TIn value)
         {
             var switchRes = SwitchToKeep(value);

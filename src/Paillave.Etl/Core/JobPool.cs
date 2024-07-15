@@ -4,18 +4,14 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl.Core
 {
-public abstract class JobPoolBase : IDisposable
+public abstract class JobPoolBase(int delayBetweenCall = 0) : IDisposable
 {
     private object _lock = new object();
     private bool _isStopped = false;
 
     private Queue<Action> _actionQueue = new Queue<Action>();
-    private int _delayBetweenCall = 0;
-    public JobPoolBase(int delayBetweenCall = 0)
-    {
-        _delayBetweenCall = delayBetweenCall;
-    }
-    private System.Threading.EventWaitHandle _mtxWaitNewProcess = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
+    private int _delayBetweenCall = delayBetweenCall;
+        private System.Threading.EventWaitHandle _mtxWaitNewProcess = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.AutoReset);
 
     protected void BackgroundProcess()
     {

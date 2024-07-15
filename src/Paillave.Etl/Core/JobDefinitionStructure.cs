@@ -6,19 +6,12 @@ namespace Paillave.Etl.Core
 {
     public class JobDefinitionStructure
     {
-        private class NodeDescription : INodeDescription
+        private class NodeDescription(INodeDescription nodeContext) : INodeDescription
         {
-            public NodeDescription(INodeDescription nodeContext)
-            {
-                this.NodeName = nodeContext.NodeName;
-                this.TypeName = nodeContext.TypeName;
-                this.PerformanceImpact = nodeContext.PerformanceImpact;
-                this.MemoryFootPrint = nodeContext.MemoryFootPrint;
-            }
-            public string NodeName { get; }
-            public string TypeName { get; }
-            public ProcessImpact PerformanceImpact { get; }
-            public ProcessImpact MemoryFootPrint { get; }
+            public string NodeName { get; } = nodeContext.NodeName;
+            public string TypeName { get; } = nodeContext.TypeName;
+            public ProcessImpact PerformanceImpact { get; } = nodeContext.PerformanceImpact;
+            public ProcessImpact MemoryFootPrint { get; } = nodeContext.MemoryFootPrint;
             public INodeDescription Parent => null;
         }
         public JobDefinitionStructure(List<StreamToNodeLink> streamToNodeLinks, List<INodeDescription> nodes, string sourceNodeName)

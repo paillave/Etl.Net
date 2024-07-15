@@ -7,9 +7,8 @@ namespace Paillave.Etl.Core
     {
         public IStream<TIn> Stream { get; set; }
     }
-    public class OfTypeStreamNode<TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, OfTypeArgs<TIn, TOut>> where TOut : TIn
+    public class OfTypeStreamNode<TIn, TOut>(string name, OfTypeArgs<TIn, TOut> args) : StreamNodeBase<TOut, IStream<TOut>, OfTypeArgs<TIn, TOut>>(name, args) where TOut : TIn
     {
-        public OfTypeStreamNode(string name, OfTypeArgs<TIn, TOut> args) : base(name, args) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
         protected override IStream<TOut> CreateOutputStream(OfTypeArgs<TIn, TOut> args)

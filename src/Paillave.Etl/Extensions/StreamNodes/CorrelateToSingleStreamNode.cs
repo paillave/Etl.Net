@@ -11,12 +11,8 @@ namespace Paillave.Etl.Core
         public IStream<Correlated<TInRight>> RightInputStream { get; set; }
         public Func<TInLeft, TInRight, TOut> ResultSelector { get; set; }
     }
-    public class CorrelateToSingleStreamNode<TInLeft, TInRight, TOut> : StreamNodeBase<Correlated<TOut>, IStream<Correlated<TOut>>, CorrelateArgs<TInLeft, TInRight, TOut>>
+    public class CorrelateToSingleStreamNode<TInLeft, TInRight, TOut>(string name, CorrelateArgs<TInLeft, TInRight, TOut> args) : StreamNodeBase<Correlated<TOut>, IStream<Correlated<TOut>>, CorrelateArgs<TInLeft, TInRight, TOut>>(name, args)
     {
-        public CorrelateToSingleStreamNode(string name, CorrelateArgs<TInLeft, TInRight, TOut> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;

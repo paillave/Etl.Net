@@ -11,12 +11,8 @@ namespace Paillave.Etl.Core
         public Func<TAggrRes, TIn, TAggrRes> Aggregate { get; set; }
         public Func<TIn, TAggrRes> CreateEmptyAggregation { get; set; }
     }
-    public class AggregateSortedStreamNode<TIn, TAggrRes, TKey> : StreamNodeBase<AggregationResult<TIn, TKey, TAggrRes>, ISortedStream<AggregationResult<TIn, TKey, TAggrRes>, TKey>, AggregateSortedArgs<TIn, TAggrRes, TKey>>
+    public class AggregateSortedStreamNode<TIn, TAggrRes, TKey>(string name, AggregateSortedArgs<TIn, TAggrRes, TKey> args) : StreamNodeBase<AggregationResult<TIn, TKey, TAggrRes>, ISortedStream<AggregationResult<TIn, TKey, TAggrRes>, TKey>, AggregateSortedArgs<TIn, TAggrRes, TKey>>(name, args)
     {
-        public AggregateSortedStreamNode(string name, AggregateSortedArgs<TIn, TAggrRes, TKey> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;

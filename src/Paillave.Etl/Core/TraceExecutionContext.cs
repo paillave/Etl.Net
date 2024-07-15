@@ -10,30 +10,22 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl.Core
 {
-    internal class TraceExecutionContext : IExecutionContext
+    internal class TraceExecutionContext(WaitHandle startSynchronizer, Guid executionId,
+        JobPoolDispatcher jobPoolDispatcher, IDependencyResolver resolver, 
+        CancellationToken cancellationToken, IFileValueConnectors connectors) : IExecutionContext
     {
         private readonly List<Task> _tasksToWait = new List<Task>();
         private readonly CollectionDisposableManager _disposables = new CollectionDisposableManager();
-        private WaitHandle _startSynchronizer { get; }
-        public TraceExecutionContext(WaitHandle startSynchronizer, Guid executionId, JobPoolDispatcher jobPoolDispatcher, IDependencyResolver resolver, CancellationToken cancellationToken, IFileValueConnectors connectors)
-        {
-            this._jobPoolDispatcher = jobPoolDispatcher;
-            this.ExecutionId = executionId;
-            this.Connectors = connectors;
-            this.JobName = null;
-            this._startSynchronizer = startSynchronizer;
-            this.DependencyResolver = resolver;
-            this.ContextBag = new SimpleDependencyResolver();
-        }
-        public IDependencyResolver DependencyResolver { get; }
-        private readonly JobPoolDispatcher _jobPoolDispatcher;
-        public IFileValueConnectors Connectors { get; }
-        public Guid ExecutionId { get; }
-        public string JobName { get; }
+        private WaitHandle _startSynchronizer { get; } = startSynchronizer;
+        public IDependencyResolver DependencyResolver { get; } = resolver;
+        private readonly JobPoolDispatcher _jobPoolDispatcher = jobPoolDispatcher;
+        public IFileValueConnectors Connectors { get; } = connectors;
+        public Guid ExecutionId { get; } = executionId;
+        public string JobName { get; } = null;
         public bool IsTracingContext => true;
         public void AddNode<T>(INodeDescription nodeContext, IPushObservable<T> observable) => _tasksToWait.Add(observable.ToTaskAsync());
         public Task GetCompletionTask() => Task.WhenAll(_tasksToWait.ToArray()).ContinueWith(_ => _disposables.Dispose());
-        public SimpleDependencyResolver ContextBag { get; }
+        public SimpleDependencyResolver ContextBag { get; } = new SimpleDependencyResolver();
 
         public bool Terminating => false;
 

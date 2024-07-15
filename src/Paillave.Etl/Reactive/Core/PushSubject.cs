@@ -87,10 +87,7 @@ namespace Paillave.Etl.Reactive.Core
             }
         }
 
-        public virtual void Dispose()
-        {
-            this.Complete();
-        }
+        public virtual void Dispose() => this.Complete();
 
         public virtual void PushException(Exception exception)
         {

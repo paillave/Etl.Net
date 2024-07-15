@@ -9,12 +9,8 @@ namespace Paillave.Etl.Core
         public IStream<TIn> InputStream { get; set; }
         public int ChunkSize { get; set; }
     }
-    public class ChunkStreamNode<TIn> : StreamNodeBase<IEnumerable<TIn>, IStream<IEnumerable<TIn>>, ChunkArgs<TIn>>
+    public class ChunkStreamNode<TIn>(string name, ChunkArgs<TIn> args) : StreamNodeBase<IEnumerable<TIn>, IStream<IEnumerable<TIn>>, ChunkArgs<TIn>>(name, args)
     {
-        public ChunkStreamNode(string name, ChunkArgs<TIn> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;

@@ -62,21 +62,9 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<T> Distinct<T>(this IPushObservable<T> observable, IEqualityComparer<T> comparer)
-        {
-            return new DistinctSubject<T>(observable, comparer);
-        }
-        public static IPushObservable<T> Distinct<T>(this IPushObservable<T> observable, Func<T, T, bool> comparer)
-        {
-            return new DistinctSubject<T>(observable, new LambdaEqualityComparer<T>(comparer));
-        }
-        public static IPushObservable<T> Distinct<T, K>(this IPushObservable<T> observable, Func<T, K> getKey)
-        {
-            return new DistinctSubject<T, K>(observable, getKey);
-        }
-        public static IPushObservable<T> Distinct<T>(this IPushObservable<T> observable) where T : IEquatable<T>
-        {
-            return new DistinctSubject<T>(observable, new LambdaEqualityComparer<T>((l, r) => l.Equals(r)));
-        }
+        public static IPushObservable<T> Distinct<T>(this IPushObservable<T> observable, IEqualityComparer<T> comparer) => new DistinctSubject<T>(observable, comparer);
+        public static IPushObservable<T> Distinct<T>(this IPushObservable<T> observable, Func<T, T, bool> comparer) => new DistinctSubject<T>(observable, new LambdaEqualityComparer<T>(comparer));
+        public static IPushObservable<T> Distinct<T, K>(this IPushObservable<T> observable, Func<T, K> getKey) => new DistinctSubject<T, K>(observable, getKey);
+        public static IPushObservable<T> Distinct<T>(this IPushObservable<T> observable) where T : IEquatable<T> => new DistinctSubject<T>(observable, new LambdaEqualityComparer<T>((l, r) => l.Equals(r)));
     }
 }

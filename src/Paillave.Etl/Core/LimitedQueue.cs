@@ -2,14 +2,9 @@
 
 namespace Paillave.Etl.Core
 {
-    public class LimitedQueue<T> : ConcurrentQueue<T>
+    public class LimitedQueue<T>(int limit) : ConcurrentQueue<T>()
     {
-        public int Limit { get; }
-
-        public LimitedQueue(int limit) : base()
-        {
-            Limit = limit;
-        }
+        public int Limit { get; } = limit;
 
         public new void Enqueue(T item)
         {

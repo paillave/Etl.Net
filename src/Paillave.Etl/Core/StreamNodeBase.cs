@@ -70,60 +70,44 @@ namespace Paillave.Etl.Core
         private IEnumerable<MemberInfo> GetMemberInfos(Type type)
             => type.GetProperties().Cast<MemberInfo>().Union(type.GetFields());
         private IEnumerable<MemberInfo> GetMemberInfos<T>() => GetMemberInfos(typeof(T));
-        private List<InputStream> GetInputStreams(TArgs args)
-        {
-            return GetMemberInfos(args.GetType())
+        private List<InputStream> GetInputStreams(TArgs args) =>
+            GetMemberInfos(args.GetType())
                 .Select(propertyInfo => new { propertyInfo.Name, Value = GetMemberInfoValue(propertyInfo, args) as IStream })
                 .Where(i => i.Value != null)
                 .Select(i => new InputStream { SourceNodeName = i.Value.SourceNode.NodeName, InputName = i.Name })
                 .ToList();
-        }
 
-        private IExecutionContext GetExecutionContext(TArgs args)
-        {
-            return GetMemberInfos(args.GetType())
+        private IExecutionContext GetExecutionContext(TArgs args) => 
+            GetMemberInfos(args.GetType())
                 .Select(propertyInfo => GetMemberInfoValue(propertyInfo, args))
                 .OfType<IStream>()
                 .Select(i => i.SourceNode.ExecutionContext)
                 .OrderBy(i => !i.IsTracingContext)
                 .FirstOrDefault();
-        }
-        private INodeContext GetNodeContext(TArgs args)
-        {
-            return GetMemberInfos(args.GetType())
+        private INodeContext GetNodeContext(TArgs args) =>
+            GetMemberInfos(args.GetType())
                 .Select(propertyInfo => GetMemberInfoValue(propertyInfo, args))
                 .OfType<IStream>()
                 .Select(i => i.SourceNode)
                 .FirstOrDefault(i => !i.ExecutionContext.IsTracingContext);
-        }
 
         protected abstract TOutStream CreateOutputStream(TArgs args);
 
-        protected IStream<TOut> CreateUnsortedStream(IPushObservable<TOut> observable)
-        {
-            return new Stream<TOut>(this, observable);
-        }
+        protected IStream<TOut> CreateUnsortedStream(IPushObservable<TOut> observable) => 
+            new Stream<TOut>(this, observable);
 
-        protected ISingleStream<TOut> CreateSingleStream(IPushObservable<TOut> observable)
-        {
-            return new SingleStream<TOut>(this, observable);
-        }
+        protected ISingleStream<TOut> CreateSingleStream(IPushObservable<TOut> observable) =>
+            new SingleStream<TOut>(this, observable);
 
-        protected ISortedStream<TOut, TKey> CreateSortedStream<TKey>(IPushObservable<TOut> observable, SortDefinition<TOut, TKey> sortDefinition)
-        {
-            return new SortedStream<TOut, TKey>(this, observable, sortDefinition);
-        }
+        protected ISortedStream<TOut, TKey> CreateSortedStream<TKey>(IPushObservable<TOut> observable, SortDefinition<TOut, TKey> sortDefinition) => 
+            new SortedStream<TOut, TKey>(this, observable, sortDefinition);
 
-        protected IKeyedStream<TOut, TKey> CreateKeyedStream<TKey>(IPushObservable<TOut> observable, SortDefinition<TOut, TKey> sortDefinition)
-        {
-            return new KeyedStream<TOut, TKey>(this, observable, sortDefinition);
-        }
+        protected IKeyedStream<TOut, TKey> CreateKeyedStream<TKey>(IPushObservable<TOut> observable, SortDefinition<TOut, TKey> sortDefinition) => 
+            new KeyedStream<TOut, TKey>(this, observable, sortDefinition);
 
-        protected TOutStream CreateMatchingStream(IPushObservable<TOut> observable, TOutStream matchingSourceStream)
-        {
+        protected TOutStream CreateMatchingStream(IPushObservable<TOut> observable, TOutStream matchingSourceStream) =>
             // TODO: the following is an absolute dreadful solution about which I MUST find a proper alternative
-            return (TOutStream)matchingSourceStream.GetMatchingStream<TOut>(this, observable);
-        }
+            (TOutStream)matchingSourceStream.GetMatchingStream<TOut>(this, observable);
         protected Func<T1, T2> WrapSelectForDisposal<T1, T2>(Func<T1, T2> creator, bool withNoDispose)
         {
             bool isDisposable = typeof(IDisposable).IsAssignableFrom(typeof(T2));
@@ -176,15 +160,10 @@ namespace Paillave.Etl.Core
             else
                 return creator;
         }
-        protected class IndexedObject<T>
+        protected class IndexedObject<T>(int index, T item)
         {
-            public T Item { get; }
-            public int Index { get; }
-            public IndexedObject(int index, T item)
-            {
-                this.Index = index;
-                this.Item = item;
-            }
+            public T Item { get; } = item;
+            public int Index { get; } = index;
         }
         protected Func<IndexedObject<T1>, T2, T3> WrapSelectIndexObjectForDisposal<T1, T2, T3>(Func<T1, T2, int, T3> creator, bool withNoDispose)
         {

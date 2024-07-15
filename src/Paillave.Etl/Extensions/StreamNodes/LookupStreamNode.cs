@@ -13,12 +13,8 @@ namespace Paillave.Etl.Core
         public Func<TInRight, TKey> GetRightStreamKey { get; set; }
         public Func<TInLeft, TInRight, TOut> ResultSelector { get; set; }
     }
-    public class LookupStreamNode<TInLeft, TInRight, TOut, TKey> : StreamNodeBase<TOut, IStream<TOut>, LookupArgs<TInLeft, TInRight, TOut, TKey>>
+    public class LookupStreamNode<TInLeft, TInRight, TOut, TKey>(string name, LookupArgs<TInLeft, TInRight, TOut, TKey> args) : StreamNodeBase<TOut, IStream<TOut>, LookupArgs<TInLeft, TInRight, TOut, TKey>>(name, args)
     {
-        public LookupStreamNode(string name, LookupArgs<TInLeft, TInRight, TOut, TKey> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
