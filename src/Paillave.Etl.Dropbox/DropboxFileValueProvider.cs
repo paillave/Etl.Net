@@ -9,10 +9,8 @@ using Dropbox.Api.Files;
 
 namespace Paillave.Etl.Dropbox
 {
-    public class DropboxFileValueProvider : FileValueProviderBase<DropboxAdapterConnectionParameters, DropboxAdapterProviderParameters>
+    public class DropboxFileValueProvider(string code, string name, string connectionName, DropboxAdapterConnectionParameters connectionParameters, DropboxAdapterProviderParameters providerParameters) : FileValueProviderBase<DropboxAdapterConnectionParameters, DropboxAdapterProviderParameters>(code, name, connectionName, connectionParameters, providerParameters)
     {
-        public DropboxFileValueProvider(string code, string name, string connectionName, DropboxAdapterConnectionParameters connectionParameters, DropboxAdapterProviderParameters providerParameters)
-            : base(code, name, connectionName, connectionParameters, providerParameters) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
         protected override void Provide(Action<IFileValue> pushFileValue, DropboxAdapterConnectionParameters connectionParameters, DropboxAdapterProviderParameters providerParameters, CancellationToken cancellationToken, IExecutionContext context)

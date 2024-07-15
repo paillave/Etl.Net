@@ -17,14 +17,9 @@ namespace Paillave.Etl.ExcelFile
         public Func<TParsed, TIn, TOut> GetOutput { get; set; }
     }
 
-    public class ExcelRowsValuesProvider<TIn, TParsed, TOut> : ValuesProviderBase<TIn, TOut>
+    public class ExcelRowsValuesProvider<TIn, TParsed, TOut>(ExcelRowsValuesProviderArgs<TIn, TParsed, TOut> args) : ValuesProviderBase<TIn, TOut>
     {
-        private readonly ExcelRowsValuesProviderArgs<TIn, TParsed, TOut> _args;
-
-        public ExcelRowsValuesProvider(ExcelRowsValuesProviderArgs<TIn, TParsed, TOut> args)
-        {
-            this._args = args;
-        }
+        private readonly ExcelRowsValuesProviderArgs<TIn, TParsed, TOut> _args = args;
 
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
 
