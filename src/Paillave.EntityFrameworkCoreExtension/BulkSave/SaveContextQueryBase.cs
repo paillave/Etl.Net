@@ -12,48 +12,39 @@ using System.Threading.Tasks;
 
 namespace Paillave.EntityFrameworkCoreExtension.BulkSave
 {
-    public abstract class SaveContextQueryBase<T> where T : class
+    public abstract class SaveContextQueryBase<T>(DbContext context, string schema, 
+        string table, List<IProperty> propertiesToInsert,
+        List<IProperty> propertiesToUpdate, List<List<IProperty>> propertiesForPivotSet,
+        List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes, 
+        CancellationToken cancellationToken, StoreObjectIdentifier storeObject) where T : class
     {
-        protected string Table { get; }
-        protected StoreObjectIdentifier StoreObject { get; }
+        protected string Table { get; } = table;
+        protected StoreObjectIdentifier StoreObject { get; } = storeObject;
         protected string StagingId { get; } = Guid.NewGuid().ToString().Substring(0, 8);
-        protected string Schema { get; }
-        protected List<IEntityType> EntityTypes { get; }
+        protected string Schema { get; } = schema;
+        protected List<IEntityType> EntityTypes { get; } = entityTypes;
 
         /// <summary>
         /// Any column except computed
         /// </summary>
-        protected List<IProperty> PropertiesToInsert { get; }
+        protected List<IProperty> PropertiesToInsert { get; } = propertiesToInsert;
         /// <summary>
         /// any column except pivot, computed
         /// </summary>
-        protected List<IProperty> PropertiesToUpdate { get; }
+        protected List<IProperty> PropertiesToUpdate { get; } = propertiesToUpdate;
         /// <summary>
         /// pivot columns
         /// </summary>
-        protected List<List<IProperty>> PropertiesForPivotSet { get; }
+        protected List<List<IProperty>> PropertiesForPivotSet { get; } = propertiesForPivotSet;
 
         /// <summary>
         /// Any column except computed that is not pivot
         /// </summary>
-        protected List<IProperty> PropertiesToBulkLoad { get; }
+        protected List<IProperty> PropertiesToBulkLoad { get; } = propertiesToBulkLoad;
 
-        protected CancellationToken CancellationToken { get; }
+        protected CancellationToken CancellationToken { get; } = cancellationToken;
 
-        protected DbContext Context { get; }
-        public SaveContextQueryBase(DbContext context, string schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<List<IProperty>> propertiesForPivotSet, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes, CancellationToken cancellationToken, StoreObjectIdentifier storeObject)
-        {
-            this.StoreObject = storeObject;
-            this.CancellationToken = cancellationToken;
-            this.PropertiesToInsert = propertiesToInsert;
-            this.PropertiesToUpdate = propertiesToUpdate;
-            this.PropertiesForPivotSet = propertiesForPivotSet;
-            this.PropertiesToBulkLoad = propertiesToBulkLoad;
-            this.Schema = schema;
-            this.Table = table;
-            this.Context = context;
-            this.EntityTypes = entityTypes;
-        }
+        protected DbContext Context { get; } = context;
 
         /// <summary>
         /// Create the staging that is meant to receive the raw bulk load

@@ -11,14 +11,11 @@ using Microsoft.Extensions.FileProviders;
 
 namespace Paillave.EntityFrameworkCoreExtension.MigrationOperations
 {
-    public class CustomMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
+    public class CustomMigrationsSqlGenerator(MigrationsSqlGeneratorDependencies dependencies,
+        ICommandBatchPreparer commandBatchPreparer) : SqlServerMigrationsSqlGenerator(dependencies, commandBatchPreparer)
     {
-        private Assembly _assembly = null;
-        public CustomMigrationsSqlGenerator(MigrationsSqlGeneratorDependencies dependencies, ICommandBatchPreparer commandBatchPreparer) : base(dependencies, commandBatchPreparer)
-        // public CustomMigrationsSqlGenerator(MigrationsSqlGeneratorDependencies dependencies, IRelationalAnnotationProvider migrationsAnnotations) : base(dependencies, migrationsAnnotations)
-        {
-            this._assembly = dependencies.CurrentContext.Context.GetType().Assembly;
-        }
+        private Assembly _assembly = dependencies.CurrentContext.Context.GetType().Assembly;
+
         protected override void Generate(
                 MigrationOperation operation,
                 IModel model,

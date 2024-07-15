@@ -67,9 +67,8 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
             mapping.Properties = entityType.GetDeclaredProperties().Where(i => !i.IsShadowProperty()).Select(i => CreatePropertySummary(i, storeObject)).ToList();
             return mapping;
         }
-        public static PropertySummary CreatePropertySummary(IProperty property, StoreObjectIdentifier storeObject)
-        {
-            return new PropertySummary
+        public static PropertySummary CreatePropertySummary(IProperty property, StoreObjectIdentifier storeObject) =>
+            new PropertySummary
             {
                 Name = property.GetColumnName(storeObject),
                 Type = GetTypeLabel(property.ClrType),
@@ -78,7 +77,6 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
                 IsNullable = property.IsNullable,
                 MaxLength = property.GetMaxLength()
             };
-        }
         private static string GetTypeLabel(Type type)
         {
             var underlyingType = Nullable.GetUnderlyingType(type);
@@ -86,21 +84,16 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         }
     }
 
-    public class DbContextParser
+    public class DbContextParser(Assembly assembly, XDocument xmlDocumentation, string[] args)
     {
-        private readonly Assembly _assembly;
-        private readonly XDocument _xmlDocumentation;
-        private readonly string[] _args;
+        private readonly Assembly _assembly = assembly;
+        private readonly XDocument _xmlDocumentation = xmlDocumentation;
+        private readonly string[] _args = args;
 
         public DbContextParser(string assemblyPath, string[] args) : this(Assembly.LoadFrom(assemblyPath), GetXmlDocumentation(assemblyPath), args)
         {
         }
-        public DbContextParser(Assembly assembly, XDocument xmlDocumentation, string[] args)
-        {
-            this._args = args;
-            this._xmlDocumentation = xmlDocumentation;
-            this._assembly = assembly;
-        }
+
         private static XDocument GetXmlDocumentation(string assemblyPath)
         {
             var xmlDocumentationPath = Path.ChangeExtension(assemblyPath, "xml");
@@ -176,9 +169,8 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
                 Comment = entityType.GetComment()
             };
         }
-        public static PropertySummary CreatePropertySummary(IProperty property, StoreObjectIdentifier storeObject)
-        {
-            return new PropertySummary
+        public static PropertySummary CreatePropertySummary(IProperty property, StoreObjectIdentifier storeObject) =>
+            new PropertySummary
             {
                 Name = property.GetColumnName(storeObject),
                 Type = GetTypeLabel(property.ClrType),
@@ -187,7 +179,6 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
                 IsNullable = property.IsNullable,
                 MaxLength = property.GetMaxLength()
             };
-        }
         private static string GetTypeLabel(Type type)
         {
             var underlyingType = Nullable.GetUnderlyingType(type);
