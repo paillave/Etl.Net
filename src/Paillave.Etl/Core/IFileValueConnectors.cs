@@ -4,5 +4,7 @@ namespace Paillave.Etl.Core
     {
         IFileValueProvider GetProvider(string code);
         IFileValueProcessor GetProcessor(string code);
+        string[] Processors { get; }
+        string[] Providers { get; }
     }
 }
