@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Paillave.Etl.Core
 {
@@ -8,6 +9,8 @@ namespace Paillave.Etl.Core
             = new Dictionary<string, IFileValueProcessor>();
         private Dictionary<string, IFileValueProvider> _providers
             = new Dictionary<string, IFileValueProvider>();
+        public string[] Processors => _processors.Keys.ToArray();
+        public string[] Providers => _providers.Keys.ToArray();
         public FileValueConnectors Register(IFileValueProvider provider)
         {
             this._providers[provider.Code] = provider;
