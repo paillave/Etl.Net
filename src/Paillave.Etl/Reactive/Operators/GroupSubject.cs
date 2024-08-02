@@ -71,10 +71,7 @@ namespace Paillave.Etl.Reactive.Operators
                 }
             }
         }
-        private void OnOutputPushValue(KeyGroup grp, TOut value)
-        {
-            base.PushValue(value);
-        }
+        private void OnOutputPushValue(KeyGroup grp, TOut value) => base.PushValue(value);
         private void OnOutputException(KeyGroup grp, Exception exception)
         {
             lock (_syncLock)
@@ -132,9 +129,6 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TOut> Group<TIn, TKey, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, TKey> getKey, Func<IPushObservable<TIn>, TIn, IPushObservable<TOut>> parallelProcess)
-        {
-            return new GroupSubject<TIn, TKey, TOut>(sourceS, getKey, parallelProcess);
-        }
+        public static IPushObservable<TOut> Group<TIn, TKey, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, TKey> getKey, Func<IPushObservable<TIn>, TIn, IPushObservable<TOut>> parallelProcess) => new GroupSubject<TIn, TKey, TOut>(sourceS, getKey, parallelProcess);
     }
 }

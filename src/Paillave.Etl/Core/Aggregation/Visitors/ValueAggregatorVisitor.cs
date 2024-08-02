@@ -11,10 +11,7 @@ namespace Paillave.Etl.Core.Aggregation.Visitors
         public PropertyInfo SourcePropertyInfo { get; private set; }
         public PropertyInfo FilteredPropertyInfo { get; private set; } = null;
         public object Filter { get; private set; }
-        private bool IsFilter(MethodInfo methodInfo)
-        {
-            return methodInfo.Name == nameof(AggregationOperators.For);
-        }
+        private bool IsFilter(MethodInfo methodInfo) => methodInfo.Name == nameof(AggregationOperators.For);
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {
             if (IsFilter(node.Method))

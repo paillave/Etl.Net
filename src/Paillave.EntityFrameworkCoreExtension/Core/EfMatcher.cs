@@ -8,15 +8,10 @@ namespace Paillave.EntityFrameworkCoreExtension.Core
 {
     public class EfMatcher<TInLeft, TEntity, TKey>
     {
-        private class CachedEntity
+        private class CachedEntity(TEntity entity)
         {
-            public CachedEntity(TEntity entity)
-            {
-                this.Timestamp = DateTime.Now.ToFileTime();
-                this.Entity = entity;
-            }
-            public long Timestamp { get; }
-            public TEntity Entity { get; }
+            public long Timestamp { get; } = DateTime.Now.ToFileTime();
+            public TEntity Entity { get; } = entity;
         }
         private Func<TInLeft, TKey> _getLeftKey;
         private Func<TEntity, TKey> _getRightKey;

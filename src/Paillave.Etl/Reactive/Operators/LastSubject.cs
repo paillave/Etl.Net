@@ -51,9 +51,6 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TIn> Last<TIn>(this IPushObservable<TIn> observable)
-        {
-            return new LastSubject<TIn>(observable);
-        }
+        public static IPushObservable<TIn> Last<TIn>(this IPushObservable<TIn> observable) => new LastSubject<TIn>(observable);
     }
 }

@@ -75,9 +75,6 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TIn> SkipUntil<TIn, TFrom>(this IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable)
-        {
-            return new SkipUntilSubject<TIn, TFrom>(observable, fromObservable);
-        }
+        public static IPushObservable<TIn> SkipUntil<TIn, TFrom>(this IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable) => new SkipUntilSubject<TIn, TFrom>(observable, fromObservable);
     }
 }

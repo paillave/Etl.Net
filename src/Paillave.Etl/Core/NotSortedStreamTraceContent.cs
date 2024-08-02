@@ -2,14 +2,9 @@
 
 namespace Paillave.Etl.Core
 {
-    public class NotSortedStreamTraceContent : StreamTraceContentBase
+    public class NotSortedStreamTraceContent(int lineNumber) : StreamTraceContentBase
     {
-        public NotSortedStreamTraceContent(int lineNumber)
-        {
-            this.LineNumber = lineNumber;
-        }
-
-        public int LineNumber { get; }
+        public int LineNumber { get; } = lineNumber;
 
         public override TraceLevel Level => TraceLevel.Error;
 

@@ -52,9 +52,6 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<T> Merge<T>(this IPushObservable<T> observable, params IPushObservable<T>[] observables)
-        {
-            return new MergeSubject<T>(new[] { observable }.Union(observables).ToArray());
-        }
+        public static IPushObservable<T> Merge<T>(this IPushObservable<T> observable, params IPushObservable<T>[] observables) => new MergeSubject<T>(new[] { observable }.Union(observables).ToArray());
     }
 }

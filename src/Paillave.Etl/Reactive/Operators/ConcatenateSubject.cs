@@ -94,9 +94,6 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<T> Concatenate<T>(this IPushObservable<T> observable, IPushObservable<T> bottomPart)
-        {
-            return new ConcatenateSubject<T>(observable, bottomPart);
-        }
+        public static IPushObservable<T> Concatenate<T>(this IPushObservable<T> observable, IPushObservable<T> bottomPart) => new ConcatenateSubject<T>(observable, bottomPart);
     }
 }

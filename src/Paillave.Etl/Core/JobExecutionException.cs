@@ -3,12 +3,8 @@ using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Core
 {
-    public class JobExecutionException : Exception
+    public class JobExecutionException(TraceEvent traceEvent) : Exception("Job execution failed", (traceEvent.Content as UnhandledExceptionStreamTraceContent)?.Exception)
     {
-        public TraceEvent TraceEvent { get; }
-        public JobExecutionException(TraceEvent traceEvent) : base("Job execution failed", (traceEvent.Content as UnhandledExceptionStreamTraceContent)?.Exception)
-        {
-            this.TraceEvent = traceEvent;
-        }
+        public TraceEvent TraceEvent { get; } = traceEvent;
     }
 }

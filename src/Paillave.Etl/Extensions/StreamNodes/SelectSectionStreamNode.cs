@@ -19,12 +19,8 @@ namespace Paillave.Etl.Core
         public Func<TIn, SwitchBehavior> SwitchToIgnore { get; set; } = null;
         public Func<TIn, int, TOut> ResultSelector { get; set; }
     }
-    public class SelectSectionStreamNode<TIn> : StreamNodeBase<TIn, IStream<TIn>, SelectSectionArgs<TIn>>
+    public class SelectSectionStreamNode<TIn>(string name, SelectSectionArgs<TIn> args) : StreamNodeBase<TIn, IStream<TIn>, SelectSectionArgs<TIn>>(name, args)
     {
-        public SelectSectionStreamNode(string name, SelectSectionArgs<TIn> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
@@ -51,12 +47,8 @@ namespace Paillave.Etl.Core
     }
 
 
-    public class SelectSectionStreamNode<TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, SelectSectionArgs<TIn, TOut>>
+    public class SelectSectionStreamNode<TIn, TOut>(string name, SelectSectionArgs<TIn, TOut> args) : StreamNodeBase<TOut, IStream<TOut>, SelectSectionArgs<TIn, TOut>>(name, args)
     {
-        public SelectSectionStreamNode(string name, SelectSectionArgs<TIn, TOut> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;

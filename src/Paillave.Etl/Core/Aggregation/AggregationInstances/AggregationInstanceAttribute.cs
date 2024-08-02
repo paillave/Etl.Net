@@ -3,12 +3,8 @@
 namespace Paillave.Etl.Core.Aggregation.AggregationInstances
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class AggregationInstanceAttribute : Attribute
+    public class AggregationInstanceAttribute(Type type) : Attribute
     {
-        public Type AggregationInstanceType { get; }
-        public AggregationInstanceAttribute(Type type)
-        {
-            this.AggregationInstanceType = type;
-        }
+        public Type AggregationInstanceType { get; } = type;
     }
 }

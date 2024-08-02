@@ -13,18 +13,21 @@ using System.Threading.Tasks;
 
 namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
 {
-    public class SqlServerSaveContextQuery<T> : SaveContextQueryBase<T> where T : class
+    public class SqlServerSaveContextQuery<T>(DbContext Context, 
+        string schema,  string table, 
+        List<IProperty> propertiesToInsert, 
+        List<IProperty> propertiesToUpdate,
+        List<List<IProperty>> propertiesForPivotSet, 
+        List<IProperty> propertiesToBulkLoad, 
+        List<IEntityType> entityTypes, 
+        CancellationToken cancellationToken, 
+        StoreObjectIdentifier storeObject) : SaveContextQueryBase<T>(Context, schema ?? "dbo", table, propertiesToInsert, propertiesToUpdate, propertiesForPivotSet, propertiesToBulkLoad, entityTypes, cancellationToken, storeObject) where T : class
     {
         private const string TempColumnNumOrderName = "_TempColumnNumOrder";
         private const string TempColumnAction = "_Action";
         private string SqlTargetTable => $"[{this.Schema}].[{this.Table}]";
         private string SqlStagingTableName => $"[{this.Schema}].[{this.Table}_temp_{this.StagingId}]";
         private string SqlOutputStagingTableName => $"[{this.Schema}].[{this.Table}_tempoutput_{this.StagingId}]";
-
-        public SqlServerSaveContextQuery(DbContext Context, string schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<List<IProperty>> propertiesForPivotSet, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes, CancellationToken cancellationToken, StoreObjectIdentifier storeObject)
-            : base(Context, schema ?? "dbo", table, propertiesToInsert, propertiesToUpdate, propertiesForPivotSet, propertiesToBulkLoad, entityTypes, cancellationToken, storeObject)
-        {
-        }
 
         public override int CreateStagingTable()
             => this.Context.Database.ExecuteSqlRaw(this.CreateStagingTableSql());
@@ -132,14 +135,10 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
             else
                 return regularEquality;
         }
-        private string BuildPivotCriteria()
-        {
-            return string.Join(" OR ", PropertiesForPivotSet.Select(this.BuildUnitPivotCriteria));
-        }
-        private string BuildUnitPivotCriteria(List<IProperty> propertiesForPivot)
-        {
-            return "(" + string.Join(" AND ", propertiesForPivot.Select(i => CreateEqualityConditionSql("T", "S", i))) + ")";
-        }
+        private string BuildPivotCriteria() 
+            => string.Join(" OR ", PropertiesForPivotSet.Select(this.BuildUnitPivotCriteria));
+        private string BuildUnitPivotCriteria(List<IProperty> propertiesForPivot) 
+            => "(" + string.Join(" AND ", propertiesForPivot.Select(i => CreateEqualityConditionSql("T", "S", i))) + ")";
         private string GetWhenMatchedMergeStatement(HashSet<string> pivotColumns, bool doNotUpdateIfExists)
         {
             if (PropertiesToUpdate.Count == 0)

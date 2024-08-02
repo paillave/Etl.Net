@@ -11,17 +11,14 @@ using Paillave.EntityFrameworkCoreExtension.Core;
 
 namespace Paillave.EntityFrameworkCoreExtension.Searcher
 {
-    public abstract class SearchDescriptorBase<TEntity, TId> : ISearchDescriptor where TEntity : class
+    public abstract class SearchDescriptorBase<TEntity, TId>(DbContext dbContext) : ISearchDescriptor where TEntity : class
     {
         // the actual regex (without c# escapings):
         // \.(?=(?:[^"]*"[^"]*")*(?![^"]*"))
         //private static Regex _regexSplitter = new Regex("\\.(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))", RegexOptions.Singleline);
-        protected DbContext DbContext { get; }
+        protected DbContext DbContext { get; } = dbContext;
         private Func<IQueryable<TEntity>, IQueryable<TEntity>> _include = null;
-        public SearchDescriptorBase(DbContext dbContext)
-        {
-            this.DbContext = dbContext;
-        }
+
         protected abstract Expression<Func<TEntity, TId>> GetIdExpression { get; }
         public virtual string Name => typeof(TEntity).Name;
         public IDictionary<string, INavigationSelector> Navigations { get; } = new Dictionary<string, INavigationSelector>(StringComparer.InvariantCultureIgnoreCase);

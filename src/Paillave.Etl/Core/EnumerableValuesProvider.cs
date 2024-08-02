@@ -9,14 +9,9 @@ namespace Paillave.Etl.Core
         public static EnumerableValuesProvider<TIn, TOut> Create<TIn, TOut>(Func<TIn, IEnumerable<TOut>> getValues) => new EnumerableValuesProvider<TIn, TOut>(getValues);
         public static EnumerableValuesProvider<TIn1, TIn2, TOut> Create<TIn1, TIn2, TOut>(Func<TIn1, TIn2, IEnumerable<TOut>> getValues) => new EnumerableValuesProvider<TIn1, TIn2, TOut>(getValues);
     }
-    public class EnumerableValuesProvider<TIn, TOut> : ValuesProviderBase<TIn, TOut>
+    public class EnumerableValuesProvider<TIn, TOut>(Func<TIn, IEnumerable<TOut>> getValues) : ValuesProviderBase<TIn, TOut>
     {
-        private Func<TIn, IEnumerable<TOut>> _getValues;
-
-        public EnumerableValuesProvider(Func<TIn, IEnumerable<TOut>> getValues)
-        {
-            _getValues = getValues;
-        }
+        private Func<TIn, IEnumerable<TOut>> _getValues = getValues;
 
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
@@ -31,14 +26,9 @@ namespace Paillave.Etl.Core
             }
         }
     }
-    public class EnumerableValuesProvider<TIn1, TIn2, TOut> : ValuesProviderBase<TIn1, TIn2, TOut>
+    public class EnumerableValuesProvider<TIn1, TIn2, TOut>(Func<TIn1, TIn2, IEnumerable<TOut>> getValues) : ValuesProviderBase<TIn1, TIn2, TOut>
     {
-        private Func<TIn1, TIn2, IEnumerable<TOut>> _getValues;
-
-        public EnumerableValuesProvider(Func<TIn1, TIn2, IEnumerable<TOut>> getValues)
-        {
-            _getValues = getValues;
-        }
+        private Func<TIn1, TIn2, IEnumerable<TOut>> _getValues = getValues;
 
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 

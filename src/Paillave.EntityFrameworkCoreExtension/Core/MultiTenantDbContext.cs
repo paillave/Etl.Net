@@ -17,11 +17,7 @@ namespace Paillave.EntityFrameworkCoreExtension.Core
         private object _sync = new object();
         private readonly string collation;
 
-        public MultiTenantDbContext(int tenantId)
-        {
-            this.TenantId = tenantId;
-
-        }
+        public MultiTenantDbContext(int tenantId) => this.TenantId = tenantId;
         public int TenantId { get; }
 
         // https://docs.microsoft.com/en-us/ef/core/providers/sqlite/limitations

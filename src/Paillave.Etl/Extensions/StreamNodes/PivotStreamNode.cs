@@ -14,12 +14,8 @@ namespace Paillave.Etl.Core
         public Func<TIn, TKey> GetKey { get; set; }
         public Expression<Func<TIn, TAggrRes>> AggregationDescriptor;
     }
-    public class PivotStreamNode<TIn, TAggrRes, TKey> : StreamNodeBase<AggregationResult<TIn, TKey, TAggrRes>, IStream<AggregationResult<TIn, TKey, TAggrRes>>, PivotArgs<TIn, TAggrRes, TKey>>
+    public class PivotStreamNode<TIn, TAggrRes, TKey>(string name, PivotArgs<TIn, TAggrRes, TKey> args) : StreamNodeBase<AggregationResult<TIn, TKey, TAggrRes>, IStream<AggregationResult<TIn, TKey, TAggrRes>>, PivotArgs<TIn, TAggrRes, TKey>>(name, args)
     {
-        public PivotStreamNode(string name, PivotArgs<TIn, TAggrRes, TKey> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
@@ -44,12 +40,8 @@ namespace Paillave.Etl.Core
         public ISortedStream<TIn, TKey> InputStream { get; set; }
         public Expression<Func<TIn, TAggrRes>> AggregationDescriptor;
     }
-    public class PivotSortedStreamNode<TIn, TAggrRes, TKey> : StreamNodeBase<AggregationResult<TIn, TKey, TAggrRes>, ISortedStream<AggregationResult<TIn, TKey, TAggrRes>, TKey>, PivotSortedArgs<TIn, TAggrRes, TKey>>
+    public class PivotSortedStreamNode<TIn, TAggrRes, TKey>(string name, PivotSortedArgs<TIn, TAggrRes, TKey> args) : StreamNodeBase<AggregationResult<TIn, TKey, TAggrRes>, ISortedStream<AggregationResult<TIn, TKey, TAggrRes>, TKey>, PivotSortedArgs<TIn, TAggrRes, TKey>>(name, args)
     {
-        public PivotSortedStreamNode(string name, PivotSortedArgs<TIn, TAggrRes, TKey> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;

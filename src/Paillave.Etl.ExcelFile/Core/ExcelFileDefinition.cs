@@ -145,13 +145,11 @@ namespace Paillave.Etl.ExcelFile.Core
             this._respectHeaderCase = respectHeaderCase;
             return this;
         }
-        private IEnumerable<string> GetDefaultColumnNames()
-        {
-            return _fieldDefinitions.Select((i, idx) => new { Name = i.ColumnName ?? i.PropertyInfo.Name, DefinedPosition = i.Position, FallbackPosition = idx })
+        private IEnumerable<string> GetDefaultColumnNames() =>
+            _fieldDefinitions.Select((i, idx) => new { Name = i.ColumnName ?? i.PropertyInfo.Name, DefinedPosition = i.Position, FallbackPosition = idx })
                 .OrderBy(i => i.DefinedPosition)
                 .ThenBy(i => i.FallbackPosition)
                 .Select(i => i.Name);
-        }
         public ExcelFileDefinition<T> WithCultureInfo(CultureInfo cultureInfo)
         {
             this._cultureInfo = cultureInfo;

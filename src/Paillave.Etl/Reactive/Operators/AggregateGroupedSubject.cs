@@ -65,9 +65,6 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TOut> AggregateGrouped<TIn, TAggr, TKey, TOut>(this IPushObservable<TIn> observable, Func<TIn, TAggr> createInitialValue, Func<TIn, TKey> getKey, Func<TAggr, TIn, TAggr> reducer, Func<TIn, TKey, TAggr, TOut> resultSelector)
-        {
-            return new AggregateGroupedSubject<TIn, TAggr, TKey, TOut>(observable, reducer, getKey, createInitialValue, resultSelector);
-        }
+        public static IPushObservable<TOut> AggregateGrouped<TIn, TAggr, TKey, TOut>(this IPushObservable<TIn> observable, Func<TIn, TAggr> createInitialValue, Func<TIn, TKey> getKey, Func<TAggr, TIn, TAggr> reducer, Func<TIn, TKey, TAggr, TOut> resultSelector) => new AggregateGroupedSubject<TIn, TAggr, TKey, TOut>(observable, reducer, getKey, createInitialValue, resultSelector);
     }
 }

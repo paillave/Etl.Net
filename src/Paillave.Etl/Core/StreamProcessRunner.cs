@@ -17,23 +17,15 @@ namespace Paillave.Etl.Core
         public static StreamProcessRunner<TConfig> Create<TConfig>(Action<ISingleStream<TConfig>> jobDefinition, string jobName = "Job") => new StreamProcessRunner<TConfig>(jobDefinition, jobName);
         public static Task<ExecutionStatus> CreateAndExecuteAsync<TConfig>(TConfig config, Action<ISingleStream<TConfig>> jobDefinition, ExecutionOptions<TConfig> options = null, string jobName = "Job") => new StreamProcessRunner<TConfig>(jobDefinition, jobName).ExecuteAsync(config, options);
     }
-    public class DebugNodeStreamEventArgs : EventArgs
+    public class DebugNodeStreamEventArgs(string nodeName, int fromSequenceId,
+        int toSequenceId, int count, bool hasError, IList<object> traceContents) : EventArgs
     {
-        public DebugNodeStreamEventArgs(string nodeName, int fromSequenceId, int toSequenceId, int count, bool hasError, IList<object> traceContents)
-        {
-            this.NodeName = nodeName;
-            this.FromSequenceId = fromSequenceId;
-            this.ToSequenceId = toSequenceId;
-            this.Count = count;
-            this.HasError = hasError;
-            this.TraceContents = new ReadOnlyCollection<object>(traceContents);
-        }
-        public string NodeName { get; }
-        public int FromSequenceId { get; set; }
-        public int ToSequenceId { get; set; }
-        public int Count { get; set; }
-        public bool HasError { get; set; }
-        public ReadOnlyCollection<object> TraceContents { get; }
+        public string NodeName { get; } = nodeName;
+        public int FromSequenceId { get; set; } = fromSequenceId;
+        public int ToSequenceId { get; set; } = toSequenceId;
+        public int Count { get; set; } = count;
+        public bool HasError { get; set; } = hasError;
+        public ReadOnlyCollection<object> TraceContents { get; } = new ReadOnlyCollection<object>(traceContents);
     }
     public class ExecutionOptions<TConfig>
     {
@@ -46,7 +38,8 @@ namespace Paillave.Etl.Core
         public IFileValueConnectors Connectors { get; set; } = new NoFileValueConnectors();
     }
     public delegate void DebugNodeStreamEventHandler(object sender, DebugNodeStreamEventArgs e);
-    public class StreamProcessRunner<TConfig> : IStreamProcessObserver
+    public class StreamProcessRunner<TConfig>(Action<ISingleStream<TConfig>> jobDefinition, 
+        string jobName = null) : IStreamProcessObserver
     {
         public event DebugNodeStreamEventHandler DebugNodeStream = null;
 
@@ -55,16 +48,10 @@ namespace Paillave.Etl.Core
             DebugNodeStreamEventHandler handler = this.DebugNodeStream;
             handler?.Invoke(this, e);
         }
-        private Action<ISingleStream<TConfig>> _jobDefinition;
-        // private INodeContext _rootNode;
-        // private Func<IPushObservable<TraceEvent>, IPushObservable<TraceEvent>> _defaultStopCondition = traces => traces.Filter(i => i.Content.Level == TraceLevel.Error).First();
-        public StreamProcessRunner(Action<ISingleStream<TConfig>> jobDefinition, string jobName = null)
-        {
-            _jobDefinition = jobDefinition ?? (_jobDefinition => { });
-            JobName = jobName;
-        }
+        private Action<ISingleStream<TConfig>> _jobDefinition = jobDefinition ?? (_jobDefinition => { });
+
         public int DebugChunkSize { get; set; } = 1000;
-        public string JobName { get; }
+        public string JobName { get; } = jobName;
 
         private void DebugTraceProcess(IStream<TraceEvent> traceStream, ISingleStream<TConfig> startStream)
             => traceStream.Observable

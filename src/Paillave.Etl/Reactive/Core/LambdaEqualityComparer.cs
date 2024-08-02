@@ -9,18 +9,9 @@ namespace Paillave.Etl.Reactive.Core
     public class LambdaEqualityComparer<T> : IEqualityComparer<T>
     {
         public Func<T, T, bool> Comparer { get; }
-        public LambdaEqualityComparer(Func<T, T, bool> comparer)
-        {
-            Comparer = comparer;
-        }
-        public bool Equals(T x, T y)
-        {
-            return Comparer(x, y);
-        }
-        public int GetHashCode(T obj)
-        {
-            return 0;
-        }
+        public LambdaEqualityComparer(Func<T, T, bool> comparer) => Comparer = comparer;
+        public bool Equals(T x, T y) => Comparer(x, y);
+        public int GetHashCode(T obj) => 0;
     }
     public class LambdaEqualityComparer<T, K> : IEqualityComparer<T> where K : IEquatable<K>
     {
@@ -31,13 +22,7 @@ namespace Paillave.Etl.Reactive.Core
             _propertyToCompare = prop;
             Comparer = (t1, t2) => _propertyToCompare(t1).Equals(_propertyToCompare(t2));
         }
-        public bool Equals(T x, T y)
-        {
-            return Comparer(x, y);
-        }
-        public int GetHashCode(T obj)
-        {
-            return _propertyToCompare(obj)?.GetHashCode() ?? 0;
-        }
+        public bool Equals(T x, T y) => Comparer(x, y);
+        public int GetHashCode(T obj) => _propertyToCompare(obj)?.GetHashCode() ?? 0;
     }
 }

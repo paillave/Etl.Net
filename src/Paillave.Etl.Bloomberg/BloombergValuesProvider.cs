@@ -27,13 +27,11 @@ namespace Paillave.Etl.Bloomberg
     }
     public static class BloombergValuesProvider
     {
-        public static BloombergValuesProvider<TParsed> Create<TParsed>(Expression<Func<IFieldMapper, TParsed>> expression)
-        {
-            return new BloombergValuesProvider<TParsed>(new BloombergValuesProviderArgs<TParsed>
+        public static BloombergValuesProvider<TParsed> Create<TParsed>(Expression<Func<IFieldMapper, TParsed>> expression) =>
+            new BloombergValuesProvider<TParsed>(new BloombergValuesProviderArgs<TParsed>
             {
                 Mapping = new FlatFileDefinition<TParsed>().WithMap(expression).IsColumnSeparated('|'),
             });
-        }
     }
     public class BloombergValuesProvider<TParsed> : ValuesProviderBase<IFileValue, BloombergResult<TParsed>>
     {

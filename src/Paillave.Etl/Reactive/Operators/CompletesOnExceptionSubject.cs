@@ -37,21 +37,9 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<T> CompletesOnException<T>(this IPushObservable<T> observable, Action<Exception> catchMethod)
-        {
-            return new CompletesOnExceptionSubject<T, Exception>(observable, catchMethod);
-        }
-        public static IPushObservable<T> CompletesOnException<T>(this IPushObservable<T> observable)
-        {
-            return new CompletesOnExceptionSubject<T, Exception>(observable, _ => { });
-        }
-        public static IPushObservable<T> CompletesOnException<T, E>(this IPushObservable<T> observable, Action<Exception> catchMethod) where E : Exception
-        {
-            return new CompletesOnExceptionSubject<T, E>(observable, catchMethod);
-        }
-        public static IPushObservable<T> CompletesOnException<T, E>(this IPushObservable<T> observable) where E : Exception
-        {
-            return new CompletesOnExceptionSubject<T, E>(observable, _ => { });
-        }
+        public static IPushObservable<T> CompletesOnException<T>(this IPushObservable<T> observable, Action<Exception> catchMethod) => new CompletesOnExceptionSubject<T, Exception>(observable, catchMethod);
+        public static IPushObservable<T> CompletesOnException<T>(this IPushObservable<T> observable) => new CompletesOnExceptionSubject<T, Exception>(observable, _ => { });
+        public static IPushObservable<T> CompletesOnException<T, E>(this IPushObservable<T> observable, Action<Exception> catchMethod) where E : Exception => new CompletesOnExceptionSubject<T, E>(observable, catchMethod);
+        public static IPushObservable<T> CompletesOnException<T, E>(this IPushObservable<T> observable) where E : Exception => new CompletesOnExceptionSubject<T, E>(observable, _ => { });
     }
 }

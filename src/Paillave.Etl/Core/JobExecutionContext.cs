@@ -11,41 +11,33 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl.Core
 {
-    internal class JobExecutionContext : IExecutionContext
+    internal class JobExecutionContext(string jobName, Guid executionId, 
+        IPushSubject<TraceEvent> traceSubject, JobPoolDispatcher jobPoolDispatcher, 
+        IDependencyResolver resolver, CancellationTokenSource internalCancellationTokenSource, 
+        IFileValueConnectors connectors, bool useDetailedTraces) : IExecutionContext
     {
         private object _getOrCreateContextBagLock = new object();
         private JobPool _logJobPool = new JobPool();
         public TraceEvent EndOfProcessTraceEvent { get; private set; } = null;
-        private readonly IPushSubject<TraceEvent> _traceSubject;
+        private readonly IPushSubject<TraceEvent> _traceSubject = traceSubject;
         private List<StreamToNodeLink> _streamToNodeLinks = new List<StreamToNodeLink>();
-        private readonly JobPoolDispatcher _jobPoolDispatcher;
-        private readonly CancellationTokenSource _internalCancellationTokenSource;
+        private readonly JobPoolDispatcher _jobPoolDispatcher = jobPoolDispatcher;
+        private readonly CancellationTokenSource _internalCancellationTokenSource = internalCancellationTokenSource;
         private List<INodeDescription> _nodes = new List<INodeDescription>();
         public JobDefinitionStructure GetDefinitionStructure() => new JobDefinitionStructure(_streamToNodeLinks, _nodes, this.JobName);
         private readonly List<Task> _tasksToWait = new List<Task>();
         private readonly CollectionDisposableManager _disposables = new CollectionDisposableManager();
-        public JobExecutionContext(string jobName, Guid executionId, IPushSubject<TraceEvent> traceSubject, JobPoolDispatcher jobPoolDispatcher, IDependencyResolver resolver, CancellationTokenSource internalCancellationTokenSource, IFileValueConnectors connectors, bool useDetailedTraces)
-        {
-            this.UseDetailedTraces = useDetailedTraces;
-            this.ExecutionId = executionId;
-            this.JobName = jobName;
-            this._jobPoolDispatcher = jobPoolDispatcher;
-            this._internalCancellationTokenSource = internalCancellationTokenSource;
-            this._traceSubject = traceSubject;
-            this.Connectors = connectors;
-            this.ContextBag = new SimpleDependencyResolver();
-            this.DependencyResolver = resolver;
-        }
-        public IFileValueConnectors Connectors { get; }
-        public SimpleDependencyResolver ContextBag { get; }
-        public IDependencyResolver DependencyResolver { get; }
-        public Guid ExecutionId { get; }
-        public string JobName { get; }
+
+        public IFileValueConnectors Connectors { get; } = connectors;
+        public SimpleDependencyResolver ContextBag { get; } = new SimpleDependencyResolver();
+        public IDependencyResolver DependencyResolver { get; } = resolver;
+        public Guid ExecutionId { get; } = executionId;
+        public string JobName { get; } = jobName;
         public bool IsTracingContext => false;
 
         public bool Terminating => EndOfProcessTraceEvent != null;
 
-        public bool UseDetailedTraces { get; }
+        public bool UseDetailedTraces { get; } = useDetailedTraces;
 
         public void AddNode<T>(INodeDescription nodeContext, IPushObservable<T> observable)
         {

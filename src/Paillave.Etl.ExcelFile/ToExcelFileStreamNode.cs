@@ -13,11 +13,8 @@ namespace Paillave.Etl.ExcelFile
         public ExcelFileDefinition<TIn> Mapping { get; set; }
         public string FileName { get; set; }
     }
-    public class ToExcelFileStreamNode<TIn> : StreamNodeBase<IFileValue, IStream<IFileValue>, ToExcelFileArgs<TIn>>
+    public class ToExcelFileStreamNode<TIn>(string name, ToExcelFileArgs<TIn> args) : StreamNodeBase<IFileValue, IStream<IFileValue>, ToExcelFileArgs<TIn>>(name, args)
     {
-        public ToExcelFileStreamNode(string name, ToExcelFileArgs<TIn> args) : base(name, args)
-        {
-        }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
@@ -49,13 +46,9 @@ namespace Paillave.Etl.ExcelFile
         public ExcelFileDefinition<TIn> Mapping { get; set; }
         public ISingleStream<Stream> TargetStream { get; set; }
     }
-    public class ToExcelFileStreamNode<TIn, TStream> : StreamNodeBase<TIn, TStream, ToExcelFileArgs<TIn, TStream>>
+    public class ToExcelFileStreamNode<TIn, TStream>(string name, ToExcelFileArgs<TIn, TStream> args) : StreamNodeBase<TIn, TStream, ToExcelFileArgs<TIn, TStream>>(name, args)
         where TStream : IStream<TIn>
     {
-        public ToExcelFileStreamNode(string name, ToExcelFileArgs<TIn, TStream> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
@@ -68,9 +61,6 @@ namespace Paillave.Etl.ExcelFile
                 .FlatMap((i, ct) => PushObservable.FromEnumerable(i, ct));
             return CreateMatchingStream(obs, args.MainStream);
         }
-        protected void ProcessValueToOutput(Stream streamWriter, IList<TIn> value)
-        {
-            value.WriteExcelListInStream(Args.Mapping, streamWriter);
-        }
+        protected void ProcessValueToOutput(Stream streamWriter, IList<TIn> value) => value.WriteExcelListInStream(Args.Mapping, streamWriter);
     }
 }

@@ -37,17 +37,8 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<T> DistinctUntilChanged<T>(this IPushObservable<T> observable, IEqualityComparer<T> comparer)
-        {
-            return new DistinctUntilChangedSubject<T>(observable, comparer);
-        }
-        public static IPushObservable<T> DistinctUntilChanged<T>(this IPushObservable<T> observable, Func<T, T, bool> comparer)
-        {
-            return new DistinctUntilChangedSubject<T>(observable, new LambdaEqualityComparer<T>(comparer));
-        }
-        public static IPushObservable<T> DistinctUntilChanged<T>(this IPushObservable<T> observable) where T : IEquatable<T>
-        {
-            return new DistinctUntilChangedSubject<T>(observable, new LambdaEqualityComparer<T>((l, r) => l.Equals(r)));
-        }
+        public static IPushObservable<T> DistinctUntilChanged<T>(this IPushObservable<T> observable, IEqualityComparer<T> comparer) => new DistinctUntilChangedSubject<T>(observable, comparer);
+        public static IPushObservable<T> DistinctUntilChanged<T>(this IPushObservable<T> observable, Func<T, T, bool> comparer) => new DistinctUntilChangedSubject<T>(observable, new LambdaEqualityComparer<T>(comparer));
+        public static IPushObservable<T> DistinctUntilChanged<T>(this IPushObservable<T> observable) where T : IEquatable<T> => new DistinctUntilChangedSubject<T>(observable, new LambdaEqualityComparer<T>((l, r) => l.Equals(r)));
     }
 }

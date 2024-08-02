@@ -17,16 +17,14 @@ namespace Paillave.Etl.Core
         /// <typeparam name="TAggr">Aggregation type</typeparam>
         /// <typeparam name="TKeys">Key type</typeparam>
         /// <returns>Output type</returns>
-        public static IStream<AggregationResult<TIn, TKeys, TAggr>> AggregateMultiKey<TIn, TAggr, TKeys>(this IStream<TIn> stream, string name, Func<TIn, TKeys> getKeys, Func<TIn, TAggr> emptyAggregation, Func<TAggr, TIn, TAggr> aggregate)
-        {
-            return new AggregateMultiKeyStreamNode<TIn, TAggr, TKeys>(name, new AggregateMultiKeyArgs<TIn, TAggr, TKeys>
+        public static IStream<AggregationResult<TIn, TKeys, TAggr>> AggregateMultiKey<TIn, TAggr, TKeys>(this IStream<TIn> stream, string name, Func<TIn, TKeys> getKeys, Func<TIn, TAggr> emptyAggregation, Func<TAggr, TIn, TAggr> aggregate) =>
+            new AggregateMultiKeyStreamNode<TIn, TAggr, TKeys>(name, new AggregateMultiKeyArgs<TIn, TAggr, TKeys>
             {
                 InputStream = stream,
                 Aggregate = aggregate,
                 GetKeys = getKeys,
                 CreateEmptyAggregation = emptyAggregation,
             }).Output;
-        }
         /// <summary>
         /// Aggregate every element of a stream into a list of aggregations computed for each group by the key
         /// </summary>
@@ -39,16 +37,14 @@ namespace Paillave.Etl.Core
         /// <typeparam name="TAggr">Aggregation type</typeparam>
         /// <typeparam name="TKey">Key type</typeparam>
         /// <returns>Output type</returns>
-        public static IStream<AggregationResult<TIn, TKey, TAggr>> Aggregate<TIn, TAggr, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, Func<TIn, TAggr> emptyAggregation, Func<TAggr, TIn, TAggr> aggregate)
-        {
-            return new AggregateStreamNode<TIn, TAggr, TKey>(name, new AggregateArgs<TIn, TAggr, TKey>
+        public static IStream<AggregationResult<TIn, TKey, TAggr>> Aggregate<TIn, TAggr, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, Func<TIn, TAggr> emptyAggregation, Func<TAggr, TIn, TAggr> aggregate) =>
+            new AggregateStreamNode<TIn, TAggr, TKey>(name, new AggregateArgs<TIn, TAggr, TKey>
             {
                 InputStream = stream,
                 Aggregate = aggregate,
                 GetKey = getKey,
                 CreateEmptyAggregation = emptyAggregation,
             }).Output;
-        }
         /// <summary>
         /// Aggregate every element of a sorted stream into a list of aggregations computed for each group by the sorting key
         /// </summary>
@@ -60,15 +56,13 @@ namespace Paillave.Etl.Core
         /// <typeparam name="TAggr">Aggregation type</typeparam>
         /// <typeparam name="TKey">Key type</typeparam>
         /// <returns>Output type</returns>
-        public static ISortedStream<AggregationResult<TIn, TKey, TAggr>, TKey> Aggregate<TIn, TAggr, TKey>(this ISortedStream<TIn, TKey> stream, string name, Func<TIn, TAggr> emptyAggregation, Func<TAggr, TIn, TAggr> aggregate)
-        {
-            return new AggregateSortedStreamNode<TIn, TAggr, TKey>(name, new AggregateSortedArgs<TIn, TAggr, TKey>
+        public static ISortedStream<AggregationResult<TIn, TKey, TAggr>, TKey> Aggregate<TIn, TAggr, TKey>(this ISortedStream<TIn, TKey> stream, string name, Func<TIn, TAggr> emptyAggregation, Func<TAggr, TIn, TAggr> aggregate) =>
+            new AggregateSortedStreamNode<TIn, TAggr, TKey>(name, new AggregateSortedArgs<TIn, TAggr, TKey>
             {
                 InputStream = stream,
                 Aggregate = aggregate,
                 CreateEmptyAggregation = emptyAggregation
             }).Output;
-        }
 
         /// <summary>
         /// Aggregate every element of a stream into a list of aggregations computed for each group by the key
@@ -82,16 +76,14 @@ namespace Paillave.Etl.Core
         /// <typeparam name="TAggr">Aggregation type</typeparam>
         /// <typeparam name="TKey">Key type</typeparam>
         /// <returns>Output type</returns>
-        public static IStream<Correlated<AggregationResult<TIn, TKey, TAggr>>> Aggregate<TIn, TAggr, TKey>(this IStream<Correlated<TIn>> stream, string name, Func<TIn, TKey> getKey, Func<TIn, TAggr> emptyAggregation, Func<TAggr, TIn, TAggr> aggregate)
-        {
-            return new AggregateCorrelatedStreamNode<TIn, TAggr, TKey>(name, new AggregateCorrelatedArgs<TIn, TAggr, TKey>
+        public static IStream<Correlated<AggregationResult<TIn, TKey, TAggr>>> Aggregate<TIn, TAggr, TKey>(this IStream<Correlated<TIn>> stream, string name, Func<TIn, TKey> getKey, Func<TIn, TAggr> emptyAggregation, Func<TAggr, TIn, TAggr> aggregate) =>
+            new AggregateCorrelatedStreamNode<TIn, TAggr, TKey>(name, new AggregateCorrelatedArgs<TIn, TAggr, TKey>
             {
                 InputStream = stream,
                 Aggregate = aggregate,
                 GetKey = getKey,
                 CreateEmptyAggregation = emptyAggregation,
             }).Output;
-        }
         /// <summary>
         /// Aggregate every element of a sorted stream into a list of aggregations computed for each group by the sorting key
         /// </summary>
@@ -103,66 +95,45 @@ namespace Paillave.Etl.Core
         /// <typeparam name="TAggr">Aggregation type</typeparam>
         /// <typeparam name="TKey">Key type</typeparam>
         /// <returns>Output type</returns>
-        public static ISortedStream<Correlated<AggregationResult<TIn, TKey, TAggr>>, TKey> Aggregate<TIn, TAggr, TKey>(this ISortedStream<Correlated<TIn>, TKey> stream, string name, Func<TIn, TAggr> emptyAggregation, Func<TAggr, TIn, TAggr> aggregate)
-        {
-            return new AggregateCorrelatedSortedStreamNode<TIn, TAggr, TKey>(name, new AggregateCorrelatedSortedArgs<TIn, TAggr, TKey>
+        public static ISortedStream<Correlated<AggregationResult<TIn, TKey, TAggr>>, TKey> Aggregate<TIn, TAggr, TKey>(this ISortedStream<Correlated<TIn>, TKey> stream, string name, Func<TIn, TAggr> emptyAggregation, Func<TAggr, TIn, TAggr> aggregate) =>
+            new AggregateCorrelatedSortedStreamNode<TIn, TAggr, TKey>(name, new AggregateCorrelatedSortedArgs<TIn, TAggr, TKey>
             {
                 InputStream = stream,
                 Aggregate = aggregate,
                 CreateEmptyAggregation = emptyAggregation
             }).Output;
-        }
 
-
-
-
-
-
-
-
-
-
-
-
-        public static IStream<AggregationResult<TIn, TKey, List<TIn>>> GroupBy<TIn, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey)
-        {
-            return new AggregateStreamNode<TIn, List<TIn>, TKey>(name, new AggregateArgs<TIn, List<TIn>, TKey>
+        public static IStream<AggregationResult<TIn, TKey, List<TIn>>> GroupBy<TIn, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey) =>
+            new AggregateStreamNode<TIn, List<TIn>, TKey>(name, new AggregateArgs<TIn, List<TIn>, TKey>
             {
                 InputStream = stream,
                 GetKey = getKey,
                 Aggregate = (a, v) => { a.Add(v); return a; },
                 CreateEmptyAggregation = _ => new List<TIn>(),
             }).Output;
-        }
-        public static ISortedStream<AggregationResult<TIn, TKey, List<TIn>>, TKey> GroupBy<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name)
-        {
-            return new AggregateSortedStreamNode<TIn, List<TIn>, TKey>(name, new AggregateSortedArgs<TIn, List<TIn>, TKey>
+        public static ISortedStream<AggregationResult<TIn, TKey, List<TIn>>, TKey> GroupBy<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name) =>
+            new AggregateSortedStreamNode<TIn, List<TIn>, TKey>(name, new AggregateSortedArgs<TIn, List<TIn>, TKey>
             {
                 InputStream = stream,
                 Aggregate = (a, v) => { a.Add(v); return a; },
                 CreateEmptyAggregation = _ => new List<TIn>(),
             }).Output;
-        }
 
-        public static IStream<Correlated<AggregationResult<TIn, TKey, List<TIn>>>> GroupBy<TIn, TKey>(this IStream<Correlated<TIn>> stream, string name, Func<TIn, TKey> getKey)
-        {
-            return new AggregateCorrelatedStreamNode<TIn, List<TIn>, TKey>(name, new AggregateCorrelatedArgs<TIn, List<TIn>, TKey>
+        public static IStream<Correlated<AggregationResult<TIn, TKey, List<TIn>>>> GroupBy<TIn, TKey>(this IStream<Correlated<TIn>> stream, string name, Func<TIn, TKey> getKey) =>
+            new AggregateCorrelatedStreamNode<TIn, List<TIn>, TKey>(name, new AggregateCorrelatedArgs<TIn, List<TIn>, TKey>
             {
                 InputStream = stream,
                 GetKey = getKey,
                 Aggregate = (a, v) => { a.Add(v); return a; },
                 CreateEmptyAggregation = _ => new List<TIn>(),
             }).Output;
-        }
 
-        public static ISortedStream<Correlated<AggregationResult<TIn, TKey, List<TIn>>>, TKey> GroupBy<TIn, TKey>(this ISortedStream<Correlated<TIn>, TKey> stream, string name)
-        {
-            return new AggregateCorrelatedSortedStreamNode<TIn, List<TIn>, TKey>(name, new AggregateCorrelatedSortedArgs<TIn, List<TIn>, TKey>
+        public static ISortedStream<Correlated<AggregationResult<TIn, TKey, List<TIn>>>, TKey> GroupBy<TIn, TKey>(this ISortedStream<Correlated<TIn>, TKey> stream, string name) =>
+            new AggregateCorrelatedSortedStreamNode<TIn, List<TIn>, TKey>(name, new AggregateCorrelatedSortedArgs<TIn, List<TIn>, TKey>
             {
                 InputStream = stream,
                 Aggregate = (a, v) => { a.Add(v); return a; },
                 CreateEmptyAggregation = _ => new List<TIn>(),
             }).Output;
-        }
     }
 }
