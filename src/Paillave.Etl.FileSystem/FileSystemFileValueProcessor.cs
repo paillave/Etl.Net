@@ -19,7 +19,7 @@ namespace Paillave.Etl.FileSystem
             using var l = fileValue.Get(processorParameters.UseStreamCopy);
             var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
             var outputFilePath = Path.Combine(folder, fileValue.Name);
-            outputFilePath = SmartFormat.Smart.Format(outputFilePath, fileValue);
+            outputFilePath = SmartFormat.Smart.Format(outputFilePath.Replace(@"\",@"\\"), fileValue);
             if (processorParameters.BuildMissingSubFolders)
             {
                 var directory = Path.GetDirectoryName(outputFilePath);

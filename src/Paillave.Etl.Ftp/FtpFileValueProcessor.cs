@@ -18,7 +18,7 @@ namespace Paillave.Etl.Ftp
 
             // var folder = Path.Combine(connectionParameters.RootFolder ?? "", processorParameters.SubFolder ?? "");
             var filePath = Path.Combine(folder, fileValue.Name);
-            filePath = SmartFormat.Smart.Format(filePath, fileValue.Metadata);
+            filePath = SmartFormat.Smart.Format(filePath.Replace(@"\",@"\\"), fileValue.Metadata);
             using var stream = fileValue.Get(processorParameters.UseStreamCopy);
             byte[] fileContents;
             using (MemoryStream ms = new MemoryStream())
