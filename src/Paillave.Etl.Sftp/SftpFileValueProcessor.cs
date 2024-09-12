@@ -31,6 +31,8 @@ namespace Paillave.Etl.Sftp
             using (var client = new SftpClient(connectionInfo))
             {
                 client.Connect();
+                if (client.Exists(filePath))
+                    client.DeleteFile(filePath);
                 client.WriteAllBytes(filePath, fileContents);
             }
         }
