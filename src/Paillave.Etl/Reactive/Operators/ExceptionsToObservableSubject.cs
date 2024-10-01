@@ -11,15 +11,9 @@ namespace Paillave.Etl.Reactive.Operators
     {
         private readonly IDisposable _subscription;
 
-        public ExceptionsToObservableSubject(IPushObservable<T> observable) : base(observable.CancellationToken)
-        {
-            _subscription = observable.Subscribe(_ => { }, HandleComplete, HandlePushError);
-        }
+        public ExceptionsToObservableSubject(IPushObservable<T> observable) : base(observable.CancellationToken) => _subscription = observable.Subscribe(_ => { }, HandleComplete, HandlePushError);
 
-        private void HandleComplete()
-        {
-            Complete();
-        }
+        private void HandleComplete() => Complete();
 
         private void HandlePushError(Exception obj)
         {
@@ -38,9 +32,6 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<Exception> ExceptionsToObservable<T>(this IPushObservable<T> observable)
-        {
-            return new ExceptionsToObservableSubject<T>(observable);
-        }
+        public static IPushObservable<Exception> ExceptionsToObservable<T>(this IPushObservable<T> observable) => new ExceptionsToObservableSubject<T>(observable);
     }
 }

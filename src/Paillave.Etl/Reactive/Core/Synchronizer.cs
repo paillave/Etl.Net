@@ -6,14 +6,8 @@ namespace Paillave.Etl.Reactive.Core
     public class Synchronizer
     {
         private SemaphoreSlim _semaphore;
-        public IDisposable WaitBeforeProcess()
-        {
-            return new SemaphoreAwaiter(_semaphore);
-        }
-        public Synchronizer(bool noParallelisation = false)
-        {
-            _semaphore = noParallelisation ? new SemaphoreSlim(1, 1) : new SemaphoreSlim(10, 10);
-        }
+        public IDisposable WaitBeforeProcess() => new SemaphoreAwaiter(_semaphore);
+        public Synchronizer(bool noParallelisation = false) => _semaphore = noParallelisation ? new SemaphoreSlim(1, 1) : new SemaphoreSlim(10, 10);
         private class SemaphoreAwaiter : IDisposable
         {
             private SemaphoreSlim _semaphore;
@@ -34,10 +28,7 @@ namespace Paillave.Etl.Reactive.Core
                     disposedValue = true;
                 }
             }
-            public void Dispose()
-            {
-                Dispose(true);
-            }
+            public void Dispose() => Dispose(true);
             #endregion
         }
     }

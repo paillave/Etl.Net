@@ -5,19 +5,13 @@ using System.Threading;
 
 namespace Paillave.Etl.Reactive.Core
 {
-    public class DeferredWrapperPushObservable<T> : IDeferredPushObservable<T>
+    public class DeferredWrapperPushObservable<T>(IPushObservable<T> observable, Action start, Synchronizer synchronizer, CancellationToken cancellationToken) : IDeferredPushObservable<T>
     {
-        public CancellationToken CancellationToken { get; }
-        private Action _start;
-        private IPushObservable<T> _observable;
-        private Synchronizer _synchronizer = null;
-        public DeferredWrapperPushObservable(IPushObservable<T> observable, Action start, Synchronizer synchronizer, CancellationToken cancellationToken)
-        {
-            this.CancellationToken = cancellationToken;
-            _observable = observable;
-            _start = start;
-            _synchronizer = synchronizer;
-        }
+        public CancellationToken CancellationToken { get; } = cancellationToken;
+        private Action _start = start;
+        private IPushObservable<T> _observable = observable;
+        private Synchronizer _synchronizer = synchronizer;
+
         public void Start()
         {
             if (_synchronizer == null)

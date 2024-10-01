@@ -9,16 +9,12 @@ namespace Paillave.Etl.Core
     {
         public static GroupProcessor<TIn, TMultiKey> Create<TIn, TMultiKey>(Func<TIn, TMultiKey> getKeys) => new GroupProcessor<TIn, TMultiKey>(getKeys);
     }
-    public class GroupProcessor<TIn, TMultiKey>
+    public class GroupProcessor<TIn, TMultiKey>(Func<TIn, TMultiKey> getKeys)
     {
-        private Func<TIn, TMultiKey> _getKeys;
+        private Func<TIn, TMultiKey> _getKeys = getKeys;
         private static PropertyInfo[] _keyProperties = typeof(TMultiKey).GetProperties().ToArray();
         private Dictionary<(string PropertyName, object Value), (ObjectBuilder<TMultiKey> key, List<TIn>)> _keysDictionaries = new Dictionary<(string PropertyName, object Value), (ObjectBuilder<TMultiKey> key, List<TIn> rows)>();
         private List<TIn> _rowsWithNoKey = new List<TIn>();
-        public GroupProcessor(Func<TIn, TMultiKey> getKeys)
-        {
-            _getKeys = getKeys;
-        }
 
         public void ProcessRow(TIn row)
         {

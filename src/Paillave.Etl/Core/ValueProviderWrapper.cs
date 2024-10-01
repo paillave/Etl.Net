@@ -3,18 +3,12 @@ using System.Threading;
 
 namespace Paillave.Etl.Core
 {
-    public class ValueProviderWrapper<TIn, TInnerIn, TInnerOut, TOut> : IValuesProvider<TIn, TOut>
+    public class ValueProviderWrapper<TIn, TInnerIn, TInnerOut, TOut>(IValuesProvider<TInnerIn, TInnerOut> innerValueProvider,
+        Func<TIn, TInnerIn> getInnerIn, Func<TInnerOut, TIn, TOut> getOut) : IValuesProvider<TIn, TOut>
     {
-        private IValuesProvider<TInnerIn, TInnerOut> _innerValueProvider;
-        private readonly Func<TIn, TInnerIn> _getInnerIn;
-        private readonly Func<TInnerOut, TIn, TOut> _getOut;
-
-        public ValueProviderWrapper(IValuesProvider<TInnerIn, TInnerOut> innerValueProvider, Func<TIn, TInnerIn> getInnerIn, Func<TInnerOut, TIn, TOut> getOut)
-        {
-            _innerValueProvider = innerValueProvider;
-            this._getInnerIn = getInnerIn;
-            this._getOut = getOut;
-        }
+        private IValuesProvider<TInnerIn, TInnerOut> _innerValueProvider = innerValueProvider;
+        private readonly Func<TIn, TInnerIn> _getInnerIn = getInnerIn;
+        private readonly Func<TInnerOut, TIn, TOut> _getOut = getOut;
 
         public string TypeName => _innerValueProvider.TypeName;
 

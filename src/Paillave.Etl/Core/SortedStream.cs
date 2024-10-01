@@ -20,10 +20,8 @@ namespace Paillave.Etl.Core
         }
         public SortDefinition<T, TKey> SortDefinition { get; }
 
-        public override object GetMatchingStream<TOut>(INodeContext sourceNode, object observable)
-        {
+        public override object GetMatchingStream<TOut>(INodeContext sourceNode, object observable) =>
             // TODO: the following is an absolute dreadful solution about which I MUST find a proper alternative
-            return new SortedStream<TOut, TKey>(sourceNode, (IPushObservable<TOut>)observable, (SortDefinition<TOut, TKey>)((object)this.SortDefinition));
-        }
+            new SortedStream<TOut, TKey>(sourceNode, (IPushObservable<TOut>)observable, (SortDefinition<TOut, TKey>)((object)this.SortDefinition));
     }
 }

@@ -6,19 +6,13 @@ namespace Paillave.Etl.Core
     {
         public IStream<TOut> Input { get; set; }
     }
-    public class LastStreamNode<TOut> : StreamNodeBase<TOut, ISingleStream<TOut>, LastArgs<TOut>>
+    public class LastStreamNode<TOut>(string name, LastArgs<TOut> args) : StreamNodeBase<TOut, ISingleStream<TOut>, LastArgs<TOut>>(name, args)
     {
-        public LastStreamNode(string name, LastArgs<TOut> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
-        protected override ISingleStream<TOut> CreateOutputStream(LastArgs<TOut> args)
-        {
-            return base.CreateSingleStream(args.Input.Observable.Last());
-        }
+        protected override ISingleStream<TOut> CreateOutputStream(LastArgs<TOut> args) => 
+            base.CreateSingleStream(args.Input.Observable.Last());
     }
 }

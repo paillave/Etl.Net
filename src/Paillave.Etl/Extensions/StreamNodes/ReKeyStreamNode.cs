@@ -12,12 +12,8 @@ namespace Paillave.Etl.Core
         public Func<TIn, TMultiKey, TOut> ResultSelector { get; set; }
         public Func<TIn, TMultiKey> GetKeys { get; set; }
     }
-    public class ReKeyStreamNode<TIn, TOut, TMultiKey> : StreamNodeBase<TOut, IStream<TOut>, ReKeyArgs<TIn, TOut, TMultiKey>>
+    public class ReKeyStreamNode<TIn, TOut, TMultiKey>(string name, ReKeyArgs<TIn, TOut, TMultiKey> args) : StreamNodeBase<TOut, IStream<TOut>, ReKeyArgs<TIn, TOut, TMultiKey>>(name, args)
     {
-        public ReKeyStreamNode(string name, ReKeyArgs<TIn, TOut, TMultiKey> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Heavy;

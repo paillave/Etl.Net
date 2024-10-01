@@ -43,9 +43,6 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<T> Take<T>(this IPushObservable<T> observable, int count)
-        {
-            return new TakeSubject<T>(observable, count);
-        }
+        public static IPushObservable<T> Take<T>(this IPushObservable<T> observable, int count) => new TakeSubject<T>(observable, count);
     }
 }

@@ -10,9 +10,6 @@ namespace Paillave.Etl.Core.Aggregation.AggregationInstances
             var valueComp = value as IComparable;
             if (value != null && (_max == null || valueComp.CompareTo(_max) > 0)) _max = value;
         }
-        public object GetResult()
-        {
-            return _max;
-        }
+        public object GetResult() => _max;
     }
 }

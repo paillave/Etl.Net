@@ -10,20 +10,14 @@ namespace Paillave.Etl.Core
         public IStream<TIn> Stream2 { get; set; }
     }
 
-    public class UnionStreamNode<TIn> : StreamNodeBase<TIn, IStream<TIn>, UnionArgs<TIn>>
+    public class UnionStreamNode<TIn>(string name, UnionArgs<TIn> args) : StreamNodeBase<TIn, IStream<TIn>, UnionArgs<TIn>>(name, args)
     {
-        public UnionStreamNode(string name, UnionArgs<TIn> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
-        protected override IStream<TIn> CreateOutputStream(UnionArgs<TIn> args)
-        {
-            return base.CreateUnsortedStream(args.Stream1.Observable.Merge(args.Stream2.Observable));
-        }
+        protected override IStream<TIn> CreateOutputStream(UnionArgs<TIn> args) =>
+            base.CreateUnsortedStream(args.Stream1.Observable.Merge(args.Stream2.Observable));
     }
 
     public class UnionArgs<TIn1, TIn2, TOut>
@@ -36,12 +30,8 @@ namespace Paillave.Etl.Core
         public Func<TIn1, TIn2, TOut> FullResultSelectorRight { get; set; }
     }
 
-    public class UnionStreamNode<TIn1, TIn2, TOut> : StreamNodeBase<TOut, IStream<TOut>, UnionArgs<TIn1, TIn2, TOut>>
+    public class UnionStreamNode<TIn1, TIn2, TOut>(string name, UnionArgs<TIn1, TIn2, TOut> args) : StreamNodeBase<TOut, IStream<TOut>, UnionArgs<TIn1, TIn2, TOut>>(name, args)
     {
-        public UnionStreamNode(string name, UnionArgs<TIn1, TIn2, TOut> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;

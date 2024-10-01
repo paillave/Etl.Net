@@ -73,10 +73,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
 
         public int Depth => 0;
 
-        public DataTable GetSchemaTable()
-        {
-            throw new NotImplementedException();
-        }
+        public DataTable GetSchemaTable() => throw new NotImplementedException();
         public void Close()
         {
             HasRows = false;
@@ -176,10 +173,7 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
             return count;
         }
         public bool IsDBNull(int i) => this[i] is DBNull;
-        public IDataReader GetData(int i)
-        {
-            throw new NotImplementedException();
-        }
+        public IDataReader GetData(int i) => throw new NotImplementedException();
         private Dictionary<string, Dictionary<string, bool>> _shadowOfEntityDico = new Dictionary<string, Dictionary<string, bool>>();
         public object this[string name]
         {

@@ -18,27 +18,17 @@ namespace Paillave.Etl.Core
         public Func<TInLeft, TKey> GetLeftKey { get; set; }
         public Func<TInRight, TKey> GetRightKey { get; set; }
     }
-    public class SubstractStreamNode<TInLeft, TInRight, TKey> : StreamNodeBase<TInLeft, IStream<TInLeft>, SubstractArgs<TInLeft, TInRight, TKey>>
+    public class SubstractStreamNode<TInLeft, TInRight, TKey>(string name, SubstractArgs<TInLeft, TInRight, TKey> args) : StreamNodeBase<TInLeft, IStream<TInLeft>, SubstractArgs<TInLeft, TInRight, TKey>>(name, args)
     {
-        public SubstractStreamNode(string name, SubstractArgs<TInLeft, TInRight, TKey> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
-        protected override IStream<TInLeft> CreateOutputStream(SubstractArgs<TInLeft, TInRight, TKey> args)
-        {
-            return base.CreateSortedStream(args.LeftInputStream.Observable.Substract<TInLeft, TInRight, TKey>(args.RightInputStream.Observable, new SortDefinitionComparer<TInLeft, TInRight, TKey>(args.LeftInputStream.SortDefinition, args.RightInputStream.SortDefinition)), args.LeftInputStream.SortDefinition);
-        }
+        protected override IStream<TInLeft> CreateOutputStream(SubstractArgs<TInLeft, TInRight, TKey> args) => 
+            base.CreateSortedStream(args.LeftInputStream.Observable.Substract<TInLeft, TInRight, TKey>(args.RightInputStream.Observable, new SortDefinitionComparer<TInLeft, TInRight, TKey>(args.LeftInputStream.SortDefinition, args.RightInputStream.SortDefinition)), args.LeftInputStream.SortDefinition);
     }
-    public class SubstractUnsortedStreamNode<TStream, TInLeft, TInRight, TKey> : StreamNodeBase<TInLeft, TStream, SubstractUnsortedArgs<TStream, TInLeft, TInRight, TKey>> where TStream : IStream<TInLeft>
+    public class SubstractUnsortedStreamNode<TStream, TInLeft, TInRight, TKey>(string name, SubstractUnsortedArgs<TStream, TInLeft, TInRight, TKey> args) : StreamNodeBase<TInLeft, TStream, SubstractUnsortedArgs<TStream, TInLeft, TInRight, TKey>>(name, args) where TStream : IStream<TInLeft>
     {
-        public SubstractUnsortedStreamNode(string name, SubstractUnsortedArgs<TStream, TInLeft, TInRight, TKey> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Heavy;

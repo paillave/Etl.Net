@@ -11,12 +11,8 @@ namespace Paillave.Etl.Core
         public Func<TIn, TMultiKey> GetKeys { get; set; }
         public Func<TIn, TAggrRes> CreateEmptyAggregation { get; set; }
     }
-    public class AggregateMultiKeyStreamNode<TIn, TAggrRes, TMultiKey> : StreamNodeBase<AggregationResult<TIn, TMultiKey, TAggrRes>, IStream<AggregationResult<TIn, TMultiKey, TAggrRes>>, AggregateMultiKeyArgs<TIn, TAggrRes, TMultiKey>>
+    public class AggregateMultiKeyStreamNode<TIn, TAggrRes, TMultiKey>(string name, AggregateMultiKeyArgs<TIn, TAggrRes, TMultiKey> args) : StreamNodeBase<AggregationResult<TIn, TMultiKey, TAggrRes>, IStream<AggregationResult<TIn, TMultiKey, TAggrRes>>, AggregateMultiKeyArgs<TIn, TAggrRes, TMultiKey>>(name, args)
     {
-        public AggregateMultiKeyStreamNode(string name, AggregateMultiKeyArgs<TIn, TAggrRes, TMultiKey> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Heavy;

@@ -89,10 +89,7 @@ namespace Paillave.Etl.Reactive.Operators
                 TryComplete();
             }
         }
-        private void OnSourceException(Exception ex)
-        {
-            this.PushException(ex);
-        }
+        private void OnSourceException(Exception ex) => this.PushException(ex);
 
         public override void Dispose()
         {
@@ -108,12 +105,7 @@ namespace Paillave.Etl.Reactive.Operators
     public static partial class ObservableExtensions
     {
         public static IPushObservable<TOut> FlatMap<TIn, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory) //PERMIT TO BE SYNCHRONE
-        {
-            return new FlatMapSubject<TIn, TOut>(sourceS, observableFactory);
-        }
-        public static IPushObservable<TOut> SwitchMap<TIn, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory)
-        {
-            return new SwitchMapSubject<TIn, TOut>(sourceS, observableFactory);
-        }
+          => new FlatMapSubject<TIn, TOut>(sourceS, observableFactory);
+        public static IPushObservable<TOut> SwitchMap<TIn, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory) => new SwitchMapSubject<TIn, TOut>(sourceS, observableFactory);
     }
 }

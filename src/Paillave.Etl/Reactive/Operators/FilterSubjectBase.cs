@@ -10,10 +10,7 @@ namespace Paillave.Etl.Reactive.Operators
         protected abstract bool AcceptsValue(T value);
         private object _syncValue = new object();
 
-        public FilterSubjectBase(IPushObservable<T> observable) : base(observable.CancellationToken)
-        {
-            this._subscription = observable.Subscribe(HandlePushValue, this.Complete, this.PushException);
-        }
+        public FilterSubjectBase(IPushObservable<T> observable) : base(observable.CancellationToken) => this._subscription = observable.Subscribe(HandlePushValue, this.Complete, this.PushException);
 
         private void HandlePushValue(T value)
         {

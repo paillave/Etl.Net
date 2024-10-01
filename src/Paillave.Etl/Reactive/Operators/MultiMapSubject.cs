@@ -63,13 +63,7 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TOut> MultiMap<TIn, TOut>(this IPushObservable<TIn> observable, Action<TIn, Action<TOut>> outputValuesFactory)
-        {
-            return new MultiMapSubject<TIn, TOut>(observable, outputValuesFactory);
-        }
-        public static IPushObservable<TOut> MultiMap<TIn, TOut>(this IPushObservable<TIn> observable, Action<TIn, int, Action<TOut>> outputValuesFactory)
-        {
-            return new MultiMapSubject<TIn, TOut>(observable, outputValuesFactory);
-        }
+        public static IPushObservable<TOut> MultiMap<TIn, TOut>(this IPushObservable<TIn> observable, Action<TIn, Action<TOut>> outputValuesFactory) => new MultiMapSubject<TIn, TOut>(observable, outputValuesFactory);
+        public static IPushObservable<TOut> MultiMap<TIn, TOut>(this IPushObservable<TIn> observable, Action<TIn, int, Action<TOut>> outputValuesFactory) => new MultiMapSubject<TIn, TOut>(observable, outputValuesFactory);
     }
 }

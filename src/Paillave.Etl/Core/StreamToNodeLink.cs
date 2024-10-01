@@ -4,16 +4,10 @@ using System.Text;
 
 namespace Paillave.Etl.Core
 {
-    public class StreamToNodeLink
+    public class StreamToNodeLink(string sourceNodeName, string inputName, string targetNodeName)
     {
-        public StreamToNodeLink(string sourceNodeName, string inputName, string targetNodeName)
-        {
-            this.InputName = inputName;
-            this.TargetNodeName = targetNodeName;
-            this.SourceNodeName = sourceNodeName;
-        }
-        public string InputName { get; set; }
-        public string TargetNodeName { get; }
-        public string SourceNodeName { get; }
+        public string InputName { get; set; } = inputName;
+        public string TargetNodeName { get; } = targetNodeName;
+        public string SourceNodeName { get; } = sourceNodeName;
     }
 }

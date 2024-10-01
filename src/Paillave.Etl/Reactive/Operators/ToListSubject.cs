@@ -50,9 +50,6 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<List<TIn>> ToList<TIn>(this IPushObservable<TIn> observable)
-        {
-            return new ToListSubject<TIn>(observable);
-        }
+        public static IPushObservable<List<TIn>> ToList<TIn>(this IPushObservable<TIn> observable) => new ToListSubject<TIn>(observable);
     }
 }

@@ -10,9 +10,6 @@ namespace Paillave.Etl.Core.Aggregation.AggregationInstances
             var valueComp = value as IComparable;
             if (value != null && (_min == null || valueComp.CompareTo(_min) < 0)) _min = value;
         }
-        public object GetResult()
-        {
-            return _min;
-        }
+        public object GetResult() => _min;
     }
 }
