@@ -50,6 +50,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.GraphApi", "Pa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.S3", "Paillave.Etl.S3\Paillave.Etl.S3.csproj", "{1AE77176-6AEC-4130-B131-43B5D77FDC35}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Http", "Paillave.Etl.Http\Paillave.Etl.Http.csproj", "{2D3EFDF5-6DF6-455A-81D3-6ADE97261AFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -348,6 +350,18 @@ Global
 		{1AE77176-6AEC-4130-B131-43B5D77FDC35}.Release|x64.Build.0 = Release|Any CPU
 		{1AE77176-6AEC-4130-B131-43B5D77FDC35}.Release|x86.ActiveCfg = Release|Any CPU
 		{1AE77176-6AEC-4130-B131-43B5D77FDC35}.Release|x86.Build.0 = Release|Any CPU
+		{2D3EFDF5-6DF6-455A-81D3-6ADE97261AFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D3EFDF5-6DF6-455A-81D3-6ADE97261AFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D3EFDF5-6DF6-455A-81D3-6ADE97261AFE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2D3EFDF5-6DF6-455A-81D3-6ADE97261AFE}.Debug|x64.Build.0 = Debug|Any CPU
+		{2D3EFDF5-6DF6-455A-81D3-6ADE97261AFE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2D3EFDF5-6DF6-455A-81D3-6ADE97261AFE}.Debug|x86.Build.0 = Debug|Any CPU
+		{2D3EFDF5-6DF6-455A-81D3-6ADE97261AFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D3EFDF5-6DF6-455A-81D3-6ADE97261AFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D3EFDF5-6DF6-455A-81D3-6ADE97261AFE}.Release|x64.ActiveCfg = Release|Any CPU
+		{2D3EFDF5-6DF6-455A-81D3-6ADE97261AFE}.Release|x64.Build.0 = Release|Any CPU
+		{2D3EFDF5-6DF6-455A-81D3-6ADE97261AFE}.Release|x86.ActiveCfg = Release|Any CPU
+		{2D3EFDF5-6DF6-455A-81D3-6ADE97261AFE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
