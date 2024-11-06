@@ -8,12 +8,12 @@ namespace Paillave.Etl.Sftp
 
     public class SftpConnectionInfo : ISftpConnectionInfo
     {
-        public string Server { get; set; }
+        public required string Server { get; set; }
         public int PortNumber { get; set; } = 22;
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public string PrivateKeyPassPhrase { get; set; }
-        public string PrivateKey { get; set; }
+        public string? Login { get; set; }
+        public string? Password { get; set; }
+        public string? PrivateKeyPassPhrase { get; set; }
+        public string? PrivateKey { get; set; }
         public int MaxAttempts { get; set; } = 3;
     }
 }
