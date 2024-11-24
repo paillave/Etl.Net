@@ -38,7 +38,7 @@ namespace Paillave.Etl.XmlFile
                 obs = obs.Filter(i => i.NodeDefinitionName == args.NodeDefinitionName);
             return CreateUnsortedStream(obs.Map(i => new Correlated<TOut>
             {
-                CorrelationKeys = i.CorrelationKeys,
+                CorrelationKeys = default,
                 Row = (TOut)i.Value
             }));
         }
