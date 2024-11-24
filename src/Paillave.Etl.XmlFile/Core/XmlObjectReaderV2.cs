@@ -20,21 +20,14 @@ public class XmlObjectReaderV2 : IXmlObjectReader
     }
     private class XmlPath
     {
-        private readonly struct NodeLevel
-        {
-            public NodeLevel(string node, Guid correlationId)
-                => (Node, CorrelationId) = (node, correlationId);
-            public string Node { get; }
-            public Guid CorrelationId { get; }
-        }
-        private readonly Stack<NodeLevel> _nodes = new();
+        private readonly Stack<XmlNodeLevel> _nodes = new();
         private string? _attribute = null;
         public void UnStackAttribute() => _attribute = null;
         public void StackAttribute(string attribute) => _attribute = attribute;
-        public void StackNode(string node) => _nodes.Push(new NodeLevel(node, Guid.NewGuid()));
+        public void StackNode(string node) => _nodes.Push(new XmlNodeLevel(node, Guid.NewGuid(), $"{GetPath()}/{node}"));
         public void UnStackNode() => _nodes.Pop();
         public string GetPath() => $"/{string.Join("/", _nodes.Select((i) => i.Node).Reverse())}{(_attribute == null ? "" : $"/@{_attribute}")}";
-        public HashSet<Guid> GetCorrelationKeys() => _nodes.Select(i => i.CorrelationId).ToHashSet();
+        public IList<XmlNodeLevel> GetCorrelationKeys() => _nodes.Reverse().ToList();
         public override string ToString() => GetPath();
     }
     private class NodePropertyBags
@@ -56,9 +49,9 @@ public class XmlObjectReaderV2 : IXmlObjectReader
             if (_propertyBags.TryGetValue(key, out var propertyBag))
                 propertyBag.ResetValues();
         }
-        public void EndNode(string key)
+        public void EndNode(XmlPath xmlPath)
         {
-            if (_propertyBags.TryGetValue(key, out var propertyBag))
+            if (_propertyBags.TryGetValue(xmlPath.ToString(), out var propertyBag))
             {
                 var value = propertyBag.CreateRow();
                 _pushResult(new XmlNodeParsed(
@@ -67,7 +60,7 @@ public class XmlObjectReaderV2 : IXmlObjectReader
                     propertyBag.XmlNodeDefinition.NodePath,
                     propertyBag.XmlNodeDefinition.Type,
                     value,
-                    new Dictionary<Type, Guid>()));
+                    xmlPath.GetCorrelationKeys()));
             }
         }
     }
@@ -146,13 +139,13 @@ public class XmlObjectReaderV2 : IXmlObjectReader
                     }
                     if (isEmptyElement)
                     {
-                        _nodePropertyBags.EndNode(xmlPath.ToString());
+                        _nodePropertyBags.EndNode(xmlPath);
                         xmlPath.UnStackNode();
                     }
                     break;
                 case XmlNodeType.EndElement:
                     _nodePropertyBags.SetValue(xmlPath.ToString(), lastTextValue);
-                    _nodePropertyBags.EndNode(xmlPath.ToString());
+                    _nodePropertyBags.EndNode(xmlPath);
                     lastTextValue = null;
                     xmlPath.UnStackNode();
                     break;
@@ -162,4 +155,12 @@ public class XmlObjectReaderV2 : IXmlObjectReader
             }
         }
     }
+}
+public readonly struct XmlNodeLevel
+{
+    public XmlNodeLevel(string node, Guid correlationId, string path)
+        => (Node, CorrelationId, Path) = (node, correlationId, path);
+    public string Node { get; }
+    public Guid CorrelationId { get; }
+    public string Path { get; }
 }
