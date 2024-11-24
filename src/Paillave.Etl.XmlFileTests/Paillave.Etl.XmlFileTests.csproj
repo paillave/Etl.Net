@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+    <PackageReference Include="xunit" Version="2.4.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
+    <PackageReference Include="coverlet.collector" Version="3.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.FileSystem\Paillave.Etl.FileSystem.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.XmlFile\Paillave.Etl.XmlFile.csproj" />
+  </ItemGroup>
+
+</Project>
