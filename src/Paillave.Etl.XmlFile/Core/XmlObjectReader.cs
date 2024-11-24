@@ -93,7 +93,7 @@ public class XmlObjectReader : IXmlObjectReader
         else if (_xmlNodesDefinitionSearch.Contains(key))
         {
             var (value, nd) = CreateValue(sourceName, key);
-            pushResult(new XmlNodeParsed(sourceName, nd.Name, nd.NodePath, nd.Type, value, new Dictionary<Type, Guid>()));
+            pushResult(new XmlNodeParsed(sourceName, nd.Name, nd.NodePath, nd.Type, value, new List<XmlNodeLevel>()));
         }
         ProcessEndOfAnyNode(nodes);
     }
