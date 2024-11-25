@@ -13,11 +13,12 @@ using Paillave.Etl.Zip;
 
 namespace Paillave.Etl.Samples
 {
-    class Program2
+    class Program
     {
-        static async Task Main2(string[] args)
+        static async Task Main(string[] args)
         {
-            await ImportAndCreateFileWithConfigAsync(args);
+            await ImportAndCreateFileAsync(args);
+            // await ImportAndCreateFileWithConfigAsync(args);
         }
         private static ConfigurationFileValueConnectorParser CreateConfigurationFileValueConnectorParser() => new ConfigurationFileValueConnectorParser(
                 new FileSystemProviderProcessorAdapter(),
@@ -58,6 +59,8 @@ namespace Paillave.Etl.Samples
             structure.OpenEstimatedExecutionPlan();
 
             ITraceReporter traceReporter = new AdvancedConsoleExecutionDisplay();
+            var dataAccess= new DataAccess.TestDbContext();
+            await dataAccess.Database.EnsureCreatedAsync();
             var executionOptions = new ExecutionOptions<string[]>
             {
                 Connectors = new FileValueConnectors()
@@ -65,7 +68,7 @@ namespace Paillave.Etl.Samples
                     .Register(new FileSystemFileValueProvider("POS", "Positions", Path.Combine(Environment.CurrentDirectory, "InputFiles"), "*.Positions.csv"))
                     .Register(new FileSystemFileValueProcessor("OUT", "Result", Path.Combine(Environment.CurrentDirectory, "InputFiles"))),
                 Resolver = new SimpleDependencyResolver()
-                    .Register(new DataAccess.TestDbContext()),
+                    .Register(dataAccess),
                 TraceProcessDefinition = traceReporter.TraceProcessDefinition,
             };
             traceReporter.Initialize(structure);
@@ -82,12 +85,14 @@ namespace Paillave.Etl.Samples
         static async Task ImportAndCreateFileWithConfigAsync(string[] args)
         {
             var processRunner = StreamProcessRunner.Create<string[]>(TestImport2.Import);
+            var dataAccess= new DataAccess.TestDbContext();
+            await dataAccess.Database.EnsureCreatedAsync();
             var executionOptions = new ExecutionOptions<string[]>
             {
                 Connectors = CreateConfigurationFileValueConnectorParser()
-                    .GetConnectors(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "connectorsConfig.json"))),
+                    .GetConnectors(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "connectorsLocalConfig.json"))),
                 Resolver = new SimpleDependencyResolver()
-                    .Register(new DataAccess.TestDbContext())
+                    .Register(dataAccess)
             };
             var res = await processRunner.ExecuteAsync(args, executionOptions);
         }
