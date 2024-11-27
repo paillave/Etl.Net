@@ -92,10 +92,6 @@ public class EfSaveEngine<T> where T : class
     {
         var entityCondition = _findConditionExpression.ApplyPartialLeft(entity);
         var existingEntity = contextSet.AsNoTracking().FirstOrDefault(entityCondition);
-        if (this._context is MultiTenantDbContext mtCtx)
-        {
-            mtCtx.UpdateEntityForMultiTenancy(entity);
-        }
         if (existingEntity == null)
         {
             _context.Entry(entity).State = EntityState.Added;
@@ -107,10 +103,14 @@ public class EfSaveEngine<T> where T : class
                 var val = keyPropertyInfo.GetValue(existingEntity);
                 keyPropertyInfo.SetValue(entity, val);
             }
-            if (!doNotUpdateIfExists)
-            {
-                contextSet.Update(entity);
-            }
+        }
+        if (this._context is MultiTenantDbContext mtCtx)
+        {
+            mtCtx.UpdateEntityForMultiTenancy(entity);
+        }
+        if (existingEntity != null && !doNotUpdateIfExists)
+        {
+            contextSet.Update(entity);
         }
     }
 }

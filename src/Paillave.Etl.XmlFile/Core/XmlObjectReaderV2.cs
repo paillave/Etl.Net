@@ -70,8 +70,7 @@ public class XmlObjectReaderV2 : IXmlObjectReader
         public IXmlNodeDefinition XmlNodeDefinition { get; }
         private readonly List<XmlFieldDefinition> _xmlFieldDefinitions;
         private readonly HashSet<string> _valuesPath;
-        private readonly Dictionary<string, string> _xmlValues = new Dictionary<string, string>();
-
+        private readonly Dictionary<string, string> _xmlValues = new();
         public PropertyBag(string sourceName, IXmlNodeDefinition xmlNodeDefinition)
         {
             SourceName = sourceName;
@@ -79,15 +78,36 @@ public class XmlObjectReaderV2 : IXmlObjectReader
             _xmlFieldDefinitions = xmlNodeDefinition.GetXmlFieldDefinitions().ToList();
             this._valuesPath = _xmlFieldDefinitions.Select(i => i.NodePath).ToHashSet();
         }
-
         public void SetValue(string key, string? value)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return;
-
+                //   ^(?<segment>/(?<segmentName>[^/[]+)([[](?<segmentFilter>(?<segmentFilterAttribute>[^]=]+)=""(?<segmentFilterValue>[^""]*)"")[]])?)+$
+                //   /zer[sdfsdfsd="er"]/wfxf/trtr[qdff="bg"]
+                //   https://regex101.com/r/tG1jF6/1
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
             if (_valuesPath.Contains(key))
                 _xmlValues[key] = value;
         }
+
+        // public void SetValue(string key, string? value, Dictionary<string, string> xmlAttributes)
+        // {
+        //     if (string.IsNullOrWhiteSpace(value))
+        //         return;
+        //     if (TryGetPathMatch(key, xmlAttributes, out var pathMatch) && pathMatch != null)
+        //         _xmlValues[pathMatch] = value;
+        // }
+        // private bool TryGetPathMatch(string key, Dictionary<string, string> xmlAttributes, out string? pathMatch)
+        // {
+        //     pathMatch = null;
+        //     if (_valuesPath.Contains(key))
+        //     {
+        //         pathMatch = key;
+        //         return true;
+        //     }
+        //     return false;
+        // }
+
         public object CreateRow()
         {
             var objectBuilder = new ObjectBuilder(XmlNodeDefinition.Type);

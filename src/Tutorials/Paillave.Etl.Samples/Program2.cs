@@ -10,6 +10,7 @@ using Paillave.Etl.Ftp;
 using Paillave.Etl.Sftp;
 using Paillave.Etl.Mail;
 using Paillave.Etl.Zip;
+using Microsoft.EntityFrameworkCore;
 
 namespace Paillave.Etl.Samples
 {
@@ -56,11 +57,12 @@ namespace Paillave.Etl.Samples
         {
             var processRunner = StreamProcessRunner.Create<string[]>(TestImport2.Import);
             var structure = processRunner.GetDefinitionStructure();
-            structure.OpenEstimatedExecutionPlan();
+            // structure.OpenEstimatedExecutionPlan();
 
             ITraceReporter traceReporter = new AdvancedConsoleExecutionDisplay();
-            var dataAccess= new DataAccess.TestDbContext();
+            var dataAccess = new DataAccess.TestDbContext();
             await dataAccess.Database.EnsureCreatedAsync();
+            // dataAccess.Database.Migrate();
             var executionOptions = new ExecutionOptions<string[]>
             {
                 Connectors = new FileValueConnectors()
@@ -85,7 +87,7 @@ namespace Paillave.Etl.Samples
         static async Task ImportAndCreateFileWithConfigAsync(string[] args)
         {
             var processRunner = StreamProcessRunner.Create<string[]>(TestImport2.Import);
-            var dataAccess= new DataAccess.TestDbContext();
+            var dataAccess = new DataAccess.TestDbContext();
             await dataAccess.Database.EnsureCreatedAsync();
             var executionOptions = new ExecutionOptions<string[]>
             {
