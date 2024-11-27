@@ -24,26 +24,20 @@ namespace Paillave.Etl.Core
     /// </summary>
     /// <typeparam name="TIn">Input type</typeparam>
     /// <typeparam name="TOut">Outout type</typeparam>
-    public class SimpleSelectProcessor<TIn, TOut> : ISelectProcessor<TIn, TOut>
+    /// <remarks>
+    /// Builds the processor giving the process to be applied at any occurrence as a parameter
+    /// </remarks>
+    /// <param name="selector">Delegate describing the tranformation</param>
+    public class SimpleSelectProcessor<TIn, TOut>(Func<TIn, TOut> selector) : ISelectProcessor<TIn, TOut>
     {
-        private Func<TIn, TOut> _selector;
-        /// <summary>
-        /// Builds the processor giving the process to be applied at any occurrence as a parameter
-        /// </summary>
-        /// <param name="selector">Delegate describing the tranformation</param>
-        public SimpleSelectProcessor(Func<TIn, TOut> selector)
-        {
-            _selector = selector;
-        }
+        private Func<TIn, TOut> _selector = selector;
+
         /// <summary>
         /// Transformation to apply on an occurrence of an element of the stream
         /// </summary>
         /// <param name="value">Input value</param>
         /// <returns>Output value</returns>
-        public TOut ProcessRow(TIn value)
-        {
-            return _selector(value);
-        }
+        public TOut ProcessRow(TIn value) => _selector(value);
     }
     /// <summary>
     /// Implementation of a select transformation adding a sequence for a given keyset
@@ -51,20 +45,16 @@ namespace Paillave.Etl.Core
     /// <typeparam name="TKey">Key type</typeparam>
     /// <typeparam name="TIn">Input type</typeparam>
     /// <typeparam name="TOut">Outout type</typeparam>
-    public class SelectWithSequenceProcessor<TIn, TKey, TOut> : ISelectProcessor<TIn, TOut>
+    /// <remarks>
+    /// Builds the processor giving the process to be applied at any occurrence as a parameter
+    /// </remarks>
+    /// <param name="selector">Delegate describing the tranformation</param>
+    public class SelectWithSequenceProcessor<TIn, TKey, TOut>(Func<TIn, int, TOut> selector, Func<TIn, TKey> keySelector) : ISelectProcessor<TIn, TOut>
     {
         private Dictionary<TKey, int> _sequences = new Dictionary<TKey, int>();
-        private Func<TIn, int, TOut> _selector;
-        private Func<TIn, TKey> _keySelector;
-        /// <summary>
-        /// Builds the processor giving the process to be applied at any occurrence as a parameter
-        /// </summary>
-        /// <param name="selector">Delegate describing the tranformation</param>
-        public SelectWithSequenceProcessor(Func<TIn, int, TOut> selector, Func<TIn, TKey> keySelector)
-        {
-            _selector = selector;
-            _keySelector = keySelector;
-        }
+        private Func<TIn, int, TOut> _selector = selector;
+        private Func<TIn, TKey> _keySelector = keySelector;
+
         /// <summary>
         /// Transformation to apply on an occurrence of an element of the stream
         /// </summary>
@@ -85,33 +75,23 @@ namespace Paillave.Etl.Core
     /// <typeparam name="TIn">Input type</typeparam>
     /// <typeparam name="TOut">Outout type</typeparam>
     /// <typeparam name="TCtx">Context type</typeparam>
-    public class ContextSelectProcessor<TIn, TOut, TCtx> : ISelectProcessor<TIn, TOut>
+    /// <remarks>
+    /// Builds the processor giving the process to be applied at any occurrence as a parameter and the initial value of the context
+    /// </remarks>
+    /// <param name="selector">Delegate describing the tranformation depending on a context that can be updated if necessary</param>
+    /// <param name="initialContext">Initial value of the context</param>
+    public class ContextSelectProcessor<TIn, TOut, TCtx>(Func<TIn, TCtx, Action<TCtx>, TOut> selector, TCtx initialContext) : ISelectProcessor<TIn, TOut>
     {
-        private Func<TIn, TCtx, Action<TCtx>, TOut> _selector;
-        private TCtx _context;
-        /// <summary>
-        /// Builds the processor giving the process to be applied at any occurrence as a parameter and the initial value of the context
-        /// </summary>
-        /// <param name="selector">Delegate describing the tranformation depending on a context that can be updated if necessary</param>
-        /// <param name="initialContext">Initial value of the context</param>
-        public ContextSelectProcessor(Func<TIn, TCtx, Action<TCtx>, TOut> selector, TCtx initialContext)
-        {
-            _selector = selector;
-            _context = initialContext;
-        }
+        private Func<TIn, TCtx, Action<TCtx>, TOut> _selector = selector;
+        private TCtx _context = initialContext;
+
         /// <summary>
         /// Transformation to apply on an occurrence of an element of the stream
         /// </summary>
         /// <param name="value">Input value</param>
         /// <returns>Output value</returns>
-        public TOut ProcessRow(TIn value)
-        {
-            return _selector(value, _context, SetContext);
-        }
-        private void SetContext(TCtx newContext)
-        {
-            _context = newContext;
-        }
+        public TOut ProcessRow(TIn value) => _selector(value, _context, SetContext);
+        private void SetContext(TCtx newContext) => _context = newContext;
     }
     #endregion
 
@@ -137,27 +117,21 @@ namespace Paillave.Etl.Core
     /// </summary>
     /// <typeparam name="TIn">Input type</typeparam>
     /// <typeparam name="TOut">Outout type</typeparam>
-    public class SimpleSelectWithIndexProcessor<TIn, TOut> : ISelectWithIndexProcessor<TIn, TOut>
+    /// <remarks>
+    /// Builds the processor giving the process to be applied at any occurrence using index occurrence as a parameter
+    /// </remarks>
+    /// <param name="selector">Delegate describing the tranformation using the occurrence index</param>
+    public class SimpleSelectWithIndexProcessor<TIn, TOut>(Func<TIn, int, TOut> selector) : ISelectWithIndexProcessor<TIn, TOut>
     {
-        private Func<TIn, int, TOut> _selector;
-        /// <summary>
-        /// Builds the processor giving the process to be applied at any occurrence using index occurrence as a parameter
-        /// </summary>
-        /// <param name="selector">Delegate describing the tranformation using the occurrence index</param>
-        public SimpleSelectWithIndexProcessor(Func<TIn, int, TOut> selector)
-        {
-            _selector = selector;
-        }
+        private Func<TIn, int, TOut> _selector = selector;
+
         /// <summary>
         /// Transformation to apply on an occurrence of an element of the stream
         /// </summary>
         /// <param name="value">Input value</param>
         /// <param name="index">Occurrence index</param>
         /// <returns>Output value</returns>
-        public TOut ProcessRow(TIn value, int index)
-        {
-            return _selector(value, index);
-        }
+        public TOut ProcessRow(TIn value, int index) => _selector(value, index);
     }
     /// <summary>
     /// Implementation of a select transformation with a context instance using occurrence index
@@ -165,34 +139,24 @@ namespace Paillave.Etl.Core
     /// <typeparam name="TIn">Input type</typeparam>
     /// <typeparam name="TOut">Outout type</typeparam>
     /// <typeparam name="TCtx">Context type</typeparam>
-    public class ContextSelectWithIndexProcessor<TIn, TOut, TCtx> : ISelectWithIndexProcessor<TIn, TOut>
+    /// <remarks>
+    /// Builds the processor giving the process to be applied at any occurrence as a parameter and the initial value of the context
+    /// </remarks>
+    /// <param name="selector">Delegate describing the tranformation depending on the occurrence index and on a context that can be updated if necessary</param>
+    /// <param name="initialContext">Initial value of the context</param>
+    public class ContextSelectWithIndexProcessor<TIn, TOut, TCtx>(Func<TIn, int, TCtx, Action<TCtx>, TOut> selector, TCtx initialContext) : ISelectWithIndexProcessor<TIn, TOut>
     {
-        private Func<TIn, int, TCtx, Action<TCtx>, TOut> _selector;
-        private TCtx _context;
-        /// <summary>
-        /// Builds the processor giving the process to be applied at any occurrence as a parameter and the initial value of the context
-        /// </summary>
-        /// <param name="selector">Delegate describing the tranformation depending on the occurrence index and on a context that can be updated if necessary</param>
-        /// <param name="initialContext">Initial value of the context</param>
-        public ContextSelectWithIndexProcessor(Func<TIn, int, TCtx, Action<TCtx>, TOut> selector, TCtx initialContext)
-        {
-            _selector = selector;
-            _context = initialContext;
-        }
+        private Func<TIn, int, TCtx, Action<TCtx>, TOut> _selector = selector;
+        private TCtx _context = initialContext;
+
         /// <summary>
         /// Transformation to apply on an occurrence of an element of the stream using the occurrence index
         /// </summary>
         /// <param name="value">Input value</param>
         /// <param name="index">Occurrence index</param>
         /// <returns>Output value</returns>
-        public TOut ProcessRow(TIn value, int index)
-        {
-            return _selector(value, index, _context, SetContext);
-        }
-        private void SetContext(TCtx newContext)
-        {
-            _context = newContext;
-        }
+        public TOut ProcessRow(TIn value, int index) => _selector(value, index, _context, SetContext);
+        private void SetContext(TCtx newContext) => _context = newContext;
     }
     #endregion
 }

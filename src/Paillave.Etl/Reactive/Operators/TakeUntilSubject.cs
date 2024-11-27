@@ -35,9 +35,6 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TIn> TakeUntil<TIn, TFrom>(this IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable)
-        {
-            return new TakeUntilSubject<TIn, TFrom>(observable, fromObservable);
-        }
+        public static IPushObservable<TIn> TakeUntil<TIn, TFrom>(this IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable) => new TakeUntilSubject<TIn, TFrom>(observable, fromObservable);
     }
 }

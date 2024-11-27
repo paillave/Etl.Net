@@ -54,11 +54,11 @@ namespace Paillave.Etl.Core
         }
         public T GetAggregation() => ObjectBuilder<T>.CreateInstance(_aggregations.ToDictionary(i => i.Key, i => i.Value.GetResult()));
     }
-    internal class CorrelatedObjectAggregator<T>
+    internal class CorrelatedObjectAggregator<T>(Dictionary<string, IAggregationInstance> aggregations)
     {
-        private Dictionary<string, IAggregationInstance> _aggregations;
+        private Dictionary<string, IAggregationInstance> _aggregations = aggregations;
         private HashSet<Guid> _correlationKeys = new HashSet<Guid>();
-        public CorrelatedObjectAggregator(Dictionary<string, IAggregationInstance> aggregations) => _aggregations = aggregations;
+
         public CorrelatedObjectAggregator<T> Aggregate(Correlated<T> value)
         {
             _correlationKeys.UnionWith(value.CorrelationKeys);
@@ -79,9 +79,8 @@ namespace Paillave.Etl.Core
         public Func<TIn, TGroupingKey> GetGroupingKey { get; set; }
         public AggregationBuilder<TIn> Aggregator { get; set; }
     }
-    public class DistinctAggregateStreamNode<TIn, TGroupingKey> : StreamNodeBase<TIn, IStream<TIn>, DistinctAggregateArgs<TIn, TGroupingKey>>
+    public class DistinctAggregateStreamNode<TIn, TGroupingKey>(string name, DistinctAggregateArgs<TIn, TGroupingKey> args) : StreamNodeBase<TIn, IStream<TIn>, DistinctAggregateArgs<TIn, TGroupingKey>>(name, args)
     {
-        public DistinctAggregateStreamNode(string name, DistinctAggregateArgs<TIn, TGroupingKey> args) : base(name, args) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
         protected override IStream<TIn> CreateOutputStream(DistinctAggregateArgs<TIn, TGroupingKey> args)
@@ -97,9 +96,8 @@ namespace Paillave.Etl.Core
         public Func<TIn, TGroupingKey> GetGroupingKey { get; set; }
         public AggregationBuilder<TIn> Aggregator { get; set; }
     }
-    public class DistinctAggregateCorrelatedStreamNode<TIn, TGroupingKey> : StreamNodeBase<Correlated<TIn>, IStream<Correlated<TIn>>, DistinctAggregateCorrelatedArgs<TIn, TGroupingKey>>
+    public class DistinctAggregateCorrelatedStreamNode<TIn, TGroupingKey>(string name, DistinctAggregateCorrelatedArgs<TIn, TGroupingKey> args) : StreamNodeBase<Correlated<TIn>, IStream<Correlated<TIn>>, DistinctAggregateCorrelatedArgs<TIn, TGroupingKey>>(name, args)
     {
-        public DistinctAggregateCorrelatedStreamNode(string name, DistinctAggregateCorrelatedArgs<TIn, TGroupingKey> args) : base(name, args) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
         protected override IStream<Correlated<TIn>> CreateOutputStream(DistinctAggregateCorrelatedArgs<TIn, TGroupingKey> args)

@@ -4,11 +4,11 @@ using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Autofac
 {
-    public class AutofacDependencyResolver : IDependencyResolver
+    public class AutofacDependencyResolver(IComponentContext componentContext) : IDependencyResolver
     {
         private SimpleDependencyResolver _dependencyResolver = new SimpleDependencyResolver();
-        private readonly IComponentContext _componentContext;
-        public AutofacDependencyResolver(IComponentContext componentContext) => (_componentContext) = (componentContext);
+        private readonly IComponentContext _componentContext = componentContext;
+
         public object Resolve(Type type)
         {
             var res = _dependencyResolver.Resolve(type);

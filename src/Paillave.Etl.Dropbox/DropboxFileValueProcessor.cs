@@ -7,10 +7,8 @@ using Dropbox.Api.Files;
 
 namespace Paillave.Etl.Dropbox
 {
-    public class DropboxFileValueProcessor : FileValueProcessorBase<DropboxAdapterConnectionParameters, DropboxAdapterProcessorParameters>
+    public class DropboxFileValueProcessor(string code, string name, string connectionName, DropboxAdapterConnectionParameters connectionParameters, DropboxAdapterProcessorParameters processorParameters) : FileValueProcessorBase<DropboxAdapterConnectionParameters, DropboxAdapterProcessorParameters>(code, name, connectionName, connectionParameters, processorParameters)
     {
-        public DropboxFileValueProcessor(string code, string name, string connectionName, DropboxAdapterConnectionParameters connectionParameters, DropboxAdapterProcessorParameters processorParameters)
-            : base(code, name, connectionName, connectionParameters, processorParameters) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
         protected override void Process(IFileValue fileValue, DropboxAdapterConnectionParameters connectionParameters, DropboxAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)

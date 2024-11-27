@@ -5,17 +5,12 @@ using System.Linq.Expressions;
 
 namespace Paillave.EntityFrameworkCoreExtension.Searcher
 {
-    public class FieldSelector<TEntity, TValue> : IFieldSelector where TEntity : class
+    public class FieldSelector<TEntity, TValue>(string name, Expression<Func<TEntity, 
+        TValue>> getValue, Func<string, TValue> convertFromString) : IFieldSelector where TEntity : class
     {
-        public FieldSelector(string name, Expression<Func<TEntity, TValue>> getValue, Func<string, TValue> convertFromString)
-        {
-            this.Name = name;
-            this.GetValueExpression = getValue;
-            this.ConvertFromString = i => convertFromString(i);
-        }
-        public string Name { get; }
+        public string Name { get; } = name;
         // Expression<Func<TEntity, TValue>>
-        public LambdaExpression GetValueExpression { get; }
-        public Func<string, object> ConvertFromString { get; }
+        public LambdaExpression GetValueExpression { get; } = getValue;
+        public Func<string, object> ConvertFromString { get; } = i => convertFromString(i);
     }
 }

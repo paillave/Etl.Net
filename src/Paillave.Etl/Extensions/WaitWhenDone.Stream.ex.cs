@@ -2,9 +2,8 @@ namespace Paillave.Etl.Core
 {
     public static partial class WaitWhenDoneEx
     {
-        public static ISortedStream<TIn, TKey> WaitWhenDone<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, params IStream<object>[] streamToWait)
-        {
-            return new WaitWhenDoneStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new WaitWhenDoneArgs<TIn, ISortedStream<TIn, TKey>>
+        public static ISortedStream<TIn, TKey> WaitWhenDone<TIn, TKey>(this ISortedStream<TIn, TKey> stream, string name, params IStream<object>[] streamToWait) =>
+            new WaitWhenDoneStreamNode<TIn, ISortedStream<TIn, TKey>>(name, new WaitWhenDoneArgs<TIn, ISortedStream<TIn, TKey>>
             {
                 Input = stream,
                 Input1ToWait = streamToWait.Length >= 1 ? streamToWait[0] : null,
@@ -18,10 +17,8 @@ namespace Paillave.Etl.Core
                 Input9ToWait = streamToWait.Length >= 9 ? streamToWait[8] : null,
                 Input10ToWait = streamToWait.Length >= 10 ? streamToWait[9] : null,
             }).Output;
-        }
-        public static IKeyedStream<TIn, TKey> WaitWhenDone<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, params IStream<object>[] streamToWait)
-        {
-            return new WaitWhenDoneStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new WaitWhenDoneArgs<TIn, IKeyedStream<TIn, TKey>>
+        public static IKeyedStream<TIn, TKey> WaitWhenDone<TIn, TKey>(this IKeyedStream<TIn, TKey> stream, string name, params IStream<object>[] streamToWait) =>
+            new WaitWhenDoneStreamNode<TIn, IKeyedStream<TIn, TKey>>(name, new WaitWhenDoneArgs<TIn, IKeyedStream<TIn, TKey>>
             {
                 Input = stream,
                 Input1ToWait = streamToWait.Length >= 1 ? streamToWait[0] : null,
@@ -35,10 +32,8 @@ namespace Paillave.Etl.Core
                 Input9ToWait = streamToWait.Length >= 9 ? streamToWait[8] : null,
                 Input10ToWait = streamToWait.Length >= 10 ? streamToWait[9] : null,
             }).Output;
-        }
-        public static IStream<TIn> WaitWhenDone<TIn>(this IStream<TIn> stream, string name, params IStream<object>[] streamToWait)
-        {
-            return new WaitWhenDoneStreamNode<TIn, IStream<TIn>>(name, new WaitWhenDoneArgs<TIn, IStream<TIn>>
+        public static IStream<TIn> WaitWhenDone<TIn>(this IStream<TIn> stream, string name, params IStream<object>[] streamToWait) =>
+            new WaitWhenDoneStreamNode<TIn, IStream<TIn>>(name, new WaitWhenDoneArgs<TIn, IStream<TIn>>
             {
                 Input = stream,
                 Input1ToWait = streamToWait.Length >= 1 ? streamToWait[0] : null,
@@ -52,10 +47,8 @@ namespace Paillave.Etl.Core
                 Input9ToWait = streamToWait.Length >= 9 ? streamToWait[8] : null,
                 Input10ToWait = streamToWait.Length >= 10 ? streamToWait[9] : null,
             }).Output;
-        }
-        public static ISingleStream<TIn> WaitWhenDone<TIn>(this ISingleStream<TIn> stream, string name, params IStream<object>[] streamToWait)
-        {
-            return new WaitWhenDoneStreamNode<TIn, ISingleStream<TIn>>(name, new WaitWhenDoneArgs<TIn, ISingleStream<TIn>>
+        public static ISingleStream<TIn> WaitWhenDone<TIn>(this ISingleStream<TIn> stream, string name, params IStream<object>[] streamToWait) =>
+            new WaitWhenDoneStreamNode<TIn, ISingleStream<TIn>>(name, new WaitWhenDoneArgs<TIn, ISingleStream<TIn>>
             {
                 Input = stream,
                 Input1ToWait = streamToWait.Length >= 1 ? streamToWait[0] : null,
@@ -69,6 +62,5 @@ namespace Paillave.Etl.Core
                 Input9ToWait = streamToWait.Length >= 9 ? streamToWait[8] : null,
                 Input10ToWait = streamToWait.Length >= 10 ? streamToWait[9] : null,
             }).Output;
-        }
     }
 }

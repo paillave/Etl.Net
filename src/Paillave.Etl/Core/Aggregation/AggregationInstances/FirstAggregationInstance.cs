@@ -12,9 +12,6 @@
                 _hasValue = true;
             }
         }
-        public object GetResult()
-        {
-            return _first;
-        }
+        public object GetResult() => _first;
     }
 }

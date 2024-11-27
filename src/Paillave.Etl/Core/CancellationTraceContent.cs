@@ -2,13 +2,10 @@
 
 namespace Paillave.Etl.Core
 {
-    public class CancellationTraceContent : StreamTraceContentBase
+    public class CancellationTraceContent(CancellationCause cause) : StreamTraceContentBase
     {
-        private readonly CancellationCause _cause;
-        public CancellationTraceContent(CancellationCause cause)
-        {
-            this._cause = cause;
-        }
+        private readonly CancellationCause _cause = cause;
+
         public override TraceLevel Level => TraceLevel.Warning;
         private string TextCancellationCause
             => _cause == CancellationCause.CancelledBecauseOfError ? "an error occurred" : "cancellation requested from outside";

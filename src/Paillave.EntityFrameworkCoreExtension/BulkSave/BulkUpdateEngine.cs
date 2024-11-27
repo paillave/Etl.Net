@@ -10,11 +10,10 @@ using Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer;
 
 namespace Paillave.EntityFrameworkCoreExtension.BulkSave
 {
-    public class BulkUpdateEngine<TEntity, TSource> : BulkUpdateEngineBase<TEntity, TSource> where TEntity : class
+    public class BulkUpdateEngine<TEntity, TSource>(DbContext context, Expression<Func<TSource,
+        TEntity>> updateKey, Expression<Func<TSource,
+            TEntity>> updateValues) : BulkUpdateEngineBase<TEntity, TSource>(context, updateKey, updateValues) where TEntity : class
     {
-        public BulkUpdateEngine(DbContext context, Expression<Func<TSource, TEntity>> updateKey, Expression<Func<TSource, TEntity>> updateValues)
-            : base(context, updateKey, updateValues) { }
-
         protected override UpdateContextQueryBase<TSource> CreateUpdateContextQueryInstance(DbContext context, string schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType, IDictionary<string, MemberInfo> propertiesGetter)
         {
             if (context.Database.IsSqlServer())

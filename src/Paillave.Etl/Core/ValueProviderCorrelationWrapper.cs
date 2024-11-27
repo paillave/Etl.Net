@@ -1,10 +1,7 @@
 namespace Paillave.Etl.Core
 {
-    public class ValueProviderCorrelationWrapper<TInnerIn, TInnerOut> : ValueProviderWrapper<Correlated<TInnerIn>, TInnerIn, TInnerOut, Correlated<TInnerOut>>
+    public class ValueProviderCorrelationWrapper<TInnerIn, TInnerOut>(IValuesProvider<TInnerIn, TInnerOut> innerValueProvider) 
+        : ValueProviderWrapper<Correlated<TInnerIn>, TInnerIn, TInnerOut, Correlated<TInnerOut>>(innerValueProvider, i => i.Row, (i, j) => new Correlated<TInnerOut> { Row = i, CorrelationKeys = j.CorrelationKeys })
     {
-        public ValueProviderCorrelationWrapper(IValuesProvider<TInnerIn, TInnerOut> innerValueProvider) :
-            base(innerValueProvider, i => i.Row, (i, j) => new Correlated<TInnerOut> { Row = i, CorrelationKeys = j.CorrelationKeys })
-        {
-        }
     }
 }

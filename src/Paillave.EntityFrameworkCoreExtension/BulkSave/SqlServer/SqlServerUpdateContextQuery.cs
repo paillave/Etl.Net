@@ -11,18 +11,17 @@ using System.Text;
 
 namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
 {
-    public class SqlServerUpdateContextQuery<T> : UpdateContextQueryBase<T>
+    public class SqlServerUpdateContextQuery<T>(DbContext context, string schema,
+        string table, List<IProperty> propertiesToUpdate,
+        List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad,
+        IEntityType baseType, IDictionary<string, MemberInfo> propertiesGetter,
+        StoreObjectIdentifier storeObject) : UpdateContextQueryBase<T>(context, schema ?? "dbo", table, propertiesToUpdate, propertiesForPivot, propertiesToBulkLoad, baseType, propertiesGetter, storeObject)
     {
         private string SqlTargetTable => $"[{this.Schema}].[{this.Table}]";
         private string SqlStagingTableName => $"[{this.Schema}].[{this.Table}_temp_{this.StagingId}]";
 
-        public SqlServerUpdateContextQuery(DbContext context, string schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType, IDictionary<string, MemberInfo> propertiesGetter, StoreObjectIdentifier storeObject)
-            : base(context, schema ?? "dbo", table, propertiesToUpdate, propertiesForPivot, propertiesToBulkLoad, baseType, propertiesGetter, storeObject)
-        {
-        }
-
         protected virtual string CreateStagingTableSql()
-            => $@"SELECT TOP 0 { string.Join(",", PropertiesToBulkLoad.Select(i => $"T.{i.GetColumnName(base.StoreObject)}")) }
+            => $@"SELECT TOP 0 {string.Join(",", PropertiesToBulkLoad.Select(i => $"T.{i.GetColumnName(base.StoreObject)}"))}
                     INTO {SqlStagingTableName} FROM {SqlTargetTable} AS T 
                     LEFT JOIN {SqlTargetTable} AS Source ON 1 = 0;";
 
@@ -83,11 +82,9 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer
             => $"{property.GetColumnName(base.StoreObject)} = {aliasRight}.{property.GetColumnName(base.StoreObject)}";
 
         protected virtual string MergeFromStagingSql()
-        {
-            return $@"UDPATE t
+            => $@"UDPATE t
                     SET {string.Join(", ", this.PropertiesToUpdate.Select(i => CreateSetValueSql("s", i)))}
                     FROM {this.SqlStagingTableName} AS s
                     INNER JOIN {this.SqlTargetTable} AS t ON {string.Join(" AND ", this.PropertiesForPivot.Select(i => CreateEqualityConditionSql("s", "t", i)))}";
-        }
     }
 }

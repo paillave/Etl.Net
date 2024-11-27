@@ -53,9 +53,6 @@
             if (_sum == null) _sum = default(ushort);
             _sum = ((ushort)_sum) + value;
         }
-        public override object GetResult()
-        {
-            return _sum;
-        }
+        public override object GetResult() => _sum;
     }
 }

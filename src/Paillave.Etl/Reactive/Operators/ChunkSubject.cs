@@ -20,10 +20,7 @@ namespace Paillave.Etl.Reactive.Operators
             }
         }
 
-        private void HandleOnException(Exception ex)
-        {
-            this.PushException(ex);
-        }
+        private void HandleOnException(Exception ex) => this.PushException(ex);
 
         private void HandleOnComplete()
         {
@@ -65,9 +62,6 @@ namespace Paillave.Etl.Reactive.Operators
 
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<IEnumerable<TIn>> Chunk<TIn>(this IPushObservable<TIn> sourceS, int chunkSize)
-        {
-            return new ChunkSubject<TIn>(sourceS, chunkSize);
-        }
+        public static IPushObservable<IEnumerable<TIn>> Chunk<TIn>(this IPushObservable<TIn> sourceS, int chunkSize) => new ChunkSubject<TIn>(sourceS, chunkSize);
     }
 }

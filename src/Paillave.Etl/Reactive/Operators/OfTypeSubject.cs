@@ -34,9 +34,6 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TOut> OfType<TIn, TOut>(this IPushObservable<TIn> observable) where TOut : TIn
-        {
-            return new OfTypeSubject<TIn, TOut>(observable);
-        }
+        public static IPushObservable<TOut> OfType<TIn, TOut>(this IPushObservable<TIn> observable) where TOut : TIn => new OfTypeSubject<TIn, TOut>(observable);
     }
 }

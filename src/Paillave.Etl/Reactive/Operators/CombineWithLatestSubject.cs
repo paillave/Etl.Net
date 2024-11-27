@@ -136,9 +136,9 @@ namespace Paillave.Etl.Reactive.Operators
             _obsel2.Dispose();
             base.Dispose();
         }
-        private class ObservableElement<T> : IDisposable
+        private class ObservableElement<T>(IDisposable disposable) : IDisposable
         {
-            private IDisposable _disposable;
+            private IDisposable _disposable = disposable;
             private T _lastValue = default;
             public Queue<T> Buffer = new Queue<T>();
             public T LastValue
@@ -153,21 +153,11 @@ namespace Paillave.Etl.Reactive.Operators
             public bool IsComplete { get; set; }
             public bool HasLastValue { get; private set; } = false;
 
-            public ObservableElement(IDisposable disposable)
-            {
-                _disposable = disposable;
-            }
-            public void Dispose()
-            {
-                _disposable.Dispose();
-            }
+            public void Dispose() => _disposable.Dispose();
         }
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TOut> CombineWithLatest<TIn1, TIn2, TOut>(this IPushObservable<TIn1> observable1, IPushObservable<TIn2> observable2, Func<TIn1, TIn2, TOut> selector, bool bufferTillFirstMatch = false)
-        {
-            return new CombineWithLatestSubject<TIn1, TIn2, TOut>(observable1, observable2, selector, bufferTillFirstMatch);
-        }
+        public static IPushObservable<TOut> CombineWithLatest<TIn1, TIn2, TOut>(this IPushObservable<TIn1> observable1, IPushObservable<TIn2> observable2, Func<TIn1, TIn2, TOut> selector, bool bufferTillFirstMatch = false) => new CombineWithLatestSubject<TIn1, TIn2, TOut>(observable1, observable2, selector, bufferTillFirstMatch);
     }
 }

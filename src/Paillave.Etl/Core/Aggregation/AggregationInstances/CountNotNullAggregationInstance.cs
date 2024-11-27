@@ -7,9 +7,6 @@
         {
             if (value != null) _count++;
         }
-        public object GetResult()
-        {
-            return _count;
-        }
+        public object GetResult() => _count;
     }
 }

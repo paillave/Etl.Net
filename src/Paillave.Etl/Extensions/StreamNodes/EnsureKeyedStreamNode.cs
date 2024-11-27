@@ -8,19 +8,13 @@ namespace Paillave.Etl.Core
         public IStream<T> Input { get; set; }
         public SortDefinition<T, TKey> SortDefinition { get; set; }
     }
-    public class EnsureKeyedStreamNode<TOut, TKey> : StreamNodeBase<TOut, IKeyedStream<TOut, TKey>, EnsureKeyedArgs<TOut, TKey>>
+    public class EnsureKeyedStreamNode<TOut, TKey>(string name, EnsureKeyedArgs<TOut, TKey> args) : StreamNodeBase<TOut, IKeyedStream<TOut, TKey>, EnsureKeyedArgs<TOut, TKey>>(name, args)
     {
-        public EnsureKeyedStreamNode(string name, EnsureKeyedArgs<TOut, TKey> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
-        protected override IKeyedStream<TOut, TKey> CreateOutputStream(EnsureKeyedArgs<TOut, TKey> args)
-        {
-            return base.CreateKeyedStream(args.Input.Observable.ExceptionOnUnsorted(args.SortDefinition, true), args.SortDefinition);
-        }
+        protected override IKeyedStream<TOut, TKey> CreateOutputStream(EnsureKeyedArgs<TOut, TKey> args) =>
+            base.CreateKeyedStream(args.Input.Observable.ExceptionOnUnsorted(args.SortDefinition, true), args.SortDefinition);
     }
 }

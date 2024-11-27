@@ -47,10 +47,7 @@ namespace Paillave.Etl.ExcelFile.Core
         }
 
         public object ParsedValue { get; private set; } = null;
-        public bool SetValue(ExcelWorksheet excelWorksheet, int row, int column)
-        {
-            return SetValue(excelWorksheet.GetValue(row, column));
-        }
+        public bool SetValue(ExcelWorksheet excelWorksheet, int row, int column) => SetValue(excelWorksheet.GetValue(row, column));
         private bool SetValue(object value)
         {
             if (value != null)
@@ -71,9 +68,6 @@ namespace Paillave.Etl.ExcelFile.Core
             return true;
         }
 
-        private void SetValue(string text)
-        {
-            this.ParsedValue = Deserialize(text);
-        }
+        private void SetValue(string text) => this.ParsedValue = Deserialize(text);
     }
 }

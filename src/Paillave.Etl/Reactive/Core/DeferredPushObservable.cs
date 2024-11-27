@@ -7,16 +7,11 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl.Reactive.Core
 {
-    public class DeferredPushObservable<T> : PushSubject<T>, IDeferredPushObservable<T>
+    public class DeferredPushObservable<T>(Action<Action<T>, CancellationToken> valuesFactory, CancellationToken cancellationToken) : PushSubject<T>(cancellationToken), IDeferredPushObservable<T>
     {
-        private Action<Action<T>, CancellationToken> _valuesFactory;
-        public DeferredPushObservable(Action<Action<T>, CancellationToken> valuesFactory, CancellationToken cancellationToken) : base(cancellationToken) => _valuesFactory = valuesFactory;
-
+        private Action<Action<T>, CancellationToken> _valuesFactory = valuesFactory;
         private Guid tmp = Guid.NewGuid();
-        public void Start()
-        {
-            Task.Run(() => InternStart());
-        }
+        public void Start() => Task.Run(() => InternStart());
         private void InternStart()
         {
             lock (LockObject)

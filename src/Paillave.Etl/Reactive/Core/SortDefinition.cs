@@ -63,15 +63,9 @@ namespace Paillave.Etl.Reactive.Core
             return 0;
         }
 
-        public bool Equals(T x, T y)
-        {
-            return Compare(x, y) == 0;
-        }
+        public bool Equals(T x, T y) => Compare(x, y) == 0;
 
-        public int GetHashCode(T obj)
-        {
-            return this.GetKey(obj)?.GetHashCode() ?? 0;
-        }
+        public int GetHashCode(T obj) => this.GetKey(obj)?.GetHashCode() ?? 0;
         private List<SortStep> GetSortSteps()
         {
             var keyType = typeof(TKey);
@@ -105,38 +99,20 @@ namespace Paillave.Etl.Reactive.Core
                     .ToList();
         }
 
-        int System.Collections.IComparer.Compare(object x, object y)
-        {
-            return Compare((T)x, (T)y);
-        }
+        int System.Collections.IComparer.Compare(object x, object y) => Compare((T)x, (T)y);
 
-        bool System.Collections.IEqualityComparer.Equals(object x, object y)
-        {
-            return Equals((T)x, (T)y);
-        }
+        bool System.Collections.IEqualityComparer.Equals(object x, object y) => Equals((T)x, (T)y);
 
-        int System.Collections.IEqualityComparer.GetHashCode(object obj)
-        {
-            return GetHashCode((T)obj);
-        }
+        int System.Collections.IEqualityComparer.GetHashCode(object obj) => GetHashCode((T)obj);
     }
-    public class SortStep
+    public class SortStep(int position, SortOrder sortOrder)
     {
-        public SortStep(int position, SortOrder sortOrder)
-        {
-            this.Position = position;
-            this.SortOrder = sortOrder;
-        }
-        public SortStep(int position, SortOrder sortOrder, PropertyInfo propertyInfo) : this(position, sortOrder)
-        {
+        public SortStep(int position, SortOrder sortOrder, PropertyInfo propertyInfo) : this(position, sortOrder) => 
             this.GetValue = (i) => propertyInfo.GetValue(i);
-        }
-        public SortStep(int position, SortOrder sortOrder, Func<object, object> getValue) : this(position, sortOrder)
-        {
+        public SortStep(int position, SortOrder sortOrder, Func<object, object> getValue) : this(position, sortOrder) => 
             this.GetValue = getValue;
-        }
         public Func<object, object> GetValue { get; }
-        public int Position { get; }
-        public SortOrder SortOrder { get; }
+        public int Position { get; } = position;
+        public SortOrder SortOrder { get; } = sortOrder;
     }
 }

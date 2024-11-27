@@ -10,9 +10,8 @@ namespace Paillave.Etl.Core
         public IStream<TIn> Stream { get; set; }
         public IValuesProvider<TIn, TOut> ValuesProvider { get; set; }
     }
-    public class CrossApplyStreamNode<TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, CrossApplyArgs<TIn, TOut>>
+    public class CrossApplyStreamNode<TIn, TOut>(string name, CrossApplyArgs<TIn, TOut> args) : StreamNodeBase<TOut, IStream<TOut>, CrossApplyArgs<TIn, TOut>>(name, args)
     {
-        public CrossApplyStreamNode(string name, CrossApplyArgs<TIn, TOut> args) : base(name, args) { }
         public override string TypeName => $"Cross apply {this.Args.ValuesProvider.TypeName}";
         public override ProcessImpact PerformanceImpact => this.Args.ValuesProvider.PerformanceImpact;
         public override ProcessImpact MemoryFootPrint => this.Args.ValuesProvider.MemoryFootPrint;

@@ -9,7 +9,7 @@ namespace Paillave.Etl.Core
         public IStream<TraceEvent> InputStream { get; set; }
         public int Limit { get; set; } = 1000;
     }
-    public class KeepLastTracesStreamNode : StreamNodeBase<NodeTraces, IStream<NodeTraces>, KeepLastTracesArgs>
+    public class KeepLastTracesStreamNode(string name, KeepLastTracesArgs args) : StreamNodeBase<NodeTraces, IStream<NodeTraces>, KeepLastTracesArgs>(name, args)
     {
         private class Counter
         {
@@ -17,7 +17,7 @@ namespace Paillave.Etl.Core
             public int Value => _value;
             public void Increment() => Interlocked.Increment(ref _value);
         }
-        public KeepLastTracesStreamNode(string name, KeepLastTracesArgs args) : base(name, args) { }
+
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
         protected override IStream<NodeTraces> CreateOutputStream(KeepLastTracesArgs args)

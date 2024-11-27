@@ -7,10 +7,8 @@ namespace Paillave.Etl.Core
         public SingleStream(INodeContext sourceNode, IPushObservable<T> observable, bool trace=true) : base(sourceNode, observable, new SortDefinition<T, T>(i => i), trace)
         {
         }
-        public override object GetMatchingStream<TOut>(INodeContext sourceNode, object observable)
-        {
+        public override object GetMatchingStream<TOut>(INodeContext sourceNode, object observable) =>
             // TODO: the following is an absolute dreadful solution about which I MUST find a proper alternative
-            return new SingleStream<TOut>(sourceNode, (IPushObservable<TOut>)observable);
-        }
+            new SingleStream<TOut>(sourceNode, (IPushObservable<TOut>)observable);
     }
 }

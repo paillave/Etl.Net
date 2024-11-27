@@ -42,9 +42,6 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<T> Do<T>(this IPushObservable<T> observable, Action<T> action)
-        {
-            return new DoSubject<T>(observable, action);
-        }
+        public static IPushObservable<T> Do<T>(this IPushObservable<T> observable, Action<T> action) => new DoSubject<T>(observable, action);
     }
 }

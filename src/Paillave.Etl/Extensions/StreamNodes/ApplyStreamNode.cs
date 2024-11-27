@@ -22,12 +22,8 @@ namespace Paillave.Etl.Core
         public bool ExcludeNull { get; set; }
         public bool WithNoDispose { get; set; }
     }
-    public class ApplySingleStreamNode<TInMain, TInToApply, TOut> : StreamNodeBase<TOut, ISingleStream<TOut>, ApplySingleArgs<TInMain, TInToApply, TOut>>
+    public class ApplySingleStreamNode<TInMain, TInToApply, TOut>(string name, ApplySingleArgs<TInMain, TInToApply, TOut> args) : StreamNodeBase<TOut, ISingleStream<TOut>, ApplySingleArgs<TInMain, TInToApply, TOut>>(name, args)
     {
-        public ApplySingleStreamNode(string name, ApplySingleArgs<TInMain, TInToApply, TOut> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;

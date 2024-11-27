@@ -14,12 +14,8 @@ namespace Paillave.Etl.Core
         public bool NoParallelisation { get; set; }
     }
 
-    public class ToSubProcessesStreamNode<TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, ToSubProcessesArgs<TIn, TOut>>
+    public class ToSubProcessesStreamNode<TIn, TOut>(string name, ToSubProcessesArgs<TIn, TOut> args) : StreamNodeBase<TOut, IStream<TOut>, ToSubProcessesArgs<TIn, TOut>>(name, args)
     {
-        public ToSubProcessesStreamNode(string name, ToSubProcessesArgs<TIn, TOut> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;

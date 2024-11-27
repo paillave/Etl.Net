@@ -42,10 +42,8 @@ namespace Paillave.Etl.Core.Aggregation
             if (CanAggregate(this.GetInValue(input)))
                 this.InternalAggregate(input);
         }
-        protected virtual void InternalAggregate(TIn input)
-        {
+        protected virtual void InternalAggregate(TIn input) => 
             AggregationInstance?.Aggregate(SourcePropertyInfo?.GetValue(this.GetInValue(input)));
-        }
         private bool CanAggregate(TValue input)
         {
             if (FilteredPropertyInfo == null) return true;
@@ -57,19 +55,16 @@ namespace Paillave.Etl.Core.Aggregation
         }
         public object GetResult() => AggregationInstance?.GetResult();
     }
-    public class Aggregator<TIn> : AggregatorBase<TIn, TIn>
+    public class Aggregator<TIn>(Type aggregatorInstanceType, PropertyInfo sourcePropertyInfo, 
+        PropertyInfo targetPropertyInfo) : AggregatorBase<TIn, TIn>(aggregatorInstanceType, sourcePropertyInfo, targetPropertyInfo)
     {
-        public Aggregator(Type aggregatorInstanceType, PropertyInfo sourcePropertyInfo, PropertyInfo targetPropertyInfo)
-            : base(aggregatorInstanceType, sourcePropertyInfo, targetPropertyInfo) { }
         protected override TIn GetInValue(TIn input) => input;
         protected override AggregatorBase<TIn, TIn> CreateEmptyInstance(Type aggregatorInstanceType, PropertyInfo sourcePropertyInfo, PropertyInfo targetPropertyInfo)
             => new Aggregator<TIn>(aggregatorInstanceType, sourcePropertyInfo, targetPropertyInfo);
     }
-    public class CorrelatedAggregator<TCorrelated> : AggregatorBase<Correlated<TCorrelated>, TCorrelated>
+    public class CorrelatedAggregator<TCorrelated>(Type aggregatorInstanceType, PropertyInfo sourcePropertyInfo, 
+        PropertyInfo targetPropertyInfo) : AggregatorBase<Correlated<TCorrelated>, TCorrelated>(aggregatorInstanceType, sourcePropertyInfo, targetPropertyInfo)
     {
-        public CorrelatedAggregator(Type aggregatorInstanceType, PropertyInfo sourcePropertyInfo, PropertyInfo targetPropertyInfo)
-            : base(aggregatorInstanceType, sourcePropertyInfo, targetPropertyInfo) { }
-
         public HashSet<Guid> CorrelationKeys = new HashSet<Guid>();
         protected override AggregatorBase<Correlated<TCorrelated>, TCorrelated> CreateEmptyInstance(Type aggregatorInstanceType, PropertyInfo sourcePropertyInfo, PropertyInfo targetPropertyInfo)
             => new CorrelatedAggregator<TCorrelated>(aggregatorInstanceType, sourcePropertyInfo, targetPropertyInfo);

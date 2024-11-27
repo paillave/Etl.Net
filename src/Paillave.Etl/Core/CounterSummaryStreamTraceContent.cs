@@ -2,15 +2,11 @@
 
 namespace Paillave.Etl.Core
 {
-    public class CounterSummaryStreamTraceContent : StreamTraceContentBase
+    public class CounterSummaryStreamTraceContent(int counter) : StreamTraceContentBase
     {
-        public CounterSummaryStreamTraceContent(int counter)
-        {
-            this.Counter = counter;
-        }
         public override TraceLevel Level => TraceLevel.Info;
 
-        public int Counter { get; }
+        public int Counter { get; } = counter;
 
         public override string Message => $"{this.Counter} row(s) issued";
     }

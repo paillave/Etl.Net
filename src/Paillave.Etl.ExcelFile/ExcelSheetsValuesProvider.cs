@@ -8,10 +8,7 @@ namespace Paillave.Etl.ExcelFile
     public class ExcelSheetSelection
     {
         internal ExcelWorksheet ExcelWorksheet { get; }
-        internal ExcelSheetSelection(ExcelWorksheet excelWorksheet)
-        {
-            ExcelWorksheet = excelWorksheet;
-        }
+        internal ExcelSheetSelection(ExcelWorksheet excelWorksheet) => ExcelWorksheet = excelWorksheet;
         public string Name => this.ExcelWorksheet.Name;
     }
     public class ExcelSheetsValuesProviderArgs<TOut>

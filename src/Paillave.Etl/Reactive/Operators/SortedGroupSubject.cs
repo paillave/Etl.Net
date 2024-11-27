@@ -96,10 +96,7 @@ namespace Paillave.Etl.Reactive.Operators
                 TryComplete();
             }
         }
-        private void OnSourceException(Exception ex)
-        {
-            base.PushException(ex);
-        }
+        private void OnSourceException(Exception ex) => base.PushException(ex);
         public override void Dispose()
         {
             lock (_syncLock)
@@ -112,9 +109,6 @@ namespace Paillave.Etl.Reactive.Operators
     }
     public static partial class ObservableExtensions
     {
-        public static IPushObservable<TOut> SortedGroup<TIn, TKey, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, TKey> getKey, Func<IPushObservable<TIn>, TIn, IPushObservable<TOut>> parallelProcess)
-        {
-            return new SortedGroupSubjectSubject<TIn, TKey, TOut>(sourceS, getKey, parallelProcess);
-        }
+        public static IPushObservable<TOut> SortedGroup<TIn, TKey, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, TKey> getKey, Func<IPushObservable<TIn>, TIn, IPushObservable<TOut>> parallelProcess) => new SortedGroupSubjectSubject<TIn, TKey, TOut>(sourceS, getKey, parallelProcess);
     }
 }
