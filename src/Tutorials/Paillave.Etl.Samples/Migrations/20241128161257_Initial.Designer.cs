@@ -12,7 +12,7 @@ using Paillave.Etl.Samples.DataAccess;
 namespace Paillave.Etl.Samples.Migrations
 {
     [DbContext(typeof(TestDbContext))]
-    [Migration("20241127170031_Initial")]
+    [Migration("20241128161257_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -172,6 +172,28 @@ namespace Paillave.Etl.Samples.Migrations
                     b.ToTable("SimpleTable", (string)null);
                 });
 
+            modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.SimpleTableRelated", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SimpleTableId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SimpleTableId");
+
+                    b.ToTable("SimpleTableRelated", (string)null);
+                });
+
             modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.Equity", b =>
                 {
                     b.HasBaseType("Paillave.Etl.Samples.DataAccess.Security");
@@ -235,9 +257,23 @@ namespace Paillave.Etl.Samples.Migrations
                     b.Navigation("Security");
                 });
 
+            modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.SimpleTableRelated", b =>
+                {
+                    b.HasOne("Paillave.Etl.Samples.DataAccess.SimpleTable", null)
+                        .WithMany("Relateds")
+                        .HasForeignKey("SimpleTableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.Composition", b =>
                 {
                     b.Navigation("Positions");
+                });
+
+            modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.SimpleTable", b =>
+                {
+                    b.Navigation("Relateds");
                 });
 #pragma warning restore 612, 618
         }

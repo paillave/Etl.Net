@@ -1,4 +1,4 @@
 SicavCode,SicavName,SicavType,PortfolioCode,PortfolioName
-S1,Sicav1AA,UCITS,P1,Portfolio1
-S2,Sicav2AA,AIFM,P2,Portfolio2
-S1,Sicav1AA,UCITS,P3,Portfolio3
+S1,Sicav1,UCITS,P1,Portfolio1
+S2,Sicav2,AIFM,P2,Portfolio2
+S1,Sicav1,UCITS,P3,Portfolio3
