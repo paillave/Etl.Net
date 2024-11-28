@@ -109,7 +109,7 @@ namespace Paillave.Etl.Bloomberg
                                     var splitted = lineSerializer.Splitter.Split(line);
                                     ticker = splitted[0];
                                     line = string.Join("|", splitted.Skip(3));
-                                    parsed = lineSerializer.Deserialize(line, sourceName, index);
+                                    parsed = lineSerializer.Deserialize(line, sourceName, index, null);
                                 }
                                 catch (Exception ex)
                                 {

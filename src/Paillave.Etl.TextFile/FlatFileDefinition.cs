@@ -24,7 +24,8 @@ namespace Paillave.Etl.TextFile
         private bool _respectHeaderCase = false;
 
         public int FirstLinesToIgnore { get; private set; }
-        public Func<string,string>? LinePreProcessor { get; set; }
+        public Func<string, string>? LinePreProcessor { get; set; }
+        public Dictionary<string, Func<string, string>>? ValuePreProcessor = null;
 
         private IEnumerable<string> GetDefaultColumnNames()
         {
@@ -53,9 +54,16 @@ namespace Paillave.Etl.TextFile
             FirstLinesToIgnore = firstLinesToIgnore;
             return this;
         }
-        public FlatFileDefinition<T>  WithLinePreProcessor(Func<string,string> linePreProcessor)
+        public FlatFileDefinition<T> WithLinePreProcessor(Func<string, string> linePreProcessor)
         {
             LinePreProcessor = linePreProcessor;
+            return this;
+        }
+        public FlatFileDefinition<T> WithValuePreProcessor(string propertyName, Func<string, string> valuePreProcessor)
+        {
+            if (ValuePreProcessor == null)
+                ValuePreProcessor = new Dictionary<string, Func<string, string>>();
+            ValuePreProcessor[propertyName] = valuePreProcessor;
             return this;
         }
         public FlatFileDefinition<T> WithMap(Expression<Func<IFieldMapper, T>> expression)

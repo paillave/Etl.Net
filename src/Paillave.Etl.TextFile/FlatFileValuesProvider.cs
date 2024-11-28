@@ -46,7 +46,7 @@ namespace Paillave.Etl.TextFile
                         TParsed parsed;
                         try
                         {
-                            parsed = lineSerializer.Deserialize(line, sourceName, index);
+                            parsed = lineSerializer.Deserialize(line, sourceName, index, _args.Mapping.ValuePreProcessor);
                         }
                         catch (Exception ex)
                         {
@@ -71,7 +71,7 @@ namespace Paillave.Etl.TextFile
                         TParsed parsed;
                         try
                         {
-                            parsed = lineSerializer.Deserialize(line, sourceName, index);
+                            parsed = lineSerializer.Deserialize(line, sourceName, index, _args.Mapping.ValuePreProcessor);
                         }
                         catch (Exception ex)
                         {
