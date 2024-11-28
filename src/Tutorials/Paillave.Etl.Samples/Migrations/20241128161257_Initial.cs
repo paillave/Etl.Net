@@ -82,6 +82,26 @@ namespace Paillave.Etl.Samples.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SimpleTableRelated",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SimpleTableId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SimpleTableRelated", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SimpleTableRelated_SimpleTable_SimpleTableId",
+                        column: x => x.SimpleTableId,
+                        principalTable: "SimpleTable",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Composition",
                 columns: table => new
                 {
@@ -141,6 +161,11 @@ namespace Paillave.Etl.Samples.Migrations
                 name: "IX_Position_SecurityId",
                 table: "Position",
                 column: "SecurityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SimpleTableRelated_SimpleTableId",
+                table: "SimpleTableRelated",
+                column: "SimpleTableId");
         }
 
         /// <inheritdoc />
@@ -150,13 +175,16 @@ namespace Paillave.Etl.Samples.Migrations
                 name: "Position");
 
             migrationBuilder.DropTable(
-                name: "SimpleTable");
+                name: "SimpleTableRelated");
 
             migrationBuilder.DropTable(
                 name: "Composition");
 
             migrationBuilder.DropTable(
                 name: "Security");
+
+            migrationBuilder.DropTable(
+                name: "SimpleTable");
 
             migrationBuilder.DropTable(
                 name: "Portfolio");

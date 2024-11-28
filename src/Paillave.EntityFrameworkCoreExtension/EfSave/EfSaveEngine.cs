@@ -94,7 +94,8 @@ public class EfSaveEngine<T> where T : class
         var existingEntity = contextSet.AsNoTracking().FirstOrDefault(entityCondition);
         if (existingEntity == null)
         {
-            _context.Entry(entity).State = EntityState.Added;
+            // _context.Entry(entity).State = EntityState.Added;
+            contextSet.Update(entity);
         }
         else
         {

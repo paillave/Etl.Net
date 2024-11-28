@@ -55,7 +55,7 @@ namespace Paillave.Etl.Samples
         /// <returns></returns>
         static async Task ImportAndCreateFileAsync(string[] args)
         {
-            var processRunner = StreamProcessRunner.Create<string[]>(TestImport2.Import);
+            var processRunner = StreamProcessRunner.Create<string[]>(TestImport3.Import);
             var structure = processRunner.GetDefinitionStructure();
             // structure.OpenEstimatedExecutionPlan();
 
