@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
     <PackageId>Paillave.EtlNet.Ftp</PackageId>
     <PackageTags>ETL .net core SSIS reactive FTP</PackageTags>
     <Product>ETL.net FTP extensions</Product>
@@ -11,8 +11,8 @@
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FluentFTP" Version="46.0.2" allowedVersions="33.0.0" />
-    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="7.0.0" allowedVersions="6.0.0" />
-    <PackageReference Include="SmartFormat" Version="3.4.0" />
+    <PackageReference Include="FluentFTP" Version="52.0.0" allowedVersions="33.0.0" />
+    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="9.0.0" allowedVersions="6.0.0" />
+    <PackageReference Include="SmartFormat" Version="3.5.1" />
   </ItemGroup>
 </Project>

@@ -9,8 +9,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="4.5.3.3" allowedVersions=""/>
-    <PackageReference Include="ExcelDataReader" Version="3.6.0" allowedVersions="3.6.0"/>
-    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" allowedVersions="3.6.0" />
+    <PackageReference Include="ExcelDataReader" Version="3.7.0" allowedVersions="3.6.0"/>
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.7.0" allowedVersions="3.6.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />

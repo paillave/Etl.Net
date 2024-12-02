@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
     <PackageId>Paillave.EntityFrameworkCoreExtension</PackageId>
     <PackageTags>ETL .net core EF reactive</PackageTags>
     <Product>Entity Framework extensions</Product>
