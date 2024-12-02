@@ -12,7 +12,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" allowedVersions="6.0.0"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" allowedVersions="6.0.0"/>
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="9.0.0" allowedVersions="6.0.0"/>
-    <PackageReference Include="system.data.sqlclient"  Version="4.9.0" />
-    <!-- <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" allowedVersions="5.2.0"/> -->
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" allowedVersions="5.2.0"/>
   </ItemGroup>
 </Project>

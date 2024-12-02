@@ -68,7 +68,7 @@ contextStream
 
 ## Setup the connection
 
-By using `System.Data.SqlClient`, we create a connection to the database and we will inject it into the ETL process when triggering it.
+By using `Microsoft.Data.SqlClient`, we create a connection to the database and we will inject it into the ETL process when triggering it.
 
 The extension that needs to operate with the database will get its connection through the DI setup here.
 
@@ -200,7 +200,7 @@ using Paillave.Etl.FileSystem;
 using Paillave.Etl.Zip;
 using Paillave.Etl.TextFile;
 using Paillave.Etl.SqlServer;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Paillave.Etl.Core;
 
 namespace SimpleTutorial
