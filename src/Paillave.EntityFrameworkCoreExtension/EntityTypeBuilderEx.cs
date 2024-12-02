@@ -10,14 +10,14 @@ namespace Paillave.EntityFrameworkCoreExtension
         {
             var type = typeof(TEntity);
             var tableName = type.Name;
-            var schemaName = type.Namespace.Split('.').Last();
+            var schemaName = type.Namespace?.Split('.').Last();
             return entityTypeBuilder.ToTable(tableName, schemaName);
         }
-        public static OwnedNavigationBuilder<TFrom, TTo> ToTable<TFrom, TTo>(this OwnedNavigationBuilder<TFrom, TTo>  entityTypeBuilder) where TFrom : class where TTo:class
+        public static OwnedNavigationBuilder<TFrom, TTo> ToTable<TFrom, TTo>(this OwnedNavigationBuilder<TFrom, TTo> entityTypeBuilder) where TFrom : class where TTo : class
         {
             var type = typeof(TTo);
             var tableName = type.Name;
-            var schemaName = type.Namespace.Split('.').Last();
+            var schemaName = type.Namespace?.Split('.').Last();
             return entityTypeBuilder.ToTable(tableName, schemaName);
         }
     }

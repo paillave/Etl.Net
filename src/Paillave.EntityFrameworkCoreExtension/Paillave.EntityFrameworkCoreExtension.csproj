@@ -6,6 +6,7 @@
     <PackageTags>ETL .net core EF reactive</PackageTags>
     <Product>Entity Framework extensions</Product>
     <Description>Entity Framework Extensions</Description>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FastMember" Version="1.5.0" allowedVersions="1.1.0" />
