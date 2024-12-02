@@ -1,24 +1,28 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace Paillave.Etl.Samples.Migrations
 {
-    public partial class TestDb : Migration
+    /// <inheritdoc />
+    public partial class Initial : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
                 name: "Security",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    InternalCode = table.Column<string>(nullable: false),
-                    Isin = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Discriminator = table.Column<string>(nullable: false),
-                    Issuer = table.Column<string>(nullable: true),
-                    Class = table.Column<string>(nullable: true)
+                    InternalCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Isin = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Issuer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Class = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -30,11 +34,11 @@ namespace Paillave.Etl.Samples.Migrations
                 name: "Sicav",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    InternalCode = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Type = table.Column<string>(nullable: true)
+                    InternalCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,14 +47,27 @@ namespace Paillave.Etl.Samples.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SimpleTable",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SimpleTable", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Portfolio",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    InternalCode = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    SicavId = table.Column<int>(nullable: false)
+                    InternalCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SicavId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,13 +82,33 @@ namespace Paillave.Etl.Samples.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SimpleTableRelated",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SimpleTableId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SimpleTableRelated", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SimpleTableRelated_SimpleTable_SimpleTableId",
+                        column: x => x.SimpleTableId,
+                        principalTable: "SimpleTable",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Composition",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "DATE", nullable: false),
-                    PortfolioId = table.Column<int>(nullable: false)
+                    PortfolioId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,9 +126,9 @@ namespace Paillave.Etl.Samples.Migrations
                 name: "Position",
                 columns: table => new
                 {
-                    CompositionId = table.Column<int>(nullable: false),
-                    SecurityId = table.Column<int>(nullable: false),
-                    Value = table.Column<decimal>(nullable: false)
+                    CompositionId = table.Column<int>(type: "int", nullable: false),
+                    SecurityId = table.Column<int>(type: "int", nullable: false),
+                    Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -124,18 +161,30 @@ namespace Paillave.Etl.Samples.Migrations
                 name: "IX_Position_SecurityId",
                 table: "Position",
                 column: "SecurityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SimpleTableRelated_SimpleTableId",
+                table: "SimpleTableRelated",
+                column: "SimpleTableId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Position");
 
             migrationBuilder.DropTable(
+                name: "SimpleTableRelated");
+
+            migrationBuilder.DropTable(
                 name: "Composition");
 
             migrationBuilder.DropTable(
                 name: "Security");
+
+            migrationBuilder.DropTable(
+                name: "SimpleTable");
 
             migrationBuilder.DropTable(
                 name: "Portfolio");

@@ -23,7 +23,7 @@ namespace Paillave.Etl.TextFile
             this._rowNumberPropertyNames = rowNumberPropertyNames;
             this._rowGuidPropertyNames = rowGuidPropertyNames;
         }
-        public T Deserialize(string line, string sourceName, int rowNumber)
+        public T Deserialize(string line, string sourceName, int rowNumber, Dictionary<string, Func<string, string>>? valuePreProcessor)
         {
             var stringValues = this.Splitter.Split(line);
             var values = this._indexToPropertySerializerDictionary.ToDictionary(i => i.Value.PropertyName, i =>
@@ -40,8 +40,10 @@ namespace Paillave.Etl.TextFile
                 // if(string.IsNullOrWhiteSpace(valueToParse) && Nullable.)
                 try
                 {
+                    if (valuePreProcessor != null && valuePreProcessor.TryGetValue(i.Value.PropertyName, out var preProcessor))
+                        valueToParse = preProcessor(valueToParse);
                     return i.Value.Deserialize(valueToParse);
-                } 
+                }
                 catch (Exception ex)
                 {
                     throw new FlatFileFieldDeserializeException(i.Key, i.Value.PropertyName, valueToParse, ex);

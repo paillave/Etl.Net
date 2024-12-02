@@ -32,12 +32,13 @@ namespace Paillave.Etl.XmlFile
                 NodeDefinitionName = nodeDefinitionName
             }).Output;
         }
-        public static IStream<Correlated<T>> XmlNodeOfTypeCorrelated<T>(this IStream<XmlNodeParsed> stream, string name, string nodeDefinitionName = null)
+        public static IStream<Correlated<T>> XmlNodeOfTypeCorrelated<T>(this IStream<XmlNodeParsed> stream, string name, string correlationPath, string? nodeDefinitionName = null)
         {
-            return new XmlNodeOfTypeCorrelatedStreamNode<T>(name, new XmlNodeOfTypeFileArgs<T>
+            return new XmlNodeOfTypeCorrelatedStreamNode<T>(name, new XmlNodeOfTypeCorrelatedFileArgs<T>
             {
                 MainStream = stream,
-                NodeDefinitionName = nodeDefinitionName
+                NodeDefinitionName = nodeDefinitionName,
+                CorrelationPath = correlationPath
             }).Output;
         }
     }

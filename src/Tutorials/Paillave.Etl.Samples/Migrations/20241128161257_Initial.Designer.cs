@@ -7,28 +7,31 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Paillave.Etl.Samples.DataAccess;
 
+#nullable disable
+
 namespace Paillave.Etl.Samples.Migrations
 {
     [DbContext(typeof(TestDbContext))]
-    [Migration("20201030083250_TestDb")]
-    partial class TestDb
+    [Migration("20241128161257_Initial")]
+    partial class Initial
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "7.0.8")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.Composition", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("DATE");
@@ -42,23 +45,23 @@ namespace Paillave.Etl.Samples.Migrations
 
                     b.HasIndex("PortfolioId");
 
-                    b.ToTable("Composition");
+                    b.ToTable("Composition", (string)null);
                 });
 
             modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.Portfolio", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("InternalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SicavId")
@@ -70,7 +73,7 @@ namespace Paillave.Etl.Samples.Migrations
 
                     b.HasIndex("SicavId");
 
-                    b.ToTable("Portfolio");
+                    b.ToTable("Portfolio", (string)null);
                 });
 
             modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.Position", b =>
@@ -88,17 +91,16 @@ namespace Paillave.Etl.Samples.Migrations
 
                     b.HasIndex("SecurityId");
 
-                    b.ToTable("Position");
+                    b.ToTable("Position", (string)null);
                 });
 
             modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.Security", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -109,34 +111,38 @@ namespace Paillave.Etl.Samples.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Isin")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasAlternateKey("InternalCode");
 
-                    b.ToTable("Security");
+                    b.ToTable("Security", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Security");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.Sicav", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("InternalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
@@ -146,7 +152,46 @@ namespace Paillave.Etl.Samples.Migrations
 
                     b.HasAlternateKey("InternalCode");
 
-                    b.ToTable("Sicav");
+                    b.ToTable("Sicav", (string)null);
+                });
+
+            modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.SimpleTable", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SimpleTable", (string)null);
+                });
+
+            modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.SimpleTableRelated", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SimpleTableId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SimpleTableId");
+
+                    b.ToTable("SimpleTableRelated", (string)null);
                 });
 
             modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.Equity", b =>
@@ -178,6 +223,8 @@ namespace Paillave.Etl.Samples.Migrations
                         .HasForeignKey("PortfolioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Portfolio");
                 });
 
             modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.Portfolio", b =>
@@ -187,6 +234,8 @@ namespace Paillave.Etl.Samples.Migrations
                         .HasForeignKey("SicavId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Sicav");
                 });
 
             modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.Position", b =>
@@ -202,6 +251,29 @@ namespace Paillave.Etl.Samples.Migrations
                         .HasForeignKey("SecurityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Composition");
+
+                    b.Navigation("Security");
+                });
+
+            modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.SimpleTableRelated", b =>
+                {
+                    b.HasOne("Paillave.Etl.Samples.DataAccess.SimpleTable", null)
+                        .WithMany("Relateds")
+                        .HasForeignKey("SimpleTableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.Composition", b =>
+                {
+                    b.Navigation("Positions");
+                });
+
+            modelBuilder.Entity("Paillave.Etl.Samples.DataAccess.SimpleTable", b =>
+                {
+                    b.Navigation("Relateds");
                 });
 #pragma warning restore 612, 618
         }

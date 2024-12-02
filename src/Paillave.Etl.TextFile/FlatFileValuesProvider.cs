@@ -33,7 +33,10 @@ namespace Paillave.Etl.TextFile
                 {
                     if (cancellationToken.IsCancellationRequested) break;
                     string line = sr.ReadLine();
-
+                    if (_args.Mapping.LinePreProcessor != null)
+                    {
+                        line = _args.Mapping.LinePreProcessor(line);
+                    }
                     if (index == _args.Mapping.FirstLinesToIgnore)
                     {
                         lineSerializer = _args.Mapping.GetSerializer(line);
@@ -43,7 +46,7 @@ namespace Paillave.Etl.TextFile
                         TParsed parsed;
                         try
                         {
-                            parsed = lineSerializer.Deserialize(line, sourceName, index);
+                            parsed = lineSerializer.Deserialize(line, sourceName, index, _args.Mapping.ValuePreProcessor);
                         }
                         catch (Exception ex)
                         {
@@ -68,7 +71,7 @@ namespace Paillave.Etl.TextFile
                         TParsed parsed;
                         try
                         {
-                            parsed = lineSerializer.Deserialize(line, sourceName, index);
+                            parsed = lineSerializer.Deserialize(line, sourceName, index, _args.Mapping.ValuePreProcessor);
                         }
                         catch (Exception ex)
                         {
