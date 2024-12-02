@@ -12,6 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" allowedVersions="13.0.1"/>
-    <PackageReference Include="NJsonSchema" Version="10.9.0" allowedVersions="10.6.6"/>
+    <PackageReference Include="NJsonSchema" Version="11.1.0" allowedVersions="10.6.6"/>
   </ItemGroup>
 </Project>

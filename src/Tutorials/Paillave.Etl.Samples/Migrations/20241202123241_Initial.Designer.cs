@@ -12,7 +12,7 @@ using Paillave.Etl.Samples.DataAccess;
 namespace Paillave.Etl.Samples.Migrations
 {
     [DbContext(typeof(TestDbContext))]
-    [Migration("20241128161257_Initial")]
+    [Migration("20241202123241_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Paillave.Etl.Samples.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.8")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -61,7 +61,6 @@ namespace Paillave.Etl.Samples.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SicavId")
@@ -104,18 +103,17 @@ namespace Paillave.Etl.Samples.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
                     b.Property<string>("InternalCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Isin")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -124,7 +122,7 @@ namespace Paillave.Etl.Samples.Migrations
 
                     b.ToTable("Security", (string)null);
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Security");
+                    b.HasDiscriminator().HasValue("Security");
 
                     b.UseTphMappingStrategy();
                 });
@@ -142,7 +140,6 @@ namespace Paillave.Etl.Samples.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
@@ -164,7 +161,6 @@ namespace Paillave.Etl.Samples.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -181,7 +177,6 @@ namespace Paillave.Etl.Samples.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SimpleTableId")

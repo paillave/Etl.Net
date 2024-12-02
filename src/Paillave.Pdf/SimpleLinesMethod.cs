@@ -95,6 +95,8 @@ namespace Paillave.Pdf
                     letter.Width,
                     letter.FontSize,
                     letter.Font,
+                    UglyToad.PdfPig.Core.TextRenderingMode.Fill,
+                    letter.Color,
                     letter.Color,
                     letter.PointSize,
                     letter.TextSequence);
