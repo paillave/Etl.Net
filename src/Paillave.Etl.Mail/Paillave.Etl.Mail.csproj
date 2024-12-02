@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
     <PackageId>Paillave.EtlNet.Mail</PackageId>
     <PackageTags>ETL .net core SSIS reactive Mail</PackageTags>
     <Product>ETL.net Mail extensions</Product>
     <Description>Extensions for Etl.Net to send of read EMails</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MailKit" Version="4.7.1" allowedVersions="2.10.0"/>
-    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="7.0.0" allowedVersions="6.0.0" />
-    <PackageReference Include="MimeTypes" Version="2.4.1" allowedVersions="2.1.0">
+    <PackageReference Include="MailKit" Version="4.8.0" allowedVersions="2.10.0"/>
+    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="9.0.0" allowedVersions="6.0.0" />
+    <PackageReference Include="MimeTypes" Version="2.5.2" allowedVersions="2.1.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

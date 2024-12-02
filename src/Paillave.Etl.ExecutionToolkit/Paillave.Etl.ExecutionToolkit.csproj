@@ -17,7 +17,7 @@
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="7.0.2" allowedVersions="6.0.0" />
-    <PackageReference Include="Terminal.Gui" Version="1.10.1" />
+    <PackageReference Include="System.Text.Json" Version="9.0.0" allowedVersions="6.0.0" />
+    <PackageReference Include="Terminal.Gui" Version="1.17.1" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
     <PackageId>Paillave.EtlNet.FileSystem</PackageId>
     <PackageTags>ETL .net core SSIS reactive text file csv</PackageTags>
     <Product>ETL.net file system extensions</Product>
@@ -11,6 +11,6 @@
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SmartFormat" Version="3.4.0" />
+    <PackageReference Include="SmartFormat" Version="3.5.1" />
   </ItemGroup>
 </Project>

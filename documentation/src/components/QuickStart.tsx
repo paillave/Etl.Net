@@ -31,7 +31,7 @@ using Paillave.Etl.FileSystem;
 using Paillave.Etl.Zip;
 using Paillave.Etl.TextFile;
 using Paillave.Etl.SqlServer;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 
 namespace SimpleTutorial

@@ -8,7 +8,7 @@
     <Description>Autofac extensions for Etl.Net</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="7.0.1" allowedVersions="5.0.0" />
+    <PackageReference Include="Autofac" Version="8.1.1" allowedVersions="5.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
