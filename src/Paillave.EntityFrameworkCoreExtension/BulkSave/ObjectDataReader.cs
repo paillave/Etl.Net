@@ -217,15 +217,15 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
                 }
                 else
                 {
-                    if (!_accessorsByType.TryGetValue(_currentType, out var acc)) return DBNull.Value;
+                    if (!_accessorsByType.TryGetValue(_currentType, out var acc)) return Constants.DBNull;
                     var val = acc[Current, name];
-                    if (val == null) return DBNull.Value;
+                    if (val == null) return Constants.DBNull;
                     if (_convertibleProperties.TryGetValue(name, out var converter)) return converter.ConvertToProvider(val);
                     return val;
                 }
             }
         }
-        public object this[int i] => this[_memberNames[i]] ?? DBNull.Value;
+        public object this[int i] => this[_memberNames[i]] ?? Constants.DBNull;
     }
     public class ObjectDataReaderConfig
     {

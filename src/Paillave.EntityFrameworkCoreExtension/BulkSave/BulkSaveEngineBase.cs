@@ -216,14 +216,14 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave
                     .Where(j => !j.IsPrimaryKey() || string.Equals(GetDataReaderAction(resultDataRow, resultColumns), "INSERT", StringComparison.InvariantCultureIgnoreCase))
                     .Where(j => j.DeclaringType.ClrType.IsAssignableFrom(entry.Metadata.ClrType))
                     .Select(p => new { p.Name, Value = this.GetDataReaderValue(resultDataRow, resultColumns, p) })
-                    .Where(p => p.Value != DBNull.Value)
+                    .Where(p => p.Value != Constants.DBNull)
                     .ToDictionary(p => p.Name, p => p.Value);
                 entry.CurrentValues.SetValues(dicoToSet); // TODO: do not update key if already exists
                 entry.OriginalValues.SetValues(dicoToSet);
                 foreach (var item in propertiesToGetAfterSetInTarget.Where(j => !j.IsShadowProperty() && j.DeclaringType.ClrType.IsAssignableFrom(entry.Metadata.ClrType)).ToList())
                 {
                     var value = this.GetDataReaderValue(resultDataRow, resultColumns, item);
-                    if (value != DBNull.Value) item.PropertyInfo.SetValue(inputEntity, value);
+                    if (value != Constants.DBNull) item.PropertyInfo.SetValue(inputEntity, value);
                 }
             }
         }
