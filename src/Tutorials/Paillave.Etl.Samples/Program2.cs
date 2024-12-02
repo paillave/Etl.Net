@@ -55,11 +55,12 @@ namespace Paillave.Etl.Samples
         /// <returns></returns>
         static async Task ImportAndCreateFileAsync(string[] args)
         {
-            var processRunner = StreamProcessRunner.Create<string[]>(TestImport3.Import);
+            var processRunner = StreamProcessRunner.Create<string[]>(TestImport2.Import);
             var structure = processRunner.GetDefinitionStructure();
             // structure.OpenEstimatedExecutionPlan();
 
-            ITraceReporter traceReporter = new AdvancedConsoleExecutionDisplay();
+            // ITraceReporter traceReporter = new AdvancedConsoleExecutionDisplay();
+            ITraceReporter traceReporter = new SimpleConsoleExecutionDisplay();
             var dataAccess = new DataAccess.TestDbContext();
             await dataAccess.Database.EnsureCreatedAsync();
             // dataAccess.Database.Migrate();
