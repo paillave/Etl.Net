@@ -21,7 +21,7 @@ steps:
 
 - task: UseDotNet@2
   inputs:
-    version: '8.0.x'
+    version: '9.0.x'
 
 - task: NuGetCommand@2
   name: RestoreNugetDependencies
