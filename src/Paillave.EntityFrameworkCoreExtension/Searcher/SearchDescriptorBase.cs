@@ -15,7 +15,7 @@ public abstract class SearchDescriptorBase<TEntity, TId> : ISearchDescriptor whe
     // \.(?=(?:[^"]*"[^"]*")*(?![^"]*"))
     //private static Regex _regexSplitter = new Regex("\\.(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))", RegexOptions.Singleline);
     protected DbContext DbContext { get; }
-    private Func<IQueryable<TEntity>, IQueryable<TEntity>> _include = null;
+    private Func<IQueryable<TEntity>, IQueryable<TEntity>>? _include = null;
     public SearchDescriptorBase(DbContext dbContext)
     {
         this.DbContext = dbContext;
@@ -24,16 +24,18 @@ public abstract class SearchDescriptorBase<TEntity, TId> : ISearchDescriptor whe
     public virtual string Name => typeof(TEntity).Name;
     public IDictionary<string, INavigationSelector> Navigations { get; } = new Dictionary<string, INavigationSelector>(StringComparer.InvariantCultureIgnoreCase);
     public IDictionary<string, IFieldSelector> Fields { get; } = new Dictionary<string, IFieldSelector>(StringComparer.InvariantCultureIgnoreCase);
-    public IFieldSelector DefaultValueProperty { get; private set; } = null;
+    public IFieldSelector? DefaultValueProperty { get; private set; } = null;
     public SearchMetadata GetMetadata() => this.GetStructure(this.Name, this);
     private SearchMetadata GetStructure(string name, ISearchDescriptor descriptor)
-        => new SearchMetadata(
-            name,
-            descriptor.Name,
-            descriptor.Fields.Keys
-                .Select(k => new SearchMetadata(k, descriptor.Name))
+        => new SearchMetadata()
+        {
+            Name = name,
+            Type = descriptor.Name,
+            SubLevels = descriptor.Fields.Keys
+                .Select(k => new SearchMetadata() { Name = k, Type = descriptor.Name })
                 .Union(descriptor.Navigations.Select(v => GetStructure(v.Key, v.Value.ObjectDescriptor))
-            ).ToList());
+            ).ToList()
+        };
     public SearchDescriptorBase<TEntity, TId> AddValue<TValue>(string name, bool isOnKey, Expression<Func<TEntity, TValue>> getValue, Func<string, TValue> convert)
     {
         var valueProperty = new FieldSelector<TEntity, TValue>(name, getValue, convert);
@@ -60,7 +62,7 @@ public abstract class SearchDescriptorBase<TEntity, TId> : ISearchDescriptor whe
     {
         var entityParameterExpression = Expression.Parameter(typeof(TEntity), "entity");
 
-        Expression filterExpression = null;
+        Expression? filterExpression = null;
         foreach (var filter in filters)
         {
             var subFilter = GetFilterExpressionBody(entityParameterExpression, filter.Key, filter.Value);
@@ -101,13 +103,13 @@ public abstract class SearchDescriptorBase<TEntity, TId> : ISearchDescriptor whe
     //     => this.GetValueExpression<object>(pathToProperty, levelDescriptors);
     private TElement[] ConvertAcceptedValues<TElement>(IEnumerable<string> acceptedValues, Func<string, object> converter)
         => acceptedValues.Select(i => (TElement)converter(i)).ToArray();
-    private List<string> ParsePropertyPath(string line) => JsonSerializer.Deserialize<List<string>>(line);
-    private (Expression BodyExpression, Func<string, object> Converter) GetValueBodyExpression(ParameterExpression entityParameter, string pathToProperty)
+    private List<string>? ParsePropertyPath(string line) => JsonSerializer.Deserialize<List<string>>(line);
+    private (Expression BodyExpression, Func<string, object?> Converter) GetValueBodyExpression(ParameterExpression entityParameter, string pathToProperty)
     {
         if (string.IsNullOrWhiteSpace(pathToProperty))
             return (entityParameter, i => i);
 
-        var pathSegments = this.ParsePropertyPath(pathToProperty);
+        var pathSegments = this.ParsePropertyPath(pathToProperty) ?? new List<string>();
 
         // INavigationSelector navigationSelector = null;
         ISearchDescriptor objectDescriptor = this;
@@ -116,21 +118,25 @@ public abstract class SearchDescriptorBase<TEntity, TId> : ISearchDescriptor whe
         {
             if (objectDescriptor.Navigations.TryGetValue(pathSegment, out var navigation))
             {
-                valueExpression = GetExpressionBodyReferencingValue(navigation.GetTargetExpression, valueExpression);
+                valueExpression = GetExpressionBodyReferencingValue(navigation.GetTargetExpression, valueExpression) ?? throw new Exception("Navigation expression is null");
                 // valueExpression = Expression.Invoke(navigation.GetTargetExpression, valueExpression);
                 objectDescriptor = navigation.ObjectDescriptor;
             }
             else if (objectDescriptor.Fields.TryGetValue(pathSegment, out var field))
             {
-                return (GetExpressionBodyReferencingValue(field.GetValueExpression, valueExpression), field.ConvertFromString);
+                var valueExpressionBody = GetExpressionBodyReferencingValue(field.GetValueExpression, valueExpression);
+
+                if (valueExpressionBody == null) throw new Exception("Value expression body is null");
+                return (valueExpressionBody!, field.ConvertFromString);
                 // return (Expression.Invoke(field.GetValueExpression, valueExpression), field.ConvertFromString);
             }
         }
-        var defaultField = objectDescriptor.DefaultValueProperty;
-        return (GetExpressionBodyReferencingValue(defaultField.GetValueExpression, valueExpression), defaultField.ConvertFromString);
+        IFieldSelector defaultField = objectDescriptor.DefaultValueProperty ?? throw new Exception("Default value property is null");
+        Expression expressionBodyReference = GetExpressionBodyReferencingValue(defaultField.GetValueExpression, valueExpression) ?? throw new Exception("Default value expression is null");
+        return (expressionBodyReference, defaultField.ConvertFromString);
         // return (Expression.Invoke(defaultField.GetValueExpression, valueExpression), defaultField.ConvertFromString);
     }
-    private Expression GetExpressionBodyReferencingValue(LambdaExpression expression, Expression newParameterExpression)
+    private Expression? GetExpressionBodyReferencingValue(LambdaExpression expression, Expression newParameterExpression)
     {
         var parameterToBeReplaced = expression.Parameters[0];
         var visitor = new ReplacementVisitor(parameterToBeReplaced, newParameterExpression);
@@ -142,10 +148,12 @@ public abstract class SearchDescriptorBase<TEntity, TId> : ISearchDescriptor whe
         (var valueExpressionBody, var converter) = GetValueBodyExpression(entityParameterExpression, pathToProperty);
         return Expression.Lambda(valueExpressionBody, entityParameterExpression);
     }
-    private object CallMethod(string methodName, Type[] genericParameters, object[] args)
+    private object? CallMethod(string methodName, Type[] genericParameters, object[] args)
     {
         // var methods = this.GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance);
         var method = typeof(SearchDescriptorBase<,>).MakeGenericType(typeof(TEntity), typeof(TId)).GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
+        if (method == null)
+            throw new Exception($"Method {methodName} not found");
         var groupQueryableMethodInfo = method.MakeGenericMethod(genericParameters);
         return groupQueryableMethodInfo.Invoke(this, args);
     }
@@ -154,7 +162,8 @@ public abstract class SearchDescriptorBase<TEntity, TId> : ISearchDescriptor whe
         var queryable = Search(filters);
         var groupingLambdaExpression = GetValueLambdaExpression(pathToGroupProperty);
         var groupingType = groupingLambdaExpression.ReturnType;
-        return (Dictionary<GroupingValue, List<TEntity>>)CallMethod(nameof(GroupQueryable), new[] { groupingLambdaExpression.ReturnType }, new object[] { queryable, groupingLambdaExpression });
+        var tmp = (Dictionary<GroupingValue, List<TEntity>>)(CallMethod(nameof(GroupQueryable), new[] { groupingLambdaExpression.ReturnType }, new object[] { queryable, groupingLambdaExpression }) ?? throw new Exception("GroupQueryable returned null"));
+        return tmp;
         // var groupQueryableMethodInfo = this.GetType().GetMethod(nameof(GroupQueryable), BindingFlags.NonPublic | BindingFlags.Instance).MakeGenericMethod(groupingType);
         // return (List<List<TEntity>>)groupQueryableMethodInfo.Invoke(this, new object[] { queryable, groupingLambdaExpression });
     }
@@ -162,12 +171,15 @@ public abstract class SearchDescriptorBase<TEntity, TId> : ISearchDescriptor whe
     {
         var entityParameterExpression = Expression.Parameter(typeof(TEntity), "entity");
         var keyedRowType = typeof(KeyedRow<>).MakeGenericType(typeof(TEntity), typeof(TId), typeof(TKey));
-        var constructorInfo = keyedRowType.GetConstructor(new Type[] { });
+        var constructorInfo = keyedRowType.GetConstructor(new Type[] { }) ?? throw new Exception("Constructor not found");
         var callConstructor = Expression.New(constructorInfo);
+        var keyedRowTypePropertyKey = keyedRowType.GetProperty(nameof(KeyedRow<int>.Key)) ?? throw new Exception("Property Key not found");
+        var keyedRowTypePropertyRow = keyedRowType.GetProperty(nameof(KeyedRow<int>.Row)) ?? throw new Exception("Property Row not found");
+        var expressionBody = GetExpressionBodyReferencingValue(groupingExpression, entityParameterExpression)
+            ?? throw new Exception("Grouping expression body is null");
         var initializedObject = Expression.MemberInit(callConstructor,
-            // Expression.Bind(keyedRowType.GetProperty(nameof(KeyedRow<int>.Key)), Expression.Invoke(groupingExpression, entityParameterExpression)),
-            Expression.Bind(keyedRowType.GetProperty(nameof(KeyedRow<int>.Key)), GetExpressionBodyReferencingValue(groupingExpression, entityParameterExpression)),
-            Expression.Bind(keyedRowType.GetProperty(nameof(KeyedRow<int>.Row)), entityParameterExpression));
+            Expression.Bind(keyedRowTypePropertyKey, expressionBody),
+            Expression.Bind(keyedRowTypePropertyRow, entityParameterExpression));
         var getGroupingKeyLambdaExpression = (Expression<Func<TEntity, KeyedRow<TKey>>>)Expression.Lambda(initializedObject, entityParameterExpression);
         return queryable.Select(getGroupingKeyLambdaExpression).ToList().GroupBy(i => i.Key).ToDictionary(i => new GroupingValue(i.Key), i => i.Select(j => j.Row).ToList());
     }
@@ -182,15 +194,17 @@ public abstract class SearchDescriptorBase<TEntity, TId> : ISearchDescriptor whe
         => this.Search(filters).Select(this.GetIdExpression).ToList();
     public virtual Dictionary<GroupingValue, List<(TId id, string label)>> SearchIds(Dictionary<string, List<string>> filters, string pathToGroupProperty)
     {
-        var getId = this.GetIdExpression.Compile();
-        var defaultValue = this.DefaultValueProperty.GetValueExpression.Compile() as Func<TEntity, object>;
+        Func<TEntity, TId> getId = this.GetIdExpression.Compile() ?? throw new Exception("GetIdExpression is null");
+        var defaultValue = this.DefaultValueProperty?.GetValueExpression.Compile() as Func<TEntity, object>;
         return this.Search(filters, pathToGroupProperty).ToDictionary(i => i.Key, i => i.Value.Select(j =>
         {
             var id = getId(j);
-            string label = getId(j).ToString();
-            try { label = defaultValue(j)?.ToString(); }
+            string label = id?.ToString() ?? string.Empty;
+            if (defaultValue == null) return (id, label);
+            try { label = defaultValue(j)?.ToString() ?? string.Empty; }
             catch { }
-            return (id, label);
+            (TId id, string label) searchCriteria = (id, label);
+            return searchCriteria;
         }).ToList());
     }
     protected virtual IQueryable<TEntity> GetQueryable() => Include(this.DbContext.Set<TEntity>().AsQueryable());
@@ -203,7 +217,7 @@ public abstract class SearchDescriptorBase<TEntity, TId> : ISearchDescriptor whe
     }
     private class KeyedRow<TKey>
     {
-        public TKey Key { get; set; }
-        public TEntity Row { get; set; }
+        public required TKey Key { get; set; }
+        public required TEntity Row { get; set; }
     }
 }

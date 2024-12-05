@@ -15,16 +15,20 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
     {
         public ModelStructure GetModelStructure(TCtx dbContext)
         {
-            var modelStructure = new ModelStructure();
+            // var modelStructure = new ModelStructure();
             var model = dbContext.GetService<IDesignTimeModel>().Model;
             // var model = dbContext.Model;
             var entityTypes = model.GetEntityTypes().OrderBy(i => i.Name).ToList();
 
-            modelStructure.Entities = entityTypes.Select(CreateEntitySummary).ToDictionary(i => i.Name);
-            modelStructure.Links = entityTypes
+            var modelStructureEntities = entityTypes.Select(CreateEntitySummary).ToDictionary(i => i.Name);
+            var modelStructureLinks = entityTypes
                 .SelectMany(i => i.GetNavigations().Where(navigation => navigation.DeclaringType.ClrType.Name == i.ClrType.Name).Select(n => CreateLinkSummary(i, n)))
-                .Union(entityTypes.Where(i => i.BaseType != null).Select(i => CreateInheritLinkSummary(i, i.BaseType))).ToList();
-            return modelStructure;
+                .Union(entityTypes.Where(i => i.BaseType != null).Select(i => CreateInheritLinkSummary(i, i.BaseType!))).ToList();
+            return new ModelStructure
+            {
+                Entities = modelStructureEntities,
+                Links = modelStructureLinks
+            };
         }
         public static LinkSummary CreateLinkSummary(IEntityType entityType, INavigation navigation)
         {
@@ -56,7 +60,8 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
                 ToName = toMapping.Name,
                 ToSchema = toMapping.Schema,
                 To = $"{toMapping.Schema}.{toMapping.Name}",
-                Type = LinkType.Inherits
+                Type = LinkType.Inherits,
+                Required = false
             };
         }
         public static EntitySummary CreateEntitySummary(IEntityType entityType)
@@ -71,7 +76,7 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         {
             return new PropertySummary
             {
-                Name = property.GetColumnName(storeObject),
+                Name = property.GetColumnName(storeObject) ?? throw new InvalidOperationException("Column name is not defined"),
                 Type = GetTypeLabel(property.ClrType),
                 IsForeignKey = property.IsForeignKey(),
                 IsKey = property.IsKey(),
@@ -104,32 +109,38 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         private static XDocument GetXmlDocumentation(string assemblyPath)
         {
             var xmlDocumentationPath = Path.ChangeExtension(assemblyPath, "xml");
-            return File.Exists(xmlDocumentationPath) ? XDocument.Load(xmlDocumentationPath) : null;
+            return File.Exists(xmlDocumentationPath) ? XDocument.Load(xmlDocumentationPath) : throw new InvalidOperationException("Xml documentation file not found");
         }
 
         public ModelStructure GetModelStructure()
         {
-            var modelStructure = new ModelStructure();
+            // var modelStructure = new ModelStructure();
             var dbContext = CreateDbContextInstance(_assembly, _args);
             var entityTypes = dbContext.Model.GetEntityTypes().ToList();
-
+            Dictionary<string, string>? modelStructureComments = null;
             if (_xmlDocumentation != null)
             {
                 var members = _xmlDocumentation.Descendants().Elements("member");
-                modelStructure.Comments = members
-                   .Where(i => i.Attribute("name").Value.StartsWith("T:"))
+                modelStructureComments = members
+                   .Where(i => i.Attribute("name")?.Value?.StartsWith("T:") ?? false)
                    .Select(i => new
                    {
-                       TypeName = i.Attribute("name").Value.Split('.').LastOrDefault(),
-                       Comment = i.Element("summary").Value
+                       TypeName = i.Attribute("name")?.Value.Split('.').LastOrDefault(),
+                       Comment = i.Element("summary")?.Value
                    })
-                   .ToDictionary(i => i.TypeName, i => i.Comment);
+                   .Where(i => i.Comment != null && i.TypeName != null)
+                   .ToDictionary(i => i.TypeName!, i => i.Comment!);
             }
-            modelStructure.Entities = entityTypes.Select(CreateEntitySummary).ToDictionary(i => i.Name);
-            modelStructure.Links = entityTypes
+            var modelStructureEntities = entityTypes.Select(CreateEntitySummary).ToDictionary(i => i.Name);
+            var modelStructureLinks = entityTypes
                 .SelectMany(i => i.GetNavigations().Where(navigation => navigation.DeclaringType.ClrType.Name == i.ClrType.Name).Select(n => CreateLinkSummary(i, n)))
-                .Union(entityTypes.Where(i => i.BaseType != null).Select(i => CreateInheritLinkSummary(i, i.BaseType))).ToList();
-            return modelStructure;
+                .Union(entityTypes.Where(i => i.BaseType != null).Select(i => CreateInheritLinkSummary(i, i.BaseType!))).ToList();
+            return new ModelStructure
+            {
+                Entities = modelStructureEntities,
+                Links = modelStructureLinks,
+                Comments = modelStructureComments
+            };
         }
         public static LinkSummary CreateLinkSummary(IEntityType entityType, INavigation navigation)
         {
@@ -160,7 +171,8 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
                 To = $"{toSummary.Schema}.{toSummary.Name}",
                 ToSchema = toSummary.Schema,
                 ToName = toSummary.Name,
-                Type = LinkType.Inherits
+                Type = LinkType.Inherits,
+                Required = false
             };
         }
         public static EntitySummary CreateEntitySummary(IEntityType entityType)
@@ -180,7 +192,7 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         {
             return new PropertySummary
             {
-                Name = property.GetColumnName(storeObject),
+                Name = property.GetColumnName(storeObject) ?? throw new InvalidOperationException("Column name is not defined"),
                 Type = GetTypeLabel(property.ClrType),
                 IsForeignKey = property.IsForeignKey(),
                 IsKey = property.IsKey(),
@@ -202,25 +214,26 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
             }
             catch (ReflectionTypeLoadException e)
             {
-                return e.Types.Where(t => t != null);
+                return e.Types.Where(t => t != null).Cast<Type>();
             }
         }
         private static DbContext CreateDbContextInstance(Assembly assembly, string[] args)
         {
             var allTypes = GetTypes(assembly);
             var dbContextType = allTypes.FirstOrDefault(i => typeof(DbContext).IsAssignableFrom(i));
-            if (dbContextType == null) return null;
+            if (dbContextType == null) throw new InvalidOperationException("DbContext type not found");
             if (dbContextType.GetConstructor(new Type[] { }) == null)
             {
                 var databaseContextFactoryType = allTypes.FirstOrDefault(IsDatabaseContextFactoryType);
-                if (databaseContextFactoryType == null) return null;
+                if (databaseContextFactoryType == null) throw new InvalidOperationException("IDesignTimeDbContextFactory not found");
                 var designTimeDbContextFactory = Activator.CreateInstance(databaseContextFactoryType);
                 var methodInfo = databaseContextFactoryType.GetMethod(nameof(IDesignTimeDbContextFactory<DbContext>.CreateDbContext));
-                return methodInfo.Invoke(designTimeDbContextFactory, new object[] { args }) as DbContext;
+                if (methodInfo == null) throw new InvalidOperationException("CreateDbContext method not found");
+                return methodInfo.Invoke(designTimeDbContextFactory, new object[] { args }) as DbContext ?? throw new InvalidOperationException("CreateDbContext method returned null");
             }
             else
             {
-                return Activator.CreateInstance(dbContextType) as DbContext;
+                return Activator.CreateInstance(dbContextType) as DbContext ?? throw new InvalidOperationException("DbContext instance could not be created");
             }
         }
         private static bool IsDatabaseContextFactoryType(Type type)
@@ -230,8 +243,8 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
     {
         public static EntitySummary GetEntityEssentials(this IEntityType entityType)
         {
-            ITableMappingBase viewMapping = entityType.GetViewMappings().FirstOrDefault();
-            ITableMappingBase tableMapping = entityType.GetTableMappings().FirstOrDefault();
+            ITableMappingBase? viewMapping = entityType.GetViewMappings().FirstOrDefault();
+            // ITableMappingBase? tableMapping = entityType.GetTableMappings().FirstOrDefault();
             var isView = viewMapping != null;
             var schemaName = isView ? entityType.GetViewSchema() : entityType.GetSchema();
             var tableName = isView ? entityType.GetViewName() : entityType.GetTableName();
@@ -241,7 +254,8 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
                 IsView = isView,
                 Name = entityType.ClrType.Name,
                 Schema = schemaName,
-                TargetName = tableName
+                TargetName = tableName,
+                Properties = new List<PropertySummary>()
             };
         }
     }

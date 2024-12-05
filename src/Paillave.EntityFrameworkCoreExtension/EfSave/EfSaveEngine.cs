@@ -27,13 +27,28 @@ public class EfSaveEngine<T> where T : class
             .ToList();
         List<List<PropertyInfo>> propertyInfosForPivot;
         if ((pivotKeys?.Length ?? 0) == 0)
-            propertyInfosForPivot = new List<List<PropertyInfo>> { entityType.FindPrimaryKey().Properties
+        {
+            var pk = entityType.FindPrimaryKey();
+            if (pk == null)
+                propertyInfosForPivot = new List<List<PropertyInfo>>();
+            else
+                propertyInfosForPivot = new List<List<PropertyInfo>> { pk.Properties
                 .Where(i => i.PropertyInfo != null)
                 .Select(i => i.PropertyInfo!)
                 .ToList() };
+        }
         else
-            propertyInfosForPivot = pivotKeys.Select(pivotKey => KeyDefinitionExtractor.GetKeys(pivotKey))
-                .ToList();
+        {
+            if (pivotKeys != null)
+            {
+                propertyInfosForPivot = pivotKeys.Select(pivotKey => KeyDefinitionExtractor.GetKeys(pivotKey))
+                    .ToList();
+            }
+            else
+            {
+                propertyInfosForPivot = new List<List<PropertyInfo>>();
+            }
+        }
 
         _findConditionExpression = CreateFindConditionExpression(propertyInfosForPivot);
     }
@@ -41,7 +56,7 @@ public class EfSaveEngine<T> where T : class
     {
         ParameterExpression leftParam = Expression.Parameter(typeof(T), "i");
         ParameterExpression rightParam = Expression.Parameter(typeof(T), "rightParam");
-        Expression predicateBody = null;
+        Expression? predicateBody = null;
         foreach (var propertyInfosForPivot in propertyInfosForPivotSet)
         {
             var pivotPartExpression = CreatePivotPartExpression(propertyInfosForPivot, leftParam, rightParam);
@@ -50,11 +65,13 @@ public class EfSaveEngine<T> where T : class
             else
                 predicateBody = Expression.OrElse(predicateBody, pivotPartExpression);
         }
+        if(predicateBody == null)
+            throw new InvalidOperationException("No pivot key found");
         return Expression.Lambda<Func<T, T, bool>>(predicateBody, new[] { leftParam, rightParam });
     }
     private Expression CreatePivotPartExpression(List<PropertyInfo> propertyInfosForPivot, ParameterExpression leftParam, ParameterExpression rightParam)
     {
-        Expression predicatePivotPart = null;
+        Expression? predicatePivotPart = null;
         foreach (var propertyInfoForPivot in propertyInfosForPivot)
         {
             var equalityExpression = CreateEqualityExpression(propertyInfoForPivot, leftParam, rightParam);
@@ -63,6 +80,8 @@ public class EfSaveEngine<T> where T : class
             else
                 predicatePivotPart = Expression.AndAlso(predicatePivotPart, equalityExpression);
         }
+        if(predicatePivotPart == null)
+            throw new InvalidOperationException("No pivot key found");
         return predicatePivotPart;
     }
     private Expression CreateEqualityExpression(PropertyInfo propertyInfo, ParameterExpression leftParam, ParameterExpression rightParam)

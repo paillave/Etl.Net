@@ -12,7 +12,7 @@ namespace Paillave.Etl.Core.Mapping.Visitors
         protected override Expression VisitNew(NewExpression node)
         {
             if (node.Members != null)
-                this.MappingSetters.AddRange(node.Members.Zip(node.Arguments, (m, a) => GetMappingSetterDefinition(a, m as PropertyInfo)).ToList());
+                this.MappingSetters.AddRange(node.Members.Zip(node.Arguments, (m, a) => GetMappingSetterDefinition(a, m as PropertyInfo)).Where(i => i != null).Cast<MappingSetterDefinition>().ToList());
             return base.VisitNew(node);
         }
         protected override MemberAssignment VisitMemberAssignment(MemberAssignment node)
@@ -28,23 +28,29 @@ namespace Paillave.Etl.Core.Mapping.Visitors
             {
                 var vis2 = new MappingSetterVisitor();
                 vis2.Visit(node.Expression);
-                vis2.MappingSetter.TargetPropertyInfo = node.Member as PropertyInfo;
-                MappingSetters.Add(vis2.MappingSetter);
+                if (vis2.MappingSetter != null)
+                {
+                    vis2.MappingSetter.TargetPropertyInfo = node.Member as PropertyInfo;
+                    MappingSetters.Add(vis2.MappingSetter);
+                }
             }
             return base.VisitMemberAssignment(node);
         }
-        private MappingSetterDefinition GetMappingSetterDefinition(Expression argument, PropertyInfo propertyInfo)
+        private MappingSetterDefinition? GetMappingSetterDefinition(Expression argument, PropertyInfo? propertyInfo)
         {
             MappingSetterVisitor vis = new MappingSetterVisitor();
             vis.Visit(argument);
-            MappingSetterDefinition mappingSetter = vis.MappingSetter;
-            mappingSetter.TargetPropertyInfo = propertyInfo;
+            var mappingSetter = vis.MappingSetter;
+            if (mappingSetter != null)
+            {
+                mappingSetter.TargetPropertyInfo = propertyInfo;
+            }
             return mappingSetter;
         }
         private class UnaryMapping : ExpressionVisitor
         {
-            public MappingSetterDefinition MappingSetter = null;
-            protected override Expression VisitUnary(UnaryExpression node)
+            public MappingSetterDefinition? MappingSetter = null;
+            protected override Expression? VisitUnary(UnaryExpression node)
             {
                 var vis = new MappingSetterVisitor();
                 vis.Visit(node.Operand);

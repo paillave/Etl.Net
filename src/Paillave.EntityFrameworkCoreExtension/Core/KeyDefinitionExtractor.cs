@@ -31,7 +31,7 @@ namespace Paillave.EntityFrameworkCoreExtension.Core
         public class ExpressionKeysResult
         {
             public List<MemberExpression> MemberExpressions { get; } = new List<MemberExpression>();
-            public ParameterExpression ParameterExpression { get; set; }
+            public ParameterExpression? ParameterExpression { get; set; }
         }
         public static ExpressionKeysResult GetExpressionKeys<T>(Expression<Func<T, object>> getKey)
         {

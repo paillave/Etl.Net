@@ -19,10 +19,10 @@ public abstract class BulkUpdateEngineBase<T, TSource> where T : class
     private IEntityType _baseType;
     protected StoreObjectIdentifier StoreObject { get; }
 
-    private string _schema;
+    private string? _schema;
     private string _table;
     private readonly DbContext _context;
-    protected abstract UpdateContextQueryBase<TSource> CreateUpdateContextQueryInstance(DbContext context, string schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType, IDictionary<string, MemberInfo> propertiesGetter);
+    protected abstract UpdateContextQueryBase<TSource> CreateUpdateContextQueryInstance(DbContext context, string? schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType, IDictionary<string, MemberInfo> propertiesGetter);
     private IEnumerable<IEntityType> GetAllRelatedEntityTypes(IEntityType et)
     {
         yield return et;

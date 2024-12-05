@@ -43,6 +43,7 @@ namespace Paillave.Etl.Core.Mapping
         bool? ToOptionalBooleanColumn(string columnName, string trueValue, string falseValue);
         bool? ToOptionalBooleanColumn(string columnName, string[] trueValues, string[] falseValues);
 
+        T Ignore<T>();
         string ToSourceName();
         int ToLineNumber();
         Guid ToRowGuid();
