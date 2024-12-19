@@ -35,7 +35,7 @@ namespace Paillave.Etl.Sftp
             using (var client = new SftpClient(connectionInfo))
             {
                 client.Connect();
-                return client.ListDirectory(folder).ToArray();
+                return client.ListDirectory(folder).Where(i => !i.IsDirectory).ToArray();
             }
         }
         protected override void Test(SftpAdapterConnectionParameters connectionParameters, SftpAdapterProviderParameters providerParameters)
