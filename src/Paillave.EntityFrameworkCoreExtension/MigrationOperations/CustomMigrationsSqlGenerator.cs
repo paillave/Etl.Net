@@ -13,15 +13,14 @@ namespace Paillave.EntityFrameworkCoreExtension.MigrationOperations
 {
     public class CustomMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
     {
-        private Assembly _assembly = null;
+        private Assembly _assembly;
         public CustomMigrationsSqlGenerator(MigrationsSqlGeneratorDependencies dependencies, ICommandBatchPreparer commandBatchPreparer) : base(dependencies, commandBatchPreparer)
-        // public CustomMigrationsSqlGenerator(MigrationsSqlGeneratorDependencies dependencies, IRelationalAnnotationProvider migrationsAnnotations) : base(dependencies, migrationsAnnotations)
         {
             this._assembly = dependencies.CurrentContext.Context.GetType().Assembly;
         }
         protected override void Generate(
                 MigrationOperation operation,
-                IModel model,
+                IModel? model,
                 MigrationCommandListBuilder builder)
         {
             switch (operation)

@@ -7,9 +7,9 @@ namespace Paillave.Etl.Core.Aggregation.Visitors
 {
     public class GetValueAggregatorVisitor<TIn> : ExpressionVisitor
     {
-        public Type AggregationInstanceType { get; private set; }
-        public PropertyInfo SourcePropertyInfo { get; private set; }
-        protected override Expression VisitMethodCall(MethodCallExpression node)
+        public Type? AggregationInstanceType { get; private set; }
+        public PropertyInfo? SourcePropertyInfo { get; private set; }
+        protected override Expression? VisitMethodCall(MethodCallExpression node)
         {
             var aggregationInstanceAttribute = node.Method.GetCustomAttribute<AggregationInstanceAttribute>();
             if (aggregationInstanceAttribute == null) throw new InvalidOperationException();

@@ -9,6 +9,6 @@ public interface ISearchDescriptor
     SearchMetadata GetMetadata();
     IDictionary<string, INavigationSelector> Navigations { get; }
     IDictionary<string, IFieldSelector> Fields { get; }
-    IFieldSelector DefaultValueProperty { get; }
+    IFieldSelector? DefaultValueProperty { get; }
     Expression GetFilterExpression(Dictionary<string, List<string>> filters);
 }

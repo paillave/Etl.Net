@@ -26,12 +26,18 @@ namespace Paillave.EntityFrameworkCoreExtension.Core
             var equalityExpressions = _inputKeyExpressionStructure.MemberExpressions
                 .Zip(_entityKeyExpressionStructure.MemberExpressions, (i, e) => Expression.Equal(i, e));
 
-            BinaryExpression expr = null;
+            BinaryExpression? expr = null;
             foreach (var equalityExpression in equalityExpressions)
             {
                 if (expr == null) expr = equalityExpression;
                 else expr = Expression.AndAlso(expr, equalityExpression);
             }
+            if (expr == null)
+                throw new InvalidOperationException("No equality expression found");
+            if (_entityKeyExpressionStructure.ParameterExpression == null)
+                throw new InvalidOperationException("No entity parameter expression found");
+            if (_inputKeyExpressionStructure.ParameterExpression == null)
+                throw new InvalidOperationException("No input parameter expression found");
             var fExpr = Expression.Lambda<Func<TInLeft, TEntity, bool>>(expr, _inputKeyExpressionStructure.ParameterExpression, _entityKeyExpressionStructure.ParameterExpression);
 
             return fExpr.ApplyPartialLeft(value);

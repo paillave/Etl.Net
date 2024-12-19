@@ -17,7 +17,7 @@ public class SqlServerSaveContextQuery<T> : SaveContextQueryBase<T> where T : cl
     private string SqlStagingTableName => $"[{this.Schema}].[{this.Table}_temp_{this.StagingId}]";
     private string SqlOutputStagingTableName => $"[{this.Schema}].[{this.Table}_tempoutput_{this.StagingId}]";
 
-    public SqlServerSaveContextQuery(DbContext Context, string schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<List<IProperty>> propertiesForPivotSet, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes, CancellationToken cancellationToken, StoreObjectIdentifier storeObject)
+    public SqlServerSaveContextQuery(DbContext Context, string? schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<List<IProperty>> propertiesForPivotSet, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes, CancellationToken cancellationToken, StoreObjectIdentifier storeObject)
         : base(Context, schema ?? "dbo", table, propertiesToInsert, propertiesToUpdate, propertiesForPivotSet, propertiesToBulkLoad, entityTypes, cancellationToken, storeObject)
     {
     }
@@ -159,7 +159,7 @@ public class SqlServerSaveContextQuery<T> : SaveContextQueryBase<T> where T : cl
     }
     protected virtual string MergeFromStagingSql(bool doNotUpdateIfExists = false)
     {
-        var pivotColumns = PropertiesForPivotSet.SelectMany(p => p.Select(i => i.GetColumnName(base.StoreObject)).Where(i => !string.IsNullOrWhiteSpace(i)).Select(i => i!)).ToHashSet();
+        var pivotColumns = PropertiesForPivotSet.SelectMany(p => p.Select(i => i.GetColumnName(base.StoreObject)).Where(i => !string.IsNullOrWhiteSpace(i)).Cast<string>()).ToHashSet();
         string whenNotMatchedStatement = $@"WHEN NOT MATCHED BY TARGET THEN 
                     INSERT ({string.Join(", ", PropertiesToInsert.Select(i => $"[{i.GetColumnName(base.StoreObject)}]"))})
                     VALUES ({string.Join(", ", PropertiesToInsert.Select(i => $"S.[{i.GetColumnName(base.StoreObject)}]"))})";

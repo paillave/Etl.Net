@@ -5,7 +5,7 @@ namespace Paillave.EntityFrameworkCoreExtension.MigrationOperations
     public class ScriptsMigration : Migration
     {
         private string[] _scripts = new string[] { };
-        private string _rootPath = null;
+        private string _rootPath;
         public ScriptsMigration(string rootPath, params string[] scripts)
         {
             _scripts = scripts;

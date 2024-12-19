@@ -3,7 +3,7 @@
     public class CountNotNullAggregationInstance : IAggregationInstance
     {
         private int _count = 0;
-        public void Aggregate(object value)
+        public void Aggregate(object? value)
         {
             if (value != null) _count++;
         }

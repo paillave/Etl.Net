@@ -4,8 +4,8 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
 {
     public class ModelStructure
     {
-        public Dictionary<string, EntitySummary> Entities { get; set; }
-        public List<LinkSummary> Links { get; set; }
-        public Dictionary<string, string> Comments { get; set; }
+        public required Dictionary<string, EntitySummary> Entities { get; set; }
+        public required List<LinkSummary> Links { get; set; }
+        public Dictionary<string, string>? Comments { get; set; }
     }
 }

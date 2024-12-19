@@ -2,11 +2,10 @@
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>2.2.1-beta</Version>
+    <Version>2.2.2-beta</Version>
     <PackageIcon>NugetIcon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>Stéphane Royer</Authors>
-    <Company>FundProcess</Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://paillave.github.io/Etl.Net/</PackageProjectUrl>

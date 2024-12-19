@@ -6,9 +6,9 @@ namespace Paillave.Etl.Core.Aggregation.Visitors
 {
     public class EqualityAggregateVisitor<TIn> : ExpressionVisitor
     {
-        public PropertyInfo FilteredPropertyInfo { get; private set; } = null;
-        public object Filter { get; private set; }
-        protected override Expression VisitBinary(BinaryExpression node)
+        public PropertyInfo? FilteredPropertyInfo { get; private set; } = null;
+        public object? Filter { get; private set; }
+        protected override Expression? VisitBinary(BinaryExpression node)
         {
             if (node.NodeType != ExpressionType.Equal) return null;
             ValueToAggregateVisitor<TIn> visV = new ValueToAggregateVisitor<TIn>();
