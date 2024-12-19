@@ -5,8 +5,8 @@ namespace Paillave.Etl.Core.Aggregation.Visitors
 {
     public class AggregationDescriptorVisitor<TIn, TValue, TAggregator> : ExpressionVisitor where TAggregator : AggregatorBase<TIn, TValue>
     {
-        public List<TAggregator> AggregationsToProcess { get; private set; }
-        protected override Expression VisitLambda<T>(Expression<T> node)
+        public List<TAggregator>? AggregationsToProcess { get; private set; }
+        protected override Expression? VisitLambda<T>(Expression<T> node)
         {
             NewInstanceVisitor<TIn, TValue, TAggregator> vis = new NewInstanceVisitor<TIn, TValue, TAggregator>();
             vis.Visit(node.Body);

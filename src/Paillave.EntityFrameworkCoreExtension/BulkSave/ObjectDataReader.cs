@@ -184,7 +184,7 @@ public class ObjectDataReader : IDataReader
         throw new NotImplementedException();
     }
     private Dictionary<string, Dictionary<string, bool>> _shadowOfEntityDico = new Dictionary<string, Dictionary<string, bool>>();
-    public object? this[string name]
+    public object this[string name]
     {
         get
         {
@@ -200,35 +200,36 @@ public class ObjectDataReader : IDataReader
                     if (subDic.TryGetValue(name, out var hasIt))
                     {
                         if (hasIt)
-                            return etr.Property(name).CurrentValue;
+                            return etr.Property(name).CurrentValue ?? Constants.DBNull;
                         else
-                            return null;
+                            return Constants.DBNull;
                     }
                     var elt = etr.Properties.FirstOrDefault(i => i.Metadata.Name == name);
                     subDic[name] = elt != null;
                     if (elt != null)
-                        return elt.CurrentValue;
+                        return elt.CurrentValue ?? Constants.DBNull;
                     else
-                        return null;
+                        return Constants.DBNull;
                 }
                 var elt2 = etr.Properties.FirstOrDefault(i => i.Metadata.Name == name);
                 _shadowOfEntityDico[etr.Metadata.Name] = new Dictionary<string, bool> { [name] = elt2 != null };
-                if (elt2 == null) return null;
-                return elt2.CurrentValue;
+                if (elt2 == null) return Constants.DBNull;
+                return elt2.CurrentValue ?? Constants.DBNull;
                 // if(etr.Properties.FirstOrDefault())
                 // return etr.Property(name).CurrentValue;
             }
             else
             {
+                if (_currentType == null) throw new Exception("No current item");
                 if (!_accessorsByType.TryGetValue(_currentType, out var acc)) return Constants.DBNull;
                 var val = acc[Current, name];
                 if (val == null) return Constants.DBNull;
-                if (_convertibleProperties.TryGetValue(name, out var converter)) return converter.ConvertToProvider(val);
+                if (_convertibleProperties.TryGetValue(name, out var converter)) return converter.ConvertToProvider(val) ?? Constants.DBNull;
                 return val;
             }
         }
     }
-    public object? this[int i] => this[_memberNames[i]] ?? Constants.DBNull;
+    public object this[int i] => this[_memberNames[i]];
 }
 public class ObjectDataReaderConfig
 {

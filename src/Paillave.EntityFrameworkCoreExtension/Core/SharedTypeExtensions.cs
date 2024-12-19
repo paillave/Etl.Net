@@ -21,7 +21,7 @@ namespace Paillave.EntityFrameworkCoreExtension.Core
             }
             catch (ReflectionTypeLoadException ex)
             {
-                return ex.Types.Where(t => t != null).Select(IntrospectionExtensions.GetTypeInfo);
+                return ex.Types.Where(t => t != null).Select(t => IntrospectionExtensions.GetTypeInfo(t!));
             }
         }
     }

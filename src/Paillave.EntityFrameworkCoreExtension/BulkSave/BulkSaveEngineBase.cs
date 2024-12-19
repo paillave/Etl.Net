@@ -23,11 +23,11 @@ public abstract class BulkSaveEngineBase<T> : IDisposable where T : class
     private List<IEntityType> _entityTypes;
 
     protected StoreObjectIdentifier StoreObject { get; }
-    private string _schema;
+    private string? _schema;
     private string _table;
     private bool disposedValue;
     private readonly DbContext _context;
-    protected abstract SaveContextQueryBase<T> CreateSaveContextQueryInstance(DbContext context, string schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<List<IProperty>> propertiesForPivotSet, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes, CancellationToken cancellationToken);
+    protected abstract SaveContextQueryBase<T> CreateSaveContextQueryInstance(DbContext context, string? schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<List<IProperty>> propertiesForPivotSet, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes, CancellationToken cancellationToken);
     private IEnumerable<IEntityType> GetAllRelatedEntityTypes(IEntityType et)
     {
         yield return et;

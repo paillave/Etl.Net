@@ -2,7 +2,7 @@ namespace Paillave.Etl.Core.Aggregation.AggregationInstances
 {
     public abstract class AggregationInstanceBase : IAggregationInstance
     {
-        public virtual void Aggregate(object value)
+        public virtual void Aggregate(object? value)
         {
             if (value == null) return;
             switch (value)
@@ -29,6 +29,6 @@ namespace Paillave.Etl.Core.Aggregation.AggregationInstances
         protected abstract void Add(uint value);
         protected abstract void Add(ulong value);
         protected abstract void Add(ushort value);
-        public abstract object GetResult();
+        public abstract object? GetResult();
     }
 }

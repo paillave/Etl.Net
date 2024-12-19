@@ -54,6 +54,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Http", "Pailla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.XmlFileTests", "Paillave.Etl.XmlFileTests\Paillave.Etl.XmlFileTests.csproj", "{D3F4F6F9-F964-436D-8C16-4FEFD97F2EEE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.AzureStorageAccountFileProvider", "Paillave.Etl.AzureStorageAccountFileProvider\Paillave.Etl.AzureStorageAccountFileProvider.csproj", "{01C62EAC-96DF-488A-83AF-6CCA87A8F3CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -376,6 +378,18 @@ Global
 		{D3F4F6F9-F964-436D-8C16-4FEFD97F2EEE}.Release|x64.Build.0 = Release|Any CPU
 		{D3F4F6F9-F964-436D-8C16-4FEFD97F2EEE}.Release|x86.ActiveCfg = Release|Any CPU
 		{D3F4F6F9-F964-436D-8C16-4FEFD97F2EEE}.Release|x86.Build.0 = Release|Any CPU
+		{01C62EAC-96DF-488A-83AF-6CCA87A8F3CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01C62EAC-96DF-488A-83AF-6CCA87A8F3CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01C62EAC-96DF-488A-83AF-6CCA87A8F3CE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{01C62EAC-96DF-488A-83AF-6CCA87A8F3CE}.Debug|x64.Build.0 = Debug|Any CPU
+		{01C62EAC-96DF-488A-83AF-6CCA87A8F3CE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{01C62EAC-96DF-488A-83AF-6CCA87A8F3CE}.Debug|x86.Build.0 = Debug|Any CPU
+		{01C62EAC-96DF-488A-83AF-6CCA87A8F3CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01C62EAC-96DF-488A-83AF-6CCA87A8F3CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01C62EAC-96DF-488A-83AF-6CCA87A8F3CE}.Release|x64.ActiveCfg = Release|Any CPU
+		{01C62EAC-96DF-488A-83AF-6CCA87A8F3CE}.Release|x64.Build.0 = Release|Any CPU
+		{01C62EAC-96DF-488A-83AF-6CCA87A8F3CE}.Release|x86.ActiveCfg = Release|Any CPU
+		{01C62EAC-96DF-488A-83AF-6CCA87A8F3CE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
