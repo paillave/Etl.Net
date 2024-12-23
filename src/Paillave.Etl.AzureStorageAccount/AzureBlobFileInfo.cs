@@ -7,7 +7,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Microsoft.Extensions.FileProviders;
 
-namespace Paillave.Etl.AzureStorageAccountFileProvider;
+namespace Paillave.Etl.AzureStorageAccount;
 
 public class AzureBlobFileInfo : IFileInfo
 {
