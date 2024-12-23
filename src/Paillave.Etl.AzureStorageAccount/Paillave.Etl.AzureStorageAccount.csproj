@@ -1,10 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworks>net7.0</TargetFrameworks>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <PackageId>Paillave.EtlNet.AzureStorageAccount</PackageId>
     <PackageTags>ETL .net core azure storage account</PackageTags>
     <Product>Azure Storage Account extensions</Product>
