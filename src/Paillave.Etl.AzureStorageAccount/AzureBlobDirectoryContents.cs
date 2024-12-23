@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Extensions.FileProviders;
 
 namespace Paillave.Etl.AzureStorageAccountFileProvider;

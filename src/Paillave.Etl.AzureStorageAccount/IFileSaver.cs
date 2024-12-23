@@ -1,3 +1,6 @@
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.FileProviders;
 
 namespace Paillave.Etl.AzureStorageAccountFileProvider;

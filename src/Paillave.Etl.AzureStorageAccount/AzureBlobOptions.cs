@@ -1,3 +1,5 @@
+using System;
+
 namespace Paillave.Etl.AzureStorageAccountFileProvider;
 
 public class AzureBlobOptions

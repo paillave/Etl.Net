@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using Paillave.Etl.Core;
 
 namespace Paillave.Etl.AzureStorageAccountFileProvider;
