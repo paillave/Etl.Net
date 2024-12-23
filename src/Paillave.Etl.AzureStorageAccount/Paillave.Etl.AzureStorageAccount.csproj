@@ -5,7 +5,7 @@
     <TargetFrameworks>net7.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PackageId>Paillave.EtlNet.AzureStorageAccountFileProvider</PackageId>
+    <PackageId>Paillave.EtlNet.AzureStorageAccount</PackageId>
     <PackageTags>ETL .net core azure storage account</PackageTags>
     <Product>Azure Storage Account extensions</Product>
     <Description>Extensions for Etl.Net to get of write files to Azure Storage Account</Description>
