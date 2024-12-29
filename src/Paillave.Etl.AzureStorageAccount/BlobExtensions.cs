@@ -21,7 +21,7 @@ internal static class BlobExtensions
         if (options.ConnectionString != null)
             return new BlobServiceClient(options.ConnectionString);
         else if (options.BaseUri != null && (options.DefaultAzureCredential ?? false))
-            return new BlobServiceClient(options.BaseUri, new DefaultAzureCredential());
+            return new BlobServiceClient(options.BaseUri, new DefaultAzureCredential(Environment.UserInteractive));
         else
             throw new ArgumentException("One of the following must be set: 'ConnectionString' or 'BaseUri'+'Token'!", nameof(options));
     }
