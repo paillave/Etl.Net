@@ -79,7 +79,11 @@ namespace Paillave.Etl.Samples
         {
             var processRunner = StreamProcessRunner.Create<string[]>(i => i
                 .FromConnector("in", "IN")
-                .ToConnector("out", "OUT")
+                .Do("write on console",context =>
+                {
+                    Console.WriteLine($"Processing {context.Name}");
+                })
+                // .ToConnector("out", "OUT")
             );
             var structure = processRunner.GetDefinitionStructure();
             // structure.OpenEstimatedExecutionPlan();
@@ -98,11 +102,13 @@ namespace Paillave.Etl.Samples
                             PortNumber = 22,
                             Login = ConsoleAsk("login:"),
                             Password = ConsoleAsk("password:"),
-                            RootFolder = "/stephane/Documents/Invoices",
-                            MaxAttempts = 3
+                            MaxAttempts = 3,
+                            RootFolder = "stephane",
+                            // RootFolder = "/stephane/Documents",
                         },
                         new SftpAdapterProviderParameters
                         {
+                            SubFolder = "Documents",
                             // SubFolder = "",
                             FileNamePattern = "*"
                         }))

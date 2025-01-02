@@ -5,7 +5,7 @@
 // using Paillave.Etl.Zip;
 // using Paillave.Etl.TextFile;
 // using Paillave.Etl.SqlServer;
-// using System.Data.SqlClient;
+// using Microsoft.Data.SqlClient;
 // using Paillave.Etl.ExecutionToolkit;
 // using System.Linq;
 // using System.IO;
