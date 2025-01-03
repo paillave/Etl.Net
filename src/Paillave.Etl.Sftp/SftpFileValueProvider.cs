@@ -17,7 +17,7 @@ public class SftpFileValueProvider : FileValueProviderBase<SftpAdapterConnection
     {
         var searchPattern = string.IsNullOrEmpty(providerParameters.FileNamePattern) ? "*" : providerParameters.FileNamePattern;
         var matcher = new Matcher().AddInclude(searchPattern);
-        var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : ConcatenatePath(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
+        var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : StringEx.ConcatenatePath(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
 
         var files = ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => GetFileList(connectionParameters, providerParameters));
         foreach (var file in files)
@@ -27,15 +27,11 @@ public class SftpFileValueProvider : FileValueProviderBase<SftpAdapterConnection
                 pushFileValue(new SftpFileValue(connectionParameters, folder, file.Name, this.Code, this.Name, this.ConnectionName));
         }
     }
-    private static string ConcatenatePath(params string[] segments)
-    {
-        return string.Join("/", segments.Where(i => !string.IsNullOrWhiteSpace(i))).Replace("//", "/");
-    }
     private Renci.SshNet.Sftp.ISftpFile[] GetFileList(SftpAdapterConnectionParameters connectionParameters, SftpAdapterProviderParameters providerParameters)
     {
         var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder)
             ? (providerParameters.SubFolder ?? "")
-            : ConcatenatePath(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
+            : StringEx.ConcatenatePath(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
         var connectionInfo = connectionParameters.CreateConnectionInfo();
         using (var client = new SftpClient(connectionInfo))
         {
@@ -47,7 +43,7 @@ public class SftpFileValueProvider : FileValueProviderBase<SftpAdapterConnection
     }
     protected override void Test(SftpAdapterConnectionParameters connectionParameters, SftpAdapterProviderParameters providerParameters)
     {
-        var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : ConcatenatePath(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
+        var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : StringEx.ConcatenatePath(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
         var searchPattern = string.IsNullOrEmpty(providerParameters.FileNamePattern) ? "*" : providerParameters.FileNamePattern;
         var matcher = new Matcher().AddInclude(searchPattern);
         var connectionInfo = connectionParameters.CreateConnectionInfo();
