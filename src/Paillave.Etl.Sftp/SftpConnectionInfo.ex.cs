@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Renci.SshNet;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Sftp
 {
