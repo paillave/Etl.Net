@@ -29,7 +29,7 @@ namespace Paillave.Etl.Sftp
             using (var client = new SftpClient(connectionInfo))
             {
                 client.Connect();
-                client.DeleteFile(Path.Combine(_folder, Name));
+                client.DeleteFile(StringEx.ConcatenatePath(_folder, Name));
             }
         }
         public override Stream GetContent() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, GetContentSingleTime);
@@ -39,7 +39,7 @@ namespace Paillave.Etl.Sftp
             using (var client = new SftpClient(connectionInfo))
             {
                 client.Connect();
-                return new MemoryStream(client.ReadAllBytes(Path.Combine(_folder, Name)));
+                return new MemoryStream(client.ReadAllBytes(StringEx.ConcatenatePath(_folder, Name)));
             }
         }
         private StreamWithResource OpenContentSingleTime()
@@ -47,7 +47,7 @@ namespace Paillave.Etl.Sftp
             var connectionInfo = _connectionInfo.CreateConnectionInfo();
             var client = new SftpClient(connectionInfo);
             client.Connect();
-            return new StreamWithResource(client.OpenRead(Path.Combine(_folder, Name)), client);
+            return new StreamWithResource(client.OpenRead(StringEx.ConcatenatePath(_folder, Name)), client);
         }
 
         public override StreamWithResource OpenContent() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, OpenContentSingleTime);
