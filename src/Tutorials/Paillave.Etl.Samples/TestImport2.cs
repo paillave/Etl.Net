@@ -1,5 +1,6 @@
 using Paillave.Etl.Core;
 using Paillave.Etl.EntityFrameworkCore;
+using Paillave.Etl.Samples.DataAccess;
 using Paillave.Etl.TextFile;
 
 namespace Paillave.Etl.Samples
@@ -8,6 +9,7 @@ namespace Paillave.Etl.Samples
     {
         public static void Import(ISingleStream<string[]> contextStream)
         {
+            contextStream.EfCoreSelect("erre", (o, i) => o.Set<Portfolio>().Select(i => new Portfolio { InternalCode = i.InternalCode, Name = i.Name, SicavId = i.SicavId }));
             var portfolioFileStream = contextStream
                 .FromConnector("Get portfolio files", "PTF")
                 .CrossApplyTextFile("Parse portfolio file", FlatFileDefinition.Create(i => new
@@ -45,7 +47,8 @@ namespace Paillave.Etl.Samples
                 })
                 .EfCoreSave("Save sicav", o => o
                     .SeekOn(i => i.InternalCode)
-                    .DoNotUpdateIfExists());
+                    // .DoNotUpdateIfExists()
+                    .WithMode(SaveMode.EntityFrameworkCore));
 
             var portfolioStream = portfolioFileStream
                 .Distinct("Distinct portfolio", i => i.PortfolioCode, true)

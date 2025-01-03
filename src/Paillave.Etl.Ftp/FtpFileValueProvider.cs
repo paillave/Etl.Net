@@ -31,7 +31,7 @@ namespace Paillave.Etl.Ftp
         }
         private FtpListItem[] GetFileList(FtpAdapterConnectionParameters connectionParameters, FtpAdapterProviderParameters providerParameters)
         {
-            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
+            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : StringEx.ConcatenatePath(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
             using (FtpClient client = connectionParameters.CreateFtpClient())
             {
                 return (providerParameters.Recursive ? client.GetListing(folder, FtpListOption.Recursive) : client.GetListing(folder)).Where(i => i.Type == FtpObjectType.File).ToArray();
@@ -39,7 +39,7 @@ namespace Paillave.Etl.Ftp
         }
         protected override void Test(FtpAdapterConnectionParameters connectionParameters, FtpAdapterProviderParameters providerParameters)
         {
-            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
+            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : StringEx.ConcatenatePath(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
             using (FtpClient client = connectionParameters.CreateFtpClient())
             {
                 if (providerParameters.Recursive)

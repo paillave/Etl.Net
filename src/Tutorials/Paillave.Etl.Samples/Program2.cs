@@ -10,14 +10,16 @@ using Paillave.Etl.Ftp;
 using Paillave.Etl.Sftp;
 using Paillave.Etl.Mail;
 using Paillave.Etl.Zip;
+using Microsoft.EntityFrameworkCore;
 
 namespace Paillave.Etl.Samples
 {
-    class Program2
+    class Program
     {
-        static async Task Main2(string[] args)
+        static async Task Main(string[] args)
         {
-            await ImportAndCreateFileWithConfigAsync(args);
+            await ImportAndCreateFileAsync(args);
+            // await ImportAndCreateFileWithConfigAsync(args);
         }
         private static ConfigurationFileValueConnectorParser CreateConfigurationFileValueConnectorParser() => new ConfigurationFileValueConnectorParser(
                 new FileSystemProviderProcessorAdapter(),
@@ -55,9 +57,13 @@ namespace Paillave.Etl.Samples
         {
             var processRunner = StreamProcessRunner.Create<string[]>(TestImport2.Import);
             var structure = processRunner.GetDefinitionStructure();
-            structure.OpenEstimatedExecutionPlan();
+            // structure.OpenEstimatedExecutionPlan();
 
-            ITraceReporter traceReporter = new AdvancedConsoleExecutionDisplay();
+            // ITraceReporter traceReporter = new AdvancedConsoleExecutionDisplay();
+            ITraceReporter traceReporter = new SimpleConsoleExecutionDisplay();
+            var dataAccess = new DataAccess.TestDbContext();
+            await dataAccess.Database.EnsureCreatedAsync();
+            // dataAccess.Database.Migrate();
             var executionOptions = new ExecutionOptions<string[]>
             {
                 Connectors = new FileValueConnectors()
@@ -65,7 +71,7 @@ namespace Paillave.Etl.Samples
                     .Register(new FileSystemFileValueProvider("POS", "Positions", Path.Combine(Environment.CurrentDirectory, "InputFiles"), "*.Positions.csv"))
                     .Register(new FileSystemFileValueProcessor("OUT", "Result", Path.Combine(Environment.CurrentDirectory, "InputFiles"))),
                 Resolver = new SimpleDependencyResolver()
-                    .Register(new DataAccess.TestDbContext()),
+                    .Register(dataAccess),
                 TraceProcessDefinition = traceReporter.TraceProcessDefinition,
             };
             traceReporter.Initialize(structure);
@@ -82,12 +88,14 @@ namespace Paillave.Etl.Samples
         static async Task ImportAndCreateFileWithConfigAsync(string[] args)
         {
             var processRunner = StreamProcessRunner.Create<string[]>(TestImport2.Import);
+            var dataAccess = new DataAccess.TestDbContext();
+            await dataAccess.Database.EnsureCreatedAsync();
             var executionOptions = new ExecutionOptions<string[]>
             {
                 Connectors = CreateConfigurationFileValueConnectorParser()
-                    .GetConnectors(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "connectorsConfig.json"))),
+                    .GetConnectors(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "connectorsLocalConfig.json"))),
                 Resolver = new SimpleDependencyResolver()
-                    .Register(new DataAccess.TestDbContext())
+                    .Register(dataAccess)
             };
             var res = await processRunner.ExecuteAsync(args, executionOptions);
         }

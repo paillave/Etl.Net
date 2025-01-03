@@ -4,21 +4,27 @@ namespace Paillave.Etl.Core.Mapping.Visitors
 {
     public class DummyFieldMapper : IFieldMapper
     {
-        public MappingSetterDefinition MappingSetter { get; } = new MappingSetterDefinition();
+        public MappingSetterDefinition? MappingSetter { get; private set; } = null;
         #region boolean
         public bool ToBooleanColumn(string columnName, string trueValue, string falseValue)
         {
-            this.MappingSetter.TrueValues = new[] { trueValue };
-            this.MappingSetter.FalseValues = new[] { falseValue };
-            this.MappingSetter.ColumnName = columnName;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                TrueValues = new[] { trueValue },
+                FalseValues = new[] { falseValue },
+                ColumnName = columnName,
+            };
             return default;
         }
 
         public bool ToBooleanColumn(string columnName, string[] trueValues, string[] falseValues)
         {
-            this.MappingSetter.TrueValues = trueValues;
-            this.MappingSetter.FalseValues = falseValues;
-            this.MappingSetter.ColumnName = columnName;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                TrueValues = trueValues,
+                FalseValues = falseValues,
+                ColumnName = columnName,
+            };
             return default;
         }
         public bool? ToOptionalBooleanColumn(string columnName, string trueValue, string falseValue)
@@ -37,18 +43,27 @@ namespace Paillave.Etl.Core.Mapping.Visitors
         #region generic
         public T ToColumn<T>(int columnIndex)
         {
-            this.MappingSetter.ColumnIndex = columnIndex;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                ColumnIndex = columnIndex,
+            };
             return default;
         }
         public T ToColumn<T>(string columnName)
         {
-            this.MappingSetter.ColumnName = columnName;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                ColumnName = columnName,
+            };
             return default;
         }
         public T ToColumn<T>(int columnIndex, int size)
         {
-            this.MappingSetter.ColumnIndex = columnIndex;
-            this.MappingSetter.Size = size;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                ColumnIndex = columnIndex,
+                Size = size,
+            };
             return default;
         }
         #endregion
@@ -56,18 +71,27 @@ namespace Paillave.Etl.Core.Mapping.Visitors
         #region string
         public string ToColumn(int columnIndex)
         {
-            this.MappingSetter.ColumnIndex = columnIndex;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                ColumnIndex = columnIndex,
+            };
             return default;
         }
         public string ToColumn(string columnName)
         {
-            this.MappingSetter.ColumnName = columnName;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                ColumnName = columnName,
+            };
             return default;
         }
         public string ToColumn(int columnIndex, int size)
         {
-            this.MappingSetter.ColumnIndex = columnIndex;
-            this.MappingSetter.Size = size;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                ColumnIndex = columnIndex,
+                Size = size,
+            };
             return default;
         }
         #endregion
@@ -75,207 +99,290 @@ namespace Paillave.Etl.Core.Mapping.Visitors
         #region number
         public T ToNumberColumn<T>(int columnIndex, string decimalSeparator, string groupSeparator)
         {
-            this.MappingSetter.DecimalSeparator = decimalSeparator;
-            this.MappingSetter.GroupSeparator = groupSeparator;
-            this.MappingSetter.ColumnIndex = columnIndex;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                DecimalSeparator = decimalSeparator,
+                GroupSeparator = groupSeparator,
+                ColumnIndex = columnIndex,
+            };
             return default;
         }
 
         public T ToNumberColumn<T>(string columnName, string decimalSeparator, string groupSeparator)
         {
-            this.MappingSetter.DecimalSeparator = decimalSeparator;
-            this.MappingSetter.GroupSeparator = groupSeparator;
-            this.MappingSetter.ColumnName = columnName;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                DecimalSeparator = decimalSeparator,
+                GroupSeparator = groupSeparator,
+                ColumnName = columnName,
+            };
             return default;
         }
 
         public T ToNumberColumn<T>(int columnIndex, int size, string decimalSeparator, string groupSeparator)
         {
-            this.MappingSetter.DecimalSeparator = decimalSeparator;
-            this.MappingSetter.GroupSeparator = groupSeparator;
-            this.MappingSetter.ColumnIndex = columnIndex;
-            this.MappingSetter.Size = size;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                DecimalSeparator = decimalSeparator,
+                GroupSeparator = groupSeparator,
+                ColumnIndex = columnIndex,
+                Size = size,
+            };
             return default;
         }
 
         public T ToNumberColumn<T>(int columnIndex, string decimalSeparator)
         {
-            this.MappingSetter.DecimalSeparator = decimalSeparator;
-            this.MappingSetter.GroupSeparator = null;
-            this.MappingSetter.ColumnIndex = columnIndex;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                DecimalSeparator = decimalSeparator,
+                ColumnIndex = columnIndex,
+            };
             return default;
         }
 
         public T ToNumberColumn<T>(string columnName, string decimalSeparator)
         {
-            this.MappingSetter.DecimalSeparator = decimalSeparator;
-            this.MappingSetter.GroupSeparator = null;
-            this.MappingSetter.ColumnName = columnName;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                DecimalSeparator = decimalSeparator,
+                ColumnName = columnName,
+            };
             return default;
         }
 
         public T ToNumberColumn<T>(int columnIndex, int size, string decimalSeparator)
         {
-            this.MappingSetter.DecimalSeparator = decimalSeparator;
-            this.MappingSetter.GroupSeparator = null;
-            this.MappingSetter.ColumnIndex = columnIndex;
-            this.MappingSetter.Size = size;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                DecimalSeparator = decimalSeparator,
+                ColumnIndex = columnIndex,
+                Size = size,
+            };
             return default;
         }
         #endregion
         #region date
         public DateTime ToCulturedDateColumn(int columnIndex, string cultureName)
         {
-            this.MappingSetter.CultureName = cultureName;
-            this.MappingSetter.ColumnIndex = columnIndex;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                CultureName = cultureName,
+                ColumnIndex = columnIndex,
+            };
             return default;
         }
 
         public DateTime ToCulturedDateColumn(string columnName, string cultureName)
         {
-            this.MappingSetter.CultureName = cultureName;
-            this.MappingSetter.ColumnName = columnName;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                CultureName = cultureName,
+                ColumnName = columnName,
+            };
             return default;
         }
 
         public DateTime ToCulturedDateColumn(int columnIndex, string cultureName, string dateFormat)
         {
-            this.MappingSetter.CultureName = cultureName;
-            this.MappingSetter.DateFormat = dateFormat;
-            this.MappingSetter.ColumnIndex = columnIndex;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                CultureName = cultureName,
+                DateFormat = dateFormat,
+                ColumnIndex = columnIndex,
+            };
             return default;
         }
 
         public DateTime ToCulturedDateColumn(string columnName, string cultureName, string dateFormat)
         {
-            this.MappingSetter.CultureName = cultureName;
-            this.MappingSetter.DateFormat = dateFormat;
-            this.MappingSetter.ColumnName = columnName;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                CultureName = cultureName,
+                DateFormat = dateFormat,
+                ColumnName = columnName,
+            };
             return default;
         }
 
         public DateTime ToCulturedDateColumn(int columnIndex, int size, string cultureName)
         {
-            this.MappingSetter.CultureName = cultureName;
-            this.MappingSetter.Size = size;
-            this.MappingSetter.ColumnIndex = columnIndex;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                CultureName = cultureName,
+                Size = size,
+                ColumnIndex = columnIndex,
+            };
             return default;
         }
 
         public DateTime ToCulturedDateColumn(int columnIndex, int size, string cultureName, string dateFormat)
         {
-            this.MappingSetter.CultureName = cultureName;
-            this.MappingSetter.Size = size;
-            this.MappingSetter.DateFormat = dateFormat;
-            this.MappingSetter.ColumnIndex = columnIndex;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                CultureName = cultureName,
+                Size = size,
+                DateFormat = dateFormat,
+                ColumnIndex = columnIndex,
+            };
             return default;
         }
 
         public DateTime ToDateColumn(int columnIndex, string dateFormat)
         {
-            this.MappingSetter.DateFormat = dateFormat;
-            this.MappingSetter.ColumnIndex = columnIndex;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                DateFormat = dateFormat,
+                ColumnIndex = columnIndex,
+            };
             return default;
         }
 
         public DateTime ToDateColumn(string columnName, string dateFormat)
         {
-            this.MappingSetter.DateFormat = dateFormat;
-            this.MappingSetter.ColumnName = columnName;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                DateFormat = dateFormat,
+                ColumnName = columnName,
+            };
             return default;
         }
 
         public DateTime ToDateColumn(int columnIndex, int size, string dateFormat)
         {
-            this.MappingSetter.DateFormat = dateFormat;
-            this.MappingSetter.ColumnIndex = columnIndex;
-            this.MappingSetter.Size = size;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                DateFormat = dateFormat,
+                ColumnIndex = columnIndex,
+                Size = size,
+            };
             return default;
         }
 
         public DateTime? ToOptionalCulturedDateColumn(int columnIndex, string cultureName)
         {
-            this.MappingSetter.ColumnIndex = columnIndex;
-            this.MappingSetter.CultureName = cultureName;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                CultureName = cultureName,
+                ColumnIndex = columnIndex,
+            };
             return default;
         }
 
         public DateTime? ToOptionalCulturedDateColumn(string columnName, string cultureName)
         {
-            this.MappingSetter.ColumnName = columnName;
-            this.MappingSetter.CultureName = cultureName;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                CultureName = cultureName,
+                ColumnName = columnName,
+            };
             return default;
         }
 
         public DateTime? ToOptionalCulturedDateColumn(int columnIndex, string cultureName, string dateFormat)
         {
-            this.MappingSetter.ColumnIndex = columnIndex;
-            this.MappingSetter.CultureName = cultureName;
-            this.MappingSetter.DateFormat = dateFormat;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                CultureName = cultureName,
+                DateFormat = dateFormat,
+                ColumnIndex = columnIndex,
+            };
             return default;
         }
 
         public DateTime? ToOptionalCulturedDateColumn(string columnName, string cultureName, string dateFormat)
         {
-            this.MappingSetter.ColumnName = columnName;
-            this.MappingSetter.CultureName = cultureName;
-            this.MappingSetter.DateFormat = dateFormat;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                CultureName = cultureName,
+                DateFormat = dateFormat,
+                ColumnName = columnName,
+            };
             return default;
         }
 
         public DateTime? ToOptionalCulturedDateColumn(int columnIndex, int size, string cultureName)
         {
-            this.MappingSetter.ColumnIndex = columnIndex;
-            this.MappingSetter.CultureName = cultureName;
-            this.MappingSetter.Size = size;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                CultureName = cultureName,
+                Size = size,
+                ColumnIndex = columnIndex,
+            };
             return default;
         }
 
         public DateTime? ToOptionalCulturedDateColumn(int columnIndex, int size, string cultureName, string dateFormat)
         {
-            this.MappingSetter.ColumnIndex = columnIndex;
-            this.MappingSetter.CultureName = cultureName;
-            this.MappingSetter.Size = size;
-            this.MappingSetter.DateFormat = dateFormat;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                CultureName = cultureName,
+                Size = size,
+                DateFormat = dateFormat,
+                ColumnIndex = columnIndex,
+            };
             return default;
         }
 
         public DateTime? ToOptionalDateColumn(int columnIndex, string dateFormat)
         {
-            this.MappingSetter.ColumnIndex = columnIndex;
-            this.MappingSetter.DateFormat = dateFormat;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                DateFormat = dateFormat,
+                ColumnIndex = columnIndex,
+            };
             return default;
         }
 
         public DateTime? ToOptionalDateColumn(string columnName, string dateFormat)
         {
-            this.MappingSetter.ColumnName = columnName;
-            this.MappingSetter.DateFormat = dateFormat;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                DateFormat = dateFormat,
+                ColumnName = columnName,
+            };
             return default;
         }
 
         public DateTime? ToOptionalDateColumn(int columnIndex, int size, string dateFormat)
         {
-            this.MappingSetter.ColumnIndex = columnIndex;
-            this.MappingSetter.Size = size;
-            this.MappingSetter.DateFormat = dateFormat;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                DateFormat = dateFormat,
+                ColumnIndex = columnIndex,
+                Size = size,
+            };
             return default;
         }
 
         public string ToSourceName()
         {
-            this.MappingSetter.ForSourceName = true;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                ForSourceName = true
+            };
             return default;
         }
 
         public int ToLineNumber()
         {
-            this.MappingSetter.ForLineNumber = true;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                ForLineNumber = true
+            };
             return default;
         }
         public Guid ToRowGuid()
         {
-            this.MappingSetter.ForRowGuid = true;
+            this.MappingSetter = new MappingSetterDefinition
+            {
+                ForRowGuid = true
+            };
+            return default;
+        }
+
+        public T Ignore<T>()
+        {
             return default;
         }
         #endregion

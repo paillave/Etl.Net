@@ -26,7 +26,7 @@ public class S3FileValue : FileValueBase<S3FileValueMetadata>
     {
         using (var client = _connectionInfo.CreateBucketConnection())
         {
-            client.DeleteAsync(Path.Combine(_folder, Name)).Wait();
+            client.DeleteAsync(StringEx.ConcatenatePath(_folder, Name)).Wait();
         }
     }
     public override Stream GetContent() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, GetContentSingleTime);
@@ -35,7 +35,7 @@ public class S3FileValue : FileValueBase<S3FileValueMetadata>
         using (S3Bucket? client = _connectionInfo.CreateBucketConnection())
         {
             var ms = new MemoryStream();
-            using (var stream = client.DownloadAsync(Path.Combine(_folder, Name)).Result)
+            using (var stream = client.DownloadAsync(Name, _folder).Result)
                 stream.CopyTo(ms);
             ms.Seek(0, SeekOrigin.Begin);
             return ms;
@@ -44,7 +44,7 @@ public class S3FileValue : FileValueBase<S3FileValueMetadata>
     private StreamWithResource OpenContentSingleTime()
     {
         var client = _connectionInfo.CreateBucketConnection();
-        return new StreamWithResource(client.DownloadAsync(Path.Combine(_folder, Name)).Result, client);
+        return new StreamWithResource(client.DownloadFromKeyAsync(StringEx.ConcatenatePath(_folder, Name)).Result, client);
     }
 
     public override StreamWithResource OpenContent() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, OpenContentSingleTime);

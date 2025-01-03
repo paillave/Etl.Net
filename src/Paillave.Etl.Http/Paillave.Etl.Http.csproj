@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\SharedSettings.props" />
+  <PropertyGroup>
+    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
+    <PackageId>Paillave.EtlNet.Http</PackageId>
+    <PackageTags>ETL .net core SSIS Http Responses</PackageTags>
+    <Product>ETL.net Http extensions</Product>
+    <Description>Extensions for Etl.Net to read Http Responses</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
+    <PackageReference Include="MimeTypes" Version="2.5.2" allowedVersions="2.1.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" allowedVersions="13.0.1" />
+
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
+ </ItemGroup>
+</Project>

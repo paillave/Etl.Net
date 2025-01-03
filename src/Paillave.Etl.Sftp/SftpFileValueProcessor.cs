@@ -14,7 +14,7 @@ namespace Paillave.Etl.Sftp
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
         protected override void Process(IFileValue fileValue, SftpAdapterConnectionParameters connectionParameters, SftpAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
         {
-            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
+            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : StringEx.ConcatenatePath(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
             using var stream = fileValue.Get(processorParameters.UseStreamCopy);
             byte[] fileContents;
             using (MemoryStream ms = new MemoryStream())
@@ -22,7 +22,7 @@ namespace Paillave.Etl.Sftp
                 stream.CopyTo(ms);
                 fileContents = ms.ToArray();
             }
-            ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => UploadSingleTime(connectionParameters, fileContents, Path.Combine(folder, fileValue.Name)));
+            ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => UploadSingleTime(connectionParameters, fileContents, StringEx.ConcatenatePath(folder, fileValue.Name)));
             push(fileValue);
         }
         private void UploadSingleTime(SftpAdapterConnectionParameters connectionParameters, byte[] fileContents, string filePath)
@@ -31,13 +31,15 @@ namespace Paillave.Etl.Sftp
             using (var client = new SftpClient(connectionInfo))
             {
                 client.Connect();
+                if (client.Exists(filePath))
+                    client.DeleteFile(filePath);
                 client.WriteAllBytes(filePath, fileContents);
             }
         }
         protected override void Test(SftpAdapterConnectionParameters connectionParameters, SftpAdapterProcessorParameters processorParameters)
         {
             var fileName = Guid.NewGuid().ToString();
-            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
+            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : StringEx.ConcatenatePath(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
             var connectionInfo = connectionParameters.CreateConnectionInfo();
             using (var client = new SftpClient(connectionInfo))
             {
@@ -51,12 +53,12 @@ namespace Paillave.Etl.Sftp
                     fileContents = ms.ToArray();
                 }
 
-                client.WriteAllBytes(Path.Combine(folder, fileName), fileContents);
+                client.WriteAllBytes(StringEx.ConcatenatePath(folder, fileName), fileContents);
             }
             using (var client = new SftpClient(connectionInfo))
             {
                 client.Connect();
-                client.DeleteFile(Path.Combine(folder, fileName));
+                client.DeleteFile(StringEx.ConcatenatePath(folder, fileName));
             }
         }
     }

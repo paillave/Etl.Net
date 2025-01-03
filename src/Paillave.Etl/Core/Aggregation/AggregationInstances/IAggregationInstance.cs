@@ -2,7 +2,7 @@
 {
     public interface IAggregationInstance
     {
-        void Aggregate(object value);
-        object GetResult();
+        void Aggregate(object? value);
+        object? GetResult();
     }
 }

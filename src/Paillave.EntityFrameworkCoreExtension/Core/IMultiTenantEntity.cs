@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Paillave.EntityFrameworkCoreExtension.Core
+﻿namespace Paillave.EntityFrameworkCoreExtension.Core
 {
     public interface IMultiTenantEntity
     {

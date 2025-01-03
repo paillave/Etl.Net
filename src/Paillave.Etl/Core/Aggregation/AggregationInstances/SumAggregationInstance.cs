@@ -2,7 +2,7 @@
 {
     public class SumAggregationInstance : AggregationInstanceBase
     {
-        private object _sum = null;
+        private object? _sum = null;
         protected override void Add(int value)
         {
             if (_sum == null) _sum = default(int);
@@ -53,7 +53,7 @@
             if (_sum == null) _sum = default(ushort);
             _sum = ((ushort)_sum) + value;
         }
-        public override object GetResult()
+        public override object? GetResult()
         {
             return _sum;
         }

@@ -5,7 +5,7 @@ namespace Paillave.Etl.Core.Mapping.Visitors
 {
     public class MappingSetterVisitor : ExpressionVisitor
     {
-        public MappingSetterDefinition MappingSetter = null;
+        public MappingSetterDefinition? MappingSetter = null;
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {
             DummyFieldMapper dummyFieldMapper = new DummyFieldMapper();

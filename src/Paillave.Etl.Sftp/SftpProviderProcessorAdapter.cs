@@ -11,18 +11,16 @@ namespace Paillave.Etl.Sftp
         [Required]
         public string Server { get; set; }
         public int PortNumber { get; set; } = 22;
-        [Required]
-        public string Login { get; set; }
-        [Required]
-        public string Password { get; set; }
-        public string PrivateKeyPassPhrase { get; set; }
-        public string PrivateKey { get; set; }
+        public string? Login { get; set; }
+        public string? Password { get; set; }
+        public string? PrivateKeyPassPhrase { get; set; }
+        public string? PrivateKey { get; set; }
         public int MaxAttempts { get; set; } = 3;
     }
     public class SftpAdapterProviderParameters
     {
-        public string SubFolder { get; set; }
-        public string FileNamePattern { get; set; }
+        public string? SubFolder { get; set; }
+        public string? FileNamePattern { get; set; }
     }
     public class SftpAdapterProcessorParameters
     {

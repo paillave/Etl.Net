@@ -7,9 +7,9 @@ namespace Paillave.Etl.Samples.DataAccess
     public abstract class Security
     {
         public int Id { get; set; }
-        public string InternalCode { get; set; }
-        public string Isin { get; set; }
-        public string Name { get; set; }
+        public required string InternalCode { get; set; }
+        public string? Isin { get; set; }
+        public required string Name { get; set; }
     }
     public class SecurityConfiguration : IEntityTypeConfiguration<Security>
     {
@@ -17,7 +17,6 @@ namespace Paillave.Etl.Samples.DataAccess
         {
             builder.ToTable(nameof(Security));
             builder.HasKey(i => i.Id);
-            builder.Property(i => i.InternalCode).IsRequired();
             builder.HasAlternateKey(i => i.InternalCode);
             builder.Property(i => i.Id).UseIdentityColumn();
         }

@@ -40,8 +40,8 @@ namespace Paillave.Etl.XmlFile.Core
             var existingFieldDefinition = _xmlFieldDefinitions.FirstOrDefault(i => i.TargetPropertyInfo.Name == xmlFieldDefinition.TargetPropertyInfo.Name);
             if (existingFieldDefinition == null)
                 _xmlFieldDefinitions.Add(xmlFieldDefinition);
-            else
-                if (xmlFieldDefinition.NodePath != null) existingFieldDefinition.NodePath = xmlFieldDefinition.NodePath;
+            else if (xmlFieldDefinition.NodePath != null)
+                existingFieldDefinition.NodePath = xmlFieldDefinition.NodePath;
         }
         // public XmlNodeDefinition<T> MapXPathToProperty<TField>(string valueXPathQuery, Expression<Func<T, TField>> memberLambda)
         // {

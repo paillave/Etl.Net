@@ -24,7 +24,11 @@ namespace Paillave.EntityFrameworkCoreExtension.Core
         public void ProcessBatch(IEnumerable<TIn> items, TCtx dbContext)
         {
             var existingItemsFromDb = GetExistingElements(dbContext, items.Select(_getKey).ToArray());
-            var primaryKeyParameters = dbContext.Model.FindRuntimeEntityType(typeof(TIn)).FindPrimaryKey().Properties.Select(i => i.PropertyInfo).ToList();
+            var entityType = dbContext.Model.FindRuntimeEntityType(typeof(TIn));
+            if (entityType == null)
+                throw new InvalidOperationException($"The entity type {typeof(TIn).FullName} is not part of the model");
+            var primaryKey = entityType.FindPrimaryKey();
+            var primaryKeyParameters = primaryKey?.Properties.Select(i => i.PropertyInfo).Where(i => i != null).Cast<PropertyInfo>().ToList() ?? new List<PropertyInfo>();
             var itemsReadyToUpdate = items.GroupJoin(existingItemsFromDb, _getKey, _getKey, (l, r) =>
             {
                 var matchFromDb = r.FirstOrDefault();

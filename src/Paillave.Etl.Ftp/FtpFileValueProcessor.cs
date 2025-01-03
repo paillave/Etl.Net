@@ -14,11 +14,11 @@ namespace Paillave.Etl.Ftp
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
         protected override void Process(IFileValue fileValue, FtpAdapterConnectionParameters connectionParameters, FtpAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
         {
-            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
+            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : StringEx.ConcatenatePath(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
 
-            // var folder = Path.Combine(connectionParameters.RootFolder ?? "", processorParameters.SubFolder ?? "");
-            var filePath = Path.Combine(folder, fileValue.Name);
-            filePath = SmartFormat.Smart.Format(filePath, fileValue.Metadata);
+            // var folder = StringEx.ConcatenatePath(connectionParameters.RootFolder ?? "", processorParameters.SubFolder ?? "");
+            var filePath = StringEx.ConcatenatePath(folder, fileValue.Name);
+            filePath = SmartFormat.Smart.Format(filePath.Replace(@"\",@"\\"), fileValue.Metadata);
             using var stream = fileValue.Get(processorParameters.UseStreamCopy);
             byte[] fileContents;
             using (MemoryStream ms = new MemoryStream())
@@ -46,8 +46,8 @@ namespace Paillave.Etl.Ftp
 
         protected override void Test(FtpAdapterConnectionParameters connectionParameters, FtpAdapterProcessorParameters processorParameters)
         {
-            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
-            var testFilePath = Path.Combine(folder, Guid.NewGuid().ToString());
+            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : StringEx.ConcatenatePath(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
+            var testFilePath = StringEx.ConcatenatePath(folder, Guid.NewGuid().ToString());
             using (FtpClient client = connectionParameters.CreateFtpClient())
             {
                 var stream = new MemoryStream();

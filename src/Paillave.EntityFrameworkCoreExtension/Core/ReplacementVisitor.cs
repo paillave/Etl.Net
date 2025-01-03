@@ -12,7 +12,7 @@ namespace Paillave.EntityFrameworkCoreExtension.Core
             this.replacement = replacement;
         }
 
-        public override Expression Visit(Expression node)
+        public override Expression? Visit(Expression? node)
         {
             return node == original ? replacement : base.Visit(node);
         }

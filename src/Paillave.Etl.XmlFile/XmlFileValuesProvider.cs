@@ -21,8 +21,8 @@ namespace Paillave.Etl.XmlFile
         public override void PushValues(IFileValue input, Action<XmlNodeParsed> push, CancellationToken cancellationToken, IExecutionContext context)
         {
             using var stream = input.Get(_args.UseStreamCopy);
-            XmlObjectReader xmlObjectReader = new XmlObjectReader(_args.XmlFileDefinition);
-            xmlObjectReader.Read(stream, input.Name, push, cancellationToken);
+            IXmlObjectReader xmlObjectReader = new XmlObjectReaderV2(_args.XmlFileDefinition, input.Name, push);
+            xmlObjectReader.Read(stream, cancellationToken);
         }
     }
 }

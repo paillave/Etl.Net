@@ -104,7 +104,7 @@ namespace Paillave.Etl.Core
                 }
             }
         }
-        public static TOut CreateInstance(IDictionary<string, object> values)
+        public static TOut CreateInstance(IDictionary<string, object?> values)
         {
             TOut ret;
             if (_isOutputAnonymous)

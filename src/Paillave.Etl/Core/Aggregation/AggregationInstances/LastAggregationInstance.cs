@@ -2,12 +2,12 @@
 {
     public class LastAggregationInstance : IAggregationInstance
     {
-        private object _last = null;
-        public void Aggregate(object value)
+        private object? _last = null;
+        public void Aggregate(object? value)
         {
             _last = value;
         }
-        public object GetResult()
+        public object? GetResult()
         {
             return _last;
         }

@@ -2,9 +2,9 @@
 {
     public class FirstAggregationInstance : IAggregationInstance
     {
-        private object _first = null;
+        private object? _first = null;
         private bool _hasValue = false;
-        public void Aggregate(object value)
+        public void Aggregate(object? value)
         {
             if (!_hasValue)
             {
@@ -12,7 +12,7 @@
                 _hasValue = true;
             }
         }
-        public object GetResult()
+        public object? GetResult()
         {
             return _first;
         }

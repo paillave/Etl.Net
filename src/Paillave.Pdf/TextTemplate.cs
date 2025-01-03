@@ -147,15 +147,15 @@ namespace Paillave.Pdf
             public BookmarkTextTemplateCheck(List<List<DocumentBookmarkNode>> bookmarks) => _bookmarks = bookmarks;
             public bool Check(TextLine textLine, Page page, List<HorizontalLine> lines)
                 => GetMatchingBookmark((decimal)textLine.BoundingBox.Top, (decimal)textLine.BoundingBox.Bottom, page.Number) != null;
-            private List<DocumentBookmarkNode> GetMatchingBookmark(decimal top, decimal bottom, int pageNumber)
+            private List<DocumentBookmarkNode>? GetMatchingBookmark(decimal top, decimal bottom, int pageNumber)
             {
                 if (_bookmarks == null) return null;
                 var heigh = top - bottom;
                 return _bookmarks.FirstOrDefault(i =>
                 {
-                    var bBottom = i[0].Destination.Coordinates.Bottom ?? (i[0].Destination.Coordinates.Top.Value - heigh);
-                    var bTop = i[0].Destination.Coordinates.Top ?? (i[0].Destination.Coordinates.Bottom.Value + heigh);
-                    return i[0].PageNumber == pageNumber && bBottom <= top && bTop >= bottom;
+                    var bBottom = i[0].Destination.Coordinates.Bottom ?? i[0].Destination.Coordinates.Top??0 - (double)heigh;
+                    var bTop = i[0].Destination.Coordinates.Top ?? i[0].Destination.Coordinates.Bottom??0 + (double)heigh;
+                    return i[0].PageNumber == pageNumber && bBottom <= (double)top && bTop >= (double)bottom;
                 });
             }
         }

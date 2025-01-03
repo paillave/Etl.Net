@@ -8,7 +8,7 @@
     <Description>Pdf files extensions for Etl.Net</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="PdfPig" Version="0.1.7" allowedVersions="0.1.7-alpha-20220525-559f3" />
+    <PackageReference Include="PdfPig" Version="0.1.9" allowedVersions="0.1.7-alpha-20220525-559f3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Pdf\Paillave.Pdf.csproj" />

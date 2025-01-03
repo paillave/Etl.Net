@@ -13,9 +13,9 @@ namespace Paillave.Etl.Core.Aggregation
             this.FilterValue = value;
         }
         protected PropertyInfo SourcePropertyInfo { get; }
-        protected IAggregationInstance AggregationInstance { get; private set; } = null;
-        protected PropertyInfo FilteredPropertyInfo { get; private set; }
-        protected object FilterValue { get; private set; }
+        protected IAggregationInstance? AggregationInstance { get; private set; } = null;
+        protected PropertyInfo? FilteredPropertyInfo { get; private set; }
+        protected object? FilterValue { get; private set; }
         protected Type AggregatorInstanceType { get; }
         public PropertyInfo TargetPropertyInfo { get; }
         protected abstract TValue GetInValue(TIn input);
@@ -32,7 +32,7 @@ namespace Paillave.Etl.Core.Aggregation
         public AggregatorBase<TIn, TValue> CopyEmpty()
         {
             var agg = CreateEmptyInstance(AggregatorInstanceType, SourcePropertyInfo, TargetPropertyInfo);
-            if (FilteredPropertyInfo != null)
+            if (FilteredPropertyInfo != null && FilterValue != null)
                 agg.SetFilter(FilteredPropertyInfo, FilterValue);
             return agg;
         }
@@ -53,9 +53,9 @@ namespace Paillave.Etl.Core.Aggregation
             if (value == null && FilterValue == null) return true;
             if (value == null && FilterValue != null) return false;
             if (value != null && FilterValue == null) return false;
-            return value.Equals(FilterValue);
+            return value!.Equals(FilterValue);
         }
-        public object GetResult() => AggregationInstance?.GetResult();
+        public object? GetResult() => AggregationInstance?.GetResult();
     }
     public class Aggregator<TIn> : AggregatorBase<TIn, TIn>
     {
