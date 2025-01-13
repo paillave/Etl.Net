@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace Paillave.EntityFrameworkCoreExtension.EfSave;
+
 public class EfSaveEngine<T> where T : class
 {
     private readonly Expression<Func<T, T, bool>> _findConditionExpression;
@@ -36,6 +37,18 @@ public class EfSaveEngine<T> where T : class
                 .ToList();
 
         _findConditionExpression = CreateFindConditionExpression(propertyInfosForPivot);
+    }
+    public EfSaveEngine(DbContext context, CancellationToken cancellationToken, Expression<Func<T, T, bool>> pivotCondition)
+    {
+        this._cancellationToken = cancellationToken;
+        _context = context;
+        var entityType = context.Model.FindEntityType(typeof(T)) ?? throw new InvalidOperationException("DbContext does not contain EntitySet for Type: " + typeof(T).Name);
+        _keyPropertyInfos = entityType.GetProperties()
+            .Where(i => !i.IsShadowProperty() && i.IsPrimaryKey())
+            .Where(i => i.PropertyInfo != null)
+            .Select(i => i.PropertyInfo!)
+            .ToList();
+        _findConditionExpression = pivotCondition;
     }
     private Expression<Func<T, T, bool>> CreateFindConditionExpression(List<List<PropertyInfo>> propertyInfosForPivotSet)
     {
@@ -115,3 +128,7 @@ public class EfSaveEngine<T> where T : class
         }
     }
 }
+
+
+
+

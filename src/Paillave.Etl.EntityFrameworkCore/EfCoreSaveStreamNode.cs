@@ -45,6 +45,11 @@ public class EfCoreSaveArgsBuilder<TInEf, TIn, TOut>
             GetOutput = (i, j) => j
         }));
 
+    public EfCoreSaveArgsBuilder<TInEf, TIn, TOut> SeekOn(Expression<Func<TInEf, TInEf, bool>> pivot)
+    {
+        this.Args.PivotCriteria = pivot;
+        return this;
+    }
     public EfCoreSaveArgsBuilder<TInEf, TIn, TOut> SeekOn(Expression<Func<TInEf, object>> pivot)
     {
         this.Args.PivotKeys = new List<Expression<Func<TInEf, object>>> { pivot };
@@ -146,6 +151,11 @@ public class EfCoreSaveCorrelatedArgsBuilder<TInEf, TIn, TOut>
         this.Args.PivotKeys.Add(pivot);
         return this;
     }
+    public EfCoreSaveCorrelatedArgsBuilder<TInEf, TIn, TOut> SeekOn(Expression<Func<TInEf, TInEf, bool>> pivot)
+    {
+        this.Args.PivotCriteria = pivot;
+        return this;
+    }
     public EfCoreSaveCorrelatedArgsBuilder<TInEf, TIn, TNewOut> Output<TNewOut>(Func<TIn, TInEf, TNewOut> getOutput)
         => new EfCoreSaveCorrelatedArgsBuilder<TInEf, TIn, TNewOut>(UpdateArgs(new EfCoreSaveArgs<TInEf, Correlated<TIn>, Correlated<TNewOut>>
         {
@@ -210,6 +220,7 @@ public class EfCoreSaveArgs<TInEf, TIn, TOut> : IThroughEntityFrameworkCoreArgs<
     public string? KeyedConnection { get; set; } = null;
     public bool KeepChangeTracker { get; set; } = false;
     public Type? DbContextType { get; set; } = null;
+    public Expression<Func<TInEf, TInEf, bool>> PivotCriteria { get; internal set; }
 }
 public enum SaveMode
 {
@@ -279,17 +290,24 @@ public class EfCoreSaveStreamNode<TInEf, TIn, TOut> : StreamNodeBase<TOut, IStre
     public async Task ProcessBatchAsync(List<(TIn Input, TInEf Entity)> items, DbContext dbContext, SaveMode bulkLoadMode)
     {
         var entities = items.Select(i => i.Item2).ToArray();
-        var pivotKeys = Args.PivotKeys == null ? (Expression<Func<TInEf, object>>[])null : Args.PivotKeys.ToArray();
-        if (bulkLoadMode == SaveMode.EntityFrameworkCore)
+        if (Args.PivotCriteria != null)
         {
-            dbContext.EfSaveAsync(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly).Wait();
+                dbContext.EfSaveAsync(entities, Args.PivotCriteria, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly).Wait();
         }
         else
         {
-            if (dbContext.Database.IsSqlServer())
-                dbContext.BulkSave(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly);
-            else
+            var pivotKeys = Args.PivotKeys == null ? (Expression<Func<TInEf, object>>[])null : Args.PivotKeys.ToArray();
+            if (bulkLoadMode == SaveMode.EntityFrameworkCore)
+            {
                 dbContext.EfSaveAsync(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly).Wait();
+            }
+            else
+            {
+                if (dbContext.Database.IsSqlServer())
+                    dbContext.BulkSave(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly);
+                else
+                    dbContext.EfSaveAsync(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly).Wait();
+            }
         }
         DetachAllEntities(dbContext);
     }

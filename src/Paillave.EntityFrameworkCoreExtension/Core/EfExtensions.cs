@@ -1,115 +1,100 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
-namespace Paillave.EntityFrameworkCoreExtension.Core
+namespace Paillave.EntityFrameworkCoreExtension.Core;
+
+public static class EfExtensions
 {
-    public static class EfExtensions
+    /// <summary>
+    /// Applies a partial function application by replacing the second parameter of the given expression with a specified expression value.
+    /// </summary>
+    /// <typeparam name="T1">The type of the first parameter of the original expression.</typeparam>
+    /// <typeparam name="T2">The type of the second parameter of the original expression.</typeparam>
+    /// <typeparam name="TResult">The return type of the original expression.</typeparam>
+    /// <param name="expression">The original expression with two parameters.</param>
+    /// <param name="expressionValue">The expression value to replace the second parameter of the original expression.</param>
+    /// <returns>A new expression with the second parameter replaced by the specified expression value.</returns>
+    public static Expression<Func<T1, TResult>> ApplyPartialRight<T1, T2, TResult>(this Expression<Func<T1, T2, TResult>> expression, Expression expressionValue)
     {
-        #region Remove from ef core version 5
-        // see here: https://blog.oneunicorn.com/2020/01/12/toquerystring/ and https://github.com/dotnet/efcore/issues/6482
-        public static string ToQueryString<TEntity>(this IQueryable<TEntity> query) where TEntity : class
-        {
-            var enumerator = query.Provider.Execute<IEnumerable<TEntity>>(query.Expression).GetEnumerator();
-            var relationalCommandCache = enumerator.Private("_relationalCommandCache");
-            var selectExpression = relationalCommandCache.Private<SelectExpression>("_selectExpression");
-            var factory = relationalCommandCache.Private<IQuerySqlGeneratorFactory>("_querySqlGeneratorFactory");
+        var parameterToBeReplaced = expression.Parameters[1];
+        var visitor = new ReplacementVisitor(parameterToBeReplaced, expressionValue);
+        var newBody = visitor.Visit(expression.Body);
+        return Expression.Lambda<Func<T1, TResult>>(newBody, expression.Parameters[0]);
+    }
 
-            var sqlGenerator = factory.Create();
-            var command = sqlGenerator.GetCommand(selectExpression);
-
-            string sql = command.CommandText;
-            return sql;
-        }
-        private static object Private(this object obj, string privateField) => obj?.GetType().GetField(privateField, BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(obj);
-        private static T Private<T>(this object obj, string privateField) => (T)obj?.GetType().GetField(privateField, BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(obj);
-        #endregion
-
-        public static EntityEntry<TEntity> EntryWithoutDetectChanges<TEntity>(this DbContext context, TEntity entity)
-                    where TEntity : class
-        {
-            var entryWithoutDetectChangesMethodInfo = context.GetType().GetMethod("EntryWithoutDetectChanges", BindingFlags.Instance | BindingFlags.NonPublic, null, new[] { typeof(TEntity) }, null);
-            return (EntityEntry<TEntity>)entryWithoutDetectChangesMethodInfo.Invoke(context, new object[] { entity });
-        }
-        private static Regex regex = new Regex(@"SELECT\s+(?<ref>[[]?.+?[]]?)[.].+?\sFROM", RegexOptions.Singleline & RegexOptions.IgnoreCase);
-        // public static Task DeleteWhereAsync<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> filter) where T : class
-        //     => DeleteWhereAsync(dbSet, filter, CancellationToken.None);
-        // [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Reviewed")]
-        // public static async Task DeleteWhereAsync<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> filter, CancellationToken cancellationToken) where T : class
-        // {
-        //     await dbSet.Where(filter).ExecuteDeleteAsync(); //return type exception because of unexpected joins EF core makes for some reason I don't get
-        //     // var query = dbSet.Where(filter);
-        //     // var enumerator = query.Provider.Execute<IEnumerable<T>>(query.Expression).GetEnumerator();
-        //     // var relationalCommandCache = enumerator.Private("_relationalCommandCache");
-        //     // var relationQueryContext = enumerator.Private<RelationalQueryContext>("_relationalQueryContext");
-        //     // var selectExpression = relationalCommandCache.Private<SelectExpression>("_selectExpression");
-        //     // var factory = relationalCommandCache.Private<IQuerySqlGeneratorFactory>("_querySqlGeneratorFactory");
-
-        //     // var sqlGenerator = factory.Create();
-        //     // var command = sqlGenerator.GetCommand(selectExpression);
-        //     // var parameterValues = relationQueryContext.ParameterValues;
-        //     // var dbCtx = relationQueryContext.Context.Database.GetDbConnection();
-        //     // var dbCommand = dbCtx.CreateCommand();
-        //     // if (dbCtx.State == ConnectionState.Closed)
-        //     // {
-        //     //     dbCtx.Open();
-        //     // }
-        //     // string deleteSql = regex.Replace(command.CommandText, "DELETE $1 FROM", 1);
-        //     // // dbCommand.Transaction = relationQueryContext.Context.Database.CurrentTransaction as System.Data.Common.DbTransaction;
-        //     // dbCommand.CommandText = deleteSql;
-        //     // dbCommand.CommandType = CommandType.Text;
-        //     // dbCommand.CommandTimeout = 3000;
-        //     // foreach (var parameter in command.Parameters)
-        //     //     parameter.AddDbParameter(dbCommand, parameterValues[parameter.InvariantName]);
-        //     // await dbCommand.ExecuteNonQueryAsync(cancellationToken);
-        // }
-
-        public static Expression<Func<T1, TResult>> ApplyPartialRight<T1, T2, TResult>(this Expression<Func<T1, T2, TResult>> expression, Expression expressionValue)
-        {
-            var parameterToBeReplaced = expression.Parameters[1];
-            var visitor = new ReplacementVisitor(parameterToBeReplaced, expressionValue);
-            var newBody = visitor.Visit(expression.Body);
-            return Expression.Lambda<Func<T1, TResult>>(newBody, expression.Parameters[0]);
-        }
-
-        public static Expression<Func<T1, TResult>> ApplyPartialRight<T1, T2, TResult>(this Expression<Func<T1, T2, TResult>> expression, T2 value)
-        {
-            var parameterToBeReplaced = expression.Parameters[1];
-            var constant = Expression.Constant(value, parameterToBeReplaced.Type);
-            return ApplyPartialRight(expression, constant);
-        }
-        public static Expression<Func<T2, TResult>> ApplyPartialLeft<T1, T2, TResult>(this Expression<Func<T1, T2, TResult>> expression, Expression expressionValue)
-        {
-            var parameterToBeReplaced = expression.Parameters[0];
-            var visitor = new ReplacementVisitor(parameterToBeReplaced, expressionValue);
-            var newBody = visitor.Visit(expression.Body);
-            return Expression.Lambda<Func<T2, TResult>>(newBody, expression.Parameters[1]);
-        }
-        public static Expression<Func<T2, TResult>> ApplyPartialLeft<T1, T2, TResult>(this Expression<Func<T1, T2, TResult>> expression, T1 value)
-        {
-            var parameterToBeReplaced = expression.Parameters[0];
-            var constant = Expression.Constant(value, parameterToBeReplaced.Type);
-            return ApplyPartialLeft(expression, constant);
-        }
-        public static Expression<Func<TResult>> ApplyPartial<T1, TResult>(this Expression<Func<T1, TResult>> expression, Expression expressionValue)
-        {
-            var parameterToBeReplaced = expression.Parameters[0];
-            var visitor = new ReplacementVisitor(parameterToBeReplaced, expressionValue);
-            var newBody = visitor.Visit(expression.Body);
-            return Expression.Lambda<Func<TResult>>(newBody, expression.Parameters[1]);
-        }
-        public static Expression<Func<TResult>> ApplyPartial<T1, TResult>(this Expression<Func<T1, TResult>> expression, T1 value)
-        {
-            var parameterToBeReplaced = expression.Parameters[0];
-            var constant = Expression.Constant(value, parameterToBeReplaced.Type);
-            return ApplyPartial(expression, constant);
-        }
+    /// <summary>
+    /// Partially applies a value to the second parameter of a given expression.
+    /// </summary>
+    /// <typeparam name="T1">The type of the first parameter of the expression.</typeparam>
+    /// <typeparam name="T2">The type of the second parameter of the expression.</typeparam>
+    /// <typeparam name="TResult">The type of the result of the expression.</typeparam>
+    /// <param name="expression">The expression to which the value will be partially applied.</param>
+    /// <param name="value">The value to be applied to the second parameter of the expression.</param>
+    /// <returns>An expression with the second parameter replaced by the specified value.</returns>
+    public static Expression<Func<T1, TResult>> ApplyPartialRight<T1, T2, TResult>(this Expression<Func<T1, T2, TResult>> expression, T2 value)
+    {
+        var parameterToBeReplaced = expression.Parameters[1];
+        var constant = Expression.Constant(value, parameterToBeReplaced.Type);
+        return ApplyPartialRight(expression, constant);
+    }
+    /// <summary>
+    /// Applies a partial function by replacing the first parameter of the given expression with the specified expression value.
+    /// </summary>
+    /// <typeparam name="T1">The type of the first parameter of the original expression.</typeparam>
+    /// <typeparam name="T2">The type of the second parameter of the original expression and the first parameter of the resulting expression.</typeparam>
+    /// <typeparam name="TResult">The return type of the expression.</typeparam>
+    /// <param name="expression">The original expression with two parameters.</param>
+    /// <param name="expressionValue">The expression value to replace the first parameter of the original expression.</param>
+    /// <returns>A new expression with the first parameter replaced by the specified expression value.</returns>
+    public static Expression<Func<T2, TResult>> ApplyPartialLeft<T1, T2, TResult>(this Expression<Func<T1, T2, TResult>> expression, Expression expressionValue)
+    {
+        var parameterToBeReplaced = expression.Parameters[0];
+        var visitor = new ReplacementVisitor(parameterToBeReplaced, expressionValue);
+        var newBody = visitor.Visit(expression.Body);
+        return Expression.Lambda<Func<T2, TResult>>(newBody, expression.Parameters[1]);
+    }
+    /// <summary>
+    /// Partially applies the first parameter of a given expression with a specified value.
+    /// </summary>
+    /// <typeparam name="T1">The type of the first parameter of the expression.</typeparam>
+    /// <typeparam name="T2">The type of the second parameter of the expression.</typeparam>
+    /// <typeparam name="TResult">The type of the result of the expression.</typeparam>
+    /// <param name="expression">The expression to partially apply.</param>
+    /// <param name="value">The value to apply to the first parameter of the expression.</param>
+    /// <returns>An expression with the first parameter replaced by the specified value.</returns>
+    public static Expression<Func<T2, TResult>> ApplyPartialLeft<T1, T2, TResult>(this Expression<Func<T1, T2, TResult>> expression, T1 value)
+    {
+        var parameterToBeReplaced = expression.Parameters[0];
+        var constant = Expression.Constant(value, parameterToBeReplaced.Type);
+        return ApplyPartialLeft(expression, constant);
+    }
+    /// <summary>
+    /// Applies a partial evaluation to the given expression by replacing the first parameter with the specified expression value.
+    /// </summary>
+    /// <typeparam name="T1">The type of the first parameter in the original expression.</typeparam>
+    /// <typeparam name="TResult">The return type of the expression.</typeparam>
+    /// <param name="expression">The original expression to be partially evaluated.</param>
+    /// <param name="expressionValue">The expression value to replace the first parameter in the original expression.</param>
+    /// <returns>A new expression with the first parameter replaced by the specified expression value.</returns>
+    public static Expression<Func<TResult>> ApplyPartial<T1, TResult>(this Expression<Func<T1, TResult>> expression, Expression expressionValue)
+    {
+        var parameterToBeReplaced = expression.Parameters[0];
+        var visitor = new ReplacementVisitor(parameterToBeReplaced, expressionValue);
+        var newBody = visitor.Visit(expression.Body);
+        return Expression.Lambda<Func<TResult>>(newBody, expression.Parameters[1]);
+    }
+    /// <summary>
+    /// Applies a partial evaluation to the given expression by replacing the first parameter with a constant value.
+    /// </summary>
+    /// <typeparam name="T1">The type of the parameter to be replaced.</typeparam>
+    /// <typeparam name="TResult">The return type of the expression.</typeparam>
+    /// <param name="expression">The expression to be partially evaluated.</param>
+    /// <param name="value">The constant value to replace the first parameter in the expression.</param>
+    /// <returns>A new expression with the first parameter replaced by the given constant value.</returns>
+    public static Expression<Func<TResult>> ApplyPartial<T1, TResult>(this Expression<Func<T1, TResult>> expression, T1 value)
+    {
+        var parameterToBeReplaced = expression.Parameters[0];
+        var constant = Expression.Constant(value, parameterToBeReplaced.Type);
+        return ApplyPartial(expression, constant);
     }
 }
