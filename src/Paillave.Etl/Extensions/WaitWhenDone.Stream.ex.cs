@@ -1,3 +1,5 @@
+using System;
+
 namespace Paillave.Etl.Core
 {
     public static partial class WaitWhenDoneEx
