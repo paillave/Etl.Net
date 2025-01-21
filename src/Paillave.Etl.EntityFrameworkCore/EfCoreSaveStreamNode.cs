@@ -296,7 +296,7 @@ public class EfCoreSaveStreamNode<TInEf, TIn, TOut> : StreamNodeBase<TOut, IStre
         }
         else
         {
-            var pivotKeys = Args.PivotKeys == null ? (Expression<Func<TInEf, object>>[])null : Args.PivotKeys.ToArray();
+            var pivotKeys = Args.PivotKeys == null ? null : Args.PivotKeys.ToArray();
             if (bulkLoadMode == SaveMode.EntityFrameworkCore)
             {
                 dbContext.EfSaveAsync(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly).Wait();
