@@ -111,6 +111,8 @@ namespace Paillave.Etl.SqlServer
                 var parameter = command.CreateParameter();
                 parameter.ParameterName = $"@{parameterName}";
                 parameter.Value = _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value;
+                if (_inPropertyInfos[parameterName].PropertyType == typeof(byte[]))
+                    parameter.DbType = DbType.Binary;
                 command.Parameters.Add(parameter);
                 // command.Parameters.Add(new SqlParameter($"@{parameterName}", _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value));
             }
