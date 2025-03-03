@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Amazon.Runtime;
 using Amazon.S3;
 using Amazon.S3.Model;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.S3;
 public class S3Bucket : IDisposable
@@ -24,7 +25,7 @@ public class S3Bucket : IDisposable
         var response = await _client.PutObjectAsync(new PutObjectRequest
         {
             BucketName = _bucketName,
-            Key = string.IsNullOrWhiteSpace(folder) ? objectName : Path.Combine(folder, objectName),
+            Key = string.IsNullOrWhiteSpace(folder) ? objectName : StringEx.ConcatenatePath(folder, objectName),
             InputStream = stream
             // FilePath = filePath,
         });
@@ -35,7 +36,7 @@ public class S3Bucket : IDisposable
     }
 
     public Task<Stream> DownloadAsync(string objectName, string? folder = null)
-        => DownloadFromKeyAsync(string.IsNullOrWhiteSpace(folder) ? objectName : Path.Combine(folder, objectName));
+        => DownloadFromKeyAsync(string.IsNullOrWhiteSpace(folder) ? objectName : StringEx.ConcatenatePath(folder, objectName));
     public async Task<Stream> DownloadFromKeyAsync(string objectKey)
     {
         GetObjectResponse response = await _client.GetObjectAsync(new GetObjectRequest
