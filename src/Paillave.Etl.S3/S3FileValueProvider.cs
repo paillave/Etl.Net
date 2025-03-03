@@ -28,7 +28,7 @@ public class S3FileValueProvider : FileValueProviderBase<S3AdapterConnectionPara
     {
         var searchPattern = string.IsNullOrEmpty(providerParameters.FileNamePattern) ? "*" : providerParameters.FileNamePattern;
         var matcher = new Matcher().AddInclude(searchPattern);
-        var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
+        var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : StringEx.ConcatenatePath(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
 
         var files = ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => GetFileList(connectionParameters, providerParameters));
         foreach (var file in files)
@@ -40,7 +40,7 @@ public class S3FileValueProvider : FileValueProviderBase<S3AdapterConnectionPara
     }
     private List<S3FileItem> GetFileList(S3AdapterConnectionParameters connectionParameters, S3AdapterProviderParameters providerParameters)
     {
-        var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
+        var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : StringEx.ConcatenatePath(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
         using (var client = connectionParameters.CreateBucketConnection())
             return client.ListAsync(folder, providerParameters.Recursive).Result;
     }
