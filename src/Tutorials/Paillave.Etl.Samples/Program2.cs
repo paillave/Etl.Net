@@ -7,6 +7,7 @@ using Paillave.Etl.FromConfigurationConnectors;
 using Paillave.Etl.Ftp;
 using Paillave.Etl.Sftp;
 using Paillave.Etl.Mail;
+using Paillave.Etl.Pgp;
 
 namespace Paillave.Etl.Samples
 {
@@ -14,15 +15,18 @@ namespace Paillave.Etl.Samples
     {
         static async Task Main(string[] args)
         {
-            await ConnectorTestAsync(args);
+            CreateConnectorConfigurationFileSchema();
+            // await ConnectorTestAsync(args);
             // await ImportAndCreateFileAsync(args);
             // await ImportAndCreateFileWithConfigAsync(args);
         }
         private static ConfigurationFileValueConnectorParser CreateConfigurationFileValueConnectorParser() => new ConfigurationFileValueConnectorParser(
+                new PgpProviderProcessorAdapter(),
                 new FileSystemProviderProcessorAdapter(),
                 new FtpProviderProcessorAdapter(),
                 new SftpProviderProcessorAdapter(),
-                new MailProviderProcessorAdapter());
+                new MailProviderProcessorAdapter()
+                );
         public static void CreateConnectorConfigurationFileSchema()
             => File.WriteAllText(Path.Combine(Environment.CurrentDirectory, "connectorsConfigSchema.json"), CreateConfigurationFileValueConnectorParser().GetConnectorsSchemaJson());
 

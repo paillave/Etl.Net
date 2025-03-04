@@ -6,6 +6,91 @@
     "$ref": "#/definitions/Connection"
   },
   "definitions": {
+    "PgpAdapterConnectionParameters": {
+      "title": "PgpAdapterConnectionParameters",
+      "type": "object",
+      "additionalProperties": false
+    },
+    "Processes_Pgp": {
+      "title": "Processes_Pgp",
+      "type": "object",
+      "additionalProperties": {
+        "title": "PgpAdapterProcessorParameters",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Operation": {
+            "$ref": "#/definitions/Processes_Pgp/additionalProperties/definitions/PgpOperation"
+          },
+          "PrivateKey": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "Passphrase": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "PublicKey": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "UseStreamCopy": {
+            "type": "boolean"
+          },
+          "Name": {
+            "type": "string",
+            "additionalProperties": false
+          }
+        },
+        "definitions": {
+          "PgpOperation": {
+            "type": "integer",
+            "description": "",
+            "x-enumNames": [
+              "Encrypt",
+              "EncryptAndSign",
+              "Decrypt",
+              "Sign",
+              "UnSign",
+              "Verify"
+            ],
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        }
+      }
+    },
+    "Adapter_Pgp": {
+      "title": "Adapter_Pgp",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "Type"
+      ],
+      "properties": {
+        "Type": {
+          "pattern": "^Pgp$"
+        },
+        "Connection": {
+          "$ref": "#/definitions/PgpAdapterConnectionParameters"
+        },
+        "Processors": {
+          "$ref": "#/definitions/Processes_Pgp"
+        }
+      }
+    },
     "FileSystemAdapterConnectionParameters": {
       "title": "FileSystemAdapterConnectionParameters",
       "type": "object",
@@ -29,16 +114,10 @@
         "additionalProperties": false,
         "properties": {
           "SubFolder": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string"
           },
           "FileNamePattern": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string"
           },
           "Recursive": {
             "type": "boolean"
@@ -59,10 +138,13 @@
         "additionalProperties": false,
         "properties": {
           "SubFolder": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string"
+          },
+          "UseStreamCopy": {
+            "type": "boolean"
+          },
+          "BuildMissingSubFolders": {
+            "type": "boolean"
           },
           "Name": {
             "type": "string",
@@ -104,10 +186,7 @@
       ],
       "properties": {
         "RootFolder": {
-          "type": [
-            "null",
-            "string"
-          ]
+          "type": "string"
         },
         "Server": {
           "type": "string",
@@ -126,40 +205,25 @@
           "minLength": 1
         },
         "FingerPrintSha1": {
-          "type": [
-            "null",
-            "string"
-          ]
+          "type": "string"
         },
         "SerialNumber": {
-          "type": [
-            "null",
-            "string"
-          ]
+          "type": "string"
         },
         "SubjectChecks": {
-          "type": [
-            "null",
-            "object"
-          ],
+          "type": "object",
           "additionalProperties": {
             "type": "string"
           }
         },
         "IssuerChecks": {
-          "type": [
-            "null",
-            "object"
-          ],
+          "type": "object",
           "additionalProperties": {
             "type": "string"
           }
         },
         "PublicKey": {
-          "type": [
-            "null",
-            "string"
-          ]
+          "type": "string"
         },
         "MaxAttempts": {
           "type": "integer",
@@ -194,16 +258,10 @@
         "additionalProperties": false,
         "properties": {
           "SubFolder": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string"
           },
           "FileNamePattern": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string"
           },
           "Recursive": {
             "type": "boolean"
@@ -224,10 +282,13 @@
         "additionalProperties": false,
         "properties": {
           "SubFolder": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string"
+          },
+          "UseStreamCopy": {
+            "type": "boolean"
+          },
+          "BuildMissingSubFolders": {
+            "type": "boolean"
           },
           "Name": {
             "type": "string",
@@ -263,16 +324,11 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "Server",
-        "Login",
-        "Password"
+        "Server"
       ],
       "properties": {
         "RootFolder": {
-          "type": [
-            "null",
-            "string"
-          ]
+          "type": "string"
         },
         "Server": {
           "type": "string",
@@ -283,12 +339,16 @@
           "format": "int32"
         },
         "Login": {
-          "type": "string",
-          "minLength": 1
+          "type": [
+            "null",
+            "string"
+          ]
         },
         "Password": {
-          "type": "string",
-          "minLength": 1
+          "type": [
+            "null",
+            "string"
+          ]
         },
         "PrivateKeyPassPhrase": {
           "type": [
@@ -344,10 +404,10 @@
         "additionalProperties": false,
         "properties": {
           "SubFolder": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string"
+          },
+          "UseStreamCopy": {
+            "type": "boolean"
           },
           "Name": {
             "type": "string",
@@ -395,23 +455,32 @@
           "format": "int32"
         },
         "Login": {
-          "type": [
-            "null",
-            "string"
-          ]
+          "type": "string"
         },
         "Password": {
-          "type": [
-            "null",
-            "string"
-          ]
+          "type": "string"
         },
-        "Secured": {
-          "type": "boolean"
+        "Ssl": {
+          "type": [
+            "boolean",
+            "null"
+          ]
         },
         "MaxAttempts": {
           "type": "integer",
           "format": "int32"
+        },
+        "Tls": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "TlsWhenAvailable": {
+          "type": [
+            "boolean",
+            "null"
+          ]
         }
       }
     },
@@ -430,34 +499,19 @@
             ]
           },
           "FromContains": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string"
           },
           "ToContains": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string"
           },
           "SubjectContains": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string"
           },
           "AttachmentNamePattern": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string"
           },
           "Folder": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string"
           },
           "SetToReadIfBatchDeletion": {
             "type": "boolean"
@@ -489,32 +543,23 @@
             "minLength": 1
           },
           "FromDisplayName": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string"
           },
           "To": {
             "type": "string",
             "minLength": 1
           },
           "ToDisplayName": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string"
           },
           "Body": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string"
           },
           "Subject": {
-            "type": [
-              "null",
-              "string"
-            ]
+            "type": "string"
+          },
+          "UseStreamCopy": {
+            "type": "boolean"
           },
           "Name": {
             "type": "string",
@@ -552,6 +597,12 @@
         "Type": {
           "anyOf": [
             {
+              "description": "Handle pgp files",
+              "enum": [
+                "Pgp"
+              ]
+            },
+            {
               "description": "Get and save files on the local file system",
               "enum": [
                 "FileSystem"
@@ -579,6 +630,9 @@
         }
       },
       "anyOf": [
+        {
+          "$ref": "#/definitions/Adapter_Pgp"
+        },
         {
           "$ref": "#/definitions/Adapter_FileSystem"
         },
