@@ -80,6 +80,7 @@ namespace Paillave.Etl.Samples
 
 
             // var builder = new DbContextOptionsBuilder<PmsDbContext>();
+            // // builder.UseSqlServer("Server=tcp:fundprocessprod.database.windows.net,1433;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=False;Connection Timeout=300;");
             // var context = new PmsDbContext(builder.Options, new TenantContext(1));
             // var cur = context.Set<Currency>().First();
             // var secus = new List<Security> {

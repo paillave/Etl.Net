@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.Data.SqlClient;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;

@@ -1,20 +1,12 @@
 {
     "$schema": "./connectorsConfigSchema.json",
     "inputFilesForSomePartnerFTP": {
-        "Type": "FileSystem",
+        "Type": "Pgp",
         "Connection": {
-            "RootFolder": "InputFiles"
-        },
-        "Providers": {
-            "POS": {
-                "FileNamePattern": "*.Positions.csv"
-            },
-            "PTF": {
-                "FileNamePattern": "*.Portfolios.csv"
-            }
         },
         "Processors": {
             "OUT": {
+                "Operation": 0
             }
         }
     }

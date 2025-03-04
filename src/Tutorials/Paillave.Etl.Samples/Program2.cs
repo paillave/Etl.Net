@@ -3,14 +3,11 @@
 using Paillave.Etl.FileSystem;
 using Paillave.Etl.Core;
 using Paillave.Etl.ExecutionToolkit;
-using System.Threading.Tasks;
-using System.IO;
 using Paillave.Etl.FromConfigurationConnectors;
 using Paillave.Etl.Ftp;
 using Paillave.Etl.Sftp;
 using Paillave.Etl.Mail;
-using Paillave.Etl.Zip;
-using Microsoft.EntityFrameworkCore;
+using Paillave.Etl.Pgp;
 
 namespace Paillave.Etl.Samples
 {
@@ -18,14 +15,18 @@ namespace Paillave.Etl.Samples
     {
         static async Task Main(string[] args)
         {
-            await ImportAndCreateFileAsync(args);
+            CreateConnectorConfigurationFileSchema();
+            // await ConnectorTestAsync(args);
+            // await ImportAndCreateFileAsync(args);
             // await ImportAndCreateFileWithConfigAsync(args);
         }
         private static ConfigurationFileValueConnectorParser CreateConfigurationFileValueConnectorParser() => new ConfigurationFileValueConnectorParser(
+                new PgpProviderProcessorAdapter(),
                 new FileSystemProviderProcessorAdapter(),
                 new FtpProviderProcessorAdapter(),
                 new SftpProviderProcessorAdapter(),
-                new MailProviderProcessorAdapter());
+                new MailProviderProcessorAdapter()
+                );
         public static void CreateConnectorConfigurationFileSchema()
             => File.WriteAllText(Path.Combine(Environment.CurrentDirectory, "connectorsConfigSchema.json"), CreateConfigurationFileValueConnectorParser().GetConnectorsSchemaJson());
 
@@ -78,6 +79,58 @@ namespace Paillave.Etl.Samples
 
             var res = await processRunner.ExecuteAsync(args, executionOptions);
             res.OpenActualExecutionPlan();
+        }
+        static async Task ConnectorTestAsync(string[] args)
+        {
+            var processRunner = StreamProcessRunner.Create<string[]>(i => i
+                .FromConnector("in", "IN")
+                .Do("write on console",context =>
+                {
+                    Console.WriteLine($"Processing {context.Name}");
+                })
+                // .ToConnector("out", "OUT")
+            );
+            var structure = processRunner.GetDefinitionStructure();
+            // structure.OpenEstimatedExecutionPlan();
+
+            ITraceReporter traceReporter = new SimpleConsoleExecutionDisplay();
+            // var dataAccess = new DataAccess.TestDbContext();
+            // await dataAccess.Database.EnsureCreatedAsync();
+            // dataAccess.Database.Migrate();
+            var executionOptions = new ExecutionOptions<string[]>
+            {
+                Connectors = new FileValueConnectors()
+                    .Register(
+                        new SftpFileValueProvider("IN", "Input", "Sftp", new SftpAdapterConnectionParameters
+                        {
+                            Server = "localhost",
+                            PortNumber = 22,
+                            Login = ConsoleAsk("login:"),
+                            Password = ConsoleAsk("password:"),
+                            MaxAttempts = 3,
+                            RootFolder = "stephane",
+                            // RootFolder = "/stephane/Documents",
+                        },
+                        new SftpAdapterProviderParameters
+                        {
+                            SubFolder = "Documents",
+                            // SubFolder = "",
+                            FileNamePattern = "*"
+                        }))
+                    .Register(new FileSystemFileValueProcessor("OUT", "Output", Path.Combine(Environment.CurrentDirectory, "InputFiles"))),
+                // Resolver = new SimpleDependencyResolver()
+                //     .Register(dataAccess),
+                TraceProcessDefinition = traceReporter.TraceProcessDefinition,
+            };
+            traceReporter.Initialize(structure);
+
+            var res = await processRunner.ExecuteAsync(args, executionOptions);
+            // res.OpenActualExecutionPlan();
+        }
+        static string? ConsoleAsk(string question)
+        {
+            Console.WriteLine(question);
+            return Console.ReadLine();
         }
 
         /// <summary>
