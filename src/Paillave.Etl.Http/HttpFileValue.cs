@@ -8,15 +8,23 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
     public override string Name { get; }
     private byte[]? _content { get; }
 
-    public HttpFileValue(string name, byte[]? content, string url,
-                         string connectorCode, string connectionName, string connectorName)
-        : base(new HttpFileValueMetadata
-        {
-            Url = url,
-            ConnectorCode = connectorCode,
-            ConnectionName = connectionName,
-            ConnectorName = connectorName
-        })
+    public HttpFileValue(
+        string name,
+        byte[]? content,
+        string url,
+        string connectorCode,
+        string connectionName,
+        string connectorName
+    )
+        : base(
+            new HttpFileValueMetadata
+            {
+                Url = url,
+                ConnectorCode = connectorCode,
+                ConnectionName = connectionName,
+                ConnectorName = connectorName,
+            }
+        )
     {
         Name = name;
         _content = content;
