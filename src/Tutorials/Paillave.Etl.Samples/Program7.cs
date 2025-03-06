@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Paillave.Etl.Core;
 using Paillave.Etl.Ftp;
 using Paillave.Etl.Samples.DataAccess;
-using Paillave.Etl.Http;
+using Paillave.Etl.HttpExtension;
 
 namespace Paillave.Etl.Samples
 {
@@ -24,7 +24,7 @@ namespace Paillave.Etl.Samples
 
             Console.WriteLine("Debug 3");
     
-            var portfolioFileStream = contextStream.CrossApply("Get Files", new HttpFileValueProvider("code", "https://127.0.01:80", "Get", ""))
+            var portfolioFileStream = contextStream.CrossApply("Get Files", new HttpFileValueProvider("code", "https://127.0.0.1:80", "Get", ""))
             .Do("print to console", i => Console.WriteLine(i.Name));
 
             Console.WriteLine("Debug 4");
