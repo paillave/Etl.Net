@@ -5,106 +5,108 @@ using FluentFtp;
 using Paillave.Etl.Core;
 
 namespace Paillave.Etl.HttpExtension;
+
+public class HttpFileValueProcessor
+    : FileValueProcessorBase<HttpAdapterConnectionParameters, HttpAdapterProcessorParameters>
 {
-    public class HttpFileValueProcessor
-        : FileValueProcessorBase<HttpAdapterConnectionParameters, HttpAdapterProcessorParameters>
+    public HttpFileValueProcessor(
+        string code,
+        string name,
+        string connectionName,
+        HttpAdapterConnectionParameters connectionParameters,
+        HttpAdapterProcessorParameters processorParameters
+    )
+        : base(code, name, connectionName, connectionParameters, processorParameters) { }
+
+    public HttpFileValueProcessor(
+        string code,
+        string name,
+        string url,
+        string method,
+        List<string> headerParts,
+        string connexionType,
+        object? body
+    )
+        : base(
+            code,
+            name,
+            url,
+            new HttpAdapterConnectionParameters
+            {
+                Url = url,
+                HeaderParts = headerParts,
+                ConnexionType = connexionType,
+            },
+            new HttpAdapterProcessorParameters { Method = method, Body = body }
+        ) { }
+
+    public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+    public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
+
+    protected override void Process(
+        IFileValue fileValue,
+        HttpAdapterConnectionParameters connectionParameters,
+        HttpAdapterProcessorParameters processorParameters,
+        Action<IFileValue> push,
+        CancellationToken cancellationToken,
+        IExecutionContext context
+    )
     {
-        public HttpFileValueProcessor(
-            string code,
-            string name,
-            string connectionName,
-            HttpAdapterConnectionParameters connectionParameters,
-            HttpAdapterProcessorParameters processorParameters
-        )
-            : base(code, name, connectionName, connectionParameters, processorParameters) { }
+        using var stream = fileValue.Get(processorParameters.UseStreamCopy);
 
-        public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
-        public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
+        var httpClientFactory = context.DependencyResolver.Resolve<IHttpClientFactory>();
+        using var httpClient =
+            httpClientFactory?.CreateClient()
+            ?? HttpClientFactory.CreateHttpClient(connectionParameters); // If none is provided, use the default factory
 
-        protected override void Process(
-            IFileValue fileValue,
-            HttpAdapterConnectionParameters connectionParameters,
-            HttpAdapterProcessorParameters processorParameters,
-            Action<IFileValue> push,
-            CancellationToken cancellationToken,
-            IExecutionContext context
-        )
+        var response;
+        if (processorParameters.Method == "GET")
         {
-            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder)
-                ? (processorParameters.SubFolder ?? "")
-                : StringEx.ConcatenatePath(
-                    connectionParameters.RootFolder,
-                    processorParameters.SubFolder ?? ""
-                );
-
-            // var folder = StringEx.ConcatenatePath(connectionParameters.RootFolder ?? "", processorParameters.SubFolder ?? "");
-            var filePath = StringEx.ConcatenatePath(folder, fileValue.Name);
-            filePath = SmartFormat.Smart.Format(filePath.Replace(@"\", @"\\"), fileValue.Metadata);
-            using var stream = fileValue.Get(processorParameters.UseStreamCopy);
-            byte[] fileContents;
-            using (MemoryStream ms = new MemoryStream())
-            {
-                stream.CopyTo(ms);
-                fileContents = ms.ToArray();
-            }
-            ActionRunner.TryExecute(
-                connectionParameters.MaxAttempts,
-                () =>
-                    UploadSingleTime(
-                        connectionParameters,
-                        fileContents,
-                        filePath,
-                        processorParameters.BuildMissingSubFolders
-                    )
+            response = httpClient.GetAsync(connectionParameters.Url).Result;
+        }
+        else if (processorParameters.Method == "POST")
+        {
+            response = httpClient
+                .PostAsync(
+                    connectionParameters.Url,
+                    HttpRequestBodyEx.GetJsonBody(processorParameters.Body)
+                )
+                .Result;
+        }
+        else
+        {
+            throw new NotImplementedException(
+                $"Method type '{connectionParameters.ConnexionType}' is not implemented."
             );
-            push(fileValue);
         }
 
-        private void UploadSingleTime(
-            HttpAdapterConnectionParameters connectionParameters,
-            byte[] fileContents,
-            string filePath,
-            bool buildMissingSubFolders
-        )
-        {
-            using (HttpClient client = connectionParameters.CreateHttpClient())
-            {
-                if (buildMissingSubFolders)
-                {
-                    var directory = Path.GetDirectoryName(filePath);
-                    if (!string.IsNullOrWhiteSpace(directory))
-                        client.CreateDirectory(directory);
-                }
+        var content = response.Content.ReadAsByteArrayAsync().Result;
+        var fileName = response.GetFileName(connectionParameters.Url);
 
-                client.UploadBytes(fileContents, filePath);
-            }
-        }
+        push(
+            new HttpFileValue(
+                fileName,
+                content,
+                connectionParameters.Url,
+                Code,
+                ConnectionName,
+                Name
+            )
+        );
+        return;
+    }
 
-        protected override void Test(
-            HttpAdapterConnectionParameters connectionParameters,
-            HttpAdapterProcessorParameters processorParameters
-        )
-        {
-            var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder)
-                ? (processorParameters.SubFolder ?? "")
-                : StringEx.ConcatenatePath(
-                    connectionParameters.RootFolder,
-                    processorParameters.SubFolder ?? ""
-                );
-            var testFilePath = StringEx.ConcatenatePath(folder, Guid.NewGuid().ToString());
-            using (HttpClient client = connectionParameters.CreateHttpClient())
-            {
-                var stream = new MemoryStream();
-                byte[] fileContents;
-                stream.Position = 0;
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    stream.CopyTo(ms);
-                    fileContents = ms.ToArray();
-                }
-                client.UploadStream(stream, testFilePath);
-                client.DeleteFile(testFilePath);
-            }
-        }
+    protected override void Test(
+        HttpAdapterConnectionParameters connectionParameters,
+        HttpAdapterProcessorParameters processorParameters
+    )
+    {
+        // using var httpClient = new HttpClient();
+        // httpClient
+        //     .PostAsync(
+        //         connectionParameters.Url,
+        //         HttpRequestBodyEx.GetJsonBody(processorParameters.Body)
+        //     )
+        //     .Wait();
     }
 }
