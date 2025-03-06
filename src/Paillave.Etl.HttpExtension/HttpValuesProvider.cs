@@ -6,7 +6,7 @@
 
 
 // namespace Paillave.Etl.HttpExtension;
-// {
+
 //     public class HttpValuesProviderArgs<TOut>
 //     {
 //         public Encoding Encoding { get; set; } = null;
@@ -47,4 +47,3 @@
 //             }
 //         }
 //     }
-// }

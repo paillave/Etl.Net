@@ -1,59 +1,74 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
-
 using System.Net.Http;
-
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace Paillave.Etl.HttpExtension;
+
+public static class HttpClientFactory
 {
-    public static class HttpClientFactory
+    public static HttpClient CreateHttpClient(IHttpConnectionInfo connectionParameters)
     {
-        public static HttpClient CreateHttpClient(IHttpConnectionInfo connectionParameters)
+        HttpClient client = new HttpClient();
+
+        switch (connectionParameters.ConnexionType)
         {
-            HttpClient client = new HttpClient();
+            case "None":
+                // No authentication needed
+                break;
 
-            if (connectionParameters.ConnexionType == "None") { }
-            else if (connectionParameters.ConnexionType == "Bearer")
-            {
+            case "Bearer":
                 if (connectionParameters.HeaderParts.Count > 0)
                 {
-                    client.DefaultRequestHeaders.Authorization =
-                        new AuthenticationHeaderValue("Bearer", connectionParameters.HeaderParts[0]);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                        "Bearer",
+                        connectionParameters.HeaderParts[0]
+                    );
                 }
-            }
-            else if (connectionParameters.ConnexionType == "Basic")
-            {
+                break;
+
+            case "Basic":
                 if (connectionParameters.HeaderParts.Count >= 2)
                 {
-                    string credentials = $"{connectionParameters.HeaderParts[0]}:{connectionParameters.HeaderParts[1]}";
-                    string base64Credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes(credentials));
-                    client.DefaultRequestHeaders.Authorization =
-                        new AuthenticationHeaderValue("Basic", base64Credentials);
+                    string credentials =
+                        $"{connectionParameters.HeaderParts[0]}:{connectionParameters.HeaderParts[1]}";
+                    string base64Credentials = Convert.ToBase64String(
+                        Encoding.UTF8.GetBytes(credentials)
+                    );
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                        "Basic",
+                        base64Credentials
+                    );
                 }
-            }
-            else if (connectionParameters.ConnexionType == "ApiKey")
-            {
+                break;
+
+            case "ApiKey":
                 if (connectionParameters.HeaderParts.Count > 0)
                 {
-                    client.DefaultRequestHeaders.Add("X-API-Key", connectionParameters.HeaderParts[0]);
+                    client.DefaultRequestHeaders.Add(
+                        "X-API-Key",
+                        connectionParameters.HeaderParts[0]
+                    );
                 }
-            }
-            else if (connectionParameters.ConnexionType == "CustomHeader")
-            {
+                break;
+
+            case "CustomHeader":
                 if (connectionParameters.HeaderParts.Count >= 2)
                 {
-                    client.DefaultRequestHeaders.Add(connectionParameters.HeaderParts[0], connectionParameters.HeaderParts[1]);
+                    client.DefaultRequestHeaders.Add(
+                        connectionParameters.HeaderParts[0],
+                        connectionParameters.HeaderParts[1]
+                    );
                 }
-            }
-            else
-            {
-                throw new NotImplementedException($"Authentication type '{connectionParameters.ConnexionType}' is not implemented.");
-            }
+                break;
 
-            return client;
+            default:
+                throw new NotImplementedException(
+                    $"Authentication type '{connectionParameters.ConnexionType}' is not implemented."
+                );
         }
+
+        return client;
     }
 }

@@ -24,8 +24,8 @@ namespace Paillave.Etl.Samples
 
             Console.WriteLine("Debug 3");
     
-            var portfolioFileStream = contextStream.CrossApply("Get Files", new HttpFileValueProvider("code", "https://127.0.0.1:80", "Get", ""))
-            .Do("print to console", i => Console.WriteLine(i.Name));
+            // var portfolioFileStream = contextStream.CrossApply("Get Files", new HttpFileValueProvider("code", "https://127.0.0.1:80", "Get", ""))
+            // .Do("print to console", i => Console.WriteLine(i.Name));
 
             Console.WriteLine("Debug 4");
         }

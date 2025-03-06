@@ -2,16 +2,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Paillave.Etl.Core;
 
-
 namespace Paillave.Etl.HttpExtension;
-
 
 public class HttpAdapterConnectionParameters : IHttpConnectionInfo
 {
     public required string Url { get; set; }
-    
+
     public List<string> HeaderParts { get; set; }
-    
+
     public string ConnexionType { get; set; }
 }
 

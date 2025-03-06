@@ -1,52 +1,93 @@
-// using System;
-// using System.IO;
-// using System.Threading;
-// using Paillave.Etl.Core;
-// using Microsoft.Extensions.FileSystemGlobbing;
-// using FluentFtp;
-// using System.Linq;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Paillave.Etl.Core;
 
-// namespace Paillave.Etl.HttpExtension2
-// {
-//     public class HttpFileValueProvider : FileValueProviderBase<HttpAdapterConnectionParameters, HttpAdapterProviderParameters>
-//     {
-//         public HttpFileValueProvider(string code, string name, string connectionName, HttpAdapterConnectionParameters connectionParameters, HttpAdapterProviderParameters providerParameters)
-//             : base(code, name, connectionName, connectionParameters, providerParameters) { }
-//         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
-//         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-//         protected override void Provide(Action<IFileValue> pushFileValue, HttpAdapterConnectionParameters connectionParameters, HttpAdapterProviderParameters providerParameters, CancellationToken cancellationToken, IExecutionContext context)
-//         {
-//             var searchPattern = string.IsNullOrEmpty(providerParameters.FileNamePattern) ? "*" : providerParameters.FileNamePattern;
-//             var matcher = new Matcher().AddInclude(searchPattern);
-//             var files = ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => GetFileList(connectionParameters, providerParameters));
-//             foreach (var item in files)
-//             {
-//                 if (cancellationToken.IsCancellationRequested) break;
-//                 var fullPath = item.FullName;
-//                 var fileName = Path.GetFileName(fullPath);
-//                 fileName = Path.GetFileName(fileName);
-//                 if (matcher.Match(fileName).HasMatches)
-//                     pushFileValue(new HttpFileValue(connectionParameters, Path.GetDirectoryName(fullPath), fileName, this.Code, this.Name, this.ConnectionName));
-//             }
-//         }
-//         private HttpListItem[] GetFileList(HttpAdapterConnectionParameters connectionParameters, HttpAdapterProviderParameters providerParameters)
-//         {
-//             var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : StringEx.ConcatenatePath(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
-//             using (HttpClient client = connectionParameters.CreateHttpClient())
-//             {
-//                 return (providerParameters.Recursive ? client.GetListing(folder, HttpListOption.Recursive) : client.GetListing(folder)).Where(i => i.Type == HttpObjectType.File).ToArray();
-//             }
-//         }
-//         protected override void Test(HttpAdapterConnectionParameters connectionParameters, HttpAdapterProviderParameters providerParameters)
-//         {
-//             var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : StringEx.ConcatenatePath(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
-//             using (HttpClient client = connectionParameters.CreateHttpClient())
-//             {
-//                 if (providerParameters.Recursive)
-//                     client.GetListing(folder, HttpListOption.Recursive);
-//                 else
-//                     client.GetListing(folder);
-//             }
-//         }
-//     }
-// }
+namespace Paillave.Etl.HttpExtension;
+
+public class HttpFileValueProvider
+    : FileValueProviderBase<HttpAdapterConnectionParameters, HttpAdapterProviderParameters>
+{
+    public HttpFileValueProvider(
+        string code,
+        string name,
+        string connectionName,
+        HttpAdapterConnectionParameters connectionParameters,
+        HttpAdapterProviderParameters providerParameters
+    )
+        : base(code, name, connectionName, connectionParameters, providerParameters) { }
+
+    public HttpFileValueProvider(
+        string code,
+        string name,
+        string url,
+        string method,
+        List<string> headerParts,
+        string connexionType,
+        object? body
+    )
+        : base(
+            code,
+            url,
+            url,
+            new HttpAdapterConnectionParameters
+            {
+                Url = url,
+                HeaderParts = headerParts,
+                ConnexionType = connexionType,
+            },
+            new HttpAdapterProviderParameters { Method = method, Body = body }
+        ) { }
+
+    public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
+    public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
+
+    protected override void Provide(
+        Action<IFileValue> pushFileValue,
+        HttpAdapterConnectionParameters connectionParameters,
+        HttpAdapterProviderParameters providerParameters,
+        CancellationToken cancellationToken,
+        IExecutionContext context
+    )
+    {
+        var url = connectionParameters.Url;
+
+        var httpClientFactory = context.DependencyResolver.Resolve<IHttpClientFactory>();
+        using var httpClient =
+            httpClientFactory?.CreateClient()
+            ?? HttpClientFactory.CreateHttpClient(connectionParameters); // If none is provided, use the default factory
+
+        var response = GetResponse(connectionParameters, providerParameters, httpClient).Result;
+        var content = response?.Content.ReadAsByteArrayAsync().Result;
+
+        pushFileValue(new HttpFileValue(connectionParameters, content, Code, ConnectionName, Name));
+    }
+
+    protected override void Test(
+        HttpAdapterConnectionParameters connectionParameters,
+        HttpAdapterProviderParameters providerParameters
+    )
+    {
+        using var httpClient = new HttpClient();
+        GetResponse(connectionParameters, providerParameters, httpClient).Wait();
+    }
+
+    private static Task<HttpResponseMessage> GetResponse(
+        HttpAdapterConnectionParameters connectionParameters,
+        HttpAdapterProviderParameters providerParameters,
+        HttpClient httpClient
+    )
+    {
+        return providerParameters.Method switch
+        {
+            "Get" => httpClient.GetAsync(connectionParameters.Url),
+            "Post" => httpClient.PostAsync(
+                connectionParameters.Url,
+                HttpRequestBodyEx.GetJsonBody(providerParameters.Body)
+            ),
+            _ => throw new NotImplementedException(),
+        };
+    }
+}
