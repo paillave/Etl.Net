@@ -17,6 +17,7 @@ public class HttpAdapterParametersBase
 {
     public required string Method { get; set; }
     public string Slug { get; set; }
+    public string ResponseFormat { get; set; }
     public object? Body { get; set; }
 }
 
