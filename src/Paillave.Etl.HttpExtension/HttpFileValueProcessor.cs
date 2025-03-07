@@ -65,14 +65,12 @@ public class HttpFileValueProcessor
         IExecutionContext context
     )
     {
-        using var stream = fileValue.Get(processorParameters.UseStreamCopy);
-
-        var url = connectionParameters.Url;
+        // using var stream = fileValue.Get(processorParameters.UseStreamCopy);
 
         var httpClientFactory = context.DependencyResolver.Resolve<IHttpClientFactory>();
         using var httpClient =
             httpClientFactory?.CreateClient()
-            ?? HttpClientFactory.CreateHttpClient(connectionParameters); // If none is provided, use the default factory
+            ?? HttpClientFactory.CreateHttpClient(connectionParameters, processorParameters); // If none is provided, use the default factory
 
         var response = Helpers
             .GetResponse(connectionParameters, processorParameters, httpClient)

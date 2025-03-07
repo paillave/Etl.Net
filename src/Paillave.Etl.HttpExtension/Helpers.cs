@@ -70,36 +70,36 @@ namespace Paillave.Etl.HttpExtension
         }
         public static Task<HttpResponseMessage> GetResponse(
             HttpAdapterConnectionParameters connectionParameters,
-            HttpAdapterParametersBase parametersBase,
+            HttpAdapterParametersBase adapterParametersBase,
             HttpClient httpClient
         )
         {
-            var url = new Uri(
+            var uri = new Uri(
                 new Uri(connectionParameters.Url.TrimEnd('/')),
-                parametersBase.Slug
+                adapterParametersBase.Slug
             ).ToString();
 
             var requestMessage = new HttpRequestMessage
             {
-                RequestUri = new Uri(url),
-                Method = new HttpMethod(parametersBase.Method.ToUpper())
+                RequestUri = new Uri(uri),
+                Method = new HttpMethod(adapterParametersBase.Method.ToUpper())
             };
 
-            if (parametersBase.Method.ToUpper() == "POST" || parametersBase.Method.ToUpper() == "PUT" || parametersBase.Method.ToUpper() == "PATCH")
+            if (adapterParametersBase.Method.ToUpper() == "POST" || adapterParametersBase.Method.ToUpper() == "PUT" || adapterParametersBase.Method.ToUpper() == "PATCH")
             {
-                requestMessage.Content = Helpers.GetRequestBody(parametersBase.Body, parametersBase.RequestFormat);
+                requestMessage.Content = Helpers.GetRequestBody(adapterParametersBase.Body, adapterParametersBase.RequestFormat);
             }
 
-            return parametersBase.Method.ToUpper() switch
+            return adapterParametersBase.Method.ToUpper() switch
             {
-                "GET" => httpClient.GetAsync(url),
+                "GET" => httpClient.GetAsync(uri),
                 "POST" => httpClient.SendAsync(requestMessage),
                 "PUT" => httpClient.SendAsync(requestMessage),
-                "DELETE" => httpClient.DeleteAsync(url),
+                "DELETE" => httpClient.DeleteAsync(uri),
                 "PATCH" => httpClient.SendAsync(requestMessage),
-                "HEAD" => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, url)),
-                "OPTIONS" => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Options, url)),
-                _ => throw new NotImplementedException($"HTTP method '{parametersBase.Method}' is not implemented."),
+                "HEAD" => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, uri)),
+                "OPTIONS" => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Options, uri)),
+                _ => throw new NotImplementedException($"HTTP method '{adapterParametersBase.Method}' is not implemented."),
             };
         }
     }
