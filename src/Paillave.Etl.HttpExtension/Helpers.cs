@@ -79,7 +79,7 @@ public static class Helpers
             "Get" => httpClient.GetAsync(url),
             "Post" => httpClient.PostAsync(
                 url,
-                Helpers.GetJsonBody(parametersBase.Body)
+                Helpers.GetResponseBody(parametersBase.Body, parametersBase.ResponseFormat) 
             ),
             _ => throw new NotImplementedException(),
         };

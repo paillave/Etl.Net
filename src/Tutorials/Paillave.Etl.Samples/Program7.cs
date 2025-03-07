@@ -33,6 +33,7 @@ namespace Paillave.Etl.Samples
                         "http://127.0.0.1:80/",
                         "Get",
                         "/ip",
+                        "json",
                         new List<string>(),
                         "None",
                         null

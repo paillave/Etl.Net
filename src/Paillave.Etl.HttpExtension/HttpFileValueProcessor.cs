@@ -27,7 +27,7 @@ public class HttpFileValueProcessor
         string url,
         string method,
         string slug,
-        string responseFormat
+        string responseFormat,
         List<string> headerParts,
         string connexionType,
         object? body
