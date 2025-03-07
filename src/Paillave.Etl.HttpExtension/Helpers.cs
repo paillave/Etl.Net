@@ -68,7 +68,6 @@ namespace Paillave.Etl.HttpExtension
                     throw new NotImplementedException();
             }
         }
-
         public static Task<HttpResponseMessage> GetResponse(
             HttpAdapterConnectionParameters connectionParameters,
             HttpAdapterParametersBase parametersBase,
@@ -80,24 +79,26 @@ namespace Paillave.Etl.HttpExtension
                 parametersBase.Slug
             ).ToString();
 
+            var requestMessage = new HttpRequestMessage
+            {
+                RequestUri = new Uri(url),
+                Method = new HttpMethod(parametersBase.Method.ToUpper())
+            };
+
+            if (parametersBase.Method.ToUpper() == "POST" || parametersBase.Method.ToUpper() == "PUT" || parametersBase.Method.ToUpper() == "PATCH")
+            {
+                requestMessage.Content = Helpers.GetRequestBody(parametersBase.Body, parametersBase.RequestFormat);
+            }
+
             return parametersBase.Method.ToUpper() switch
             {
                 "GET" => httpClient.GetAsync(url),
-                "POST" => httpClient.PostAsync(
-                    url,
-                    Helpers.GetRequestBody(parametersBase.Body, parametersBase.RequestFormat)
-                ),
-                "PUT" => httpClient.PutAsync(
-                    url,
-                    Helpers.GetRequestBody(parametersBase.Body, parametersBase.RequestFormat)
-                ),
+                "POST" => httpClient.SendAsync(requestMessage),
+                "PUT" => httpClient.SendAsync(requestMessage),
                 "DELETE" => httpClient.DeleteAsync(url),
-                "PATCH" => httpClient.PatchAsync(
-                    url,
-                    Helpers.GetRequestBody(parametersBase.Body, parametersBase.RequestFormat)
-                ),
-                "HEAD" => httpClient.HeadAsync(url),
-                "OPTIONS" => httpClient.OptionsAsync(url),
+                "PATCH" => httpClient.SendAsync(requestMessage),
+                "HEAD" => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, url)),
+                "OPTIONS" => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Options, url)),
                 _ => throw new NotImplementedException($"HTTP method '{parametersBase.Method}' is not implemented."),
             };
         }
