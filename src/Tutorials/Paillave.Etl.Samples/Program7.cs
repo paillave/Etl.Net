@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Paillave.Etl.Core;
-using Paillave.Etl.Ftp;
-using Paillave.Etl.Samples.DataAccess;
 using Paillave.Etl.HttpExtension;
 
 namespace Paillave.Etl.Samples
@@ -18,14 +16,44 @@ namespace Paillave.Etl.Samples
 
             Console.WriteLine("Debug 2");
         }
+
         public static void Import(ISingleStream<string[]> contextStream)
         {
             // public HttpFileValueProvider(string code, string url, string method, string body)
 
             Console.WriteLine("Debug 3");
-    
-            // var portfolioFileStream = contextStream.CrossApply("Get Files", new HttpFileValueProvider("code", "https://127.0.0.1:80", "Get", ""))
-            // .Do("print to console", i => Console.WriteLine(i.Name));
+
+            var portfolioFileStream = contextStream
+                .CrossApply(
+                    "Get Files",
+                    new HttpFileValueProvider(
+                        "codeTest",
+                        "nameTest",
+                        "connectionNameTest",
+                        "http://127.0.0.1:80/",
+                        "Get",
+                        "/ip",
+                        new List<string>(),
+                        "None",
+                        null
+                    )
+                )
+                .Do(
+                    "print to console",
+                    i =>
+                    {
+                        // Convert the Stream content into a byte array
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            i.GetContent().CopyTo(memoryStream);
+                            byte[] contentBytes = memoryStream.ToArray();
+                            string contentString = System.Text.Encoding.UTF8.GetString(
+                                contentBytes
+                            ); // Convert byte array to string
+                            Console.WriteLine($"result: {contentString}"); // Print the result as a string
+                        }
+                    }
+                );
 
             Console.WriteLine("Debug 4");
         }

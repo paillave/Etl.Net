@@ -22,23 +22,30 @@ public class HttpFileValueProvider
     public HttpFileValueProvider(
         string code,
         string name,
+        string connectionName,
         string url,
         string method,
+        string slug,
         List<string> headerParts,
         string connexionType,
         object? body
     )
         : base(
             code,
-            url,
-            url,
+            name,
+            connectionName,
             new HttpAdapterConnectionParameters
             {
                 Url = url,
                 HeaderParts = headerParts,
                 ConnexionType = connexionType,
             },
-            new HttpAdapterProviderParameters { Method = method, Body = body }
+            new HttpAdapterProviderParameters
+            {
+                Method = method,
+                Slug = slug,
+                Body = body,
+            }
         ) { }
 
     public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
@@ -59,10 +66,14 @@ public class HttpFileValueProvider
             httpClientFactory?.CreateClient()
             ?? HttpClientFactory.CreateHttpClient(connectionParameters); // If none is provided, use the default factory
 
-        var response = GetResponse(connectionParameters, providerParameters, httpClient).Result;
+        var response = Helpers
+            .GetResponse(connectionParameters, providerParameters, httpClient)
+            .Result;
         var content = response?.Content.ReadAsByteArrayAsync().Result;
 
-        pushFileValue(new HttpFileValue(connectionParameters, content, Code, ConnectionName, Name));
+        pushFileValue(
+            new HttpFileValue(Name, content, Code, Name, ConnectionName, connectionParameters)
+        );
     }
 
     protected override void Test(
@@ -71,23 +82,6 @@ public class HttpFileValueProvider
     )
     {
         using var httpClient = new HttpClient();
-        GetResponse(connectionParameters, providerParameters, httpClient).Wait();
-    }
-
-    private static Task<HttpResponseMessage> GetResponse(
-        HttpAdapterConnectionParameters connectionParameters,
-        HttpAdapterProviderParameters providerParameters,
-        HttpClient httpClient
-    )
-    {
-        return providerParameters.Method switch
-        {
-            "Get" => httpClient.GetAsync(connectionParameters.Url),
-            "Post" => httpClient.PostAsync(
-                connectionParameters.Url,
-                HttpRequestBodyEx.GetJsonBody(providerParameters.Body)
-            ),
-            _ => throw new NotImplementedException(),
-        };
+        Helpers.GetResponse(connectionParameters, providerParameters, httpClient).Wait();
     }
 }

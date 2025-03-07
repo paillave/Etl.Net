@@ -23,8 +23,10 @@ public class HttpFileValueProcessor
     public HttpFileValueProcessor(
         string code,
         string name,
+        string connectionName,
         string url,
         string method,
+        string slug,
         List<string> headerParts,
         string connexionType,
         object? body
@@ -32,14 +34,19 @@ public class HttpFileValueProcessor
         : base(
             code,
             name,
-            url,
+            connectionName,
             new HttpAdapterConnectionParameters
             {
                 Url = url,
                 HeaderParts = headerParts,
                 ConnexionType = connexionType,
             },
-            new HttpAdapterProcessorParameters { Method = method, Body = body }
+            new HttpAdapterProcessorParameters
+            {
+                Method = method,
+                Slug = slug,
+                Body = body,
+            }
         ) { }
 
     public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
@@ -63,10 +70,12 @@ public class HttpFileValueProcessor
             httpClientFactory?.CreateClient()
             ?? HttpClientFactory.CreateHttpClient(connectionParameters); // If none is provided, use the default factory
 
-        var response = GetResponse(connectionParameters, processorParameters, httpClient).Result;
+        var response = Helpers
+            .GetResponse(connectionParameters, processorParameters, httpClient)
+            .Result;
         var content = response.Content.ReadAsByteArrayAsync().Result;
 
-        push(new HttpFileValue(connectionParameters, content, Code, ConnectionName, Name));
+        push(new HttpFileValue(Name, content, Code, Name, ConnectionName, connectionParameters));
         return;
     }
 
@@ -75,29 +84,7 @@ public class HttpFileValueProcessor
         HttpAdapterProcessorParameters processorParameters
     )
     {
-        // using var httpClient = new HttpClient();
-        // httpClient
-        //     .PostAsync(
-        //         connectionParameters.Url,
-        //         HttpRequestBodyEx.GetJsonBody(processorParameters.Body)
-        //     )
-        //     .Wait();
-    }
-
-    private static Task<HttpResponseMessage> GetResponse(
-        HttpAdapterConnectionParameters connectionParameters,
-        HttpAdapterProcessorParameters processorParameters,
-        HttpClient httpClient
-    )
-    {
-        return processorParameters.Method switch
-        {
-            "Get" => httpClient.GetAsync(connectionParameters.Url),
-            "Post" => httpClient.PostAsync(
-                connectionParameters.Url,
-                HttpRequestBodyEx.GetJsonBody(processorParameters.Body)
-            ),
-            _ => throw new NotImplementedException(),
-        };
+        using var httpClient = new HttpClient();
+        Helpers.GetResponse(connectionParameters, processorParameters, httpClient).Wait();
     }
 }

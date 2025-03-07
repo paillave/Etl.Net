@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Paillave.Etl.Core;
@@ -11,14 +12,15 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
     private readonly IHttpConnectionInfo _connectionInfo;
 
     public HttpFileValue(IHttpConnectionInfo connectionInfo)
-        : this(connectionInfo, null, null, null, null) { }
+        : this(null, null, null, null, null, connectionInfo) { }
 
     public HttpFileValue(
-        IHttpConnectionInfo connectionInfo,
+        string name,
         byte[]? content,
         string connectorCode,
         string connectorName,
-        string connectionName
+        string connectionName,
+        IHttpConnectionInfo connectionInfo
     )
         : base(
             new HttpFileValueMetadata
@@ -31,11 +33,12 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
             }
         )
     {
+        Name = name;
         _connectionInfo = connectionInfo;
         _content = content;
     }
 
-    public override Stream GetContent() => new MemoryStream(_content ?? new byte[0]);
+    public override Stream GetContent() => new MemoryStream(_content ?? Array.Empty<byte>());
 
     public override StreamWithResource OpenContent() => new(GetContent());
 

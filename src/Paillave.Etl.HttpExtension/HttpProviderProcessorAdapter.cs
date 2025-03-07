@@ -13,17 +13,18 @@ public class HttpAdapterConnectionParameters : IHttpConnectionInfo
     public string ConnexionType { get; set; }
 }
 
-public class HttpAdapterProviderParameters
+public class HttpAdapterParametersBase
 {
     public required string Method { get; set; }
+    public string Slug { get; set; }
     public object? Body { get; set; }
 }
 
-public class HttpAdapterProcessorParameters
+public class HttpAdapterProviderParameters : HttpAdapterParametersBase { }
+
+public class HttpAdapterProcessorParameters : HttpAdapterParametersBase
 {
     public bool UseStreamCopy { get; set; } = true;
-    public required string Method { get; set; }
-    public object? Body { get; set; }
 }
 
 // {
