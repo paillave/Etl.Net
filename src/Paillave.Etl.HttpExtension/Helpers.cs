@@ -80,14 +80,25 @@ namespace Paillave.Etl.HttpExtension
                 parametersBase.Slug
             ).ToString();
 
-            return parametersBase.Method switch
+            return parametersBase.Method.ToUpper() switch
             {
-                "Get" => httpClient.GetAsync(url),
-                "Post" => httpClient.PostAsync(
+                "GET" => httpClient.GetAsync(url),
+                "POST" => httpClient.PostAsync(
                     url,
                     Helpers.GetRequestBody(parametersBase.Body, parametersBase.RequestFormat)
                 ),
-                _ => throw new NotImplementedException(),
+                "PUT" => httpClient.PutAsync(
+                    url,
+                    Helpers.GetRequestBody(parametersBase.Body, parametersBase.RequestFormat)
+                ),
+                "DELETE" => httpClient.DeleteAsync(url),
+                "PATCH" => httpClient.PatchAsync(
+                    url,
+                    Helpers.GetRequestBody(parametersBase.Body, parametersBase.RequestFormat)
+                ),
+                "HEAD" => httpClient.HeadAsync(url),
+                "OPTIONS" => httpClient.OptionsAsync(url),
+                _ => throw new NotImplementedException($"HTTP method '{parametersBase.Method}' is not implemented."),
             };
         }
     }
