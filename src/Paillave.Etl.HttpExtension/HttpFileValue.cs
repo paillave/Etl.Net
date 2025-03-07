@@ -27,6 +27,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
             {
                 Url = connectionInfo.Url,
                 AuthParameters = connectionInfo.AuthParameters,
+                AuthenticationType = connectionInfo.AuthenticationType,
                 ConnectorCode = connectorCode,
                 ConnectionName = connectionName,
                 ConnectorName = connectorName,
@@ -67,5 +68,5 @@ public class HttpFileValueMetadata : FileValueMetadataBase
 {
     public required string Url { get; set; }
     public List<string>? AuthParameters { get; set; }
-    public string AuthenticationType { get; set; } = "None";
+    public string AuthenticationType { get; set; }
 }

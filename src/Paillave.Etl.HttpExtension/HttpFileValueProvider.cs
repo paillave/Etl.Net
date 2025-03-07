@@ -25,14 +25,14 @@ public class HttpFileValueProvider
         string connectionName,
         string url,
         string method,
-        string slug,
-        string responseFormat,
-        string requestFormat,
-        List<string> authParameters,
-        List<KeyValuePair<string, string>> additionalHeaders,
-        List<KeyValuePair<string, string>> additionalParameters,
-        string AuthenticationType,
-        object? body
+        string slug = "/",
+        string responseFormat = "json",
+        string requestFormat = "json",
+        string AuthenticationType = "None",
+        List<string>? authParameters = null,
+        List<KeyValuePair<string, string>>? additionalHeaders = null,
+        List<KeyValuePair<string, string>>? additionalParameters = null,
+        object? body = null
     )
         : base(
             code,
