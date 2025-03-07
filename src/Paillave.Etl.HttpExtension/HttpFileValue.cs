@@ -65,7 +65,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 
 public class HttpFileValueMetadata : FileValueMetadataBase
 {
-    public string Url { get; set; }
-    public List<string> AuthParameters { get; set; }
-    public string AuthenticationType { get; set; }
+    public required string Url { get; set; }
+    public List<string>? AuthParameters { get; set; }
+    public string AuthenticationType { get; set; } = "None";
 }

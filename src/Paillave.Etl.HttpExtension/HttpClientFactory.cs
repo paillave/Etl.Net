@@ -16,11 +16,42 @@ public static class HttpClientFactory
     )
     {
         HttpClient client = new HttpClient();
+        client = ManageAdditionalHeaders(client, connectionParameters, adapterParametersBase);
+        client = ManageAuthentication(client, connectionParameters, adapterParametersBase);
+        return client;
+    }
 
+    private static HttpClient ManageAdditionalHeaders(
+        HttpClient client,
+        IHttpConnectionInfo connectionParameters,
+        HttpAdapterParametersBase adapterParametersBase
+    )
+    {
+        if (adapterParametersBase.AdditionalHeaders != null)
+        {
+            foreach (var header in adapterParametersBase.AdditionalHeaders)
+            {
+                if (client.DefaultRequestHeaders.Contains(header.Key))
+                    throw new ArgumentException(
+                        $"Header '{header.Key}' already exists in the request."
+                    );
+
+                client.DefaultRequestHeaders.Add(header.Key, header.Value);
+            }
+        }
+
+        return client;
+    }
+
+    private static HttpClient ManageAuthentication(
+        HttpClient client,
+        IHttpConnectionInfo connectionParameters,
+        HttpAdapterParametersBase adapterParametersBase
+    )
+    {
         switch (connectionParameters.AuthenticationType)
         {
             case "None":
-                // No authentication needed
                 break;
 
             case "Bearer":

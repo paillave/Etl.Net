@@ -7,20 +7,20 @@ namespace Paillave.Etl.HttpExtension;
 public class HttpAdapterConnectionParameters : IHttpConnectionInfo
 {
     public required string Url { get; set; }
-
-    public List<string> AuthParameters { get; set; }
-
-    public string AuthenticationType { get; set; }
+    public List<string>? AuthParameters { get; set; }
+    public string AuthenticationType { get; set; } = "None";
     public int MaxAttempts { get; set; } = 5;
 }
 
 public class HttpAdapterParametersBase
 {
     public required string Method { get; set; }
-    public string Slug { get; set; }
-    public string ResponseFormat { get; set; }
-    public string RequestFormat { get; set; }
+    public string Slug { get; set; } = "/";
+    public string ResponseFormat { get; set; } = "json";
+    public string RequestFormat { get; set; } = "json";
     public object? Body { get; set; }
+    public List<KeyValuePair<string, string>>? AdditionalHeaders { get; set; }
+    public List<KeyValuePair<string, string>>? AdditionalParameters { get; set; }
 }
 
 public class HttpAdapterProviderParameters : HttpAdapterParametersBase { }

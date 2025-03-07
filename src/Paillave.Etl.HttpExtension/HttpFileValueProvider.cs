@@ -29,6 +29,8 @@ public class HttpFileValueProvider
         string responseFormat,
         string requestFormat,
         List<string> authParameters,
+        List<KeyValuePair<string, string>> additionalHeaders,
+        List<KeyValuePair<string, string>> additionalParameters,
         string AuthenticationType,
         object? body
     )
@@ -49,6 +51,8 @@ public class HttpFileValueProvider
                 ResponseFormat = responseFormat,
                 RequestFormat = requestFormat,
                 Body = body,
+                AdditionalHeaders = additionalHeaders,
+                AdditionalParameters = additionalParameters,
             }
         ) { }
 

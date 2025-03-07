@@ -30,6 +30,8 @@ public class HttpFileValueProcessor
         string responseFormat,
         string requestFormat,
         List<string> authParameters,
+        List<KeyValuePair<string, string>> additionalHeaders,
+        List<KeyValuePair<string, string>> additionalParameters,
         string AuthenticationType,
         object? body
     )
@@ -50,6 +52,8 @@ public class HttpFileValueProcessor
                 RequestFormat = requestFormat,
                 ResponseFormat = responseFormat,
                 Body = body,
+                AdditionalHeaders = additionalHeaders,
+                AdditionalParameters = additionalParameters,
             }
         ) { }
 

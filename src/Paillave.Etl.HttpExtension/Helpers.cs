@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 using Paillave.Etl.Core;
 
 namespace Paillave.Etl.HttpExtension
@@ -24,7 +25,7 @@ namespace Paillave.Etl.HttpExtension
                     "xml" => new StringContent("<root></root>", Encoding.UTF8, "application/xml"),
                     "text" => new StringContent(string.Empty, Encoding.UTF8, "text/plain"),
                     "html" => new StringContent("<html></html>", Encoding.UTF8, "text/html"),
-                    "img" => new ByteArrayContent(Array.Empty<byte>()), 
+                    "img" => new ByteArrayContent(Array.Empty<byte>()),
                     _ => throw new NotImplementedException(),
                 };
             }
@@ -43,12 +44,19 @@ namespace Paillave.Etl.HttpExtension
                         using (var stringWriter = new StringWriter())
                         {
                             xmlSerializer.Serialize(stringWriter, body);
-                            return new StringContent(stringWriter.ToString(), Encoding.UTF8, "application/xml");
+                            return new StringContent(
+                                stringWriter.ToString(),
+                                Encoding.UTF8,
+                                "application/xml"
+                            );
                         }
                     }
                     catch (Exception ex)
                     {
-                        throw new InvalidOperationException("Failed to serialize object to XML.", ex);
+                        throw new InvalidOperationException(
+                            "Failed to serialize object to XML.",
+                            ex
+                        );
                     }
 
                 case "text":
@@ -68,38 +76,64 @@ namespace Paillave.Etl.HttpExtension
                     throw new NotImplementedException();
             }
         }
+
         public static Task<HttpResponseMessage> GetResponse(
             HttpAdapterConnectionParameters connectionParameters,
             HttpAdapterParametersBase adapterParametersBase,
             HttpClient httpClient
         )
         {
-            var uri = new Uri(
-                new Uri(connectionParameters.Url.TrimEnd('/')),
-                adapterParametersBase.Slug
-            ).ToString();
+            // Base URL and slug
+            var baseUrl = connectionParameters.Url.TrimEnd('/');
+            var slug = adapterParametersBase.Slug;
+            var uriBuilder = new UriBuilder(new Uri(new Uri(baseUrl), slug));
+
+            // Handle query parameters
+            if (
+                adapterParametersBase.AdditionalParameters != null
+                && adapterParametersBase.AdditionalParameters.Any()
+            )
+            {
+                var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
+
+                foreach (var param in adapterParametersBase.AdditionalParameters)
+                {
+                    query[param.Key] = param.Value; // Avoid duplicates, update if key exists
+                }
+
+                uriBuilder.Query = query.ToString();
+            }
+
+            var finalUri = uriBuilder.ToString();
 
             var requestMessage = new HttpRequestMessage
             {
-                RequestUri = new Uri(uri),
-                Method = new HttpMethod(adapterParametersBase.Method.ToUpper())
+                RequestUri = new Uri(finalUri),
+                Method = new HttpMethod(adapterParametersBase.Method.ToUpper()),
             };
 
-            if (adapterParametersBase.Method.ToUpper() == "POST" || adapterParametersBase.Method.ToUpper() == "PUT" || adapterParametersBase.Method.ToUpper() == "PATCH")
+            if (adapterParametersBase.Method.ToUpper() is "POST" or "PUT" or "PATCH")
             {
-                requestMessage.Content = Helpers.GetRequestBody(adapterParametersBase.Body, adapterParametersBase.RequestFormat);
+                requestMessage.Content = Helpers.GetRequestBody(
+                    adapterParametersBase.Body,
+                    adapterParametersBase.RequestFormat
+                );
             }
 
             return adapterParametersBase.Method.ToUpper() switch
             {
-                "GET" => httpClient.GetAsync(uri),
+                "GET" => httpClient.GetAsync(finalUri),
                 "POST" => httpClient.SendAsync(requestMessage),
                 "PUT" => httpClient.SendAsync(requestMessage),
-                "DELETE" => httpClient.DeleteAsync(uri),
+                "DELETE" => httpClient.DeleteAsync(finalUri),
                 "PATCH" => httpClient.SendAsync(requestMessage),
-                "HEAD" => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, uri)),
-                "OPTIONS" => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Options, uri)),
-                _ => throw new NotImplementedException($"HTTP method '{adapterParametersBase.Method}' is not implemented."),
+                "HEAD" => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, finalUri)),
+                "OPTIONS" => httpClient.SendAsync(
+                    new HttpRequestMessage(HttpMethod.Options, finalUri)
+                ),
+                _ => throw new NotImplementedException(
+                    $"HTTP method '{adapterParametersBase.Method}' is not implemented."
+                ),
             };
         }
     }
