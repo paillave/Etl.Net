@@ -29,7 +29,7 @@ public class HttpFileValueProcessor
         string slug,
         string responseFormat,
         string requestFormat,
-        List<string> headerParts,
+        List<string> authParameters,
         string AuthenticationType,
         object? body
     )
@@ -40,7 +40,7 @@ public class HttpFileValueProcessor
             new HttpAdapterConnectionParameters
             {
                 Url = url,
-                HeaderParts = headerParts,
+                AuthParameters = authParameters,
                 AuthenticationType = AuthenticationType,
             },
             new HttpAdapterProcessorParameters

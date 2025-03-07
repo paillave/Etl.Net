@@ -24,24 +24,24 @@ public static class HttpClientFactory
                 break;
 
             case "Bearer":
-                if (connectionParameters.HeaderParts.Count == 1)
+                if (connectionParameters.AuthParameters.Count == 1)
                 {
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
                         "Bearer",
-                        connectionParameters.HeaderParts[0]
+                        connectionParameters.AuthParameters[0]
                     );
                 }
                 else
                     throw new ArgumentException(
-                        "Wrong number of HeaderParts for Bearer authentication."
+                        "Wrong number of AuthParameters for Bearer authentication."
                     );
                 break;
 
             case "Basic":
-                if (connectionParameters.HeaderParts.Count == 2)
+                if (connectionParameters.AuthParameters.Count == 2)
                 {
                     string credentials =
-                        $"{connectionParameters.HeaderParts[0]}:{connectionParameters.HeaderParts[1]}";
+                        $"{connectionParameters.AuthParameters[0]}:{connectionParameters.AuthParameters[1]}";
                     string base64Credentials = Convert.ToBase64String(
                         Encoding.UTF8.GetBytes(credentials)
                     );
@@ -52,60 +52,60 @@ public static class HttpClientFactory
                 }
                 else
                     throw new ArgumentException(
-                        "Wrong number of HeaderParts for Basic authentication."
+                        "Wrong number of AuthParameters for Basic authentication."
                     );
                 break;
 
             case "ApiKey":
-                if (connectionParameters.HeaderParts.Count == 1)
+                if (connectionParameters.AuthParameters.Count == 1)
                 {
                     client.DefaultRequestHeaders.Add(
                         "X-API-Key",
-                        connectionParameters.HeaderParts[0]
+                        connectionParameters.AuthParameters[0]
                     );
                 }
                 else
                     throw new ArgumentException(
-                        "Wrong number of HeaderParts for ApiKey authentication."
+                        "Wrong number of AuthParameters for ApiKey authentication."
                     );
                 break;
 
             case "CustomHeader":
-                if (connectionParameters.HeaderParts.Count % 2 == 0)
+                if (connectionParameters.AuthParameters.Count % 2 == 0)
                 {
-                    for (int i = 0; i < connectionParameters.HeaderParts.Count; i += 2)
+                    for (int i = 0; i < connectionParameters.AuthParameters.Count; i += 2)
                     {
-                        // Assuming HeaderParts is a list with alternating key-value pairs
+                        // Assuming AuthParameters is a list with alternating key-value pairs
                         client.DefaultRequestHeaders.Add(
-                            connectionParameters.HeaderParts[i],
-                            connectionParameters.HeaderParts[i + 1]
+                            connectionParameters.AuthParameters[i],
+                            connectionParameters.AuthParameters[i + 1]
                         );
                     }
                 }
                 else
                     throw new ArgumentException(
-                        "Wrong number of HeaderParts for CustomHeader authentication."
+                        "Wrong number of AuthParameters for CustomHeader authentication."
                     );
                 break;
 
             // FIXME: WIP, logic to be validated
             case "Digest":
-                if (connectionParameters.HeaderParts.Count >= 2)
+                if (connectionParameters.AuthParameters.Count >= 2)
                 {
                     var uri = new Uri(
                         new Uri(connectionParameters.Url.TrimEnd('/')),
                         adapterParametersBase.Slug
                     ).ToString();
 
-                    string username = connectionParameters.HeaderParts[0];
-                    string password = connectionParameters.HeaderParts[1];
+                    string username = connectionParameters.AuthParameters[0];
+                    string password = connectionParameters.AuthParameters[1];
                     string qop =
-                        connectionParameters.HeaderParts.Count > 2
-                            ? connectionParameters.HeaderParts[2]
+                        connectionParameters.AuthParameters.Count > 2
+                            ? connectionParameters.AuthParameters[2]
                             : "auth"; // Default to "auth" if qop is not specified
                     string algorithm =
-                        connectionParameters.HeaderParts.Count > 3
-                            ? connectionParameters.HeaderParts[3]
+                        connectionParameters.AuthParameters.Count > 3
+                            ? connectionParameters.AuthParameters[3]
                             : "MD5"; // Default to MD5
 
                     var response = client.GetAsync(uri).Result;
@@ -142,7 +142,7 @@ public static class HttpClientFactory
                 else
                 {
                     throw new ArgumentException(
-                        "Wrong number of HeaderParts for Digest authentication."
+                        "Wrong number of AuthParameters for Digest authentication."
                     );
                 }
                 break;

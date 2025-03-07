@@ -8,7 +8,7 @@ public class HttpAdapterConnectionParameters : IHttpConnectionInfo
 {
     public required string Url { get; set; }
 
-    public List<string> HeaderParts { get; set; }
+    public List<string> AuthParameters { get; set; }
 
     public string AuthenticationType { get; set; }
     public int MaxAttempts { get; set; } = 5;
