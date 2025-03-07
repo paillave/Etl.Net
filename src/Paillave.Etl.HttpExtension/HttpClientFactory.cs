@@ -19,17 +19,21 @@ public static class HttpClientFactory
                 break;
 
             case "Bearer":
-                if (connectionParameters.HeaderParts.Count > 0)
+                if (connectionParameters.HeaderParts.Count == 1)
                 {
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
                         "Bearer",
                         connectionParameters.HeaderParts[0]
                     );
                 }
+                else
+                    throw new ArgumentException(
+                        "Wrong number of HeaderParts for Bearer authentication."
+                    );
                 break;
 
             case "Basic":
-                if (connectionParameters.HeaderParts.Count >= 2)
+                if (connectionParameters.HeaderParts.Count == 2)
                 {
                     string credentials =
                         $"{connectionParameters.HeaderParts[0]}:{connectionParameters.HeaderParts[1]}";
@@ -41,26 +45,42 @@ public static class HttpClientFactory
                         base64Credentials
                     );
                 }
+                else
+                    throw new ArgumentException(
+                        "Wrong number of HeaderParts for Basic authentication."
+                    );
                 break;
 
             case "ApiKey":
-                if (connectionParameters.HeaderParts.Count > 0)
+                if (connectionParameters.HeaderParts.Count == 1)
                 {
                     client.DefaultRequestHeaders.Add(
                         "X-API-Key",
                         connectionParameters.HeaderParts[0]
                     );
                 }
+                else
+                    throw new ArgumentException(
+                        "Wrong number of HeaderParts for ApiKey authentication."
+                    );
                 break;
 
             case "CustomHeader":
-                if (connectionParameters.HeaderParts.Count >= 2)
+                if (connectionParameters.HeaderParts.Count % 2 == 0)
                 {
-                    client.DefaultRequestHeaders.Add(
-                        connectionParameters.HeaderParts[0],
-                        connectionParameters.HeaderParts[1]
-                    );
+                    for (int i = 0; i < connectionParameters.HeaderParts.Count; i += 2)
+                    {
+                        // Assuming HeaderParts is a list with alternating key-value pairs
+                        client.DefaultRequestHeaders.Add(
+                            connectionParameters.HeaderParts[i],
+                            connectionParameters.HeaderParts[i + 1]
+                        );
+                    }
                 }
+                else
+                    throw new ArgumentException(
+                        "Wrong number of HeaderParts for CustomHeader authentication."
+                    );
                 break;
 
             default:
