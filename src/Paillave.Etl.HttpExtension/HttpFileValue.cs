@@ -45,7 +45,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 
     private Stream GetContentSingleTime()
     {
-        new MemoryStream(_content ?? Array.Empty<byte>());
+        return new MemoryStream(_content ?? Array.Empty<byte>());
     }
 
     protected override void DeleteFile() { }
