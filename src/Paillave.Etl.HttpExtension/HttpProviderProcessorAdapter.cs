@@ -10,7 +10,7 @@ public class HttpAdapterConnectionParameters : IHttpConnectionInfo
 
     public List<string> HeaderParts { get; set; }
 
-    public string ConnexionType { get; set; }
+    public string AuthenticationType { get; set; }
     public int MaxAttempts { get; set; } = 5;
 }
 

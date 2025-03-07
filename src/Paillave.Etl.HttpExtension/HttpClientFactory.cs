@@ -12,7 +12,7 @@ public static class HttpClientFactory
     {
         HttpClient client = new HttpClient();
 
-        switch (connectionParameters.ConnexionType)
+        switch (connectionParameters.AuthenticationType)
         {
             case "None":
                 // No authentication needed
@@ -65,7 +65,7 @@ public static class HttpClientFactory
 
             default:
                 throw new NotImplementedException(
-                    $"Authentication type '{connectionParameters.ConnexionType}' is not implemented."
+                    $"Authentication type '{connectionParameters.AuthenticationType}' is not implemented."
                 );
         }
 

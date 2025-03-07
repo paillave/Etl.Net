@@ -30,7 +30,7 @@ public class HttpFileValueProcessor
         string responseFormat,
         string requestFormat,
         List<string> headerParts,
-        string connexionType,
+        string AuthenticationType,
         object? body
     )
         : base(
@@ -41,7 +41,7 @@ public class HttpFileValueProcessor
             {
                 Url = url,
                 HeaderParts = headerParts,
-                ConnexionType = connexionType,
+                AuthenticationType = AuthenticationType,
             },
             new HttpAdapterProcessorParameters
             {

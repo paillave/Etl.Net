@@ -29,7 +29,7 @@ public class HttpFileValueProvider
         string responseFormat,
         string requestFormat,
         List<string> headerParts,
-        string connexionType,
+        string AuthenticationType,
         object? body
     )
         : base(
@@ -40,7 +40,7 @@ public class HttpFileValueProvider
             {
                 Url = url,
                 HeaderParts = headerParts,
-                ConnexionType = connexionType,
+                AuthenticationType = AuthenticationType,
             },
             new HttpAdapterProviderParameters
             {
