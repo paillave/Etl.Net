@@ -28,6 +28,7 @@ public class HttpFileValueProcessor
         string method,
         string slug,
         string responseFormat,
+        string requestFormat,
         List<string> headerParts,
         string connexionType,
         object? body
@@ -46,6 +47,7 @@ public class HttpFileValueProcessor
             {
                 Method = method,
                 Slug = slug,
+                RequestFormat = requestFormat,
                 ResponseFormat = responseFormat,
                 Body = body,
             }

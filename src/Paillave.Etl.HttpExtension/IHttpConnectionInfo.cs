@@ -7,4 +7,5 @@ public interface IHttpConnectionInfo
     public string Url { get; set; }
     public List<string> HeaderParts { get; set; }
     public string ConnexionType { get; set; }
+    public int MaxAttempts { get; set; }
 }

@@ -11,6 +11,7 @@ public class HttpAdapterConnectionParameters : IHttpConnectionInfo
     public List<string> HeaderParts { get; set; }
 
     public string ConnexionType { get; set; }
+    public int MaxAttempts { get; set; } = 5;
 }
 
 public class HttpAdapterParametersBase
@@ -18,6 +19,7 @@ public class HttpAdapterParametersBase
     public required string Method { get; set; }
     public string Slug { get; set; }
     public string ResponseFormat { get; set; }
+    public string RequestFormat { get; set; }
     public object? Body { get; set; }
 }
 

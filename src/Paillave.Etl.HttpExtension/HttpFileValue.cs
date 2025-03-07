@@ -38,9 +38,15 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
         _content = content;
     }
 
-    public override Stream GetContent() => new MemoryStream(_content ?? Array.Empty<byte>());
-
     public override StreamWithResource OpenContent() => new(GetContent());
+
+    public override Stream GetContent() =>
+        ActionRunner.TryExecute(_connectionInfo.MaxAttempts, GetContentSingleTime);
+
+    private Stream GetContentSingleTime()
+    {
+        new MemoryStream(_content ?? Array.Empty<byte>());
+    }
 
     protected override void DeleteFile() { }
 
@@ -54,26 +60,6 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
     //     // var pathToDelete = StringEx.ConcatenatePath(_folder, this.Name).Replace('\\', '/');
     //     // using (HttpClient client = _connectionInfo.CreateHttpClient())
     //     //     client.DeleteFile(pathToDelete);
-    // }
-
-    // public override Stream GetContent() =>
-    //     ActionRunner.TryExecute(_connectionInfo.MaxAttempts, GetContentSingleTime);
-
-    // private Stream GetContentSingleTime()
-    // {
-    //     using (HttpClient client = _connectionInfo.CreateHttpClient())
-    //     {
-    //         // TODO : use _connectionInfo on client to get stuff
-
-    //         // MemoryStream ms = new MemoryStream();
-    //         // var pathToDownload = StringEx
-    //         //     .ConcatenatePath(_folder, this.Name)
-    //         //     .Replace('\\', '/');
-    //         // if (!client.DownloadStream(ms, pathToDownload))
-    //         //     throw new System.Exception($"File {pathToDownload} failed to be downloaded");
-    //         // ms.Seek(0, SeekOrigin.Begin);
-    //         // return ms;
-    //     }
     // }
 }
 

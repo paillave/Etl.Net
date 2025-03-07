@@ -34,6 +34,7 @@ namespace Paillave.Etl.Samples
                         "Get",
                         "/ip",
                         "json",
+                        null,
                         new List<string>(),
                         "None",
                         null
