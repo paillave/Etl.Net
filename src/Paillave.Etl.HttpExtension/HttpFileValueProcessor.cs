@@ -69,7 +69,7 @@ public class HttpFileValueProcessor
         IExecutionContext context
     )
     {
-        // using var stream = fileValue.Get(processorParameters.UseStreamCopy);
+        using var stream = fileValue.Get(processorParameters.UseStreamCopy);
 
         var httpClientFactory = context.DependencyResolver.Resolve<IHttpClientFactory>();
         using var httpClient =
@@ -77,7 +77,7 @@ public class HttpFileValueProcessor
             ?? HttpClientFactory.CreateHttpClient(connectionParameters, processorParameters); // If none is provided, use the default factory
 
         var response = Helpers
-            .GetResponse(connectionParameters, processorParameters, httpClient)
+            .GetResponse(connectionParameters, processorParameters, httpClient, new StreamContent(stream))
             .Result;
         var content = response.Content.ReadAsByteArrayAsync().Result;
 

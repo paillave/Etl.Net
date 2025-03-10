@@ -80,7 +80,8 @@ namespace Paillave.Etl.HttpExtension
         public static Task<HttpResponseMessage> GetResponse(
             HttpAdapterConnectionParameters connectionParameters,
             HttpAdapterParametersBase adapterParametersBase,
-            HttpClient httpClient
+            HttpClient httpClient,
+            StreamContent? stream = null
         )
         {
             // Base URL and slug
@@ -114,16 +115,18 @@ namespace Paillave.Etl.HttpExtension
 
             if (adapterParametersBase.Method.ToUpper() is "POST" or "PUT" or "PATCH")
             {
-                requestMessage.Content = Helpers.GetRequestBody(
-                    adapterParametersBase.Body,
-                    adapterParametersBase.RequestFormat
-                );
+                requestMessage.Content =
+                    stream
+                    ?? Helpers.GetRequestBody(
+                        adapterParametersBase.Body,
+                        adapterParametersBase.RequestFormat
+                    );
             }
 
             return adapterParametersBase.Method.ToUpper() switch
             {
                 "GET" => httpClient.GetAsync(finalUri),
-                "POST" => httpClient.SendAsync(requestMessage),
+                "POST" => httpClient.PostAsync(requestMessage),
                 "PUT" => httpClient.SendAsync(requestMessage),
                 "DELETE" => httpClient.DeleteAsync(finalUri),
                 "PATCH" => httpClient.SendAsync(requestMessage),
