@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using Paillave.Etl.Core;
@@ -17,13 +18,40 @@ public class HttpFileValueProcessor
     )
         : base(code, name, connectionName, connectionParameters, processorParameters) { }
 
-    public HttpFileValueProcessor(string code, string name, string url, string method, object? body)
+    public HttpFileValueProcessor(
+        string code,
+        string name,
+        string url,
+        string method,
+        object? body = null,
+        string slug = "/",
+        string responseFormat = "json",
+        string requestFormat = "json",
+        string AuthenticationType = "None",
+        List<string>? authParameters = null,
+        List<KeyValuePair<string, string>>? additionalHeaders = null,
+        List<KeyValuePair<string, string>>? additionalParameters = null
+    )
         : base(
             code,
             name,
-            url,
-            new HttpAdapterConnectionParameters { Url = url },
-            new HttpAdapterProcessorParameters { Method = method, Body = body }
+            new Uri(new Uri(url.TrimEnd('/')), slug).ToString(),
+            new HttpAdapterConnectionParameters
+            {
+                Url = url,
+                AuthParameters = authParameters,
+                AuthenticationType = AuthenticationType,
+            },
+            new HttpAdapterProcessorParameters
+            {
+                Method = method,
+                Slug = slug,
+                RequestFormat = requestFormat,
+                ResponseFormat = responseFormat,
+                Body = body,
+                AdditionalHeaders = additionalHeaders,
+                AdditionalParameters = additionalParameters,
+            }
         ) { }
 
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
@@ -41,16 +69,24 @@ public class HttpFileValueProcessor
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
 
         var httpClientFactory = context.DependencyResolver.Resolve<IHttpClientFactory>();
-        using var httpClient = httpClientFactory.CreateClient();
+        using var httpClient =
+            httpClientFactory?.CreateClient()
+            ?? HttpClientFactory.CreateHttpClient(connectionParameters, processorParameters); // If none is provided, use the default factory
 
-        if (processorParameters.Method is not "Post")
-            throw new NotImplementedException();
-
-        var response = httpClient
-            .PostAsync(connectionParameters.Url, new StreamContent(stream))
+        var response = Helpers
+            .GetResponse(
+                connectionParameters,
+                processorParameters,
+                httpClient,
+                new StreamContent(stream)
+            )
             .Result;
         var content = response.Content.ReadAsByteArrayAsync().Result;
-        var fileName = response.GetFileName(connectionParameters.Url);
+        // var fileName = response.GetFileName(connectionParameters.Url);
+        var fileName = new Uri(
+            new Uri(connectionParameters.Url.TrimEnd('/')),
+            processorParameters.Slug
+        ).ToString();
 
         push(
             new HttpFileValue(
@@ -70,11 +106,6 @@ public class HttpFileValueProcessor
     )
     {
         using var httpClient = new HttpClient();
-        httpClient
-            .PostAsync(
-                connectionParameters.Url,
-                HttpRequestBodyEx.GetJsonBody(processorParameters.Body)
-            )
-            .Wait();
+        Helpers.GetResponse(connectionParameters, processorParameters, httpClient).Wait();
     }
 }

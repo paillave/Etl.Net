@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Paillave.Etl.Core;
 
-namespace Paillave.Etl.HttpExtension
+namespace Paillave.Etl.Http
 {
     public static class Helpers
     {

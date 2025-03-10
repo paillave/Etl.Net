@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
 using Paillave.Etl.Core;
 
@@ -7,6 +9,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 {
     public override string Name { get; }
     private byte[]? _content { get; }
+    private readonly IHttpConnectionInfo? _connectionInfo;
 
     public HttpFileValue(
         string name,
@@ -14,7 +17,8 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
         string url,
         string connectorCode,
         string connectionName,
-        string connectorName
+        string connectorName,
+        IHttpConnectionInfo? connectionInfo = null
     )
         : base(
             new HttpFileValueMetadata
@@ -27,12 +31,19 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
         )
     {
         Name = name;
+        _connectionInfo = connectionInfo;
         _content = content;
     }
 
-    public override Stream GetContent() => new MemoryStream(_content ?? new byte[0]);
-
     public override StreamWithResource OpenContent() => new(GetContent());
+
+    public override Stream GetContent() =>
+        ActionRunner.TryExecute(_connectionInfo.MaxAttempts, GetContentSingleTime);
+
+    private Stream GetContentSingleTime()
+    {
+        return new MemoryStream(_content ?? Array.Empty<byte>());
+    }
 
     protected override void DeleteFile() { }
 }
@@ -40,4 +51,6 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 public class HttpFileValueMetadata : FileValueMetadataBase
 {
     public required string Url { get; set; }
+    public List<string>? AuthParameters { get; set; }
+    public string? AuthenticationType { get; set; }
 }

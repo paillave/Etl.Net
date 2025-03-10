@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,13 +19,48 @@ public class HttpFileValueProvider
     )
         : base(code, name, connectionName, connectionParameters, providerParameters) { }
 
-    public HttpFileValueProvider(string code, string url, string method, string body)
+    // public HttpFileValueProvider(string code, string url, string method, string body)
+    //     : base(
+    //         code,
+    //         url,
+    //         url,
+    //         new HttpAdapterConnectionParameters { Url = url },
+    //         new HttpAdapterProviderParameters { Method = method, Body = body }
+    //     ) { }
+
+    public HttpFileValueProvider(
+        string code,
+        string url,
+        string method,
+        object? body = null,
+        string slug = "/",
+        string responseFormat = "json",
+        string requestFormat = "json",
+        string AuthenticationType = "None",
+        List<string>? authParameters = null,
+        List<KeyValuePair<string, string>>? additionalHeaders = null,
+        List<KeyValuePair<string, string>>? additionalParameters = null
+    )
         : base(
             code,
-            url,
-            url,
-            new HttpAdapterConnectionParameters { Url = url },
-            new HttpAdapterProviderParameters { Method = method, Body = body }
+            new Uri(new Uri(url.TrimEnd('/')), slug).ToString(),
+            new Uri(new Uri(url.TrimEnd('/')), slug).ToString(),
+            new HttpAdapterConnectionParameters
+            {
+                Url = url,
+                AuthParameters = authParameters,
+                AuthenticationType = AuthenticationType,
+            },
+            new HttpAdapterProviderParameters
+            {
+                Method = method,
+                Slug = slug,
+                ResponseFormat = responseFormat,
+                RequestFormat = requestFormat,
+                Body = body,
+                AdditionalHeaders = additionalHeaders,
+                AdditionalParameters = additionalParameters,
+            }
         ) { }
 
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
@@ -38,16 +74,32 @@ public class HttpFileValueProvider
         IExecutionContext context
     )
     {
-        var url = connectionParameters.Url;
-
         var httpClientFactory = context.DependencyResolver.Resolve<IHttpClientFactory>();
-        using var httpClient = httpClientFactory.CreateClient(url);
+        using var httpClient =
+            httpClientFactory?.CreateClient()
+            ?? HttpClientFactory.CreateHttpClient(connectionParameters, providerParameters); // If none is provided, use the default factory
 
-        var response = GetResponse(connectionParameters, providerParameters, httpClient).Result;
-        var filename = response.GetFileName(url);
+        var response = Helpers
+            .GetResponse(connectionParameters, providerParameters, httpClient)
+            .Result;
+
         var content = response?.Content.ReadAsByteArrayAsync().Result;
 
-        pushFileValue(new HttpFileValue(filename, content, url, Code, ConnectionName, Name));
+        var fileName = new Uri(
+            new Uri(connectionParameters.Url.TrimEnd('/')),
+            providerParameters.Slug
+        ).ToString();
+
+        pushFileValue(
+            new HttpFileValue(
+                fileName,
+                content,
+                connectionParameters.Url,
+                Code,
+                ConnectionName,
+                Name
+            )
+        );
     }
 
     protected override void Test(
@@ -56,23 +108,6 @@ public class HttpFileValueProvider
     )
     {
         using var httpClient = new HttpClient();
-        GetResponse(connectionParameters, providerParameters, httpClient).Wait();
-    }
-
-    private static Task<HttpResponseMessage> GetResponse(
-        HttpAdapterConnectionParameters connectionParameters,
-        HttpAdapterProviderParameters providerParameters,
-        HttpClient httpClient
-    )
-    {
-        return providerParameters.Method switch
-        {
-            "Get" => httpClient.GetAsync(connectionParameters.Url),
-            "Post" => httpClient.PostAsync(
-                connectionParameters.Url,
-                HttpRequestBodyEx.GetJsonBody(providerParameters.Body)
-            ),
-            _ => throw new NotImplementedException(),
-        };
+        Helpers.GetResponse(connectionParameters, providerParameters, httpClient).Wait();
     }
 }

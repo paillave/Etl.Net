@@ -77,7 +77,12 @@ public class HttpFileValueProcessor
             ?? HttpClientFactory.CreateHttpClient(connectionParameters, processorParameters); // If none is provided, use the default factory
 
         var response = Helpers
-            .GetResponse(connectionParameters, processorParameters, httpClient, new StreamContent(stream))
+            .GetResponse(
+                connectionParameters,
+                processorParameters,
+                httpClient,
+                new StreamContent(stream)
+            )
             .Result;
         var content = response.Content.ReadAsByteArrayAsync().Result;
 
