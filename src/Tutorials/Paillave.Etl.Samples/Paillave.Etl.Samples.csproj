@@ -17,6 +17,7 @@
     <ProjectReference Include="..\..\Paillave.Etl.S3\Paillave.Etl.S3.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.GraphApi\Paillave.Etl.GraphApi.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.HttpExtension\Paillave.Etl.HttpExtension.csproj" />
+    <ProjectReference Include="..\..\Paillave.Etl.Http\Paillave.Etl.Http.csproj" />
   </ItemGroup>
 
   <ItemGroup>
