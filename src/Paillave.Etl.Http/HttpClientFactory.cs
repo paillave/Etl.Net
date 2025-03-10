@@ -4,13 +4,28 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Paillave.Etl.Http;
 
-public static class HttpClientFactory
+public class HttpClientFactory
 {
-    public static HttpClient CreateHttpClient(
+    private readonly IDictionary<string, HttpClient> _clients =
+        new Dictionary<string, HttpClient>();
+
+    public HttpClient GetClient(
+        string name,
+        IHttpConnectionInfo connectionParameters,
+        HttpAdapterParametersBase adapterParametersBase
+    )
+    {
+        if (_clients.TryGetValue(name, out var client))
+            return client;
+
+        _clients[name] = CreateClient(connectionParameters, adapterParametersBase);
+        return _clients[name];
+    }
+
+    public static HttpClient CreateClient(
         IHttpConnectionInfo connectionParameters,
         HttpAdapterParametersBase adapterParametersBase
     )

@@ -10,7 +10,7 @@ namespace Paillave.Etl.HttpExtension;
 
 public static class HttpClientFactory
 {
-    public static HttpClient CreateHttpClient(
+    public static HttpClient GetClient(
         IHttpConnectionInfo connectionParameters,
         HttpAdapterParametersBase adapterParametersBase
     )

@@ -59,7 +59,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
     //     // TODO: is there even the equivalent of a delete in the context of RESTful APIs?
 
     //     // var pathToDelete = StringEx.ConcatenatePath(_folder, this.Name).Replace('\\', '/');
-    //     // using (HttpClient client = _connectionInfo.CreateHttpClient())
+    //     // using (HttpClient client = _connectionInfo.GetClient())
     //     //     client.DeleteFile(pathToDelete);
     // }
 }

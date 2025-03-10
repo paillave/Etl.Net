@@ -68,10 +68,10 @@ public class HttpFileValueProcessor
     {
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
 
-        var httpClientFactory = context.DependencyResolver.Resolve<IHttpClientFactory>();
+        var httpClientFactory = context.DependencyResolver.Resolve<HttpClientFactory>();
         using var httpClient =
-            httpClientFactory?.CreateClient()
-            ?? HttpClientFactory.CreateHttpClient(connectionParameters, processorParameters); // If none is provided, use the default factory
+            httpClientFactory?.GetClient(Name, connectionParameters, processorParameters)
+            ?? HttpClientFactory.CreateClient(connectionParameters, processorParameters); // If none is provided, call static CreateClient method
 
         var response = Helpers
             .GetResponse(

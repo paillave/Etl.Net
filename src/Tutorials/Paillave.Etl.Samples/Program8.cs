@@ -12,14 +12,11 @@ namespace Paillave.Etl.Samples
             Console.WriteLine("Debug 1");
 
             var processRunner = StreamProcessRunner.Create<string[]>(Import);
-            var myHttpFactory = new SimpleHttpClientFactory();
-            var myHttpClient = new HttpClient();
-            myHttpFactory.RegisterNamedClient("http://127.0.0.1:80/anything", myHttpClient);
-            myHttpFactory.RegisterNamedClient("http://127.0.0.1:80/ip", myHttpClient);
+            var httpClientFactory = new HttpClientFactory();
             var executionOptions = new ExecutionOptions<string[]>
             {
-                Resolver = new SimpleDependencyResolver().Register<IHttpClientFactory>(
-                    myHttpFactory
+                Resolver = new SimpleDependencyResolver().Register<HttpClientFactory>(
+                    httpClientFactory
                 ),
             };
             var res = await processRunner.ExecuteAsync(args, executionOptions);
@@ -101,7 +98,9 @@ namespace Paillave.Etl.Samples
             if (_clients.TryGetValue(name, out var client))
                 return client;
 
-            throw new ArgumentException($"No client registered with name {name}");
+            _clients[name] = new HttpClient();
+
+            return _clients[name];
         }
     }
 }

@@ -85,9 +85,10 @@ namespace Paillave.Etl.Http
         )
         {
             // Base URL and slug
-            var baseUrl = connectionParameters.Url.TrimEnd('/');
-            var slug = adapterParametersBase.Slug;
-            var uriBuilder = new UriBuilder(new Uri(new Uri(baseUrl), slug));
+            var baseUrl = connectionParameters.Url?.TrimEnd('/');
+            var slug = adapterParametersBase.Slug?.TrimStart('/');
+            var combinedUrl = $"{baseUrl}/{slug}".TrimEnd('/');
+            var uriBuilder = new UriBuilder(combinedUrl);
 
             // Handle query parameters
             if (

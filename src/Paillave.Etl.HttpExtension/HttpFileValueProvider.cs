@@ -70,7 +70,7 @@ public class HttpFileValueProvider
         var httpClientFactory = context.DependencyResolver.Resolve<IHttpClientFactory>();
         using var httpClient =
             httpClientFactory?.CreateClient()
-            ?? HttpClientFactory.CreateHttpClient(connectionParameters, providerParameters); // If none is provided, use the default factory
+            ?? HttpClientFactory.GetClient(connectionParameters, providerParameters); // If none is provided, use the default factory
 
         var response = Helpers
             .GetResponse(connectionParameters, providerParameters, httpClient)

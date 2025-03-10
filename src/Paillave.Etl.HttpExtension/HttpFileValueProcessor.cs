@@ -74,7 +74,7 @@ public class HttpFileValueProcessor
         var httpClientFactory = context.DependencyResolver.Resolve<IHttpClientFactory>();
         using var httpClient =
             httpClientFactory?.CreateClient()
-            ?? HttpClientFactory.CreateHttpClient(connectionParameters, processorParameters); // If none is provided, use the default factory
+            ?? HttpClientFactory.GetClient(connectionParameters, processorParameters); // If none is provided, use the default factory
 
         var response = Helpers
             .GetResponse(
