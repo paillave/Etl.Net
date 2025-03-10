@@ -38,7 +38,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
     public override StreamWithResource OpenContent() => new(GetContent());
 
     public override Stream GetContent() =>
-        ActionRunner.TryExecute(_connectionInfo.MaxAttempts, GetContentSingleTime);
+        ActionRunner.TryExecute(_connectionInfo?.MaxAttempts ?? 1, GetContentSingleTime);
 
     private Stream GetContentSingleTime()
     {
