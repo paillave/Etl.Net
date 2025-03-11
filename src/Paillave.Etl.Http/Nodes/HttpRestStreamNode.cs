@@ -42,5 +42,5 @@ public class HttpRestStreamNode
 
 public class HttpArgs
 {
-    public required IStream<HttpCallArgs> Stream { get; set; }
+    public IStream<HttpCallArgs> Stream { get; set; }
 }
