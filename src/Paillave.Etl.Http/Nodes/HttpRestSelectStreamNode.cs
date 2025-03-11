@@ -1,6 +1,7 @@
 using System.Net.Http;
-using System.Reactive.Linq;
+using System.Threading;
 using Paillave.Etl.Core;
+using Paillave.Etl.Reactive.Operators;
 
 namespace Paillave.Etl.Http;
 
@@ -11,22 +12,19 @@ public class HttpRestSelectStreamNode : HttpRestBaseStreamNode
 
     protected override IStream<HttpResponseMessage> CreateOutputStream(HttpCallArgs args)
     {
-        var observable = Observable.Defer(async () =>
-        {
-            using (var httpClient = new HttpClient())
-            {
-                // var response = await httpClient.GetAsync(url);
-                var httpClient = HttpClientFactory.CreateClient(
-                    args.ConnectionParameters,
-                    args.AdapterParameters
-                );
-                var response = Helpers
-                    .GetResponse(args.ConnectionParameters, args.AdapterParameters, httpClient)
-                    .Result;
+        var httpClient = HttpClientFactory.CreateClient(
+            args.ConnectionParameters,
+            args.AdapterParameters
+        );
 
-                return response;
-            }
-        });
+        var response = Helpers
+            .GetResponse(args.ConnectionParameters, args.AdapterParameters, httpClient)
+            .Result;
+
+        var waitHandle = new ManualResetEvent(false); // FIXME: to be get from ETL context?
+        var cancellationToken = new CancellationToken(); // FIXME: to be get from ETL context?
+
+        var observable = PushObservable.FromSingle(response, waitHandle, cancellationToken);
 
         return base.CreateUnsortedStream(observable);
     }

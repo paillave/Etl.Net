@@ -35,6 +35,7 @@ public class HttpCallArgs
     public HttpAdapterParametersBase AdapterParameters { get; set; }
 }
 
+
 // public class HttpProviderProcessorAdapter
 //     : ProviderProcessorAdapterBase<
 //         HttpAdapterConnectionParameters,

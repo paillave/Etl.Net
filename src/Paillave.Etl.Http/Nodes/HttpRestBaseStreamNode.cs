@@ -11,5 +11,5 @@ public abstract class HttpRestBaseStreamNode
 
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-    protected abstract override IStream<HttpResponseMessage> CreateOutputStream(HttpCallArgs args);
+    // protected abstract override IStream<HttpResponseMessage> CreateOutputStream(HttpCallArgs args);
 }
