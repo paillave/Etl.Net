@@ -81,8 +81,16 @@ public class HttpFileValueProcessor
                 new StreamContent(stream)
             )
             .Result;
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(
+                $"Error for {Name}  -->  {response.StatusCode}  -  {response.ReasonPhrase}"
+            );
+        }
+
         var content = response.Content.ReadAsByteArrayAsync().Result;
-        // var fileName = response.GetFileName(connectionParameters.Url);
+        
         var fileName = new Uri(
             new Uri(connectionParameters.Url.TrimEnd('/')),
             processorParameters.Slug

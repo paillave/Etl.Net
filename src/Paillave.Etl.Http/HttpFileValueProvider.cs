@@ -19,15 +19,6 @@ public class HttpFileValueProvider
     )
         : base(code, name, connectionName, connectionParameters, providerParameters) { }
 
-    // public HttpFileValueProvider(string code, string url, string method, string body)
-    //     : base(
-    //         code,
-    //         url,
-    //         url,
-    //         new HttpAdapterConnectionParameters { Url = url },
-    //         new HttpAdapterProviderParameters { Method = method, Body = body }
-    //     ) { }
-
     public HttpFileValueProvider(
         string code,
         string url,
@@ -79,12 +70,18 @@ public class HttpFileValueProvider
             httpClientFactory?.GetClient(Name, connectionParameters, providerParameters)
             ?? HttpClientFactory.CreateClient(connectionParameters, providerParameters); // If none is provided, call static CreateClient method
 
-
         var response = Helpers
             .GetResponse(connectionParameters, providerParameters, httpClient)
             .Result;
 
-        var content = response?.Content.ReadAsByteArrayAsync().Result;
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(
+                $"Error for {Name}  -->  {response.StatusCode}  -  {response.ReasonPhrase}"
+            );
+        }
+
+        var content = response.Content.ReadAsByteArrayAsync().Result;
 
         var fileName = new Uri(
             new Uri(connectionParameters.Url.TrimEnd('/')),
