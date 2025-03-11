@@ -29,6 +29,12 @@ public class HttpAdapterProcessorParameters : HttpAdapterParametersBase
     public bool UseStreamCopy { get; set; } = true;
 }
 
+public class HttpCallArgs
+{
+    public HttpAdapterConnectionParameters ConnectionParameters { get; set; }
+    public HttpAdapterParametersBase AdapterParameters { get; set; }
+}
+
 // public class HttpProviderProcessorAdapter
 //     : ProviderProcessorAdapterBase<
 //         HttpAdapterConnectionParameters,
