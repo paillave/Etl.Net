@@ -68,6 +68,14 @@ namespace Paillave.Etl.Samples
         public static void Import(ISingleStream<string[]> contextStream)
         {
             contextStream
+                .FromConnector("get from http", "MyHttpSourceForThePurposeX")
+                .ParseJson<MyTargetType>("parseJson")
+                .SerializeToJson("serializeJson")
+                .ToConnector("post to http", "MyHttpSourceForThePurposeY");
+
+
+
+            contextStream
                 .Select(
                     "create required stream item type",
                     i => new HttpCallArgs

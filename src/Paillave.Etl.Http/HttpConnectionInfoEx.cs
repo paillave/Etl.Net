@@ -7,6 +7,14 @@ using System.Text;
 
 namespace Paillave.Etl.Http;
 
+public static class IHttpConnectionInfoEx
+{
+    public static HttpClient CreateHttpClient(this IHttpConnectionInfo httpConnectionInfo, Dictionary<string, string>? extraHeaders)
+    {
+
+    }
+}
+[Obsolete]
 public class HttpClientFactory
 {
     // Singleton instance

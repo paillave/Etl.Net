@@ -8,12 +8,11 @@ namespace Paillave.Etl.Http;
 public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 {
     public override string Name { get; }
-    private byte[]? _content { get; }
     private readonly IHttpConnectionInfo? _connectionInfo;
+    private readonly HttpAdapterParametersBase _parameters;
 
     public HttpFileValue(
         string name,
-        byte[]? content,
         string url,
         string connectorCode,
         string connectionName,
@@ -32,7 +31,6 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
     {
         Name = name;
         _connectionInfo = connectionInfo;
-        _content = content;
     }
 
     public override StreamWithResource OpenContent() => new(GetContent());
@@ -45,7 +43,9 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
         return new MemoryStream(_content ?? Array.Empty<byte>());
     }
 
-    protected override void DeleteFile() { }
+    protected override void DeleteFile() { 
+//use DELETE method instead of the original one
+    }
 }
 
 public class HttpFileValueMetadata : FileValueMetadataBase

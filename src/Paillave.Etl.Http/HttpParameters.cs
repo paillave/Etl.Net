@@ -1,26 +1,36 @@
+using System;
 using System.Collections.Generic;
-using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Http;
 
 public class HttpAdapterConnectionParameters : IHttpConnectionInfo
 {
-    public required string Url { get; set; }
-    public List<string>? AuthParameters { get; set; }
-    public string AuthenticationType { get; set; } = "None";
-    public int MaxAttempts { get; set; } = 5;
+    // public required string Url { get; set; }
+    // public List<string>? AuthParameters { get; set; }
+    // public string AuthenticationType { get; set; } = "None";
+    // public int MaxAttempts { get; set; } = 5;
+    public required Uri Url { get; set; }
+    public HttpAuthentication? Authentication { get; set; }
+    public int MaxAttempts { get; set; } = 3;
+    public Dictionary<string, string>? HttpHeaders { get; set; }
 }
-
+public enum HttpMethods
+{
+    GET = 0,
+    POST = 1
+}
 public class HttpAdapterParametersBase
 {
-    public required string Method { get; set; }
-    public string Slug { get; set; } = "/";
-    public string ResponseFormat { get; set; } = "json";
-    public string RequestFormat { get; set; } = "json";
-    public object? Body { get; set; }
-    public List<KeyValuePair<string, string>>? AdditionalHeaders { get; set; }
-    public List<KeyValuePair<string, string>>? AdditionalParameters { get; set; }
+    public required HttpMethods Method { get; set; }
+    // public string? Slug { get; set; } = "/";
+    public string ResponseFormat { get; set; } = "json/application";
+    public string? RequestFormat { get; set; } //if null, assume it from ifilevalue.name
+    // public object? Body { get; set; } // got from ifilevalue
+
+    public Dictionary<string, string>? AdditionalHeaders { get; set; }
+    // public List<KeyValuePair<string, string>>? AdditionalParameters { get; set; }
 }
+// public class
 
 public class HttpAdapterProviderParameters : HttpAdapterParametersBase { }
 
@@ -31,8 +41,8 @@ public class HttpAdapterProcessorParameters : HttpAdapterParametersBase
 
 public class HttpCallArgs
 {
-    public HttpAdapterConnectionParameters ConnectionParameters { get; set; }
-    public HttpAdapterParametersBase AdapterParameters { get; set; }
+    public required HttpAdapterConnectionParameters ConnectionParameters { get; set; }
+    public required HttpAdapterParametersBase AdapterParameters { get; set; }
 }
 
 
