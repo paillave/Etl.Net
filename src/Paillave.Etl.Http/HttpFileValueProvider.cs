@@ -70,8 +70,8 @@ public class HttpFileValueProvider
         var httpClient = httpClientFactory.GetClient(
             Name,
             connectionParameters,
-            processorParameters
-        )
+            providerParameters
+        );
 
         var response = Helpers
             .GetResponse(connectionParameters, providerParameters, httpClient)
