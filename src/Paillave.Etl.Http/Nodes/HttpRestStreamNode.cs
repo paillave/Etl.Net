@@ -19,7 +19,8 @@ public class HttpRestStreamNode
         var outputObservable = args.Stream.Observable.Map(httpCallArgs =>
         {
             // Create the client for each call (or reuse a singleton if possible)
-            var httpClient = HttpClientFactory.CreateClient(
+            var httpClient = HttpClientFactory.Instance.GetClient(
+                NodeName,
                 httpCallArgs.ConnectionParameters,
                 httpCallArgs.AdapterParameters
             );

@@ -68,11 +68,13 @@ public class HttpFileValueProcessor
     {
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
 
-        var httpClientFactory = context.DependencyResolver.Resolve<HttpClientFactory>();
-        using var httpClient =
-            httpClientFactory?.GetClient(Name, connectionParameters, processorParameters)
-            ?? HttpClientFactory.CreateClient(connectionParameters, processorParameters); // If none is provided, call static CreateClient method
-
+        var httpClientFactory =
+            context.DependencyResolver.Resolve<HttpClientFactory>() ?? HttpClientFactory.Instance;
+        var httpClient = httpClientFactory.GetClient(
+            Name,
+            connectionParameters,
+            processorParameters
+        );
         var response = Helpers
             .GetResponse(
                 connectionParameters,
@@ -90,7 +92,7 @@ public class HttpFileValueProcessor
         }
 
         var content = response.Content.ReadAsByteArrayAsync().Result;
-        
+
         var fileName = new Uri(
             new Uri(connectionParameters.Url.TrimEnd('/')),
             processorParameters.Slug

@@ -10,7 +10,7 @@
 //         static async Task Main(string[] args)
 //         {
 //             var processRunner = StreamProcessRunner.Create<string[]>(Import);
-//             var httpClientFactory = new HttpClientFactory();
+//             var httpClientFactory = HttpClientFactory.Instance;
 //             var executionOptions = new ExecutionOptions<string[]>
 //             {
 //                 Resolver = new SimpleDependencyResolver().Register<HttpClientFactory>(

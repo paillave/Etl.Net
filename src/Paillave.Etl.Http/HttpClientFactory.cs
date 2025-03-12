@@ -9,8 +9,15 @@ namespace Paillave.Etl.Http;
 
 public class HttpClientFactory
 {
+    // Singleton instance
+    private static readonly HttpClientFactory _instance = new HttpClientFactory();
+    public static HttpClientFactory Instance => _instance;
+
     private readonly IDictionary<string, HttpClient> _clients =
         new Dictionary<string, HttpClient>();
+
+    // Private constructor prevents instantiation from other classes
+    private HttpClientFactory() { }
 
     public HttpClient GetClient(
         string name,
