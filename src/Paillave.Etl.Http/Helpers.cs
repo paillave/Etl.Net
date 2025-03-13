@@ -76,7 +76,7 @@ namespace Paillave.Etl.Http
         }
 
         public static Task<HttpResponseMessage> GetResponse(
-            HttpAdapterConnectionParameters connectionParameters,
+            IHttpConnectionInfo connectionParameters,
             HttpAdapterParametersBase adapterParametersBase,
             HttpClient httpClient,
             StreamContent? stream = null
@@ -153,14 +153,13 @@ namespace Paillave.Etl.Http
         )
         {
             string method = "GET";
-            string nc = "00000001"; // Nonce count (you can increase this in multiple requests)
+            string nc = "00000001";
             string cnonce = "xyz"; // Client nonce (a random string)
 
-            // Compute HA1 and HA2 hashes
+            // Compute HA1 and HA2 hashes, then response hash
             string ha1 = ComputeMd5Hash($"{username}:{realm}:{password}");
             string ha2 = ComputeMd5Hash($"{method}:{uri}");
 
-            // Compute response hash
             string response = ComputeMd5Hash($"{ha1}:{nonce}:{nc}:{cnonce}:{qop}:{ha2}");
 
             return $"username=\"{username}\", realm=\"{realm}\", nonce=\"{nonce}\", uri=\"{uri}\", "

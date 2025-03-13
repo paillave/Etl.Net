@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using Paillave.Etl.Core;
@@ -10,6 +9,7 @@ public class HttpFileValueProcessor
     : FileValueProcessorBase<HttpAdapterConnectionParameters, HttpAdapterProcessorParameters>
 {
     private HttpClient? _httpClient = null;
+
     public HttpFileValueProcessor(
         string code,
         string name,
@@ -18,42 +18,6 @@ public class HttpFileValueProcessor
         HttpAdapterProcessorParameters processorParameters
     )
         : base(code, name, connectionName, connectionParameters, processorParameters) { }
-
-    // public HttpFileValueProcessor(
-    //     string code,
-    //     string name,
-    //     string url,
-    //     string method,
-    //     object? body = null,
-    //     string slug = "/",
-    //     string responseFormat = "json",
-    //     string requestFormat = "json",
-    //     string AuthenticationType = "None",
-    //     List<string>? authParameters = null,
-    //     List<KeyValuePair<string, string>>? additionalHeaders = null,
-    //     List<KeyValuePair<string, string>>? additionalParameters = null
-    // )
-    //     : base(
-    //         code,
-    //         name,
-    //         new Uri(new Uri(url.TrimEnd('/')), slug).ToString(),
-    //         new HttpAdapterConnectionParameters
-    //         {
-    //             Url = url,
-    //             AuthParameters = authParameters,
-    //             AuthenticationType = AuthenticationType,
-    //         },
-    //         new HttpAdapterProcessorParameters
-    //         {
-    //             Method = method,
-    //             Slug = slug,
-    //             RequestFormat = requestFormat,
-    //             ResponseFormat = responseFormat,
-    //             Body = body,
-    //             AdditionalHeaders = additionalHeaders,
-    //             AdditionalParameters = additionalParameters,
-    //         }
-    //     ) { }
 
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
@@ -68,14 +32,12 @@ public class HttpFileValueProcessor
     )
     {
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
-        _httpClient ??= connectionParameters.CreateHttpClient(processorParameters.AdditionalHeaders);
-        // var httpClientFactory =
-        //     context.DependencyResolver.Resolve<HttpClientFactory>() ?? HttpClientFactory.Instance;
-        // var httpClient = httpClientFactory.GetClient(
-        //     Name,
-        //     connectionParameters,
-        //     processorParameters
-        // );
+
+        _httpClient ??= IHttpConnectionInfoEx.CreateHttpClient(
+            connectionParameters,
+            processorParameters.AdditionalHeaders
+        );
+
         var response = Helpers
             .GetResponse(
                 connectionParameters,
@@ -94,14 +56,9 @@ public class HttpFileValueProcessor
 
         var content = response.Content.ReadAsByteArrayAsync().Result;
 
-        var fileName = new Uri(
-            new Uri(connectionParameters.Url.TrimEnd('/')),
-            processorParameters.Slug
-        ).ToString();
-
         push(
             new HttpFileValue(
-                fileName,
+                connectionParameters.Url,
                 content,
                 connectionParameters.Url,
                 Code,

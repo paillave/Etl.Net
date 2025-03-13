@@ -12,14 +12,13 @@ public static class IHttpConnectionInfoEx
     )
     {
         HttpClient client = new HttpClient();
-        client = ManageAdditionalHeaders(client, httpConnectionInfo, extraHeaders);
+        client = ManageAdditionalHeaders(client, extraHeaders);
         client = ManageAuthentication(client, httpConnectionInfo);
         return client;
     }
 
     private static HttpClient ManageAdditionalHeaders(
         HttpClient client,
-        IHttpConnectionInfo connectionParameters,
         Dictionary<string, string>? extraHeaders
     )
     {

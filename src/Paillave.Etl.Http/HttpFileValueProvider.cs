@@ -19,41 +19,6 @@ public class HttpFileValueProvider
     )
         : base(code, name, connectionName, connectionParameters, providerParameters) { }
 
-    // public HttpFileValueProvider(
-    //     string code,
-    //     string url,
-    //     string method,
-    //     object? body = null,
-    //     string slug = "/",
-    //     string responseFormat = "json",
-    //     string requestFormat = "json",
-    //     string AuthenticationType = "None",
-    //     List<string>? authParameters = null,
-    //     List<KeyValuePair<string, string>>? additionalHeaders = null,
-    //     List<KeyValuePair<string, string>>? additionalParameters = null
-    // )
-    //     : base(
-    //         code,
-    //         new Uri(new Uri(url.TrimEnd('/')), slug).ToString(),
-    //         new Uri(new Uri(url.TrimEnd('/')), slug).ToString(),
-    //         new HttpAdapterConnectionParameters
-    //         {
-    //             Url = url,
-    //             AuthParameters = authParameters,
-    //             AuthenticationType = AuthenticationType,
-    //         },
-    //         new HttpAdapterProviderParameters
-    //         {
-    //             Method = method,
-    //             Slug = slug,
-    //             ResponseFormat = responseFormat,
-    //             RequestFormat = requestFormat,
-    //             Body = body,
-    //             AdditionalHeaders = additionalHeaders,
-    //             AdditionalParameters = additionalParameters,
-    //         }
-    //     ) { }
-
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
 
@@ -65,12 +30,10 @@ public class HttpFileValueProvider
         IExecutionContext context
     )
     {
-        var httpClient= connectionParameters.CreateHttpClient(providerParameters.AdditionalHeaders);
-        // var httpClient = httpClientFactory.GetClient(
-        //     Name,
-        //     connectionParameters,
-        //     processorParameters
-        // )
+        var httpClient = IHttpConnectionInfoEx.CreateHttpClient(
+            connectionParameters,
+            providerParameters.AdditionalHeaders
+        );
 
         var response = Helpers
             .GetResponse(connectionParameters, providerParameters, httpClient)
@@ -85,14 +48,9 @@ public class HttpFileValueProvider
 
         var content = response.Content.ReadAsByteArrayAsync().Result;
 
-        var fileName = new Uri(
-            new Uri(connectionParameters.Url.TrimEnd('/')),
-            providerParameters.Slug
-        ).ToString();
-
         pushFileValue(
             new HttpFileValue(
-                fileName,
+                connectionParameters.Url,
                 content,
                 connectionParameters.Url,
                 Code,

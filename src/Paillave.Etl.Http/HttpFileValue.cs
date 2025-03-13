@@ -8,7 +8,7 @@ namespace Paillave.Etl.Http;
 public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 {
     public override string Name { get; }
-    private readonly IHttpConnectionInfo? _connectionInfo;
+    private readonly IHttpConnectionInfo _connectionInfo;
     private readonly HttpAdapterParametersBase _parameters;
 
     public HttpFileValue(
@@ -17,7 +17,8 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
         string connectorCode,
         string connectionName,
         string connectorName,
-        IHttpConnectionInfo? connectionInfo = null
+        IHttpConnectionInfo? connectionInfo = null,
+        HttpAdapterParametersBase? parameters = null
     )
         : base(
             new HttpFileValueMetadata
@@ -30,7 +31,8 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
         )
     {
         Name = name;
-        _connectionInfo = connectionInfo;
+        _connectionInfo = connectionInfo ?? new HttpAdapterConnectionParameters { Url = url };
+        _parameters = parameters ?? new HttpAdapterParametersBase { Method = HttpMethods.GET };
     }
 
     public override StreamWithResource OpenContent() => new(GetContent());
@@ -40,11 +42,28 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 
     private Stream GetContentSingleTime()
     {
-        return new MemoryStream(_content ?? Array.Empty<byte>());
+        var httpClient = IHttpConnectionInfoEx.CreateHttpClient(
+            _connectionInfo,
+            _parameters.AdditionalHeaders
+        );
+
+        var response = Helpers.GetResponse(_connectionInfo, _parameters, httpClient).Result;
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(
+                $"Error for {Name}  -->  {response.StatusCode}  -  {response.ReasonPhrase}"
+            );
+        }
+
+        return new MemoryStream(
+            response.Content.ReadAsByteArrayAsync().Result ?? Array.Empty<byte>()
+        );
     }
 
-    protected override void DeleteFile() { 
-//use DELETE method instead of the original one
+    protected override void DeleteFile()
+    {
+        //use DELETE method instead of the original one
     }
 }
 
