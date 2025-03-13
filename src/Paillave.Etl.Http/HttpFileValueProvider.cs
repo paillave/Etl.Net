@@ -30,32 +30,15 @@ public class HttpFileValueProvider
         IExecutionContext context
     )
     {
-        var httpClient = IHttpConnectionInfoEx.CreateHttpClient(
-            connectionParameters,
-            providerParameters.AdditionalHeaders
-        );
-
-        var response = Helpers
-            .GetResponse(connectionParameters, providerParameters, httpClient)
-            .Result;
-
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new Exception(
-                $"Error for {Name}  -->  {response.StatusCode}  -  {response.ReasonPhrase}"
-            );
-        }
-
-        var content = response.Content.ReadAsByteArrayAsync().Result;
-
         pushFileValue(
             new HttpFileValue(
                 connectionParameters.Url,
-                content,
                 connectionParameters.Url,
                 Code,
                 ConnectionName,
-                Name
+                Name,
+                connectionParameters,
+                providerParameters
             )
         );
     }

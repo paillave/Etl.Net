@@ -110,12 +110,16 @@ namespace Paillave.Etl.Http
 
             if (adapterParametersBase.Method == HttpMethods.POST)
             {
-                requestMessage.Content =
-                    stream
-                    ?? Helpers.GetRequestBody(
-                        adapterParametersBase.Body,
-                        adapterParametersBase.RequestFormat
-                    );
+                // requestMessage.Content =
+                //     stream
+                //     ?? Helpers.GetRequestBody(
+                //         adapterParametersBase.Body,
+                //         adapterParametersBase.RequestFormat
+                //     );
+                requestMessage.Content = Helpers.GetRequestBody(
+                    stream?.GetJsonBody() ?? adapterParametersBase.Body,
+                    adapterParametersBase.RequestFormat
+                );
             }
 
             return adapterParametersBase.Method switch

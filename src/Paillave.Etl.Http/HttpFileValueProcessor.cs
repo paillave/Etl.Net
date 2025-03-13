@@ -33,37 +33,15 @@ public class HttpFileValueProcessor
     {
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
 
-        _httpClient ??= IHttpConnectionInfoEx.CreateHttpClient(
-            connectionParameters,
-            processorParameters.AdditionalHeaders
-        );
-
-        var response = Helpers
-            .GetResponse(
-                connectionParameters,
-                processorParameters,
-                _httpClient,
-                new StreamContent(stream)
-            )
-            .Result;
-
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new Exception(
-                $"Error for {Name}  -->  {response.StatusCode}  -  {response.ReasonPhrase}"
-            );
-        }
-
-        var content = response.Content.ReadAsByteArrayAsync().Result;
-
         push(
             new HttpFileValue(
                 connectionParameters.Url,
-                content,
                 connectionParameters.Url,
                 Code,
                 ConnectionName,
-                Name
+                Name,
+                connectionParameters,
+                processorParameters
             )
         );
     }
