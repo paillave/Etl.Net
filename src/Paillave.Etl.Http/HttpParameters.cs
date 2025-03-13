@@ -5,32 +5,27 @@ namespace Paillave.Etl.Http;
 
 public class HttpAdapterConnectionParameters : IHttpConnectionInfo
 {
-    // public required string Url { get; set; }
-    // public List<string>? AuthParameters { get; set; }
-    // public string AuthenticationType { get; set; } = "None";
-    // public int MaxAttempts { get; set; } = 5;
     public required Uri Url { get; set; }
     public HttpAuthentication? Authentication { get; set; }
     public int MaxAttempts { get; set; } = 3;
     public Dictionary<string, string>? HttpHeaders { get; set; }
 }
+
 public enum HttpMethods
 {
     GET = 0,
-    POST = 1
+    POST = 1,
 }
+
 public class HttpAdapterParametersBase
 {
     public required HttpMethods Method { get; set; }
-    // public string? Slug { get; set; } = "/";
     public string ResponseFormat { get; set; } = "json/application";
     public string? RequestFormat { get; set; } //if null, assume it from ifilevalue.name
-    // public object? Body { get; set; } // got from ifilevalue
 
+    // public object? Body { get; set; } // got from ifilevalue
     public Dictionary<string, string>? AdditionalHeaders { get; set; }
-    // public List<KeyValuePair<string, string>>? AdditionalParameters { get; set; }
 }
-// public class
 
 public class HttpAdapterProviderParameters : HttpAdapterParametersBase { }
 
