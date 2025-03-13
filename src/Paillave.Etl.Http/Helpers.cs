@@ -137,5 +137,46 @@ namespace Paillave.Etl.Http
                 ),
             };
         }
+
+        public static string ExtractHeaderValue(string header, string key)
+        {
+            var start = header.IndexOf(key + "=") + key.Length + 2; // Skip "key=" and the quote
+            var end = header.IndexOf('"', start);
+            return header.Substring(start, end - start);
+        }
+
+        public static string GenerateDigestAuthHeader(
+            string username,
+            string password,
+            string realm,
+            string nonce,
+            string qop,
+            string uri,
+            string opaque
+        )
+        {
+            string method = "GET";
+            string nc = "00000001"; // Nonce count (you can increase this in multiple requests)
+            string cnonce = "xyz"; // Client nonce (a random string)
+
+            // Compute HA1 and HA2 hashes
+            string ha1 = ComputeMd5Hash($"{username}:{realm}:{password}");
+            string ha2 = ComputeMd5Hash($"{method}:{uri}");
+
+            // Compute response hash
+            string response = ComputeMd5Hash($"{ha1}:{nonce}:{nc}:{cnonce}:{qop}:{ha2}");
+
+            return $"username=\"{username}\", realm=\"{realm}\", nonce=\"{nonce}\", uri=\"{uri}\", "
+                + $"response=\"{response}\", qop={qop}, nc={nc}, cnonce=\"{cnonce}\", opaque=\"{opaque}\"";
+        }
+
+        public static string ComputeMd5Hash(string input)
+        {
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] hashBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(input));
+                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+            }
+        }
     }
 }
