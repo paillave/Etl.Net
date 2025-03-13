@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace Paillave.Etl.Http;
 
@@ -15,20 +12,20 @@ public static class IHttpConnectionInfoEx
     )
     {
         HttpClient client = new HttpClient();
-        client = ManageAdditionalHeaders(client, connectionParameters, adapterParametersBase);
-        client = ManageAuthentication(client, connectionParameters, adapterParametersBase);
+        client = ManageAdditionalHeaders(client, httpConnectionInfo, extraHeaders);
+        client = ManageAuthentication(client, httpConnectionInfo);
         return client;
     }
 
     private static HttpClient ManageAdditionalHeaders(
         HttpClient client,
         IHttpConnectionInfo connectionParameters,
-        HttpAdapterParametersBase adapterParametersBase
+        Dictionary<string, string>? extraHeaders
     )
     {
-        if (adapterParametersBase.AdditionalHeaders != null)
+        if (extraHeaders != null)
         {
-            foreach (var header in adapterParametersBase.AdditionalHeaders)
+            foreach (var header in extraHeaders)
             {
                 if (client.DefaultRequestHeaders.Contains(header.Key))
                     throw new ArgumentException(
