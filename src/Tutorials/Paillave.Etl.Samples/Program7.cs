@@ -10,24 +10,25 @@
 //         static async Task Main(string[] args)
 //         {
 //             var processRunner = StreamProcessRunner.Create<string[]>(Import);
-//             var httpClientFactory = HttpClientFactory.Instance;
-//             var executionOptions = new ExecutionOptions<string[]>
-//             {
-//                 Resolver = new SimpleDependencyResolver().Register<HttpClientFactory>(
-//                     httpClientFactory
-//                 ),
-//             };
-//             var res = await processRunner.ExecuteAsync(args, executionOptions);
+
+//             // var executionOptions = new ExecutionOptions<string[]>
+//             // {
+//             //     Resolver = new SimpleDependencyResolver().Register<HttpClientFactory>(
+//             //         httpClientFactory
+//             //     ),
+//             // };
+//             var res = await processRunner.ExecuteAsync(
+//                 args /*, executionOptions*/
+//             );
 //         }
 
 //         private static void DoOneTest(
 //             ISingleStream<string[]> contextStream,
 //             string testName,
-//             string authType,
-//             List<string> authParams,
-//             string slug = "/headers",
-//             string method = "Get",
-//             string url = "http://127.0.0.1:80/"
+//             // string authType,
+//             // List<string> authParams,
+//             HttpMethods method = HttpMethods.GET,
+//             string url = "http://127.0.0.1:80/ip"
 //         )
 //         {
 //             var fileStream = contextStream
@@ -35,16 +36,10 @@
 //                     "Get Files",
 //                     new HttpFileValueProvider(
 //                         code: "codeTest",
-//                         url: url,
-//                         method: method,
-//                         slug: slug,
-//                         responseFormat: "json",
-//                         requestFormat: null, // Assuming requestFormat can be null
-//                         authParameters: authParams,
-//                         additionalHeaders: new List<KeyValuePair<string, string>>(),
-//                         additionalParameters: new List<KeyValuePair<string, string>>(),
-//                         AuthenticationType: authType,
-//                         body: null
+//                         name: url,
+//                         connectionName: url,
+//                         connectionParameters: new HttpAdapterConnectionParameters { Url = url },
+//                         providerParameters: new HttpAdapterProviderParameters { Method = method }
 //                     )
 //                 )
 //                 .Do(
@@ -87,10 +82,9 @@
 
 //             DoOneTest(
 //                 contextStream,
-//                 "Basic auth (NOK)",
-//                 "Basic",
-//                 new List<string>() { "usr", "pwdWrong" },
-//                 "/basic-auth/usr/pwd"
+//                 "Basic auth (NOK)"
+//             // "Basic",
+//             // new List<string>() { "usr", "pwdWrong" },
 //             );
 
 //             // DoOneTest(

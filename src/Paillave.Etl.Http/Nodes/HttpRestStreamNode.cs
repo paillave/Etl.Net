@@ -15,16 +15,13 @@ public class HttpRestStreamNode
 
     protected override IStream<HttpResponseMessage> CreateOutputStream(HttpArgs args)
     {
-        // Map each HttpCallArgs into an HttpResponseMessage using Select/Map
         var outputObservable = args.Stream.Observable.Map(httpCallArgs =>
         {
-            // Create the client for each call (or reuse a singleton if possible)
             var httpClient = IHttpConnectionInfoEx.CreateHttpClient(
                 httpCallArgs.ConnectionParameters,
                 httpCallArgs.AdapterParameters.AdditionalHeaders
             );
 
-            // Execute the HTTP request synchronously (or async with async-friendly pattern)
             var response = Helpers
                 .GetResponse(
                     httpCallArgs.ConnectionParameters,
