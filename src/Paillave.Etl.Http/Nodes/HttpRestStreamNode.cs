@@ -19,10 +19,9 @@ public class HttpRestStreamNode
         var outputObservable = args.Stream.Observable.Map(httpCallArgs =>
         {
             // Create the client for each call (or reuse a singleton if possible)
-            var httpClient = HttpClientFactory.Instance.GetClient(
-                NodeName,
+            var httpClient = IHttpConnectionInfoEx.CreateHttpClient(
                 httpCallArgs.ConnectionParameters,
-                httpCallArgs.AdapterParameters
+                httpCallArgs.AdapterParameters.AdditionalHeaders
             );
 
             // Execute the HTTP request synchronously (or async with async-friendly pattern)
@@ -37,11 +36,11 @@ public class HttpRestStreamNode
             return response;
         });
 
-        return base.CreateUnsortedStream(outputObservable);
+        return CreateUnsortedStream(outputObservable);
     }
 }
 
 public class HttpArgs
 {
-    public IStream<HttpCallArgs> Stream { get; set; }
+    public required IStream<HttpCallArgs> Stream { get; set; }
 }
