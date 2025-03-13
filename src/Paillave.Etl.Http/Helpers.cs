@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -57,10 +58,10 @@ namespace Paillave.Etl.Http
                     }
 
                 case "text":
-                    return new StringContent(body.ToString(), Encoding.UTF8, "text/plain");
+                    return new StringContent(body?.ToString() ?? "", Encoding.UTF8, "text/plain");
 
                 case "html":
-                    return new StringContent(body.ToString(), Encoding.UTF8, "text/html");
+                    return new StringContent(body?.ToString() ?? "", Encoding.UTF8, "text/html");
 
                 case "img":
                     if (body is byte[] byteArray)
@@ -81,11 +82,7 @@ namespace Paillave.Etl.Http
             StreamContent? stream = null
         )
         {
-            // Base URL and slug
-            var baseUrl = connectionParameters.Url?.TrimEnd('/');
-            var slug = adapterParametersBase.Slug?.TrimStart('/');
-            var combinedUrl = $"{baseUrl}/{slug}".TrimEnd('/');
-            var uriBuilder = new UriBuilder(combinedUrl);
+            var uriBuilder = new UriBuilder(connectionParameters.Url);
 
             // Handle query parameters
             if (
@@ -108,10 +105,10 @@ namespace Paillave.Etl.Http
             var requestMessage = new HttpRequestMessage
             {
                 RequestUri = new Uri(finalUri),
-                Method = new HttpMethod(adapterParametersBase.Method.ToUpper()),
+                Method = new HttpMethod(adapterParametersBase.Method.ToString()),
             };
 
-            if (adapterParametersBase.Method.ToUpper() is "POST" or "PUT" or "PATCH")
+            if (adapterParametersBase.Method == HttpMethods.POST)
             {
                 requestMessage.Content =
                     stream
@@ -121,17 +118,17 @@ namespace Paillave.Etl.Http
                     );
             }
 
-            return adapterParametersBase.Method.ToUpper() switch
+            return adapterParametersBase.Method switch
             {
-                "GET" => httpClient.GetAsync(finalUri),
-                "POST" => httpClient.SendAsync(requestMessage),
-                "PUT" => httpClient.SendAsync(requestMessage),
-                "DELETE" => httpClient.DeleteAsync(finalUri),
-                "PATCH" => httpClient.SendAsync(requestMessage),
-                "HEAD" => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, finalUri)),
-                "OPTIONS" => httpClient.SendAsync(
-                    new HttpRequestMessage(HttpMethod.Options, finalUri)
-                ),
+                HttpMethods.GET => httpClient.GetAsync(finalUri),
+                HttpMethods.POST => httpClient.SendAsync(requestMessage),
+                // "PUT" => httpClient.SendAsync(requestMessage),
+                // "DELETE" => httpClient.DeleteAsync(finalUri),
+                // "PATCH" => httpClient.SendAsync(requestMessage),
+                // "HEAD" => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, finalUri)),
+                // "OPTIONS" => httpClient.SendAsync(
+                //     new HttpRequestMessage(HttpMethod.Options, finalUri)
+                // ),
                 _ => throw new NotImplementedException(
                     $"HTTP method '{adapterParametersBase.Method}' is not implemented."
                 ),
