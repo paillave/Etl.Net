@@ -11,6 +11,7 @@ public class HttpAuthentication
     public BearerAuthentication? Bearer { get; set; }
     public BasicAuthentication? Basic { get; set; }
     public DigestAuthentication? Digest { get; set; }
+    public XCBACCESSAuthentication? XCBACCESS { get; set; }
 }
 
 public abstract class AbstractAuthentication {
@@ -92,5 +93,41 @@ public class BearerAuthentication : AbstractAuthentication
     public override HttpClient AddAuthenticationHeaders(HttpClient client){
         throw new NotImplementedException("Bearer authentication not implemented");
         // return client;
+    }
+}
+
+
+public class XCBACCESSAuthentication : AbstractAuthentication
+{
+    public required string AccessKey { get; set; }
+    public required string SigningKey { get; set; }
+    public required string Passphrase { get; set; }
+
+    public HttpMethods? Method { get; set; }
+    public string? Path { get; set; }
+    public string? Body { get; set; }
+
+    public void SetMethodPathBody(HttpMethods method, string path, string body){
+        Method = method;
+        Path = path;
+        Body = body;
+    }
+    
+    public override HttpClient AddAuthenticationHeaders(HttpClient client){
+        var timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
+        var signature = Helpers.Sign(
+            timestamp,
+            Method?.ToString() ?? throw new ArgumentNullException("Method must be set"),
+            Path ?? throw new ArgumentNullException("Path must be set"),
+            Body ?? throw new ArgumentNullException("Body must be set"),
+            SigningKey
+        );
+
+        client.DefaultRequestHeaders.Add("X-CB-ACCESS-KEY", AccessKey);
+        client.DefaultRequestHeaders.Add("X-CB-ACCESS-SIGNATURE", signature);    
+        client.DefaultRequestHeaders.Add("X-CB-ACCESS-TIMESTAMP", timestamp);
+        client.DefaultRequestHeaders.Add("X-CB-ACCESS-PASSPHRASE", Passphrase);
+
+        return client;
     }
 }
