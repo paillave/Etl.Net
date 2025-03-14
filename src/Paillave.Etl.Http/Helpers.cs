@@ -13,7 +13,7 @@ namespace Paillave.Etl.Http
     public static class Helpers
     {
         // Updated to handle "img" for all image formats
-        private static HttpContent GetRequestBody(object? body, string requestFormat)
+        private static HttpContent GetRequestBodyAsHttpContent(object? body, string requestFormat)
         {
             if (body == null)
             {
@@ -75,6 +75,19 @@ namespace Paillave.Etl.Http
             }
         }
 
+        public static string GetRequestBodyAsString(object? body, string requestFormat)
+        {
+            var httpContent = GetRequestBodyAsHttpContent(body, requestFormat);
+
+            if (requestFormat.ToLower().StartsWith("img"))
+            {
+                var byteArray = httpContent.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+                return Convert.ToBase64String(byteArray);
+            }
+
+            return httpContent.ReadAsStringAsync().GetAwaiter().GetResult();
+        }
+
         public static Task<HttpResponseMessage> GetResponse(
             IHttpConnectionInfo connectionParameters,
             HttpAdapterParametersBase adapterParametersBase,
@@ -116,7 +129,7 @@ namespace Paillave.Etl.Http
                 //         adapterParametersBase.Body,
                 //         adapterParametersBase.RequestFormat
                 //     );
-                requestMessage.Content = Helpers.GetRequestBody(
+                requestMessage.Content = Helpers.GetRequestBodyAsHttpContent(
                     stream?.GetJsonBody() ?? adapterParametersBase.Body,
                     adapterParametersBase.RequestFormat
                 );
