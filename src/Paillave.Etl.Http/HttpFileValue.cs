@@ -63,7 +63,21 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 
     protected override void DeleteFile()
     {
-        //use DELETE method instead of the original one
+        var httpClient = IHttpConnectionInfoEx.CreateHttpClient(
+            _connectionInfo,
+            _parameters.AdditionalHeaders
+        );
+
+        var parameters = new HttpAdapterParametersBase(_parameters) { Method = HttpMethods.DELETE };
+
+        var response = Helpers.GetResponse(_connectionInfo, _parameters, httpClient).Result;
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(
+                $"Error for {Name}  -->  {response.StatusCode}  -  {response.ReasonPhrase}"
+            );
+        }
     }
 }
 

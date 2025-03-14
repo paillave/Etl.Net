@@ -25,13 +25,39 @@ public class HttpAdapterParametersBase
     public object? Body { get; set; }
     public Dictionary<string, string>? AdditionalHeaders { get; set; }
     public Dictionary<string, string>? AdditionalParameters { get; set; }
+
+    public HttpAdapterParametersBase(HttpAdapterParametersBase other)
+    {
+        Method = other.Method;
+        ResponseFormat = other.ResponseFormat;
+        RequestFormat = other.RequestFormat;
+        Body = other.Body;
+        AdditionalHeaders =
+            other.AdditionalHeaders != null
+                ? new Dictionary<string, string>(other.AdditionalHeaders)
+                : null;
+        AdditionalParameters =
+            other.AdditionalParameters != null
+                ? new Dictionary<string, string>(other.AdditionalParameters)
+                : null;
+    }
 }
 
-public class HttpAdapterProviderParameters : HttpAdapterParametersBase { }
+public class HttpAdapterProviderParameters : HttpAdapterParametersBase
+{
+    public HttpAdapterProviderParameters(HttpAdapterProviderParameters other)
+        : base(other) { }
+}
 
 public class HttpAdapterProcessorParameters : HttpAdapterParametersBase
 {
     public bool UseStreamCopy { get; set; } = true;
+
+    public HttpAdapterProcessorParameters(HttpAdapterProcessorParameters other)
+        : base(other)
+    {
+        UseStreamCopy = other.UseStreamCopy;
+    }
 }
 
 public class HttpCallArgs
