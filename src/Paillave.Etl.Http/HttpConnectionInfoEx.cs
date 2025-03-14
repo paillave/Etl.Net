@@ -7,13 +7,13 @@ namespace Paillave.Etl.Http;
 public static class IHttpConnectionInfoEx
 {
     public static HttpClient CreateHttpClient(
-        this IHttpConnectionInfo httpConnectionInfo,
-        Dictionary<string, string>? extraHeaders
+        IHttpConnectionInfo httpConnectionInfo,
+        HttpAdapterParametersBase adapterParameters
     )
     {
         HttpClient client = new HttpClient();
-        client = ManageAdditionalHeaders(client, extraHeaders);
-        client = ManageAuthentication(client, httpConnectionInfo);
+        client = ManageAdditionalHeaders(client, adapterParameters.AdditionalHeaders);
+        client = ManageAuthentication(client, httpConnectionInfo, adapterParameters);
         return client;
     }
 
@@ -40,7 +40,8 @@ public static class IHttpConnectionInfoEx
 
     private static HttpClient ManageAuthentication(
         HttpClient client,
-        IHttpConnectionInfo connectionParameters
+        IHttpConnectionInfo connectionParameters,
+        HttpAdapterParametersBase adapterParameters
     )
     {
         if (connectionParameters.Authentication?.Bearer != null)
@@ -49,6 +50,20 @@ public static class IHttpConnectionInfoEx
             connectionParameters.Authentication.Basic.AddAuthenticationHeaders(client);
         else if (connectionParameters.Authentication?.Digest != null)
             connectionParameters.Authentication.Digest.AddAuthenticationHeaders(client);
+        else if (connectionParameters.Authentication?.Digest != null)
+            connectionParameters.Authentication.Digest.AddAuthenticationHeaders(client);
+        else if (connectionParameters.Authentication?.XCBACCESS != null)
+        {
+            connectionParameters.Authentication.XCBACCESS.SetMethodPathBody(
+                adapterParameters.Method,
+                connectionParameters.Url,
+                Helpers.GetRequestBodyAsString(
+                    adapterParameters.Body,
+                    adapterParameters.RequestFormat
+                )
+            );
+            connectionParameters.Authentication.XCBACCESS.AddAuthenticationHeaders(client);
+        }
 
         return client;
     }

@@ -19,7 +19,7 @@ public class HttpRestStreamNode
         {
             var httpClient = IHttpConnectionInfoEx.CreateHttpClient(
                 httpCallArgs.ConnectionParameters,
-                httpCallArgs.AdapterParameters.AdditionalHeaders
+                httpCallArgs.AdapterParameters
             );
 
             var response = Helpers

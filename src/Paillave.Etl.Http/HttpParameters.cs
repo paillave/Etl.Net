@@ -15,6 +15,7 @@ public enum HttpMethods
 {
     GET = 0,
     POST = 1,
+    DELETE = 2,
 }
 
 public class HttpAdapterParametersBase
@@ -25,6 +26,8 @@ public class HttpAdapterParametersBase
     public object? Body { get; set; }
     public Dictionary<string, string>? AdditionalHeaders { get; set; }
     public Dictionary<string, string>? AdditionalParameters { get; set; }
+
+    public HttpAdapterParametersBase() { }
 
     public HttpAdapterParametersBase(HttpAdapterParametersBase other)
     {
@@ -45,6 +48,8 @@ public class HttpAdapterParametersBase
 
 public class HttpAdapterProviderParameters : HttpAdapterParametersBase
 {
+    public HttpAdapterProviderParameters() { }
+
     public HttpAdapterProviderParameters(HttpAdapterProviderParameters other)
         : base(other) { }
 }
@@ -52,6 +57,8 @@ public class HttpAdapterProviderParameters : HttpAdapterParametersBase
 public class HttpAdapterProcessorParameters : HttpAdapterParametersBase
 {
     public bool UseStreamCopy { get; set; } = true;
+
+    public HttpAdapterProcessorParameters() { }
 
     public HttpAdapterProcessorParameters(HttpAdapterProcessorParameters other)
         : base(other)

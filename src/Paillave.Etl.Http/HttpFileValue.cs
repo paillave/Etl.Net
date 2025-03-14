@@ -32,7 +32,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
     {
         Name = name;
         _connectionInfo = connectionInfo ?? new HttpAdapterConnectionParameters { Url = url };
-        _parameters = parameters ?? new HttpAdapterParametersBase { Method = HttpMethods.GET };
+        _parameters = parameters ?? new HttpAdapterParametersBase() { Method = HttpMethods.GET };
     }
 
     public override StreamWithResource OpenContent() => new(GetContent());
@@ -42,10 +42,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 
     private Stream GetContentSingleTime()
     {
-        var httpClient = IHttpConnectionInfoEx.CreateHttpClient(
-            _connectionInfo,
-            _parameters.AdditionalHeaders
-        );
+        var httpClient = IHttpConnectionInfoEx.CreateHttpClient(_connectionInfo, _parameters);
 
         var response = Helpers.GetResponse(_connectionInfo, _parameters, httpClient).Result;
 
@@ -63,14 +60,11 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 
     protected override void DeleteFile()
     {
-        var httpClient = IHttpConnectionInfoEx.CreateHttpClient(
-            _connectionInfo,
-            _parameters.AdditionalHeaders
-        );
+        var httpClient = IHttpConnectionInfoEx.CreateHttpClient(_connectionInfo, _parameters);
 
         var parameters = new HttpAdapterParametersBase(_parameters) { Method = HttpMethods.DELETE };
 
-        var response = Helpers.GetResponse(_connectionInfo, _parameters, httpClient).Result;
+        var response = Helpers.GetResponse(_connectionInfo, parameters, httpClient).Result;
 
         if (!response.IsSuccessStatusCode)
         {
