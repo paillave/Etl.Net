@@ -17,15 +17,30 @@ namespace Paillave.Etl.Http
         {
             if (body == null)
             {
-                return requestFormat.ToLower() switch
+                switch (requestFormat.ToLower())
                 {
-                    "json" => new StringContent("{}", Encoding.UTF8, "application/json"),
-                    "xml" => new StringContent("<root></root>", Encoding.UTF8, "application/xml"),
-                    "text" => new StringContent(string.Empty, Encoding.UTF8, "text/plain"),
-                    "html" => new StringContent("<html></html>", Encoding.UTF8, "text/html"),
-                    "img" => new ByteArrayContent(Array.Empty<byte>()),
-                    _ => throw new NotImplementedException(),
-                };
+                    case "application/json":
+                        return new StringContent("{}", Encoding.UTF8, "application/json");
+
+                    case "application/xml":
+                        return new StringContent("<root></root>", Encoding.UTF8, "application/xml");
+
+                    case "text/plain":
+                        return new StringContent(string.Empty, Encoding.UTF8, "text/plain");
+
+                    case "text/html":
+                        return new StringContent("<html></html>", Encoding.UTF8, "text/html");
+
+                    case "image/jpeg":
+                    case "image/png":
+                    case "image/gif":
+                    case "image/svg+xml":
+                    case "image/webp":
+                        return new ByteArrayContent(Array.Empty<byte>());
+
+                    default:
+                        throw new NotImplementedException();
+                }
             }
 
             // Process based on response format
@@ -75,8 +90,11 @@ namespace Paillave.Etl.Http
             }
         }
 
-        public static string GetRequestBodyAsString(object? body, string requestFormat)
+        public static string? GetRequestBodyAsString(object? body, string requestFormat)
         {
+            if (body == null)
+                return null;
+
             var httpContent = GetRequestBodyAsHttpContent(body, requestFormat);
 
             if (requestFormat.ToLower().StartsWith("img"))
@@ -195,11 +213,14 @@ namespace Paillave.Etl.Http
         public static string Sign(
             string timestamp,
             string method,
-            string path,
-            string body,
+            string uri,
+            string? body,
             string signingKey
         )
         {
+            var url = new Uri(uri);
+            var path = url.AbsolutePath;
+
             try
             {
                 string message = $"{timestamp}{method}{path}{body}";

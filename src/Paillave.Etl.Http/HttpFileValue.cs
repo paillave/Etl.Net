@@ -64,7 +64,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 
         var parameters = new HttpAdapterParametersBase(_parameters) { Method = HttpMethods.DELETE };
 
-        var response = Helpers.GetResponse(_connectionInfo, parameters, httpClient).Result;
+        var response = Helpers.GetResponse(_connectionInfo, _parameters, httpClient).Result;
 
         if (!response.IsSuccessStatusCode)
         {

@@ -21,8 +21,8 @@ public enum HttpMethods
 public class HttpAdapterParametersBase
 {
     public required HttpMethods Method { get; set; }
-    public string ResponseFormat { get; set; } = "json/application";
-    public string RequestFormat { get; set; } = "json/application";
+    public string ResponseFormat { get; set; } = "application/json";
+    public string RequestFormat { get; set; } = "application/json";
     public object? Body { get; set; }
     public Dictionary<string, string>? AdditionalHeaders { get; set; }
     public Dictionary<string, string>? AdditionalParameters { get; set; }

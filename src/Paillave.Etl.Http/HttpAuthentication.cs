@@ -119,7 +119,7 @@ public class XCBACCESSAuthentication : AbstractAuthentication
             timestamp,
             Method?.ToString() ?? throw new ArgumentNullException("Method must be set"),
             Path ?? throw new ArgumentNullException("Path must be set"),
-            Body ?? throw new ArgumentNullException("Body must be set"),
+            Body,
             SigningKey
         );
 
