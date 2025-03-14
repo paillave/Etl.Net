@@ -178,5 +178,37 @@ namespace Paillave.Etl.Http
                 return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
             }
         }
+
+        public static string Sign(
+            string timestamp,
+            string method,
+            string path,
+            string body,
+            string signingKey
+        )
+        {
+            try
+            {
+                string message = $"{timestamp}{method}{path}{body}";
+
+                byte[] hmacKey;
+                try
+                {
+                    hmacKey = Convert.FromBase64String(signingKey);
+                }
+                catch (FormatException)
+                {
+                    hmacKey = Encoding.UTF8.GetBytes(signingKey);
+                }
+
+                using var hmac = new HMACSHA256(hmacKey);
+                byte[] signature = hmac.ComputeHash(Encoding.UTF8.GetBytes(message));
+                return Convert.ToBase64String(signature);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Failed to generate signature", e);
+            }
+        }
     }
 }
