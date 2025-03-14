@@ -103,11 +103,11 @@ public class XCBACCESSAuthentication : AbstractAuthentication
     public required string SigningKey { get; set; }
     public required string Passphrase { get; set; }
 
-    public HttpMethods? Method { get; set; }
+    public HttpMethodCustomEnum? Method { get; set; }
     public string? Path { get; set; }
     public string? Body { get; set; }
 
-    public void SetMethodPathBody(HttpMethods method, string path, string body){
+    public void SetMethodPathBody(HttpMethodCustomEnum method, string path, string body){
         Method = method;
         Path = path;
         Body = body;
@@ -117,8 +117,8 @@ public class XCBACCESSAuthentication : AbstractAuthentication
         var timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
         var signature = Helpers.Sign(
             timestamp,
-            Method?.ToString() ?? throw new ArgumentNullException("Method must be set"),
-            Path ?? throw new ArgumentNullException("Path must be set"),
+            Method?.ToString() ?? throw new ArgumentNullException("Method must be set for XCBACCESS Authentication"),
+            Path ?? throw new ArgumentNullException("Path must be set for XCBACCESS Authentication"),
             Body,
             SigningKey
         );

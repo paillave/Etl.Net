@@ -11,18 +11,11 @@ public class HttpAdapterConnectionParameters : IHttpConnectionInfo
     public Dictionary<string, string>? HttpHeaders { get; set; }
 }
 
-public enum HttpMethods
-{
-    GET = 0,
-    POST = 1,
-    DELETE = 2,
-}
-
 public class HttpAdapterParametersBase
 {
-    public required HttpMethods Method { get; set; }
-    public string ResponseFormat { get; set; } = "application/json";
-    public string RequestFormat { get; set; } = "application/json";
+    public required HttpMethodCustomEnum Method { get; set; }
+    public RequestFormat ResponseFormat { get; set; } = RequestFormat.JSON;
+    public RequestFormat RequestFormat { get; set; } = RequestFormat.JSON;
     public object? Body { get; set; }
     public Dictionary<string, string>? AdditionalHeaders { get; set; }
     public Dictionary<string, string>? AdditionalParameters { get; set; }
@@ -72,6 +65,48 @@ public class HttpCallArgs
     public required HttpAdapterConnectionParameters ConnectionParameters { get; set; }
     public required HttpAdapterParametersBase AdapterParameters { get; set; }
 }
+
+public enum HttpMethodCustomEnum
+{
+    GET = 0,
+    POST = 1,
+    DELETE = 2,
+}
+
+public enum RequestFormat
+{
+    JSON,
+    XML,
+    PlainText,
+    HTML,
+    JPEG,
+    PNG,
+    GIF,
+    SVG,
+    WebP,
+}
+
+public class RequestFormatParser
+{
+    public static RequestFormat ParseRequestFormat(string requestFormat)
+    {
+        return requestFormat.ToLower() switch
+        {
+            "application/json" => RequestFormat.JSON,
+            "application/xml" => RequestFormat.XML,
+            "text/plain" => RequestFormat.PlainText,
+            "text/html" => RequestFormat.HTML,
+            "image/jpeg" => RequestFormat.JPEG,
+            "image/png" => RequestFormat.PNG,
+            "image/gif" => RequestFormat.GIF,
+            "image/svg+xml" => RequestFormat.SVG,
+            "image/webp" => RequestFormat.WebP,
+            _ => throw new NotImplementedException($"Unsupported format: {requestFormat}"),
+        };
+    }
+}
+
+
 
 
 // public class HttpProviderProcessorAdapter

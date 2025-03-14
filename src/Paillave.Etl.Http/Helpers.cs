@@ -13,29 +13,32 @@ namespace Paillave.Etl.Http
     public static class Helpers
     {
         // Updated to handle "img" for all image formats
-        private static HttpContent GetRequestBodyAsHttpContent(object? body, string requestFormat)
+        private static HttpContent GetRequestBodyAsHttpContent(
+            object? body,
+            RequestFormat requestFormat
+        )
         {
             if (body == null)
             {
-                switch (requestFormat.ToLower())
+                switch (requestFormat)
                 {
-                    case "application/json":
+                    case RequestFormat.JSON:
                         return new StringContent("{}", Encoding.UTF8, "application/json");
 
-                    case "application/xml":
+                    case RequestFormat.XML:
                         return new StringContent("<root></root>", Encoding.UTF8, "application/xml");
 
-                    case "text/plain":
+                    case RequestFormat.PlainText:
                         return new StringContent(string.Empty, Encoding.UTF8, "text/plain");
 
-                    case "text/html":
+                    case RequestFormat.HTML:
                         return new StringContent("<html></html>", Encoding.UTF8, "text/html");
 
-                    case "image/jpeg":
-                    case "image/png":
-                    case "image/gif":
-                    case "image/svg+xml":
-                    case "image/webp":
+                    case RequestFormat.JPEG:
+                    case RequestFormat.PNG:
+                    case RequestFormat.GIF:
+                    case RequestFormat.SVG:
+                    case RequestFormat.WebP:
                         return new ByteArrayContent(Array.Empty<byte>());
 
                     default:
@@ -44,13 +47,13 @@ namespace Paillave.Etl.Http
             }
 
             // Process based on response format
-            switch (requestFormat.ToLower())
+            switch (requestFormat)
             {
-                case "json":
+                case RequestFormat.JSON:
                     var jsonBody = JsonConvert.SerializeObject(body);
                     return new StringContent(jsonBody, Encoding.UTF8, "application/json");
 
-                case "xml":
+                case RequestFormat.XML:
                     try
                     {
                         var xmlSerializer = new XmlSerializer(body.GetType());
@@ -72,13 +75,17 @@ namespace Paillave.Etl.Http
                         );
                     }
 
-                case "text":
+                case RequestFormat.PlainText:
                     return new StringContent(body?.ToString() ?? "", Encoding.UTF8, "text/plain");
 
-                case "html":
+                case RequestFormat.HTML:
                     return new StringContent(body?.ToString() ?? "", Encoding.UTF8, "text/html");
 
-                case "img":
+                case RequestFormat.JPEG:
+                case RequestFormat.PNG:
+                case RequestFormat.GIF:
+                case RequestFormat.SVG:
+                case RequestFormat.WebP:
                     if (body is byte[] byteArray)
                     {
                         return new ByteArrayContent(byteArray);
@@ -90,14 +97,23 @@ namespace Paillave.Etl.Http
             }
         }
 
-        public static string? GetRequestBodyAsString(object? body, string requestFormat)
+        public static string? GetRequestBodyAsString(object? body, RequestFormat requestFormat)
         {
             if (body == null)
                 return null;
 
             var httpContent = GetRequestBodyAsHttpContent(body, requestFormat);
 
-            if (requestFormat.ToLower().StartsWith("img"))
+            if (
+                new RequestFormat[]
+                {
+                    RequestFormat.JPEG,
+                    RequestFormat.PNG,
+                    RequestFormat.GIF,
+                    RequestFormat.SVG,
+                    RequestFormat.WebP,
+                }.Contains(requestFormat)
+            )
             {
                 var byteArray = httpContent.ReadAsByteArrayAsync().GetAwaiter().GetResult();
                 return Convert.ToBase64String(byteArray);
@@ -139,7 +155,7 @@ namespace Paillave.Etl.Http
                 Method = new HttpMethod(adapterParametersBase.Method.ToString()),
             };
 
-            if (adapterParametersBase.Method == HttpMethods.POST)
+            if (adapterParametersBase.Method == HttpMethodCustomEnum.POST)
             {
                 // requestMessage.Content =
                 //     stream
@@ -155,14 +171,14 @@ namespace Paillave.Etl.Http
 
             return adapterParametersBase.Method switch
             {
-                HttpMethods.GET => httpClient.GetAsync(finalUri),
-                HttpMethods.POST => httpClient.SendAsync(requestMessage),
+                HttpMethodCustomEnum.GET => httpClient.GetAsync(finalUri),
+                HttpMethodCustomEnum.POST => httpClient.SendAsync(requestMessage),
                 // "PUT" => httpClient.SendAsync(requestMessage),
                 // "DELETE" => httpClient.DeleteAsync(finalUri),
                 // "PATCH" => httpClient.SendAsync(requestMessage),
-                // "HEAD" => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Head, finalUri)),
+                // "HEAD" => httpClient.SendAsync(new HttpRequestMessage(HttpMethodCustomEnum.Head, finalUri)),
                 // "OPTIONS" => httpClient.SendAsync(
-                //     new HttpRequestMessage(HttpMethod.Options, finalUri)
+                //     new HttpRequestMessage(HttpMethodCustomEnum.Options, finalUri)
                 // ),
                 _ => throw new NotImplementedException(
                     $"HTTP method '{adapterParametersBase.Method}' is not implemented."

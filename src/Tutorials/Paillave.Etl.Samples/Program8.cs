@@ -27,7 +27,7 @@
 //         private static void DoOneTest(
 //             ISingleStream<string[]> contextStream,
 //             string testName,
-//             HttpMethods method = HttpMethods.GET,
+//             HttpMethodCustomEnum method = HttpMethodCustomEnum.GET,
 //             string url = "http://127.0.0.1:80/ip"
 //         )
 //         {
