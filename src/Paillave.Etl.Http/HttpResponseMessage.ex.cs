@@ -9,7 +9,8 @@ public static class HttpResponseMessageEx
 {
     public static string GetFileName(this HttpResponseMessage? response, string url)
     {
-        var filename = response?.Content.Headers.ContentDisposition?.FileName
+        var filename =
+            response?.Content.Headers.ContentDisposition?.FileName
             ?? url.Split('/', StringSplitOptions.RemoveEmptyEntries).Last();
 
         var extension = Path.GetExtension(filename);
