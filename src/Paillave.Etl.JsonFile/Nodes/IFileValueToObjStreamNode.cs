@@ -4,13 +4,8 @@ using Paillave.Etl.Reactive.Operators;
 
 namespace Paillave.Etl.JsonFile;
 
-// public class IFileValueToObjStreamNode<TIn, TOut>
-//     : StreamNodeBase<TOut, IStream<TOut>, JsonArgsIFileValueStream<TIn>>
-//     where TIn : IFileValue
-
 public class IFileValueToObjStreamNode<TOut>
     : StreamNodeBase<TOut, IStream<TOut>, JsonArgsIFileValueStream<IFileValue>>
-
 {
     public IFileValueToObjStreamNode(string name, JsonArgsIFileValueStream<IFileValue> args)
         : base(name, args) { }

@@ -8,8 +8,6 @@ namespace Paillave.Etl.Http;
 public class HttpFileValueProcessor
     : FileValueProcessorBase<HttpAdapterConnectionParameters, HttpAdapterProcessorParameters>
 {
-    private HttpClient? _httpClient = null;
-
     public HttpFileValueProcessor(
         string code,
         string name,
@@ -32,6 +30,8 @@ public class HttpFileValueProcessor
     )
     {
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
+
+        var payload = fileValue.GetContent();
 
         push(
             new HttpFileValue(

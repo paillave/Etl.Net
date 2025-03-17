@@ -95,14 +95,13 @@ namespace Paillave.Etl.Samples
                     "print to console (after ParseJson)",
                     i => Console.WriteLine($"\nafter ParseJson : {i.ToString()}")
                 )
-                .SerializeToJson<TestRoot>("serializeJson")
-                .Do(
-                    "print to console (after SerializeToJson)",
-                    i => Console.WriteLine($"\nafter SerializeToJson : {i.ToString()}")
-                )
-                .Select("create required stream item type", i => i.Headers)
-                // .ToConnector("post to http", "MyHttpSourceForThePurposeY")
-                ;
+                // .SerializeToJson<TestRoot>("serializeJson")
+                // .Do(
+                //     "print to console (after SerializeToJson)",
+                //     i => Console.WriteLine($"\nafter SerializeToJson : {i.ToString()}")
+                // )
+                .SerializeToJsonFileValue<TestRoot>("serializeJson")
+                .ToConnector("post to http", "MyHttpSourceForThePurposeY");
 
             // .Do(
             //     "print to console",

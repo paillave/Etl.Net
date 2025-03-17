@@ -23,4 +23,15 @@ public static partial class JsonEx
             new JsonArgsObjectStream<T> { Stream = stream }
         ).Output;
     }
+
+    public static IStream<JsonFileValue> SerializeToJsonFileValue<T>(
+        this IStream<T> stream,
+        string name
+    )
+    {
+        return new ObjToJsonFileValueStreamNode<T>(
+            name,
+            new JsonArgsObjectStream<T> { Stream = stream }
+        ).Output;
+    }
 }
