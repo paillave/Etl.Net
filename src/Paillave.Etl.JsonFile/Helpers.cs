@@ -1,89 +1,86 @@
+using System;
+using System.IO;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Paillave.Etl.Core;
 
 namespace Paillave.Etl.JsonFile;
 
 public static class Helpers
 {
-    public static T? DeserializeJsonToObject<T>(string json)
+    public static T JsonToObject<T>(JObject json)
     {
-        if (string.IsNullOrWhiteSpace(json))
+        if (json == null)
             return default;
 
-        return JsonConvert.DeserializeObject<T>(json);
+        return json.ToObject<T>();
     }
 
-    public static StringContent GetStringContentFromObject(object? body, Encoding? encoding = null)
+    public static JObject ObjectToJson<T>(T obj, bool indented = false)
     {
-        var jsonBody = JsonConvert.SerializeObject(body);
-        encoding ??= Encoding.UTF8;
-        return new StringContent(jsonBody, encoding, "application/json");
+        if (obj == null)
+            return new JObject();
+
+        var formatting = indented ? Formatting.Indented : Formatting.None;
+        string jsonString = JsonConvert.SerializeObject(obj, formatting);
+        return JObject.Parse(jsonString);
     }
 
-    public static T? GetFileValueFromJson<T, TIntermediary>(
-        string json,
-        Func<TIntermediary, T> mapper
-    )
-        where T : class, IFileValue
-    {
-        var intermediaryObj = DeserializeJsonToObject<TIntermediary>(json);
+    //     public static T? JsonToFileValue<T, TIntermediary>(string json, Func<TIntermediary, T> mapper)
+    //         where T : class, IFileValue
+    //     {
+    //         var intermediaryObj = JsonToObject<TIntermediary>(json);
 
-        return intermediaryObj == null ? default : mapper(intermediaryObj);
-    }
+    //         return intermediaryObj == null ? default : mapper(intermediaryObj);
+    //     }
 
-    public static T? GetFileValueFromObject<T, TIntermediary>(
-        TIntermediary intermediaryObj,
-        Func<TIntermediary, T> mapper
-    )
-        where T : class, IFileValue
+    //     public static T? ObjectToFileValue<T, TIntermediary>(
+    //         TIntermediary intermediaryObj,
+    //         Func<TIntermediary, T> mapper
+    //     )
+    //         where T : class, IFileValue
+    //     {
+    //         if (intermediaryObj == null)
+    //             return default;
+
+    //         return mapper(intermediaryObj);
+    //     }
+
+    public static T? FileValueToObject<T>(IFileValue fileValue, Encoding? encoding = null)
     {
-        if (intermediaryObj == null)
+        if (fileValue == null)
             return default;
 
-        return mapper(intermediaryObj);
-    }
+        var content = fileValue.GetContent();
 
-    public static T? GetObjectFromFileValue<T>(IFileValue fileValue, Encoding? encoding = null)
-    {
-        if (fileValue == null || fileValue.Content == null)
+        if (content == null)
             return default;
 
-        byte[]? bytes = fileValue.Content switch
+        if (!(content is Stream stream))
+            throw new InvalidOperationException("Content must be a Stream.");
+
+        byte[]? bytes = null;
+
+        if (stream.CanSeek)
+            stream.Position = 0;
+
+        using (var ms = new MemoryStream())
         {
-            byte[] b => b,
-            Stream s => 
-            {
-                if (s.CanSeek)
-                    s.Position = 0;
+            stream.CopyTo(ms);
+            bytes = ms.ToArray();
+        }
 
-                using var ms = new MemoryStream();
-                s.CopyTo(ms);
-                return ms.ToArray();
-            },
-            _ => null
-        };
-
-        if (bytes == null)
+        if (bytes == null || bytes.Length == 0)
             return default;
 
         encoding ??= Encoding.UTF8;
 
-        string json = encoding.GetString(bytes);
+        string jsonString = encoding.GetString(bytes);
 
-        return DeserializeJsonToObject<T>(json);
-    }
+        // Convert the JSON string to a JObject and then to the desired object
+        var json = JObject.Parse(jsonString);
 
-    public static T? CreateFileValueFromObject<T>(
-        object obj,
-        Func<byte[], T> fileValueFactory,
-        Encoding? encoding = null
-    )
-        where T : class, IFileValue
-    {
-        var json = JsonConvert.SerializeObject(obj);
-        encoding ??= Encoding.UTF8;
-        var bytes = encoding.GetBytes(json);
-        return fileValueFactory(bytes);
+        return JsonToObject<T>(json);
     }
 }
