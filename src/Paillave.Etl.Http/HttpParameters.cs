@@ -50,6 +50,7 @@ public class HttpAdapterProviderParameters : HttpAdapterParametersBase
 public class HttpAdapterProcessorParameters : HttpAdapterParametersBase
 {
     public bool UseStreamCopy { get; set; } = true;
+    public bool UserResponseAsOutput { get; set; } = false;
 
     public HttpAdapterProcessorParameters() { }
 

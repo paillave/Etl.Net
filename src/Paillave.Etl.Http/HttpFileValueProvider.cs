@@ -49,6 +49,6 @@ public class HttpFileValueProvider
     )
     {
         using var httpClient = new HttpClient();
-        Helpers.GetResponse(connectionParameters, providerParameters, httpClient).Wait();
+        HttpHelpers.GetResponse(connectionParameters, providerParameters, httpClient).Wait();
     }
 }

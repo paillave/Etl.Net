@@ -22,7 +22,7 @@ public class HttpRestStreamNode
                 httpCallArgs.AdapterParameters
             );
 
-            var response = Helpers
+            var response = HttpHelpers
                 .GetResponse(
                     httpCallArgs.ConnectionParameters,
                     httpCallArgs.AdapterParameters,

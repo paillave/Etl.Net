@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading;
 using Paillave.Etl.Core;
@@ -31,19 +32,58 @@ public class HttpFileValueProcessor
     {
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
 
-        var payload = fileValue.GetContent();
-
-        push(
-            new HttpFileValue(
-                connectionParameters.Url,
-                connectionParameters.Url,
-                Code,
-                ConnectionName,
-                Name,
-                connectionParameters,
-                processorParameters
-            )
+        var httpClient = IHttpConnectionInfoEx.CreateHttpClient(
+            connectionParameters,
+            processorParameters
         );
+
+        var response = HttpHelpers
+            .GetResponse(connectionParameters, processorParameters, httpClient)
+            .Result;
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(
+                $"Error for {Name}  -->  {response.StatusCode}  -  {response.ReasonPhrase}"
+            );
+        }
+
+        if (processorParameters.UserResponseAsOutput)
+        {
+            // var content = response.Content.ReadAsByteArrayAsync().Result;
+            var content = new MemoryStream(
+                response.Content.ReadAsByteArrayAsync().Result ?? Array.Empty<byte>()
+            );
+            var fileName = response.GetFileName(connectionParameters.Url);
+
+            push(
+                new HttpPostFileValue(
+                    content,
+                    fileName,
+                    new HttpPostFileValueMetadata
+                    {
+                        Url = connectionParameters.Url,
+                        ConnectorCode = Code,
+                        ConnectionName = ConnectionName,
+                        ConnectorName = Name,
+                    }
+                )
+            );
+            return;
+        }
+
+        push(fileValue);
+
+        // return new MemoryStream(
+        //     response.Content.ReadAsByteArrayAsync().Result ?? Array.Empty<byte>()
+        // );
+
+
+        // 1) submit the content
+        // 2) if useResponseAsOutput
+        //    ==>  return FileValue.Create( ... )  (nouveau type, contient metadata qui tracent la response)    (m'inspirer de InMemoryFileValue)
+        //    else
+        //    return le IFileValue en entrée
     }
 
     protected override void Test(
@@ -52,6 +92,6 @@ public class HttpFileValueProcessor
     )
     {
         using var httpClient = new HttpClient();
-        Helpers.GetResponse(connectionParameters, processorParameters, httpClient).Wait();
+        HttpHelpers.GetResponse(connectionParameters, processorParameters, httpClient).Wait();
     }
 }

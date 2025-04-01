@@ -33,9 +33,19 @@ namespace Paillave.Etl.Samples
             {
                 Method = HttpMethodCustomEnum.GET,
             };
+            var httpProcessorConnectionParameters = new HttpAdapterConnectionParameters
+            {
+                Url = "http://127.0.0.1:80/anything",
+            };
             var httpAdapterProcessorsParameters = new HttpAdapterProcessorParameters
             {
                 Method = HttpMethodCustomEnum.POST,
+                UserResponseAsOutput = true,
+            };
+            var httpAdapterProcessorsParameters2 = new HttpAdapterProcessorParameters
+            {
+                Method = HttpMethodCustomEnum.POST,
+                UserResponseAsOutput = false,
             };
 
             var connectors = new FileValueConnectors();
@@ -53,8 +63,17 @@ namespace Paillave.Etl.Samples
                     "MyHttpSourceForThePurposeY",
                     "Output",
                     "HttpConnection2",
-                    httpAdapterConnectionParameters,
+                    httpProcessorConnectionParameters,
                     httpAdapterProcessorsParameters
+                )
+            );
+            connectors.Register(
+                new HttpFileValueProcessor(
+                    "MyHttpSourceForThePurposeY_UserResponseAsOutput",
+                    "Output",
+                    "HttpConnection2",
+                    httpProcessorConnectionParameters,
+                    httpAdapterProcessorsParameters2
                 )
             );
 
@@ -95,13 +114,20 @@ namespace Paillave.Etl.Samples
                     "print to console (after ParseJson)",
                     i => Console.WriteLine($"\nafter ParseJson : {i.ToString()}")
                 )
-                // .SerializeToJson<TestRoot>("serializeJson")
-                // .Do(
-                //     "print to console (after SerializeToJson)",
-                //     i => Console.WriteLine($"\nafter SerializeToJson : {i.ToString()}")
-                // )
                 .SerializeToJsonFileValue<TestRoot>("serializeJson")
-                .ToConnector("post to http", "MyHttpSourceForThePurposeY");
+                .ToConnector("post to http", "MyHttpSourceForThePurposeY")
+                .Do(
+                    "result of connectors",
+                    i => Console.WriteLine($"\nafter connector : {i.ToString()}")
+                )
+                .ToConnector("post to http", "MyHttpSourceForThePurposeY_UserResponseAsOutput")
+                .Do(
+                    "result of connectors",
+                    i =>
+                        Console.WriteLine(
+                            $"\nafter connector (UseResponseAsOutput) : {i.ToString()}"
+                        )
+                );
 
             // .Do(
             //     "print to console",

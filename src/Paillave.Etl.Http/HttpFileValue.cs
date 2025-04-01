@@ -45,7 +45,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
     {
         var httpClient = IHttpConnectionInfoEx.CreateHttpClient(_connectionInfo, _parameters);
 
-        var response = Helpers.GetResponse(_connectionInfo, _parameters, httpClient).Result;
+        var response = HttpHelpers.GetResponse(_connectionInfo, _parameters, httpClient).Result;
 
         if (!response.IsSuccessStatusCode)
         {
@@ -68,7 +68,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
             Method = HttpMethodCustomEnum.DELETE,
         };
 
-        var response = Helpers.GetResponse(_connectionInfo, parameters, httpClient).Result;
+        var response = HttpHelpers.GetResponse(_connectionInfo, parameters, httpClient).Result;
 
         if (!response.IsSuccessStatusCode)
         {

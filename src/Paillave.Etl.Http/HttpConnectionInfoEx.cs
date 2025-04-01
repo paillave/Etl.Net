@@ -57,7 +57,7 @@ public static class IHttpConnectionInfoEx
             connectionParameters.Authentication.XCBACCESS.SetMethodPathBody(
                 adapterParameters.Method,
                 connectionParameters.Url,
-                Helpers.GetRequestBodyAsString(
+                HttpHelpers.GetRequestBodyAsString(
                     adapterParameters.Body,
                     adapterParameters.RequestFormat
                 )

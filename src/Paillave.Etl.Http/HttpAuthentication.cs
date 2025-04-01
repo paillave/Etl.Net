@@ -37,12 +37,12 @@ public class DigestAuthentication : AbstractAuthentication
         if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
         {
             var authHeader = response.Headers.WwwAuthenticate.ToString();
-            string realm = Helpers.ExtractHeaderValue(authHeader, "realm");
-            string nonce = Helpers.ExtractHeaderValue(authHeader, "nonce");
-            string opaque = Helpers.ExtractHeaderValue(authHeader, "opaque");
+            string realm = HttpHelpers.ExtractHeaderValue(authHeader, "realm");
+            string nonce = HttpHelpers.ExtractHeaderValue(authHeader, "nonce");
+            string opaque = HttpHelpers.ExtractHeaderValue(authHeader, "opaque");
 
             // Step 2: Generate the Digest Authentication header
-            var digestAuthHeader = Helpers.GenerateDigestAuthHeader(
+            var digestAuthHeader = HttpHelpers.GenerateDigestAuthHeader(
                 User,
                 Password,
                 realm,
@@ -118,7 +118,7 @@ public class XCBACCESSAuthentication : AbstractAuthentication
     public override HttpClient AddAuthenticationHeaders(HttpClient client)
     {
         var timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
-        var signature = Helpers.Sign(
+        var signature = HttpHelpers.Sign(
             timestamp,
             Method?.ToString()
                 ?? throw new ArgumentNullException(

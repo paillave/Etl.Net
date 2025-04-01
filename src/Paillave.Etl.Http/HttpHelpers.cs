@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace Paillave.Etl.Http
 {
-    public static class Helpers
+    public static class HttpHelpers
     {
         // Updated to handle "img" for all image formats
         private static HttpContent GetRequestBodyAsHttpContent(
@@ -163,7 +163,7 @@ namespace Paillave.Etl.Http
                 //         adapterParametersBase.Body,
                 //         adapterParametersBase.RequestFormat
                 //     );
-                requestMessage.Content = Helpers.GetRequestBodyAsHttpContent(
+                requestMessage.Content = GetRequestBodyAsHttpContent(
                     stream?.GetJsonBody() ?? adapterParametersBase.Body,
                     adapterParametersBase.RequestFormat
                 );
