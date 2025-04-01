@@ -16,11 +16,8 @@ public class ObjToJsonStreamNode<TIn>
 
     protected override IStream<JObject> CreateOutputStream(JsonArgsObjectStream<TIn> args)
     {
-        var outputObservable = args.Stream.Observable.Map(i =>
-            Helpers.ObjectToJson<TIn>(i)
-        );
+        var outputObservable = args.Stream.Observable.Map(i => JsonHelpers.ObjectToJson<TIn>(i));
 
         return base.CreateUnsortedStream(outputObservable);
     }
 }
-

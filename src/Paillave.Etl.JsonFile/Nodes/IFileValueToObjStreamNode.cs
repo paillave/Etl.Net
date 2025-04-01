@@ -15,7 +15,7 @@ public class IFileValueToObjStreamNode<TOut>
 
     protected override IStream<TOut> CreateOutputStream(JsonArgsIFileValueStream<IFileValue> args)
     {
-        var outputObservable = args.Stream.Observable.Map(i => Helpers.FileValueToObject<TOut>(i));
+        var outputObservable = args.Stream.Observable.Map(i => JsonHelpers.FileValueToObject<TOut>(i));
 
         return base.CreateUnsortedStream(outputObservable);
     }

@@ -19,7 +19,7 @@ public class ObjToJsonFileValueStreamNode<TIn>
         // Map from TIn to JObject, and explicitly cast it to TOut (which is JObject)
         var outputObservable = args.Stream.Observable.Map(i =>
         {
-            var payload = Helpers.ObjectToJson<TIn>(i);
+            var payload = JsonHelpers.ObjectToJson<TIn>(i);
             return new JsonFileValue(NodeName, payload);
         });
 

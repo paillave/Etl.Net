@@ -13,7 +13,7 @@ public class HttpAdapterConnectionParameters : IHttpConnectionInfo
 
 public class HttpAdapterParametersBase
 {
-    public required HttpMethodCustomEnum Method { get; set; }
+    public HttpMethodCustomEnum Method { get; set; } = HttpMethodCustomEnum.GET;
     public RequestFormat ResponseFormat { get; set; } = RequestFormat.JSON;
     public RequestFormat RequestFormat { get; set; } = RequestFormat.JSON;
     public object? Body { get; set; }

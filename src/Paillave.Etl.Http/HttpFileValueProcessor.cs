@@ -56,16 +56,23 @@ public class HttpFileValueProcessor
             );
             var fileName = response.GetFileName(connectionParameters.Url);
 
+            var responseFormat = RequestFormatParser.ParseRequestFormat(
+                response.Content.Headers.ContentType?.MediaType ?? "text/plain" // Fallback to plain text
+            );
+
+            var newProcessorParameters = new HttpAdapterParametersBase(processorParameters)
+            {
+                ResponseFormat = responseFormat,
+            };
+
             push(
                 new HttpPostFileValue(
                     content,
                     fileName,
                     new HttpPostFileValueMetadata
                     {
-                        Url = connectionParameters.Url,
-                        ConnectorCode = Code,
-                        ConnectionName = ConnectionName,
-                        ConnectorName = Name,
+                        ConnectionInfo = connectionParameters,
+                        Parameters = newProcessorParameters,
                     }
                 )
             );
@@ -73,17 +80,6 @@ public class HttpFileValueProcessor
         }
 
         push(fileValue);
-
-        // return new MemoryStream(
-        //     response.Content.ReadAsByteArrayAsync().Result ?? Array.Empty<byte>()
-        // );
-
-
-        // 1) submit the content
-        // 2) if useResponseAsOutput
-        //    ==>  return FileValue.Create( ... )  (nouveau type, contient metadata qui tracent la response)    (m'inspirer de InMemoryFileValue)
-        //    else
-        //    return le IFileValue en entrée
     }
 
     protected override void Test(

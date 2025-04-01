@@ -23,10 +23,9 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
         : base(
             new HttpFileValueMetadata
             {
-                Url = url,
-                ConnectorCode = connectorCode,
-                ConnectionName = connectionName,
-                ConnectorName = connectorName,
+                ConnectionInfo =
+                    connectionInfo ?? new HttpAdapterConnectionParameters { Url = url },
+                Parameters = parameters ?? new HttpAdapterParametersBase { },
             }
         )
     {
@@ -81,7 +80,6 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 
 public class HttpFileValueMetadata : FileValueMetadataBase
 {
-    public required string Url { get; set; }
-    public List<string>? AuthParameters { get; set; }
-    public string? AuthenticationType { get; set; }
+    public required IHttpConnectionInfo ConnectionInfo { get; set; }
+    public required HttpAdapterParametersBase Parameters { get; set; }
 }

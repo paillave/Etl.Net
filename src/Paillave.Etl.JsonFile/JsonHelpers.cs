@@ -7,7 +7,7 @@ using Paillave.Etl.Core;
 
 namespace Paillave.Etl.JsonFile;
 
-public static class Helpers
+public static class JsonHelpers
 {
     public static T JsonToObject<T>(JObject json)
     {
@@ -26,26 +26,6 @@ public static class Helpers
         string jsonString = JsonConvert.SerializeObject(obj, formatting);
         return JObject.Parse(jsonString);
     }
-
-    //     public static T? JsonToFileValue<T, TIntermediary>(string json, Func<TIntermediary, T> mapper)
-    //         where T : class, IFileValue
-    //     {
-    //         var intermediaryObj = JsonToObject<TIntermediary>(json);
-
-    //         return intermediaryObj == null ? default : mapper(intermediaryObj);
-    //     }
-
-    //     public static T? ObjectToFileValue<T, TIntermediary>(
-    //         TIntermediary intermediaryObj,
-    //         Func<TIntermediary, T> mapper
-    //     )
-    //         where T : class, IFileValue
-    //     {
-    //         if (intermediaryObj == null)
-    //             return default;
-
-    //         return mapper(intermediaryObj);
-    //     }
 
     public static T? FileValueToObject<T>(IFileValue fileValue, Encoding? encoding = null)
     {
