@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\SharedSettings.props" />
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <PackageId>Paillave.EtlNet.Pgp</PackageId>
+    <PackageTags>ETL .net core SSIS reactive pgp</PackageTags>
+    <Product>ETL.net PGP extensions</Product>
+    <Description>Extensions for Etl.Net to handle PGP</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="PgpCore" Version="6.5.1" />
+  </ItemGroup>
+</Project>
