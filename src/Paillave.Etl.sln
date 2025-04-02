@@ -58,6 +58,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.AzureStorageAc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Pgp", "Paillave.Etl.Pgp\Paillave.Etl.Pgp.csproj", "{98FCFFD8-5809-49B6-AEB6-1C1325A68584}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.JsonFile", "Paillave.Etl.JsonFile\Paillave.Etl.JsonFile.csproj", "{F151FFFE-9295-4A1C-932B-4F655DE6724C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -404,6 +406,18 @@ Global
 		{98FCFFD8-5809-49B6-AEB6-1C1325A68584}.Release|x64.Build.0 = Release|Any CPU
 		{98FCFFD8-5809-49B6-AEB6-1C1325A68584}.Release|x86.ActiveCfg = Release|Any CPU
 		{98FCFFD8-5809-49B6-AEB6-1C1325A68584}.Release|x86.Build.0 = Release|Any CPU
+		{F151FFFE-9295-4A1C-932B-4F655DE6724C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F151FFFE-9295-4A1C-932B-4F655DE6724C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F151FFFE-9295-4A1C-932B-4F655DE6724C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F151FFFE-9295-4A1C-932B-4F655DE6724C}.Debug|x64.Build.0 = Debug|Any CPU
+		{F151FFFE-9295-4A1C-932B-4F655DE6724C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F151FFFE-9295-4A1C-932B-4F655DE6724C}.Debug|x86.Build.0 = Debug|Any CPU
+		{F151FFFE-9295-4A1C-932B-4F655DE6724C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F151FFFE-9295-4A1C-932B-4F655DE6724C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F151FFFE-9295-4A1C-932B-4F655DE6724C}.Release|x64.ActiveCfg = Release|Any CPU
+		{F151FFFE-9295-4A1C-932B-4F655DE6724C}.Release|x64.Build.0 = Release|Any CPU
+		{F151FFFE-9295-4A1C-932B-4F655DE6724C}.Release|x86.ActiveCfg = Release|Any CPU
+		{F151FFFE-9295-4A1C-932B-4F655DE6724C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
