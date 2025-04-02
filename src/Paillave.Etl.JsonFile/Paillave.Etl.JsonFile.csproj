@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\SharedSettings.props" />
+  <PropertyGroup>
+    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
+    <PackageId>Paillave.EtlNet.JsonFile</PackageId>
+    <PackageTags>ETL .net core SSIS JsonFile Connectors</PackageTags>
+    <Product>ETL.net JsonFile extensions</Product>
+    <Description>Extensions for Etl.Net to parse the items of a Stream from/to Json format</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" allowedVersions="13.0.1"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
+ </ItemGroup>
+</Project>

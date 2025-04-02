@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading;
 using Paillave.Etl.Core;
@@ -8,49 +9,85 @@ namespace Paillave.Etl.Http;
 public class HttpFileValueProcessor
     : FileValueProcessorBase<HttpAdapterConnectionParameters, HttpAdapterProcessorParameters>
 {
-    public HttpFileValueProcessor(string code, string name, string connectionName, HttpAdapterConnectionParameters connectionParameters, HttpAdapterProcessorParameters processorParameters)
+    public HttpFileValueProcessor(
+        string code,
+        string name,
+        string connectionName,
+        HttpAdapterConnectionParameters connectionParameters,
+        HttpAdapterProcessorParameters processorParameters
+    )
         : base(code, name, connectionName, connectionParameters, processorParameters) { }
-
-    public HttpFileValueProcessor(string code, string name, string url, string method, object? body)
-        : base(
-            code, name, url,
-            new HttpAdapterConnectionParameters
-            {
-                Url = url
-            },
-            new HttpAdapterProcessorParameters
-            {
-                Method = method,
-                Body = body
-            })
-    { }
 
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
 
-    protected override void Process(IFileValue fileValue, HttpAdapterConnectionParameters connectionParameters,
-                                    HttpAdapterProcessorParameters processorParameters, Action<IFileValue> push,
-                                    CancellationToken cancellationToken, IExecutionContext context)
+    protected override void Process(
+        IFileValue fileValue,
+        HttpAdapterConnectionParameters connectionParameters,
+        HttpAdapterProcessorParameters processorParameters,
+        Action<IFileValue> push,
+        CancellationToken cancellationToken,
+        IExecutionContext context
+    )
     {
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
 
-        var httpClientFactory = context.DependencyResolver.Resolve<IHttpClientFactory>();
-        using var httpClient = httpClientFactory.CreateClient();
+        var httpClient = IHttpConnectionInfoEx.CreateHttpClient(
+            connectionParameters,
+            processorParameters
+        );
 
-        if (processorParameters.Method is not "Post")
-            throw new NotImplementedException();
+        var response = HttpHelpers
+            .GetResponse(connectionParameters, processorParameters, httpClient)
+            .Result;
 
-        var response = httpClient.PostAsync(connectionParameters.Url, new StreamContent(stream)).Result;
-        var content = response.Content.ReadAsByteArrayAsync().Result;
-        var fileName = response.GetFileName(connectionParameters.Url);
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception(
+                $"Error for {Name}  -->  {response.StatusCode}  -  {response.ReasonPhrase}"
+            );
+        }
 
-        push(new HttpFileValue(fileName, content, connectionParameters.Url, Code, ConnectionName, Name));
+        if (processorParameters.UserResponseAsOutput)
+        {
+            // var content = response.Content.ReadAsByteArrayAsync().Result;
+            var content = new MemoryStream(
+                response.Content.ReadAsByteArrayAsync().Result ?? Array.Empty<byte>()
+            );
+            var fileName = response.GetFileName(connectionParameters.Url);
+
+            var responseFormat = RequestFormatParser.ParseRequestFormat(
+                response.Content.Headers.ContentType?.MediaType ?? "text/plain" // Fallback to plain text
+            );
+
+            var newProcessorParameters = new HttpAdapterParametersBase(processorParameters)
+            {
+                ResponseFormat = responseFormat,
+            };
+
+            push(
+                new HttpPostFileValue(
+                    content,
+                    fileName,
+                    new HttpPostFileValueMetadata
+                    {
+                        ConnectionInfo = connectionParameters,
+                        Parameters = newProcessorParameters,
+                    }
+                )
+            );
+            return;
+        }
+
+        push(fileValue);
     }
 
-    protected override void Test(HttpAdapterConnectionParameters connectionParameters,
-                                 HttpAdapterProcessorParameters processorParameters)
+    protected override void Test(
+        HttpAdapterConnectionParameters connectionParameters,
+        HttpAdapterProcessorParameters processorParameters
+    )
     {
         using var httpClient = new HttpClient();
-        httpClient.PostAsync(connectionParameters.Url, HttpRequestBodyEx.GetJsonBody(processorParameters.Body)).Wait();
+        HttpHelpers.GetResponse(connectionParameters, processorParameters, httpClient).Wait();
     }
 }

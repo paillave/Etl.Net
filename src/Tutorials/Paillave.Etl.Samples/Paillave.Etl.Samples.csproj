@@ -16,6 +16,8 @@
     <ProjectReference Include="..\..\Paillave.Etl.ExecutionToolkit\Paillave.Etl.ExecutionToolkit.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.S3\Paillave.Etl.S3.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.GraphApi\Paillave.Etl.GraphApi.csproj" />
+    <ProjectReference Include="..\..\Paillave.Etl.Http\Paillave.Etl.Http.csproj" />
+    <ProjectReference Include="..\..\Paillave.Etl.JsonFile\Paillave.Etl.JsonFile.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +35,5 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
 
 </Project>
