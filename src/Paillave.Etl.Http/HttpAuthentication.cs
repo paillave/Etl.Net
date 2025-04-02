@@ -11,7 +11,7 @@ public class HttpAuthentication
     public BearerAuthentication? Bearer { get; set; }
     public BasicAuthentication? Basic { get; set; }
     public DigestAuthentication? Digest { get; set; }
-    public XCBACCESSAuthentication? XCBACCESS { get; set; }
+    public XCBACCESSAuthentication? Xcbaccess { get; set; }
 }
 
 public abstract class AbstractAuthentication

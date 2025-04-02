@@ -52,9 +52,9 @@ public static class IHttpConnectionInfoEx
             connectionParameters.Authentication.Digest.AddAuthenticationHeaders(client);
         else if (connectionParameters.Authentication?.Digest != null)
             connectionParameters.Authentication.Digest.AddAuthenticationHeaders(client);
-        else if (connectionParameters.Authentication?.XCBACCESS != null)
+        else if (connectionParameters.Authentication?.Xcbaccess != null)
         {
-            connectionParameters.Authentication.XCBACCESS.SetMethodPathBody(
+            connectionParameters.Authentication.Xcbaccess.SetMethodPathBody(
                 adapterParameters.Method,
                 connectionParameters.Url,
                 HttpHelpers.GetRequestBodyAsString(
@@ -62,7 +62,7 @@ public static class IHttpConnectionInfoEx
                     adapterParameters.RequestFormat
                 )
             );
-            connectionParameters.Authentication.XCBACCESS.AddAuthenticationHeaders(client);
+            connectionParameters.Authentication.Xcbaccess.AddAuthenticationHeaders(client);
         }
 
         return client;

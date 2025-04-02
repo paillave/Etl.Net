@@ -32,7 +32,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
         Name = name;
         _connectionInfo = connectionInfo ?? new HttpAdapterConnectionParameters { Url = url };
         _parameters =
-            parameters ?? new HttpAdapterParametersBase() { Method = HttpMethodCustomEnum.GET };
+            parameters ?? new HttpAdapterParametersBase() { Method = HttpMethodCustomEnum.Get };
     }
 
     public override StreamWithResource OpenContent() => new(GetContent());
@@ -64,7 +64,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 
         var parameters = new HttpAdapterParametersBase(_parameters)
         {
-            Method = HttpMethodCustomEnum.DELETE,
+            Method = HttpMethodCustomEnum.Delete,
         };
 
         var response = HttpHelpers.GetResponse(_connectionInfo, parameters, httpClient).Result;

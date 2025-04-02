@@ -13,9 +13,9 @@ public class HttpAdapterConnectionParameters : IHttpConnectionInfo
 
 public class HttpAdapterParametersBase
 {
-    public HttpMethodCustomEnum Method { get; set; } = HttpMethodCustomEnum.GET;
-    public RequestFormat ResponseFormat { get; set; } = RequestFormat.JSON;
-    public RequestFormat RequestFormat { get; set; } = RequestFormat.JSON;
+    public HttpMethodCustomEnum Method { get; set; } = HttpMethodCustomEnum.Get;
+    public RequestFormat ResponseFormat { get; set; } = RequestFormat.Json;
+    public RequestFormat RequestFormat { get; set; } = RequestFormat.Json;
     public object? Body { get; set; }
     public Dictionary<string, string>? AdditionalHeaders { get; set; }
     public Dictionary<string, string>? AdditionalParameters { get; set; }
@@ -69,21 +69,21 @@ public class HttpCallArgs
 
 public enum HttpMethodCustomEnum
 {
-    GET = 0,
-    POST = 1,
-    DELETE = 2,
+    Get = 0,
+    Post = 1,
+    Delete = 2,
 }
 
 public enum RequestFormat
 {
-    JSON,
-    XML,
-    PlainText,
-    HTML,
-    JPEG,
-    PNG,
-    GIF,
-    SVG,
+    Json,
+    Xml,
+    PlainTxt,
+    Html,
+    Jpeg,
+    Png,
+    Gif,
+    Svg,
     WebP,
 }
 
@@ -93,14 +93,14 @@ public class RequestFormatParser
     {
         return requestFormat.ToLower() switch
         {
-            "application/json" => RequestFormat.JSON,
-            "application/xml" => RequestFormat.XML,
-            "text/plain" => RequestFormat.PlainText,
-            "text/html" => RequestFormat.HTML,
-            "image/jpeg" => RequestFormat.JPEG,
-            "image/png" => RequestFormat.PNG,
-            "image/gif" => RequestFormat.GIF,
-            "image/svg+xml" => RequestFormat.SVG,
+            "application/json" => RequestFormat.Json,
+            "application/xml" => RequestFormat.Xml,
+            "text/plain" => RequestFormat.PlainTxt,
+            "text/html" => RequestFormat.Html,
+            "image/jpeg" => RequestFormat.Jpeg,
+            "image/png" => RequestFormat.Png,
+            "image/gif" => RequestFormat.Gif,
+            "image/svg+xml" => RequestFormat.Svg,
             "image/webp" => RequestFormat.WebP,
             _ => throw new NotImplementedException($"Unsupported format: {requestFormat}"),
         };

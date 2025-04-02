@@ -31,7 +31,7 @@ namespace Paillave.Etl.Samples
             };
             var httpAdapterProviderParameters = new HttpAdapterProviderParameters
             {
-                Method = HttpMethodCustomEnum.GET,
+                Method = HttpMethodCustomEnum.Get,
             };
             var httpProcessorConnectionParameters = new HttpAdapterConnectionParameters
             {
@@ -39,12 +39,12 @@ namespace Paillave.Etl.Samples
             };
             var httpAdapterProcessorsParameters = new HttpAdapterProcessorParameters
             {
-                Method = HttpMethodCustomEnum.POST,
+                Method = HttpMethodCustomEnum.Post,
                 UserResponseAsOutput = true,
             };
             var httpAdapterProcessorsParameters2 = new HttpAdapterProcessorParameters
             {
-                Method = HttpMethodCustomEnum.POST,
+                Method = HttpMethodCustomEnum.Post,
                 UserResponseAsOutput = false,
             };
 

@@ -22,22 +22,22 @@ namespace Paillave.Etl.Http
             {
                 switch (requestFormat)
                 {
-                    case RequestFormat.JSON:
+                    case RequestFormat.Json:
                         return new StringContent("{}", Encoding.UTF8, "application/json");
 
-                    case RequestFormat.XML:
+                    case RequestFormat.Xml:
                         return new StringContent("<root></root>", Encoding.UTF8, "application/xml");
 
-                    case RequestFormat.PlainText:
+                    case RequestFormat.PlainTxt:
                         return new StringContent(string.Empty, Encoding.UTF8, "text/plain");
 
-                    case RequestFormat.HTML:
+                    case RequestFormat.Html:
                         return new StringContent("<html></html>", Encoding.UTF8, "text/html");
 
-                    case RequestFormat.JPEG:
-                    case RequestFormat.PNG:
-                    case RequestFormat.GIF:
-                    case RequestFormat.SVG:
+                    case RequestFormat.Jpeg:
+                    case RequestFormat.Png:
+                    case RequestFormat.Gif:
+                    case RequestFormat.Svg:
                     case RequestFormat.WebP:
                         return new ByteArrayContent(Array.Empty<byte>());
 
@@ -49,11 +49,11 @@ namespace Paillave.Etl.Http
             // Process based on response format
             switch (requestFormat)
             {
-                case RequestFormat.JSON:
+                case RequestFormat.Json:
                     var jsonBody = JsonConvert.SerializeObject(body);
                     return new StringContent(jsonBody, Encoding.UTF8, "application/json");
 
-                case RequestFormat.XML:
+                case RequestFormat.Xml:
                     try
                     {
                         var xmlSerializer = new XmlSerializer(body.GetType());
@@ -75,16 +75,16 @@ namespace Paillave.Etl.Http
                         );
                     }
 
-                case RequestFormat.PlainText:
+                case RequestFormat.PlainTxt:
                     return new StringContent(body?.ToString() ?? "", Encoding.UTF8, "text/plain");
 
-                case RequestFormat.HTML:
+                case RequestFormat.Html:
                     return new StringContent(body?.ToString() ?? "", Encoding.UTF8, "text/html");
 
-                case RequestFormat.JPEG:
-                case RequestFormat.PNG:
-                case RequestFormat.GIF:
-                case RequestFormat.SVG:
+                case RequestFormat.Jpeg:
+                case RequestFormat.Png:
+                case RequestFormat.Gif:
+                case RequestFormat.Svg:
                 case RequestFormat.WebP:
                     if (body is byte[] byteArray)
                     {
@@ -107,10 +107,10 @@ namespace Paillave.Etl.Http
             if (
                 new RequestFormat[]
                 {
-                    RequestFormat.JPEG,
-                    RequestFormat.PNG,
-                    RequestFormat.GIF,
-                    RequestFormat.SVG,
+                    RequestFormat.Jpeg,
+                    RequestFormat.Png,
+                    RequestFormat.Gif,
+                    RequestFormat.Svg,
                     RequestFormat.WebP,
                 }.Contains(requestFormat)
             )
@@ -155,7 +155,7 @@ namespace Paillave.Etl.Http
                 Method = new HttpMethod(adapterParametersBase.Method.ToString()),
             };
 
-            if (adapterParametersBase.Method == HttpMethodCustomEnum.POST)
+            if (adapterParametersBase.Method == HttpMethodCustomEnum.Post)
             {
                 // requestMessage.Content =
                 //     stream
@@ -171,8 +171,8 @@ namespace Paillave.Etl.Http
 
             return adapterParametersBase.Method switch
             {
-                HttpMethodCustomEnum.GET => httpClient.GetAsync(finalUri),
-                HttpMethodCustomEnum.POST => httpClient.SendAsync(requestMessage),
+                HttpMethodCustomEnum.Get => httpClient.GetAsync(finalUri),
+                HttpMethodCustomEnum.Post => httpClient.SendAsync(requestMessage),
                 // "PUT" => httpClient.SendAsync(requestMessage),
                 // "DELETE" => httpClient.DeleteAsync(finalUri),
                 // "PATCH" => httpClient.SendAsync(requestMessage),
