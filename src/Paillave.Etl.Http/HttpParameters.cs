@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Http;
 
@@ -110,43 +111,43 @@ public class RequestFormatParser
 
 
 
-// public class HttpProviderProcessorAdapter
-//     : ProviderProcessorAdapterBase<
-//         HttpAdapterConnectionParameters,
-//         HttpAdapterProviderParameters,
-//         HttpAdapterProcessorParameters
-//     >
-// {
-//     public override string Description => "Get/send HTTP responses/requests";
-//     public override string Name => "Http";
+public class HttpProviderProcessorAdapter
+    : ProviderProcessorAdapterBase<
+        HttpAdapterConnectionParameters,
+        HttpAdapterProviderParameters,
+        HttpAdapterProcessorParameters
+    >
+{
+    public override string Description => "Get/send HTTP responses/requests";
+    public override string Name => "Http";
 
-//     protected override IFileValueProvider CreateProvider(
-//         string code,
-//         string name,
-//         string connectionName,
-//         HttpAdapterConnectionParameters connectionParameters,
-//         HttpAdapterProviderParameters inputParameters
-//     ) =>
-//         new HttpFileValueProvider(
-//             code,
-//             name,
-//             connectionName,
-//             connectionParameters,
-//             inputParameters
-//         );
+    protected override IFileValueProvider CreateProvider(
+        string code,
+        string name,
+        string connectionName,
+        HttpAdapterConnectionParameters connectionParameters,
+        HttpAdapterProviderParameters inputParameters
+    ) =>
+        new HttpFileValueProvider(
+            code,
+            name,
+            connectionName,
+            connectionParameters,
+            inputParameters
+        );
 
-//     protected override IFileValueProcessor CreateProcessor(
-//         string code,
-//         string name,
-//         string connectionName,
-//         HttpAdapterConnectionParameters connectionParameters,
-//         HttpAdapterProcessorParameters outputParameters
-//     ) =>
-//         new HttpFileValueProcessor(
-//             code,
-//             name,
-//             connectionName,
-//             connectionParameters,
-//             outputParameters
-//         );
-// }
+    protected override IFileValueProcessor CreateProcessor(
+        string code,
+        string name,
+        string connectionName,
+        HttpAdapterConnectionParameters connectionParameters,
+        HttpAdapterProcessorParameters outputParameters
+    ) =>
+        new HttpFileValueProcessor(
+            code,
+            name,
+            connectionName,
+            connectionParameters,
+            outputParameters
+        );
+}
