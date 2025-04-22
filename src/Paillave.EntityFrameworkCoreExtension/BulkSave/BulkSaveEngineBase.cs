@@ -94,7 +94,7 @@ public abstract class BulkSaveEngineBase<T> : IDisposable where T : class
         dbComputedProperties = allProperties.Where(i => (i.ValueGenerated & ValueGenerated.OnAddOrUpdate) != ValueGenerated.Never).ToList();
         notPivotComputedProperties = dbComputedProperties.Except(_propertiesForPivotSet.SelectMany(i => i)).ToList();
 
-        defaultValuesProperties = allProperties.Where(i => i.GetDefaultValueSql() != null).ToList();
+        defaultValuesProperties = allProperties.Where(i => i.GetDefaultValueSql() != null || i.GetDefaultValue() != null).ToList();
 
         _propertiesToBulkLoad = allProperties.Except(notPivotComputedProperties).ToList();
 
