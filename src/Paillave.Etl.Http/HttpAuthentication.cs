@@ -14,12 +14,12 @@ public class HttpAuthentication
     public XCBACCESSAuthentication? Xcbaccess { get; set; }
 }
 
-public interface IAuthentication
+public interface IAuthenticationParameters
 {
     HttpClient AddAuthenticationHeaders(HttpClient client);
 }
 
-public class DigestAuthentication : IAuthentication
+public class DigestAuthentication : IAuthenticationParameters
 {
     public required string Url { get; set; }
     public required string User { get; set; }
@@ -68,7 +68,7 @@ public enum DigestAlgorithm
     MD5 = 0,
 }
 
-public class BasicAuthentication : IAuthentication
+public class BasicAuthentication : IAuthenticationParameters
 {
     public required string User { get; set; }
     public required string Password { get; set; }
@@ -85,7 +85,7 @@ public class BasicAuthentication : IAuthentication
     }
 }
 
-public class BearerAuthentication : IAuthentication
+public class BearerAuthentication : IAuthenticationParameters
 {
     public required string Authority { get; set; }
     public required string ClientId { get; set; }
@@ -98,7 +98,7 @@ public class BearerAuthentication : IAuthentication
     }
 }
 
-public class XCBACCESSAuthentication : IAuthentication
+public class XCBACCESSAuthentication : IAuthenticationParameters
 {
     public required string AccessKey { get; set; }
     public required string SigningKey { get; set; }
