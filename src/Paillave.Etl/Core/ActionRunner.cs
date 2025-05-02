@@ -28,7 +28,7 @@ namespace Paillave.Etl.Core
                 {
                     return action();
                 }
-                catch
+                catch(Exception ex)
                 {
                     if (--attempts <= 0) throw;
                 }

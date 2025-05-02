@@ -8,7 +8,7 @@ public static class IHttpConnectionInfoEx
 {
     public static HttpClient CreateHttpClient(
         IHttpConnectionInfo httpConnectionInfo,
-        HttpAdapterParametersBase adapterParameters
+        IHttpAdapterParameters adapterParameters
     )
     {
         HttpClient client = new HttpClient();
@@ -41,7 +41,7 @@ public static class IHttpConnectionInfoEx
     private static HttpClient ManageAuthentication(
         HttpClient client,
         IHttpConnectionInfo connectionParameters,
-        HttpAdapterParametersBase adapterParameters
+        IHttpAdapterParameters adapterParameters
     )
     {
         if (connectionParameters.Authentication?.Bearer != null)
