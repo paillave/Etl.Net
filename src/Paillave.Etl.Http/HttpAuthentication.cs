@@ -14,12 +14,12 @@ public class HttpAuthentication
     public XCBACCESSAuthentication? Xcbaccess { get; set; }
 }
 
-public abstract class AbstractAuthentication
+public interface IAuthentication
 {
-    public abstract HttpClient AddAuthenticationHeaders(HttpClient client);
+    HttpClient AddAuthenticationHeaders(HttpClient client);
 }
 
-public class DigestAuthentication : AbstractAuthentication
+public class DigestAuthentication : IAuthentication
 {
     public required string Url { get; set; }
     public required string User { get; set; }
@@ -27,7 +27,7 @@ public class DigestAuthentication : AbstractAuthentication
     public required string QualityOfProtection { get; set; }
     public required DigestAlgorithm Algorithm { get; set; } = DigestAlgorithm.MD5;
 
-    public override HttpClient AddAuthenticationHeaders(HttpClient client)
+    public HttpClient AddAuthenticationHeaders(HttpClient client)
     {
         throw new NotImplementedException("Digest authentication not tested enough");
 
@@ -68,12 +68,12 @@ public enum DigestAlgorithm
     MD5 = 0,
 }
 
-public class BasicAuthentication : AbstractAuthentication
+public class BasicAuthentication : IAuthentication
 {
     public required string User { get; set; }
     public required string Password { get; set; }
 
-    public override HttpClient AddAuthenticationHeaders(HttpClient client)
+    public HttpClient AddAuthenticationHeaders(HttpClient client)
     {
         string credentials = $"{User}:{Password}";
         string base64Credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes(credentials));
@@ -85,20 +85,20 @@ public class BasicAuthentication : AbstractAuthentication
     }
 }
 
-public class BearerAuthentication : AbstractAuthentication
+public class BearerAuthentication : IAuthentication
 {
     public required string Authority { get; set; }
     public required string ClientId { get; set; }
     public required string Passphrase { get; set; }
 
-    public override HttpClient AddAuthenticationHeaders(HttpClient client)
+    public HttpClient AddAuthenticationHeaders(HttpClient client)
     {
         throw new NotImplementedException("Bearer authentication not implemented");
         // return client;
     }
 }
 
-public class XCBACCESSAuthentication : AbstractAuthentication
+public class XCBACCESSAuthentication : IAuthentication
 {
     public required string AccessKey { get; set; }
     public required string SigningKey { get; set; }
@@ -115,7 +115,7 @@ public class XCBACCESSAuthentication : AbstractAuthentication
         Body = body;
     }
 
-    public override HttpClient AddAuthenticationHeaders(HttpClient client)
+    public HttpClient AddAuthenticationHeaders(HttpClient client)
     {
         var timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
         var signature = HttpHelpers.Sign(
