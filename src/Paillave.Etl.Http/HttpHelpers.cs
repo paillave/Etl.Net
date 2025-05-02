@@ -124,7 +124,7 @@ namespace Paillave.Etl.Http
 
         public static Task<HttpResponseMessage> GetResponse(
             IHttpConnectionInfo connectionParameters,
-            HttpAdapterParametersBase adapterParametersBase,
+            IHttpAdapterParameters adapterParametersBase,
             HttpClient httpClient,
             StreamContent? stream = null
         )

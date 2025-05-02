@@ -60,7 +60,7 @@ public class HttpFileValueProcessor
                 response.Content.Headers.ContentType?.MediaType ?? "text/plain" // Fallback to plain text
             );
 
-            var newProcessorParameters = new HttpAdapterParametersBase(processorParameters)
+            var newProcessorParameters = new HttpAdapterProviderParameters(processorParameters)
             {
                 ResponseFormat = responseFormat,
             };
