@@ -236,10 +236,11 @@ namespace Paillave.Etl.Http
         {
             var url = new Uri(uri);
             var path = url.AbsolutePath;
+            var capitalizedMethod = method.ToUpperInvariant();
 
             try
             {
-                string message = $"{timestamp}{method}{path}{body}";
+                string message = $"{timestamp}{capitalizedMethod}{path}{body}";
 
                 byte[] hmacKey;
                 try
@@ -250,7 +251,7 @@ namespace Paillave.Etl.Http
                 {
                     hmacKey = Encoding.UTF8.GetBytes(signingKey);
                 }
-
+                
                 using var hmac = new HMACSHA256(hmacKey);
                 byte[] signature = hmac.ComputeHash(Encoding.UTF8.GetBytes(message));
                 return Convert.ToBase64String(signature);

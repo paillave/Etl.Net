@@ -12,19 +12,16 @@ public static class IHttpConnectionInfoEx
     )
     {
         HttpClient client = new HttpClient();
-        client = ManageAdditionalHeaders(client, adapterParameters.AdditionalHeaders);
+        client = ManageHeaders(client, httpConnectionInfo.HttpHeaders);
         client = ManageAuthentication(client, httpConnectionInfo, adapterParameters);
         return client;
     }
 
-    private static HttpClient ManageAdditionalHeaders(
-        HttpClient client,
-        Dictionary<string, string>? extraHeaders
-    )
+    private static HttpClient ManageHeaders(HttpClient client, Dictionary<string, string>? headers)
     {
-        if (extraHeaders != null)
+        if (headers != null)
         {
-            foreach (var header in extraHeaders)
+            foreach (var header in headers)
             {
                 if (client.DefaultRequestHeaders.Contains(header.Key))
                     throw new ArgumentException(
