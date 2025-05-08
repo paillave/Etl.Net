@@ -49,7 +49,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(
-                $"Error for {Name}  -->  {response.StatusCode}  -  {response.ReasonPhrase}"
+                $"Error for {Name}  -->  StatusCode: {response.StatusCode}  -  ReasonPhrase: {response.ReasonPhrase}"
             );
         }
 
