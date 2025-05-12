@@ -9,7 +9,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 {
     public override string Name { get; }
     private readonly IHttpConnectionInfo _connectionInfo;
-    private readonly HttpAdapterParametersBase _parameters;
+    private readonly IHttpAdapterParameters _parameters;
 
     public HttpFileValue(
         string name,
@@ -18,21 +18,21 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
         string connectionName,
         string connectorName,
         IHttpConnectionInfo? connectionInfo = null,
-        HttpAdapterParametersBase? parameters = null
+        IHttpAdapterParameters? parameters = null
     )
         : base(
             new HttpFileValueMetadata
             {
                 ConnectionInfo =
                     connectionInfo ?? new HttpAdapterConnectionParameters { Url = url },
-                Parameters = parameters ?? new HttpAdapterParametersBase { },
+                Parameters = parameters ?? new HttpAdapterProviderParameters { },
             }
         )
     {
         Name = name;
         _connectionInfo = connectionInfo ?? new HttpAdapterConnectionParameters { Url = url };
         _parameters =
-            parameters ?? new HttpAdapterParametersBase() { Method = HttpMethodCustomEnum.Get };
+            parameters ?? new HttpAdapterProviderParameters() { Method = HttpMethodCustomEnum.Get };
     }
 
     public override StreamWithResource OpenContent() => new(GetContent());
@@ -49,7 +49,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
         if (!response.IsSuccessStatusCode)
         {
             throw new Exception(
-                $"Error for {Name}  -->  {response.StatusCode}  -  {response.ReasonPhrase}"
+                $"Error for {Name}  -->  StatusCode: {response.StatusCode}  -  ReasonPhrase: {response.ReasonPhrase}"
             );
         }
 
@@ -62,7 +62,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
     {
         var httpClient = IHttpConnectionInfoEx.CreateHttpClient(_connectionInfo, _parameters);
 
-        var parameters = new HttpAdapterParametersBase(_parameters)
+        var parameters = new HttpAdapterProviderParameters(_parameters)
         {
             Method = HttpMethodCustomEnum.Delete,
         };
@@ -81,5 +81,5 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 public class HttpFileValueMetadata : FileValueMetadataBase
 {
     public required IHttpConnectionInfo ConnectionInfo { get; set; }
-    public required HttpAdapterParametersBase Parameters { get; set; }
+    public required IHttpAdapterParameters Parameters { get; set; }
 }

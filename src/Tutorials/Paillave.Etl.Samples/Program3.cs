@@ -79,22 +79,23 @@
 //                 .Wait();
 
 
-//             // var builder = new DbContextOptionsBuilder<PmsDbContext>();
-//             // var context = new PmsDbContext(builder.Options, new TenantContext(1));
-//             // var cur = context.Set<Currency>().First();
-//             // var secus = new List<Security> {
-//             //     new FxForward
-//             //     {
-//             //         InternalCode="coucou",
-//             //         Name="coucou",
-//             //         MaturityDate=DateTime.Today,
-//             //         CurrencyId=cur.Id,
-//             //         SellCurrencyId=cur.Id,
-//             //         BuyAmount=10,
-//             //         IsOtc=true,
-//             //         PricingFrequency=FrequencyType.Daily
-//             //     }
-//             // };
+            // var builder = new DbContextOptionsBuilder<PmsDbContext>();
+            // // builder.UseSqlServer("Server=tcp:fundprocessprod.database.windows.net,1433;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=False;Connection Timeout=300;");
+            // var context = new PmsDbContext(builder.Options, new TenantContext(1));
+            // var cur = context.Set<Currency>().First();
+            // var secus = new List<Security> {
+            //     new FxForward
+            //     {
+            //         InternalCode="coucou",
+            //         Name="coucou",
+            //         MaturityDate=DateTime.Today,
+            //         CurrencyId=cur.Id,
+            //         SellCurrencyId=cur.Id,
+            //         BuyAmount=10,
+            //         IsOtc=true,
+            //         PricingFrequency=FrequencyType.Daily
+            //     }
+            // };
 
 //             // var executionOptions = new ExecutionOptions<List<Security>>
 //             // {

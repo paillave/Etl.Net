@@ -12,7 +12,7 @@ public class HttpAdapterConnectionParameters : IHttpConnectionInfo
     public Dictionary<string, string>? HttpHeaders { get; set; }
 }
 
-public class HttpAdapterParametersBase
+public class HttpAdapterProviderParameters : IHttpAdapterParameters
 {
     public HttpMethodCustomEnum Method { get; set; } = HttpMethodCustomEnum.Get;
     public RequestFormat ResponseFormat { get; set; } = RequestFormat.Json;
@@ -21,9 +21,9 @@ public class HttpAdapterParametersBase
     public Dictionary<string, string>? AdditionalHeaders { get; set; }
     public Dictionary<string, string>? AdditionalParameters { get; set; }
 
-    public HttpAdapterParametersBase() { }
+    public HttpAdapterProviderParameters() { }
 
-    public HttpAdapterParametersBase(HttpAdapterParametersBase other)
+    public HttpAdapterProviderParameters(IHttpAdapterParameters other)
     {
         Method = other.Method;
         ResponseFormat = other.ResponseFormat;
@@ -40,32 +40,44 @@ public class HttpAdapterParametersBase
     }
 }
 
-public class HttpAdapterProviderParameters : HttpAdapterParametersBase
+public class HttpAdapterProcessorParameters : IHttpAdapterParameters
 {
-    public HttpAdapterProviderParameters() { }
+    public HttpMethodCustomEnum Method { get; set; } = HttpMethodCustomEnum.Get;
+    public RequestFormat ResponseFormat { get; set; } = RequestFormat.Json;
+    public RequestFormat RequestFormat { get; set; } = RequestFormat.Json;
+    public object? Body { get; set; }
+    public Dictionary<string, string>? AdditionalHeaders { get; set; }
+    public Dictionary<string, string>? AdditionalParameters { get; set; }
 
-    public HttpAdapterProviderParameters(HttpAdapterProviderParameters other)
-        : base(other) { }
-}
-
-public class HttpAdapterProcessorParameters : HttpAdapterParametersBase
-{
     public bool UseStreamCopy { get; set; } = true;
     public bool UserResponseAsOutput { get; set; } = false;
 
     public HttpAdapterProcessorParameters() { }
 
     public HttpAdapterProcessorParameters(HttpAdapterProcessorParameters other)
-        : base(other)
     {
+        Method = other.Method;
+        ResponseFormat = other.ResponseFormat;
+        RequestFormat = other.RequestFormat;
+        Body = other.Body;
+        AdditionalHeaders =
+            other.AdditionalHeaders != null
+                ? new Dictionary<string, string>(other.AdditionalHeaders)
+                : null;
+        AdditionalParameters =
+            other.AdditionalParameters != null
+                ? new Dictionary<string, string>(other.AdditionalParameters)
+                : null;
+
         UseStreamCopy = other.UseStreamCopy;
+        UserResponseAsOutput = other.UserResponseAsOutput;
     }
 }
 
 public class HttpCallArgs
 {
     public required HttpAdapterConnectionParameters ConnectionParameters { get; set; }
-    public required HttpAdapterParametersBase AdapterParameters { get; set; }
+    public required IHttpAdapterParameters AdapterParameters { get; set; }
 }
 
 public enum HttpMethodCustomEnum
@@ -107,9 +119,6 @@ public class RequestFormatParser
         };
     }
 }
-
-
-
 
 public class HttpProviderProcessorAdapter
     : ProviderProcessorAdapterBase<
