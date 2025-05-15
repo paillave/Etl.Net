@@ -38,7 +38,7 @@ public partial class GraphApiMailFileValueProvider : FileValueProviderBase<Graph
     {
         // List<GraphApiMailFileValue> fileValues = new List<GraphApiMailFileValue>();
         using var graphClient = connectionParameters.CreateGraphApiClient();
-        var inputFolder = graphClient.GetFolderAsync(connectionParameters.UserId, providerParameters.Folder, cancellationToken).Result;
+        var inputFolder = graphClient.GetMailFolderAsync(connectionParameters.UserId, providerParameters.Folder, cancellationToken).Result;
 
         var matcher = string.IsNullOrWhiteSpace(providerParameters.AttachmentNamePattern) ? null : new Matcher().AddInclude(providerParameters.AttachmentNamePattern);
         graphClient.Users[connectionParameters.UserId].MailFolders[inputFolder.Id].Messages
