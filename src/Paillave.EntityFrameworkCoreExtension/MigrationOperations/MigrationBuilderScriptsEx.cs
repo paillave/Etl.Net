@@ -1,3 +1,4 @@
+using System.Buffers.Text;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Paillave.EntityFrameworkCoreExtension.MigrationOperations

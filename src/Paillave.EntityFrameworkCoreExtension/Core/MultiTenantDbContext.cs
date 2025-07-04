@@ -81,8 +81,12 @@ public class MultiTenantDbContext : DbContext
             {
                 UpdateEntityForMultiTenancy(item);
             }
+            OnBeforeSaveChanges();
             return base.SaveChanges();
         }
+    }
+    public virtual void OnBeforeSaveChanges()
+    {
     }
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
@@ -93,6 +97,7 @@ public class MultiTenantDbContext : DbContext
             {
                 UpdateEntityForMultiTenancy(item);
             }
+            OnBeforeSaveChanges();
             return base.SaveChangesAsync(cancellationToken);
         }
     }
