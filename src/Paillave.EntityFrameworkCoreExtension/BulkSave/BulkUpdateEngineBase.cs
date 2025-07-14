@@ -51,12 +51,10 @@ public abstract class BulkUpdateEngineBase<T, TSource> where T : class
 
         var valuesSetters = SettersExtractor.GetGetters(updateValues);
         var keySetters = SettersExtractor.GetGetters(updateKey);
-        if (typeof(IMultiTenantEntity).IsAssignableFrom(typeof(T)))
+        var tenantIdProp = allProperties.FirstOrDefault(i => i.Name == "TenantId");
+        if (tenantIdProp != null)
         {
-            var tenantIdProp = allProperties.First(i => i.Name == nameof(IMultiTenantEntity.TenantId));
-            var columnName = tenantIdProp.GetColumnName(this.StoreObject);
-            if (columnName == null)
-                throw new InvalidOperationException("TenantId column is not defined for Type: " + typeof(T).Name);
+            var columnName = tenantIdProp.GetColumnName(this.StoreObject) ?? throw new InvalidOperationException("TenantId column is not defined for Type: " + typeof(T).Name);
             if (!keySetters.ContainsKey(columnName))
             {
                 if (tenantIdProp.PropertyInfo == null)

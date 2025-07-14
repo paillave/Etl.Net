@@ -7,7 +7,8 @@ using System.Threading;
 using System.Collections.Generic;
 using Paillave.EntityFrameworkCoreExtension.MigrationOperations;
 using System.Collections;
-using System.Reflection;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Paillave.EntityFrameworkCoreExtension.Core;
 
@@ -22,6 +23,9 @@ public class MultiTenantDbContext : DbContext
 
     }
     public int TenantId { get; }
+    private Dictionary<Type, IEntityType>? _inTenantEntities = null;
+    // private record EntitySummary(IProperty TenantIdProperty)
+    private Dictionary<Type, IEntityType> InTenantEntities => _inTenantEntities ??= this.Model.GetEntityTypes().Where(i => i.FindProperty("TenantId") != null).ToDictionary(i => i.ClrType);
 
     // https://docs.microsoft.com/en-us/ef/core/providers/sqlite/limitations
     // https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/providers?tabs=dotnet-core-cli
@@ -61,7 +65,7 @@ public class MultiTenantDbContext : DbContext
                 }
                 else if (type.GetConstructor(new Type[] { this.GetType() }) != null)
                 {
-                    target.Invoke(modelBuilder, new[] { Activator.CreateInstance(type, new object[] { this }) });
+                    target.Invoke(modelBuilder, [Activator.CreateInstance(type, [this])]);
                 }
             }
         }
@@ -77,9 +81,10 @@ public class MultiTenantDbContext : DbContext
         lock (_sync)
         {
             ChangeTracker.DetectChanges();
-            foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Added).Select(i => i.Entity).ToList())
+            var processed = new HashSet<object>();
+            foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Added).ToList())
             {
-                UpdateEntityForMultiTenancy(item);
+                InnerUpdateEntityForMultiTenancy(processed, item);
             }
             OnBeforeSaveChanges();
             return base.SaveChanges();
@@ -93,9 +98,10 @@ public class MultiTenantDbContext : DbContext
         lock (_sync)
         {
             ChangeTracker.DetectChanges();
-            foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Added).Select(i => i.Entity).ToList())
+            var processed = new HashSet<object>();
+            foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Added).ToList())
             {
-                UpdateEntityForMultiTenancy(item);
+                InnerUpdateEntityForMultiTenancy(processed, item);
             }
             OnBeforeSaveChanges();
             return base.SaveChangesAsync(cancellationToken);
@@ -103,43 +109,36 @@ public class MultiTenantDbContext : DbContext
     }
     public void UpdateEntitiesForMultiTenancy<T>(IEnumerable<T> items) where T : class
     {
-        foreach (var item in items) this.UpdateEntityForMultiTenancy(item);
+        var processed = new HashSet<object>();
+        if (items == null) return;
+        foreach (var item in items) this.InnerUpdateEntityForMultiTenancy(processed, Entry(item));
     }
     public void UpdateEntityForMultiTenancy(object item)
     {
         var processed = new HashSet<object>();
-        InnerUpdateEntityForMultiTenancy(processed, item);
+        if (item == null) return;
+        InnerUpdateEntityForMultiTenancy(processed, Entry(item));
     }
-    private readonly Dictionary<Type, PropertyInfo[]> _propertyInfosToSetForMultitenancies = new Dictionary<Type, PropertyInfo[]>();
-    private readonly object _propertyInfosToSetForMultitenanciesLock = new object();
-    private PropertyInfo[] GetPropertiesForMultiTenancy(Type type)
+    private void InnerUpdateEntityForMultiTenancy(HashSet<object> processedEntities, EntityEntry entityEntry)
     {
-        lock (_propertyInfosToSetForMultitenanciesLock)
+        if (processedEntities.Contains(entityEntry.Entity)) return;
+        processedEntities.Add(entityEntry.Entity);
+        if (TenantId == 0 || !InTenantEntities.TryGetValue(entityEntry.Metadata.ClrType, out var entityType)) return;
+        entityEntry.Property("TenantId").CurrentValue = TenantId;
+        foreach (var navigation in entityEntry.Navigations)
         {
-            if (_propertyInfosToSetForMultitenancies.TryGetValue(type, out var properties)) return properties;
-            properties = type.GetProperties().Where(i => (i.PropertyType.IsClass && i.PropertyType.IsAssignableTo(typeof(IMultiTenantEntity))) || i.PropertyType.IsAssignableTo(typeof(IEnumerable))).ToArray();
-            _propertyInfosToSetForMultitenancies[type] = properties;
-            return properties;
-        }
-    }
-    private void InnerUpdateEntityForMultiTenancy(HashSet<object> hashset, object item)
-    {
-        if (hashset.Contains(item)) return;
-        hashset.Add(item);
-        if (item is IEnumerable array)
-        {
-            foreach (var elt in array)
+            if (navigation.CurrentValue != null)
             {
-                InnerUpdateEntityForMultiTenancy(hashset, elt);
+                if (navigation.Metadata.IsCollection)
+                {
+                    foreach (var subItem in (navigation.CurrentValue as IEnumerable)?.Cast<object>() ?? [])
+                        InnerUpdateEntityForMultiTenancy(processedEntities, Entry(subItem));
+                }
+                else
+                {
+                    InnerUpdateEntityForMultiTenancy(processedEntities, Entry(navigation.CurrentValue));
+                }
             }
-        }
-        else
-        if (TenantId != 0 && item is IMultiTenantEntity multiTenantEntity)
-        {
-            multiTenantEntity.TenantId = TenantId;
-            var propertyValues = GetPropertiesForMultiTenancy(item.GetType()).Select(p => p.GetValue(item)).Where(i => i != null).ToList();
-            foreach (var pv in propertyValues)
-                InnerUpdateEntityForMultiTenancy(hashset, pv!);
         }
     }
 }

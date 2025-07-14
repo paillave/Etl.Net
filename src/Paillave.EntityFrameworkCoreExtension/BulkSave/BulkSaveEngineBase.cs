@@ -81,12 +81,7 @@ public abstract class BulkSaveEngineBase<T> : IDisposable where T : class
         }
         else
         {
-            IProperty? tenantIdProp = null;
-
-            if (typeof(IMultiTenantEntity).IsAssignableFrom(typeof(T)))
-            {
-                tenantIdProp = allProperties.First(i => i.Name == nameof(IMultiTenantEntity.TenantId));
-            }
+            var tenantIdProp = allProperties.FirstOrDefault(i => i.Name == "TenantId");
 
             _propertiesForPivotSet = pivotKeys.Select(pivotKey => this.GetPropertiesForPivot(allProperties, tenantIdProp, pivotKey)).ToList();
         }
