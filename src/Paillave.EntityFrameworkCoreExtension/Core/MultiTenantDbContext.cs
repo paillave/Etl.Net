@@ -61,9 +61,9 @@ public class MultiTenantDbContext : DbContext
                 var target = applyEntityConfigurationMethod.MakeGenericMethod(@interface.GenericTypeArguments[0]);
                 if (type.GetConstructor(Type.EmptyTypes) != null)
                 {
-                    target.Invoke(modelBuilder, new[] { Activator.CreateInstance(type) });
+                    target.Invoke(modelBuilder, [Activator.CreateInstance(type)]);
                 }
-                else if (type.GetConstructor(new Type[] { this.GetType() }) != null)
+                else if (type.GetConstructor([this.GetType()]) != null)
                 {
                     target.Invoke(modelBuilder, [Activator.CreateInstance(type, [this])]);
                 }

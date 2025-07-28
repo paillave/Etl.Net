@@ -18,7 +18,7 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
             // var modelStructure = new ModelStructure();
             var model = dbContext.GetService<IDesignTimeModel>().Model;
             // var model = dbContext.Model;
-            var entityTypes = model.GetEntityTypes().OrderBy(i => i.Name).ToList();
+            var entityTypes = model.GetEntityTypes().Where(i => !i.IsPropertyBag).OrderBy(i => i.Name).ToList();
 
             var modelStructureEntities = entityTypes.Select(CreateEntitySummary).ToDictionary(i => i.Name);
             var modelStructureLinks = entityTypes
@@ -116,7 +116,7 @@ namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
         {
             // var modelStructure = new ModelStructure();
             var dbContext = CreateDbContextInstance(_assembly, _args);
-            var entityTypes = dbContext.Model.GetEntityTypes().ToList();
+            var entityTypes = dbContext.Model.GetEntityTypes().Where(i => !i.IsPropertyBag).ToList();
             Dictionary<string, string>? modelStructureComments = null;
             if (_xmlDocumentation != null)
             {
