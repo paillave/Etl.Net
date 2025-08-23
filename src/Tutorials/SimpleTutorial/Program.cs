@@ -16,7 +16,6 @@ var connectors = new FileValueConnectors().Register(new GraphApiMailFileValuePro
         Folder = "Boîte de réception"
     }));
 
-
 var res = await StreamProcessRunner.CreateAndExecuteAsync("dummy", baseStream =>
 {
     baseStream
