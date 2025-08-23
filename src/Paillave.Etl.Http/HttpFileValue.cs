@@ -12,11 +12,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
     private readonly IHttpAdapterParameters _parameters;
 
     public HttpFileValue(
-        string name,
         string url,
-        string connectorCode,
-        string connectionName,
-        string connectorName,
         IHttpConnectionInfo? connectionInfo = null,
         IHttpAdapterParameters? parameters = null
     )
@@ -29,7 +25,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
             }
         )
     {
-        Name = name;
+        Name = url;
         _connectionInfo = connectionInfo ?? new HttpAdapterConnectionParameters { Url = url };
         _parameters =
             parameters ?? new HttpAdapterProviderParameters() { Method = HttpMethodCustomEnum.Get };

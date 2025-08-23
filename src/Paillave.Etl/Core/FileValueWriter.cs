@@ -13,7 +13,6 @@ namespace Paillave.Etl.Core
 
         public FileValueWriter(TMetadata metadata, Dictionary<string, IEnumerable<Destination>> destinations, string name, Encoding encoding = null, int bufferSize = -1)
             => (_streamWriter, Name, Metadata, Destinations) = (new StreamWriter(new MemoryStream(), encoding, bufferSize, true), name, metadata, destinations);
-
         public FileValueWriter<TMetadata> Write(string format, params object[] arg)
         {
             _streamWriter.Write(format, arg);
@@ -115,6 +114,18 @@ namespace Paillave.Etl.Core
             var stream = new StreamWithResource(GetContent());
             stream.Position = 0;
             return stream;
+        }
+
+        public object Serialize() => throw new NotSupportedException("Serialization is not supported for FileValueWriter");
+
+        public string GetSerialization()
+        {
+            this._streamWriter.Flush();
+            var ms = new MemoryStream();
+            this._streamWriter.BaseStream.Seek(0, SeekOrigin.Begin);
+            this._streamWriter.BaseStream.CopyTo(ms);
+            ms.Seek(0, SeekOrigin.Begin);
+            return Convert.ToBase64String(ms.ToArray());
         }
     }
     public static class FileValueWriter

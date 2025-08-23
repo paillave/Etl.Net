@@ -9,6 +9,7 @@ using Paillave.Etl.GraphApi.Requesting;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 using Microsoft.Graph.Models;
+using System.Text.Json;
 
 namespace Paillave.Etl.GraphApi;
 
@@ -22,19 +23,40 @@ public class GraphApiMailAdapterProviderParameters
     public string Folder { get; set; }
     public bool SetToReadIfBatchDeletion { get; set; }
 }
-public partial class GraphApiMailFileValueProvider : FileValueProviderBase<GraphApiAdapterConnectionParameters, GraphApiMailAdapterProviderParameters>
+public partial class GraphApiMailFileValueProvider(string code, string name, string connectionName, GraphApiAdapterConnectionParameters connectionParameters, GraphApiMailAdapterProviderParameters providerParameters) : FileValueProviderBase<GraphApiAdapterConnectionParameters, GraphApiMailAdapterProviderParameters>(code, name, connectionName, connectionParameters, providerParameters)
 {
-    public GraphApiMailFileValueProvider(string code, string name, string connectionName, GraphApiAdapterConnectionParameters connectionParameters, GraphApiMailAdapterProviderParameters providerParameters)
-        : base(code, name, connectionName, connectionParameters, providerParameters) { }
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-    protected override void Provide(Action<IFileValue> pushFileValue, GraphApiAdapterConnectionParameters connectionParameters, GraphApiMailAdapterProviderParameters providerParameters, CancellationToken cancellationToken, IExecutionContext context)
+    protected override void Provide(object input, Action<IFileValue, FileReference> pushFileValue, GraphApiAdapterConnectionParameters connectionParameters, GraphApiMailAdapterProviderParameters providerParameters, CancellationToken cancellationToken)
     {
         using InThreadJobPool jobPool = new InThreadJobPool();
-        Task task = Task.Run(() => ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => GetFileList(connectionParameters, providerParameters, fv => jobPool.ExecuteAsync(() => pushFileValue(fv)), cancellationToken)));
+        Task task = Task.Run(() => ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => GetFileList(connectionParameters, providerParameters, (fv, fr) => jobPool.ExecuteAsync(() => pushFileValue(fv, fr)), cancellationToken)));
         jobPool.Listen(task);
     }
-    private void GetFileList(GraphApiAdapterConnectionParameters connectionParameters, GraphApiMailAdapterProviderParameters providerParameters, Action<GraphApiMailFileValue> pushFileValue, CancellationToken cancellationToken)
+    private class FileSpecificData
+    {
+        public required string MessageId { get; set; }
+        public required string AttachmentId { get; set; }
+        public required string Subject { get; set; }
+        public required string AttachmentName { get; set; }
+        public required string SenderAddress { get; set; }
+        public required DateTime ReceivedDateTime { get; set; }
+        public required Dictionary<string, bool> DeletionDico { get; set; }
+    }
+
+    public override IFileValue Provide(string name, string fileSpecific)
+    {
+        var fileSpecificData = JsonSerializer.Deserialize<FileSpecificData>(fileSpecific) ?? throw new Exception("Invalid file specific");
+        return new GraphApiMailFileValue(
+                                    connectionParameters,
+                                    fileSpecificData.MessageId, fileSpecificData.AttachmentId,
+                                    providerParameters.Folder, fileSpecificData.Subject, fileSpecificData.AttachmentName,
+                                    fileSpecificData.SenderAddress, fileSpecificData.ReceivedDateTime,
+                                    this.Code, this.Name, this.ConnectionName,
+                                    providerParameters.SetToReadIfBatchDeletion, fileSpecificData.DeletionDico
+                                );
+    }
+    private void GetFileList(GraphApiAdapterConnectionParameters connectionParameters, GraphApiMailAdapterProviderParameters providerParameters, Action<GraphApiMailFileValue, FileReference> pushFileValue, CancellationToken cancellationToken)
     {
         // List<GraphApiMailFileValue> fileValues = new List<GraphApiMailFileValue>();
         using var graphClient = connectionParameters.CreateGraphApiClient();
@@ -56,7 +78,7 @@ public partial class GraphApiMailFileValueProvider : FileValueProviderBase<Graph
                         attachments.Add(a);
                         return Task.FromResult(true);
                     }).Wait();
-                var deletionDico = attachments.ToDictionary(i => i.Id, i => false);
+                var deletionDico = (attachments ?? []).ToDictionary(i => i.Id, i => false);
                 foreach (var item in attachments)
                 {
                     if (cancellationToken.IsCancellationRequested) break;
@@ -70,7 +92,17 @@ public partial class GraphApiMailFileValueProvider : FileValueProviderBase<Graph
                             this.Code, this.Name, this.ConnectionName,
                             providerParameters.SetToReadIfBatchDeletion, deletionDico
                         );
-                        pushFileValue(fileValue);
+                        var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.Serialize(new FileSpecificData
+                        {
+                            AttachmentId = item.Id,
+                            MessageId = message.Id,
+                            Subject = message.Subject,
+                            AttachmentName = item.Name,
+                            SenderAddress = message.From.EmailAddress.Address,
+                            ReceivedDateTime = message.ReceivedDateTime.Value.UtcDateTime,
+                            DeletionDico = deletionDico,
+                        }));
+                        pushFileValue(fileValue, fileReference);
                         // fileValues.Add(fileValue);
                     }
                 }
@@ -122,9 +154,7 @@ public partial class GraphApiMailFileValueProvider : FileValueProviderBase<Graph
     }
     protected override void Test(GraphApiAdapterConnectionParameters connectionParameters, GraphApiMailAdapterProviderParameters providerParameters)
     {
-        using (var client = connectionParameters.CreateGraphApiClient())
-        {
-            client.Users[connectionParameters.UserId].MailFolders.GetAsync().Wait();
-        }
+        using var client = connectionParameters.CreateGraphApiClient();
+        client.Users[connectionParameters.UserId].MailFolders.GetAsync().Wait();
     }
 }

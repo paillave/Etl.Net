@@ -2,36 +2,28 @@ using Paillave.Etl.Core;
 
 namespace Paillave.Etl.AzureStorageAccountFileProvider;
 
-public class AzureStorageAccountFileValue : FileValueBase<AzureStorageAccountFileValueMetadata>
-{
-    private readonly AzureBlobOptions _azureBlobOptions;
-    private readonly AzureBlobFileInfo _fileInfo;
-    public AzureStorageAccountFileValue(AzureBlobFileInfo fileInfo, string connectorCode, string connectorName, string connectionName, AzureBlobOptions azureBlobOptions)
-        : base(new AzureStorageAccountFileValueMetadata
-        {
-            BaseUri = azureBlobOptions.BaseUri,
-            Name = fileInfo.Name,
-            Folder = fileInfo.PhysicalPath,
-            DocumentContainer = azureBlobOptions.DocumentContainer,
-            ConnectionName = connectionName,
-            ConnectorCode = connectorCode,
-            ConnectorName = connectorName,
-        })
+public class AzureStorageAccountFileValue(AzureBlobFileInfo fileInfo, string connectorCode, string connectorName, string connectionName, AzureBlobOptions azureBlobOptions)
+    : FileValueBase<AzureStorageAccountFileValueMetadata>(new AzureStorageAccountFileValueMetadata
     {
-        _fileInfo = fileInfo;
-        _azureBlobOptions = azureBlobOptions;
-    }
-
-    public override string Name => _fileInfo.Name;
+        BaseUri = azureBlobOptions.BaseUri,
+        Name = fileInfo.Name,
+        Folder = fileInfo.PhysicalPath,
+        DocumentContainer = azureBlobOptions.DocumentContainer,
+        ConnectionName = connectionName,
+        ConnectorCode = connectorCode,
+        ConnectorName = connectorName,
+    })
+{
+    public override string Name => fileInfo.Name;
 
     public override Stream GetContent()
-        => _fileInfo.CreateReadStream();
+        => fileInfo.CreateReadStream();
 
     public override StreamWithResource OpenContent()
         => new(GetContent());
 
     protected override void DeleteFile()
-        => _fileInfo.DeleteAsync().Wait();
+        => fileInfo.DeleteAsync().Wait();
 }
 public class AzureStorageAccountFileValueMetadata : FileValueMetadataBase
 {

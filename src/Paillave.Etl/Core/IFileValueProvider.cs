@@ -1,14 +1,14 @@
 using System;
 using System.Threading;
 
-namespace Paillave.Etl.Core
+namespace Paillave.Etl.Core;
+
+public interface IFileValueProvider
 {
-    public interface IFileValueProvider
-    {
-        string Code { get; }
-        ProcessImpact PerformanceImpact { get; }
-        ProcessImpact MemoryFootPrint { get; }
-        void Provide(Action<IFileValue> pushFileValue, CancellationToken cancellationToken, IExecutionContext context);
-        void Test();
-    }
+    string Code { get; }
+    ProcessImpact PerformanceImpact { get; }
+    ProcessImpact MemoryFootPrint { get; }
+    void Provide(object input, Action<IFileValue, FileReference> pushFileValue, CancellationToken cancellationToken);
+    IFileValue Provide(string name, string fileSpecific);
+    void Test();
 }

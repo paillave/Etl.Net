@@ -11,7 +11,7 @@ namespace Paillave.Etl.Ftp
         private readonly IFtpConnectionInfo _connectionInfo;
         public FtpFileValue(IFtpConnectionInfo connectionInfo, string folder, string fileName)
             : this(connectionInfo, folder, fileName, null, null, null) { }
-        public FtpFileValue(IFtpConnectionInfo connectionInfo, string folder, string fileName, string connectorCode, string connectorName, string connectionName)
+        public FtpFileValue(IFtpConnectionInfo connectionInfo, string? folder, string fileName, string connectorCode, string connectorName, string connectionName)
             : base(new FtpFileValueMetadata
             {
                 Server = connectionInfo.Server,
@@ -104,7 +104,7 @@ namespace Paillave.Etl.Ftp
     public class FtpFileValueMetadata : FileValueMetadataBase
     {
         public string Server { get; set; }
-        public string Folder { get; set; }
+        public string? Folder { get; set; }
         public string Name { get; set; }
     }
 }

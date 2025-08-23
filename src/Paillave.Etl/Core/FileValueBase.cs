@@ -40,6 +40,8 @@ namespace Paillave.Etl.Core
             stream.Position = 0;
             return stream;
         }
+
+        // public abstract string GetSerialization();
     }
 
     public abstract class FileValueMetadataBase : IFileValueMetadata

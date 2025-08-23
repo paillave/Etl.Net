@@ -5,16 +5,15 @@ using Paillave.Etl.Core;
 using Microsoft.Extensions.FileSystemGlobbing;
 using FluentFTP;
 using System.Linq;
+using System.Text.Json;
 
 namespace Paillave.Etl.Ftp
 {
-    public class FtpFileValueProvider : FileValueProviderBase<FtpAdapterConnectionParameters, FtpAdapterProviderParameters>
+    public class FtpFileValueProvider(string code, string name, string connectionName, FtpAdapterConnectionParameters connectionParameters, FtpAdapterProviderParameters providerParameters) : FileValueProviderBase<FtpAdapterConnectionParameters, FtpAdapterProviderParameters>(code, name, connectionName, connectionParameters, providerParameters)
     {
-        public FtpFileValueProvider(string code, string name, string connectionName, FtpAdapterConnectionParameters connectionParameters, FtpAdapterProviderParameters providerParameters)
-            : base(code, name, connectionName, connectionParameters, providerParameters) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-        protected override void Provide(Action<IFileValue> pushFileValue, FtpAdapterConnectionParameters connectionParameters, FtpAdapterProviderParameters providerParameters, CancellationToken cancellationToken, IExecutionContext context)
+        protected override void Provide(object input, Action<IFileValue, FileReference> pushFileValue, FtpAdapterConnectionParameters connectionParameters, FtpAdapterProviderParameters providerParameters, CancellationToken cancellationToken)
         {
             var searchPattern = string.IsNullOrEmpty(providerParameters.FileNamePattern) ? "*" : providerParameters.FileNamePattern;
             var matcher = new Matcher().AddInclude(searchPattern);
@@ -26,8 +25,24 @@ namespace Paillave.Etl.Ftp
                 var fileName = Path.GetFileName(fullPath);
                 fileName = Path.GetFileName(fileName);
                 if (matcher.Match(fileName).HasMatches)
-                    pushFileValue(new FtpFileValue(connectionParameters, Path.GetDirectoryName(fullPath), fileName, this.Code, this.Name, this.ConnectionName));
+                {
+                    var folder = Path.GetDirectoryName(fullPath);
+                    var fileValue = new FtpFileValue(connectionParameters, folder, fileName, this.Code, this.Name, this.ConnectionName);
+                    var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.Serialize(new FileSpecificData { FileName = fileName, Folder = folder }));
+                    pushFileValue(fileValue, fileReference);
+                }
             }
+        }
+        public override IFileValue Provide(string name, string fileSpecific)
+        {
+            var fileSpecificData = JsonSerializer.Deserialize<FileSpecificData>(fileSpecific) ?? throw new Exception("Invalid file specific");
+            return new FtpFileValue(connectionParameters, fileSpecificData.Folder, fileSpecificData.FileName, this.Code, this.Name, this.ConnectionName);
+        }
+
+        private class FileSpecificData
+        {
+            public required string? Folder { get; set; }
+            public required string FileName { get; set; }
         }
         private FtpListItem[] GetFileList(FtpAdapterConnectionParameters connectionParameters, FtpAdapterProviderParameters providerParameters)
         {
@@ -48,5 +63,6 @@ namespace Paillave.Etl.Ftp
                     client.GetListing(folder);
             }
         }
+
     }
 }

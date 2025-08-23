@@ -1,8 +1,8 @@
 using System;
-using System.Collections.ObjectModel;
 using System.IO;
 
 namespace Paillave.Etl.Core;
+
 public interface IFileValue
 {
     string Name { get; }
@@ -13,6 +13,7 @@ public interface IFileValue
     Type MetadataType { get; }
     IFileValueMetadata Metadata { get; }
     string SourceType { get; }
+    // public string GetSerialization();
 }
 public interface IFileValueMetadata
 {
@@ -22,28 +23,22 @@ public interface IFileValueMetadata
     string? ConnectorName { get; }
     object? Properties { get; }
 }
-public class StreamWithResource : Stream
+public class StreamWithResource(Stream stream, params IDisposable[] underlyingDisposables) : Stream
 {
-    public StreamWithResource(Stream stream, params IDisposable[] underlyingDisposables)
-        => (_stream, _underlyingDisposables)
-        = (stream, new ReadOnlyCollection<IDisposable>(underlyingDisposables));
-    public readonly Stream _stream;
-    public readonly ReadOnlyCollection<IDisposable> _underlyingDisposables;
-
-    public override bool CanRead => _stream.CanRead;
-    public override bool CanSeek => _stream.CanSeek;
-    public override bool CanWrite => _stream.CanWrite;
-    public override long Length => _stream.Length;
-    public override long Position { get => _stream.Position; set => _stream.Position = value; }
-    public override void Flush() => _stream.Flush();
-    public override int Read(byte[] buffer, int offset, int count) => _stream.Read(buffer, offset, count);
-    public override long Seek(long offset, SeekOrigin origin) => _stream.Seek(offset, origin);
-    public override void SetLength(long value) => _stream.SetLength(value);
-    public override void Write(byte[] buffer, int offset, int count) => _stream.Write(buffer, offset, count);
+    public override bool CanRead => stream.CanRead;
+    public override bool CanSeek => stream.CanSeek;
+    public override bool CanWrite => stream.CanWrite;
+    public override long Length => stream.Length;
+    public override long Position { get => stream.Position; set => stream.Position = value; }
+    public override void Flush() => stream.Flush();
+    public override int Read(byte[] buffer, int offset, int count) => stream.Read(buffer, offset, count);
+    public override long Seek(long offset, SeekOrigin origin) => stream.Seek(offset, origin);
+    public override void SetLength(long value) => stream.SetLength(value);
+    public override void Write(byte[] buffer, int offset, int count) => stream.Write(buffer, offset, count);
     protected override void Dispose(bool disposing)
     {
         if (disposing)
-            foreach (var item in _underlyingDisposables)
+            foreach (var item in underlyingDisposables)
                 item.Dispose();
         base.Dispose(disposing);
     }

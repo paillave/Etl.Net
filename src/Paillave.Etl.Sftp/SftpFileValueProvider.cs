@@ -4,16 +4,26 @@ using Paillave.Etl.Core;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Renci.SshNet;
 using System.Linq;
+using System.Text.Json;
 
 namespace Paillave.Etl.Sftp;
 
-public class SftpFileValueProvider : FileValueProviderBase<SftpAdapterConnectionParameters, SftpAdapterProviderParameters>
+public class SftpFileValueProvider(string code, string name, string connectionName, SftpAdapterConnectionParameters connectionParameters, SftpAdapterProviderParameters providerParameters) : FileValueProviderBase<SftpAdapterConnectionParameters, SftpAdapterProviderParameters>(code, name, connectionName, connectionParameters, providerParameters)
 {
-    public SftpFileValueProvider(string code, string name, string connectionName, SftpAdapterConnectionParameters connectionParameters, SftpAdapterProviderParameters providerParameters)
-        : base(code, name, connectionName, connectionParameters, providerParameters) { }
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-    protected override void Provide(Action<IFileValue> pushFileValue, SftpAdapterConnectionParameters connectionParameters, SftpAdapterProviderParameters providerParameters, CancellationToken cancellationToken, IExecutionContext context)
+
+    private class FileSpecificData
+    {
+        public required string Folder { get; set; }
+        public required string FileName { get; set; }
+    }
+    public override IFileValue Provide(string name, string fileSpecific)
+    {
+        var fileSpecificData = JsonSerializer.Deserialize<FileSpecificData>(fileSpecific) ?? throw new Exception("Invalid file specific");
+        return new SftpFileValue(connectionParameters, fileSpecificData.Folder, fileSpecificData.FileName, this.Code, this.Name, this.ConnectionName);
+    }
+    protected override void Provide(object input, Action<IFileValue, FileReference> pushFileValue, SftpAdapterConnectionParameters connectionParameters, SftpAdapterProviderParameters providerParameters, CancellationToken cancellationToken)
     {
         var searchPattern = string.IsNullOrEmpty(providerParameters.FileNamePattern) ? "*" : providerParameters.FileNamePattern;
         var matcher = new Matcher().AddInclude(searchPattern);
@@ -24,7 +34,11 @@ public class SftpFileValueProvider : FileValueProviderBase<SftpAdapterConnection
         {
             if (cancellationToken.IsCancellationRequested) break;
             if (matcher.Match(file.Name).HasMatches)
-                pushFileValue(new SftpFileValue(connectionParameters, folder, file.Name, this.Code, this.Name, this.ConnectionName));
+            {
+                var fileValue = new SftpFileValue(connectionParameters, folder, file.Name, this.Code, this.Name, this.ConnectionName);
+                var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.Serialize(new FileSpecificData { FileName = file.Name, Folder = folder }));
+                pushFileValue(fileValue, fileReference);
+            }
         }
     }
     private static string ConcatenatePath(params string[] segments)

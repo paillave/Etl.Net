@@ -1,52 +1,68 @@
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using Fluid;
 using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Http;
 
-public class HttpFileValueProvider
-    : FileValueProviderBase<HttpAdapterConnectionParameters, HttpAdapterProviderParameters>
-{
-    public HttpFileValueProvider(
-        string code,
-        string name,
-        string connectionName,
-        HttpAdapterConnectionParameters connectionParameters,
-        HttpAdapterProviderParameters providerParameters
+public class HttpFileValueProvider(
+    string code,
+    string name,
+    string connectionName,
+    HttpAdapterConnectionParameters connectionParameters,
+    HttpAdapterProviderParameters providerParameters
     )
-        : base(code, name, connectionName, connectionParameters, providerParameters) { }
-
+        : FileValueProviderBase<HttpAdapterConnectionParameters, HttpAdapterProviderParameters>(code, name, connectionName, connectionParameters, providerParameters)
+{
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
 
-    protected override void Provide(
-        Action<IFileValue> pushFileValue,
+    public override IFileValue Provide(string name, string fileSpecific)
+    {
+        return new HttpFileValue(
+                fileSpecific,
+                connectionParameters,
+                providerParameters);
+    }
+
+    protected override void Provide(object input,
+        Action<IFileValue, FileReference> pushFileValue,
         HttpAdapterConnectionParameters connectionParameters,
         HttpAdapterProviderParameters providerParameters,
-        CancellationToken cancellationToken,
-        IExecutionContext context
+        CancellationToken cancellationToken
     )
     {
-        pushFileValue(
-            new HttpFileValue(
-                connectionParameters.Url,
-                connectionParameters.Url,
-                Code,
-                ConnectionName,
-                Name,
+        var url = HttpFileValueProvider.FluidMergeAsync(connectionParameters.Url, input);
+        var fileValue = new HttpFileValue(
+                url,
                 connectionParameters,
                 providerParameters
-            )
-        );
+            );
+        var fileReference = new FileReference(fileValue.Name, this.Code, url);
+        pushFileValue(fileValue, fileReference);
+    }
+    private static string FluidMergeAsync(string template, object? data)
+    {
+        var parser = new FluidParser();
+        var context = new TemplateContext(data ?? new(), new TemplateOptions
+        {
+            ModelNamesComparer = StringComparer.InvariantCultureIgnoreCase,
+            MemberAccessStrategy = new UnsafeMemberAccessStrategy()
+        }, true);
+        if (parser.TryParse(template, out var fTemplate, out var error))
+        {
+            return fTemplate.Render(context);
+        }
+        else
+        {
+            throw new Exception($"Error: {error}");
+        }
     }
 
     protected override void Test(
         HttpAdapterConnectionParameters connectionParameters,
-        HttpAdapterProviderParameters providerParameters
-    )
+        HttpAdapterProviderParameters providerParameters)
     {
         using var httpClient = new HttpClient();
         HttpHelpers.GetResponse(connectionParameters, providerParameters, httpClient).Wait();
