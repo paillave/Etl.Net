@@ -34,7 +34,8 @@ public class HttpFileValueProcessor
 
         var httpClient = IHttpConnectionInfoEx.CreateHttpClient(
             connectionParameters,
-            processorParameters
+            processorParameters,
+            fileValue.Metadata
         );
 
         var response = HttpHelpers
@@ -67,7 +68,8 @@ public class HttpFileValueProcessor
 
             push(
                 new HttpPostFileValue(
-                    content,
+                    //content,
+                    connectionParameters.Url.ToStream(),
                     fileName,
                     new HttpPostFileValueMetadata
                     {

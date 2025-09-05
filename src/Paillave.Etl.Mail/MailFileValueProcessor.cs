@@ -109,6 +109,12 @@ namespace Paillave.Etl.Mail
                 smtpClient.Send(mailMessage);
             }
         }
+        /// <summary>
+        /// TODO : replace with liquid syntax
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="metadata"></param>
+        /// <returns></returns>
         private static string FormatText(string text, JToken metadata)
         {
             var regex = new Regex("\\{(?<name>.+?)(:(.+?))?}", RegexOptions.Singleline);

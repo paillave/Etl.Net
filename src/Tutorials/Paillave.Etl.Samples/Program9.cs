@@ -23,7 +23,7 @@ namespace Paillave.Etl.Samples
 
     class Program9
     {
-        static async Task Main(string[] args)
+        static async Task Main9(string[] args)
         {
             var httpAdapterConnectionParameters = new HttpAdapterConnectionParameters
             {

@@ -9,7 +9,7 @@ namespace BlogTutorial
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static async Task Main1(string[] args)
         {
             var processRunner = StreamProcessRunner.Create<string>(DefineProcess102);
             var executionOptions = new ExecutionOptions<string>

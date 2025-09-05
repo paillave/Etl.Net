@@ -12,7 +12,7 @@ namespace BlogTutorial
 {
     class Program9
     {
-        static async Task Main9(string[] args)
+        static async Task Main(string[] args)
         {
             var processRunner = StreamProcessRunner.Create<string>(DefineProcess2);
             processRunner.DebugNodeStream += (sender, e)

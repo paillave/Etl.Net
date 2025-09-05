@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Paillave.Etl.Core;
+using Fluid;
 
 namespace Paillave.Etl.Http;
 
@@ -11,6 +12,8 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
     private readonly IHttpConnectionInfo _connectionInfo;
     private readonly IHttpAdapterParameters _parameters;
 
+    private readonly IFileValueMetadata? _additionalMetadata = null;
+
     public HttpFileValue(
         string name,
         string url,
@@ -18,7 +21,8 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
         string connectionName,
         string connectorName,
         IHttpConnectionInfo? connectionInfo = null,
-        IHttpAdapterParameters? parameters = null
+        IHttpAdapterParameters? parameters = null,
+        IFileValueMetadata? additionalMetadata = null
     )
         : base(
             new HttpFileValueMetadata
@@ -42,7 +46,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 
     private Stream GetContentSingleTime()
     {
-        var httpClient = IHttpConnectionInfoEx.CreateHttpClient(_connectionInfo, _parameters);
+        var httpClient = IHttpConnectionInfoEx.CreateHttpClient(_connectionInfo, _parameters, _additionalMetadata);
 
         var response = HttpHelpers.GetResponse(_connectionInfo, _parameters, httpClient).Result;
 
@@ -60,7 +64,7 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
 
     protected override void DeleteFile()
     {
-        var httpClient = IHttpConnectionInfoEx.CreateHttpClient(_connectionInfo, _parameters);
+        var httpClient = IHttpConnectionInfoEx.CreateHttpClient(_connectionInfo, _parameters, _additionalMetadata);
 
         var parameters = new HttpAdapterProviderParameters(_parameters)
         {
