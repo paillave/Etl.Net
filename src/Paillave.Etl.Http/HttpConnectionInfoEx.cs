@@ -13,11 +13,19 @@ public static class IHttpConnectionInfoEx
     {
         HttpClient client = new HttpClient();
         client = ManageHeaders(client, httpConnectionInfo.HttpHeaders);
+        ApplyHeaders(client, adapterParameters.AdditionalHeaders);
         client = ManageAuthentication(client, httpConnectionInfo, adapterParameters);
         return client;
     }
 
     private static HttpClient ManageHeaders(HttpClient client, Dictionary<string, string>? headers)
+    {
+        ApplyHeaders(client, headers);
+
+        return client;
+    }
+
+    private static void ApplyHeaders(HttpClient client, Dictionary<string, string>? headers)
     {
         if (headers != null)
         {
@@ -31,8 +39,6 @@ public static class IHttpConnectionInfoEx
                 client.DefaultRequestHeaders.TryAddWithoutValidation(header.Key, header.Value);
             }
         }
-
-        return client;
     }
 
     private static HttpClient ManageAuthentication(
