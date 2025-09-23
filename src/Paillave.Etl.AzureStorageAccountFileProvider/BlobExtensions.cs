@@ -20,10 +20,10 @@ internal static class BlobExtensions
             throw new ArgumentException("One of the following must be set: 'ConnectionString' or 'BaseUri'+'Token'!", nameof(options));
     }
     internal static AzureBlobFileInfo GetFileInfo(this BlobContainerClient container, string subpath)
-        => new AzureBlobFileInfo(container.GetBlobClient(subpath));
+        => new(container.GetBlobClient(subpath));
 
     internal static AzureBlobDirectoryContents GetDirectoryContents(this BlobContainerClient container, string prefix, CancellationToken cancellationToken = default)
-        => new AzureBlobDirectoryContents(container.ListDirectoryAsync(prefix, cancellationToken).ToBlockingEnumerable().ToList());
+        => new([.. container.ListDirectoryAsync(prefix, cancellationToken).ToBlockingEnumerable(cancellationToken: cancellationToken)]);
     internal static async IAsyncEnumerable<AzureBlobFileInfo> ListDirectoryAsync(this BlobContainerClient container, string prefix, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         var resultSegment = container

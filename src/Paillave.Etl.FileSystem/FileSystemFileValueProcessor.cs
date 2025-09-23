@@ -14,7 +14,7 @@ namespace Paillave.Etl.FileSystem
 
         public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-        protected override void Process(IFileValue fileValue, FileSystemAdapterConnectionParameters connectionParameters, FileSystemAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
+        protected override void Process(IFileValue fileValue, FileSystemAdapterConnectionParameters connectionParameters, FileSystemAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken)
         {
             using var l = fileValue.Get(processorParameters.UseStreamCopy);
             var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");

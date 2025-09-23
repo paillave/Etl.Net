@@ -3,13 +3,12 @@ using System.Threading;
 
 namespace Paillave.Etl.Core
 {
-    public class NoFileValueProcessor : IFileValueProcessor
+    public class NoFileValueProcessor(string code) : IFileValueProcessor
     {
-        public NoFileValueProcessor(string code) => (Code) = (code);
-        public string Code { get; }
+        public string Code { get; } = code;
         public ProcessImpact PerformanceImpact => ProcessImpact.Light;
         public ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-        public void Process(IFileValue fileValue, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
+        public void Process(IFileValue fileValue, Action<IFileValue> push, CancellationToken cancellationToken)
         {
             throw new Exception($"{Code}: this file value provider does not exist");
         }

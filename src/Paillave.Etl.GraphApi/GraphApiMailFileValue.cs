@@ -1,14 +1,13 @@
 using Microsoft.Graph.Models;
 using Paillave.Etl.Core;
 using Paillave.Etl.GraphApi.Provider;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace Paillave.Etl.GraphApi;
 
-public class GraphApiMailFileValue : FileValueBase<GraphApiMailFileValueMetadata>
+public class GraphApiMailFileValue : FileValueBase
 {
     public override string Name { get; }
     private readonly string _userId;
@@ -18,32 +17,9 @@ public class GraphApiMailFileValue : FileValueBase<GraphApiMailFileValueMetadata
     private readonly IGraphApiConnectionInfo _connectionInfo;
     private readonly Dictionary<string, bool> _deleted;
     internal GraphApiMailFileValue(
-        IGraphApiConnectionInfo connectionInfo,
-        string messageId, string attachmentId,
-        string folder, string mailSubject, string attachmentName,
-        string sender, DateTime receivedDate,
-        string connectorCode, string connectorName, string connectionName,
+        IGraphApiConnectionInfo connectionInfo, string messageId, string attachmentId, string attachmentName,
         bool setToReadIfBatchDeletion, Dictionary<string, bool> deleted)
-        : base(new GraphApiMailFileValueMetadata
-        {
-            ClientId = connectionInfo.ClientId,
-            TenantId = connectionInfo.TenantId,
-
-            UserId = connectionInfo.UserId,
-            MessageId = messageId,
-            AttachmentId = attachmentId,
-
-            Folder = folder,
-            MailSubject = mailSubject,
-            Name = attachmentName,
-
-            Sender = sender,
-            ReceivedDate = receivedDate,
-
-            ConnectorCode = connectorCode,
-            ConnectionName = connectionName,
-            ConnectorName = connectorName,
-        }) => (Name, _userId, _messageId, _attachmentId, _connectionInfo, _deleted, _setToReadIfBatchDeletion)
+            => (Name, _userId, _messageId, _attachmentId, _connectionInfo, _deleted, _setToReadIfBatchDeletion)
             = (attachmentName, connectionInfo.UserId, messageId, attachmentId, connectionInfo, deleted, setToReadIfBatchDeletion);
     protected override void DeleteFile() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, DeleteFileSingleTime);
     protected void DeleteFileSingleTime()
@@ -86,17 +62,4 @@ public class GraphApiMailFileValue : FileValueBase<GraphApiMailFileValueMetadata
     }
 
     public override StreamWithResource OpenContent() => new StreamWithResource(GetContent());
-}
-public class GraphApiMailFileValueMetadata : FileValueMetadataBase
-{
-    public string TenantId { get; set; }
-    public string ClientId { get; set; }
-    public string UserId { get; set; }
-    public string MessageId { get; set; }
-    public string AttachmentId { get; set; }
-    public string Folder { get; set; }
-    public string Name { get; set; }
-    public string MailSubject { get; set; }
-    public DateTime ReceivedDate { get; set; }
-    public string Sender { get; set; }
 }

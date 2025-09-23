@@ -33,7 +33,7 @@ public class ZipFileValueProcessor : FileValueProcessorBase<ZipAdapterConnection
         : base(code, name, connectionName, connectionParameters, processorParameters) { }
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-    protected override void Process(IFileValue fileValue, ZipAdapterConnectionParameters connectionParameters, ZipAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
+    protected override void Process(IFileValue fileValue, ZipAdapterConnectionParameters connectionParameters, ZipAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken)
     {
         switch (processorParameters.Direction)
         {
@@ -42,13 +42,13 @@ public class ZipFileValueProcessor : FileValueProcessorBase<ZipAdapterConnection
                 {
                     FileNamePattern = processorParameters.FileNamePattern,
                     Password = connectionParameters.Password
-                }).PushValues(fileValue, push, cancellationToken, context);
+                }).PushValues(fileValue, push, cancellationToken);
                 break;
             case ZipDirection.Zip:
                 new ZipFileProcessorValuesProvider(new ZipFileProcessorParams
                 {
                     Password = connectionParameters.Password
-                }).PushValues(fileValue, push, cancellationToken, context);
+                }).PushValues(fileValue, push, cancellationToken);
                 break;
         }
     }

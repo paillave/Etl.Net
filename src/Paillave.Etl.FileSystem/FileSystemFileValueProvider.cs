@@ -22,8 +22,8 @@ public class FileSystemFileValueProvider : FileValueProviderBase<FileSystemAdapt
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
 
-    public override IFileValue Provide(string name, string fileSpecific)
-        => new FileSystemFileValue(new FileInfo(fileSpecific), Code, Name, ConnectionName);
+    public override IFileValue Provide(string fileSpecific)
+        => new FileSystemFileValue(new FileInfo(fileSpecific));
     protected override void Provide(object input, Action<IFileValue, FileReference> pushFileValue, FileSystemAdapterConnectionParameters connectionParameters, FileSystemAdapterProviderParameters providerParameters, CancellationToken cancellationToken)
     {
         var rootFolder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
@@ -36,7 +36,7 @@ public class FileSystemFileValueProvider : FileValueProviderBase<FileSystemAdapt
         {
             if (cancellationToken.IsCancellationRequested) break;
             var filePath = isRootedPath ? Path.Combine(rootFolder, file) : file;
-            var fileValue = new FileSystemFileValue(new FileInfo(filePath), Code, Name, ConnectionName);
+            var fileValue = new FileSystemFileValue(new FileInfo(filePath));
             var fileReference = new FileReference(fileValue.Name, this.Code, filePath);
             pushFileValue(fileValue, fileReference);
         }

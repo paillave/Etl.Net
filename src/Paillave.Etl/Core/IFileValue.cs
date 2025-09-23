@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Paillave.Etl.Core;
@@ -10,18 +11,8 @@ public interface IFileValue
     Stream GetContent();
     StreamWithResource OpenContent();
     void Delete();
-    Type MetadataType { get; }
-    IFileValueMetadata Metadata { get; }
-    string SourceType { get; }
-    // public string GetSerialization();
-}
-public interface IFileValueMetadata
-{
-    string Type { get; }
-    string? ConnectorCode { get; }
-    string? ConnectionName { get; }
-    string? ConnectorName { get; }
-    object? Properties { get; }
+    object? Metadata { get; set; }
+    Dictionary<string, IEnumerable<Destination>>? Destinations { get; set; }
 }
 public class StreamWithResource(Stream stream, params IDisposable[] underlyingDisposables) : Stream
 {
@@ -42,4 +33,16 @@ public class StreamWithResource(Stream stream, params IDisposable[] underlyingDi
                 item.Dispose();
         base.Dispose(disposing);
     }
+}
+
+public class Destination
+{
+    public string DisplayName { get; set; }
+    public string Email { get; set; }
+    public string StreetAddress { get; set; }
+    public string ZipCode { get; set; }
+    public string Location { get; set; }
+    public string Country { get; set; }
+    public string Culture { get; set; }
+
 }

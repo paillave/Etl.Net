@@ -8,14 +8,13 @@ public class AzureStorageAccountAdapterProcessorParameters
     public bool? OverwriteIfAlreadyExists { get; set; } = false;
 }
 
-public class AzureStorageAccountFileValueProcessor : FileValueProcessorBase<AzureBlobOptions, AzureStorageAccountAdapterProcessorParameters>
+public class AzureStorageAccountFileValueProcessor(string code, string name, string connectionName, AzureBlobOptions connectionParameters, AzureStorageAccountAdapterProcessorParameters processorParameters) 
+    : FileValueProcessorBase<AzureBlobOptions, AzureStorageAccountAdapterProcessorParameters>(code, name, connectionName, connectionParameters, processorParameters)
 {
-    public AzureStorageAccountFileValueProcessor(string code, string name, string connectionName, AzureBlobOptions connectionParameters, AzureStorageAccountAdapterProcessorParameters processorParameters)
-        : base(code, name, connectionName, connectionParameters, processorParameters) { }
-
     public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-    protected override void Process(IFileValue fileValue, AzureBlobOptions connectionParameters, AzureStorageAccountAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
+    protected override void Process(IFileValue fileValue, AzureBlobOptions connectionParameters,
+        AzureStorageAccountAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken)
     {
         IDictionary<string, string>? metadata = ExtractMetadataRecursively(fileValue.Metadata);
         var blobContainerClient = connectionParameters.GetBlobContainerClient();
@@ -27,20 +26,20 @@ public class AzureStorageAccountFileValueProcessor : FileValueProcessorBase<Azur
             fileValue.GetContent(),
             processorParameters.OverwriteIfAlreadyExists ?? false,
             metadata,
-            cancellationToken).Wait();
+            cancellationToken).Wait(cancellationToken);
         push(fileValue);
     }
 
-    private IDictionary<string, string>? ExtractMetadataRecursively(IFileValueMetadata metadata)
+    private static IDictionary<string, string>? ExtractMetadataRecursively(object? metadata)
     {
         if (metadata == null)
             return null;
         var result = new Dictionary<string, string>();
-        if (metadata.Properties != null)
+        if (metadata != null)
         {
-            foreach (var property in metadata.Properties.GetType().GetProperties())
+            foreach (var property in metadata.GetType().GetProperties())
             {
-                var value = property.GetValue(metadata.Properties);
+                var value = property.GetValue(metadata);
                 if (value != null)
                 {
                     var stringValue = value.ToString();
@@ -61,13 +60,4 @@ public class AzureStorageAccountFileValueProcessor : FileValueProcessorBase<Azur
         blobContainerClient.SaveFileAsync(subPath, ms).Wait();
         blobContainerClient.GetBlobClient(subPath).Delete();
     }
-
-    private byte[] ToByteArray(Stream stream)
-    {
-        using var memoryStream = new MemoryStream();
-        stream.Seek(0, SeekOrigin.Begin);
-        stream.CopyTo(memoryStream);
-        return memoryStream.ToArray();
-    }
 }
-

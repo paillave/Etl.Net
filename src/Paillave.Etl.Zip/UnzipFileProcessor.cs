@@ -15,12 +15,12 @@ public class UnzipFileProcessorParams
     public string FileNamePattern { get; set; }
     public bool UseStreamCopy { get; set; } = true;
 }
-public class UnzippedFileValueMetadata : FileValueMetadataBase, IFileValueWithDestinationMetadata
-{
-    public string ParentFileName { get; set; }
-    public IFileValueMetadata ParentFileMetadata { get; set; }
-    public Dictionary<string, IEnumerable<Destination>> Destinations { get; set; }
-}
+// public class UnzippedFileValueMetadata : FileValueMetadataBase, IFileValueWithDestinationMetadata
+// {
+//     public string ParentFileName { get; set; }
+//     public IFileValueMetadata ParentFileMetadata { get; set; }
+//     public Dictionary<string, IEnumerable<Destination>> Destinations { get; set; }
+// }
 
 public class UnzipFileProcessor : FileValueProcessorBase<object, UnzipFileProcessorParams>
 {
@@ -31,9 +31,9 @@ public class UnzipFileProcessor : FileValueProcessorBase<object, UnzipFileProces
 
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
 
-    protected override void Process(IFileValue fileValue, object connectionParameters, UnzipFileProcessorParams processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
+    protected override void Process(IFileValue fileValue, object connectionParameters, UnzipFileProcessorParams processorParameters, Action<IFileValue> push, CancellationToken cancellationToken)
     {
-        var destinations = (fileValue.Metadata as IFileValueWithDestinationMetadata)?.Destinations;
+        var destinations = fileValue.Destinations;
         if (cancellationToken.IsCancellationRequested) return;
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
         using var zf = new ZipFile(stream);
@@ -52,12 +52,7 @@ public class UnzipFileProcessor : FileValueProcessorBase<object, UnzipFileProces
                 using (var zipStream = zf.GetInputStream(zipEntry))
                     zipStream.CopyTo(outputStream, 4096);
                 outputStream.Seek(0, SeekOrigin.Begin);
-                push(new UnzippedFileValue<UnzippedFileValueMetadata>(outputStream, zipEntry.Name, new UnzippedFileValueMetadata
-                {
-                    ParentFileName = fileValue.Name,
-                    ParentFileMetadata = fileValue.Metadata,
-                    Destinations = destinations
-                }, fileValue, fileNames, zipEntry.Name));
+                push(new UnzippedFileValue(outputStream, zipEntry.Name, fileValue, fileNames, zipEntry.Name));
             }
         }
     }

@@ -16,20 +16,19 @@ public class GraphApiMailFileValueProcessor : FileValueProcessorBase<GraphApiAda
         : base(code, name, connectionName, connectionParameters, processorParameters) { }
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-    private IEnumerable<(Destination, JObject)> GetDestinations(GraphApiAdapterProcessorParameters processorParameters, IFileValueMetadata metadata)
+    private IEnumerable<(Destination, JObject)> GetDestinations(GraphApiAdapterProcessorParameters processorParameters, IFileValue fileValue)
     {
         if (processorParameters.ToFromMetadata)
         {
-            IFileValueWithDestinationMetadata destinationMetadata = metadata as IFileValueWithDestinationMetadata;
             var tos = processorParameters.To.Split(";")
-                .SelectMany(to => (destinationMetadata?.Destinations ?? new Dictionary<string, IEnumerable<Destination>>(StringComparer.InvariantCultureIgnoreCase))
+                .SelectMany(to => (fileValue.Destinations ?? new Dictionary<string, IEnumerable<Destination>>(StringComparer.InvariantCultureIgnoreCase))
                     .TryGetValue(to, out var destinations)
-                        ? destinations ?? new List<Destination>()
+                        ? destinations ?? []
                         : new List<Destination>())
                 .ToList();
             foreach (var to in tos)
             {
-                JObject metadataJson = metadata == null ? new JObject() : JObject.FromObject(metadata);
+                JObject metadataJson = fileValue.Metadata == null ? [] : JObject.FromObject(fileValue.Metadata);
                 metadataJson["Destination"] = JObject.FromObject(to);
                 yield return (to, metadataJson);
             }
@@ -38,7 +37,7 @@ public class GraphApiMailFileValueProcessor : FileValueProcessorBase<GraphApiAda
         {
             var tos = processorParameters.To.Split(";");
             var toNames = (processorParameters.ToDisplayName ?? "").Split(";");
-            JObject metadataJson = metadata == null ? new JObject() : JObject.FromObject(metadata);
+            JObject metadataJson = fileValue.Metadata == null ? new JObject() : JObject.FromObject(fileValue.Metadata);
             for (int i = 0; i < tos.Length; i++)
             {
                 var mailAddress = FormatText(tos[i], metadataJson);
@@ -62,9 +61,9 @@ public class GraphApiMailFileValueProcessor : FileValueProcessorBase<GraphApiAda
     }
     protected override void Process(
         IFileValue fileValue, GraphApiAdapterConnectionParameters connectionParameters, GraphApiAdapterProcessorParameters processorParameters,
-        Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
+        Action<IFileValue> push, CancellationToken cancellationToken)
     {
-        var destinations = GetDestinations(processorParameters, fileValue.Metadata).ToList();
+        var destinations = GetDestinations(processorParameters, fileValue).ToList();
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
         MemoryStream ms = new MemoryStream();
         stream.CopyTo(ms);

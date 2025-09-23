@@ -17,20 +17,19 @@ namespace Paillave.Etl.Mail
             : base(code, name, connectionName, connectionParameters, processorParameters) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-        private IEnumerable<(Destination, JObject)> GetDestinations(MailAdapterProcessorParameters processorParameters, IFileValueMetadata metadata)
+        private IEnumerable<(Destination, JObject)> GetDestinations(MailAdapterProcessorParameters processorParameters, IFileValue fileValue)
         {
             if (processorParameters.ToFromMetadata)
             {
-                IFileValueWithDestinationMetadata destinationMetadata = metadata as IFileValueWithDestinationMetadata;
                 var tos = processorParameters.To.Split(";")
-                    .SelectMany(to => (destinationMetadata?.Destinations ?? new Dictionary<string, IEnumerable<Destination>>(StringComparer.InvariantCultureIgnoreCase))
+                    .SelectMany(to => (fileValue?.Destinations ?? new Dictionary<string, IEnumerable<Destination>>(StringComparer.InvariantCultureIgnoreCase))
                         .TryGetValue(to, out var destinations)
                             ? destinations ?? new List<Destination>()
-                            : new List<Destination>())
+                            : [])
                     .ToList();
                 foreach (var to in tos)
                 {
-                    JObject metadataJson = metadata == null ? new JObject() : JObject.FromObject(metadata);
+                    JObject metadataJson = fileValue.Metadata == null ? [] : JObject.FromObject(fileValue.Metadata);
                     metadataJson["Destination"] = JObject.FromObject(to);
                     yield return (to, metadataJson);
                 }
@@ -39,7 +38,7 @@ namespace Paillave.Etl.Mail
             {
                 var tos = processorParameters.To.Split(";");
                 var toNames = (processorParameters.ToDisplayName ?? "").Split(";");
-                JObject metadataJson = metadata == null ? new JObject() : JObject.FromObject(metadata);
+                JObject metadataJson = fileValue.Metadata == null ? [] : JObject.FromObject(fileValue.Metadata);
                 for (int i = 0; i < tos.Length; i++)
                 {
                     var mailAddress = FormatText(tos[i], metadataJson);
@@ -64,13 +63,13 @@ namespace Paillave.Etl.Mail
         }
         protected override void Process(
             IFileValue fileValue, MailAdapterConnectionParameters connectionParameters, MailAdapterProcessorParameters processorParameters,
-            Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
+            Action<IFileValue> push, CancellationToken cancellationToken)
         {
             var portNumber = connectionParameters.PortNumber == 0 ? 25 : connectionParameters.PortNumber;
 
-            var destinations = GetDestinations(processorParameters, fileValue.Metadata).ToList();
+            var destinations = GetDestinations(processorParameters, fileValue).ToList();
             using var stream = fileValue.Get(processorParameters.UseStreamCopy);
-            MemoryStream ms = new MemoryStream();
+            var ms = new MemoryStream();
             stream.CopyTo(ms);
             foreach (var (destination, metadataJson) in destinations)
             {
@@ -97,17 +96,14 @@ namespace Paillave.Etl.Mail
                     Attachment attachment = new Attachment(ms, fileValue.Name, MimeTypes.GetMimeType(fileValue.Name));
                     mailMessage.Attachments.Add(attachment);
                 }
-                ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => SendSingleFile(connectionParameters, (MimeMessage)mailMessage, portNumber));
+                ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => MailFileValueProcessor.SendSingleFile(connectionParameters, (MimeMessage)mailMessage, portNumber));
             }
             push(fileValue);
         }
-        private void SendSingleFile(MailAdapterConnectionParameters connectionParameters, MimeMessage mailMessage, int portNumber)
+        private static void SendSingleFile(MailAdapterConnectionParameters connectionParameters, MimeMessage mailMessage, int portNumber)
         {
-            // using (var client = new SmtpClient(connectionParameters.Server, portNumber))
-            using (var smtpClient = connectionParameters.CreateSmtpClient())
-            {
-                smtpClient.Send(mailMessage);
-            }
+            using var smtpClient = connectionParameters.CreateSmtpClient();
+            smtpClient.Send(mailMessage);
         }
         private static string FormatText(string text, JToken metadata)
         {
@@ -134,7 +130,7 @@ namespace Paillave.Etl.Mail
         }
         protected override void Test(MailAdapterConnectionParameters connectionParameters, MailAdapterProcessorParameters processorParameters)
         {
-            using (var client = connectionParameters.CreateSmtpClient()) { }
+            using var client = connectionParameters.CreateSmtpClient();
         }
     }
 }

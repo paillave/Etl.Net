@@ -14,7 +14,7 @@ public static class StringEx
         stream.Position = 0;
         return stream;
     }
-    public static string ConcatenatePath(params string[] segments)
+    public static string ConcatenatePath(params string?[] segments)
     {
         return string.Join("/", segments.Where(i => !string.IsNullOrWhiteSpace(i))).Replace("//", "/");
     }

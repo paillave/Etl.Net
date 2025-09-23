@@ -26,8 +26,7 @@ public class HttpFileValueProcessor
         HttpAdapterConnectionParameters connectionParameters,
         HttpAdapterProcessorParameters processorParameters,
         Action<IFileValue> push,
-        CancellationToken cancellationToken,
-        IExecutionContext context
+        CancellationToken cancellationToken
     )
     {
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
@@ -68,13 +67,7 @@ public class HttpFileValueProcessor
             push(
                 new HttpPostFileValue(
                     content,
-                    fileName,
-                    new HttpPostFileValueMetadata
-                    {
-                        ConnectionInfo = connectionParameters,
-                        Parameters = newProcessorParameters,
-                    }
-                )
+                    fileName                )
             );
             return;
         }

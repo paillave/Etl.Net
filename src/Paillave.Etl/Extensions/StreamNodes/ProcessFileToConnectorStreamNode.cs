@@ -23,7 +23,7 @@ namespace Paillave.Etl.Core
         protected override IStream<IFileValue> CreateOutputStream(ProcessFileToConnectorArgs args)
             => base.CreateUnsortedStream(args.Input.Observable.FlatMap((i, ct) => new DeferredPushObservable<IFileValue>((af, c) =>
              {
-                 _processor.Process(i, af, c, this.ExecutionContext);
+                 _processor.Process(i, af, c);
              }, ct)));
     }
 }

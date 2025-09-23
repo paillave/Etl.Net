@@ -31,19 +31,14 @@ public partial class MailFileValueProvider(string code, string name, string conn
         public required DateTime ReceivedDateTime { get; set; }
         public required Dictionary<string, bool> DeletionDico { get; set; }
     }
-    public override IFileValue Provide(string name, string fileSpecific)
+    public override IFileValue Provide(string fileSpecific)
     {
         var fileSpecificData = JsonSerializer.Deserialize<FileSpecificData>(fileSpecific) ?? throw new Exception("Invalid file specific");
         return new MailFileValue(
             connectionParameters,
             providerParameters.Folder,
             fileSpecificData.AttachmentName,
-            this.Code,
-            this.Name,
-            this.ConnectionName,
             providerParameters.SetToReadIfBatchDeletion,
-            fileSpecificData.Subject,
-            fileSpecificData.ReceivedDateTime,
             fileSpecificData.MessageId,
             fileSpecificData.DeletionDico
         );
@@ -83,12 +78,7 @@ public partial class MailFileValueProvider(string code, string name, string conn
                                 connectionParameters,
                                 providerParameters.Folder,
                                 attachment.ContentDisposition.FileName,
-                                this.Code,
-                                this.Name,
-                                this.ConnectionName,
                                 providerParameters.SetToReadIfBatchDeletion,
-                                message.Subject,
-                                message.Date.DateTime,
                                 item.Id,
                                 deletionDico
                             );

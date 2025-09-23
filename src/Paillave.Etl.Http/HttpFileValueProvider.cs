@@ -18,7 +18,7 @@ public class HttpFileValueProvider(
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
 
-    public override IFileValue Provide(string name, string fileSpecific)
+    public override IFileValue Provide(string fileSpecific)
     {
         return new HttpFileValue(
                 fileSpecific,

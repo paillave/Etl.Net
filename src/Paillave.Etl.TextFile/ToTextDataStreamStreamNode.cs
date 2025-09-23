@@ -26,16 +26,13 @@ namespace Paillave.Etl.TextFile
     public class ToFileValueStreamNode<TIn, TRow> : StreamNodeBase<IFileValue, ISingleStream<IFileValue>, ToTextDataStreamArgs<TIn, TRow>>
     {
         private readonly LineSerializer<TRow> _serialize;
-        private FileValueWriter<FlatFileValueMetadata> _streamWriter;
+        private FileValueWriter _streamWriter;
         public ToFileValueStreamNode(string name, ToTextDataStreamArgs<TIn, TRow> args) : base(name, args)
         {
             _serialize = args.Mapping.GetSerializer();
-            _streamWriter = FileValueWriter.Create(new FlatFileValueMetadata
-            {
-                Map = _serialize.GetTextMapping(),
-                ExtraMetadata = args.Metadata,
-                Destinations = args.Destinations,
-            }, args.FileName, args.Encoding ?? Encoding.Default, 1024);
+            _streamWriter = FileValueWriter.Create(args.FileName, args.Encoding ?? Encoding.Default, 1024);
+            _streamWriter.Metadata= args.Metadata;
+            _streamWriter.Destinations = args.Destinations;
             _streamWriter.WriteLine(args.Mapping.GenerateDefaultHeaderLine());
         }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
@@ -46,12 +43,6 @@ namespace Paillave.Etl.TextFile
             return CreateSingleStream(obs);
         }
         private void ProcessValueToOutput(TIn value) => _streamWriter.WriteLine(_serialize.Serialize(Args.GetRow(value)));
-    }
-    public class FlatFileValueMetadata : FileValueMetadataBase, IFileValueWithDestinationMetadata
-    {
-        public Dictionary<string, string> Map { get; set; }
-        public Dictionary<string, IEnumerable<Destination>> Destinations { get; set; }
-        public object ExtraMetadata { get; set; }
     }
     public class ToTextDataStreamFileArgs<TIn, TStream>
         where TStream : IStream<TIn>

@@ -13,7 +13,7 @@ namespace Paillave.Etl.Dropbox
             : base(code, name, connectionName, connectionParameters, processorParameters) { }
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-        protected override void Process(IFileValue fileValue, DropboxAdapterConnectionParameters connectionParameters, DropboxAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
+        protected override void Process(IFileValue fileValue, DropboxAdapterConnectionParameters connectionParameters, DropboxAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken)
         {
             var path = $"/{Path.Combine(connectionParameters.RootFolder ?? "", processorParameters.SubFolder ?? "", fileValue.Name)}".Replace("\\", "/").Replace("//", "/");
             using var stream = fileValue.Get(processorParameters.UseStreamCopy);

@@ -1,35 +1,22 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Http;
 
-public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
+public class HttpFileValue : FileValueBase
 {
     public override string Name { get; }
     private readonly IHttpConnectionInfo _connectionInfo;
     private readonly IHttpAdapterParameters _parameters;
 
-    public HttpFileValue(
-        string url,
-        IHttpConnectionInfo? connectionInfo = null,
-        IHttpAdapterParameters? parameters = null
-    )
-        : base(
-            new HttpFileValueMetadata
-            {
-                ConnectionInfo =
-                    connectionInfo ?? new HttpAdapterConnectionParameters { Url = url },
-                Parameters = parameters ?? new HttpAdapterProviderParameters { },
-            }
-        )
-    {
-        Name = url;
-        _connectionInfo = connectionInfo ?? new HttpAdapterConnectionParameters { Url = url };
-        _parameters =
-            parameters ?? new HttpAdapterProviderParameters() { Method = HttpMethodCustomEnum.Get };
-    }
+    public HttpFileValue(string url, IHttpConnectionInfo? connectionInfo, IHttpAdapterParameters? parameters)
+    => (Name, _connectionInfo, _parameters)
+    = (
+        url,
+        connectionInfo ?? new HttpAdapterConnectionParameters { Url = url },
+        parameters ?? new HttpAdapterProviderParameters() { Method = HttpMethodCustomEnum.Get }
+    );
 
     public override StreamWithResource OpenContent() => new(GetContent());
 
@@ -72,10 +59,4 @@ public class HttpFileValue : FileValueBase<HttpFileValueMetadata>
             );
         }
     }
-}
-
-public class HttpFileValueMetadata : FileValueMetadataBase
-{
-    public required IHttpConnectionInfo ConnectionInfo { get; set; }
-    public required IHttpAdapterParameters Parameters { get; set; }
 }

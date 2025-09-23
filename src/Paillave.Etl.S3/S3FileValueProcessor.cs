@@ -20,7 +20,7 @@ public class S3FileValueProcessor : FileValueProcessorBase<S3AdapterConnectionPa
     { }
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-    protected override void Process(IFileValue fileValue, S3AdapterConnectionParameters connectionParameters, S3AdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
+    protected override void Process(IFileValue fileValue, S3AdapterConnectionParameters connectionParameters, S3AdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken)
     {
         var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : StringEx.ConcatenatePath(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);

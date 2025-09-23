@@ -9,6 +9,6 @@ public interface IFileValueProvider
     ProcessImpact PerformanceImpact { get; }
     ProcessImpact MemoryFootPrint { get; }
     void Provide(object input, Action<IFileValue, FileReference> pushFileValue, CancellationToken cancellationToken);
-    IFileValue Provide(string name, string fileSpecific);
+    IFileValue Provide(string fileSpecific);
     void Test();
 }

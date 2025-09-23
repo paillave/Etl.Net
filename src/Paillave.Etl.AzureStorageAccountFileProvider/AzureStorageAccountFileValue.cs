@@ -2,17 +2,8 @@ using Paillave.Etl.Core;
 
 namespace Paillave.Etl.AzureStorageAccountFileProvider;
 
-public class AzureStorageAccountFileValue(AzureBlobFileInfo fileInfo, string connectorCode, string connectorName, string connectionName, AzureBlobOptions azureBlobOptions)
-    : FileValueBase<AzureStorageAccountFileValueMetadata>(new AzureStorageAccountFileValueMetadata
-    {
-        BaseUri = azureBlobOptions.BaseUri,
-        Name = fileInfo.Name,
-        Folder = fileInfo.PhysicalPath,
-        DocumentContainer = azureBlobOptions.DocumentContainer,
-        ConnectionName = connectionName,
-        ConnectorCode = connectorCode,
-        ConnectorName = connectorName,
-    })
+public class AzureStorageAccountFileValue(AzureBlobFileInfo fileInfo)
+    : FileValueBase
 {
     public override string Name => fileInfo.Name;
 
@@ -25,7 +16,7 @@ public class AzureStorageAccountFileValue(AzureBlobFileInfo fileInfo, string con
     protected override void DeleteFile()
         => fileInfo.DeleteAsync().Wait();
 }
-public class AzureStorageAccountFileValueMetadata : FileValueMetadataBase
+public class AzureStorageAccountFileValueMetadata
 {
     public Uri? BaseUri { get; set; }
     public string? Folder { get; set; }

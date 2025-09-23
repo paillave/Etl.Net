@@ -18,10 +18,10 @@ public class SftpFileValueProvider(string code, string name, string connectionNa
         public required string Folder { get; set; }
         public required string FileName { get; set; }
     }
-    public override IFileValue Provide(string name, string fileSpecific)
+    public override IFileValue Provide(string fileSpecific)
     {
         var fileSpecificData = JsonSerializer.Deserialize<FileSpecificData>(fileSpecific) ?? throw new Exception("Invalid file specific");
-        return new SftpFileValue(connectionParameters, fileSpecificData.Folder, fileSpecificData.FileName, this.Code, this.Name, this.ConnectionName);
+        return new SftpFileValue(connectionParameters, fileSpecificData.Folder, fileSpecificData.FileName);
     }
     protected override void Provide(object input, Action<IFileValue, FileReference> pushFileValue, SftpAdapterConnectionParameters connectionParameters, SftpAdapterProviderParameters providerParameters, CancellationToken cancellationToken)
     {
@@ -35,7 +35,7 @@ public class SftpFileValueProvider(string code, string name, string connectionNa
             if (cancellationToken.IsCancellationRequested) break;
             if (matcher.Match(file.Name).HasMatches)
             {
-                var fileValue = new SftpFileValue(connectionParameters, folder, file.Name, this.Code, this.Name, this.ConnectionName);
+                var fileValue = new SftpFileValue(connectionParameters, folder, file.Name);
                 var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.Serialize(new FileSpecificData { FileName = file.Name, Folder = folder }));
                 pushFileValue(fileValue, fileReference);
             }

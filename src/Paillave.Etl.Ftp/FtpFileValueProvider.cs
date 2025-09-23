@@ -27,16 +27,16 @@ namespace Paillave.Etl.Ftp
                 if (matcher.Match(fileName).HasMatches)
                 {
                     var folder = Path.GetDirectoryName(fullPath);
-                    var fileValue = new FtpFileValue(connectionParameters, folder, fileName, this.Code, this.Name, this.ConnectionName);
+                    var fileValue = new FtpFileValue(connectionParameters, folder, fileName);
                     var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.Serialize(new FileSpecificData { FileName = fileName, Folder = folder }));
                     pushFileValue(fileValue, fileReference);
                 }
             }
         }
-        public override IFileValue Provide(string name, string fileSpecific)
+        public override IFileValue Provide(string fileSpecific)
         {
             var fileSpecificData = JsonSerializer.Deserialize<FileSpecificData>(fileSpecific) ?? throw new Exception("Invalid file specific");
-            return new FtpFileValue(connectionParameters, fileSpecificData.Folder, fileSpecificData.FileName, this.Code, this.Name, this.ConnectionName);
+            return new FtpFileValue(connectionParameters, fileSpecificData.Folder, fileSpecificData.FileName);
         }
 
         private class FileSpecificData

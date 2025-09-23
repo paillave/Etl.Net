@@ -23,5 +23,5 @@ public abstract class FileValueProviderBase<TConnectionParameters, TProviderPara
     public void PushValues(object input, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
         => Provide(input, push, cancellationToken);
 
-    public abstract IFileValue Provide(string name, string fileSpecific);
+    public abstract IFileValue Provide(string fileSpecific);
 }

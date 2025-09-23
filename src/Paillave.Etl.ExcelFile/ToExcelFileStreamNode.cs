@@ -32,15 +32,8 @@ namespace Paillave.Etl.ExcelFile
             MemoryStream stream = new MemoryStream();
             var excelReader = Args.Mapping.GetExcelReader();
             value.WriteExcelListInStream(excelReader, stream);
-            return FileValue.Create(stream, this.Args.FileName, new ExcelFileValueMetadata
-            {
-                Map = excelReader.GetTextMapping()
-            });
+            return InMemoryFileValue.Create(stream, this.Args.FileName);
         }
-    }
-    public class ExcelFileValueMetadata : FileValueMetadataBase
-    {
-        public Dictionary<string, string> Map { get; set; }
     }
     public class ToExcelFileArgs<TIn, TStream>
         where TStream : IStream<TIn>

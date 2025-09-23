@@ -23,12 +23,11 @@ public class PgpAdapterProcessorParameters
     public string? PublicKey { get; set; }
     public bool UseStreamCopy { get; set; } = true;
 }
-public class PgpFileValueMetadata : FileValueMetadataBase, IFileValueWithDestinationMetadata
-{
-    public string ParentFileName { get; set; }
-    public IFileValueMetadata ParentFileMetadata { get; set; }
-    public Dictionary<string, IEnumerable<Destination>> Destinations { get; set; }
-}
+// public class PgpFileValueMetadata : IFileValueWithDestinationMetadata
+// {
+//     public string ParentFileName { get; set; }
+//     public Dictionary<string, IEnumerable<Destination>> Destinations { get; set; }
+// }
 public class PgpFileValueProcessor : FileValueProcessorBase<PgpAdapterConnectionParameters, PgpAdapterProcessorParameters>
 {
     public PgpFileValueProcessor(string code, string name, string connectionName, PgpAdapterConnectionParameters connectionParameters, PgpAdapterProcessorParameters processorParameters)
@@ -45,9 +44,8 @@ public class PgpFileValueProcessor : FileValueProcessorBase<PgpAdapterConnection
             return new EncryptionKeys(processorParameters.PublicKey);
         throw new ArgumentException("Missing key parameters");
     }
-    protected override void Process(IFileValue fileValue, PgpAdapterConnectionParameters connectionParameters, PgpAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
+    protected override void Process(IFileValue fileValue, PgpAdapterConnectionParameters connectionParameters, PgpAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken)
     {
-        var destinations = (fileValue.Metadata as IFileValueWithDestinationMetadata)?.Destinations;
         if (cancellationToken.IsCancellationRequested) return;
         using var inputStream = fileValue.Get(processorParameters.UseStreamCopy);
 
@@ -60,12 +58,7 @@ public class PgpFileValueProcessor : FileValueProcessorBase<PgpAdapterConnection
                     var ms = new MemoryStream();
                     pgp.Decrypt(inputStream, ms);
                     ms.Seek(0, SeekOrigin.Begin);
-                    push(new PgpFileValue<PgpFileValueMetadata>(ms, fileValue.Name, new PgpFileValueMetadata
-                    {
-                        ParentFileName = fileValue.Name,
-                        ParentFileMetadata = fileValue.Metadata,
-                        Destinations = destinations
-                    }, fileValue));
+                    push(new PgpFileValue(ms, fileValue.Name, fileValue));
                 }
                 break;
             case PgpOperation.Encrypt:
@@ -75,12 +68,7 @@ public class PgpFileValueProcessor : FileValueProcessorBase<PgpAdapterConnection
                     var ms = new MemoryStream();
                     pgp.Encrypt(inputStream, ms);
                     ms.Seek(0, SeekOrigin.Begin);
-                    push(new PgpFileValue<PgpFileValueMetadata>(ms, fileValue.Name, new PgpFileValueMetadata
-                    {
-                        ParentFileName = fileValue.Name,
-                        ParentFileMetadata = fileValue.Metadata,
-                        Destinations = destinations
-                    }, fileValue));
+                    push(new PgpFileValue(ms, fileValue.Name, fileValue));
                 }
                 break;
             case PgpOperation.Sign:
@@ -90,12 +78,7 @@ public class PgpFileValueProcessor : FileValueProcessorBase<PgpAdapterConnection
                     var ms = new MemoryStream();
                     pgp.Sign(inputStream, ms);
                     ms.Seek(0, SeekOrigin.Begin);
-                    push(new PgpFileValue<PgpFileValueMetadata>(ms, fileValue.Name, new PgpFileValueMetadata
-                    {
-                        ParentFileName = fileValue.Name,
-                        ParentFileMetadata = fileValue.Metadata,
-                        Destinations = destinations
-                    }, fileValue));
+                    push(new PgpFileValue(ms, fileValue.Name, fileValue));
                 }
                 break;
             case PgpOperation.EncryptAndSign:
@@ -105,12 +88,7 @@ public class PgpFileValueProcessor : FileValueProcessorBase<PgpAdapterConnection
                     var ms = new MemoryStream();
                     pgp.EncryptAndSign(inputStream, ms);
                     ms.Seek(0, SeekOrigin.Begin);
-                    push(new PgpFileValue<PgpFileValueMetadata>(ms, fileValue.Name, new PgpFileValueMetadata
-                    {
-                        ParentFileName = fileValue.Name,
-                        ParentFileMetadata = fileValue.Metadata,
-                        Destinations = destinations
-                    }, fileValue));
+                    push(new PgpFileValue(ms, fileValue.Name, fileValue));
                 }
                 break;
             case PgpOperation.UnSign:
@@ -120,12 +98,7 @@ public class PgpFileValueProcessor : FileValueProcessorBase<PgpAdapterConnection
                     var ms = new MemoryStream();
                     pgp.ClearSign(inputStream, ms);
                     ms.Seek(0, SeekOrigin.Begin);
-                    push(new PgpFileValue<PgpFileValueMetadata>(ms, fileValue.Name, new PgpFileValueMetadata
-                    {
-                        ParentFileName = fileValue.Name,
-                        ParentFileMetadata = fileValue.Metadata,
-                        Destinations = destinations
-                    }, fileValue));
+                    push(new PgpFileValue(ms, fileValue.Name, fileValue));
                 }
                 break;
             case PgpOperation.Verify:
@@ -137,12 +110,7 @@ public class PgpFileValueProcessor : FileValueProcessorBase<PgpAdapterConnection
                     if (verified)
                     {
                         ms.Seek(0, SeekOrigin.Begin);
-                        push(new PgpFileValue<PgpFileValueMetadata>(ms, fileValue.Name, new PgpFileValueMetadata
-                        {
-                            ParentFileName = fileValue.Name,
-                            ParentFileMetadata = fileValue.Metadata,
-                            Destinations = destinations
-                        }, fileValue));
+                        push(new PgpFileValue(ms, fileValue.Name, fileValue));
                     }
                 }
                 break;

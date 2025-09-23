@@ -1,63 +1,41 @@
-using System;
+using System.Collections.Generic;
 using System.IO;
 
-namespace Paillave.Etl.Core
-{
-    public abstract class FileValueBase<TMetadata> : IFileValue
-        where TMetadata : IFileValueMetadata
-    {
-        public FileValueBase(TMetadata metadata) => Metadata = metadata;
-        private object _lock = new object();
-        private bool _isDeleted = false;
-        public abstract string Name { get; }
-        public TMetadata Metadata { get; }
-        public virtual string SourceType => this.Metadata.Type;
-        public Type MetadataType => typeof(TMetadata);
-        IFileValueMetadata IFileValue.Metadata => this.Metadata;
+namespace Paillave.Etl.Core;
 
-        public void Delete()
+public abstract class FileValueBase : IFileValue
+{
+    private readonly object _lock = new();
+    private bool _isDeleted = false;
+    public abstract string Name { get; }
+    public object? Metadata { get; set; }
+    public Dictionary<string, IEnumerable<Destination>>? Destinations { get; set; }
+
+    public void Delete()
+    {
+        lock (_lock)
         {
-            lock (_lock)
+            if (!_isDeleted)
             {
-                if (!_isDeleted)
-                {
-                    this.DeleteFile();
-                    _isDeleted = true;
-                }
+                this.DeleteFile();
+                _isDeleted = true;
             }
         }
-
-        protected abstract void DeleteFile();
-        public abstract Stream GetContent();
-        public abstract StreamWithResource OpenContent();
-
-        public StreamWithResource Get(bool useStreamCopy = true)
-        {
-            if (!useStreamCopy)
-                return OpenContent();
-
-            var stream = new StreamWithResource(GetContent());
-            stream.Position = 0;
-            return stream;
-        }
-
-        // public abstract string GetSerialization();
     }
 
-    public abstract class FileValueMetadataBase : IFileValueMetadata
+    protected abstract void DeleteFile();
+    public abstract Stream GetContent();
+    public abstract StreamWithResource OpenContent();
+
+    public StreamWithResource Get(bool useStreamCopy = true)
     {
-        public virtual string Type => this.GetType().Name
-            .Replace("FileValueMetadata", "", StringComparison.InvariantCultureIgnoreCase);
+        if (!useStreamCopy)
+            return OpenContent();
 
-        public string? ConnectorCode { get; set; }
-        public string? ConnectionName { get; set; }
-        public string? ConnectorName { get; set; }
-        public object? Properties { get; set; }
+        var stream = new StreamWithResource(GetContent());
+        stream.Position = 0;
+        return stream;
     }
 
-    public class NoSourceFileValueMetadata : FileValueMetadataBase
-    {
-        public NoSourceFileValueMetadata(string type) => Type = type;
-        public override string Type { get; }
-    }
+    // public abstract string GetSerialization();
 }

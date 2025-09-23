@@ -44,17 +44,11 @@ public partial class GraphApiMailFileValueProvider(string code, string name, str
         public required Dictionary<string, bool> DeletionDico { get; set; }
     }
 
-    public override IFileValue Provide(string name, string fileSpecific)
+    public override IFileValue Provide(string fileSpecific)
     {
         var fileSpecificData = JsonSerializer.Deserialize<FileSpecificData>(fileSpecific) ?? throw new Exception("Invalid file specific");
-        return new GraphApiMailFileValue(
-                                    connectionParameters,
-                                    fileSpecificData.MessageId, fileSpecificData.AttachmentId,
-                                    providerParameters.Folder, fileSpecificData.Subject, fileSpecificData.AttachmentName,
-                                    fileSpecificData.SenderAddress, fileSpecificData.ReceivedDateTime,
-                                    this.Code, this.Name, this.ConnectionName,
-                                    providerParameters.SetToReadIfBatchDeletion, fileSpecificData.DeletionDico
-                                );
+        return new GraphApiMailFileValue(connectionParameters, fileSpecificData.MessageId, fileSpecificData.AttachmentId,
+            fileSpecificData.AttachmentName, providerParameters.SetToReadIfBatchDeletion, fileSpecificData.DeletionDico);
     }
     private void GetFileList(GraphApiAdapterConnectionParameters connectionParameters, GraphApiMailAdapterProviderParameters providerParameters, Action<GraphApiMailFileValue, FileReference> pushFileValue, CancellationToken cancellationToken)
     {
@@ -87,9 +81,7 @@ public partial class GraphApiMailFileValueProvider(string code, string name, str
                         var fileValue = new GraphApiMailFileValue(
                             connectionParameters,
                             message.Id, item.Id,
-                            providerParameters.Folder, message.Subject, item.Name,
-                            message.From.EmailAddress.Address, message.ReceivedDateTime.Value.UtcDateTime,
-                            this.Code, this.Name, this.ConnectionName,
+                            item.Name,
                             providerParameters.SetToReadIfBatchDeletion, deletionDico
                         );
                         var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.Serialize(new FileSpecificData

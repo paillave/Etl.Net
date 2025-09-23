@@ -16,8 +16,10 @@ namespace Paillave.Etl.Zip
         public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
         public override void PushValues(IFileValue input, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
+            => PushValues(input, push, cancellationToken);
+        public void PushValues(IFileValue input, Action<IFileValue> push, CancellationToken cancellationToken)
         {
-            var destinations = (input.Metadata as IFileValueWithDestinationMetadata)?.Destinations;
+            var destinations = input.Destinations;
             if (cancellationToken.IsCancellationRequested) return;
             using var stream = input.Get(_args.UseStreamCopy);
             using var zf = new ZipFile(stream);
@@ -36,15 +38,7 @@ namespace Paillave.Etl.Zip
                     using (var zipStream = zf.GetInputStream(zipEntry))
                         zipStream.CopyTo(outputStream, 4096);
                     outputStream.Seek(0, SeekOrigin.Begin);
-                    push(new UnzippedFileValue<UnzippedFileValueMetadata>(outputStream, zipEntry.Name, new UnzippedFileValueMetadata
-                    {
-                        ParentFileName = input.Name,
-                        ParentFileMetadata = input.Metadata,
-                        Destinations = destinations,
-                        ConnectorCode = input.Metadata.ConnectorCode,
-                        ConnectionName = input.Metadata.ConnectionName,
-                        ConnectorName = input.Metadata.ConnectorName
-                    }, input, fileNames, zipEntry.Name));
+                    push(new UnzippedFileValue(outputStream, zipEntry.Name, input, fileNames, zipEntry.Name));
                 }
             }
         }

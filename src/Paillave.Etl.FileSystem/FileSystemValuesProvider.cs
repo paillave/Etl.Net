@@ -13,14 +13,9 @@ namespace Paillave.Etl.FileSystem
         public bool Recursive { get; set; } = false;
         public Func<IFileValue, TIn, TOut> GetResult { get; set; }
     }
-    public class FileSystemValuesProvider<TIn, TOut> : ValuesProviderBase<TIn, TOut>
+    public class FileSystemValuesProvider<TIn, TOut>(FileSystemValuesProviderArgs<TIn, TOut> args) : ValuesProviderBase<TIn, TOut>
     {
-        private FileSystemValuesProviderArgs<TIn, TOut> _args;
-
-        public FileSystemValuesProvider(FileSystemValuesProviderArgs<TIn, TOut> args)
-        {
-            _args = args;
-        }
+        private FileSystemValuesProviderArgs<TIn, TOut> _args = args;
 
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
 

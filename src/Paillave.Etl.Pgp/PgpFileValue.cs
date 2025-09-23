@@ -3,13 +3,12 @@ using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Pgp
 {
-    public class PgpFileValue<TMetadata> : FileValueBase<TMetadata> where TMetadata : IFileValueMetadata
+    public class PgpFileValue : FileValueBase
     {
         private readonly Stream _stream;
         private readonly IFileValue _underlyingFileValue;
         public override string Name { get; }
-        public PgpFileValue(Stream stream, string name, TMetadata metadata, IFileValue underlyingFileValue)
-            : base(metadata)
+        public PgpFileValue(Stream stream, string name, IFileValue underlyingFileValue)
             => (_stream, Name, _underlyingFileValue)
             = (stream, name, underlyingFileValue);
         public override Stream GetContent()
