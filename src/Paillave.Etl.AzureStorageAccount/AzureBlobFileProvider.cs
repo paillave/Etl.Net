@@ -2,7 +2,7 @@
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Primitives;
 
-namespace Paillave.Etl.AzureStorageAccountFileProvider;
+namespace Paillave.Etl.AzureStorageAccount;
 public class AzureBlobFileProvider : IFileProvider, IFileSaver
 {
     private readonly BlobContainerClient _blobContainerClient;

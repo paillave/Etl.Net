@@ -54,7 +54,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Http", "Pailla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.XmlFileTests", "Paillave.Etl.XmlFileTests\Paillave.Etl.XmlFileTests.csproj", "{D3F4F6F9-F964-436D-8C16-4FEFD97F2EEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.AzureStorageAccountFileProvider", "Paillave.Etl.AzureStorageAccountFileProvider\Paillave.Etl.AzureStorageAccountFileProvider.csproj", "{01C62EAC-96DF-488A-83AF-6CCA87A8F3CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.AzureStorageAccount", "Paillave.Etl.AzureStorageAccount\Paillave.Etl.AzureStorageAccount.csproj", "{01C62EAC-96DF-488A-83AF-6CCA87A8F3CE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Pgp", "Paillave.Etl.Pgp\Paillave.Etl.Pgp.csproj", "{98FCFFD8-5809-49B6-AEB6-1C1325A68584}"
 EndProject

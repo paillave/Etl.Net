@@ -22,7 +22,7 @@ namespace Paillave.Etl.Core
                 .Scan<TIn, (FixedQueue<TIn> Queue, TIn[] Items)>((new FixedQueue<TIn>(args.Count), new TIn[] { }), (a, v) =>
                     {
                         a.Queue.Enqueue(v);
-                        return (a.Queue, a.Queue.ToArray().Reverse().ToArray());
+                        return (a.Queue, Enumerable.Reverse(a.Queue.ToArray()).ToArray());
                     })
                 .Map(i => args.GetResult(i.Items));
             return base.CreateUnsortedStream(obs);
@@ -47,7 +47,7 @@ namespace Paillave.Etl.Core
                         a.Queue.Enqueue(v);
                         return (
                                 a.Queue,
-                                a.Queue.ToArray().Reverse().Select(i => i.Row).ToArray(),
+                                Enumerable.Reverse(a.Queue.ToArray()).Select(i => i.Row).ToArray(),
                                 a.Queue.ToArray().SelectMany(i => i.CorrelationKeys).ToHashSet());
                     })
                 .Map(i => new Correlated<TOut>
