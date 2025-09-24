@@ -1,7 +1,7 @@
 using Microsoft.Extensions.FileSystemGlobbing;
 using Paillave.Etl.Core;
 
-namespace Paillave.Etl.AzureStorageAccountFileProvider;
+namespace Paillave.Etl.AzureStorageAccount;
 
 public class AzureStorageAccountAdapterProviderParameters
 {

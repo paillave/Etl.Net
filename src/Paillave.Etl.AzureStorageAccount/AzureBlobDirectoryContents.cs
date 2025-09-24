@@ -1,7 +1,7 @@
 using System.Collections;
 using Microsoft.Extensions.FileProviders;
 
-namespace Paillave.Etl.AzureStorageAccountFileProvider;
+namespace Paillave.Etl.AzureStorageAccount;
 
 public class AzureBlobDirectoryContents : IDirectoryContents, IEnumerable<AzureBlobFileInfo>
 {

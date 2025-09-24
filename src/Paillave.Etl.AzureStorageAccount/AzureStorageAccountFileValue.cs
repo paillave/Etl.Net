@@ -1,6 +1,6 @@
 using Paillave.Etl.Core;
 
-namespace Paillave.Etl.AzureStorageAccountFileProvider;
+namespace Paillave.Etl.AzureStorageAccount;
 
 public class AzureStorageAccountFileValue(AzureBlobFileInfo fileInfo)
     : FileValueBase
