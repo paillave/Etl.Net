@@ -32,7 +32,7 @@ public static class IHttpConnectionInfoEx
                         $"Header '{header.Key}' already exists in the request."
                     );
 
-                client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                client.DefaultRequestHeaders.TryAddWithoutValidation(header.Key, header.Value);
             }
         }
 
