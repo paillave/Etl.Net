@@ -4,8 +4,8 @@ namespace Paillave.Etl.Mail
     {
         string Server { get; set; }
         int PortNumber { get; set; }
-        string Login { get; set; }
-        string Password { get; set; }
+        string? Login { get; set; }
+        string? Password { get; set; }
         bool? Ssl { get; set; }
         bool? Tls { get; set; }
         bool? TlsWhenAvailable { get; set; }

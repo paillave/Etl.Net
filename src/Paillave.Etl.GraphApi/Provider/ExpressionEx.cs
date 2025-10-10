@@ -22,7 +22,7 @@ public class ProjectionProcessor<T>
 {
     public static string[] ToString<TRes>(Expression<Func<T, TRes>> expression)
     {
-        ProjectionVisitor vis = new ProjectionVisitor();
+        ProjectionVisitor vis = new();
         vis.Visit(expression);
         return vis.Projections;
 
@@ -30,12 +30,12 @@ public class ProjectionProcessor<T>
 }
 public class ProjectionVisitor : ExpressionVisitor
 {
-    public string[] Projections { get; private set; }
+    public string[] Projections { get; private set; } = [];
     protected override Expression VisitLambda<T>(Expression<T> node)
     {
-        NewInstanceVisitor vis = new NewInstanceVisitor();
+        NewInstanceVisitor vis = new();
         vis.Visit(node.Body);
-        this.Projections = vis.Projections.ToArray();
+        this.Projections = [.. vis.Projections];
         return base.VisitLambda(node);
     }
 }
@@ -53,7 +53,7 @@ public class NewInstanceVisitor : ExpressionVisitor
     }
     protected override Expression VisitMember(MemberExpression node)
     {
-        if (!Projections.Any())
+        if (Projections.Count == 0)
         {
             Projections.Add(node.Member.Name);
         }

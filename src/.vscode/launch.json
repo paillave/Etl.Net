@@ -50,7 +50,7 @@
             "program": "${workspaceFolder}/Tutorials/BlogTutorial/bin/Debug/net9.0/BlogTutorial.dll",
             "args": [
                 "data",
-                "Server=localhost,1433;Database=BlogTutorial;user=BlogTutorial;password=TestEtl.TestEtl;MultipleActiveResultSets=True"
+                "Server=localhost,1433;Database=BlogTutorial;Persist Security Info=False;User ID=SA;Password=<YourStrong@Passw0rd>;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=true;Connection Timeout=300",
             ],
             "cwd": "${workspaceFolder}/Tutorials/BlogTutorial",
             "stopAtEntry": false,

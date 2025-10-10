@@ -27,6 +27,9 @@ public partial class MailFileValueProvider(string code, string name, string conn
     {
         public required uint MessageId { get; set; }
         public required string Subject { get; set; }
+        public required string SenderAddress { get; set; }
+        public required string SenderName { get; set; }
+        public required string Folder { get; set; }
         public required string AttachmentName { get; set; }
         public required DateTime ReceivedDateTime { get; set; }
         public required Dictionary<string, bool> DeletionDico { get; set; }
@@ -40,7 +43,8 @@ public partial class MailFileValueProvider(string code, string name, string conn
             fileSpecificData.AttachmentName,
             providerParameters.SetToReadIfBatchDeletion,
             fileSpecificData.MessageId,
-            fileSpecificData.DeletionDico
+            fileSpecificData.DeletionDico,
+            fileSpecificData.Subject
         );
     }
     protected override void Provide(object input, Action<IFileValue, FileReference> pushFileValue, MailAdapterConnectionParameters connectionParameters, MailAdapterProviderParameters providerParameters, CancellationToken cancellationToken)
@@ -80,7 +84,8 @@ public partial class MailFileValueProvider(string code, string name, string conn
                                 attachment.ContentDisposition.FileName,
                                 providerParameters.SetToReadIfBatchDeletion,
                                 item.Id,
-                                deletionDico
+                                deletionDico,
+                                message.Subject
                             );
                             var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.Serialize(new FileSpecificData
                             {
@@ -89,6 +94,9 @@ public partial class MailFileValueProvider(string code, string name, string conn
                                 AttachmentName = attachment.ContentDisposition.FileName,
                                 ReceivedDateTime = message.Date.DateTime,
                                 DeletionDico = deletionDico,
+                                Folder = providerParameters.Folder,
+                                SenderAddress = message.From.Mailboxes.FirstOrDefault()?.Address ?? "",
+                                SenderName = message.From.Mailboxes.FirstOrDefault()?.Name ?? "",
                             }));
                             fileValues.Add((fileValue, fileReference));
                         }

@@ -10,6 +10,7 @@ namespace Paillave.Etl.Mail;
 public class MailFileValue : FileValueBase
 {
     public override string Name { get; }
+    public string Subject { get; }
     private readonly uint _messageId;
     private readonly string _folder;
     private bool _setToReadIfBatchDeletion;
@@ -17,8 +18,9 @@ public class MailFileValue : FileValueBase
     private readonly Dictionary<string, bool> _deleted;
     // public IMapFileValue(IMailConnectionInfo connectionInfo, string folder, string fileName)
     //     : this(connectionInfo, folder, fileName, null, null, null, false) { }
-    public MailFileValue(IMailConnectionInfo connectionInfo, string folder, string fileName, bool setToReadIfBatchDeletion, uint messageId, Dictionary<string, bool> deleted)
-        => (Name, _messageId, _connectionInfo, _deleted, _folder, _setToReadIfBatchDeletion) = (fileName, messageId, connectionInfo, deleted, folder, setToReadIfBatchDeletion);
+    public MailFileValue(IMailConnectionInfo connectionInfo, string folder, string fileName, bool setToReadIfBatchDeletion, uint messageId, Dictionary<string, bool> deleted, string subject)
+        => (Name, _messageId, _connectionInfo, _deleted, _folder, _setToReadIfBatchDeletion, Subject)
+        = (fileName, messageId, connectionInfo, deleted, folder, setToReadIfBatchDeletion, subject);
     protected override void DeleteFile() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, DeleteFileSingleTime);
     protected void DeleteFileSingleTime()
     {

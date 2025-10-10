@@ -38,8 +38,9 @@ public partial class GraphApiMailFileValueProvider(string code, string name, str
         public required string MessageId { get; set; }
         public required string AttachmentId { get; set; }
         public required string Subject { get; set; }
-        public required string AttachmentName { get; set; }
         public required string SenderAddress { get; set; }
+        public required string SenderName { get; set; }
+        public required string AttachmentName { get; set; }
         public required DateTime ReceivedDateTime { get; set; }
         public required Dictionary<string, bool> DeletionDico { get; set; }
     }
@@ -48,15 +49,21 @@ public partial class GraphApiMailFileValueProvider(string code, string name, str
     {
         var fileSpecificData = JsonSerializer.Deserialize<FileSpecificData>(fileSpecific) ?? throw new Exception("Invalid file specific");
         return new GraphApiMailFileValue(connectionParameters, fileSpecificData.MessageId, fileSpecificData.AttachmentId,
-            fileSpecificData.AttachmentName, providerParameters.SetToReadIfBatchDeletion, fileSpecificData.DeletionDico);
+            fileSpecificData.AttachmentName, providerParameters.SetToReadIfBatchDeletion,
+            fileSpecificData.DeletionDico, fileSpecificData.Subject, fileSpecificData.SenderAddress,
+            fileSpecificData.SenderName, fileSpecificData.ReceivedDateTime);
     }
-    private void GetFileList(GraphApiAdapterConnectionParameters connectionParameters, GraphApiMailAdapterProviderParameters providerParameters, Action<GraphApiMailFileValue, FileReference> pushFileValue, CancellationToken cancellationToken)
+    private void GetFileList(GraphApiAdapterConnectionParameters connectionParameters, GraphApiMailAdapterProviderParameters providerParameters,
+        Action<GraphApiMailFileValue, FileReference> pushFileValue, CancellationToken cancellationToken)
     {
         // List<GraphApiMailFileValue> fileValues = new List<GraphApiMailFileValue>();
         using var graphClient = connectionParameters.CreateGraphApiClient();
         var inputFolder = graphClient.GetFolderAsync(connectionParameters.UserId, providerParameters.Folder, cancellationToken).Result;
 
-        var matcher = string.IsNullOrWhiteSpace(providerParameters.AttachmentNamePattern) ? null : new Matcher().AddInclude(providerParameters.AttachmentNamePattern);
+        var matcher = string.IsNullOrWhiteSpace(providerParameters.AttachmentNamePattern) 
+            ? null 
+            : new Matcher().AddInclude(providerParameters.AttachmentNamePattern);
+
         graphClient.Users[connectionParameters.UserId].MailFolders[inputFolder.Id].Messages
             .Where(CreateQuery(providerParameters))
             .Select(obj => new { obj.Id, obj.ParentFolderId, obj.ReceivedDateTime, obj.From })
@@ -72,27 +79,35 @@ public partial class GraphApiMailFileValueProvider(string code, string name, str
                         attachments.Add(a);
                         return Task.FromResult(true);
                     }).Wait();
-                var deletionDico = (attachments ?? []).ToDictionary(i => i.Id, i => false);
+                var deletionDico = attachments.ToDictionary(i => i.Id 
+                    ?? throw new Exception("Message id is null"), i => false);
                 foreach (var item in attachments)
                 {
                     if (cancellationToken.IsCancellationRequested) break;
-                    if (matcher == null || matcher.Match(item.Name).HasMatches)
+                    if (matcher == null || matcher.Match(item.Name ?? "").HasMatches)
                     {
                         var fileValue = new GraphApiMailFileValue(
                             connectionParameters,
-                            message.Id, item.Id,
-                            item.Name,
-                            providerParameters.SetToReadIfBatchDeletion, deletionDico
+                            message.Id ?? throw new Exception("Message id is null"),
+                            item.Id ?? throw new Exception("Attachment id is null"),
+                            item.Name ?? "",
+                            providerParameters.SetToReadIfBatchDeletion,
+                            deletionDico,
+                            message.Subject ?? "",
+                            message.From?.EmailAddress?.Address ?? "",
+                            message.From?.EmailAddress?.Name ?? "",
+                            message.ReceivedDateTime.Value.UtcDateTime
                         );
                         var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.Serialize(new FileSpecificData
                         {
                             AttachmentId = item.Id,
                             MessageId = message.Id,
-                            Subject = message.Subject,
-                            AttachmentName = item.Name,
-                            SenderAddress = message.From.EmailAddress.Address,
+                            Subject = message.Subject ?? "",
+                            AttachmentName = item.Name ?? "",
+                            SenderAddress = message.From?.EmailAddress?.Address ?? "",
                             ReceivedDateTime = message.ReceivedDateTime.Value.UtcDateTime,
                             DeletionDico = deletionDico,
+                            SenderName = message.From?.EmailAddress?.Name ?? "",
                         }));
                         pushFileValue(fileValue, fileReference);
                         // fileValues.Add(fileValue);
