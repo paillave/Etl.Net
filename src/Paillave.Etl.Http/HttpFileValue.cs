@@ -11,12 +11,20 @@ public class HttpFileValue : FileValueBase
     private readonly IHttpAdapterParameters _parameters;
 
     public HttpFileValue(string url, IHttpConnectionInfo? connectionInfo, IHttpAdapterParameters? parameters)
-    => (Name, _connectionInfo, _parameters)
-    = (
-        url,
-        connectionInfo ?? new HttpAdapterConnectionParameters { Url = url },
-        parameters ?? new HttpAdapterProviderParameters() { Method = HttpMethodCustomEnum.Get }
-    );
+    {
+        if (connectionInfo != null)
+        {
+            connectionInfo.Url = url;
+            _connectionInfo = connectionInfo;
+        }
+        else
+        {
+            _connectionInfo = new HttpAdapterConnectionParameters { Url = url };
+        }
+        Name = url;
+        _parameters = parameters ?? new HttpAdapterProviderParameters() { Method = HttpMethodCustomEnum.Get };
+    }
+
 
     public override StreamWithResource OpenContent() => new(GetContent());
 
