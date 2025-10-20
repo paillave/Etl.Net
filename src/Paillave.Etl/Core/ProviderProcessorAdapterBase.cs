@@ -20,4 +20,7 @@ namespace Paillave.Etl.Core
 
         protected abstract IFileValueProcessor CreateProcessor(string code, string name, string connectionName, TConnectionParameters connectionParameters, TProcessorParameters outputParameters);
     }
+    public class SensitiveAttribute : Attribute
+    {
+    }
 }

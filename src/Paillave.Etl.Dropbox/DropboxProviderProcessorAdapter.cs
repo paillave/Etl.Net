@@ -6,8 +6,11 @@ namespace Paillave.Etl.Dropbox
     public class DropboxAdapterConnectionParameters : IDropboxConnectionInfo
     {
         [Required]
+        [Sensitive]
         public string Token { get; set; }
+        [Sensitive]
         public string AppKey { get; set; }
+        [Sensitive]
         public string AppSecret { get; set; }
         public int MaxAttempts { get; set; } = 3;
         public string RootFolder { get; set; }

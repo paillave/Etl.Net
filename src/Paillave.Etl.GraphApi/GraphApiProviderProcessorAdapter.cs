@@ -10,6 +10,7 @@ public class GraphApiAdapterConnectionParameters : IGraphApiConnectionInfo
     [Required]
     public string ClientId { get; set; }
     [Required]
+    [Sensitive]
     public string ClientSecret { get; set; }
     [Required]
     public string UserId { get; set; }

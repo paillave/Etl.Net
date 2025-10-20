@@ -4,6 +4,7 @@ using Paillave.Etl.Core;
 using System.Net;
 
 namespace Paillave.Etl.S3;
+
 public class S3AdapterConnectionParameters : IS3ConnectionInfo
 {
     public string? RootFolder { get; set; }
@@ -16,6 +17,7 @@ public class S3AdapterConnectionParameters : IS3ConnectionInfo
     [Required]
     public string AccessKeyId { get; set; }
     [Required]
+    [Sensitive]
     public string AccessKeySecret { get; set; }
 }
 public class S3AdapterProviderParameters

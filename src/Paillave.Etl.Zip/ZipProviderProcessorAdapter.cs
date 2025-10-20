@@ -6,6 +6,7 @@ namespace Paillave.Etl.Zip;
 
 public class ZipAdapterConnectionParameters
 {
+    [Sensitive]
     public string Password { get; set; }
 }
 public enum ZipDirection

@@ -7,14 +7,9 @@ using Paillave.Etl.Core;
 
 namespace Paillave.Etl.FromConfigurationConnectors
 {
-    public class ConfigurationFileValueConnectorParser
+    public class ConfigurationFileValueConnectorParser(params IProviderProcessorAdapter[] providerProcessorAdapter)
     {
-        private IProviderProcessorAdapter[] _providerProcessorAdapter;
-        public ConfigurationFileValueConnectorParser(params IProviderProcessorAdapter[] providerProcessorAdapter)
-        {
-            _providerProcessorAdapter = providerProcessorAdapter;
-        }
-        public IFileValueConnectors GetConnectors(string jsonConfig)
+        public IFileValueConnectors GetConnectors(string jsonConfig, Func<string, string> resolveSensitiveValue)
         {
             if (string.IsNullOrWhiteSpace(jsonConfig))
             {
@@ -30,47 +25,68 @@ namespace Paillave.Etl.FromConfigurationConnectors
             {
                 return new NoFileValueConnectors();
             }
-            Dictionary<string, IProviderProcessorAdapter> adapterDictionary = _providerProcessorAdapter.ToDictionary(i => i.Name);
+            Dictionary<string, IProviderProcessorAdapter> adapterDictionary = providerProcessorAdapter.ToDictionary(i => i.Name);
             JObject o = JObject.Parse(jsonConfig);
             var elts = o.Properties()
                 .Where(p => p.Path != "$schema")
-                .Select(i => ParseConnections(i, adapterDictionary));
+                .Select(i => ParseConnections(i, adapterDictionary, resolveSensitiveValue));
             var processors = elts.SelectMany(i => i.processors).ToDictionary(i => i.Code);
             var providers = elts.SelectMany(i => i.providers).ToDictionary(i => i.Code);
             return new FileValueConnectors(providers, processors);
         }
-        private (List<IFileValueProvider> providers, List<IFileValueProcessor> processors) ParseConnections(JProperty property, Dictionary<string, IProviderProcessorAdapter> adapterDictionary)
+        private (List<IFileValueProvider> providers, List<IFileValueProcessor> processors) ParseConnections(JProperty property, Dictionary<string, IProviderProcessorAdapter> adapterDictionary, Func<string, string> resolveSensitiveValue)
         {
             var connectionNode = (JObject)property.Value;
             string connectionName = property.Name;
             string connectionTypeCode = (string)connectionNode["Type"];
             var adapter = adapterDictionary[connectionTypeCode];
             var connectionParameters = connectionNode["Connection"].ToObject(adapter.ConnectionParametersType);
+            ResolveSensitiveProperties(connectionParameters, resolveSensitiveValue);
             var providersNode = (JObject)connectionNode["Providers"];
-            var providers = providersNode == null ? new List<IFileValueProvider>() : providersNode.Properties()
-                .Select(i => ParseProvider(connectionName, connectionParameters, adapter, i))
-                .ToList();
+            var providers = providersNode == null ? new List<IFileValueProvider>() : [.. providersNode.Properties().Select(i => ParseProvider(connectionName, connectionParameters, adapter, i, resolveSensitiveValue))];
             var processorsNode = (JObject)connectionNode["Processors"];
-            var processors = processorsNode == null ? new List<IFileValueProcessor>() : processorsNode.Properties()
-                .Select(i => ParseProcessor(connectionName, connectionParameters, adapter, i))
+            var processors = processorsNode == null ? [] : processorsNode.Properties()
+                .Select(i => ParseProcessor(connectionName, connectionParameters, adapter, i, resolveSensitiveValue))
                 .ToList();
             return (providers, processors);
         }
-        private IFileValueProcessor ParseProcessor(string connectionName, object connectionParameters, IProviderProcessorAdapter adapter, JProperty i)
+        private void ResolveSensitiveProperties(object obj, Func<string, string> resolveSensitiveValue)
         {
-            var code = i.Name;
-            var value = i.Value;
-            var connectorNode = (JObject)i.Value;
-            var name = ((string)connectorNode["Name"]) ?? code;
-            return adapter.CreateProcessor(code, name, connectionName, connectionParameters, connectorNode.ToObject(adapter.ProcessorParametersType));
+            if (obj == null) return;
+            var props = obj.GetType().GetProperties().Where(p => p.CanRead && p.CanWrite);
+            foreach (var prop in props)
+            {
+                var isSensitive = Attribute.IsDefined(prop, typeof(SensitiveAttribute));
+                if (isSensitive)
+                {
+                    var currentValue = prop.GetValue(obj) as string;
+                    if (!string.IsNullOrWhiteSpace(currentValue))
+                    {
+                        var resolvedValue = resolveSensitiveValue(currentValue);
+                        prop.SetValue(obj, resolvedValue);
+                    }
+                }
+            }
         }
-        private IFileValueProvider ParseProvider(string connectionName, object connectionParameters, IProviderProcessorAdapter adapter, JProperty i)
+        private IFileValueProcessor ParseProcessor(string connectionName, object connectionParameters, IProviderProcessorAdapter adapter, JProperty i, Func<string, string> resolveSensitiveValue)
         {
             var code = i.Name;
             var value = i.Value;
             var connectorNode = (JObject)i.Value;
             var name = ((string)connectorNode["Name"]) ?? code;
-            return adapter.CreateProvider(code, name, connectionName, connectionParameters, connectorNode.ToObject(adapter.ProviderParametersType));
+            var parameters = connectorNode.ToObject(adapter.ProcessorParametersType);
+            ResolveSensitiveProperties(parameters, resolveSensitiveValue);
+            return adapter.CreateProcessor(code, name, connectionName, connectionParameters, parameters);
+        }
+        private IFileValueProvider ParseProvider(string connectionName, object connectionParameters, IProviderProcessorAdapter adapter, JProperty i, Func<string, string> resolveSensitiveValue)
+        {
+            var code = i.Name;
+            var value = i.Value;
+            var connectorNode = (JObject)i.Value;
+            var name = ((string)connectorNode["Name"]) ?? code;
+            var parameters = connectorNode.ToObject(adapter.ProviderParametersType);
+            ResolveSensitiveProperties(parameters, resolveSensitiveValue);
+            return adapter.CreateProvider(code, name, connectionName, connectionParameters, parameters);
         }
         public string GetConnectorsSchemaJson() => GetConnectorsSchema().ToJson();
         private static JsonSchema CreateAddonAdapters(JsonSchema docSchema, string title, IProviderProcessorAdapter[] dictionary)
@@ -132,7 +148,7 @@ namespace Paillave.Etl.FromConfigurationConnectors
         {
             var docSchema = JsonSchemaEx.CreateObject("Document");
 
-            var connectionSchema = CreateAddonAdapters(docSchema, "Connection", _providerProcessorAdapter)
+            var connectionSchema = CreateAddonAdapters(docSchema, "Connection", providerProcessorAdapter)
                 .AddAsDefinition(docSchema);
 
             docSchema

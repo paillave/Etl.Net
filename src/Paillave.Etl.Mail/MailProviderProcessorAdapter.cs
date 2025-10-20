@@ -10,6 +10,7 @@ public class MailAdapterConnectionParameters : IMailConnectionInfo
     public string Server { get; set; }
     public int PortNumber { get; set; } = 25;
     public string Login { get; set; }
+    [Sensitive]
     public string Password { get; set; }
     public bool? Ssl { get; set; }
     public int MaxAttempts { get; set; } = 3;

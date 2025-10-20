@@ -13,11 +13,15 @@ namespace Paillave.Etl.Ftp
         [Required]
         public string Login { get; set; }
         [Required]
+        [Sensitive]
         public string Password { get; set; }
+        [Sensitive]
         public string FingerPrintSha1 { get; set; }
+        [Sensitive]
         public string SerialNumber { get; set; }
         public Dictionary<string, string> SubjectChecks { get; set; }
         public Dictionary<string, string> IssuerChecks { get; set; }
+        [Sensitive]
         public string PublicKey { get; set; }
         public int MaxAttempts { get; set; } = 3;
         public bool? Ssl { get; set; }

@@ -6,6 +6,7 @@ using Paillave.Etl.Core;
 using PgpCore;
 
 namespace Paillave.Etl.Pgp;
+
 public enum PgpOperation
 {
     Encrypt,
@@ -18,8 +19,11 @@ public enum PgpOperation
 public class PgpAdapterProcessorParameters
 {
     public PgpOperation Operation { get; set; } = PgpOperation.Decrypt;
+    [Sensitive]
     public string? PrivateKey { get; set; }
+    [Sensitive]
     public string? Passphrase { get; set; }
+    [Sensitive]
     public string? PublicKey { get; set; }
     public bool UseStreamCopy { get; set; } = true;
 }

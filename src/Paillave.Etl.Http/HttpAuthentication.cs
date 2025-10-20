@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Http;
 
@@ -23,6 +24,7 @@ public class DigestAuthentication : IAuthenticationParameters
 {
     public required string Url { get; set; }
     public required string User { get; set; }
+    [Sensitive]
     public required string Password { get; set; }
     public required string QualityOfProtection { get; set; }
     public required DigestAlgorithm Algorithm { get; set; } = DigestAlgorithm.MD5;
@@ -71,6 +73,7 @@ public enum DigestAlgorithm
 public class BasicAuthentication : IAuthenticationParameters
 {
     public required string User { get; set; }
+    [Sensitive]
     public required string Password { get; set; }
 
     public HttpClient AddAuthenticationHeaders(HttpClient client)
@@ -89,6 +92,7 @@ public class BearerAuthentication : IAuthenticationParameters
 {
     public required string Authority { get; set; }
     public required string ClientId { get; set; }
+    [Sensitive]
     public required string Passphrase { get; set; }
 
     public HttpClient AddAuthenticationHeaders(HttpClient client)
@@ -100,8 +104,11 @@ public class BearerAuthentication : IAuthenticationParameters
 
 public class XCBACCESSAuthentication : IAuthenticationParameters
 {
+    [Sensitive]
     public required string AccessKey { get; set; }
+    [Sensitive]
     public required string SigningKey { get; set; }
+    [Sensitive]
     public required string Passphrase { get; set; }
 
     public HttpMethodCustomEnum? Method { get; set; }
