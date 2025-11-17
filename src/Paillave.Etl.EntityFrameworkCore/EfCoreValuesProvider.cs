@@ -32,9 +32,9 @@ namespace Paillave.Etl.EntityFrameworkCore
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
         public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IExecutionContext context)
         {
-            var dbContext = _args.ConnectionKey == null
-                    ? context.DependencyResolver.Resolve<DbContext>()
-                    : context.DependencyResolver.Resolve<DbContext>(_args.ConnectionKey);
+            var dbContext = context.DependencyResolver.ResolveDbContext<DbContext>(_args.ConnectionKey)
+                ?? throw new InvalidOperationException($"No DbContext could be resolved for type '{typeof(DbContext).FullName}'. Please check your dependency injection configuration.");
+
             if (_args.StreamMode)
             {
                 context.InvokeInDedicatedThreadAsync(dbContext, () =>
@@ -63,9 +63,8 @@ namespace Paillave.Etl.EntityFrameworkCore
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
         public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IExecutionContext context)
         {
-            var dbContext = _args.ConnectionKey == null
-                    ? context.DependencyResolver.Resolve<DbContext>()
-                    : context.DependencyResolver.Resolve<DbContext>(_args.ConnectionKey);
+            var dbContext = context.DependencyResolver.ResolveDbContext<DbContext>(_args.ConnectionKey)
+                ?? throw new InvalidOperationException($"No DbContext could be resolved for type '{typeof(DbContext).FullName}'. Please check your dependency injection configuration.");
             var res = context.InvokeInDedicatedThreadAsync(dbContext, async () => await _args.GetQuery(new DbContextWrapper(dbContext), input).FirstOrDefaultAsync()).Result;
             push(res);
         }
@@ -87,11 +86,9 @@ namespace Paillave.Etl.EntityFrameworkCore
         {
             var obs = args.Stream.Observable.Map(input =>
             {
-                var resolver = args.Stream.SourceNode.ExecutionContext.DependencyResolver;
+            var dbContext = args.Stream.SourceNode.ExecutionContext.DependencyResolver.ResolveDbContext<DbContext>(args.ConnectionKey)
+                ?? throw new InvalidOperationException($"No DbContext could be resolved for type '{typeof(DbContext).FullName}'. Please check your dependency injection configuration.");
                 var invoker = args.Stream.SourceNode.ExecutionContext;
-                var dbContext = args.ConnectionKey == null
-                        ? resolver.Resolve<DbContext>()
-                        : resolver.Resolve<DbContext>(args.ConnectionKey);
                 var res = invoker.InvokeInDedicatedThreadAsync(dbContext, async () => await args.GetQuery(new DbContextWrapper(dbContext), input).FirstOrDefaultAsync()).Result;
                 return res;
             });

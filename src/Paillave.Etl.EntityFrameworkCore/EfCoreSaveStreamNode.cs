@@ -135,7 +135,7 @@ public class EfCoreSaveCorrelatedArgsBuilder<TInEf, TIn, TOut>
         return args;
     }
     public EfCoreSaveCorrelatedArgsBuilder<TNewInEf, TIn, TNewInEf> Entity<TNewInEf>(Func<TIn, TNewInEf> getEntity) where TNewInEf : class
-        => new EfCoreSaveCorrelatedArgsBuilder<TNewInEf, TIn, TNewInEf>(UpdateArgs(new EfCoreSaveArgs<TNewInEf, Correlated<TIn>, Correlated<TNewInEf>>
+        => new(UpdateArgs(new EfCoreSaveArgs<TNewInEf, Correlated<TIn>, Correlated<TNewInEf>>
         {
             GetEntity = i => getEntity(i.Row),
             GetOutput = (i, j) => new Correlated<TNewInEf> { Row = j, CorrelationKeys = i.CorrelationKeys }
@@ -227,16 +227,12 @@ public enum SaveMode
     EntityFrameworkCore,
     SqlServerBulk,
 }
-public class EfCoreSaveStreamNode<TInEf, TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, EfCoreSaveArgs<TInEf, TIn, TOut>>
+public class EfCoreSaveStreamNode<TInEf, TIn, TOut>(string name, EfCoreSaveArgs<TInEf, TIn, TOut> args) : StreamNodeBase<TOut, IStream<TOut>, EfCoreSaveArgs<TInEf, TIn, TOut>>(name, args)
     where TInEf : class
 {
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
 
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-
-    public EfCoreSaveStreamNode(string name, EfCoreSaveArgs<TInEf, TIn, TOut> args) : base(name, args)
-    {
-    }
 
     protected override IStream<TOut> CreateOutputStream(EfCoreSaveArgs<TInEf, TIn, TOut> args)
     {
@@ -250,53 +246,20 @@ public class EfCoreSaveStreamNode<TInEf, TIn, TOut> : StreamNodeBase<TOut, IStre
     }
     private void ProcessChunk(List<(TIn Input, TInEf Entity)> i)
     {
-        using var dbContextWrapper = this.ResolveDbContext();
+        using var dbContextWrapper = this.ExecutionContext.DependencyResolver.ResolveDbContextWrapper(this.Args.DbContextType, this.Args.KeyedConnection);
         this.ExecutionContext.InvokeInDedicatedThreadAsync(dbContextWrapper.Object, async () => await ProcessBatchAsync(i, dbContextWrapper.Object, this.Args.BulkLoadMode)).Wait();
     }
-    private DisposeWrapper<DbContext> ResolveDbContext()
-    {
-        var dbContextType = this.Args.DbContextType ?? typeof(DbContext);
-        var dbContextFactoryType = typeof(IDbContextFactory<>).MakeGenericType(dbContextType);
-        // if (IDbContextFactory<ApplicationDbContext>)
-        if (this.Args.KeyedConnection == null)
-        {
-            if (this.ExecutionContext.DependencyResolver.TryResolve(dbContextType, out var dbContext))
-            {
-                return new DisposeWrapper<DbContext>((DbContext)dbContext, false);
-            }
-            else if (this.ExecutionContext.DependencyResolver.TryResolve(dbContextFactoryType, out var dbContextFactory))
-            {
-                var contextFactory = (DbContext)this.ExecutionContext.DependencyResolver.Resolve(dbContextType);
-                dbContext = dbContextFactoryType.GetMethod(nameof(IDbContextFactory<DbContext>.CreateDbContext))?.Invoke(contextFactory, null);
-                return new DisposeWrapper<DbContext>((DbContext)dbContext, true);
-            }
-            return null;
-        }
-        else
-        {
-            if (this.ExecutionContext.DependencyResolver.TryResolve(dbContextType, this.Args.KeyedConnection, out var dbContext))
-            {
-                return new DisposeWrapper<DbContext>((DbContext)dbContext, false);
-            }
-            else if (this.ExecutionContext.DependencyResolver.TryResolve(dbContextFactoryType, this.Args.KeyedConnection, out var dbContextFactory))
-            {
-                var contextFactory = (DbContext)this.ExecutionContext.DependencyResolver.Resolve(dbContextType);
-                dbContext = dbContextFactoryType.GetMethod(nameof(IDbContextFactory<DbContext>.CreateDbContext))?.Invoke(contextFactory, null);
-                return new DisposeWrapper<DbContext>((DbContext)dbContext, true);
-            }
-            return null;
-        }
-    }
+
     public async Task ProcessBatchAsync(List<(TIn Input, TInEf Entity)> items, DbContext dbContext, SaveMode bulkLoadMode)
     {
         var entities = items.Select(i => i.Item2).ToArray();
         if (Args.PivotCriteria != null)
         {
-                dbContext.EfSaveAsync(entities, Args.PivotCriteria, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly).Wait();
+            dbContext.EfSaveAsync(entities, Args.PivotCriteria, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly).Wait();
         }
         else
         {
-            var pivotKeys = Args.PivotKeys == null ? (Expression<Func<TInEf, object>>[])null : Args.PivotKeys.ToArray();
+            var pivotKeys = Args.PivotKeys == null ? null : Args.PivotKeys.ToArray();
             if (bulkLoadMode == SaveMode.EntityFrameworkCore)
             {
                 dbContext.EfSaveAsync(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly).Wait();

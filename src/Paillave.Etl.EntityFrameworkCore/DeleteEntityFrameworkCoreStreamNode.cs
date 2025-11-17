@@ -86,7 +86,7 @@ namespace Paillave.Etl.EntityFrameworkCore
         public IStream<TIn> InputStream { get; set; }
         public Expression<Func<TValue, TEntity, bool>> Match { get; set; }
         public Func<TIn, TValue> GetValue { get; set; }
-        internal string KeyedConnection { get; set; } = null;
+        internal string? KeyedConnection { get; set; } = null;
     }
     public class DeleteEntityFrameworkCoreStreamNode<TIn, TValue, TEntity> : StreamNodeBase<TIn, IStream<TIn>, DeleteEntityFrameworkCoreArgs<TIn, TValue, TEntity>>
         where TEntity : class
@@ -104,9 +104,8 @@ namespace Paillave.Etl.EntityFrameworkCore
             var matchingS = args.InputStream.Observable
                 .Map(i =>
                 {
-                    var ctx = args.KeyedConnection == null
-                        ? this.ExecutionContext.DependencyResolver.Resolve<DbContext>()
-                        : this.ExecutionContext.DependencyResolver.Resolve<DbContext>(args.KeyedConnection);
+                    var ctx = this.ExecutionContext.DependencyResolver.ResolveDbContext<DbContext>(args.KeyedConnection)
+                        ?? throw new InvalidOperationException($"No DbContext could be resolved for type '{typeof(DbContext).FullName}'. Please check your dependency injection configuration.");
                     TValue val = args.GetValue(i);
                     this.ExecutionContext.InvokeInDedicatedThreadAsync(ctx, async () =>
                     {

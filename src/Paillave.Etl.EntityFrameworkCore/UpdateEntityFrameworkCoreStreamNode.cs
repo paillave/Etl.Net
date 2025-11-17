@@ -13,6 +13,7 @@ namespace Paillave.Etl.EntityFrameworkCore
         where TEntity : class
     {
         public IStream<TSource> SourceStream { get; set; }
+        public string? ConnectionKey { get; set; }
         public int BatchSize { get; set; } = 10000;
         public UpdateMode BulkLoadMode { get; set; } = UpdateMode.SqlServerBulk;
         public Expression<Func<TSource, TEntity>> UpdateKey { get; set; }
@@ -40,7 +41,9 @@ namespace Paillave.Etl.EntityFrameworkCore
                 .Chunk(args.BatchSize)
                 .Do(i =>
                 {
-                    var dbContext = this.ExecutionContext.DependencyResolver.Resolve<DbContext>();
+                    var dbContext = this.ExecutionContext.DependencyResolver.ResolveDbContext<DbContext>(args.ConnectionKey)
+                        ?? throw new InvalidOperationException($"No DbContext could be resolved for type '{typeof(DbContext).FullName}'. Please check your dependency injection configuration.");
+
                     this.ExecutionContext.InvokeInDedicatedThreadAsync(dbContext, () => ProcessBatch(i.ToList(), dbContext, args.BulkLoadMode)).Wait();
                 })
                 .FlatMap((i, ct) => PushObservable.FromEnumerable(i, ct));

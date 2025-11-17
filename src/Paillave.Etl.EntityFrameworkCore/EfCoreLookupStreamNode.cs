@@ -200,9 +200,8 @@ namespace Paillave.Etl.EntityFrameworkCore
                     {
                         var matcher = this.ExecutionContext.ContextBag.Resolve(this.NodeName, () =>
                         {
-                            var ctx = args.KeyedConnection == null
-                                ? this.ExecutionContext.DependencyResolver.Resolve<DbContext>()
-                                : this.ExecutionContext.DependencyResolver.Resolve<DbContext>(args.KeyedConnection);
+                            var ctx = this.ExecutionContext.DependencyResolver.ResolveDbContext<DbContext>(args.KeyedConnection)
+                                ?? throw new InvalidOperationException($"No DbContext could be resolved for type '{typeof(DbContext).FullName}'. Please check your dependency injection configuration.");
                             return this.ExecutionContext.InvokeInDedicatedThreadAsync(ctx, () => new EfMatcher<TValue, TEntity, TKey>(new EfMatcherConfig<TValue, TEntity, TKey>
                             {
                                 Context = ctx,

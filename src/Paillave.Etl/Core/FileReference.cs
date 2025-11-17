@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 
 namespace Paillave.Etl.Core;
 
