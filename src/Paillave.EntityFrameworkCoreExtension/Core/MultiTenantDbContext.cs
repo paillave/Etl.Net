@@ -25,21 +25,23 @@ public class MultiTenantDbContext(DbContextOptions options, ITenantProvider? ten
     private void SetupMultiTenant(ModelBuilder modelBuilder)
     {
         if (tenantProvider == null) return;
-
+        var genericMethod = this.GetType()
+            .GetMethod(nameof(SetupMultiTenant), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!;
         foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(et => et.FindProperty("TenantId") != null))
-        {
-            var method = this.GetType()
-                .GetMethod(nameof(SetupMultiTenant), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
-                .MakeGenericMethod(entityType.ClrType);
-            method.Invoke(this, [modelBuilder]);
-        }
+            genericMethod
+                .MakeGenericMethod(entityType.ClrType)
+                .Invoke(this, [modelBuilder]);
     }
 
     private void SetupMultiTenant<TEntity>(ModelBuilder modelBuilder) where TEntity : class
     {
         if (tenantProvider == null) return;
-        modelBuilder.Entity<TEntity>().Property<int>("TenantId").IsRequired();
-        modelBuilder.Entity<TEntity>().HasQueryFilter(i => EF.Property<int>(i, "TenantId") == tenantProvider.Current);
+        var entityTypeBuilder = modelBuilder.Entity<TEntity>();
+        var entityType = entityTypeBuilder.Metadata;
+        if (entityType.FindProperty("TenantId") != null && entityType.GetQueryFilter() == null)
+            //     entityTypeBuilder.Property<int>("TenantId").IsRequired();
+            // if (entityType.GetQueryFilter() == null)
+            entityTypeBuilder.HasQueryFilter(i => EF.Property<int>(i, "TenantId") == tenantProvider.Current);
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
