@@ -16,7 +16,7 @@ public interface ITenantProvider
 }
 public class MultiTenantDbContext(DbContextOptions options, ITenantProvider? tenantProvider = null) : DbContext(options)
 {
-    private readonly Lock _sync = new();
+    private readonly object _sync = new();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
