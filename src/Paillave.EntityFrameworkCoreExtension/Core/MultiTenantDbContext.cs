@@ -14,7 +14,7 @@ public interface ITenantProvider
 {
     int Current { get; }
 }
-public class MultiTenantDbContext(DbContextOptions options, ITenantProvider? tenantProvider = null) : DbContext(options)
+public class MultiTenantDbContext(DbContextOptions options, ITenantProvider tenantProvider) : DbContext(options)
 {
     private readonly object _sync = new();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,7 +24,6 @@ public class MultiTenantDbContext(DbContextOptions options, ITenantProvider? ten
     }
     private void SetupMultiTenant(ModelBuilder modelBuilder)
     {
-        if (tenantProvider == null) return;
         var genericMethod = this.GetType()
             .GetMethod(nameof(SetupMultiTenant), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!;
         foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(et => et.FindProperty("TenantId") != null))
@@ -35,7 +34,6 @@ public class MultiTenantDbContext(DbContextOptions options, ITenantProvider? ten
 
     private void SetupMultiTenant<TEntity>(ModelBuilder modelBuilder) where TEntity : class
     {
-        if (tenantProvider == null) return;
         var entityTypeBuilder = modelBuilder.Entity<TEntity>();
         var entityType = entityTypeBuilder.Metadata;
         if (entityType.FindProperty("TenantId") != null && entityType.GetQueryFilter() == null)
@@ -96,8 +94,7 @@ public class MultiTenantDbContext(DbContextOptions options, ITenantProvider? ten
     {
         if (processedEntities.Contains(entityEntry.Entity)) return;
         processedEntities.Add(entityEntry.Entity);
-        var tenantId = tenantProvider?.Current;
-        if ((tenantId ?? 0) == 0) return;
+        var tenantId = tenantProvider.Current;
         entityEntry.Property("TenantId").CurrentValue = tenantId;
         foreach (var navigation in entityEntry.Navigations)
         {
