@@ -1,17 +1,15 @@
 using System;
 using Microsoft.EntityFrameworkCore;
+using Paillave.EntityFrameworkCoreExtension.Core;
 
 namespace BlogTutorial.DataAccess
 {
-    public class SimpleTutorialDbContext : DbContext
+    public class SimpleTutorialDbContext(DbContextOptions options) : MultiTenantDbContext(options)
     {
-        private readonly string _connectionString = null;
-        public SimpleTutorialDbContext() { }
-        public SimpleTutorialDbContext(string connectionString) => _connectionString = connectionString;
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(_connectionString ?? @"Server=localhost,1433;Database=BlogTutorial;user=BlogTutorial;password=TestEtl.TestEtl;MultipleActiveResultSets=True");
-        }
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     optionsBuilder.UseSqlServer(_connectionString ?? @"Server=localhost,1433;Database=BlogTutorial;user=BlogTutorial;password=TestEtl.TestEtl;MultipleActiveResultSets=True");
+        // }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var authorBuilder = modelBuilder.Entity<Author>();
@@ -54,6 +52,7 @@ namespace BlogTutorial.DataAccess
             executionLogBuilder.Property(i => i.Id).UseIdentityColumn();
             executionLogBuilder.Property(i => i.EventType).HasMaxLength(250).IsRequired();
             executionLogBuilder.Property(i => i.Message).IsRequired();
+            base.SetupMultiTenant(modelBuilder);
         }
     }
     public class Author

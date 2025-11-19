@@ -28,19 +28,18 @@ public class MultiTenantDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
         SetupMultiTenant(modelBuilder);
     }
-    private void SetupMultiTenant(ModelBuilder modelBuilder)
+    protected void SetupMultiTenant(ModelBuilder modelBuilder)
     {
         var genericMethod = this.GetType()
-            .GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-            .FirstOrDefault(m => m.Name == nameof(SetupMultiTenant) && m.IsGenericMethod)
-            ?? throw new System.Exception("Cannot find method SetupMultiTenant");
+            .GetMethods(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+            .Single(m => m.Name == nameof(SetupTypedMultiTenant) && m.IsGenericMethod && m.GetParameters().Length == 1);
         foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(et => et.FindProperty("TenantId") != null))
             genericMethod
                 .MakeGenericMethod(entityType.ClrType)
                 .Invoke(this, [modelBuilder]);
     }
 
-    private void SetupMultiTenant<TEntity>(ModelBuilder modelBuilder) where TEntity : class
+    protected void SetupTypedMultiTenant<TEntity>(ModelBuilder modelBuilder) where TEntity : class
     {
         var entityTypeBuilder = modelBuilder.Entity<TEntity>();
         var entityType = entityTypeBuilder.Metadata;

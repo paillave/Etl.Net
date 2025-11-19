@@ -9,6 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.ComponentModel.Design;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Paillave.EntityFrameworkCoreExtension.Core;
+using System.Threading;
 
 namespace BlogTutorial;
 
@@ -16,19 +19,46 @@ class Program9
 {
     static async Task Main(string[] args)
     {
-        using var dbCtx = new SimpleTutorialDbContext(args[1]);
-        dbCtx.Database.Migrate();
+        var tenantProvider = new PmsTenantProvider();
+        var sqlCnx = args[1];
 
-        var serviceCollection = new ServiceCollection().AddSingleton<DbContext, SimpleTutorialDbContext>(sp => new SimpleTutorialDbContext(args[1]));
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddEntityFrameworkSqlServer(); // Services EF Core nécessaires
+        serviceCollection.AddSingleton<ITenantProvider>(tenantProvider);
+        // serviceCollection.AddSingleton<IMigrationsSqlGenerator, PmsMigrationsSqlGenerator>();
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
-        var resolver = new CompositeDependencyResolver()
-                            .AddResolver(new SimpleDependencyResolver()
-)
-                            .AddResolver(new DependencyResolver(serviceProvider));
 
-        var ctx1 = serviceProvider.GetRequiredService<DbContext>();
-        var ctx = resolver.Resolve<DbContext>();
+
+        var optionsBuilder = new DbContextOptionsBuilder<SimpleTutorialDbContext>();
+        optionsBuilder
+            .UseSqlServer(sqlCnx, options => options
+                .CommandTimeout(2000)
+                .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
+            .UseInternalServiceProvider(serviceProvider);
+        var ctxFactory = new PooledDbContextFactory<SimpleTutorialDbContext>(optionsBuilder.Options);
+
+        var dbCtx = ctxFactory.CreateDbContext();
+
+
+
+
+
+
+
+        //         using var dbCtx = new SimpleTutorialDbContext(args[1]);
+        //         dbCtx.Database.Migrate();
+
+        //         var serviceCollection = new ServiceCollection().AddSingleton<DbContext, SimpleTutorialDbContext>(sp => new SimpleTutorialDbContext(args[1]));
+
+        //         var serviceProvider = serviceCollection.BuildServiceProvider();
+        //         var resolver = new CompositeDependencyResolver()
+        //                             .AddResolver(new SimpleDependencyResolver()
+        // )
+        //                             .AddResolver(new DependencyResolver(serviceProvider));
+
+        //         var ctx1 = serviceProvider.GetRequiredService<DbContext>();
+        //         var ctx = resolver.Resolve<DbContext>();
 
 
         // var resolver = new CompositeDependencyResolver()
@@ -202,4 +232,34 @@ public class DependencyResolver(IServiceProvider serviceProvider) : IDependencyR
         resolved = (serviceProvider.GetKeyedServices(type, key) ?? []).FirstOrDefault()!;
         return resolved != null;
     }
+}
+
+
+
+public interface IPmsTenantProvider : ITenantProvider
+{
+    void SetCurrent(int current);
+    Task ExecuteInTenantContextAsync(int tenantId, Func<CancellationToken, Task> action, CancellationToken cancellationToken);
+    Task<T> ExecuteInTenantContextAsync<T>(int tenantId, Func<CancellationToken, Task<T>> action, CancellationToken cancellationToken);
+}
+public class PmsTenantProvider : IPmsTenantProvider
+{
+    private static readonly AsyncLocal<int> _tenantId = new();
+    public int Current => _tenantId.Value;
+
+    public Task ExecuteInTenantContextAsync(int tenantId, Func<CancellationToken, Task> action, CancellationToken cancellationToken)
+        => Task.Run(() =>
+        {
+            _tenantId.Value = tenantId;
+            return action(cancellationToken);
+        });
+
+    public Task<T> ExecuteInTenantContextAsync<T>(int tenantId, Func<CancellationToken, Task<T>> action, CancellationToken cancellationToken)
+        => Task.Run(() =>
+        {
+            _tenantId.Value = tenantId;
+            return action(cancellationToken);
+        });
+
+    public void SetCurrent(int current) => _tenantId.Value = current;
 }
