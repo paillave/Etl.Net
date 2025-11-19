@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Migrations;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
-using Paillave.EntityFrameworkCoreExtension.MigrationOperations;
 using System.Collections;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -49,12 +47,12 @@ public class MultiTenantDbContext : DbContext
             // if (entityType.GetQueryFilter() == null)
             entityTypeBuilder.HasQueryFilter(i => EF.Property<int>(i, "TenantId") == tenantProvider.Current);
     }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.EnableSensitiveDataLogging(true);
-        optionsBuilder.ReplaceService<IMigrationsSqlGenerator, CustomMigrationsSqlGenerator>();
-        base.OnConfiguring(optionsBuilder);
-    }
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //     optionsBuilder.EnableSensitiveDataLogging(true);
+    //     optionsBuilder.ReplaceService<IMigrationsSqlGenerator, CustomMigrationsSqlGenerator>();
+    //     base.OnConfiguring(optionsBuilder);
+    // }
     public override int SaveChanges()
     {
         lock (_sync)
