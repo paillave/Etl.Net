@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Paillave.EntityFrameworkCoreExtension.MigrationOperations;
 using System.Collections;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Paillave.EntityFrameworkCoreExtension.Core;
 
@@ -14,9 +15,16 @@ public interface ITenantProvider
 {
     int Current { get; }
 }
-public class MultiTenantDbContext(DbContextOptions options, ITenantProvider tenantProvider) : DbContext(options)
+public class MultiTenantDbContext : DbContext
 {
+    private readonly ITenantProvider tenantProvider;
     private readonly object _sync = new();
+
+    public MultiTenantDbContext(DbContextOptions options) : base(options)
+    {
+        tenantProvider = this.GetService<ITenantProvider>();
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
