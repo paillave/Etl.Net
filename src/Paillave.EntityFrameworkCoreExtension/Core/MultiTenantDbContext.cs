@@ -31,7 +31,9 @@ public class MultiTenantDbContext : DbContext
     private void SetupMultiTenant(ModelBuilder modelBuilder)
     {
         var genericMethod = this.GetType()
-            .GetMethod(nameof(SetupMultiTenant), System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!;
+            .GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            .FirstOrDefault(m => m.Name == nameof(SetupMultiTenant) && m.IsGenericMethod)
+            ?? throw new System.Exception("Cannot find method SetupMultiTenant");
         foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(et => et.FindProperty("TenantId") != null))
             genericMethod
                 .MakeGenericMethod(entityType.ClrType)
