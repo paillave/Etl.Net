@@ -36,9 +36,7 @@ public class MultiTenantDbContext : DbContext
             .Single(m => m.Name == nameof(SetupTypedMultiTenant) && m.IsGenericMethod && m.GetParameters().Length == 1);
         _tenantAwareTypes = [.. modelBuilder.Model.GetEntityTypes()
             .Where(et => 
-                et.FindProperty("TenantId") != null 
-                && et.GetQueryFilter() == null 
-                && et.BaseType == null)
+                et.FindProperty("TenantId") != null)
             .Select(et => et.ClrType)];
         foreach (var entityType in _tenantAwareTypes)
             genericMethod
