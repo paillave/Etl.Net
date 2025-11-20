@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using System;
 
 namespace Paillave.EntityFrameworkCoreExtension.Core;
 
@@ -17,7 +18,7 @@ public class MultiTenantDbContext : DbContext
 {
     private readonly ITenantProvider tenantProvider;
     private readonly object _sync = new();
-
+    private HashSet<Type> _tenantAwareTypes = [];
     public MultiTenantDbContext(DbContextOptions options) : base(options)
     {
         tenantProvider = this.GetService<ITenantProvider>();
@@ -33,9 +34,15 @@ public class MultiTenantDbContext : DbContext
         var genericMethod = this.GetType()
             .GetMethods(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
             .Single(m => m.Name == nameof(SetupTypedMultiTenant) && m.IsGenericMethod && m.GetParameters().Length == 1);
-        foreach (var entityType in modelBuilder.Model.GetEntityTypes().Where(et => et.FindProperty("TenantId") != null))
+        _tenantAwareTypes = [.. modelBuilder.Model.GetEntityTypes()
+            .Where(et => 
+                et.FindProperty("TenantId") != null 
+                && et.GetQueryFilter() == null 
+                && et.BaseType == null)
+            .Select(et => et.ClrType)];
+        foreach (var entityType in _tenantAwareTypes)
             genericMethod
-                .MakeGenericMethod(entityType.ClrType)
+                .MakeGenericMethod(entityType)
                 .Invoke(this, [modelBuilder]);
     }
 
@@ -99,8 +106,10 @@ public class MultiTenantDbContext : DbContext
     }
     private void InnerUpdateEntityForMultiTenancy(HashSet<object> processedEntities, EntityEntry entityEntry)
     {
+        if (!_tenantAwareTypes.Contains(entityEntry.Metadata.ClrType)) return;
         if (processedEntities.Contains(entityEntry.Entity)) return;
         processedEntities.Add(entityEntry.Entity);
+
         var tenantId = tenantProvider.Current;
         entityEntry.Property("TenantId").CurrentValue = tenantId;
         foreach (var navigation in entityEntry.Navigations)
