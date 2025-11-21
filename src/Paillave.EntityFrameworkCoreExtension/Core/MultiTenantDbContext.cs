@@ -7,23 +7,47 @@ using System.Collections;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Paillave.EntityFrameworkCoreExtension.Core;
 
 public interface ITenantProvider
 {
     int Current { get; }
-    HashSet<Type> TenantAwareTypes { get; set; }
 }
-public class MultiTenantDbContext : DbContext
+internal static class ModelExtensions
 {
-    private readonly ITenantProvider tenantProvider;
+    public static HashSet<Type> GetTenantAwareTypes(this IModel model)
+        => [.. model.GetEntityTypes()
+            .Where(et => et.FindProperty("TenantId") != null)
+            .Select(et => et.ClrType)];
+    public static HashSet<Type> GetTenantAwareTypes(this IMutableModel model)
+        => [.. model.GetEntityTypes()
+            .Where(et => et.FindProperty("TenantId") != null)
+            .Select(et => et.ClrType)];
+}
+public class MultiTenantDbContext(DbContextOptions options) : DbContext(options)
+{
+    private ITenantProvider? _tenantProvider;
+    private HashSet<Type>? _tenantAwareTypes;
     private readonly object _sync = new();
-    public MultiTenantDbContext(DbContextOptions options) : base(options)
-    {
-        tenantProvider = this.GetService<ITenantProvider>();
-    }
 
+    private ITenantProvider TenantProvider
+    {
+        get
+        {
+            _tenantProvider ??= this.GetService<ITenantProvider>() ?? throw new InvalidOperationException("ITenantProvider not configured. Use UseApplicationServiceProvider or configure MultiTenantContext.");
+            return _tenantProvider;
+        }
+    }
+    private HashSet<Type> TenantAwareTypes
+    {
+        get
+        {
+            _tenantAwareTypes ??= this.Model.GetTenantAwareTypes();
+            return _tenantAwareTypes;
+        }
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
@@ -34,11 +58,8 @@ public class MultiTenantDbContext : DbContext
         var genericMethod = this.GetType()
             .GetMethods(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
             .Single(m => m.Name == nameof(SetupTypedMultiTenant) && m.IsGenericMethod && m.GetParameters().Length == 1);
-        tenantProvider.TenantAwareTypes = [.. modelBuilder.Model.GetEntityTypes()
-            .Where(et =>
-                et.FindProperty("TenantId") != null)
-            .Select(et => et.ClrType)];
-        foreach (var entityType in tenantProvider.TenantAwareTypes)
+        var tenantAwareTypes = modelBuilder.Model.GetTenantAwareTypes();
+        foreach (var entityType in tenantAwareTypes)
             genericMethod
                 .MakeGenericMethod(entityType)
                 .Invoke(this, [modelBuilder]);
@@ -51,7 +72,7 @@ public class MultiTenantDbContext : DbContext
         if (entityType.FindProperty("TenantId") != null && entityType.GetQueryFilter() == null && entityType.BaseType == null)
             //     entityTypeBuilder.Property<int>("TenantId").IsRequired();
             // if (entityType.GetQueryFilter() == null)
-            entityTypeBuilder.HasQueryFilter(i => EF.Property<int>(i, "TenantId") == tenantProvider.Current);
+            entityTypeBuilder.HasQueryFilter(i => EF.Property<int>(i, "TenantId") == TenantProvider.Current);
     }
     // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     // {
@@ -103,11 +124,11 @@ public class MultiTenantDbContext : DbContext
     }
     private void InnerUpdateEntityForMultiTenancy(HashSet<object> processedEntities, EntityEntry entityEntry)
     {
-        if (!tenantProvider.TenantAwareTypes.Contains(entityEntry.Metadata.ClrType)) return;
+        if (!TenantAwareTypes.Contains(entityEntry.Metadata.ClrType)) return;
         if (processedEntities.Contains(entityEntry.Entity)) return;
         processedEntities.Add(entityEntry.Entity);
 
-        var tenantId = tenantProvider.Current;
+        var tenantId = TenantProvider.Current;
         entityEntry.Property("TenantId").CurrentValue = tenantId;
         foreach (var navigation in entityEntry.Navigations)
         {
