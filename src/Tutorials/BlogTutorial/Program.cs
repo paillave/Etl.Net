@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Paillave.EntityFrameworkCoreExtension.Core;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace BlogTutorial;
 
@@ -246,6 +247,8 @@ public class PmsTenantProvider : IPmsTenantProvider
 {
     private static readonly AsyncLocal<int> _tenantId = new();
     public int Current => _tenantId.Value;
+
+    public HashSet<Type> TenantAwareTypes { get; set; } = [];
 
     public Task ExecuteInTenantContextAsync(int tenantId, Func<CancellationToken, Task> action, CancellationToken cancellationToken)
         => Task.Run(() =>

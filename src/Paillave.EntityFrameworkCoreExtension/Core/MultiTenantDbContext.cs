@@ -13,12 +13,12 @@ namespace Paillave.EntityFrameworkCoreExtension.Core;
 public interface ITenantProvider
 {
     int Current { get; }
+    HashSet<Type> TenantAwareTypes { get; set; }
 }
 public class MultiTenantDbContext : DbContext
 {
     private readonly ITenantProvider tenantProvider;
     private readonly object _sync = new();
-    private HashSet<Type> _tenantAwareTypes = [];
     public MultiTenantDbContext(DbContextOptions options) : base(options)
     {
         tenantProvider = this.GetService<ITenantProvider>();
@@ -34,11 +34,11 @@ public class MultiTenantDbContext : DbContext
         var genericMethod = this.GetType()
             .GetMethods(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
             .Single(m => m.Name == nameof(SetupTypedMultiTenant) && m.IsGenericMethod && m.GetParameters().Length == 1);
-        _tenantAwareTypes = [.. modelBuilder.Model.GetEntityTypes()
-            .Where(et => 
+        tenantProvider.TenantAwareTypes = [.. modelBuilder.Model.GetEntityTypes()
+            .Where(et =>
                 et.FindProperty("TenantId") != null)
             .Select(et => et.ClrType)];
-        foreach (var entityType in _tenantAwareTypes)
+        foreach (var entityType in tenantProvider.TenantAwareTypes)
             genericMethod
                 .MakeGenericMethod(entityType)
                 .Invoke(this, [modelBuilder]);
@@ -55,7 +55,6 @@ public class MultiTenantDbContext : DbContext
     }
     // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     // {
-    //     optionsBuilder.EnableSensitiveDataLogging(true);
     //     optionsBuilder.ReplaceService<IMigrationsSqlGenerator, CustomMigrationsSqlGenerator>();
     //     base.OnConfiguring(optionsBuilder);
     // }
@@ -104,7 +103,7 @@ public class MultiTenantDbContext : DbContext
     }
     private void InnerUpdateEntityForMultiTenancy(HashSet<object> processedEntities, EntityEntry entityEntry)
     {
-        if (!_tenantAwareTypes.Contains(entityEntry.Metadata.ClrType)) return;
+        if (!tenantProvider.TenantAwareTypes.Contains(entityEntry.Metadata.ClrType)) return;
         if (processedEntities.Contains(entityEntry.Entity)) return;
         processedEntities.Add(entityEntry.Entity);
 
