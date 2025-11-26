@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Microsoft.Extensions.DependencyInjection;
 using Paillave.Etl.Core;
 using Paillave.Etl.GraphApi;
 
@@ -31,6 +32,8 @@ var res = await StreamProcessRunner.CreateAndExecuteAsync("dummy", baseStream =>
         ;
 }, new ExecutionOptions<string>
 {
-    Connectors = connectors
+    Services = new ServiceCollection()
+        .AddSingleton<IFileValueConnectors>(connectors)
+        .BuildServiceProvider(),
 });
 Console.WriteLine(res.Failed ? $"fail: {res.ErrorTraceEvent}" : "Success");

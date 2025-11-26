@@ -9,31 +9,16 @@ namespace Paillave.EntityFrameworkCoreExtension.EfSave;
 
 public static class DbContextSaveExtensions
 {
-    public static Task EfSaveAsync<T>(this DbContext context, IList<T> entities, Expression<Func<T, object>> pivotKey, bool doNotUpdateIfExists = false, bool insertOnly = false) where T : class
-        => EfSaveAsync(context, entities, [pivotKey], CancellationToken.None, doNotUpdateIfExists, insertOnly);
-    public static Task EfSaveAsync<T>(this DbContext context, IList<T> entities, Expression<Func<T, object>> pivotKey, CancellationToken cancellationToken, bool doNotUpdateIfExists = false, bool insertOnly = false) where T : class
-        => EfSaveAsync(context, entities, [pivotKey], cancellationToken, doNotUpdateIfExists, insertOnly);
-    public static Task EfSaveAsync<T>(this DbContext context, IList<T> entities, Expression<Func<T, object>>[] pivotKeys, bool doNotUpdateIfExists = false, bool insertOnly = false) where T : class
-        => EfSaveAsync<T>(context, entities, pivotKeys, CancellationToken.None, doNotUpdateIfExists, insertOnly);
-    public static async Task EfSaveAsync<T>(this DbContext context, IList<T> entities, Expression<Func<T, object>>[] pivotKeys, CancellationToken? cancellationToken = null, bool doNotUpdateIfExists = false, bool insertOnly = false) where T : class
+    public static Task EfSaveAsync<T>(this DbContext context, IList<T> entities, Expression<Func<T, object>> pivotKey, bool doNotUpdateIfExists = false, bool insertOnly = false, CancellationToken cancellationToken = default) where T : class
+        => EfSaveAsync(context, entities, [pivotKey], doNotUpdateIfExists, insertOnly, cancellationToken);
+    public static async Task EfSaveAsync<T>(this DbContext context, IList<T> entities, Expression<Func<T, object>>[] pivotKeys, bool doNotUpdateIfExists = false, bool insertOnly = false, CancellationToken cancellationToken = default) where T : class
     {
-        if (cancellationToken == null)
-        {
-            cancellationToken = CancellationToken.None;
-        }
-        EfSaveEngine<T> efSaveEngine = new EfSaveEngine<T>(context, cancellationToken.Value, pivotKeys);
+        EfSaveEngine<T> efSaveEngine = new(context, cancellationToken, pivotKeys);
         await efSaveEngine.SaveAsync(entities, doNotUpdateIfExists, insertOnly);
     }
-
-    public static Task EfSaveAsync<T>(this DbContext context, IList<T> entities, Expression<Func<T, T, bool>> pivotCondition, bool doNotUpdateIfExists = false, bool insertOnly = false) where T : class
-        => EfSaveAsync(context, entities, pivotCondition, CancellationToken.None, doNotUpdateIfExists, insertOnly);
-    public static async Task EfSaveAsync<T>(this DbContext context, IList<T> entities, Expression<Func<T, T, bool>> pivotCondition, CancellationToken? cancellationToken = null, bool doNotUpdateIfExists = false, bool insertOnly = false) where T : class
+    public static async Task EfSaveAsync<T>(this DbContext context, IList<T> entities, Expression<Func<T, T, bool>> pivotCondition, bool doNotUpdateIfExists = false, bool insertOnly = false, CancellationToken cancellationToken = default) where T : class
     {
-        if (cancellationToken == null)
-        {
-            cancellationToken = CancellationToken.None;
-        }
-        EfSaveEngine<T> efSaveEngine = new EfSaveEngine<T>(context, cancellationToken.Value, pivotCondition);
+        EfSaveEngine<T> efSaveEngine = new(context, cancellationToken, pivotCondition);
         await efSaveEngine.SaveAsync(entities, doNotUpdateIfExists, insertOnly);
     }
 }

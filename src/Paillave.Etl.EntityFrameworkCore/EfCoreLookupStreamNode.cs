@@ -6,6 +6,8 @@ using Paillave.Etl.Reactive.Operators;
 using Microsoft.EntityFrameworkCore;
 using Paillave.EntityFrameworkCoreExtension.Core;
 using Paillave.Etl.Reactive.Core;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Paillave.Etl.EntityFrameworkCore
 {
@@ -184,11 +186,10 @@ namespace Paillave.Etl.EntityFrameworkCore
         public bool GetFullDataset { get; set; } = true;
         public string KeyedConnection { get; set; } = null;
     }
-    public class EfCoreLookupStreamNode<TIn, TValue, TEntity, TValueOut, TKey, TOut> : StreamNodeBase<TOut, IStream<TOut>, EfCoreLookupArgs<TIn, TValue, TEntity, TValueOut, TKey, TOut>>
+    public class EfCoreLookupStreamNode<TIn, TValue, TEntity, TValueOut, TKey, TOut>(string name, EfCoreLookupArgs<TIn, TValue, TEntity, TValueOut, TKey, TOut> args)
+        : StreamNodeBase<TOut, IStream<TOut>, EfCoreLookupArgs<TIn, TValue, TEntity, TValueOut, TKey, TOut>>(name, args)
     {
-        public EfCoreLookupStreamNode(string name, EfCoreLookupArgs<TIn, TValue, TEntity, TValueOut, TKey, TOut> args) : base(name, args)
-        {
-        }
+        private readonly Guid _nodeGuid = Guid.NewGuid();
 
         public override ProcessImpact PerformanceImpact => Args.GetFullDataset ? ProcessImpact.Light : ProcessImpact.Average;
 
@@ -197,35 +198,27 @@ namespace Paillave.Etl.EntityFrameworkCore
         protected override IStream<TOut> CreateOutputStream(EfCoreLookupArgs<TIn, TValue, TEntity, TValueOut, TKey, TOut> args)
         {
             IPushObservable<TOut> matchingS = args.SourceStream.Observable.Map(elt =>
+                {
+                    var memoryCache = this.ExecutionContext.Services.GetRequiredService<IMemoryCache>();
+
+                    var matcher = memoryCache.GetOrCreate($"{this.NodeName}-{_nodeGuid}", _ =>
                     {
-                        var matcher = this.ExecutionContext.ContextBag.Resolve(this.NodeName, () =>
+                        return new EfMatcher<TValue, TEntity, TKey>(new EfMatcherConfig<TValue, TEntity, TKey>
                         {
-                            var ctx = this.ExecutionContext.DependencyResolver.ResolveDbContext<DbContext>(args.KeyedConnection)
-                                ?? throw new InvalidOperationException($"No DbContext could be resolved for type '{typeof(DbContext).FullName}'. Please check your dependency injection configuration.");
-                            return this.ExecutionContext.InvokeInDedicatedThreadAsync(ctx, () => new EfMatcher<TValue, TEntity, TKey>(new EfMatcherConfig<TValue, TEntity, TKey>
-                            {
-                                Context = ctx,
-                                CreateIfNotFound = args.CreateIfNotFound,
-                                LeftKeyExpression = args.GetLeftStreamKey,
-                                RightKeyExpression = args.GetEntityStreamKey,
-                                MinCacheSize = args.CacheSize,
-                                GetFullDataset = args.GetFullDataset,
-                                Query = args.Query(new DbContextWrapper(ctx))
-                            })).Result;
+                            CreateIfNotFound = args.CreateIfNotFound,
+                            LeftKeyExpression = args.GetLeftStreamKey,
+                            RightKeyExpression = args.GetEntityStreamKey,
+                            MinCacheSize = args.CacheSize,
+                            GetFullDataset = args.GetFullDataset,
+                            GetQuery = (db) => args.Query(new DbContextWrapper(db))
                         });
-                        TEntity entity = default;
-                        var val = args.GetInputValue(elt);
-                        if (!args.GetFullDataset)
-                        {
-                            entity = this.ExecutionContext.InvokeInDedicatedThreadAsync(matcher.Context, () => matcher.GetMatch(val)).Result;
-                        }
-                        else
-                        {
-                            entity = matcher.GetMatch(val);
-                        }
-                        return args.GetOutputValue(elt, args.ResultSelector(val, entity));
-                    }
-                );
+                    }) ?? throw new InvalidOperationException("Memory cache failure to get or create the matcher");
+                    using var ctx = this.ExecutionContext.Services.GetDbContext(args.KeyedConnection);
+                    TEntity? entity = default;
+                    var val = args.GetInputValue(elt);
+                    entity = matcher.GetMatch(val, ctx);
+                    return args.GetOutputValue(elt, args.ResultSelector(val, entity));
+                });
             return base.CreateUnsortedStream(matchingS);
         }
     }

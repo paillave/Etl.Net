@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Data;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Paillave.Etl.SqlServer
 {
@@ -33,8 +34,9 @@ namespace Paillave.Etl.SqlServer
         }
         public void ProcessItem(TValue item, string connectionName)
         {
-            var resolver = this.ExecutionContext.DependencyResolver;
-            var sqlConnection = connectionName == null ? resolver.Resolve<IDbConnection>() : resolver.Resolve<IDbConnection>(connectionName);
+        var sqlConnection = connectionName == null 
+            ? this.ExecutionContext.Services.GetRequiredService<IDbConnection>() 
+            : this.ExecutionContext.Services.GetRequiredKeyedService<IDbConnection>(connectionName);
             var command = sqlConnection.CreateCommand();
             command.CommandText = base.Args.SqlQuery;
             command.CommandType = CommandType.Text;

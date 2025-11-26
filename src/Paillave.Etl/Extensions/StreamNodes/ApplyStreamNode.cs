@@ -8,8 +8,8 @@ namespace Paillave.Etl.Core
     {
         public IStream<TInMain> MainStream { get; set; }
         public ISingleStream<TInToApply> StreamToApply { get; set; }
-        public Func<TInMain, TInToApply, TOut> Selector { get; set; }
-        public Func<TInMain, TInToApply, int, TOut> IndexSelector { get; set; }
+        public Func<TInMain, TInToApply, IServiceProvider, TOut> Selector { get; set; }
+        public Func<TInMain, TInToApply, int, IServiceProvider, TOut> IndexSelector { get; set; }
         public bool ExcludeNull { get; set; }
         public bool WithNoDispose { get; set; }
     }
@@ -17,8 +17,8 @@ namespace Paillave.Etl.Core
     {
         public ISingleStream<TInMain> MainStream { get; set; }
         public ISingleStream<TInToApply> StreamToApply { get; set; }
-        public Func<TInMain, TInToApply, TOut> Selector { get; set; }
-        public Func<TInMain, TInToApply, int, TOut> IndexSelector { get; set; }
+        public Func<TInMain, TInToApply, IServiceProvider, TOut> Selector { get; set; }
+        public Func<TInMain, TInToApply, int, IServiceProvider, TOut> IndexSelector { get; set; }
         public bool ExcludeNull { get; set; }
         public bool WithNoDispose { get; set; }
     }

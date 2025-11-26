@@ -19,15 +19,14 @@ namespace Paillave.Etl.Core
             public string TypeName { get; }
             public ProcessImpact PerformanceImpact { get; }
             public ProcessImpact MemoryFootPrint { get; }
-            public INodeDescription Parent => null;
+            public INodeDescription? Parent => null;
         }
-        public JobDefinitionStructure(List<StreamToNodeLink> streamToNodeLinks, List<INodeDescription> nodes, string sourceNodeName)
+        public JobDefinitionStructure(List<StreamToNodeLink> streamToNodeLinks, List<INodeDescription> nodes)
         {
             this.Nodes = nodes.Select(i => (INodeDescription)new NodeDescription(i))/*.Where(i => i.Parent != null)*/.ToList();
-            this.StreamToNodeLinks = streamToNodeLinks
+            this.StreamToNodeLinks = [.. streamToNodeLinks
                 .Join(this.Nodes, i => i.SourceNodeName, i => i.NodeName, (i, j) => i)
-                .Join(this.Nodes, i => i.TargetNodeName, i => i.NodeName, (i, j) => i)
-                .ToList();
+                .Join(this.Nodes, i => i.TargetNodeName, i => i.NodeName, (i, j) => i)];
 
             // TODO: Redo total PerformanceImpact and MemoryFootPrint computation as it is completely not accurate
             this.PerformanceImpact = this.Nodes.Count == 0 ? ProcessImpact.Light : (ProcessImpact)Math.Round(this.Nodes.Average(i => (decimal)i.PerformanceImpact));

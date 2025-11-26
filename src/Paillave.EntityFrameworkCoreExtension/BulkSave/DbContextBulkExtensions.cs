@@ -14,12 +14,12 @@ public static class DbContextBulkExtensions
         BulkSaveEngineBase<T> bulkSaveEngine = new BulkSaveEngine<T>(context, pivotKeys);
         bulkSaveEngine.Save(entities, cancellationToken, doNotUpdateIfExists, insertOnly);
     }
-    public static void BulkSave<T>(this DbContext context, IList<T> entities, Expression<Func<T, object>>[] pivotKeys, CancellationToken cancellationToken, bool doNotUpdateIfExists = false, bool insertOnly = false) where T : class
+    public static void BulkSave<T>(this DbContext context, IList<T> entities, Expression<Func<T, object>>[] pivotKeys, bool doNotUpdateIfExists = false, bool insertOnly = false, CancellationToken cancellationToken = default) where T : class
     {
         BulkSaveEngineBase<T> bulkSaveEngine = new BulkSaveEngine<T>(context, pivotKeys);
         bulkSaveEngine.Save(entities, cancellationToken, doNotUpdateIfExists, insertOnly);
     }
-    public static void BulkUpdate<TEntity, TSource>(this DbContext context, IList<TSource> sources, Expression<Func<TSource, TEntity>> updateKey, Expression<Func<TSource, TEntity>> updateValues) where TEntity : class
+    public static void BulkUpdate<TEntity, TSource>(this DbContext context, IList<TSource> sources, Expression<Func<TSource, TEntity>> updateKey, Expression<Func<TSource, TEntity>> updateValues, CancellationToken cancellationToken = default) where TEntity : class
     {
         BulkUpdateEngineBase<TEntity, TSource> bulkUpdateEngine = new BulkUpdateEngine<TEntity, TSource>(context, updateKey, updateValues);
         bulkUpdateEngine.Update(sources);

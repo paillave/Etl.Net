@@ -1,5 +1,6 @@
 using Paillave.Etl.Reactive.Operators;
 using Paillave.Etl.Reactive.Core;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Paillave.Etl.Core
 {
@@ -13,7 +14,7 @@ namespace Paillave.Etl.Core
         private IFileValueProcessor _processor;
         public ProcessFileToConnectorStreamNode(string name, ProcessFileToConnectorArgs args) : base(name, args)
         {
-            _processor = this.ExecutionContext.Connectors.GetProcessor(args.OutputConnectorCode);
+            _processor = this.ExecutionContext.Services.GetRequiredService<IFileValueConnectors>().GetProcessor(args.OutputConnectorCode);
             PerformanceImpact = _processor.PerformanceImpact;
             MemoryFootPrint = _processor.MemoryFootPrint;
         }

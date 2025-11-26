@@ -8,26 +8,19 @@ namespace Paillave.EntityFrameworkCoreExtension.Core;
 
 public class EfMatcher<TInLeft, TEntity, TKey> where TKey : notnull
 {
-    private class CachedEntity
+    private class CachedEntity(TEntity? entity)
     {
-        public CachedEntity(TEntity? entity)
-        {
-            this.Timestamp = DateTime.Now.ToFileTime();
-            this.Entity = entity;
-        }
-        public long Timestamp { get; }
-        public TEntity? Entity { get; }
+        public long Timestamp { get; } = DateTime.Now.ToFileTime();
+        public TEntity? Entity { get; } = entity;
     }
-    private Func<TInLeft, TKey> _getLeftKey;
-    private Func<TEntity, TKey> _getRightKey;
-    private MatchCriteriaBuilder<TInLeft, TEntity, TKey> _matchCriteriaBuilder;
-    private Dictionary<TKey, CachedEntity> _cachedEntities = new Dictionary<TKey, CachedEntity>();
+    private readonly Func<TInLeft, TKey> _getLeftKey;
+    private readonly Func<TEntity, TKey> _getRightKey;
     private int _cacheSize = 1000;
-    public DbContext Context { get; }
+    private readonly MatchCriteriaBuilder<TInLeft, TEntity, TKey> _matchCriteriaBuilder;
+    // private readonly Dictionary<TKey, CachedEntity> _cachedEntities = [];
+    // private readonly int _cacheSize = 1000;
+    // public DbContext Context { get; }
 
-    private readonly bool _getFullDataset;
-    private Func<TInLeft, TEntity>? _createIfNotFound = null;
-    private IQueryable<TEntity>? _query = null;
     private static IEqualityComparer<TKey> GetEqualityComparer()
     {
         if (typeof(TKey) == typeof(string))
@@ -35,69 +28,82 @@ public class EfMatcher<TInLeft, TEntity, TKey> where TKey : notnull
         else
             return EqualityComparer<TKey>.Default;
     }
+    private readonly EfMatcherConfig<TInLeft, TEntity, TKey> _config;
     public EfMatcher(EfMatcherConfig<TInLeft, TEntity, TKey> config)
+        => (_config, _getLeftKey, _getRightKey, _matchCriteriaBuilder)
+        = (config, config.LeftKeyExpression.Compile(), config.RightKeyExpression.Compile(), MatchCriteriaBuilder.Create(config.LeftKeyExpression, config.RightKeyExpression));
+
+    // if (config.GetFullDataset)
+    // {
+    //     var defaultCache = config.Query.ToList();
+    //     _cacheSize = Math.Max(defaultCache.Count, config.MinCacheSize);
+    //     _cachedEntities = defaultCache
+    //         .Select(i => new { Key = _getRightKey(i), Value = new CachedEntity(i) })
+    //         .Where(i => i.Key != null)
+    //         .GroupBy(i => i.Key)
+    //         .ToDictionary(i => i.Key, i => i.First().Value, GetEqualityComparer());
+    // }
+    // else
+    // {
+    //     _cacheSize = config.MinCacheSize;
+    // }
+    private Dictionary<TKey, CachedEntity>? _cachedEntities;
+    private Dictionary<TKey, CachedEntity> GetCachedEntities(DbContext dbContext)
     {
-        _getFullDataset = config.GetFullDataset;
-        _createIfNotFound = config.CreateIfNotFound;
-        Context = config.Context;
-        _getLeftKey = config.LeftKeyExpression.Compile();
-        _getRightKey = config.RightKeyExpression.Compile();
-        _matchCriteriaBuilder = MatchCriteriaBuilder.Create(config.LeftKeyExpression, config.RightKeyExpression);
-        if (config.GetFullDataset)
+        if (_cachedEntities == null)
         {
-            var defaultCache = config.Query.ToList();
-            _cacheSize = Math.Max(defaultCache.Count, config.MinCacheSize);
-            _cachedEntities = defaultCache
-                .Select(i => new { Key = _getRightKey(i), Value = new CachedEntity(i) })
-                .Where(i => i.Key != null)
-                .GroupBy(i => i.Key)
-                .ToDictionary(i => i.Key, i => i.First().Value, GetEqualityComparer());
+            if (_config.GetFullDataset)
+            {
+                var defaultCache = _config.GetQuery(dbContext).ToList();
+                _cacheSize = Math.Max(defaultCache.Count, _config.MinCacheSize);
+                _cachedEntities = defaultCache
+                    .Select(i => new { Key = _getRightKey(i), Value = new CachedEntity(i) })
+                    .Where(i => i.Key != null)
+                    .GroupBy(i => i.Key)
+                    .ToDictionary(i => i.Key, i => i.First().Value, GetEqualityComparer());
+            }
+            else
+            {
+                _cachedEntities = new(GetEqualityComparer());
+            }
         }
-        else
-        {
-            _query = config.Query;
-            _cacheSize = config.MinCacheSize;
-        }
+        return _cachedEntities;
     }
-    public TEntity? GetMatch(TInLeft input)
+    public TEntity? GetMatch(TInLeft input, DbContext dbContext)
     {
         var inputKey = _getLeftKey(input);
         if (inputKey == null) return default;
-        if (_cachedEntities.TryGetValue(inputKey, out var entryFromCache))
+        var cachedEntities = GetCachedEntities(dbContext);
+        if (cachedEntities.TryGetValue(inputKey, out var entryFromCache))
             return entryFromCache.Entity;
-        if (_getFullDataset) return default;
+        if (_config.GetFullDataset) return default;
         var expr = _matchCriteriaBuilder.GetCriteriaExpression(input);
-        if (_query == null) throw new InvalidOperationException("Query is not set");
-        var ret = _query.FirstOrDefault(expr);
+        var query = _config.GetQuery(dbContext);
+        var ret = query.FirstOrDefault(expr);
 
-        if (ret == null && _createIfNotFound != null)
+        if (ret == null && _config.CreateIfNotFound != null)
         {
-            ret = _createIfNotFound(input);
+            ret = _config.CreateIfNotFound(input);
             if (ret == null) throw new InvalidOperationException("CreateIfNotFound returned null");
-            Context.Add(ret);
-            Context.SaveChanges();
+            dbContext.Add(ret);
+            dbContext.SaveChanges();
         }
 
-        if (_cachedEntities.Count >= _cacheSize)
+        if (cachedEntities.Count >= _cacheSize)
         {
-            var toRemove = _cachedEntities.OrderBy(i => i.Value.Timestamp).FirstOrDefault();
-            _cachedEntities.Remove(toRemove.Key);
+            var toRemove = cachedEntities.OrderBy(i => i.Value.Timestamp).FirstOrDefault();
+            cachedEntities.Remove(toRemove.Key);
         }
-        _cachedEntities[inputKey] = new CachedEntity(ret);
+        cachedEntities[inputKey] = new CachedEntity(ret);
         return ret;
     }
 }
 public class EfMatcherConfig<TInLeft, TEntity, TKey>
 {
-    public required DbContext Context { get; set; }
     public required Expression<Func<TInLeft, TKey>> LeftKeyExpression { get; set; }
     public required Expression<Func<TEntity, TKey>> RightKeyExpression { get; set; }
     public required Func<TInLeft, TEntity>? CreateIfNotFound { get; set; }
-    /// <summary>
-    /// If true, will fill the cache from the start with values that correspond the DefaultDatasetCriteria
-    /// </summary>
-    /// <value></value>
     public bool GetFullDataset { get; set; }
     public int MinCacheSize { get; set; } = 1000;
-    public required IQueryable<TEntity> Query { get; set; }
+    public required Func<DbContext, IQueryable<TEntity>> GetQuery { get; set; }
 }

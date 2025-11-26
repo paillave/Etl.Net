@@ -7,7 +7,6 @@ using Paillave.Etl.EntityFrameworkCore;
 using BlogTutorial.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.ComponentModel.Design;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Paillave.EntityFrameworkCoreExtension.Core;
@@ -23,23 +22,13 @@ class Program9
         var tenantProvider = new PmsTenantProvider();
         var sqlCnx = args[1];
 
-        var serviceCollection = new ServiceCollection();
-        serviceCollection.AddEntityFrameworkSqlServer(); // Services EF Core nécessaires
-        serviceCollection.AddSingleton<ITenantProvider>(tenantProvider);
-        // serviceCollection.AddSingleton<IMigrationsSqlGenerator, PmsMigrationsSqlGenerator>();
+                var efServiceCollection = new ServiceCollection();
+                efServiceCollection.AddEntityFrameworkSqlServer(); // Services EF Core nécessaires
+                efServiceCollection.AddSingleton(tenantProvider);
 
-        var serviceProvider = serviceCollection.BuildServiceProvider();
+                var efServiceProvider = efServiceCollection.BuildServiceProvider();
 
 
-        var optionsBuilder = new DbContextOptionsBuilder<SimpleTutorialDbContext>();
-        optionsBuilder
-            .UseSqlServer(sqlCnx, options => options
-                .CommandTimeout(2000)
-                .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
-            .UseInternalServiceProvider(serviceProvider);
-        var ctxFactory = new PooledDbContextFactory<SimpleTutorialDbContext>(optionsBuilder.Options);
-
-        var dbCtx = ctxFactory.CreateDbContext();
 
 
 
@@ -52,13 +41,13 @@ class Program9
 
         //         var serviceCollection = new ServiceCollection().AddSingleton<DbContext, SimpleTutorialDbContext>(sp => new SimpleTutorialDbContext(args[1]));
 
-        //         var serviceProvider = serviceCollection.BuildServiceProvider();
+        //         var services = serviceCollection.BuildServiceProvider();
         //         var resolver = new CompositeDependencyResolver()
         //                             .AddResolver(new SimpleDependencyResolver()
         // )
-        //                             .AddResolver(new DependencyResolver(serviceProvider));
+        //                             .AddResolver(new DependencyResolver(services));
 
-        //         var ctx1 = serviceProvider.GetRequiredService<DbContext>();
+        //         var ctx1 = services.GetRequiredService<DbContext>();
         //         var ctx = resolver.Resolve<DbContext>();
 
 
@@ -66,7 +55,7 @@ class Program9
         //                     .AddResolver(new SimpleDependencyResolver()
         //                         .Register(processContext)
         //                         .Register(etlDiagnostic))
-        //                     .AddResolver(new DependencyResolver(serviceProvider));
+        //                     .AddResolver(new DependencyResolver(services));
 
 
 
@@ -77,7 +66,11 @@ class Program9
 
         var executionOptions = new ExecutionOptions<string>
         {
-            Resolver = new SimpleDependencyResolver().Register<DbContext>(dbCtx),
+            Services = new ServiceCollection()
+                .AddDbContextPool<SimpleTutorialDbContext>(options=> options.UseSqlServer(sqlCnx, options => options
+                    .CommandTimeout(2000)
+                    .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
+                .UseApplicationServiceProvider(efServiceProvider)).BuildServiceProvider(),
             TraceProcessDefinition = (ts, cs) => ts.Do("Show trace on console", t => Console.WriteLine(t.ToString())),
             // TraceProcessDefinition = DefineTraceProcess,
             // UseDetailedTraces = true // activate only if per row traces are meant to be caught
@@ -193,48 +186,6 @@ class Program9
             .EfCoreSave("save posts", o => o.SeekOn(i => new { i.AuthorId, i.DateTime }));
     }
 }
-
-
-public class DependencyResolver(IServiceProvider serviceProvider) : IDependencyResolver
-{
-    public object Resolve(Type type)
-    {
-        var resolved = serviceProvider.GetRequiredService(type);
-        return resolved;
-    }
-    public T Resolve<T>() where T : class
-    {
-        var resolved = serviceProvider.GetRequiredService<T>();
-        return resolved;
-    }
-    public T Resolve<T>(string key) where T : class => serviceProvider.GetRequiredKeyedService<T>(key);
-    public bool TryResolve<T>(out T resolved) where T : class
-    {
-        resolved = serviceProvider.GetService<T>()!;
-        return resolved != null;
-    }
-
-    public bool TryResolve<T>(string key, out T resolved) where T : class
-    {
-        resolved = serviceProvider.GetKeyedService<T>(key)!;
-        return resolved != null;
-    }
-
-    public bool TryResolve(Type type, out object resolved)
-    {
-        resolved = serviceProvider.GetService(type)!;
-        return resolved != null;
-    }
-
-    public object Resolve(Type type, string key) => serviceProvider.GetRequiredKeyedService(type, key);
-
-    public bool TryResolve(Type type, string key, out object resolved)
-    {
-        resolved = (serviceProvider.GetKeyedServices(type, key) ?? []).FirstOrDefault()!;
-        return resolved != null;
-    }
-}
-
 
 
 public interface IPmsTenantProvider : ITenantProvider

@@ -29,7 +29,7 @@ public partial class GraphApiMailFileValueProvider(string code, string name, str
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
     protected override void Provide(object input, Action<IFileValue, FileReference> pushFileValue, GraphApiAdapterConnectionParameters connectionParameters, GraphApiMailAdapterProviderParameters providerParameters, CancellationToken cancellationToken)
     {
-        using InThreadJobPool jobPool = new InThreadJobPool();
+        using InThreadJobPool jobPool = new();
         Task task = Task.Run(() => ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => GetFileList(connectionParameters, providerParameters, (fv, fr) => jobPool.ExecuteAsync(() => pushFileValue(fv, fr)), cancellationToken)));
         jobPool.Listen(task);
     }

@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using Paillave.EntityFrameworkCoreExtension.EfSave;
 using Paillave.EntityFrameworkCoreExtension.BulkSave;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Paillave.Etl.EntityFrameworkCore;
 
@@ -246,30 +247,35 @@ public class EfCoreSaveStreamNode<TInEf, TIn, TOut>(string name, EfCoreSaveArgs<
     }
     private void ProcessChunk(List<(TIn Input, TInEf Entity)> i)
     {
-        using var dbContextWrapper = this.ExecutionContext.DependencyResolver.ResolveDbContextWrapper(this.Args.DbContextType, this.Args.KeyedConnection);
-        this.ExecutionContext.InvokeInDedicatedThreadAsync(dbContextWrapper.Object, async () => await ProcessBatchAsync(i, dbContextWrapper.Object, this.Args.BulkLoadMode)).Wait();
+        using var ctx = this.ExecutionContext.Services.GetDbContext(args.KeyedConnection);
+
+        ProcessBatchAsync(i, ctx, this.Args.BulkLoadMode, Args.SourceStream.Observable.CancellationToken)
+            .WaitAsync(Args.SourceStream.Observable.CancellationToken).GetAwaiter().GetResult();
     }
 
-    public async Task ProcessBatchAsync(List<(TIn Input, TInEf Entity)> items, DbContext dbContext, SaveMode bulkLoadMode)
+    public async Task ProcessBatchAsync(List<(TIn Input, TInEf Entity)> items, DbContext dbContext, SaveMode bulkLoadMode, CancellationToken cancellationToken)
     {
         var entities = items.Select(i => i.Item2).ToArray();
         if (Args.PivotCriteria != null)
         {
-            dbContext.EfSaveAsync(entities, Args.PivotCriteria, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly).Wait();
+            dbContext.EfSaveAsync(entities, Args.PivotCriteria, Args.DoNotUpdateIfExists, Args.InsertOnly, Args.SourceStream.Observable.CancellationToken)
+                .WaitAsync(Args.SourceStream.Observable.CancellationToken).GetAwaiter().GetResult();
         }
         else
         {
             var pivotKeys = Args.PivotKeys == null ? null : Args.PivotKeys.ToArray();
             if (bulkLoadMode == SaveMode.EntityFrameworkCore)
             {
-                dbContext.EfSaveAsync(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly).Wait();
+                dbContext.EfSaveAsync(entities, pivotKeys, Args.DoNotUpdateIfExists, Args.InsertOnly, Args.SourceStream.Observable.CancellationToken)
+                    .WaitAsync(Args.SourceStream.Observable.CancellationToken).GetAwaiter().GetResult();
             }
             else
             {
                 if (dbContext.Database.IsSqlServer())
-                    dbContext.BulkSave(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly);
+                    dbContext.BulkSave(entities, pivotKeys, Args.DoNotUpdateIfExists, Args.InsertOnly, Args.SourceStream.Observable.CancellationToken);
                 else
-                    dbContext.EfSaveAsync(entities, pivotKeys, Args.SourceStream.Observable.CancellationToken, Args.DoNotUpdateIfExists, Args.InsertOnly).Wait();
+                    dbContext.EfSaveAsync(entities, pivotKeys, Args.DoNotUpdateIfExists, Args.InsertOnly, Args.SourceStream.Observable.CancellationToken)
+                        .WaitAsync(Args.SourceStream.Observable.CancellationToken).GetAwaiter().GetResult();
             }
         }
         DetachAllEntities(dbContext);
@@ -286,18 +292,5 @@ public class EfCoreSaveStreamNode<TInEf, TIn, TOut>(string name, EfCoreSaveArgs<
             entry.State = EntityState.Detached;
         if (!Args.KeepChangeTracker)
             dbContext.ChangeTracker.Clear();
-    }
-}
-public class DisposeWrapper<T> : IDisposable where T : IDisposable
-{
-    public T Object { get; }
-    private readonly bool _dispose;
-    public DisposeWrapper(T obj, bool dispose)
-        => (Object, _dispose) = (obj, dispose);
-
-    public void Dispose()
-    {
-        if (_dispose)
-            this.Object.Dispose();
     }
 }

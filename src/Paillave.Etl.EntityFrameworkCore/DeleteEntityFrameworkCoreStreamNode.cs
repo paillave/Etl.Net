@@ -5,6 +5,7 @@ using Paillave.Etl.Reactive.Operators;
 using Microsoft.EntityFrameworkCore;
 using Paillave.EntityFrameworkCoreExtension.Core;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Paillave.Etl.EntityFrameworkCore
 {
@@ -104,13 +105,13 @@ namespace Paillave.Etl.EntityFrameworkCore
             var matchingS = args.InputStream.Observable
                 .Map(i =>
                 {
-                    var ctx = this.ExecutionContext.DependencyResolver.ResolveDbContext<DbContext>(args.KeyedConnection)
-                        ?? throw new InvalidOperationException($"No DbContext could be resolved for type '{typeof(DbContext).FullName}'. Please check your dependency injection configuration.");
-                    TValue val = args.GetValue(i);
-                    this.ExecutionContext.InvokeInDedicatedThreadAsync(ctx, async () =>
-                    {
-                        await ctx.Set<TEntity>().Where(args.Match.ApplyPartialLeft<TValue, TEntity, bool>(val)).ExecuteDeleteAsync(args.InputStream.Observable.CancellationToken);
-                    }).Wait();
+                    using var ctx = this.ExecutionContext.Services.GetDbContext(args.KeyedConnection);
+                    var val = args.GetValue(i);
+                    ctx.Set<TEntity>()
+                        .Where(args.Match.ApplyPartialLeft(val))
+                        .ExecuteDeleteAsync(args.InputStream.Observable.CancellationToken)
+                        .WaitAsync(args.InputStream.Observable.CancellationToken)
+                        .GetAwaiter().GetResult();
                     return i;
                 });
             return base.CreateUnsortedStream(matchingS);

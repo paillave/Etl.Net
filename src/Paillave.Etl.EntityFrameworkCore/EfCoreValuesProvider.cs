@@ -10,42 +10,38 @@ namespace Paillave.Etl.EntityFrameworkCore
     public class EfCoreValuesProviderArgs<TIn, TOut>
     {
         public string ConnectionKey { get; set; }
-        public Func<DbContextWrapper, TIn, IQueryable<TOut>> GetQuery { get; set; }
+        public Func<DbContext, TIn, IQueryable<TOut>> GetQuery { get; set; }
         public bool StreamMode { get; set; } = false;
     }
     public class EfCoreSingleValueProviderArgs<TIn, TOut>
     {
         public IStream<TIn> Stream { get; set; }
         public string ConnectionKey { get; set; }
-        public Func<DbContextWrapper, TIn, IQueryable<TOut>> GetQuery { get; set; }
+        public Func<DbContext, TIn, IQueryable<TOut>> GetQuery { get; set; }
     }
     /// <summary>
     /// 
     /// </summary>
     /// <typeparam name="TIn">What enters in the stream</typeparam>
     /// <typeparam name="TOut">What leaves the stream</typeparam>
-    public class EfCoreValuesProvider<TIn, TOut> : ValuesProviderBase<TIn, TOut>
+    public class EfCoreValuesProvider<TIn, TOut>(EfCoreValuesProviderArgs<TIn, TOut> args) : ValuesProviderBase<TIn, TOut>
     {
-        private readonly EfCoreValuesProviderArgs<TIn, TOut> _args;
-        public EfCoreValuesProvider(EfCoreValuesProviderArgs<TIn, TOut> args) => _args = args;
+        private readonly EfCoreValuesProviderArgs<TIn, TOut> _args = args;
+
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
         public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IExecutionContext context)
         {
-            var dbContext = context.DependencyResolver.ResolveDbContext<DbContext>(_args.ConnectionKey)
-                ?? throw new InvalidOperationException($"No DbContext could be resolved for type '{typeof(DbContext).FullName}'. Please check your dependency injection configuration.");
+            using var ctx = context.Services.GetDbContext(_args.ConnectionKey);
 
             if (_args.StreamMode)
             {
-                context.InvokeInDedicatedThreadAsync(dbContext, () =>
-                {
-                    var lsts = _args.GetQuery(new DbContextWrapper(dbContext), input).AsQueryable();
-                    foreach (var elt in lsts) push(elt);
-                }).Wait();
+                var lsts = _args.GetQuery(ctx, input).AsQueryable();
+                foreach (var elt in lsts) push(elt);
             }
             else
             {
-                var lsts = context.InvokeInDedicatedThreadAsync(dbContext, async () => await _args.GetQuery(new DbContextWrapper(dbContext), input).ToListAsync()).Result;
+                var lsts = _args.GetQuery(ctx, input).ToList();
                 lsts.ForEach(push);
             }
         }
@@ -55,29 +51,25 @@ namespace Paillave.Etl.EntityFrameworkCore
     /// </summary>
     /// <typeparam name="TIn">What enters in the stream</typeparam>
     /// <typeparam name="TOut">What leaves the stream</typeparam>
-    public class EfCoreSingleValueProvider<TIn, TOut> : ValuesProviderBase<TIn, TOut>
+    public class EfCoreSingleValueProvider<TIn, TOut>(EfCoreSingleValueProviderArgs<TIn, TOut> args) : ValuesProviderBase<TIn, TOut>
     {
-        private readonly EfCoreSingleValueProviderArgs<TIn, TOut> _args;
-        public EfCoreSingleValueProvider(EfCoreSingleValueProviderArgs<TIn, TOut> args) => _args = args;
+        private readonly EfCoreSingleValueProviderArgs<TIn, TOut> _args = args;
+
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
         public override void PushValues(TIn input, Action<TOut> push, CancellationToken cancellationToken, IExecutionContext context)
         {
-            var dbContext = context.DependencyResolver.ResolveDbContext<DbContext>(_args.ConnectionKey)
-                ?? throw new InvalidOperationException($"No DbContext could be resolved for type '{typeof(DbContext).FullName}'. Please check your dependency injection configuration.");
-            var res = context.InvokeInDedicatedThreadAsync(dbContext, async () => await _args.GetQuery(new DbContextWrapper(dbContext), input).FirstOrDefaultAsync()).Result;
+            using var ctx = context.Services.GetDbContext(_args.ConnectionKey);
+            var res = _args.GetQuery(ctx, input).FirstOrDefault();
             push(res);
         }
     }
 
 
 
-    public class EfCoreSelectSingleStreamNode<TIn, TOut> : StreamNodeBase<TOut, ISingleStream<TOut>, EfCoreSingleValueProviderArgs<TIn, TOut>>
+    public class EfCoreSelectSingleStreamNode<TIn, TOut>(string name, EfCoreSingleValueProviderArgs<TIn, TOut> args)
+        : StreamNodeBase<TOut, ISingleStream<TOut>, EfCoreSingleValueProviderArgs<TIn, TOut>>(name, args)
     {
-        public EfCoreSelectSingleStreamNode(string name, EfCoreSingleValueProviderArgs<TIn, TOut> args) : base(name, args)
-        {
-        }
-
         public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
@@ -86,10 +78,9 @@ namespace Paillave.Etl.EntityFrameworkCore
         {
             var obs = args.Stream.Observable.Map(input =>
             {
-            var dbContext = args.Stream.SourceNode.ExecutionContext.DependencyResolver.ResolveDbContext<DbContext>(args.ConnectionKey)
-                ?? throw new InvalidOperationException($"No DbContext could be resolved for type '{typeof(DbContext).FullName}'. Please check your dependency injection configuration.");
+                using var ctx = args.Stream.SourceNode.ExecutionContext.Services.GetDbContext(args.ConnectionKey);
                 var invoker = args.Stream.SourceNode.ExecutionContext;
-                var res = invoker.InvokeInDedicatedThreadAsync(dbContext, async () => await args.GetQuery(new DbContextWrapper(dbContext), input).FirstOrDefaultAsync()).Result;
+                var res = args.GetQuery(ctx, input).FirstOrDefault();
                 return res;
             });
             return base.CreateSingleStream(obs);

@@ -1,4 +1,5 @@
-﻿using Paillave.Etl.Core;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Paillave.Etl.Core;
 using Paillave.Etl.SqlServer.Core;
 using System;
 using System.Collections.Generic;
@@ -75,12 +76,14 @@ public class SqlCommandValueProvider<TIn, TOut> : ValuesProviderBase<TIn, TOut>
     {
         // https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/ado-net-code-examples
         // https://stackoverflow.com/questions/5980615/parameterized-query-in-oracle-trouble
-        var sqlConnection = _args.ConnectionName == null ? context.DependencyResolver.Resolve<IDbConnection>() : context.DependencyResolver.Resolve<IDbConnection>(_args.ConnectionName);
+        var sqlConnection = _args.ConnectionName == null 
+            ? context.Services.GetRequiredService<IDbConnection>() 
+            : context.Services.GetRequiredKeyedService<IDbConnection>(_args.ConnectionName);
         var command = sqlConnection.CreateCommand();
         command.CommandText = _args.SqlQuery;
         command.CommandType = CommandType.Text;
         // var command = new SqlCommand(_args.SqlQuery, sqlConnection);
-        Regex getParamRegex = new Regex(@"@(?<param>\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        Regex getParamRegex = new(@"@(?<param>\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         var allMatches = getParamRegex.Matches(_args.SqlQuery).ToList().Select(match => match.Groups["param"].Value).Distinct().ToList();
         foreach (var parameterName in allMatches)
         {

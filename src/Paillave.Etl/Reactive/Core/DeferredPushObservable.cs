@@ -1,38 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Reactive.Core
-{
-    public class DeferredPushObservable<T> : PushSubject<T>, IDeferredPushObservable<T>
-    {
-        private Action<Action<T>, CancellationToken> _valuesFactory;
-        public DeferredPushObservable(Action<Action<T>, CancellationToken> valuesFactory, CancellationToken cancellationToken) : base(cancellationToken) => _valuesFactory = valuesFactory;
+namespace Paillave.Etl.Reactive.Core;
 
-        private Guid tmp = Guid.NewGuid();
-        public void Start()
+public class DeferredPushObservable<T> : PushSubject<T>, IDeferredPushObservable<T>
+{
+    private Action<Action<T>, CancellationToken> _valuesFactory;
+    public DeferredPushObservable(Action<Action<T>, CancellationToken> valuesFactory, CancellationToken cancellationToken) : base(cancellationToken) => _valuesFactory = valuesFactory;
+
+    private Guid tmp = Guid.NewGuid();
+    public void Start()
+    {
+        Task.Run(() => InternStart());
+    }
+    private void InternStart()
+    {
+        lock (LockObject)
         {
-            Task.Run(() => InternStart());
-        }
-        private void InternStart()
-        {
-            lock (LockObject)
+            try
             {
-                try
-                {
-                    _valuesFactory(PushValue, base.CancellationToken);
-                }
-                catch (Exception ex)
-                {
-                    PushException(ex);
-                }
-                finally
-                {
-                    Complete();
-                }
+                _valuesFactory(PushValue, base.CancellationToken);
+            }
+            catch (Exception ex)
+            {
+                PushException(ex);
+            }
+            finally
+            {
+                Complete();
             }
         }
     }

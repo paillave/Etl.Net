@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Paillave.Etl.Core;
 
 namespace BlogTutorial
@@ -15,21 +16,18 @@ namespace BlogTutorial
             var processRunner = StreamProcessRunner.Create<string>(DefineProcess);
             var executionOptions = new ExecutionOptions<string>
             {
-                Resolver = new SimpleDependencyResolver()
-                    .Register(new SomeExternalValue
-                    {
-                        AStringValue = "injected string",
-                        AnIntValue = 658
-                    })
+                Services = new ServiceCollection().AddSingleton(new SomeExternalValue
+                {
+                    AStringValue = "injected string",
+                    AnIntValue = 658
+                }).BuildServiceProvider()
             };
             var res = await processRunner.ExecuteAsync("transmitted parameter", executionOptions);
         }
         private static void DefineProcess(ISingleStream<string> contextStream)
         {
             contextStream
-                .ResolveAndSelect("get some values", o => o
-                    .Resolve<SomeExternalValue>()
-                    .ThenSelect((context, injected) => $"{context}-{injected.AStringValue}:{injected.AnIntValue}"));
+                .SelectResolved("get some values", (context, services) => $"{context}-{services.GetRequiredService<SomeExternalValue>().AStringValue}:{services.GetRequiredService<SomeExternalValue>().AnIntValue}");
         }
     }
 }

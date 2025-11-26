@@ -1,4 +1,5 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
@@ -24,8 +25,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.FromConfigurat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Mail", "Paillave.Etl.Mail\Paillave.Etl.Mail.csproj", "{43AD98CF-4220-4A88-953C-D3322B93599B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Autofac", "Paillave.Etl.Autofac\Paillave.Etl.Autofac.csproj", "{8C5BB7A4-025C-4CA0-9A94-9DAA5F35443C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Samples", "Tutorials\Paillave.Etl.Samples\Paillave.Etl.Samples.csproj", "{D4F4EF5F-A760-43CF-BDA2-673266AEA225}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.ExecutionToolkit", "Paillave.Etl.ExecutionToolkit\Paillave.Etl.ExecutionToolkit.csproj", "{43CCC8DC-25DF-4D01-83B5-7B4E697CDB8D}"
@@ -36,9 +35,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.SqlServer", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Dropbox", "Paillave.Etl.Dropbox\Paillave.Etl.Dropbox.csproj", "{0BE639A1-6CE1-4BDF-A26B-BEB130F44C11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.SimpleTutorial", "Tutorials\SimpleTutorial\SimpleTutorial.csproj", "{59203BB5-60EE-41E3-B166-E54E584C1807}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTutorial", "Tutorials\SimpleTutorial\SimpleTutorial.csproj", "{59203BB5-60EE-41E3-B166-E54E584C1807}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.BlogTutorial", "Tutorials\BlogTutorial\BlogTutorial.csproj", "{191DFF01-0BA8-4345-AC4E-C94E8245F007}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogTutorial", "Tutorials\BlogTutorial\BlogTutorial.csproj", "{191DFF01-0BA8-4345-AC4E-C94E8245F007}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paillave.Etl.Bloomberg", "Paillave.Etl.Bloomberg\Paillave.Etl.Bloomberg.csproj", "{4DBE1730-6E96-43FF-A36E-FBBB16617775}"
 EndProject
@@ -202,18 +201,6 @@ Global
 		{43AD98CF-4220-4A88-953C-D3322B93599B}.Release|x64.Build.0 = Release|Any CPU
 		{43AD98CF-4220-4A88-953C-D3322B93599B}.Release|x86.ActiveCfg = Release|Any CPU
 		{43AD98CF-4220-4A88-953C-D3322B93599B}.Release|x86.Build.0 = Release|Any CPU
-		{8C5BB7A4-025C-4CA0-9A94-9DAA5F35443C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C5BB7A4-025C-4CA0-9A94-9DAA5F35443C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C5BB7A4-025C-4CA0-9A94-9DAA5F35443C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8C5BB7A4-025C-4CA0-9A94-9DAA5F35443C}.Debug|x64.Build.0 = Debug|Any CPU
-		{8C5BB7A4-025C-4CA0-9A94-9DAA5F35443C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8C5BB7A4-025C-4CA0-9A94-9DAA5F35443C}.Debug|x86.Build.0 = Debug|Any CPU
-		{8C5BB7A4-025C-4CA0-9A94-9DAA5F35443C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C5BB7A4-025C-4CA0-9A94-9DAA5F35443C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C5BB7A4-025C-4CA0-9A94-9DAA5F35443C}.Release|x64.ActiveCfg = Release|Any CPU
-		{8C5BB7A4-025C-4CA0-9A94-9DAA5F35443C}.Release|x64.Build.0 = Release|Any CPU
-		{8C5BB7A4-025C-4CA0-9A94-9DAA5F35443C}.Release|x86.ActiveCfg = Release|Any CPU
-		{8C5BB7A4-025C-4CA0-9A94-9DAA5F35443C}.Release|x86.Build.0 = Release|Any CPU
 		{D4F4EF5F-A760-43CF-BDA2-673266AEA225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D4F4EF5F-A760-43CF-BDA2-673266AEA225}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4F4EF5F-A760-43CF-BDA2-673266AEA225}.Debug|x64.ActiveCfg = Debug|Any CPU

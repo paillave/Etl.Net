@@ -153,7 +153,7 @@ namespace BlogTutorial
                             ctx.Value2 = $"5 value already passed";
                         return $"{ctx.Value1}-{v} {ctx.Value2}";
                     }))
-                .Do("print file name to console", Console.WriteLine);
+                .Do("print file name to console", i => Console.WriteLine(i));
         }
         private static void DefineProcess105(ISingleStream<string> contextStream)
         {
@@ -171,12 +171,11 @@ namespace BlogTutorial
                 .Do("print file name to console", i => Console.WriteLine($"{i.Id}-{i.Label}"));
         }
 
-        class ValueProcessorWithContext<TIn, TOut, TCtx> : ISelectProcessor<TIn, TOut>
+        class ValueProcessorWithContext<TIn, TOut, TCtx>(TCtx context, Func<TIn, TCtx, TOut> process) : ISelectProcessor<TIn, TOut>
         {
-            private readonly TCtx _context;
-            private readonly Func<TIn, TCtx, TOut> _process;
-            public ValueProcessorWithContext(TCtx context, Func<TIn, TCtx, TOut> process) => (_context, _process) = (context, process);
-            public TOut ProcessRow(TIn value) => _process(value, _context);
+            public TOut ProcessRow(TIn value) => process(value, context);
+
+            public TOut ProcessRow(TIn value, IServiceProvider services) => process(value, context);
         }
 
 

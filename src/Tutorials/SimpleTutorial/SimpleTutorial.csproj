@@ -5,7 +5,6 @@
     <ProjectReference Include="..\..\Paillave.Etl.TextFile\Paillave.Etl.TextFile.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.XmlFile\Paillave.Etl.XmlFile.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.Bloomberg\Paillave.Etl.Bloomberg.csproj" />
-    <ProjectReference Include="..\..\Paillave.Etl.Autofac\Paillave.Etl.Autofac.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.EntityFrameworkCore\Paillave.Etl.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.FromConfigurationConnectors\Paillave.Etl.FromConfigurationConnectors.csproj" />
     <ProjectReference Include="..\..\Paillave.Etl.FileSystem\Paillave.Etl.FileSystem.csproj" />

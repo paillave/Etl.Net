@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Paillave.Etl.Core;
 using Paillave.Etl.Http;
 using Paillave.Etl.JsonFile;
@@ -75,7 +76,12 @@ namespace Paillave.Etl.Samples
                 )
             );
 
-            var executionOptions = new ExecutionOptions<string[]> { Connectors = connectors };
+            var executionOptions = new ExecutionOptions<string[]>
+            {
+                Services = new ServiceCollection()
+                    .AddSingleton<IFileValueConnectors>(connectors)
+                    .BuildServiceProvider()
+            };
 
             var processRunner = StreamProcessRunner.Create<string[]>(Import);
 

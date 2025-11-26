@@ -24,7 +24,7 @@ public static partial class SelectEx
         return new SelectStreamNode<TIn, TOut>(name, new SelectArgs<TIn, TOut>
         {
             Stream = stream,
-            Processor = new SimpleSelectProcessor<TIn, TOut>(resultSelector),
+            Processor = new SimpleSelectProcessor<TIn, TOut>((i, _) => resultSelector(i)),
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -33,7 +33,7 @@ public static partial class SelectEx
         return new SelectStreamNode<TIn, TOut>(name, new SelectArgs<TIn, TOut>
         {
             Stream = stream,
-            Processor = new SelectWithSequenceProcessor<TIn, TKey, TOut>(resultSelector, sequenceGroupKeySelector),
+            Processor = new SelectWithSequenceProcessor<TIn, TKey, TOut>((i, idx, _) => resultSelector(i, idx), sequenceGroupKeySelector),
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -42,7 +42,7 @@ public static partial class SelectEx
         return new SelectSingleStreamNode<TIn, TOut>(name, new SelectSingleArgs<TIn, TOut>
         {
             Stream = stream,
-            Processor = new SimpleSelectProcessor<TIn, TOut>(resultSelector),
+            Processor = new SimpleSelectProcessor<TIn, TOut>((i, _) => resultSelector(i)),
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -105,7 +105,7 @@ public static partial class SelectEx
         return new SelectWithIndexStreamNode<TIn, TOut>(name, new SelectWithIndexArgs<TIn, TOut>
         {
             Stream = stream,
-            Processor = new SimpleSelectWithIndexProcessor<TIn, TOut>(resultSelector),
+            Processor = new SimpleSelectWithIndexProcessor<TIn, TOut>((i, idx, _) => resultSelector(i, idx)),
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -127,7 +127,7 @@ public static partial class SelectEx
         {
             MainStream = stream,
             StreamToApply = streamToApply,
-            IndexSelector = resultSelector,
+            IndexSelector = (i1, i2, idx, _) => resultSelector(i1, i2, idx),
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -137,7 +137,7 @@ public static partial class SelectEx
         {
             MainStream = stream,
             StreamToApply = streamToApply,
-            IndexSelector = resultSelector,
+            IndexSelector = (i1, i2, idx, _) => resultSelector(i1, i2, idx),
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -159,7 +159,7 @@ public static partial class SelectEx
         {
             MainStream = stream,
             StreamToApply = streamToApply,
-            Selector = resultSelector,
+            Selector = (i1, i2, _) => resultSelector(i1, i2),
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -169,7 +169,7 @@ public static partial class SelectEx
         {
             MainStream = stream,
             StreamToApply = streamToApply,
-            Selector = resultSelector,
+            Selector = (i1, i2, _) => resultSelector(i1, i2),
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -212,7 +212,7 @@ public static partial class SelectEx
         return new SelectStreamNode<Correlated<TIn>, Correlated<TOut>>(name, new SelectArgs<Correlated<TIn>, Correlated<TOut>>
         {
             Stream = stream,
-            Processor = new SimpleSelectProcessor<Correlated<TIn>, Correlated<TOut>>(i => new Correlated<TOut> { Row = resultSelector(i.Row), CorrelationKeys = i.CorrelationKeys }),
+            Processor = new SimpleSelectProcessor<Correlated<TIn>, Correlated<TOut>>((i, _) => new Correlated<TOut> { Row = resultSelector(i.Row), CorrelationKeys = i.CorrelationKeys }),
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -221,7 +221,7 @@ public static partial class SelectEx
         return new SelectStreamNode<Correlated<TIn>, Correlated<TOut>>(name, new SelectArgs<Correlated<TIn>, Correlated<TOut>>
         {
             Stream = stream,
-            Processor = new SelectWithSequenceProcessor<Correlated<TIn>, TKey, Correlated<TOut>>((i, idx) => new Correlated<TOut> { Row = resultSelector(i.Row, idx) }, i => sequenceGroupKeySelector(i.Row)),
+            Processor = new SelectWithSequenceProcessor<Correlated<TIn>, TKey, Correlated<TOut>>((i, idx, _) => new Correlated<TOut> { Row = resultSelector(i.Row, idx) }, i => sequenceGroupKeySelector(i.Row)),
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -230,7 +230,7 @@ public static partial class SelectEx
         return new SelectSingleStreamNode<Correlated<TIn>, Correlated<TOut>>(name, new SelectSingleArgs<Correlated<TIn>, Correlated<TOut>>
         {
             Stream = stream,
-            Processor = new SimpleSelectProcessor<Correlated<TIn>, Correlated<TOut>>(i => new Correlated<TOut> { Row = resultSelector(i.Row), CorrelationKeys = i.CorrelationKeys }),
+            Processor = new SimpleSelectProcessor<Correlated<TIn>, Correlated<TOut>>((i, _) => new Correlated<TOut> { Row = resultSelector(i.Row), CorrelationKeys = i.CorrelationKeys }),
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -293,7 +293,7 @@ public static partial class SelectEx
         return new SelectWithIndexStreamNode<Correlated<TIn>, Correlated<TOut>>(name, new SelectWithIndexArgs<Correlated<TIn>, Correlated<TOut>>
         {
             Stream = stream,
-            Processor = new SimpleSelectWithIndexProcessor<Correlated<TIn>, Correlated<TOut>>((i, idx) => new Correlated<TOut> { Row = resultSelector(i.Row, idx), CorrelationKeys = i.CorrelationKeys }),
+            Processor = new SimpleSelectWithIndexProcessor<Correlated<TIn>, Correlated<TOut>>((i, idx, _) => new Correlated<TOut> { Row = resultSelector(i.Row, idx), CorrelationKeys = i.CorrelationKeys }),
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -315,7 +315,7 @@ public static partial class SelectEx
         {
             MainStream = stream,
             StreamToApply = streamToApply,
-            IndexSelector = (i1, i2, idx) => new Correlated<TOut> { Row = resultSelector(i1.Row, i2, idx), CorrelationKeys = i1.CorrelationKeys },
+            IndexSelector = (i1, i2, idx, _) => new Correlated<TOut> { Row = resultSelector(i1.Row, i2, idx), CorrelationKeys = i1.CorrelationKeys },
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -325,7 +325,7 @@ public static partial class SelectEx
         {
             MainStream = stream,
             StreamToApply = streamToApply,
-            IndexSelector = (i1, i2, idx) => new Correlated<TOut> { Row = resultSelector(i1.Row, i2, idx), CorrelationKeys = i1.CorrelationKeys },
+            IndexSelector = (i1, i2, idx, _) => new Correlated<TOut> { Row = resultSelector(i1.Row, i2, idx), CorrelationKeys = i1.CorrelationKeys },
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -347,7 +347,7 @@ public static partial class SelectEx
         {
             MainStream = stream,
             StreamToApply = streamToApply,
-            Selector = (i1, i2) => new Correlated<TOut> { Row = resultSelector(i1.Row, i2), CorrelationKeys = i1.CorrelationKeys },
+            Selector = (i1, i2, _) => new Correlated<TOut> { Row = resultSelector(i1.Row, i2), CorrelationKeys = i1.CorrelationKeys },
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -357,7 +357,7 @@ public static partial class SelectEx
         {
             MainStream = stream,
             StreamToApply = streamToApply,
-            Selector = (i1, i2) => new Correlated<TOut> { Row = resultSelector(i1.Row, i2), CorrelationKeys = i1.CorrelationKeys },
+            Selector = (i1, i2, _) => new Correlated<TOut> { Row = resultSelector(i1.Row, i2), CorrelationKeys = i1.CorrelationKeys },
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -414,7 +414,7 @@ public static partial class SelectEx
         return new SelectStreamNode<Correlated<TIn>, Correlated<TOut>>(name, new SelectArgs<Correlated<TIn>, Correlated<TOut>>
         {
             Stream = stream,
-            Processor = new SimpleSelectProcessor<Correlated<TIn>, Correlated<TOut>>(i => new Correlated<TOut> { Row = resultSelector(i.Row), CorrelationKeys = i.CorrelationKeys }),
+            Processor = new SimpleSelectProcessor<Correlated<TIn>, Correlated<TOut>>((i, _) => new Correlated<TOut> { Row = resultSelector(i.Row), CorrelationKeys = i.CorrelationKeys }),
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -423,7 +423,7 @@ public static partial class SelectEx
         return new SelectStreamNode<Correlated<TIn>, Correlated<TOut>>(name, new SelectArgs<Correlated<TIn>, Correlated<TOut>>
         {
             Stream = stream,
-            Processor = new SelectWithSequenceProcessor<Correlated<TIn>, TKey, Correlated<TOut>>((i, idx) => new Correlated<TOut> { Row = resultSelector(i.Row, idx) }, i => sequenceGroupKeySelector(i.Row)),
+            Processor = new SelectWithSequenceProcessor<Correlated<TIn>, TKey, Correlated<TOut>>((i, idx, _) => new Correlated<TOut> { Row = resultSelector(i.Row, idx) }, i => sequenceGroupKeySelector(i.Row)),
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -432,7 +432,7 @@ public static partial class SelectEx
         return new SelectSingleStreamNode<Correlated<TIn>, Correlated<TOut>>(name, new SelectSingleArgs<Correlated<TIn>, Correlated<TOut>>
         {
             Stream = stream,
-            Processor = new SimpleSelectProcessor<Correlated<TIn>, Correlated<TOut>>(i => new Correlated<TOut> { Row = resultSelector(i.Row), CorrelationKeys = i.CorrelationKeys }),
+            Processor = new SimpleSelectProcessor<Correlated<TIn>, Correlated<TOut>>((i, _) => new Correlated<TOut> { Row = resultSelector(i.Row), CorrelationKeys = i.CorrelationKeys }),
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -495,7 +495,7 @@ public static partial class SelectEx
         return new SelectWithIndexStreamNode<Correlated<TIn>, Correlated<TOut>>(name, new SelectWithIndexArgs<Correlated<TIn>, Correlated<TOut>>
         {
             Stream = stream,
-            Processor = new SimpleSelectWithIndexProcessor<Correlated<TIn>, Correlated<TOut>>((i, idx) => new Correlated<TOut> { Row = resultSelector(i.Row, idx), CorrelationKeys = i.CorrelationKeys }),
+            Processor = new SimpleSelectWithIndexProcessor<Correlated<TIn>, Correlated<TOut>>((i, idx, _) => new Correlated<TOut> { Row = resultSelector(i.Row, idx), CorrelationKeys = i.CorrelationKeys }),
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -517,7 +517,7 @@ public static partial class SelectEx
         {
             MainStream = stream,
             StreamToApply = streamToApply,
-            IndexSelector = (i1, i2, idx) => new Correlated<TOut> { Row = resultSelector(i1.Row, i2, idx), CorrelationKeys = i1.CorrelationKeys },
+            IndexSelector = (i1, i2, idx, _) => new Correlated<TOut> { Row = resultSelector(i1.Row, i2, idx), CorrelationKeys = i1.CorrelationKeys },
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -527,7 +527,7 @@ public static partial class SelectEx
         {
             MainStream = stream,
             StreamToApply = streamToApply,
-            IndexSelector = (i1, i2, idx) => new Correlated<TOut> { Row = resultSelector(i1.Row, i2, idx), CorrelationKeys = i1.CorrelationKeys },
+            IndexSelector = (i1, i2, idx, _) => new Correlated<TOut> { Row = resultSelector(i1.Row, i2, idx), CorrelationKeys = i1.CorrelationKeys },
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -549,7 +549,7 @@ public static partial class SelectEx
         {
             MainStream = stream,
             StreamToApply = streamToApply,
-            Selector = (i1, i2) => new Correlated<TOut> { Row = resultSelector(i1.Row, i2), CorrelationKeys = i1.CorrelationKeys },
+            Selector = (i1, i2, _) => new Correlated<TOut> { Row = resultSelector(i1.Row, i2), CorrelationKeys = i1.CorrelationKeys },
             WithNoDispose = withNoDispose
         }).Output;
     }
@@ -559,7 +559,7 @@ public static partial class SelectEx
         {
             MainStream = stream,
             StreamToApply = streamToApply,
-            Selector = (i1, i2) => new Correlated<TOut> { Row = resultSelector(i1.Row, i2), CorrelationKeys = i1.CorrelationKeys },
+            Selector = (i1, i2, _) => new Correlated<TOut> { Row = resultSelector(i1.Row, i2), CorrelationKeys = i1.CorrelationKeys },
             WithNoDispose = withNoDispose
         }).Output;
     }

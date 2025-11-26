@@ -24,16 +24,13 @@ namespace Paillave.Etl.EntityFrameworkCore
         //EntityFrameworkCore,
         SqlServerBulk
     }
-    public class UpdateEntityFrameworkCoreStreamNode<TEntity, TSource> : StreamNodeBase<TSource, IStream<TSource>, UpdateEntityFrameworkCoreArgs<TEntity, TSource>>
+    public class UpdateEntityFrameworkCoreStreamNode<TEntity, TSource>(string name, UpdateEntityFrameworkCoreArgs<TEntity, TSource> args)
+        : StreamNodeBase<TSource, IStream<TSource>, UpdateEntityFrameworkCoreArgs<TEntity, TSource>>(name, args)
         where TEntity : class
     {
         public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
 
         public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-
-        public UpdateEntityFrameworkCoreStreamNode(string name, UpdateEntityFrameworkCoreArgs<TEntity, TSource> args) : base(name, args)
-        {
-        }
 
         protected override IStream<TSource> CreateOutputStream(UpdateEntityFrameworkCoreArgs<TEntity, TSource> args)
         {
@@ -41,10 +38,8 @@ namespace Paillave.Etl.EntityFrameworkCore
                 .Chunk(args.BatchSize)
                 .Do(i =>
                 {
-                    var dbContext = this.ExecutionContext.DependencyResolver.ResolveDbContext<DbContext>(args.ConnectionKey)
-                        ?? throw new InvalidOperationException($"No DbContext could be resolved for type '{typeof(DbContext).FullName}'. Please check your dependency injection configuration.");
-
-                    this.ExecutionContext.InvokeInDedicatedThreadAsync(dbContext, () => ProcessBatch(i.ToList(), dbContext, args.BulkLoadMode)).Wait();
+                    using var ctx = this.ExecutionContext.Services.GetDbContext(args.ConnectionKey);
+                    ProcessBatch(i.ToList(), ctx, args.BulkLoadMode);
                 })
                 .FlatMap((i, ct) => PushObservable.FromEnumerable(i, ct));
             return base.CreateUnsortedStream(ret);
