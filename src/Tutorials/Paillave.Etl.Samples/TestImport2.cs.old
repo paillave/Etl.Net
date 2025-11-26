@@ -1,13 +1,15 @@
-using Paillave.Etl.EntityFrameworkCore;
 using Paillave.Etl.Core;
+using Paillave.Etl.EntityFrameworkCore;
+using Paillave.Etl.Samples.DataAccess;
 using Paillave.Etl.TextFile;
 
 namespace Paillave.Etl.Samples;
 
-public static class TestImport
+public static class TestImport2
 {
     public static void Import(ISingleStream<string[]> contextStream)
     {
+        contextStream.EfCoreSelect("erre", (o, i) => o.Set<Portfolio>().Select(i => new Portfolio { InternalCode = i.InternalCode, Name = i.Name, SicavId = i.SicavId }));
         var portfolioFileStream = contextStream
             .FromConnector("Get portfolio files", "PTF")
             .CrossApplyTextFile("Parse portfolio file", FlatFileDefinition.Create(i => new
@@ -45,7 +47,8 @@ public static class TestImport
             })
             .EfCoreSave("Save sicav", o => o
                 .SeekOn(i => i.InternalCode)
-                .DoNotUpdateIfExists());
+                // .DoNotUpdateIfExists()
+                .WithMode(SaveMode.EntityFrameworkCore));
 
         var portfolioStream = portfolioFileStream
             .Distinct("Distinct portfolio", i => i.PortfolioCode, true)
@@ -61,18 +64,28 @@ public static class TestImport
 
         var compositionStream = positionFileStream
             .Distinct("Distinct compositions", i => new { i.PortfolioCode, i.Date }, true)
-            .Lookup("Get related portfolio and create composition",
+            .Lookup("Get related portfolio",
                 portfolioStream,
                 i => i.PortfolioCode,
                 i => i.InternalCode,
-                (row, portfolio) => new DataAccess.Composition
+                (row, portfolio) => new
                 {
-                    Date = row.Date,
-                    PortfolioId = portfolio.Id
+                    Portfolio = portfolio,
+                    Composition = new DataAccess.Composition
+                    {
+                        Date = row.Date,
+                        PortfolioId = portfolio.Id
+                    }
                 })
             .EfCoreSave("Save composition", o => o
+                .Entity(i => i.Composition)
                 .SeekOn(i => new { i.Date, i.PortfolioId })
-                .DoNotUpdateIfExists());
+                .DoNotUpdateIfExists()
+                .Output((i, e) => new
+                {
+                    i.Portfolio,
+                    Composition = e
+                }));
 
         var securityStream = positionFileStream
             .Distinct("Distinct securities", i => i.SecurityCode)
@@ -107,9 +120,18 @@ public static class TestImport
             {
                 Value = row.Row.Value,
                 SecurityId = row.SecurityId,
-                CompositionId = composition.Id
+                CompositionId = composition.Composition.Id
             })
             .Distinct("Distinct positions", i => new { i.CompositionId, i.SecurityId }, o => o.ForProperty(i => i.Value, DistinctAggregator.Sum))
-            .EfCoreSave("Save position");
+            .EfCoreSave("Save position")
+            .CorrelateToSingle("Get position portfolio", compositionStream, (p, c) => new { c.Portfolio.InternalCode, c.Composition.Date, p.Value })
+            .Distinct("Aggregate position per portfolio", i => new { i.InternalCode, i.Date }, o => o.ForProperty(i => i.Value, DistinctAggregator.Sum))
+            .ToTextFileValue("Export portfolios weight", "PortfoliosWeight.csv", FlatFileDefinition.Create(i => new
+            {
+                InternalCode = i.ToColumn("Code"),
+                Date = i.ToDateColumn("Date", "ddd dd MMM, yyyy"),
+                Value = i.ToNumberColumn<decimal>("Weight", "."),
+            }).IsColumnSeparated(','))
+            .ToConnector("Save portfolios position file", "OUT");
     }
 }
