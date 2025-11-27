@@ -48,19 +48,6 @@ public class StreamProcessRunner<TConfig>(Action<ISingleStream<TConfig>> jobDefi
         handler?.Invoke(this, e);
     }
     private readonly Action<ISingleStream<TConfig>> _jobDefinition = jobDefinition ?? (_jobDefinition => { });
-    private class CompositeServiceProvider(params IServiceProvider?[] serviceProviders) : IServiceProvider
-    {
-        public object GetService(Type serviceType)
-        {
-            foreach (var serviceProvider in serviceProviders.Where(sp => sp != null))
-            {
-                var service = serviceProvider!.GetService(serviceType);
-                if (service != null)
-                    return service;
-            }
-            return null;
-        }
-    }
     public int DebugChunkSize { get; set; } = 1000;
     private void DebugTraceProcess(IStream<TraceEvent> traceStream, ISingleStream<TConfig> startStream)
         => traceStream.Observable
