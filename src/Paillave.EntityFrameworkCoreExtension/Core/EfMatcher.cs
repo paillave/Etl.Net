@@ -6,20 +6,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Paillave.EntityFrameworkCoreExtension.Core;
 
-public class EfMatcher<TInLeft, TEntity, TKey> where TKey : notnull
+public class EfMatcher<TInLeft, TEntity, TKey>(EfMatcherConfig<TInLeft, TEntity, TKey> config)
+     where TKey : notnull
 {
     private class CachedEntity(TEntity? entity)
     {
         public long Timestamp { get; } = DateTime.Now.ToFileTime();
         public TEntity? Entity { get; } = entity;
     }
-    private readonly Func<TInLeft, TKey> _getLeftKey;
-    private readonly Func<TEntity, TKey> _getRightKey;
+    private readonly Func<TInLeft, TKey> _getLeftKey = config.LeftKeyExpression.Compile();
+    private readonly Func<TEntity, TKey> _getRightKey = config.RightKeyExpression.Compile();
     private int _cacheSize = 1000;
-    private readonly MatchCriteriaBuilder<TInLeft, TEntity, TKey> _matchCriteriaBuilder;
-    // private readonly Dictionary<TKey, CachedEntity> _cachedEntities = [];
-    // private readonly int _cacheSize = 1000;
-    // public DbContext Context { get; }
+    private readonly MatchCriteriaBuilder<TInLeft, TEntity, TKey> _matchCriteriaBuilder = MatchCriteriaBuilder.Create(config.LeftKeyExpression, config.RightKeyExpression);
 
     private static IEqualityComparer<TKey> GetEqualityComparer()
     {
@@ -28,34 +26,15 @@ public class EfMatcher<TInLeft, TEntity, TKey> where TKey : notnull
         else
             return EqualityComparer<TKey>.Default;
     }
-    private readonly EfMatcherConfig<TInLeft, TEntity, TKey> _config;
-    public EfMatcher(EfMatcherConfig<TInLeft, TEntity, TKey> config)
-        => (_config, _getLeftKey, _getRightKey, _matchCriteriaBuilder)
-        = (config, config.LeftKeyExpression.Compile(), config.RightKeyExpression.Compile(), MatchCriteriaBuilder.Create(config.LeftKeyExpression, config.RightKeyExpression));
-
-    // if (config.GetFullDataset)
-    // {
-    //     var defaultCache = config.Query.ToList();
-    //     _cacheSize = Math.Max(defaultCache.Count, config.MinCacheSize);
-    //     _cachedEntities = defaultCache
-    //         .Select(i => new { Key = _getRightKey(i), Value = new CachedEntity(i) })
-    //         .Where(i => i.Key != null)
-    //         .GroupBy(i => i.Key)
-    //         .ToDictionary(i => i.Key, i => i.First().Value, GetEqualityComparer());
-    // }
-    // else
-    // {
-    //     _cacheSize = config.MinCacheSize;
-    // }
     private Dictionary<TKey, CachedEntity>? _cachedEntities;
     private Dictionary<TKey, CachedEntity> GetCachedEntities(DbContext dbContext)
     {
         if (_cachedEntities == null)
         {
-            if (_config.GetFullDataset)
+            if (config.GetFullDataset)
             {
-                var defaultCache = _config.GetQuery(dbContext).ToList();
-                _cacheSize = Math.Max(defaultCache.Count, _config.MinCacheSize);
+                var defaultCache = config.GetQuery(dbContext).ToList();
+                _cacheSize = Math.Max(defaultCache.Count, config.MinCacheSize);
                 _cachedEntities = defaultCache
                     .Select(i => new { Key = _getRightKey(i), Value = new CachedEntity(i) })
                     .Where(i => i.Key != null)
@@ -65,6 +44,7 @@ public class EfMatcher<TInLeft, TEntity, TKey> where TKey : notnull
             else
             {
                 _cachedEntities = new(GetEqualityComparer());
+                _cacheSize = config.MinCacheSize;
             }
         }
         return _cachedEntities;
@@ -76,14 +56,14 @@ public class EfMatcher<TInLeft, TEntity, TKey> where TKey : notnull
         var cachedEntities = GetCachedEntities(dbContext);
         if (cachedEntities.TryGetValue(inputKey, out var entryFromCache))
             return entryFromCache.Entity;
-        if (_config.GetFullDataset) return default;
+        if (config.GetFullDataset) return default;
         var expr = _matchCriteriaBuilder.GetCriteriaExpression(input);
-        var query = _config.GetQuery(dbContext);
+        var query = config.GetQuery(dbContext);
         var ret = query.FirstOrDefault(expr);
 
-        if (ret == null && _config.CreateIfNotFound != null)
+        if (ret == null && config.CreateIfNotFound != null)
         {
-            ret = _config.CreateIfNotFound(input);
+            ret = config.CreateIfNotFound(input);
             if (ret == null) throw new InvalidOperationException("CreateIfNotFound returned null");
             dbContext.Add(ret);
             dbContext.SaveChanges();
