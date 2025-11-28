@@ -5,6 +5,7 @@ using Microsoft.Extensions.FileSystemGlobbing;
 using Renci.SshNet;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Paillave.Etl.Sftp;
 
@@ -18,7 +19,7 @@ public class SftpFileValueProvider(string code, string name, string connectionNa
         public required string Folder { get; set; }
         public required string FileName { get; set; }
     }
-    public override IFileValue Provide(string fileSpecific)
+    public override IFileValue Provide(JsonNode? fileSpecific)
     {
         var fileSpecificData = JsonSerializer.Deserialize<FileSpecificData>(fileSpecific) ?? throw new Exception("Invalid file specific");
         return new SftpFileValue(connectionParameters, fileSpecificData.Folder, fileSpecificData.FileName);
@@ -36,7 +37,7 @@ public class SftpFileValueProvider(string code, string name, string connectionNa
             if (matcher.Match(file.Name).HasMatches)
             {
                 var fileValue = new SftpFileValue(connectionParameters, folder, file.Name);
-                var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.Serialize(new FileSpecificData { FileName = file.Name, Folder = folder }));
+                var fileReference = new FileReference(fileValue.Name, this.Code,  JsonSerializer.SerializeToNode(new FileSpecificData { FileName = file.Name, Folder = folder }));
                 pushFileValue(fileValue, fileReference);
             }
         }

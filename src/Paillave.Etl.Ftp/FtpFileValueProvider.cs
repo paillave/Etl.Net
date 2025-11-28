@@ -6,6 +6,7 @@ using Microsoft.Extensions.FileSystemGlobbing;
 using FluentFTP;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Paillave.Etl.Ftp
 {
@@ -28,12 +29,12 @@ namespace Paillave.Etl.Ftp
                 {
                     var folder = Path.GetDirectoryName(fullPath);
                     var fileValue = new FtpFileValue(connectionParameters, folder, fileName);
-                    var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.Serialize(new FileSpecificData { FileName = fileName, Folder = folder }));
+                    var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.SerializeToNode(new FileSpecificData { FileName = fileName, Folder = folder }));
                     pushFileValue(fileValue, fileReference);
                 }
             }
         }
-        public override IFileValue Provide(string fileSpecific)
+        public override IFileValue Provide(JsonNode? fileSpecific)
         {
             var fileSpecificData = JsonSerializer.Deserialize<FileSpecificData>(fileSpecific) ?? throw new Exception("Invalid file specific");
             return new FtpFileValue(connectionParameters, fileSpecificData.Folder, fileSpecificData.FileName);

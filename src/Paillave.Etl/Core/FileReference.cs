@@ -4,9 +4,20 @@ using System.Text.Json.Nodes;
 
 namespace Paillave.Etl.Core;
 
-public class FileReference(string name, string connector, string fileSpecific)
+public class FileReference
 {
-    public string FileSpecific => fileSpecific;
+    private readonly string name;
+    private readonly string connector;
+    private readonly JsonNode? fileSpecific;
+
+    public FileReference(string name, string connector, JsonNode? fileSpecific)
+    {
+        this.name = name;
+        this.connector = connector;
+        this.fileSpecific = fileSpecific;
+    }
+
+    public JsonNode FileSpecific => fileSpecific;
     public string Name => name;
     public string Connector => connector;
     public Stream GetContent(IFileValueConnectors connectors)

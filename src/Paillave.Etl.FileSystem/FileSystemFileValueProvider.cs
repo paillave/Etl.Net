@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading;
 using Paillave.Etl.Core;
 
@@ -22,8 +24,8 @@ public class FileSystemFileValueProvider : FileValueProviderBase<FileSystemAdapt
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
 
-    public override IFileValue Provide(string fileSpecific)
-        => new FileSystemFileValue(new FileInfo(fileSpecific));
+    public override IFileValue Provide(JsonNode? fileSpecific)
+        => new FileSystemFileValue(new FileInfo(JsonSerializer.Deserialize<FileSpecificData>(fileSpecific)!.FilePath));
     protected override void Provide(object input, Action<IFileValue, FileReference> pushFileValue, FileSystemAdapterConnectionParameters connectionParameters, FileSystemAdapterProviderParameters providerParameters, CancellationToken cancellationToken)
     {
         var rootFolder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (providerParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, providerParameters.SubFolder ?? "");
@@ -37,7 +39,7 @@ public class FileSystemFileValueProvider : FileValueProviderBase<FileSystemAdapt
             if (cancellationToken.IsCancellationRequested) break;
             var filePath = isRootedPath ? Path.Combine(rootFolder, file) : file;
             var fileValue = new FileSystemFileValue(new FileInfo(filePath));
-            var fileReference = new FileReference(fileValue.Name, this.Code, filePath);
+            var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.SerializeToNode(new FileSpecificData { FilePath = filePath }));
             pushFileValue(fileValue, fileReference);
         }
     }
@@ -48,5 +50,10 @@ public class FileSystemFileValueProvider : FileValueProviderBase<FileSystemAdapt
         var searchPattern = string.IsNullOrEmpty(providerParameters.FileNamePattern) ? "*" : providerParameters.FileNamePattern;
         var files = Directory
             .GetFiles(folder, searchPattern, providerParameters.Recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+    }
+
+    private class FileSpecificData
+    {
+        public required string FilePath { get; set; }
     }
 }

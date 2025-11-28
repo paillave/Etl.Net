@@ -4,6 +4,7 @@ using Paillave.Etl.Core;
 using Microsoft.Extensions.FileSystemGlobbing;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Paillave.Etl.S3;
 
@@ -16,7 +17,7 @@ public class S3FileValueProvider(string code, string name, string connectionName
         public required string Folder { get; set; }
         public required string FileName { get; set; }
     }
-    public override IFileValue Provide(string fileSpecific)
+    public override IFileValue Provide(JsonNode? fileSpecific)
     {
         var fileSpecificData = JsonSerializer.Deserialize<FileSpecificData>(fileSpecific) ?? throw new Exception("Invalid file specific");
         return new S3FileValue(connectionParameters, fileSpecificData.Folder, fileSpecificData.FileName);
@@ -36,7 +37,7 @@ public class S3FileValueProvider(string code, string name, string connectionName
             if (matcher.Match(file.Name).HasMatches)
             {
                 var fileValue = new S3FileValue(connectionParameters, folder, file.Name);
-                var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.Serialize(new FileSpecificData { FileName = file.Name, Folder = folder }));
+                var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.SerializeToNode(new FileSpecificData { FileName = file.Name, Folder = folder }));
                 pushFileValue(fileValue, fileReference);
             }
         }
