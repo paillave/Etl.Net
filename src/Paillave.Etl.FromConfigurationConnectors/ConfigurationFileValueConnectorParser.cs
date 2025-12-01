@@ -96,13 +96,13 @@ namespace Paillave.Etl.FromConfigurationConnectors
                 Title = title,
                 Type = JsonObjectType.Object
             }
-                .AddAnyOfProperty("Type", false, dictionary.Select(k =>
+                .AddAnyOfProperty("Type", false, [.. dictionary.Select(k =>
                   {
                       var s = new JsonSchema();
                       s.Enumeration.Add(k.Name);
                       s.Description = k.Description;
                       return s;
-                  }).ToArray());
+                  })]);
             foreach (var item in dictionary)
                 schema.AnyOf.Add(CreateAddonAdapter(docSchema, item));
             return schema;
