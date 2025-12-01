@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.Json.Nodes;
 using SystemIO = System.IO;
 
 namespace Paillave.Etl.TextFile
@@ -17,7 +18,7 @@ namespace Paillave.Etl.TextFile
         public Func<TIn, string> GetFileName { get; set; }
         public Encoding Encoding { get; set; }
         public Dictionary<string, IEnumerable<Destination>> Destinations { get; set; }
-        public object Metadata { get; set; }
+        public JsonNode? Metadata { get; set; }
     }
     /// <summary>
     /// Writes what goes in the stream into a structured flat file

@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Paillave.Etl.Core
 {
@@ -20,7 +21,7 @@ namespace Paillave.Etl.Core
             public string FileName { get; set; }
         }
 
-        public IFileValue Provide(string fileSpecific)
+        public IFileValue Provide(JsonNode? fileSpecific)
         {
             var fileSpecificData = JsonSerializer.Deserialize<FileSpecificData>(fileSpecific) ?? throw new Exception("Invalid file specific");
             var stream = new MemoryStream(fileSpecificData.Content);

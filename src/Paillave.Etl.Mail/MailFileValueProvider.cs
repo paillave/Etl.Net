@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.Extensions.FileSystemGlobbing;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Paillave.Etl.Mail;
 
@@ -34,7 +35,7 @@ public partial class MailFileValueProvider(string code, string name, string conn
         public required DateTime ReceivedDateTime { get; set; }
         public required Dictionary<string, bool> DeletionDico { get; set; }
     }
-    public override IFileValue Provide(string fileSpecific)
+    public override IFileValue Provide(JsonNode? fileSpecific)
     {
         var fileSpecificData = JsonSerializer.Deserialize<FileSpecificData>(fileSpecific) ?? throw new Exception("Invalid file specific");
         return new MailFileValue(
@@ -65,41 +66,39 @@ public partial class MailFileValueProvider(string code, string name, string conn
                 ? client.Inbox
                 : client.GetFolder(providerParameters.Folder);
             var query = MailFileValueProvider.CreateQuery(providerParameters);
-            using (var openedFolder = new OpenedMailFolder(folder))
+            using var openedFolder = new OpenedMailFolder(folder);
+            var searchResult = openedFolder.Search(query);
+            var matcher = string.IsNullOrWhiteSpace(providerParameters.AttachmentNamePattern) ? null : new Matcher().AddInclude(providerParameters.AttachmentNamePattern);
+            foreach (var item in searchResult)
             {
-                var searchResult = openedFolder.Search(query);
-                var matcher = string.IsNullOrWhiteSpace(providerParameters.AttachmentNamePattern) ? null : new Matcher().AddInclude(providerParameters.AttachmentNamePattern);
-                foreach (var item in searchResult)
+                var message = openedFolder.GetMessage(item);
+                var attachments = message.Attachments.ToList();
+                var deletionDico = attachments.ToDictionary(i => i.ContentDisposition.FileName, i => false);
+                foreach (var attachment in message.Attachments)
                 {
-                    var message = openedFolder.GetMessage(item);
-                    var attachments = message.Attachments.ToList();
-                    var deletionDico = attachments.ToDictionary(i => i.ContentDisposition.FileName, i => false);
-                    foreach (var attachment in message.Attachments)
+                    if (matcher == null || matcher.Match(attachment.ContentDisposition.FileName).HasMatches)
                     {
-                        if (matcher == null || matcher.Match(attachment.ContentDisposition.FileName).HasMatches)
+                        var fileValue = new MailFileValue(
+                            connectionParameters,
+                            providerParameters.Folder,
+                            attachment.ContentDisposition.FileName,
+                            providerParameters.SetToReadIfBatchDeletion,
+                            item.Id,
+                            deletionDico,
+                            message.Subject
+                        );
+                        var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.SerializeToNode(new FileSpecificData
                         {
-                            var fileValue = new MailFileValue(
-                                connectionParameters,
-                                providerParameters.Folder,
-                                attachment.ContentDisposition.FileName,
-                                providerParameters.SetToReadIfBatchDeletion,
-                                item.Id,
-                                deletionDico,
-                                message.Subject
-                            );
-                            var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.Serialize(new FileSpecificData
-                            {
-                                MessageId = item.Id,
-                                Subject = message.Subject,
-                                AttachmentName = attachment.ContentDisposition.FileName,
-                                ReceivedDateTime = message.Date.DateTime,
-                                DeletionDico = deletionDico,
-                                Folder = providerParameters.Folder,
-                                SenderAddress = message.From.Mailboxes.FirstOrDefault()?.Address ?? "",
-                                SenderName = message.From.Mailboxes.FirstOrDefault()?.Name ?? "",
-                            }));
-                            fileValues.Add((fileValue, fileReference));
-                        }
+                            MessageId = item.Id,
+                            Subject = message.Subject,
+                            AttachmentName = attachment.ContentDisposition.FileName,
+                            ReceivedDateTime = message.Date.DateTime,
+                            DeletionDico = deletionDico,
+                            Folder = providerParameters.Folder,
+                            SenderAddress = message.From.Mailboxes.FirstOrDefault()?.Address ?? "",
+                            SenderName = message.From.Mailboxes.FirstOrDefault()?.Name ?? "",
+                        }));
+                        fileValues.Add((fileValue, fileReference));
                     }
                 }
             }

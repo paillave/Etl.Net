@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json.Nodes;
 
 namespace Paillave.Etl.Core;
 
@@ -8,7 +9,7 @@ public abstract class FileValueBase : IFileValue
     private readonly object _lock = new();
     private bool _isDeleted = false;
     public abstract string Name { get; }
-    public object? Metadata { get; set; }
+    public JsonNode? Metadata { get; set; }
     public Dictionary<string, IEnumerable<Destination>>? Destinations { get; set; }
 
     public void Delete()

@@ -4,14 +4,15 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Paillave.Etl.Core.Mapping;
+using System.Text.Json.Nodes;
 
 namespace Paillave.Etl.TextFile
 {
     public class FlatFileArgBuilder
     {
         public FlatFileDefinition<T> UseMap<T>(Expression<Func<IFieldMapper, T>> expression) => FlatFileDefinition.Create(expression);
-        public FlatFileDefinition<T> UseType<T>() => new FlatFileDefinition<T>();
-        public FlatFileDefinition<T> UseType<T>(T prototype) => new FlatFileDefinition<T>();
+        public FlatFileDefinition<T> UseType<T>() => new();
+        public FlatFileDefinition<T> UseType<T>(T prototype) => new();
     }
 
     public static class TextFileEx
@@ -50,7 +51,7 @@ namespace Paillave.Etl.TextFile
         #endregion
 
         #region ToTextFile
-        public static ISingleStream<IFileValue> ToTextFileValue<TIn>(this IStream<TIn> stream, string name, string fileName, FlatFileDefinition<TIn> mapping, Dictionary<string, IEnumerable<Destination>> destinations = null, object extraMetadata = null, Encoding encoding = null)
+        public static ISingleStream<IFileValue> ToTextFileValue<TIn>(this IStream<TIn> stream, string name, string fileName, FlatFileDefinition<TIn> mapping, Dictionary<string, IEnumerable<Destination>> destinations = null, JsonNode? extraMetadata = null, Encoding encoding = null)
         {
             return new ToFileValueStreamNode<TIn, TIn>(name, new ToTextDataStreamArgs<TIn, TIn>
             {
@@ -63,7 +64,7 @@ namespace Paillave.Etl.TextFile
                 Destinations = destinations
             }).Output;
         }
-        public static ISingleStream<IFileValue> ToTextFileValue<TIn>(this IStream<Correlated<TIn>> stream, string name, string fileName, FlatFileDefinition<TIn> mapping, Dictionary<string, IEnumerable<Destination>> destinations = null, object extraMetadata = null, Encoding encoding = null)
+        public static ISingleStream<IFileValue> ToTextFileValue<TIn>(this IStream<Correlated<TIn>> stream, string name, string fileName, FlatFileDefinition<TIn> mapping, Dictionary<string, IEnumerable<Destination>> destinations = null, JsonNode? extraMetadata = null, Encoding encoding = null)
         {
             return new ToFileValueStreamNode<Correlated<TIn>, TIn>(name, new ToTextDataStreamArgs<Correlated<TIn>, TIn>
             {
@@ -76,7 +77,7 @@ namespace Paillave.Etl.TextFile
                 Destinations = destinations
             }).Output;
         }
-        public static ISingleStream<IFileValue> ToTextFileValue<TIn>(this IStream<TIn> stream, string name, string fileName, Func<FlatFileDefinition<TIn>, FlatFileDefinition<TIn>> mapBuilder, Dictionary<string, IEnumerable<Destination>> destinations = null, object extraMetadata = null, Encoding encoding = null)
+        public static ISingleStream<IFileValue> ToTextFileValue<TIn>(this IStream<TIn> stream, string name, string fileName, Func<FlatFileDefinition<TIn>, FlatFileDefinition<TIn>> mapBuilder, Dictionary<string, IEnumerable<Destination>> destinations = null, JsonNode? extraMetadata = null, Encoding encoding = null)
         {
             return new ToFileValueStreamNode<TIn, TIn>(name, new ToTextDataStreamArgs<TIn, TIn>
             {
@@ -89,7 +90,7 @@ namespace Paillave.Etl.TextFile
                 Destinations = destinations
             }).Output;
         }
-        public static ISingleStream<IFileValue> ToTextFileValue<TIn>(this IStream<Correlated<TIn>> stream, string name, string fileName, Func<FlatFileDefinition<TIn>, FlatFileDefinition<TIn>> mapBuilder, Dictionary<string, IEnumerable<Destination>> destinations = null, object extraMetadata = null, Encoding encoding = null)
+        public static ISingleStream<IFileValue> ToTextFileValue<TIn>(this IStream<Correlated<TIn>> stream, string name, string fileName, Func<FlatFileDefinition<TIn>, FlatFileDefinition<TIn>> mapBuilder, Dictionary<string, IEnumerable<Destination>> destinations = null, JsonNode? extraMetadata = null, Encoding encoding = null)
         {
             return new ToFileValueStreamNode<Correlated<TIn>, TIn>(name, new ToTextDataStreamArgs<Correlated<TIn>, TIn>
             {

@@ -6,6 +6,7 @@ using Microsoft.Extensions.FileSystemGlobbing;
 using System.Linq;
 using Dropbox.Api.Files;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Paillave.Etl.Dropbox
 {
@@ -26,7 +27,7 @@ namespace Paillave.Etl.Dropbox
                 if (matcher.Match(file.Name).HasMatches)
                 {
                     var fileValue = new DropboxFileValue(connectionParameters, folder, file.Name);
-                    var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.Serialize(new FileSpecificData { FileName = file.Name, Folder = folder }));
+                    var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.SerializeToNode(new FileSpecificData { FileName = file.Name, Folder = folder }));
                     pushFileValue(fileValue, fileReference);
                 }
             }
@@ -52,7 +53,7 @@ namespace Paillave.Etl.Dropbox
             client.Files.ListFolderAsync(folder == "/" ? "" : folder);
         }
 
-        public override IFileValue Provide(string fileSpecific)
+        public override IFileValue Provide(JsonNode? fileSpecific)
         {
             var fileSpecificData = JsonSerializer.Deserialize<FileSpecificData>(fileSpecific) ?? throw new Exception("Invalid file specific");
             return new DropboxFileValue(connectionParameters, fileSpecificData.Folder, fileSpecificData.FileName);

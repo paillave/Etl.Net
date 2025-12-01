@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.Json.Nodes;
 
 namespace Paillave.Etl.Core;
 
@@ -87,7 +88,7 @@ public class FileValueWriter : IFileValue
     public string Name { get; }
     public string? ConnectorCode => null;
 
-    public object? Metadata { get; set; }
+    public JsonNode? Metadata { get; set; }
 
     public void Delete() { }
     public Stream GetContent()

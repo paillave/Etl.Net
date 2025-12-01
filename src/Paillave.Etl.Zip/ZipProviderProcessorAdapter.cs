@@ -28,10 +28,8 @@ public class ZipProviderProcessorAdapter : ProviderProcessorAdapterBase<ZipAdapt
     protected override IFileValueProcessor CreateProcessor(string code, string name, string connectionName, ZipAdapterConnectionParameters connectionParameters, ZipAdapterProcessorParameters outputParameters)
         => new ZipFileValueProcessor(code, name, connectionName, connectionParameters, outputParameters);
 }
-public class ZipFileValueProcessor : FileValueProcessorBase<ZipAdapterConnectionParameters, ZipAdapterProcessorParameters>
+public class ZipFileValueProcessor(string code, string name, string connectionName, ZipAdapterConnectionParameters connectionParameters, ZipAdapterProcessorParameters processorParameters) : FileValueProcessorBase<ZipAdapterConnectionParameters, ZipAdapterProcessorParameters>(code, name, connectionName, connectionParameters, processorParameters)
 {
-    public ZipFileValueProcessor(string code, string name, string connectionName, ZipAdapterConnectionParameters connectionParameters, ZipAdapterProcessorParameters processorParameters)
-        : base(code, name, connectionName, connectionParameters, processorParameters) { }
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
     protected override void Process(IFileValue fileValue, ZipAdapterConnectionParameters connectionParameters, ZipAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken)

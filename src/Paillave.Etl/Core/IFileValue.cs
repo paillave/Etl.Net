@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json.Nodes;
 
 namespace Paillave.Etl.Core;
 
@@ -11,7 +12,7 @@ public interface IFileValue
     Stream GetContent();
     StreamWithResource OpenContent();
     void Delete();
-    object? Metadata { get; set; }
+    JsonNode? Metadata { get; set; }
     Dictionary<string, IEnumerable<Destination>>? Destinations { get; set; }
 }
 public class StreamWithResource(Stream stream, params IDisposable[] underlyingDisposables) : Stream

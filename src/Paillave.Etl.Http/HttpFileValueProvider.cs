@@ -1,5 +1,7 @@
 using System;
 using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading;
 using Fluid;
 using Paillave.Etl.Core;
@@ -18,10 +20,10 @@ public class HttpFileValueProvider(
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
 
-    public override IFileValue Provide(string fileSpecific)
+    public override IFileValue Provide(JsonNode? fileSpecific)
     {
         return new HttpFileValue(
-                fileSpecific,
+                JsonSerializer.Deserialize<FileSpecialData>(fileSpecific)!.Url,
                 connectionParameters,
                 providerParameters);
     }
@@ -39,7 +41,7 @@ public class HttpFileValueProvider(
                 connectionParameters,
                 providerParameters
             );
-        var fileReference = new FileReference(fileValue.Name, this.Code, url);
+        var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.SerializeToNode(new FileSpecialData { Url = url }));
         pushFileValue(fileValue, fileReference);
     }
     private static string FluidMergeAsync(string template, object? data)
@@ -66,5 +68,10 @@ public class HttpFileValueProvider(
     {
         using var httpClient = new HttpClient();
         HttpHelpers.GetResponse(connectionParameters, providerParameters, httpClient).Wait();
+    }
+
+    private class FileSpecialData
+    {
+        public required string Url { get; set; }
     }
 }

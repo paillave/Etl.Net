@@ -14,16 +14,16 @@ public class GraphApiMailFileValue : FileValueBase
     public string Subject { get; }
     public string SenderAddress { get; }
     public string SenderName { get; }
-    public DateTime ReceivedDateTime { get; }
+    public DateTime? ReceivedDateTime { get; }
     private readonly string _userId;
     private readonly string _messageId;
     private readonly string _attachmentId;
-    private bool _setToReadIfBatchDeletion;
+    private readonly bool _setToReadIfBatchDeletion;
     private readonly IGraphApiConnectionInfo _connectionInfo;
     private readonly Dictionary<string, bool> _deleted;
     internal GraphApiMailFileValue(
         IGraphApiConnectionInfo connectionInfo, string messageId, string attachmentId, string attachmentName,
-        bool setToReadIfBatchDeletion, Dictionary<string, bool> deleted, string subject, string senderAddress, string senderName, DateTime receivedDateTime)
+        bool setToReadIfBatchDeletion, Dictionary<string, bool> deleted, string subject, string senderAddress, string senderName, DateTime? receivedDateTime)
             => (Name, _userId, _messageId, _attachmentId, _connectionInfo, _deleted, _setToReadIfBatchDeletion, Subject, SenderAddress, SenderName, ReceivedDateTime)
             = (attachmentName, connectionInfo.UserId, messageId, attachmentId, connectionInfo, deleted, setToReadIfBatchDeletion, subject, senderAddress, senderName, receivedDateTime);
     protected override void DeleteFile() => ActionRunner.TryExecute(_connectionInfo.MaxAttempts, DeleteFileSingleTime);

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using Microsoft.Graph.Models;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Paillave.Etl.GraphApi;
 
@@ -30,7 +31,7 @@ public partial class GraphApiMailFileValueProvider(string code, string name, str
     protected override void Provide(object input, Action<IFileValue, FileReference> pushFileValue, GraphApiAdapterConnectionParameters connectionParameters, GraphApiMailAdapterProviderParameters providerParameters, CancellationToken cancellationToken)
     {
         using InThreadJobPool jobPool = new();
-        Task task = Task.Run(() => ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => GetFileList(connectionParameters, providerParameters, (fv, fr) => jobPool.ExecuteAsync(() => pushFileValue(fv, fr)), cancellationToken)));
+        Task task = Task.Run(() => ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => GetFileList(connectionParameters, providerParameters, (fv, fr) => jobPool.ExecuteAsync(() => pushFileValue(fv, fr)), cancellationToken)), cancellationToken);
         jobPool.Listen(task);
     }
     private class FileSpecificData
@@ -41,11 +42,11 @@ public partial class GraphApiMailFileValueProvider(string code, string name, str
         public required string SenderAddress { get; set; }
         public required string SenderName { get; set; }
         public required string AttachmentName { get; set; }
-        public required DateTime ReceivedDateTime { get; set; }
+        public required DateTime? ReceivedDateTime { get; set; }
         public required Dictionary<string, bool> DeletionDico { get; set; }
     }
 
-    public override IFileValue Provide(string fileSpecific)
+    public override IFileValue Provide(JsonNode? fileSpecific)
     {
         var fileSpecificData = JsonSerializer.Deserialize<FileSpecificData>(fileSpecific) ?? throw new Exception("Invalid file specific");
         return new GraphApiMailFileValue(connectionParameters, fileSpecificData.MessageId, fileSpecificData.AttachmentId,
@@ -60,12 +61,12 @@ public partial class GraphApiMailFileValueProvider(string code, string name, str
         using var graphClient = connectionParameters.CreateGraphApiClient();
         var inputFolder = graphClient.GetFolderAsync(connectionParameters.UserId, providerParameters.Folder, cancellationToken).Result;
 
-        var matcher = string.IsNullOrWhiteSpace(providerParameters.AttachmentNamePattern) 
-            ? null 
+        var matcher = string.IsNullOrWhiteSpace(providerParameters.AttachmentNamePattern)
+            ? null
             : new Matcher().AddInclude(providerParameters.AttachmentNamePattern);
 
         graphClient.Users[connectionParameters.UserId].MailFolders[inputFolder.Id].Messages
-            .Where(CreateQuery(providerParameters))
+            .Where(GraphApiMailFileValueProvider.CreateQuery(providerParameters))
             .Select(obj => new { obj.Id, obj.ParentFolderId, obj.ReceivedDateTime, obj.From })
             .Expand(obj => obj.Attachments)
             .FetchAsync(graphClient, message =>
@@ -79,7 +80,7 @@ public partial class GraphApiMailFileValueProvider(string code, string name, str
                         attachments.Add(a);
                         return Task.FromResult(true);
                     }).Wait();
-                var deletionDico = attachments.ToDictionary(i => i.Id 
+                var deletionDico = attachments.ToDictionary(i => i.Id
                     ?? throw new Exception("Message id is null"), i => false);
                 foreach (var item in attachments)
                 {
@@ -96,16 +97,16 @@ public partial class GraphApiMailFileValueProvider(string code, string name, str
                             message.Subject ?? "",
                             message.From?.EmailAddress?.Address ?? "",
                             message.From?.EmailAddress?.Name ?? "",
-                            message.ReceivedDateTime.Value.UtcDateTime
+                            message.ReceivedDateTime?.UtcDateTime
                         );
-                        var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.Serialize(new FileSpecificData
+                        var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.SerializeToNode(new FileSpecificData
                         {
                             AttachmentId = item.Id,
                             MessageId = message.Id,
                             Subject = message.Subject ?? "",
                             AttachmentName = item.Name ?? "",
                             SenderAddress = message.From?.EmailAddress?.Address ?? "",
-                            ReceivedDateTime = message.ReceivedDateTime.Value.UtcDateTime,
+                            ReceivedDateTime = message.ReceivedDateTime?.UtcDateTime,
                             DeletionDico = deletionDico,
                             SenderName = message.From?.EmailAddress?.Name ?? "",
                         }));
@@ -117,7 +118,7 @@ public partial class GraphApiMailFileValueProvider(string code, string name, str
             }, cancellationToken).Wait();
         // return fileValues;
     }
-    private Expression<Func<Message, bool>> CreateQuery(GraphApiMailAdapterProviderParameters providerParameters)
+    private static Expression<Func<Message, bool>> CreateQuery(GraphApiMailAdapterProviderParameters providerParameters)
     {
         ParameterExpression parameter = Expression.Parameter(typeof(Message), "message");
 

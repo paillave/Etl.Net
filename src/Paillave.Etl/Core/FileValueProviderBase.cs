@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Nodes;
 using System.Threading;
 
 namespace Paillave.Etl.Core;
@@ -23,5 +24,5 @@ public abstract class FileValueProviderBase<TConnectionParameters, TProviderPara
     public void PushValues(object input, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)
         => Provide(input, push, cancellationToken);
 
-    public abstract IFileValue Provide(string fileSpecific);
+    public abstract IFileValue Provide(JsonNode? fileSpecific);
 }
