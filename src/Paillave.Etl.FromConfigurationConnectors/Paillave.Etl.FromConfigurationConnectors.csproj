@@ -11,7 +11,8 @@
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" allowedVersions="13.0.1"/>
-    <PackageReference Include="NJsonSchema" Version="11.1.0" allowedVersions="10.6.6"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" allowedVersions="13.0.1" />
+    <PackageReference Include="NJsonSchema" Version="11.1.0" allowedVersions="10.6.6" />
   </ItemGroup>
 </Project>

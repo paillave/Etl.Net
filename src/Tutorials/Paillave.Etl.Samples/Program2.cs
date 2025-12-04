@@ -10,6 +10,10 @@ using Paillave.Etl.FileSystem;
 using Paillave.Etl.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Paillave.Etl.FromConfigurationConnectors;
+using Paillave.Etl.Mail;
+using Paillave.Etl.GraphApi;
 
 namespace Paillave.Etl.Samples;
 
@@ -35,6 +39,30 @@ class Program
     //         /// <returns></returns>
     static async Task SimplyImportAsync(string[] args)
     {
+
+
+        var configuration = ApplicationConfigurationBuilder.GetConfiguration(args);
+
+
+        var configAdapter = new ConfigurationAdapter(
+            configuration,
+            new ConfigurationFileValueConnectorParser(
+                new MailProviderProcessorAdapter(),
+                new FileSystemProviderProcessorAdapter(),
+                new GraphApiProviderProcessorAdapter()),
+            s => s);
+
+        var provider = configAdapter.GetFileValueProvider("MyProvider");
+        var processor = configAdapter.GetFileValueProcessor("MyProcessor");
+        provider.Provide(new(), (fv, fr) =>
+        {
+            Console.WriteLine(fv.Name);
+            processor.Process(fv, i => { }, default);
+        }, default);
+
+        processor.Process(new InMemoryFileValue(new MemoryStream(), "TestFile.txt"), i => { }, default);
+
+
         var services = new ServiceCollection()
             .AddPooledDbContextFactory<DataAccess.TestDbContext>(options => options.UseSqlServer(@"Server=localhost,1433;Initial Catalog=TestEtl;Persist Security Info=False;User ID=SA;Password=<YourStrong@Passw0rd>;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=true;Connection Timeout=300;", options => options
                 .CommandTimeout(2000)
@@ -168,4 +196,22 @@ class Program
     //             var res = await processRunner.ExecuteAsync(args, executionOptions);
     //         }
     //     }
+}
+
+public static class ApplicationConfigurationBuilder
+{
+    public static IConfigurationRoot GetConfiguration(string[]? args = null) => new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", true, true)
+        .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", true, true)
+        .AddKeyPerFile("appsettings", true, true)
+        .AddEnvironmentVariables()
+        .AddEnvironmentVariables("SAMPLEETLNET_")
+        .AddUserSecrets(typeof(Program).Assembly)
+        .AddCommandLine(args ?? [], new Dictionary<string, string>
+        {
+            ["-cnx"] = "ConnectionStrings:SqlServer",
+            ["--connectionString"] = "ConnectionStrings:SqlServer"
+        })
+        .Build();
 }
