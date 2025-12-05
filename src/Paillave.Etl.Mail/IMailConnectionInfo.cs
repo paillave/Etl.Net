@@ -2,6 +2,8 @@ namespace Paillave.Etl.Mail
 {
     public interface IMailConnectionInfo
     {
+        public string? From { get; set; }
+        public string? FromDisplayName { get; set; }
         string Server { get; set; }
         int PortNumber { get; set; }
         string? Login { get; set; }

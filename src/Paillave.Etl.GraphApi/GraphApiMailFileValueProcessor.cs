@@ -5,7 +5,6 @@ using System.Threading;
 using Paillave.Etl.Core;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Microsoft.Graph.Models;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 
@@ -63,11 +62,7 @@ public partial class GraphApiMailFileValueProcessor(string code, string name, st
         Action<IFileValue> push, CancellationToken cancellationToken)
     {
         var destinations = GetDestinations(processorParameters, fileValue).ToList();
-        var messaging = new GraphApiMessaging(connectionParameters, new MessageContact
-        {
-            Email = processorParameters.From,
-            DisplayName = processorParameters.FromDisplayName
-        }, processorParameters.SaveToSentItems);
+        var messaging = new GraphApiMessaging(connectionParameters, processorParameters);
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
         MemoryStream ms = new();
         stream.CopyTo(ms);

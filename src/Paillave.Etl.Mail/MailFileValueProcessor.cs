@@ -64,11 +64,7 @@ public partial class MailFileValueProcessor(string code, string name, string con
         IFileValue fileValue, MailAdapterConnectionParameters connectionParameters, MailAdapterProcessorParameters processorParameters,
         Action<IFileValue> push, CancellationToken cancellationToken)
     {
-        var messaging = new SmtpMessaging(connectionParameters, new MessageContact
-        {
-            Email = processorParameters.From,
-            DisplayName = processorParameters.FromDisplayName
-        });
+        var messaging = new SmtpMessaging(connectionParameters,processorParameters);
         var destinations = MailFileValueProcessor.GetDestinations(processorParameters, fileValue).ToList();
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
         var ms = new MemoryStream();

@@ -6,6 +6,8 @@ namespace Paillave.Etl.Mail;
 
 public class MailAdapterConnectionParameters : IMailConnectionInfo
 {
+    public string? From { get; set; }
+    public string? FromDisplayName { get; set; }
     [Required]
     public string Server { get; set; }
     public int PortNumber { get; set; } = 25;

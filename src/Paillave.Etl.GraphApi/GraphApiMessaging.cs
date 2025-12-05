@@ -7,13 +7,24 @@ using Microsoft.Graph.Models;
 
 namespace Paillave.Etl.GraphApi;
 
-public class GraphApiMessaging(/*IGraphApiConnectionInfo*/ GraphApiAdapterConnectionParameters connectionInfo, MessageContact? defaultFrom = null, bool saveToSentItems = true) : IMessaging
+public class GraphApiMessaging(/*IGraphApiConnectionInfo*/ GraphApiAdapterConnectionParameters connectionInfo, GraphApiAdapterProcessorParameters? processorParameters = null) : IMessaging
 {
     public string Name => "GraphApi";
     public void Send(MessageContact? sender, string subject, string body, bool important, MessageContact[] entities, Dictionary<string, Stream>? attachments = null)
     {
         ActionRunner.TryExecute(connectionInfo.MaxAttempts, () =>
         {
+            MessageContact? defaultFrom = null;
+            defaultFrom ??= processorParameters?.From != null ? new MessageContact
+            {
+                Email = processorParameters.From,
+                DisplayName = processorParameters.FromDisplayName
+            } : null;
+            defaultFrom ??= connectionInfo.From != null ? new MessageContact
+            {
+                Email = connectionInfo.From,
+                DisplayName = connectionInfo.FromDisplayName
+            } : null;
             sender ??= defaultFrom ?? throw new ArgumentNullException(nameof(sender));
             var message = new Message
             {
@@ -47,7 +58,7 @@ public class GraphApiMessaging(/*IGraphApiConnectionInfo*/ GraphApiAdapterConnec
             client.Users[connectionInfo.UserId].SendMail.PostAsync(new Microsoft.Graph.Users.Item.SendMail.SendMailPostRequestBody
             {
                 Message = message,
-                SaveToSentItems = saveToSentItems
+                SaveToSentItems = connectionInfo.SaveToSentItems
             }).Wait();
         });
     }
