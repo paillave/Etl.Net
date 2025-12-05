@@ -64,7 +64,7 @@ public partial class MailFileValueProcessor(string code, string name, string con
         IFileValue fileValue, MailAdapterConnectionParameters connectionParameters, MailAdapterProcessorParameters processorParameters,
         Action<IFileValue> push, CancellationToken cancellationToken)
     {
-        var messaging = new SmtpMessaging(connectionParameters, new MessageDestination
+        var messaging = new SmtpMessaging(connectionParameters, new MessageContact
         {
             Email = processorParameters.From,
             DisplayName = processorParameters.FromDisplayName
@@ -94,7 +94,7 @@ public partial class MailFileValueProcessor(string code, string name, string con
                 attachments = new Dictionary<string, Stream> { [fileValue.Name] = ms };
             }
             messaging.Send(
-                new MessageDestination
+                new MessageContact
                 {
                     Email = FormatText(processorParameters.From, metadataJson),
                     DisplayName = FormatText(processorParameters.FromDisplayName, metadataJson)
@@ -102,7 +102,7 @@ public partial class MailFileValueProcessor(string code, string name, string con
                 subject,
                 body,
                 false,
-                [new MessageDestination { Email = destination.Email, DisplayName = destination.DisplayName }],
+                [new MessageContact { Email = destination.Email, DisplayName = destination.DisplayName }],
                 attachments);
         }
         push(fileValue);
@@ -140,48 +140,4 @@ public partial class MailFileValueProcessor(string code, string name, string con
 
     [GeneratedRegex("\\{(?<name>.+?)(:(.+?))?}", RegexOptions.Singleline)]
     private static partial Regex MyRegex();
-}
-
-public class SmtpMessaging(IMailConnectionInfo connectionInfo, MessageDestination? defaultFrom = null) : IMessaging
-{
-    public string Name => "Smtp";
-    public void Send(MessageDestination? sender, string subject, string body, bool important, MessageDestination[] entities, Dictionary<string, Stream>? attachments = null)
-    {
-        ActionRunner.TryExecute(connectionInfo.MaxAttempts, () =>
-        {
-            sender ??= defaultFrom ?? throw new ArgumentNullException(nameof(sender));
-            using var mailMessage = new MailMessage
-            {
-                From = new MailAddress(sender.Email, sender.DisplayName),
-                Subject = subject,
-                Body = body,
-                IsBodyHtml = true,
-                Priority = important ? MailPriority.High : MailPriority.Normal
-            };
-            foreach (var entity in entities)
-                mailMessage.To.Add(new MailAddress(entity.Email, entity.DisplayName));
-            if (attachments != null)
-            {
-                foreach (var attachment in attachments)
-                {
-                    var ms = CopyStream(attachment.Value);
-                    mailMessage.Attachments.Add(new Attachment(ms, attachment.Key, MimeTypes.GetMimeType(attachment.Key)));
-                }
-            }
-            using var smtpClient = connectionInfo.CreateSmtpClient();
-            smtpClient.Send((MimeMessage)mailMessage);
-        });
-    }
-    private static MemoryStream CopyStream(Stream stream)
-    {
-        var originalPosition = stream.CanSeek ? stream.Position : (long?)null;
-        if (stream.CanSeek)
-            stream.Seek(0, SeekOrigin.Begin);
-        var ms = new MemoryStream();
-        stream.CopyTo(ms);
-        if (originalPosition.HasValue)
-            stream.Seek(originalPosition.Value, SeekOrigin.Begin);
-        ms.Seek(0, SeekOrigin.Begin);
-        return ms;
-    }
 }

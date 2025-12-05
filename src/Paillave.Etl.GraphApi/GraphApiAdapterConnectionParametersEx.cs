@@ -30,7 +30,7 @@ internal class CustomAuthenticationProvider : IAuthenticationProvider
     public CustomAuthenticationProvider(IConfidentialClientApplication app) => _app = app;
     public async Task AuthenticateRequestAsync(RequestInformation request, Dictionary<string, object>? additionalAuthenticationContext = null, CancellationToken cancellationToken = default)
     {
-        var result = await _app.AcquireTokenForClient(new string[] { "https://graph.microsoft.com/.default" }).ExecuteAsync();
+        var result = await _app.AcquireTokenForClient(["https://graph.microsoft.com/.default"]).ExecuteAsync(cancellationToken);
         request.Headers.Add("Authorization", new AuthenticationHeaderValue("Bearer", result.AccessToken).ToString());
     }
 }

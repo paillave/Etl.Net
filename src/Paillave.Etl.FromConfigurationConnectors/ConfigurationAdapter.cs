@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Nodes;
 using Microsoft.Extensions.Configuration;
@@ -6,7 +7,7 @@ using Paillave.Etl.Core;
 
 namespace Paillave.Etl.FromConfigurationConnectors;
 
-public class ConfigurationAdapter(IConfiguration configuration, ConfigurationFileValueConnectorParser parser, Func<string, string> resolveSensitiveValues)
+public class ConfigurationAdapterProvider(IConfiguration configuration, ConfigurationFileValueConnectorParser parser)
 {
     private const string code = "DEVITEMSOURCE";
     public IFileValueProvider GetFileValueProvider(string sectionName)
@@ -19,7 +20,7 @@ public class ConfigurationAdapter(IConfiguration configuration, ConfigurationFil
         IConfigurationSection configurationSection = configuration.GetSection(sectionName);
         var section = configurationSection.ToJsonNode();
         var definition = BuildConnectorConfiguration(section, code, connectorType) ?? throw new InvalidOperationException("No configuration found for a connector");
-        var fileValueConnectors = parser.GetConnectors(definition, resolveSensitiveValues);
+        var fileValueConnectors = parser.GetConnectors(definition, i => i);
         return fileValueConnectors;
     }
     private enum ConnectorType
@@ -27,7 +28,7 @@ public class ConfigurationAdapter(IConfiguration configuration, ConfigurationFil
         Provider,
         Processor
     }
-    private string? BuildConnectorConfiguration(JsonNode? configuration, string code, ConnectorType connectorType)
+    private static string? BuildConnectorConfiguration(JsonNode? configuration, string code, ConnectorType connectorType)
     {
         if (configuration is null)
             return null;
@@ -56,6 +57,17 @@ public class ConfigurationAdapter(IConfiguration configuration, ConfigurationFil
                 break;
         }
         return obj.ToJsonString();
+    }
+}
+public class ConfigurationMessagingProvider(IConfiguration configuration, IEnumerable<IMessagingProvider> messagingProviders)
+{
+    public IMessaging GetMessaging(string sectionName)
+    {
+        IConfigurationSection configurationSection = configuration.GetSection(sectionName);
+        var messagingConfiguration = configurationSection.ToJsonNode() ?? throw new InvalidOperationException($"No configuration found for messaging section '{sectionName}'");
+        var messagingProvider = messagingProviders.FirstOrDefault(m => m.Name.Equals((string?)messagingConfiguration?["Type"], StringComparison.InvariantCultureIgnoreCase))
+           ?? throw new InvalidOperationException($"No messaging provider found for type '{(string?)messagingConfiguration?["Type"]}'");
+        return messagingProvider.GetMessaging(messagingConfiguration["Properties"]?? throw new InvalidOperationException("No configuration properties found for messaging provider"));
     }
 }
 public static class ConfigurationJsonExtensions

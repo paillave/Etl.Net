@@ -44,13 +44,12 @@ class Program
         var configuration = ApplicationConfigurationBuilder.GetConfiguration(args);
 
 
-        var configAdapter = new ConfigurationAdapter(
+        var configAdapter = new ConfigurationAdapterProvider(
             configuration,
             new ConfigurationFileValueConnectorParser(
                 new MailProviderProcessorAdapter(),
                 new FileSystemProviderProcessorAdapter(),
-                new GraphApiProviderProcessorAdapter()),
-            s => s);
+                new GraphApiProviderProcessorAdapter()));
 
         var provider = configAdapter.GetFileValueProvider("MyProvider");
         var processor = configAdapter.GetFileValueProcessor("MyProcessor");
