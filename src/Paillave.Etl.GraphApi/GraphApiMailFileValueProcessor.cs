@@ -62,8 +62,12 @@ public partial class GraphApiMailFileValueProcessor(string code, string name, st
         IFileValue fileValue, GraphApiAdapterConnectionParameters connectionParameters, GraphApiAdapterProcessorParameters processorParameters,
         Action<IFileValue> push, CancellationToken cancellationToken)
     {
-        var destinations = GraphApiMailFileValueProcessor.GetDestinations(processorParameters, fileValue).ToList();
-        var messaging = new GraphApiMessaging(connectionParameters, processorParameters.SaveToSentItems);
+        var destinations = GetDestinations(processorParameters, fileValue).ToList();
+        var messaging = new GraphApiMessaging(connectionParameters, new MessageDestination
+        {
+            Email = processorParameters.From,
+            DisplayName = processorParameters.FromDisplayName
+        }, processorParameters.SaveToSentItems);
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
         MemoryStream ms = new();
         stream.CopyTo(ms);
@@ -87,9 +91,12 @@ public partial class GraphApiMailFileValueProcessor(string code, string name, st
                 body = FormatText(processorParameters.Body, metadataJson);
                 attachments = new Dictionary<string, Stream> { [fileValue.Name] = ms };
             }
-            messaging.SendToPeople(
-                FormatText(processorParameters.From, metadataJson),
-                FormatText(processorParameters.FromDisplayName, metadataJson),
+            messaging.Send(
+                    new MessageDestination
+                    {
+                        Email = FormatText(processorParameters.From, metadataJson),
+                        DisplayName = FormatText(processorParameters.FromDisplayName, metadataJson)
+                    },
                 subject,
                 body,
                 false,
@@ -133,14 +140,11 @@ public partial class GraphApiMailFileValueProcessor(string code, string name, st
     private static partial Regex MyRegex();
 }
 
-public class MessageDestination
+
+public class GraphApiMessaging(IGraphApiConnectionInfo connectionInfo, MessageDestination? defaultFrom = null, bool saveToSentItems = true) : IMessaging
 {
-    public string? DisplayName { get; set; }
-    public required string Email { get; set; }
-}
-public class GraphApiMessaging(IGraphApiConnectionInfo connectionInfo, MessageDestination? defaultFrom = null, bool saveToSentItems = true)
-{
-    public void SendToPeople(MessageDestination? sender, string subject, string body, bool important, MessageDestination[] entities, Dictionary<string, Stream>? attachments = null)
+    public string Name => "GraphApi";
+    public void Send(MessageDestination? sender, string subject, string body, bool important, MessageDestination[] entities, Dictionary<string, Stream>? attachments = null)
     {
         ActionRunner.TryExecute(connectionInfo.MaxAttempts, () =>
         {

@@ -64,7 +64,11 @@ public partial class MailFileValueProcessor(string code, string name, string con
         IFileValue fileValue, MailAdapterConnectionParameters connectionParameters, MailAdapterProcessorParameters processorParameters,
         Action<IFileValue> push, CancellationToken cancellationToken)
     {
-        var messaging = new SmtpMessaging(connectionParameters, processorParameters.From, processorParameters.FromDisplayName);
+        var messaging = new SmtpMessaging(connectionParameters, new MessageDestination
+        {
+            Email = processorParameters.From,
+            DisplayName = processorParameters.FromDisplayName
+        });
         var destinations = MailFileValueProcessor.GetDestinations(processorParameters, fileValue).ToList();
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
         var ms = new MemoryStream();
@@ -89,9 +93,12 @@ public partial class MailFileValueProcessor(string code, string name, string con
                 body = FormatText(processorParameters.Body, metadataJson);
                 attachments = new Dictionary<string, Stream> { [fileValue.Name] = ms };
             }
-            messaging.SendToPeople(
-                FormatText(processorParameters.From, metadataJson),
-                FormatText(processorParameters.FromDisplayName, metadataJson),
+            messaging.Send(
+                new MessageDestination
+                {
+                    Email = FormatText(processorParameters.From, metadataJson),
+                    DisplayName = FormatText(processorParameters.FromDisplayName, metadataJson)
+                },
                 subject,
                 body,
                 false,
@@ -134,14 +141,11 @@ public partial class MailFileValueProcessor(string code, string name, string con
     [GeneratedRegex("\\{(?<name>.+?)(:(.+?))?}", RegexOptions.Singleline)]
     private static partial Regex MyRegex();
 }
-public class MessageDestination
+
+public class SmtpMessaging(IMailConnectionInfo connectionInfo, MessageDestination? defaultFrom = null) : IMessaging
 {
-    public string? DisplayName { get; set; }
-    public required string Email { get; set; }
-}
-public class SmtpMessaging(IMailConnectionInfo connectionInfo, MessageDestination? defaultFrom = null)
-{
-    public void SendToPeople(MessageDestination? sender, string subject, string body, bool important, MessageDestination[] entities, Dictionary<string, Stream>? attachments = null)
+    public string Name => "Smtp";
+    public void Send(MessageDestination? sender, string subject, string body, bool important, MessageDestination[] entities, Dictionary<string, Stream>? attachments = null)
     {
         ActionRunner.TryExecute(connectionInfo.MaxAttempts, () =>
         {

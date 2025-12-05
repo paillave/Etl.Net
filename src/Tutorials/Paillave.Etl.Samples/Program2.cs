@@ -54,13 +54,11 @@ class Program
 
         var provider = configAdapter.GetFileValueProvider("MyProvider");
         var processor = configAdapter.GetFileValueProcessor("MyProcessor");
-        provider.Provide(new(), (fv, fr) =>
-        {
-            Console.WriteLine(fv.Name);
-            processor.Process(fv, i => { }, default);
-        }, default);
 
-        processor.Process(new InMemoryFileValue(new MemoryStream(), "TestFile.txt"), i => { }, default);
+        await foreach (var fileValue in provider.ProvideAsync())
+            await foreach (var newFileValue in processor.ProcessAsync(fileValue)) ;
+
+        // processor.Process(new InMemoryFileValue(new MemoryStream(), "TestFile.txt"), i => { }, default);
 
 
         var services = new ServiceCollection()

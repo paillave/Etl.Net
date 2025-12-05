@@ -45,5 +45,4 @@ public class Destination
     public string Location { get; set; }
     public string Country { get; set; }
     public string Culture { get; set; }
-
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Paillave.Etl.Core
@@ -12,6 +13,12 @@ namespace Paillave.Etl.Core
         {
             throw new Exception($"{Code}: this file value provider does not exist");
         }
+
+        public IAsyncEnumerable<IFileValue> ProcessAsync(IFileValue fileValue, CancellationToken cancellationToken = default)
+        {
+            throw new Exception($"{Code}: this file value provider does not exist");
+        }
+
         public void Test() { }
     }
 }
