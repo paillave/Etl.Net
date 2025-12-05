@@ -43,6 +43,16 @@ class Program
 
         var configuration = ApplicationConfigurationBuilder.GetConfiguration(args);
 
+        var configurationMessagingProvider = new ConfigurationMessagingProvider(configuration, [
+            new SmtpMessagingProvider(),
+                new GraphApiMessagingProvider()
+        ]);
+        var msg = configurationMessagingProvider.GetMessaging("Messaging");
+
+
+
+
+
 
         var configAdapter = new ConfigurationAdapterProvider(
             configuration,

@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using NJsonSchema;
 using Paillave.Etl.Core;
 
 namespace Paillave.Etl.FromConfigurationConnectors
 {
-    public class ConfigurationFileValueConnectorParser(params IProviderProcessorAdapter[] providerProcessorAdapter)
+    public class ConfigurationFileValueConnectorParser(params IProviderProcessorAdapter[] providerProcessorAdapters)
     {
         public IFileValueConnectors GetConnectors(string jsonConfig, Func<string, string> resolveSensitiveValue)
         {
@@ -25,7 +26,7 @@ namespace Paillave.Etl.FromConfigurationConnectors
             {
                 return new NoFileValueConnectors();
             }
-            Dictionary<string, IProviderProcessorAdapter> adapterDictionary = providerProcessorAdapter.ToDictionary(i => i.Name);
+            Dictionary<string, IProviderProcessorAdapter> adapterDictionary = providerProcessorAdapters.ToDictionary(i => i.Name);
             JObject o = JObject.Parse(jsonConfig);
             var elts = o.Properties()
                 .Where(p => p.Path != "$schema")
@@ -33,6 +34,26 @@ namespace Paillave.Etl.FromConfigurationConnectors
             var processors = elts.SelectMany(i => i.processors).ToDictionary(i => i.Code);
             var providers = elts.SelectMany(i => i.providers).ToDictionary(i => i.Code);
             return new FileValueConnectors(providers, processors);
+        }
+        public IFileValueProvider GetProvider(IConfigurationSection configurationSection)
+        {
+            var type = configurationSection.GetSection("Type").Value;
+            var providerProcessorAdapter = providerProcessorAdapters.Single(a => a.Name.Equals(type, StringComparison.InvariantCultureIgnoreCase));
+            var connectionConfiguration = configurationSection.GetSection("Connection");
+            var connectionParameters = connectionConfiguration.Get(providerProcessorAdapter.ConnectionParametersType);
+            var providerSection = configurationSection.GetSection("Provider");
+            var providerParameters = providerSection.Get(providerProcessorAdapter.ProviderParametersType) ?? Activator.CreateInstance(providerProcessorAdapter.ProviderParametersType);
+            return providerProcessorAdapter.CreateProvider("code", "name", "cnx", connectionParameters, providerParameters);
+        }
+        public IFileValueProcessor GetProcessor(IConfigurationSection configurationSection)
+        {
+            var type = configurationSection.GetSection("Type").Value;
+            var providerProcessorAdapter = providerProcessorAdapters.Single(a => a.Name.Equals(type, StringComparison.InvariantCultureIgnoreCase));
+            var connectionConfiguration = configurationSection.GetSection("Connection");
+            var connectionParameters = connectionConfiguration.Get(providerProcessorAdapter.ConnectionParametersType);
+            var processorSection = configurationSection.GetSection("Processor");
+            var processorParameters = processorSection.Get(providerProcessorAdapter.ProcessorParametersType) ?? Activator.CreateInstance(providerProcessorAdapter.ProcessorParametersType);
+            return providerProcessorAdapter.CreateProcessor("code", "name", "cnx", connectionParameters, processorParameters);
         }
         private (List<IFileValueProvider> providers, List<IFileValueProcessor> processors) ParseConnections(JProperty property, Dictionary<string, IProviderProcessorAdapter> adapterDictionary, Func<string, string> resolveSensitiveValue)
         {
@@ -148,7 +169,7 @@ namespace Paillave.Etl.FromConfigurationConnectors
         {
             var docSchema = JsonSchemaEx.CreateObject("Document");
 
-            var connectionSchema = CreateAddonAdapters(docSchema, "Connection", providerProcessorAdapter)
+            var connectionSchema = CreateAddonAdapters(docSchema, "Connection", providerProcessorAdapters)
                 .AddAsDefinition(docSchema);
 
             docSchema

@@ -3,10 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Paillave.Etl.Core;
-using System.Net.Mail;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using MimeKit;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 

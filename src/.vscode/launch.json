@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/Paillave.Etl.Scheduler/bin/Debug/net9.0/Paillave.Etl.Scheduler.dll",
-            "args": [            ],
+            "args": [],
             "cwd": "${workspaceFolder}/Paillave.Etl.Scheduler",
             "stopAtEntry": false,
             "console": "integratedTerminal"
@@ -21,6 +21,14 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/Tutorials/Paillave.Etl.Samples/bin/Debug/net9.0/Paillave.Etl.Samples.dll",
+            "env": {
+                "SAMPLEETLNET_Messaging__Type": "Smtp",
+                "SAMPLEETLNET_Messaging__Properties__Server": "localhost",
+                "SAMPLEETLNET_Messaging__Properties__PortNumber": "2525",
+                "SAMPLEETLNET_Messaging__Properties__MaxAttempts": "3",
+                "SAMPLEETLNET_Messaging__Properties__From": "support@fundprocess.lu",
+                "SAMPLEETLNET_Messaging__Properties__FromDisplayName": "FundProcess Support",
+            },
             "args": [
                 "/home/stephane/Desktop/"
             ],

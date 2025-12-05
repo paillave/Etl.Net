@@ -31,6 +31,7 @@ public class SmtpMessaging(/*IMailConnectionInfo*/ MailAdapterConnectionParamete
                 From = new MailAddress(sender.Email, sender.DisplayName),
                 Subject = subject,
                 Body = body,
+                SubjectEncoding = System.Text.Encoding.UTF8,
                 IsBodyHtml = true,
                 Priority = important ? MailPriority.High : MailPriority.Normal
             };

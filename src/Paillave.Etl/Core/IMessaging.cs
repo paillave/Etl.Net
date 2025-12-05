@@ -1,8 +1,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System;
-using System.Text.Json.Nodes;
-using System.Text.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace Paillave.Etl.Core;
 
@@ -20,14 +19,13 @@ public class MessageContact
 public interface IMessagingProvider
 {
     string Name { get; }
-    IMessaging GetMessaging(JsonNode configuration);
+    IMessaging GetMessaging(IConfigurationSection configurationSection);
 }
 
 public abstract class MessagingProviderBase<TConfiguration> : IMessagingProvider where TConfiguration : class
 {
     public abstract string Name { get; }
     public abstract IMessaging GetMessaging(TConfiguration configuration);
-    IMessaging IMessagingProvider.GetMessaging(JsonNode configuration)
-        => GetMessaging(JsonSerializer.Deserialize<TConfiguration>(configuration) ??
-            throw new InvalidOperationException($"Invalid configuration for messaging provider '{this.Name}'"));
+    IMessaging IMessagingProvider.GetMessaging(IConfigurationSection parameters)
+        => GetMessaging(parameters.Get<TConfiguration>() ?? Activator.CreateInstance<TConfiguration>());
 }
