@@ -21,7 +21,19 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        await SimplyImportAsync(args);
+        var tmp = new SmtpMessaging(new MailAdapterConnectionParameters
+        {
+            Server = "localhost",
+            PortNumber = 2525,
+            From = "support@fundprocess.lu",
+            FromDisplayName = "FundProcess Support",
+        });
+        tmp.Send(null, "Test subject", "This is the body", false, [new MessageContact
+            {
+                Email="recipient@email.com",
+                DisplayName="Recipient Name"
+            }]);
+        await SimplyImport2Async(args);
         // CreateConnectorConfigurationFileSchema();
         // await ConnectorTestAsync(args);
         // await ImportAndCreateFileAsync(args);
@@ -37,6 +49,49 @@ class Program
     //         /// </summary>
     //         /// <param name="args"></param>
     //         /// <returns></returns>
+
+
+
+
+
+
+
+
+
+
+    static async Task SimplyImport2Async(string[] args)
+    {
+        var processRunner = StreamProcessRunner.Create<string[]>(contextStream =>
+                    contextStream
+                .CrossApply("ca", i => Enumerable.Range(0, 2))
+                .SubProcess("sub", i => i
+                    .CrossApply("cb", j => Enumerable.Range(0, 10).Select(k => new { j, k }))
+                )
+                .Do("show on screen", i =>
+                {
+                    Thread.Sleep(100);
+                    Console.WriteLine($"{i.j}-{i.k}");
+                }));
+        // processRunner.GetDefinitionStructure().OpenEstimatedExecutionPlan();
+        var output = await processRunner.ExecuteAsync(args);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     static async Task SimplyImportAsync(string[] args)
     {
 

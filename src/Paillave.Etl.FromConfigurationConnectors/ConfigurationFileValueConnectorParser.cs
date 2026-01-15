@@ -19,7 +19,7 @@ namespace Paillave.Etl.FromConfigurationConnectors
             try
             {
                 var validator = new NJsonSchema.Validation.JsonSchemaValidator().Validate(jsonConfig, this.GetConnectorsSchema());
-                if (validator.Where(v => !(new[] { NJsonSchema.Validation.ValidationErrorKind.NoAdditionalPropertiesAllowed, NJsonSchema.Validation.ValidationErrorKind.AdditionalPropertiesNotValid }.Contains(v.Kind) && v.Path == "#/$schema")).Count() > 0)
+                if (validator.Any(v => !(new[] { NJsonSchema.Validation.ValidationErrorKind.NoAdditionalPropertiesAllowed, NJsonSchema.Validation.ValidationErrorKind.AdditionalPropertiesNotValid }.Contains(v.Kind) && v.Path == "#/$schema")))
                     return new NoFileValueConnectors();
             }
             catch

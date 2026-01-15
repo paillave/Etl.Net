@@ -54,7 +54,8 @@ namespace Paillave.Etl.Mail
             {
                 client.Connect(connectionInfo.Server, portNumber);
             }
-            client.Authenticate(connectionInfo.Login, connectionInfo.Password);
+            if (!string.IsNullOrWhiteSpace(connectionInfo.Login))
+                client.Authenticate(connectionInfo.Login, connectionInfo.Password);
             return client;
         }
     }
