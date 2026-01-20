@@ -1,8 +1,7 @@
 ﻿using System;
 
-namespace Paillave.Etl.Reactive.Core
+namespace Paillave.Etl.Reactive.Core;
+
+public interface IPushSubject<T> : IPushObservable<T>, IPushObserver<T>, IDisposable
 {
-    public interface IPushSubject<T> : IPushObservable<T>, IPushObserver<T>, IDisposable
-    {
-    }
 }

@@ -1,17 +1,12 @@
-﻿using System.Diagnostics;
+﻿
 
-namespace Paillave.Etl.Core
+namespace Paillave.Etl.Core;
+
+public class CounterSummaryStreamTraceContent(int counter) : StreamTraceContentBase
 {
-    public class CounterSummaryStreamTraceContent : StreamTraceContentBase
-    {
-        public CounterSummaryStreamTraceContent(int counter)
-        {
-            this.Counter = counter;
-        }
-        public override TraceLevel Level => TraceLevel.Info;
+    public override EtlTraceLevel Level => EtlTraceLevel.Info;
 
-        public int Counter { get; }
+    public int Counter { get; } = counter;
 
-        public override string Message => $"{this.Counter} row(s) issued";
-    }
+    public override string Message => $"{this.Counter} row(s) issued";
 }

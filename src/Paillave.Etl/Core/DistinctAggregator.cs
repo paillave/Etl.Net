@@ -1,13 +1,12 @@
-namespace Paillave.Etl.Core
+namespace Paillave.Etl.Core;
+
+public enum DistinctAggregator
 {
-    public enum DistinctAggregator
-    {
-        First,
-        FirstNotNull,
-        Last,
-        Max,
-        Min,
-        Sum,
-        Avg
-    }
+    First,
+    FirstNotNull,
+    Last,
+    Max,
+    Min,
+    Sum,
+    Avg
 }

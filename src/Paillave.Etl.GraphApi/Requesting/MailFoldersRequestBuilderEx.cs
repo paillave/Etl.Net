@@ -72,7 +72,7 @@ public static class MailFoldersRequestBuilderEx
 
     private static async Task<List<TOut>> IterateAsync<TOut>(IBaseClient graphClient, Func<MailFolder, TOut> selectFolder, CancellationToken? cancellationToken, MailFolderCollectionResponse? withAttachmentFoldersPage)
     {
-        List<TOut> output = new List<TOut>();
+        List<TOut> output = new();
         var pageIterator = Microsoft.Graph.PageIterator<MailFolder, MailFolderCollectionResponse>.CreatePageIterator(graphClient, withAttachmentFoldersPage, m =>
         {
             output.Add(selectFolder(m));

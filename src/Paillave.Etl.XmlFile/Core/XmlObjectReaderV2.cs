@@ -8,16 +8,11 @@ using System.Threading;
 using System.Xml;
 
 namespace Paillave.Etl.XmlFile.Core;
-public class XmlObjectReaderV2 : IXmlObjectReader
+public class XmlObjectReaderV2(XmlFileDefinition xmlFileDefinition, string sourceName, Action<XmlNodeParsed> pushResult) : IXmlObjectReader
 {
-    private readonly NodePropertyBags _nodePropertyBags;
-    private readonly XmlFileDefinition _xmlFileDefinition;
+    private readonly NodePropertyBags _nodePropertyBags = new(sourceName, xmlFileDefinition, pushResult);
+    private readonly XmlFileDefinition _xmlFileDefinition = xmlFileDefinition;
 
-    public XmlObjectReaderV2(XmlFileDefinition xmlFileDefinition, string sourceName, Action<XmlNodeParsed> pushResult)
-    {
-        _nodePropertyBags = new NodePropertyBags(sourceName, xmlFileDefinition, pushResult);
-        _xmlFileDefinition = xmlFileDefinition;
-    }
     private class XmlPath
     {
         private readonly Stack<XmlNodeLevel> _nodes = new();
@@ -30,15 +25,11 @@ public class XmlObjectReaderV2 : IXmlObjectReader
         public IList<XmlNodeLevel> GetCorrelationKeys() => _nodes.Reverse().ToList();
         public override string ToString() => GetPath();
     }
-    private class NodePropertyBags
+    private class NodePropertyBags(string sourceName, XmlFileDefinition xmlFileDefinition, Action<XmlNodeParsed> pushResult)
     {
-        private readonly Dictionary<string, PropertyBag> _propertyBags;
-        private readonly Action<XmlNodeParsed> _pushResult;
-        public NodePropertyBags(string sourceName, XmlFileDefinition xmlFileDefinition, Action<XmlNodeParsed> pushResult)
-        {
-            _propertyBags = xmlFileDefinition.XmlNodeDefinitions.ToDictionary(i => i.NodePath, i => new PropertyBag(sourceName, i));
-            _pushResult = pushResult;
-        }
+        private readonly Dictionary<string, PropertyBag> _propertyBags = xmlFileDefinition.XmlNodeDefinitions.ToDictionary(i => i.NodePath, i => new PropertyBag(sourceName, i));
+        private readonly Action<XmlNodeParsed> _pushResult = pushResult;
+
         public void SetValue(string key, string? value)
         {
             foreach (var propertyBag in _propertyBags)
@@ -129,7 +120,7 @@ public class XmlObjectReaderV2 : IXmlObjectReader
 
     public void Read(Stream fileStream, CancellationToken cancellationToken)
     {
-        XmlReaderSettings xrs = new XmlReaderSettings();
+        XmlReaderSettings xrs = new();
         foreach (var item in _xmlFileDefinition.PrefixToUriNameSpacesDictionary)
             xrs.Schemas.Add(item.Key, item.Value);
         xrs.IgnoreWhitespace = true;

@@ -8,12 +8,8 @@ public class SetForCorrelationArgs<TIn>
 {
     public IStream<TIn> Input { get; set; }
 }
-public class SetForCorrelationStreamNode<TIn> : StreamNodeBase<Correlated<TIn>, IStream<Correlated<TIn>>, SetForCorrelationArgs<TIn>>
+public class SetForCorrelationStreamNode<TIn>(string name, SetForCorrelationArgs<TIn> args) : StreamNodeBase<Correlated<TIn>, IStream<Correlated<TIn>>, SetForCorrelationArgs<TIn>>(name, args)
 {
-    public SetForCorrelationStreamNode(string name, SetForCorrelationArgs<TIn> args) : base(name, args)
-    {
-    }
-
     public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;

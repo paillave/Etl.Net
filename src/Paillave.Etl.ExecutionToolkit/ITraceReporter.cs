@@ -1,11 +1,10 @@
 using System;
 using Paillave.Etl.Core;
 
-namespace Paillave.Etl.ExecutionToolkit
+namespace Paillave.Etl.ExecutionToolkit;
+
+public interface ITraceReporter : IDisposable
 {
-    public interface ITraceReporter : IDisposable
-    {
-        void TraceProcessDefinition<TConfig>(IStream<TraceEvent> traceStream, ISingleStream<TConfig> configStream);
-        void Initialize(JobDefinitionStructure jobDefinitionStructure);
-    }
+    void TraceProcessDefinition<TConfig>(IStream<TraceEvent> traceStream, ISingleStream<TConfig> configStream);
+    void Initialize(JobDefinitionStructure jobDefinitionStructure);
 }

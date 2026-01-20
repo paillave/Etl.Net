@@ -1,20 +1,14 @@
 ﻿using System;
 
 namespace Paillave.Etl.GraphApi.Provider.Writers;
-public class GenericValueWriter : IValueWriter
+public class GenericValueWriter(Type type, Func<object, ODataExpressionConverterSettings, string> odataFunction) : IValueWriter
 {
-    readonly Type type;
-    readonly Func<object, ODataExpressionConverterSettings, string> odataFunction;
+    readonly Type type = type;
+    readonly Func<object, ODataExpressionConverterSettings, string> odataFunction = odataFunction;
 
     public GenericValueWriter(Type type, Func<object, string> odataFunction) : this(type, (a, b) => odataFunction(a))
     {
     }
-    public GenericValueWriter(Type type, Func<object, ODataExpressionConverterSettings, string> odataFunction)
-    {
-        this.odataFunction = odataFunction;
-        this.type = type;
-    }
-
 
     public bool Handles(Type typeToTest)
     {

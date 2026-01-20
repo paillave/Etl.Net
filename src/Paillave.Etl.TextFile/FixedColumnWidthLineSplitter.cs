@@ -2,36 +2,29 @@
 using System.Collections.Generic;
 using System;
 
-namespace Paillave.Etl.TextFile
+namespace Paillave.Etl.TextFile;
+
+public class FixedColumnWidthLineSplitter(params int[] columnSize) : ILineSplitter
 {
-    public class FixedColumnWidthLineSplitter : ILineSplitter
+    private readonly int[] _columnSize = columnSize;
+    private readonly string _joinStringFormat = string.Join("", columnSize.Select((s, idx) => $"{{{idx},{s}}}"));
+
+    private IEnumerable<string> InternalParseFixedColumnLine(string line)
     {
-        private readonly int[] _columnSize;
-        private readonly string _joinStringFormat;
-
-        public FixedColumnWidthLineSplitter(params int[] columnSize)
+        foreach (var item in _columnSize)
         {
-            _joinStringFormat = string.Join("", columnSize.Select((s, idx) => $"{{{idx},{s}}}"));
-            this._columnSize = columnSize;
+            yield return line.Substring(0, Math.Abs(item));
+            line = line.Substring(Math.Abs(item));
         }
+    }
 
-        private IEnumerable<string> InternalParseFixedColumnLine(string line)
-        {
-            foreach (var item in _columnSize)
-            {
-                yield return line.Substring(0, Math.Abs(item));
-                line = line.Substring(Math.Abs(item));
-            }
-        }
+    public IList<string> Split(string line)
+    {
+        return InternalParseFixedColumnLine(line).ToList();
+    }
 
-        public IList<string> Split(string line)
-        {
-            return InternalParseFixedColumnLine(line).ToList();
-        }
-
-        public string Join(IEnumerable<string> line)
-        {
-            return string.Format(_joinStringFormat, line.ToArray());
-        }
+    public string Join(IEnumerable<string> line)
+    {
+        return string.Format(_joinStringFormat, line.ToArray());
     }
 }

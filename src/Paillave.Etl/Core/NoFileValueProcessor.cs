@@ -2,23 +2,22 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Paillave.Etl.Core
+namespace Paillave.Etl.Core;
+
+public class NoFileValueProcessor(string code) : IFileValueProcessor
 {
-    public class NoFileValueProcessor(string code) : IFileValueProcessor
+    public string Code { get; } = code;
+    public ProcessImpact PerformanceImpact => ProcessImpact.Light;
+    public ProcessImpact MemoryFootPrint => ProcessImpact.Light;
+    public void Process(IFileValue fileValue, Action<IFileValue> push, CancellationToken cancellationToken)
     {
-        public string Code { get; } = code;
-        public ProcessImpact PerformanceImpact => ProcessImpact.Light;
-        public ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-        public void Process(IFileValue fileValue, Action<IFileValue> push, CancellationToken cancellationToken)
-        {
-            throw new Exception($"{Code}: this file value provider does not exist");
-        }
-
-        public IAsyncEnumerable<IFileValue> ProcessAsync(IFileValue fileValue, CancellationToken cancellationToken = default)
-        {
-            throw new Exception($"{Code}: this file value provider does not exist");
-        }
-
-        public void Test() { }
+        throw new Exception($"{Code}: this file value provider does not exist");
     }
+
+    public IAsyncEnumerable<IFileValue> ProcessAsync(IFileValue fileValue, CancellationToken cancellationToken = default)
+    {
+        throw new Exception($"{Code}: this file value provider does not exist");
+    }
+
+    public void Test() { }
 }

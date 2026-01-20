@@ -1,11 +1,10 @@
-﻿namespace Paillave.Etl.Core
+﻿namespace Paillave.Etl.Core;
+
+public interface IStreamProcessObserver
 {
-    public interface IStreamProcessObserver
-    {
-        int DebugChunkSize { get; set; }
+    int DebugChunkSize { get; set; }
 
-        event DebugNodeStreamEventHandler DebugNodeStream;
+    event DebugNodeStreamEventHandler DebugNodeStream;
 
-        JobDefinitionStructure GetDefinitionStructure();
-    }
+    JobDefinitionStructure GetDefinitionStructure();
 }

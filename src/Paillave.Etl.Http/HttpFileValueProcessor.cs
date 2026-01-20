@@ -6,18 +6,15 @@ using Paillave.Etl.Core;
 
 namespace Paillave.Etl.Http;
 
-public class HttpFileValueProcessor
-    : FileValueProcessorBase<HttpAdapterConnectionParameters, HttpAdapterProcessorParameters>
-{
-    public HttpFileValueProcessor(
-        string code,
-        string name,
-        string connectionName,
-        HttpAdapterConnectionParameters connectionParameters,
-        HttpAdapterProcessorParameters processorParameters
+public class HttpFileValueProcessor(
+    string code,
+    string name,
+    string connectionName,
+    HttpAdapterConnectionParameters connectionParameters,
+    HttpAdapterProcessorParameters processorParameters
     )
-        : base(code, name, connectionName, connectionParameters, processorParameters) { }
-
+        : FileValueProcessorBase<HttpAdapterConnectionParameters, HttpAdapterProcessorParameters>(code, name, connectionName, connectionParameters, processorParameters)
+{
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
 

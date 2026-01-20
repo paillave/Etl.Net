@@ -3,12 +3,9 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Primitives;
 
 namespace Paillave.Etl.AzureStorageAccount;
-public class AzureBlobFileProvider : IFileProvider, IFileSaver
+public class AzureBlobFileProvider(AzureBlobOptions azureBlobOptions) : IFileProvider, IFileSaver
 {
-    private readonly BlobContainerClient _blobContainerClient;
-
-    public AzureBlobFileProvider(AzureBlobOptions azureBlobOptions)
-        => _blobContainerClient = azureBlobOptions.GetBlobContainerClient();
+    private readonly BlobContainerClient _blobContainerClient = azureBlobOptions.GetBlobContainerClient();
 
     public IDirectoryContents GetDirectoryContents(string subpath)
         => _blobContainerClient.GetDirectoryContents(subpath);
@@ -40,10 +37,10 @@ public class AzureBlobFileProvider : IFileProvider, IFileSaver
     public IChangeToken Watch(string filter) => new AzureBlobFileProviderChangeToken(filter, _blobContainerClient);
 
 
-    private class DisposableAction : IDisposable
+    private class DisposableAction(Action action) : IDisposable
     {
-        private readonly Action _action;
-        public DisposableAction(Action action) => _action = action;
+        private readonly Action _action = action;
+
         public void Dispose() => _action();
     }
 }

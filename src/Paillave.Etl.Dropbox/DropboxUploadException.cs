@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 
-namespace Paillave.Etl.Dropbox
+namespace Paillave.Etl.Dropbox;
+
+public class DropboxUploadException : Exception
 {
-    public class DropboxUploadException : Exception
-    {
-    }
 }

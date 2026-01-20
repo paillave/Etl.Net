@@ -11,16 +11,11 @@ public class AzureStorageAccountAdapterProviderParameters
     public string? FileNamePattern { get; set; }
 }
 
-public class AzureStorageAccountFileValueProvider : FileValueProviderBase<AzureBlobOptions, AzureStorageAccountAdapterProviderParameters>
+public class AzureStorageAccountFileValueProvider(string code, string name, string connectionName,
+                                 AzureBlobOptions connectionParameters,
+                                 AzureStorageAccountAdapterProviderParameters inputParameters) : FileValueProviderBase<AzureBlobOptions, AzureStorageAccountAdapterProviderParameters>(code, name, connectionName, connectionParameters, inputParameters)
 {
-    private readonly AzureBlobOptions connectionParameters;
-
-    public AzureStorageAccountFileValueProvider(string code, string name, string connectionName,
-                                     AzureBlobOptions connectionParameters,
-                                     AzureStorageAccountAdapterProviderParameters inputParameters) : base(code, name, connectionName, connectionParameters, inputParameters)
-    {
-        this.connectionParameters = connectionParameters;
-    }
+    private readonly AzureBlobOptions connectionParameters = connectionParameters;
 
     public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;

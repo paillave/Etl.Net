@@ -94,7 +94,7 @@ public class FileValueWriter : IFileValue
     public Stream GetContent()
     {
         this._streamWriter.Flush();
-        MemoryStream ms = new MemoryStream();
+        MemoryStream ms = new();
         this._streamWriter.BaseStream.Seek(0, SeekOrigin.Begin);
         this._streamWriter.BaseStream.CopyTo(ms);
         ms.Seek(0, SeekOrigin.Begin);

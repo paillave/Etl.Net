@@ -22,11 +22,8 @@ public class UnzipFileProcessorParams
 //     public Dictionary<string, IEnumerable<Destination>> Destinations { get; set; }
 // }
 
-public class UnzipFileProcessor : FileValueProcessorBase<object, UnzipFileProcessorParams>
+public class UnzipFileProcessor(string code, string name, string connectionName, object connectionParameters, UnzipFileProcessorParams processorParameters) : FileValueProcessorBase<object, UnzipFileProcessorParams>(code, name, connectionName, connectionParameters, processorParameters)
 {
-    public UnzipFileProcessor(string code, string name, string connectionName, object connectionParameters, UnzipFileProcessorParams processorParameters) : base(code, name, connectionName, connectionParameters, processorParameters)
-    {
-    }
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
 
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
@@ -48,7 +45,7 @@ public class UnzipFileProcessor : FileValueProcessorBase<object, UnzipFileProces
             if (cancellationToken.IsCancellationRequested) break;
             if (zipEntry.IsFile && matcher.Match(Path.GetFileName(zipEntry.Name)).HasMatches)
             {
-                MemoryStream outputStream = new MemoryStream();
+                MemoryStream outputStream = new();
                 using (var zipStream = zf.GetInputStream(zipEntry))
                     zipStream.CopyTo(outputStream, 4096);
                 outputStream.Seek(0, SeekOrigin.Begin);

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Linq.Expressions;
 
 namespace Paillave.Etl.GraphApi.Provider.Writers;
-public class GenericMethodWriter : IMethodCallWriter
+public class GenericMethodWriter(Type type, string methodName, Func<string, IEnumerable<string>, ODataExpressionConverterSettings, string> odataFunction) : IMethodCallWriter
 {
-    readonly Type type;
-    readonly string methodName;
-    readonly Func<string, IEnumerable<string>, ODataExpressionConverterSettings, string> odataFunction;
+    readonly Type type = type;
+    readonly string methodName = methodName;
+    readonly Func<string, IEnumerable<string>, ODataExpressionConverterSettings, string> odataFunction = odataFunction;
 
     public GenericMethodWriter(Type type, string methodName, string odataFunction)
         : this(type, methodName, (obj, args, s) =>
@@ -25,12 +25,6 @@ public class GenericMethodWriter : IMethodCallWriter
     }
     public GenericMethodWriter(Type type, string methodName, Func<string, IEnumerable<string>, string> odataFunction) : this(type, methodName, (a, b, c) => odataFunction(a, b))
     {
-    }
-    public GenericMethodWriter(Type type, string methodName, Func<string, IEnumerable<string>, ODataExpressionConverterSettings, string> odataFunction)
-    {
-        this.odataFunction = odataFunction;
-        this.methodName = methodName;
-        this.type = type;
     }
 
     public bool CanHandle(MethodCallExpression expression)

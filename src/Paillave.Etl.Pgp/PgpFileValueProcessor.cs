@@ -32,10 +32,8 @@ public class PgpAdapterProcessorParameters
 //     public string ParentFileName { get; set; }
 //     public Dictionary<string, IEnumerable<Destination>> Destinations { get; set; }
 // }
-public class PgpFileValueProcessor : FileValueProcessorBase<PgpAdapterConnectionParameters, PgpAdapterProcessorParameters>
+public class PgpFileValueProcessor(string code, string name, string connectionName, PgpAdapterConnectionParameters connectionParameters, PgpAdapterProcessorParameters processorParameters) : FileValueProcessorBase<PgpAdapterConnectionParameters, PgpAdapterProcessorParameters>(code, name, connectionName, connectionParameters, processorParameters)
 {
-    public PgpFileValueProcessor(string code, string name, string connectionName, PgpAdapterConnectionParameters connectionParameters, PgpAdapterProcessorParameters processorParameters)
-        : base(code, name, connectionName, connectionParameters, processorParameters) { }
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
     private EncryptionKeys CreateEncryptionKeys(PgpAdapterProcessorParameters processorParameters)

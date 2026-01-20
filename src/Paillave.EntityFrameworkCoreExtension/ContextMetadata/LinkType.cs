@@ -1,9 +1,8 @@
-namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata
+namespace Paillave.EntityFrameworkCoreExtension.ContextMetadata;
+
+public enum LinkType
 {
-    public enum LinkType
-    {
-        References,
-        Inherits,
-        Aggregates
-    }
+    References,
+    Inherits,
+    Aggregates
 }

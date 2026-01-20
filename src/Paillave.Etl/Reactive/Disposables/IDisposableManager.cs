@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Reactive.Disposables
+namespace Paillave.Etl.Reactive.Disposables;
+
+public interface IDisposableManager : IDisposable
 {
-    public interface IDisposableManager : IDisposable
-    {
-        T Set<T>(T disposable) where T:IDisposable;
-        void TryDispose(IDisposable disposable);
-        bool IsDisposed { get; }
-    }
+    T Set<T>(T disposable) where T:IDisposable;
+    void TryDispose(IDisposable disposable);
+    bool IsDisposed { get; }
 }

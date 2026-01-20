@@ -15,7 +15,7 @@ public class InMemoryFileValue : FileValueBase
         return ms;
     }
 
-    public override StreamWithResource OpenContent() => new StreamWithResource(_stream);
+    public override StreamWithResource OpenContent() => new(_stream);
 
     protected override void DeleteFile() { }
     public static IFileValue Create(Stream stream, string name)

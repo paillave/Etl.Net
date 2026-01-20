@@ -5,12 +5,9 @@ using Paillave.Etl.Reactive.Operators;
 
 namespace Paillave.Etl.JsonFile;
 
-public class ObjToJsonFileValueStreamNode<TIn>
-    : StreamNodeBase<JsonFileValue, IStream<JsonFileValue>, JsonArgsObjectStream<TIn>>
+public class ObjToJsonFileValueStreamNode<TIn>(string name, JsonArgsObjectStream<TIn> args)
+    : StreamNodeBase<JsonFileValue, IStream<JsonFileValue>, JsonArgsObjectStream<TIn>>(name, args)
 {
-    public ObjToJsonFileValueStreamNode(string name, JsonArgsObjectStream<TIn> args)
-        : base(name, args) { }
-
     public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 

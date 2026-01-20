@@ -10,16 +10,11 @@ public interface IExpressionProcessor
 {
     object ProcessMethodCall<T>(MethodCallExpression methodCall, ParameterBuilder builder, Func<ParameterBuilder, IEnumerable<T>> resultLoader, Func<Type, ParameterBuilder, IEnumerable> intermediateResultLoader);
 }
-public class ExpressionProcessor : IExpressionProcessor
+public class ExpressionProcessor(ODataExpressionConverterSettings settings, IExpressionWriter writer) : IExpressionProcessor
 {
-    private readonly IExpressionWriter _writer;
-    readonly ODataExpressionConverterSettings settings;
+    private readonly IExpressionWriter _writer = writer;
+    readonly ODataExpressionConverterSettings settings = settings;
 
-    public ExpressionProcessor(ODataExpressionConverterSettings settings, IExpressionWriter writer)
-    {
-        this.settings = settings;
-        _writer = writer;
-    }
     public ExpressionProcessor(ODataExpressionConverterSettings settings) : this(settings, new ExpressionWriter(settings))
     { }
 

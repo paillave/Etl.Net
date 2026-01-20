@@ -1,8 +1,7 @@
-﻿namespace Paillave.Etl.Core.Aggregation.AggregationInstances
+﻿namespace Paillave.Etl.Core.Aggregation.AggregationInstances;
+
+public interface IAggregationInstance
 {
-    public interface IAggregationInstance
-    {
-        void Aggregate(object? value);
-        object? GetResult();
-    }
+    void Aggregate(object? value);
+    object? GetResult();
 }

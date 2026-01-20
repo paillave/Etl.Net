@@ -63,5 +63,5 @@ public class GraphApiMailFileValue : FileValueBase
         return ms;
     }
 
-    public override StreamWithResource OpenContent() => new StreamWithResource(GetContent());
+    public override StreamWithResource OpenContent() => new(GetContent());
 }

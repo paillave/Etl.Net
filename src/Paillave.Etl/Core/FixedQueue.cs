@@ -1,19 +1,18 @@
 using System.Collections.Concurrent;
 
-namespace Paillave.Etl.Core
+namespace Paillave.Etl.Core;
+
+public class FixedQueue<T>(int limit) : ConcurrentQueue<T>
 {
-    public class FixedQueue<T> : ConcurrentQueue<T>
+    private readonly int _limit = limit;
+    private readonly object lockObject = new();
+
+    public new void Enqueue(T item)
     {
-        private int _limit;
-        private object lockObject = new object();
-        public FixedQueue(int limit) => _limit = limit;
-        public new void Enqueue(T item)
+        lock (lockObject)
         {
-            lock (lockObject)
-            {
-                base.Enqueue(item);
-                while (base.Count > _limit && base.TryDequeue(out T overflow)) ;
-            }
+            base.Enqueue(item);
+            while (base.Count > _limit && base.TryDequeue(out T overflow)) ;
         }
     }
 }

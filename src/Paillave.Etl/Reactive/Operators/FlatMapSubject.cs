@@ -8,112 +8,109 @@ using System.Linq.Expressions;
 using Paillave.Etl.Reactive.Disposables;
 using System.Threading;
 
-namespace Paillave.Etl.Reactive.Operators
+namespace Paillave.Etl.Reactive.Operators;
+
+public class FlatMapSubject<TIn, TOut>(IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory) : FlatMapSubjectBase<TIn, TOut>(sourceS, observableFactory)
 {
-    public class FlatMapSubject<TIn, TOut> : FlatMapSubjectBase<TIn, TOut>
-    {
-        public FlatMapSubject(IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory) : base(sourceS, observableFactory) { }
-        protected override IDisposableManager CreateDisposableManagerInstance() => new CollectionDisposableManager();
-    }
-    public class SwitchMapSubject<TIn, TOut> : FlatMapSubjectBase<TIn, TOut>
-    {
-        public SwitchMapSubject(IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory) : base(sourceS, observableFactory) { }
-        protected override IDisposableManager CreateDisposableManagerInstance() => new SingleDisposableManager();
-    }
-    public abstract class FlatMapSubjectBase<TIn, TOut> : PushSubject<TOut>
-    {
-        private Guid _guid = Guid.NewGuid();
+    protected override IDisposableManager CreateDisposableManagerInstance() => new CollectionDisposableManager();
+}
+public class SwitchMapSubject<TIn, TOut>(IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory) : FlatMapSubjectBase<TIn, TOut>(sourceS, observableFactory)
+{
+    protected override IDisposableManager CreateDisposableManagerInstance() => new SingleDisposableManager();
+}
+public abstract class FlatMapSubjectBase<TIn, TOut> : PushSubject<TOut>
+{
+    private readonly Guid _guid = Guid.NewGuid();
 
-        private IDisposable _sourceSubscription;
-        private IDisposableManager _outSubscriptions;
-        private Func<TIn, CancellationToken, IPushObservable<TOut>> _observableFactory;
-        private object _syncLock = new object();
+    private IDisposable _sourceSubscription;
+    private readonly IDisposableManager _outSubscriptions;
+    private readonly Func<TIn, CancellationToken, IPushObservable<TOut>> _observableFactory;
+    private readonly object _syncLock = new();
 
-        protected abstract IDisposableManager CreateDisposableManagerInstance();
+    protected abstract IDisposableManager CreateDisposableManagerInstance();
 
-        public FlatMapSubjectBase(IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory) : base(sourceS.CancellationToken)
+    public FlatMapSubjectBase(IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory) : base(sourceS.CancellationToken)
+    {
+        lock (_syncLock)
         {
-            lock (_syncLock)
-            {
-                _outSubscriptions = CreateDisposableManagerInstance();
-                _observableFactory = observableFactory;
-                _sourceSubscription = sourceS.Subscribe(OnSourcePush, OnSourceComplete, OnSourceException);
-            }
+            _outSubscriptions = CreateDisposableManagerInstance();
+            _observableFactory = observableFactory;
+            _sourceSubscription = sourceS.Subscribe(OnSourcePush, OnSourceComplete, OnSourceException);
         }
-        private void OnSourcePush(TIn value)
+    }
+    private void OnSourcePush(TIn value)
+    {
+        if (CancellationToken.IsCancellationRequested)
         {
-            if (CancellationToken.IsCancellationRequested)
+            return;
+        }
+        lock (_syncLock)
+        {
+            IPushObservable<TOut> outS;
+            try
             {
+                outS = _observableFactory(value, this.CancellationToken);
+            }
+            catch (Exception ex)
+            {
+                PushException(ex);
                 return;
             }
-            lock (_syncLock)
+            //TODO: Solve the bug that makes FlatMapSubjectTests.BigLoad failing
+            #region The bug is here
+            IDisposable outSubscription = null;
+            outSubscription = outS.Subscribe(base.PushValue, () =>
             {
-                IPushObservable<TOut> outS;
-                try
-                {
-                    outS = _observableFactory(value, this.CancellationToken);
-                }
-                catch (Exception ex)
-                {
-                    PushException(ex);
-                    return;
-                }
-                //TODO: Solve the bug that makes FlatMapSubjectTests.BigLoad failing
-                #region The bug is here
-                IDisposable outSubscription = null;
-                outSubscription = outS.Subscribe(base.PushValue, () =>
-                {
-                    _outSubscriptions.TryDispose(outSubscription);
-                    TryComplete();
-                }, base.PushException);
-                var deferred = outS as IDeferredPushObservable<TOut>;
-                _outSubscriptions.Set(outSubscription);
-                if (deferred != null) deferred.Start();
-                #endregion
-            }
-        }
-
-        private void TryComplete()
-        {
-            if (this._sourceSubscription == null && this._outSubscriptions.IsDisposed)
-            {
-                this.Complete();
-            }
-        }
-
-        private void OnSourceComplete()
-        {
-            lock (_syncLock)
-            {
-                this._sourceSubscription = null;
+                _outSubscriptions.TryDispose(outSubscription);
                 TryComplete();
-            }
-        }
-        private void OnSourceException(Exception ex)
-        {
-            this.PushException(ex);
-        }
-
-        public override void Dispose()
-        {
-            lock (_syncLock)
-            {
-                base.Dispose();
-                _sourceSubscription?.Dispose();
-                _outSubscriptions.Dispose();
-            }
+            }, base.PushException);
+            var deferred = outS as IDeferredPushObservable<TOut>;
+            _outSubscriptions.Set(outSubscription);
+            if (deferred != null) deferred.Start();
+            #endregion
         }
     }
 
-    public static partial class ObservableExtensions
+    private void TryComplete()
     {
-        public static IPushObservable<TOut> FlatMap<TIn, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory) //PERMIT TO BE SYNCHRONE
+        if (this._sourceSubscription == null && this._outSubscriptions.IsDisposed)
         {
-            return new FlatMapSubject<TIn, TOut>(sourceS, observableFactory);
+            this.Complete();
         }
-        public static IPushObservable<TOut> SwitchMap<TIn, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory)
+    }
+
+    private void OnSourceComplete()
+    {
+        lock (_syncLock)
         {
-            return new SwitchMapSubject<TIn, TOut>(sourceS, observableFactory);
+            this._sourceSubscription = null;
+            TryComplete();
         }
+    }
+    private void OnSourceException(Exception ex)
+    {
+        this.PushException(ex);
+    }
+
+    public override void Dispose()
+    {
+        lock (_syncLock)
+        {
+            base.Dispose();
+            _sourceSubscription?.Dispose();
+            _outSubscriptions.Dispose();
+        }
+    }
+}
+
+public static partial class ObservableExtensions
+{
+    public static IPushObservable<TOut> FlatMap<TIn, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory) //PERMIT TO BE SYNCHRONE
+    {
+        return new FlatMapSubject<TIn, TOut>(sourceS, observableFactory);
+    }
+    public static IPushObservable<TOut> SwitchMap<TIn, TOut>(this IPushObservable<TIn> sourceS, Func<TIn, CancellationToken, IPushObservable<TOut>> observableFactory)
+    {
+        return new SwitchMapSubject<TIn, TOut>(sourceS, observableFactory);
     }
 }

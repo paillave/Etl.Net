@@ -1,10 +1,9 @@
-namespace Paillave.Pdf
+namespace Paillave.Pdf;
+
+public interface IBounds
 {
-    public interface IBounds
-    {
-        double Top { get; }
-        double Bottom { get; }
-        double Left { get; }
-        double Right { get; }
-    }
+    double Top { get; }
+    double Bottom { get; }
+    double Left { get; }
+    double Right { get; }
 }

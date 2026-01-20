@@ -12,15 +12,15 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave;
 
 public abstract class BulkUpdateEngineBase<T, TSource> where T : class
 {
-    private List<IProperty> _propertiesToUpdate; // any column except pivot, computed
-    private List<IProperty> _propertiesForPivot; // pivot columns
-    private List<IProperty> _propertiesToBulkLoad; // any column except computed that is not pivot
-    private IDictionary<string, MemberInfo> _propertyGetters;
-    private IEntityType _baseType;
+    private readonly List<IProperty> _propertiesToUpdate; // any column except pivot, computed
+    private readonly List<IProperty> _propertiesForPivot; // pivot columns
+    private readonly List<IProperty> _propertiesToBulkLoad; // any column except computed that is not pivot
+    private readonly IDictionary<string, MemberInfo> _propertyGetters;
+    private readonly IEntityType _baseType;
     protected StoreObjectIdentifier StoreObject { get; }
 
-    private string? _schema;
-    private string _table;
+    private readonly string? _schema;
+    private readonly string _table;
     private readonly DbContext _context;
     protected abstract UpdateContextQueryBase<TSource> CreateUpdateContextQueryInstance(DbContext context, string? schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType, IDictionary<string, MemberInfo> propertiesGetter);
     private IEnumerable<IEntityType> GetAllRelatedEntityTypes(IEntityType et)

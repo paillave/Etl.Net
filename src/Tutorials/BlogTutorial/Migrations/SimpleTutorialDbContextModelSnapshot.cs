@@ -8,178 +8,177 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BlogTutorial.Migrations
+namespace BlogTutorial.Migrations;
+
+[DbContext(typeof(SimpleTutorialDbContext))]
+partial class SimpleTutorialDbContextModelSnapshot : ModelSnapshot
 {
-    [DbContext(typeof(SimpleTutorialDbContext))]
-    partial class SimpleTutorialDbContextModelSnapshot : ModelSnapshot
+    protected override void BuildModel(ModelBuilder modelBuilder)
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+        modelBuilder
+            .HasAnnotation("ProductVersion", "9.0.0")
+            .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+        SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BlogTutorial.DataAccess.Author", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+        modelBuilder.Entity("BlogTutorial.DataAccess.Author", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                b.Property<string>("Email")
+                    .IsRequired()
+                    .HasMaxLength(250)
+                    .HasColumnType("nvarchar(250)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
+                b.HasIndex("Email")
+                    .IsUnique();
 
-                    b.ToTable("Author", (string)null);
-                });
+                b.ToTable("Author", (string)null);
+            });
 
-            modelBuilder.Entity("BlogTutorial.DataAccess.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+        modelBuilder.Entity("BlogTutorial.DataAccess.Category", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                b.Property<string>("Code")
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("Code")
-                        .IsUnique();
+                b.HasIndex("Code")
+                    .IsUnique();
 
-                    b.ToTable("Category", (string)null);
-                });
+                b.ToTable("Category", (string)null);
+            });
 
-            modelBuilder.Entity("BlogTutorial.DataAccess.ExecutionLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+        modelBuilder.Entity("BlogTutorial.DataAccess.ExecutionLog", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("DateTime")
+                    .HasColumnType("datetime2");
 
-                    b.Property<string>("EventType")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                b.Property<string>("EventType")
+                    .IsRequired()
+                    .HasMaxLength(250)
+                    .HasColumnType("nvarchar(250)");
 
-                    b.Property<Guid>("ExecutionId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("ExecutionId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Message")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("ExecutionLog", (string)null);
-                });
+                b.ToTable("ExecutionLog", (string)null);
+            });
 
-            modelBuilder.Entity("BlogTutorial.DataAccess.Post", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+        modelBuilder.Entity("BlogTutorial.DataAccess.Post", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
+                b.Property<int>("AuthorId")
+                    .HasColumnType("int");
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
+                b.Property<int?>("CategoryId")
+                    .HasColumnType("int");
 
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("DateTime")
+                    .HasColumnType("datetime2");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
+                b.Property<string>("Discriminator")
+                    .IsRequired()
+                    .HasMaxLength(8)
+                    .HasColumnType("nvarchar(8)");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Title")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                b.HasIndex("CategoryId");
 
-                    b.HasIndex("AuthorId", "DateTime")
-                        .IsUnique();
+                b.HasIndex("AuthorId", "DateTime")
+                    .IsUnique();
 
-                    b.ToTable("Post", (string)null);
+                b.ToTable("Post", (string)null);
 
-                    b.HasDiscriminator().HasValue("Post");
+                b.HasDiscriminator().HasValue("Post");
 
-                    b.UseTphMappingStrategy();
-                });
+                b.UseTphMappingStrategy();
+            });
 
-            modelBuilder.Entity("BlogTutorial.DataAccess.LinkPost", b =>
-                {
-                    b.HasBaseType("BlogTutorial.DataAccess.Post");
+        modelBuilder.Entity("BlogTutorial.DataAccess.LinkPost", b =>
+            {
+                b.HasBaseType("BlogTutorial.DataAccess.Post");
 
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Url")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.HasDiscriminator().HasValue("LinkPost");
-                });
+                b.HasDiscriminator().HasValue("LinkPost");
+            });
 
-            modelBuilder.Entity("BlogTutorial.DataAccess.TextPost", b =>
-                {
-                    b.HasBaseType("BlogTutorial.DataAccess.Post");
+        modelBuilder.Entity("BlogTutorial.DataAccess.TextPost", b =>
+            {
+                b.HasBaseType("BlogTutorial.DataAccess.Post");
 
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Text")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.HasDiscriminator().HasValue("TextPost");
-                });
+                b.HasDiscriminator().HasValue("TextPost");
+            });
 
-            modelBuilder.Entity("BlogTutorial.DataAccess.Post", b =>
-                {
-                    b.HasOne("BlogTutorial.DataAccess.Author", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+        modelBuilder.Entity("BlogTutorial.DataAccess.Post", b =>
+            {
+                b.HasOne("BlogTutorial.DataAccess.Author", "Author")
+                    .WithMany()
+                    .HasForeignKey("AuthorId")
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
 
-                    b.HasOne("BlogTutorial.DataAccess.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                b.HasOne("BlogTutorial.DataAccess.Category", "Category")
+                    .WithMany()
+                    .HasForeignKey("CategoryId")
+                    .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("Author");
+                b.Navigation("Author");
 
-                    b.Navigation("Category");
-                });
+                b.Navigation("Category");
+            });
 #pragma warning restore 612, 618
-        }
     }
 }

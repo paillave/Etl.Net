@@ -4,121 +4,120 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace Paillave.Etl.Core
+namespace Paillave.Etl.Core;
+
+public class ObjectBuilder
 {
-    public class ObjectBuilder
+    public static object CreateInstance(Type type, Dictionary<string, object> values) => new ObjectBuilder(type) { Values = values }.CreateInstance();
+    private readonly ParameterInfo[] _anonymousConstructorParameters;
+    private readonly IDictionary<string, PropertyInfo> _nonAnonymousPropertyInfos;
+    private readonly bool _isOutputAnonymous;
+    private readonly Type _outType;
+    public IReadOnlyDictionary<string, Type> Types { get; }
+    public IDictionary<string, object> Values { get; private set; } = new Dictionary<string, object>();
+    public ObjectBuilder(Type outType, bool presetDefaultValues = false)
     {
-        public static object CreateInstance(Type type, Dictionary<string, object> values) => new ObjectBuilder(type) { Values = values }.CreateInstance();
-        private readonly ParameterInfo[] _anonymousConstructorParameters;
-        private readonly IDictionary<string, PropertyInfo> _nonAnonymousPropertyInfos;
-        private readonly bool _isOutputAnonymous;
-        private Type _outType;
-        public IReadOnlyDictionary<string, Type> Types { get; }
-        public IDictionary<string, object> Values { get; private set; } = new Dictionary<string, object>();
-        public ObjectBuilder(Type outType, bool presetDefaultValues = false)
+        _outType = outType;
+        _isOutputAnonymous = Attribute.IsDefined(_outType, typeof(CompilerGeneratedAttribute), false);
+        if (_isOutputAnonymous)
         {
-            _outType = outType;
-            _isOutputAnonymous = Attribute.IsDefined(_outType, typeof(CompilerGeneratedAttribute), false);
-            if (_isOutputAnonymous)
-            {
-                _anonymousConstructorParameters = _outType.GetConstructors()[0].GetParameters();
-                Types = _anonymousConstructorParameters.ToDictionary(i => i.Name, i => i.ParameterType);
-            }
-            else
-            {
-                _nonAnonymousPropertyInfos = _outType.GetProperties().ToDictionary(i => i.Name);
-                Types = _nonAnonymousPropertyInfos.ToDictionary(i => i.Key, i => i.Value.PropertyType);
-            }
-
-            if (presetDefaultValues)
-            {
-                if (_isOutputAnonymous)
-                    Values = _anonymousConstructorParameters.ToDictionary(i => i.Name, i => CreateDefaultInstance(i.ParameterType));
-                else
-                    Values = _nonAnonymousPropertyInfos.ToDictionary(i => i.Key, i => CreateDefaultInstance(i.Value.PropertyType));
-            }
-            else
-                Values = new Dictionary<string, object>();
+            _anonymousConstructorParameters = _outType.GetConstructors()[0].GetParameters();
+            Types = _anonymousConstructorParameters.ToDictionary(i => i.Name, i => i.ParameterType);
         }
-        private object CreateDefaultInstance(Type type) => type.IsValueType ? Activator.CreateInstance(type) : null;
-        public object CreateInstance()
+        else
         {
-            object ret;
-            if (_isOutputAnonymous)
-            {
-                ret = Activator.CreateInstance(_outType, _anonymousConstructorParameters.Select(i => this.Values[i.Name]).ToArray());
-            }
-            else
-            {
-                ret = Activator.CreateInstance(_outType);
-                foreach (var aggregator in this.Values)
-                    _nonAnonymousPropertyInfos[aggregator.Key].SetValue(ret, aggregator.Value);
-            }
-            return ret;
+            _nonAnonymousPropertyInfos = _outType.GetProperties().ToDictionary(i => i.Name);
+            Types = _nonAnonymousPropertyInfos.ToDictionary(i => i.Key, i => i.Value.PropertyType);
         }
 
+        if (presetDefaultValues)
+        {
+            if (_isOutputAnonymous)
+                Values = _anonymousConstructorParameters.ToDictionary(i => i.Name, i => CreateDefaultInstance(i.ParameterType));
+            else
+                Values = _nonAnonymousPropertyInfos.ToDictionary(i => i.Key, i => CreateDefaultInstance(i.Value.PropertyType));
+        }
+        else
+            Values = new Dictionary<string, object>();
     }
-    public class ObjectBuilder<TOut>
+    private object CreateDefaultInstance(Type type) => type.IsValueType ? Activator.CreateInstance(type) : null;
+    public object CreateInstance()
     {
-        private static readonly ParameterInfo[] _anonymousConstructorParameters;
-        private static readonly IDictionary<string, PropertyInfo> _nonAnonymousPropertyInfos;
-        private static readonly bool _isOutputAnonymous;
-        private static Type _outType = typeof(TOut);
-        static ObjectBuilder()
+        object ret;
+        if (_isOutputAnonymous)
         {
-            _isOutputAnonymous = Attribute.IsDefined(_outType, typeof(CompilerGeneratedAttribute), false);
-            if (_isOutputAnonymous)
-                _anonymousConstructorParameters = _outType.GetConstructors()[0].GetParameters();
-            else
-                _nonAnonymousPropertyInfos = _outType.GetProperties().ToDictionary(i => i.Name);
+            ret = Activator.CreateInstance(_outType, _anonymousConstructorParameters.Select(i => this.Values[i.Name]).ToArray());
         }
-        public IDictionary<string, object> Values { get; private set; }
-        public ObjectBuilder(bool presetDefaultValues = false)
+        else
         {
-            if (presetDefaultValues)
-            {
-                if (_isOutputAnonymous)
-                {
-                    Values = _anonymousConstructorParameters.ToDictionary(i => i.Name, i => CreateDefaultInstance(i.ParameterType));
-                }
-                else
-                {
-                    Values = _nonAnonymousPropertyInfos.ToDictionary(i => i.Key, i => CreateDefaultInstance(i.Value.PropertyType));
-                }
-            }
-            else
-                Values = new Dictionary<string, object>();
+            ret = Activator.CreateInstance(_outType);
+            foreach (var aggregator in this.Values)
+                _nonAnonymousPropertyInfos[aggregator.Key].SetValue(ret, aggregator.Value);
         }
-        private static object CreateDefaultInstance(Type type) => type.IsValueType ? Activator.CreateInstance(type) : null;
-        public TOut CreateInstance()
+        return ret;
+    }
+
+}
+public class ObjectBuilder<TOut>
+{
+    private static readonly ParameterInfo[] _anonymousConstructorParameters;
+    private static readonly IDictionary<string, PropertyInfo> _nonAnonymousPropertyInfos;
+    private static readonly bool _isOutputAnonymous;
+    private static readonly Type _outType = typeof(TOut);
+    static ObjectBuilder()
+    {
+        _isOutputAnonymous = Attribute.IsDefined(_outType, typeof(CompilerGeneratedAttribute), false);
+        if (_isOutputAnonymous)
+            _anonymousConstructorParameters = _outType.GetConstructors()[0].GetParameters();
+        else
+            _nonAnonymousPropertyInfos = _outType.GetProperties().ToDictionary(i => i.Name);
+    }
+    public IDictionary<string, object> Values { get; private set; }
+    public ObjectBuilder(bool presetDefaultValues = false)
+    {
+        if (presetDefaultValues)
         {
-            return CreateInstance(this.Values);
-        }
-        public void Merge(ObjectBuilder<TOut> ob)
-        {
-            foreach (var item in ob.Values)
-            {
-                if (item.Value != null)
-                {
-                    this.Values[item.Key] = item.Value;
-                }
-            }
-        }
-        public static TOut CreateInstance(IDictionary<string, object?> values)
-        {
-            TOut ret;
             if (_isOutputAnonymous)
             {
-                ret = (TOut)Activator.CreateInstance(_outType, _anonymousConstructorParameters.Select(i =>
-                    values.TryGetValue(i.Name, out var ret) ? ret : CreateDefaultInstance(i.ParameterType)).ToArray());
+                Values = _anonymousConstructorParameters.ToDictionary(i => i.Name, i => CreateDefaultInstance(i.ParameterType));
             }
             else
             {
-                ret = Activator.CreateInstance<TOut>();
-                foreach (var aggregator in values)
-                    _nonAnonymousPropertyInfos[aggregator.Key].SetValue(ret, aggregator.Value);
+                Values = _nonAnonymousPropertyInfos.ToDictionary(i => i.Key, i => CreateDefaultInstance(i.Value.PropertyType));
             }
-            return ret;
         }
+        else
+            Values = new Dictionary<string, object>();
+    }
+    private static object CreateDefaultInstance(Type type) => type.IsValueType ? Activator.CreateInstance(type) : null;
+    public TOut CreateInstance()
+    {
+        return CreateInstance(this.Values);
+    }
+    public void Merge(ObjectBuilder<TOut> ob)
+    {
+        foreach (var item in ob.Values)
+        {
+            if (item.Value != null)
+            {
+                this.Values[item.Key] = item.Value;
+            }
+        }
+    }
+    public static TOut CreateInstance(IDictionary<string, object?> values)
+    {
+        TOut ret;
+        if (_isOutputAnonymous)
+        {
+            ret = (TOut)Activator.CreateInstance(_outType, _anonymousConstructorParameters.Select(i =>
+                values.TryGetValue(i.Name, out var ret) ? ret : CreateDefaultInstance(i.ParameterType)).ToArray());
+        }
+        else
+        {
+            ret = Activator.CreateInstance<TOut>();
+            foreach (var aggregator in values)
+                _nonAnonymousPropertyInfos[aggregator.Key].SetValue(ret, aggregator.Value);
+        }
+        return ret;
     }
 }

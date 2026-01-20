@@ -40,7 +40,7 @@ public class EfCoreSaveArgsBuilder<TInEf, TIn, TOut>
         return args;
     }
     public EfCoreSaveArgsBuilder<TNewInEf, TIn, TNewInEf> Entity<TNewInEf>(Func<TIn, TNewInEf> getEntity) where TNewInEf : class
-        => new EfCoreSaveArgsBuilder<TNewInEf, TIn, TNewInEf>(UpdateArgs(new EfCoreSaveArgs<TNewInEf, TIn, TNewInEf>
+        => new(UpdateArgs(new EfCoreSaveArgs<TNewInEf, TIn, TNewInEf>
         {
             GetEntity = getEntity,
             GetOutput = (i, j) => j
@@ -62,7 +62,7 @@ public class EfCoreSaveArgsBuilder<TInEf, TIn, TOut>
         return this;
     }
     public EfCoreSaveArgsBuilder<TInEf, TIn, TNewOut> Output<TNewOut>(Func<TIn, TInEf, TNewOut> getOutput)
-        => new EfCoreSaveArgsBuilder<TInEf, TIn, TNewOut>(UpdateArgs(new EfCoreSaveArgs<TInEf, TIn, TNewOut>
+        => new(UpdateArgs(new EfCoreSaveArgs<TInEf, TIn, TNewOut>
         {
             GetEntity = this.Args.GetEntity,
             GetOutput = getOutput,
@@ -158,7 +158,7 @@ public class EfCoreSaveCorrelatedArgsBuilder<TInEf, TIn, TOut>
         return this;
     }
     public EfCoreSaveCorrelatedArgsBuilder<TInEf, TIn, TNewOut> Output<TNewOut>(Func<TIn, TInEf, TNewOut> getOutput)
-        => new EfCoreSaveCorrelatedArgsBuilder<TInEf, TIn, TNewOut>(UpdateArgs(new EfCoreSaveArgs<TInEf, Correlated<TIn>, Correlated<TNewOut>>
+        => new(UpdateArgs(new EfCoreSaveArgs<TInEf, Correlated<TIn>, Correlated<TNewOut>>
         {
             GetEntity = this.Args.GetEntity,
             GetOutput = (i, e) => new Correlated<TNewOut> { Row = getOutput(i.Row, e), CorrelationKeys = i.CorrelationKeys },

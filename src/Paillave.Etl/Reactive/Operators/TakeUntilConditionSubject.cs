@@ -5,60 +5,59 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Reactive.Operators
-{
-    public class TakeUntilConditionSubject<TIn> : PushSubject<TIn>
-    {
-        private object _lockObject = new object();
-        private IDisposable _disp1;
-        private Func<TIn, bool> _condition;
-        private bool _included;
-        public TakeUntilConditionSubject(IPushObservable<TIn> observable, Func<TIn, bool> condition, bool included = false) : base(observable.CancellationToken)
-        {
-            _condition = condition;
-            _included = included;
-            _disp1 = observable.Subscribe(HandleOnPush, Complete, PushException);
-        }
+namespace Paillave.Etl.Reactive.Operators;
 
-        private void HandleOnPush(TIn obj)
+public class TakeUntilConditionSubject<TIn> : PushSubject<TIn>
+{
+    private readonly object _lockObject = new();
+    private readonly IDisposable _disp1;
+    private readonly Func<TIn, bool> _condition;
+    private readonly bool _included;
+    public TakeUntilConditionSubject(IPushObservable<TIn> observable, Func<TIn, bool> condition, bool included = false) : base(observable.CancellationToken)
+    {
+        _condition = condition;
+        _included = included;
+        _disp1 = observable.Subscribe(HandleOnPush, Complete, PushException);
+    }
+
+    private void HandleOnPush(TIn obj)
+    {
+        if (CancellationToken.IsCancellationRequested)
         {
-            if (CancellationToken.IsCancellationRequested)
+            return;
+        }
+        lock (_lockObject)
+        {
+            if (!this.IsComplete)
             {
-                return;
-            }
-            lock (_lockObject)
-            {
-                if (!this.IsComplete)
+                try
                 {
-                    try
+                    bool conditionReached = _condition(obj);
+                    if (conditionReached)
                     {
-                        bool conditionReached = _condition(obj);
-                        if (conditionReached)
-                        {
-                            if (_included) PushValue(obj);
-                            Complete();
-                        }
-                        else
-                            PushValue(obj);
+                        if (_included) PushValue(obj);
+                        Complete();
                     }
-                    catch (Exception ex)
-                    {
-                        PushException(ex);
-                    }
+                    else
+                        PushValue(obj);
+                }
+                catch (Exception ex)
+                {
+                    PushException(ex);
                 }
             }
         }
-        public override void Dispose()
-        {
-            _disp1.Dispose();
-            base.Dispose();
-        }
     }
-    public static partial class ObservableExtensions
+    public override void Dispose()
     {
-        public static IPushObservable<TIn> TakeUntil<TIn>(this IPushObservable<TIn> observable, Func<TIn, bool> condition, bool included = false)
-        {
-            return new TakeUntilConditionSubject<TIn>(observable, condition, included);
-        }
+        _disp1.Dispose();
+        base.Dispose();
+    }
+}
+public static partial class ObservableExtensions
+{
+    public static IPushObservable<TIn> TakeUntil<TIn>(this IPushObservable<TIn> observable, Func<TIn, bool> condition, bool included = false)
+    {
+        return new TakeUntilConditionSubject<TIn>(observable, condition, included);
     }
 }

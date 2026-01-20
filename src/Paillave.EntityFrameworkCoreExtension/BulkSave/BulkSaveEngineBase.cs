@@ -13,18 +13,18 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave;
 
 public abstract class BulkSaveEngineBase<T> : IDisposable where T : class
 {
-    private List<IProperty> _propertiesToInsert; // any column except computed
-    private List<IProperty> _propertiesToUpdate; // any column except pivot, computed
+    private readonly List<IProperty> _propertiesToInsert; // any column except computed
+    private readonly List<IProperty> _propertiesToUpdate; // any column except pivot, computed
                                                  // private HashSet<string> _propertiesNotToBeUpdatedToNull = new HashSet<string>();
-    private List<List<IProperty>> _propertiesForPivotSet; // pivot columns
+    private readonly List<List<IProperty>> _propertiesForPivotSet; // pivot columns
                                                           // private List<IProperty> _propertiesForPivot; // pivot columns
-    private List<IProperty> _propertiesToGetAfterSetInTarget; // computed, and with default value column
-    private List<IProperty> _propertiesToBulkLoad; // any column except computed that is not pivot
-    private List<IEntityType> _entityTypes;
+    private readonly List<IProperty> _propertiesToGetAfterSetInTarget; // computed, and with default value column
+    private readonly List<IProperty> _propertiesToBulkLoad; // any column except computed that is not pivot
+    private readonly List<IEntityType> _entityTypes;
 
     protected StoreObjectIdentifier StoreObject { get; }
-    private string? _schema;
-    private string _table;
+    private readonly string? _schema;
+    private readonly string _table;
     private bool disposedValue;
     private readonly DbContext _context;
     protected abstract SaveContextQueryBase<T> CreateSaveContextQueryInstance(DbContext context, string? schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<List<IProperty>> propertiesForPivotSet, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes, CancellationToken cancellationToken);

@@ -21,19 +21,32 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var tmp = new SmtpMessaging(new MailAdapterConnectionParameters
+        var tmp = new GraphApi.GraphApiMessaging(new GraphApiAdapterConnectionParameters
         {
-            Server = "localhost",
-            PortNumber = 2525,
             From = "support@fundprocess.lu",
-            FromDisplayName = "FundProcess Support",
+            FromDisplayName = "FundProcess in Development",
+            MaxAttempts = 3,
         });
         tmp.Send(null, "Test subject", "This is the body", false, [new MessageContact
             {
-                Email="recipient@email.com",
+                Email="stephane.royer@fundprocess.lu",
                 DisplayName="Recipient Name"
             }]);
-        await SimplyImport2Async(args);
+        // var tmp = new SmtpMessaging(new MailAdapterConnectionParameters
+        // {
+        //     From = "support@fundprocess.lu",
+        //     FromDisplayName = "FundProcess in Development",
+        //     MaxAttempts = 3,
+        //     PortNumber = 587,
+        //     Server = "smtp-relay.brevo.com",
+        //     Ssl = false,
+        // });
+        // tmp.Send(null, "Test subject", "This is the body", false, [new MessageContact
+        //     {
+        //         Email="recipient@email.com",
+        //         DisplayName="Recipient Name"
+        //     }]);
+        // await SimplyImport2Async(args);
         // CreateConnectorConfigurationFileSchema();
         // await ConnectorTestAsync(args);
         // await ImportAndCreateFileAsync(args);
@@ -52,6 +65,13 @@ class Program
 
 
 
+    // "FUNDPROCESS_Messaging__Properties__From": "support@fundprocess.lu",
+    // "FUNDPROCESS_Messaging__Properties__FromDisplayName": "FundProcess in Development",
+    // "FUNDPROCESS_Messaging__Properties__MaxAttempts": "3",
+    // "FUNDPROCESS_Messaging__Properties__PortNumber": "587",
+    // "FUNDPROCESS_Messaging__Properties__Server": "smtp-relay.brevo.com",
+    // "FUNDPROCESS_Messaging__Properties__Ssl": "false",
+    // "FUNDPROCESS_Messaging__Type": "Smtp",
 
 
 
@@ -126,7 +146,7 @@ class Program
 
 
         var services = new ServiceCollection()
-            .AddPooledDbContextFactory<DataAccess.TestDbContext>(options => options.UseSqlServer(@"Server=localhost,1433;Initial Catalog=TestEtl;Persist Security Info=False;User ID=SA;Password=<YourStrong@Passw0rd>;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=true;Connection Timeout=300;", options => options
+            .AddPooledDbContextFactory<DataAccess.TestDbContext>(options => options.UseSqlServer(@"Server=localhost,1433;Initial Catalog=TestEtl;Persist Security Info=False;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=true;Connection Timeout=300;", options => options
                 .CommandTimeout(2000)
                 .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)))
             .AddTransient<DbContext>(sp => sp

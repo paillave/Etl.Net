@@ -1,48 +1,47 @@
 ﻿using Paillave.Etl.Reactive.Core;
 using System;
 
-namespace Paillave.Etl.Reactive.Operators
-{
-    public class CompletedSubject<TIn> : PushSubject<int>
-    {
-        private IDisposable _subscription;
-        private int _count = 0;
-        private object _lockSync = new object();
-        public CompletedSubject(IPushObservable<TIn> observable) : base(observable.CancellationToken)
-        {
-            _subscription = observable.Subscribe(i =>
-            {
-                if (CancellationToken.IsCancellationRequested)
-                {
-                    return;
-                }
-                lock (_lockSync)
-                {
-                    _count++;
-                }
-            }, this.HandleComplete, this.PushException);
-        }
+namespace Paillave.Etl.Reactive.Operators;
 
-        private void HandleComplete()
+public class CompletedSubject<TIn> : PushSubject<int>
+{
+    private readonly IDisposable _subscription;
+    private int _count = 0;
+    private readonly object _lockSync = new();
+    public CompletedSubject(IPushObservable<TIn> observable) : base(observable.CancellationToken)
+    {
+        _subscription = observable.Subscribe(i =>
         {
+            if (CancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             lock (_lockSync)
             {
-                PushValue(_count);
-                base.Complete();
+                _count++;
             }
-        }
+        }, this.HandleComplete, this.PushException);
+    }
 
-        public override void Dispose()
+    private void HandleComplete()
+    {
+        lock (_lockSync)
         {
-            base.Dispose();
-            _subscription.Dispose();
+            PushValue(_count);
+            base.Complete();
         }
     }
-    public static partial class ObservableExtensions
+
+    public override void Dispose()
     {
-        public static IPushObservable<int> Completed<TIn>(this IPushObservable<TIn> observable)
-        {
-            return new CompletedSubject<TIn>(observable);
-        }
+        base.Dispose();
+        _subscription.Dispose();
+    }
+}
+public static partial class ObservableExtensions
+{
+    public static IPushObservable<int> Completed<TIn>(this IPushObservable<TIn> observable)
+    {
+        return new CompletedSubject<TIn>(observable);
     }
 }

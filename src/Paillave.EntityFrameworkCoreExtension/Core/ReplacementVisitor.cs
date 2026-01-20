@@ -1,20 +1,13 @@
 using System.Linq.Expressions;
 
-namespace Paillave.EntityFrameworkCoreExtension.Core
+namespace Paillave.EntityFrameworkCoreExtension.Core;
+
+public class ReplacementVisitor(Expression original, Expression replacement) : ExpressionVisitor
 {
-    public class ReplacementVisitor : ExpressionVisitor
+    private readonly Expression original = original, replacement = replacement;
+
+    public override Expression? Visit(Expression? node)
     {
-        private readonly Expression original, replacement;
-
-        public ReplacementVisitor(Expression original, Expression replacement)
-        {
-            this.original = original;
-            this.replacement = replacement;
-        }
-
-        public override Expression? Visit(Expression? node)
-        {
-            return node == original ? replacement : base.Visit(node);
-        }
+        return node == original ? replacement : base.Visit(node);
     }
 }

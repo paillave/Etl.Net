@@ -20,9 +20,9 @@ public class SqlCommandValueProviderArgsBuilder<TIn>
     public SqlCommandValueProviderArgsBuilder() { }
 
     public SqlCommandValueProviderWithQueryArgsBuilder<TIn> FromQuery(string query)
-        => new SqlCommandValueProviderWithQueryArgsBuilder<TIn>(query, _connectionName);
+        => new(query, _connectionName);
     public SqlCommandValueProviderArgsBuilder<TIn> WithKeyedConnection(string keyedConnection)
-        => new SqlCommandValueProviderArgsBuilder<TIn>(keyedConnection);
+        => new(keyedConnection);
 }
 public class SqlCommandValueProviderWithQueryArgsBuilder<TIn>
 {
@@ -30,19 +30,19 @@ public class SqlCommandValueProviderWithQueryArgsBuilder<TIn>
     private readonly string _connectionName;
     public SqlCommandValueProviderWithQueryArgsBuilder(string query, string connectionName) => (_query, _connectionName) = (query, connectionName);
     public SqlCommandValueProviderArgsBuilder<TIn, TOut> WithMapping<TOut>()
-        => new SqlCommandValueProviderArgsBuilder<TIn, TOut>(SqlResultMapDefinition.Create<TOut>(), _query, _connectionName);
+        => new(SqlResultMapDefinition.Create<TOut>(), _query, _connectionName);
     public SqlCommandValueProviderArgsBuilder<TIn, TOut> WithMapping<TOut>(Expression<Func<ISqlResultMapper, TOut>> expression)
-        => new SqlCommandValueProviderArgsBuilder<TIn, TOut>(SqlResultMapDefinition.Create<TOut>(expression), _query, _connectionName);
+        => new(SqlResultMapDefinition.Create<TOut>(expression), _query, _connectionName);
 }
 public class SqlCommandValueProviderArgsBuilder<TIn, TOut>
 {
-    private SqlResultMapDefinition<TOut> _mapping;
+    private readonly SqlResultMapDefinition<TOut> _mapping;
     private readonly string _query;
     private readonly string _connectionName;
     public SqlCommandValueProviderArgsBuilder(SqlResultMapDefinition<TOut> mapping, string query, string connectionName)
         => (_mapping, _query, _connectionName) = (mapping, query, connectionName);
     internal SqlCommandValueProviderArgs<TIn, TOut> GetArgs()
-        => new SqlCommandValueProviderArgs<TIn, TOut>
+        => new()
         {
             ConnectionName = _connectionName,
             Mapping = _mapping,
@@ -58,7 +58,7 @@ public class SqlCommandValueProviderArgs<TIn, TOut>
 public class SqlCommandValueProvider<TIn, TOut> : ValuesProviderBase<TIn, TOut>
 {
     private readonly SqlCommandValueProviderArgs<TIn, TOut> _args;
-    private static IDictionary<string, PropertyInfo> _inPropertyInfos = typeof(TIn).GetProperties().ToDictionary(i => i.Name, StringComparer.InvariantCultureIgnoreCase);
+    private static readonly IDictionary<string, PropertyInfo> _inPropertyInfos = typeof(TIn).GetProperties().ToDictionary(i => i.Name, StringComparer.InvariantCultureIgnoreCase);
     public SqlCommandValueProvider(SqlCommandValueProviderArgs<TIn, TOut> args) => (_args) = (args);
     public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
@@ -108,7 +108,7 @@ internal static class ConnectionEx
         command.CommandText = sqlQuery;
         command.CommandType = CommandType.Text;
         // var command = new SqlCommand(_args.SqlQuery, sqlConnection);
-        Regex getParamRegex = new Regex(@"@(?<param>\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        Regex getParamRegex = new(@"@(?<param>\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         var allMatches = getParamRegex.Matches(sqlQuery).ToList().Select(match => match.Groups["param"].Value).Distinct().ToList();
         foreach (var parameterName in allMatches)
         {

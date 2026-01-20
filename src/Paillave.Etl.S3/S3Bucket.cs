@@ -9,16 +9,10 @@ using Amazon.S3.Model;
 using Paillave.Etl.Core;
 
 namespace Paillave.Etl.S3;
-public class S3Bucket : IDisposable
+public class S3Bucket(AWSCredentials credentials, AmazonS3Config config, string bucketName) : IDisposable
 {
-    private readonly IAmazonS3 _client;
-    private readonly string _bucketName;
-
-    public S3Bucket(AWSCredentials credentials, AmazonS3Config config, string bucketName)
-    {
-        _bucketName = bucketName;
-        _client = new AmazonS3Client(credentials, config);
-    }
+    private readonly IAmazonS3 _client = new AmazonS3Client(credentials, config);
+    private readonly string _bucketName = bucketName;
 
     public async Task UploadAsync(string objectName, Stream stream, string? folder = null)
     {
@@ -55,7 +49,7 @@ public class S3Bucket : IDisposable
 
     public async Task<List<S3FileItem>> ListAsync(string? folder = null, bool? recursive = false)
     {
-        List<S3FileItem> objects = new List<S3FileItem>();
+        List<S3FileItem> objects = new();
         var request = new ListObjectsV2Request
         {
             BucketName = _bucketName,

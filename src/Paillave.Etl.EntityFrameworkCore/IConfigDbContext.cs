@@ -3,10 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Paillave.Etl.EntityFrameworkCore
+namespace Paillave.Etl.EntityFrameworkCore;
+
+public interface IConfigDbContext<TCtx> where TCtx : DbContext
 {
-    public interface IConfigDbContext<TCtx> where TCtx : DbContext
-    {
-        TCtx DbContext { get; }
-    }
+    TCtx DbContext { get; }
 }

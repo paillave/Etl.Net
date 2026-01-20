@@ -3,198 +3,191 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace Paillave.Etl.Reactive.Core
+namespace Paillave.Etl.Reactive.Core;
+
+#if ETL_DEBUG
+public static class TmpClass
 {
-#if ETL_DEBUG
-    public static class TmpClass
+    public static void Log(string line)
     {
-        public static void Log(string line)
+        using (var fs = new FileStream("/home/stephane/Desktop/log.txt", FileMode.Append))
+        using (var sr = new StreamWriter(fs))
         {
-            using (var fs = new FileStream("/home/stephane/Desktop/log.txt", FileMode.Append))
-            using (var sr = new StreamWriter(fs))
-            {
-                sr.WriteLine(line);
-                fs.Flush();
-                sr.Flush();
-            }
+            sr.WriteLine(line);
+            fs.Flush();
+            sr.Flush();
         }
     }
-    public static class TypeEx
+}
+public static class TypeEx
+{
+    public static string GetFullName(this Type type)
     {
-        public static string GetFullName(this Type type)
+        if (type.IsGenericType)
         {
-            if (type.IsGenericType)
-            {
-                return $"{type.Name.Split("`")[0]}<{string.Join(",", type.GetGenericArguments().Select(i => i.GetFullName()))}>";
-            }
-            else
-            {
-                return $"{type.Name}";
-            }
+            return $"{type.Name.Split("`")[0]}<{string.Join(",", type.GetGenericArguments().Select(i => i.GetFullName()))}>";
+        }
+        else
+        {
+            return $"{type.Name}";
         }
     }
+}
 #endif
-    public class PushSubject<T> : IPushSubject<T>
+public class PushSubject<T> : IPushSubject<T>
+{
+    public CancellationToken CancellationToken { get; }
+    private readonly Guid _id = Guid.NewGuid();
+    public PushSubject(CancellationToken cancellationToken)
     {
-        public CancellationToken CancellationToken { get; }
-        private Guid _id = Guid.NewGuid();
-        public PushSubject(CancellationToken cancellationToken)
-        {
 #if ETL_DEBUG
-            var msg = $"{_id}\t<{this.GetType().GetFullName()}>\tCreated";
+        var msg = $"{_id}\t<{this.GetType().GetFullName()}>\tCreated";
+        Console.WriteLine(msg);
+        TmpClass.Log(msg);
+#endif
+        this.CancellationToken = cancellationToken;
+        cancellationToken.Register(this.Complete);
+    }
+
+    private bool _isComplete = false;
+    protected object LockObject = new();
+    protected ConcurrentList<ISubscription<T>> Subscriptions { get; } = new ConcurrentList<ISubscription<T>>();
+
+    public virtual IDisposable Subscribe(ISubscription<T> subscription)
+    {
+        lock (LockObject)
+        {
+            if (this._isComplete && subscription.OnComplete != null) subscription.OnComplete();
+            this.Subscriptions.Add(subscription);
+            return new Unsubscriber(this, subscription);
+        }
+    }
+    protected bool IsComplete
+    {
+        get
+        {
+            lock (LockObject)
+                return _isComplete;
+        }
+    }
+    public void  Complete()
+    {
+        lock (LockObject)
+        {
+            if (this._isComplete) return;
+#if ETL_DEBUG
+            var msg = $"{_id}\t<{this.GetType().GetFullName()}>\tCompleted";
             Console.WriteLine(msg);
             TmpClass.Log(msg);
 #endif
-            this.CancellationToken = cancellationToken;
-            cancellationToken.Register(this.Complete);
+            this._isComplete = true;
+            foreach (var item in this.Subscriptions.ToList())
+                if (item.OnComplete != null)
+                    item.OnComplete();
         }
+    }
 
-        private bool _isComplete = false;
-        protected object LockObject = new object();
-        protected ConcurrentList<ISubscription<T>> Subscriptions { get; } = new ConcurrentList<ISubscription<T>>();
+    public virtual void Dispose()
+    {
+        this.Complete();
+    }
 
-        public virtual IDisposable Subscribe(ISubscription<T> subscription)
+    public virtual void PushException(Exception exception)
+    {
+        lock (LockObject)
         {
-            lock (LockObject)
-            {
-                if (this._isComplete && subscription.OnComplete != null) subscription.OnComplete();
-                this.Subscriptions.Add(subscription);
-                return new Unsubscriber(this, subscription);
-            }
-        }
-        protected bool IsComplete
-        {
-            get
-            {
-                lock (LockObject)
-                    return _isComplete;
-            }
-        }
-        public void  Complete()
-        {
-            lock (LockObject)
-            {
-                if (this._isComplete) return;
-#if ETL_DEBUG
-                var msg = $"{_id}\t<{this.GetType().GetFullName()}>\tCompleted";
-                Console.WriteLine(msg);
-                TmpClass.Log(msg);
-#endif
-                this._isComplete = true;
+            if (!this._isComplete)
                 foreach (var item in this.Subscriptions.ToList())
-                    if (item.OnComplete != null)
-                        item.OnComplete();
-            }
+                    if (item.OnPushException != null)
+                        item.OnPushException(exception);
         }
+    }
 
-        public virtual void Dispose()
+    protected void TryPushValue(Func<T> getValue)
+    {
+        try
         {
-            this.Complete();
+            var v = getValue();
+            PushValue(v);
         }
-
-        public virtual void PushException(Exception exception)
+        catch (Exception ex)
         {
-            lock (LockObject)
-            {
-                if (!this._isComplete)
-                    foreach (var item in this.Subscriptions.ToList())
-                        if (item.OnPushException != null)
-                            item.OnPushException(exception);
-            }
+            PushException(ex);
         }
-
-        protected void TryPushValue(Func<T> getValue)
+    }
+    public void PushValue(T value)
+    {
+        if (CancellationToken.IsCancellationRequested)
         {
-            try
-            {
-                var v = getValue();
-                PushValue(v);
-            }
-            catch (Exception ex)
-            {
-                PushException(ex);
-            }
+            return;
         }
-        public void PushValue(T value)
+        lock (LockObject)
         {
-            if (CancellationToken.IsCancellationRequested)
-            {
-                return;
-            }
-            lock (LockObject)
-            {
-                if (!this._isComplete)
-                    foreach (var item in this.Subscriptions.ToList())
+            if (!this._isComplete)
+                foreach (var item in this.Subscriptions.ToList())
+                {
+                    try
                     {
-                        try
-                        {
-                            if (item.OnPushValue != null)
-                                item.OnPushValue(value);
-                        }
-                        catch (Exception ex)
-                        {
-                            if (item.OnPushException != null)
-                                item.OnPushException(ex);
-                        }
+                        if (item.OnPushValue != null)
+                            item.OnPushValue(value);
                     }
-            }
-        }
-
-        public IDisposable Subscribe(Action<T> onPush)
-        {
-            return Subscribe(new Subscription<T>(onPush));
-        }
-
-        public IDisposable Subscribe(Action<T> onPush, Action onComplete)
-        {
-            return Subscribe(new Subscription<T>(onPush, onComplete));
-        }
-
-        public IDisposable Subscribe(Action<T> onPush, Action onComplete, Action<Exception> onException)
-        {
-            return Subscribe(new Subscription<T>(onPush, onComplete, onException));
-        }
-        private class Unsubscriber : IDisposable
-        {
-            // var objSync=new Object();
-            private PushSubject<T> _observableBase;
-            private ISubscription<T> _subscription;
-
-            public Unsubscriber(PushSubject<T> observableBase, ISubscription<T> subscription)
-            {
-                this._observableBase = observableBase;
-                this._subscription = subscription;
-            }
-
-            public void Dispose()
-            {
-                this._observableBase.Subscriptions.Remove(this._subscription);
-            }
-        }
-        protected class ConcurrentList<U>
-        {
-            private List<U> lst = new List<U>();
-            private object syncObject = new Object();
-            public void Remove(U elt)
-            {
-                lock (syncObject)
-                {
-                    lst.Remove(elt);
+                    catch (Exception ex)
+                    {
+                        if (item.OnPushException != null)
+                            item.OnPushException(ex);
+                    }
                 }
-            }
-            public void Add(U elt)
+        }
+    }
+
+    public IDisposable Subscribe(Action<T> onPush)
+    {
+        return Subscribe(new Subscription<T>(onPush));
+    }
+
+    public IDisposable Subscribe(Action<T> onPush, Action onComplete)
+    {
+        return Subscribe(new Subscription<T>(onPush, onComplete));
+    }
+
+    public IDisposable Subscribe(Action<T> onPush, Action onComplete, Action<Exception> onException)
+    {
+        return Subscribe(new Subscription<T>(onPush, onComplete, onException));
+    }
+    private class Unsubscriber(PushSubject<T> observableBase, ISubscription<T> subscription) : IDisposable
+    {
+        // var objSync=new Object();
+        private readonly PushSubject<T> _observableBase = observableBase;
+        private readonly ISubscription<T> _subscription = subscription;
+
+        public void Dispose()
+        {
+            this._observableBase.Subscriptions.Remove(this._subscription);
+        }
+    }
+    protected class ConcurrentList<U>
+    {
+        private readonly List<U> lst = new();
+        private readonly object syncObject = new();
+        public void Remove(U elt)
+        {
+            lock (syncObject)
             {
-                lock (syncObject)
-                {
-                    lst.Add(elt);
-                }
+                lst.Remove(elt);
             }
-            public List<U> ToList()
+        }
+        public void Add(U elt)
+        {
+            lock (syncObject)
             {
-                lock (syncObject)
-                {
-                    return lst.ToList();
-                }
+                lst.Add(elt);
+            }
+        }
+        public List<U> ToList()
+        {
+            lock (syncObject)
+            {
+                return lst.ToList();
             }
         }
     }

@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Reactive.Core
-{
-    public enum SortOrder { Ascending, Descending }
-}
+namespace Paillave.Etl.Reactive.Core;
+
+public enum SortOrder { Ascending, Descending }

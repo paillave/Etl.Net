@@ -5,18 +5,17 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Paillave.Etl.XmlFile.Core.Mapping.Visitors
+namespace Paillave.Etl.XmlFile.Core.Mapping.Visitors;
+
+public class XmlMappingSetterVisitor : ExpressionVisitor
 {
-    public class XmlMappingSetterVisitor : ExpressionVisitor
+    public XmlFieldDefinition MappingSetter = null;
+    protected override Expression VisitMethodCall(MethodCallExpression node)
     {
-        public XmlFieldDefinition MappingSetter = null;
-        protected override Expression VisitMethodCall(MethodCallExpression node)
-        {
-            DummyFieldMapper dummyFieldMapper = new DummyFieldMapper();
-            var methodInfo = node.Method;
-            methodInfo.Invoke(dummyFieldMapper, node.Arguments.Cast<ConstantExpression>().Select(i => i.Value).ToArray());
-            this.MappingSetter = dummyFieldMapper.MappingSetter;
-            return null;
-        }
+        DummyFieldMapper dummyFieldMapper = new();
+        var methodInfo = node.Method;
+        methodInfo.Invoke(dummyFieldMapper, node.Arguments.Cast<ConstantExpression>().Select(i => i.Value).ToArray());
+        this.MappingSetter = dummyFieldMapper.MappingSetter;
+        return null;
     }
 }

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Paillave.Etl.Core
+namespace Paillave.Etl.Core;
+
+public class StreamStatisticCounter
 {
-    public class StreamStatisticCounter
-    {
-        public int Counter { get; set; }
-        public string SourceNodeName { get; set; }
-    }
+    public int Counter { get; set; }
+    public string SourceNodeName { get; set; }
 }

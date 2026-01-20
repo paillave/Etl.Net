@@ -5,7 +5,7 @@ using System.Linq;
 namespace Paillave.Etl.GraphApi.Provider.Writers;
 public class StringMemberWriter : IMemberCallWriter
 {
-    static string[] methods = { "Length" };
+    static readonly string[] methods = { "Length" };
 
     public bool CanHandle(MemberExpression expression)
     {

@@ -17,15 +17,9 @@ public interface IExpressionWriter
     string Write(Expression expression);
 }
 
-public class ExpressionWriter : IExpressionWriter
+public class ExpressionWriter(ODataExpressionConverterSettings settings) : IExpressionWriter
 {
-    readonly ODataExpressionConverterSettings settings;
-
-    public ExpressionWriter(ODataExpressionConverterSettings settings)
-    {
-        this.settings = settings;
-    }
-
+    readonly ODataExpressionConverterSettings settings = settings;
     private static readonly ExpressionType[] CompositeExpressionTypes = { ExpressionType.Or, ExpressionType.OrElse, ExpressionType.And, ExpressionType.AndAlso };
     private static readonly Type[] GroupedExpressionTypes = { typeof(BinaryExpression) };
 

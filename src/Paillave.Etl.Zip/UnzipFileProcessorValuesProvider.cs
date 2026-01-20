@@ -31,7 +31,7 @@ public class UnzipFileProcessorValuesProvider(UnzipFileProcessorParams args) : V
             if (cancellationToken.IsCancellationRequested) break;
             if (zipEntry.IsFile && matcher.Match(Path.GetFileName(zipEntry.Name)).HasMatches)
             {
-                MemoryStream outputStream = new MemoryStream();
+                MemoryStream outputStream = new();
                 using (var zipStream = zf.GetInputStream(zipEntry))
                     zipStream.CopyTo(outputStream, 4096);
                 outputStream.Seek(0, SeekOrigin.Begin);

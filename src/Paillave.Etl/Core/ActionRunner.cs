@@ -1,40 +1,39 @@
 using System;
 
-namespace Paillave.Etl.Core
+namespace Paillave.Etl.Core;
+
+public class ActionRunner
 {
-    public class ActionRunner
+    public static void TryExecute(int attempts, Action action)
     {
-        public static void TryExecute(int attempts, Action action)
+        while (attempts > 0)
         {
-            while (attempts > 0)
+            try
             {
-                try
-                {
-                    action();
-                    return;
-                }
-                catch
-                {
-                    if (--attempts <= 0) throw;
-                }
-                System.Threading.Thread.Sleep(1000);
+                action();
+                return;
             }
+            catch
+            {
+                if (--attempts <= 0) throw;
+            }
+            System.Threading.Thread.Sleep(1000);
         }
-        public static T TryExecute<T>(int attempts, Func<T> action)
+    }
+    public static T TryExecute<T>(int attempts, Func<T> action)
+    {
+        while (attempts > 0)
         {
-            while (attempts > 0)
+            try
             {
-                try
-                {
-                    return action();
-                }
-                catch(Exception ex)
-                {
-                    if (--attempts <= 0) throw;
-                }
-                System.Threading.Thread.Sleep(1000);
+                return action();
             }
-            throw new Exception($"{nameof(ActionRunner)}: This failure should not happen");
+            catch(Exception ex)
+            {
+                if (--attempts <= 0) throw;
+            }
+            System.Threading.Thread.Sleep(1000);
         }
+        throw new Exception($"{nameof(ActionRunner)}: This failure should not happen");
     }
 }

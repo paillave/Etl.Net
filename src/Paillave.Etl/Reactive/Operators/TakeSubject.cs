@@ -5,47 +5,46 @@ using System.Text;
 using System.Threading.Tasks;
 using Paillave.Etl.Reactive.Core;
 
-namespace Paillave.Etl.Reactive.Operators
+namespace Paillave.Etl.Reactive.Operators;
+
+public class TakeSubject<T> : PushSubject<T>
 {
-    public class TakeSubject<T> : PushSubject<T>
+    private readonly IDisposable _subscription;
+    private readonly object _lockObject = new();
+
+    public TakeSubject(IPushObservable<T> observable, int count) : base(observable.CancellationToken)
     {
-        private IDisposable _subscription;
-        private object _lockObject = new object();
-
-        public TakeSubject(IPushObservable<T> observable, int count) : base(observable.CancellationToken)
+        this._subscription = observable.Subscribe(i =>
         {
-            this._subscription = observable.Subscribe(i =>
+            if (CancellationToken.IsCancellationRequested)
             {
-                if (CancellationToken.IsCancellationRequested)
-                {
-                    return;
-                }
-                lock (_lockObject)
-                {
-                    count--;
-                    if (count >= 0) this.PushValue(i);
-                    if (count == 0) this.Complete();
-                }
-            }, this.Complete, (ex) =>
+                return;
+            }
+            lock (_lockObject)
             {
-                lock (_lockObject)
-                {
-                    if (count >= 0) this.PushException(ex);
-                }
-            });
-        }
-
-        public override void Dispose()
+                count--;
+                if (count >= 0) this.PushValue(i);
+                if (count == 0) this.Complete();
+            }
+        }, this.Complete, (ex) =>
         {
-            base.Dispose();
-            _subscription.Dispose();
-        }
+            lock (_lockObject)
+            {
+                if (count >= 0) this.PushException(ex);
+            }
+        });
     }
-    public static partial class ObservableExtensions
+
+    public override void Dispose()
     {
-        public static IPushObservable<T> Take<T>(this IPushObservable<T> observable, int count)
-        {
-            return new TakeSubject<T>(observable, count);
-        }
+        base.Dispose();
+        _subscription.Dispose();
+    }
+}
+public static partial class ObservableExtensions
+{
+    public static IPushObservable<T> Take<T>(this IPushObservable<T> observable, int count)
+    {
+        return new TakeSubject<T>(observable, count);
     }
 }

@@ -9,18 +9,13 @@ using System.Threading;
 
 namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer;
 
-public class SqlServerSaveContextQuery<T> : SaveContextQueryBase<T> where T : class
+public class SqlServerSaveContextQuery<T>(DbContext Context, string? schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<List<IProperty>> propertiesForPivotSet, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes, CancellationToken cancellationToken, StoreObjectIdentifier storeObject) : SaveContextQueryBase<T>(Context, schema ?? "dbo", table, propertiesToInsert, propertiesToUpdate, propertiesForPivotSet, propertiesToBulkLoad, entityTypes, cancellationToken, storeObject) where T : class
 {
     private const string TempColumnNumOrderName = "_TempColumnNumOrder";
     private const string TempColumnAction = "_Action";
     private string SqlTargetTable => $"[{this.Schema}].[{this.Table}]";
     private string SqlStagingTableName => $"[{this.Schema}].[{this.Table}_temp_{this.StagingId}]";
     private string SqlOutputStagingTableName => $"[{this.Schema}].[{this.Table}_tempoutput_{this.StagingId}]";
-
-    public SqlServerSaveContextQuery(DbContext Context, string? schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<List<IProperty>> propertiesForPivotSet, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes, CancellationToken cancellationToken, StoreObjectIdentifier storeObject)
-        : base(Context, schema ?? "dbo", table, propertiesToInsert, propertiesToUpdate, propertiesForPivotSet, propertiesToBulkLoad, entityTypes, cancellationToken, storeObject)
-    {
-    }
 
     public override int CreateStagingTable()
         => this.Context.Database.ExecuteSqlRaw(this.CreateStagingTableSql());

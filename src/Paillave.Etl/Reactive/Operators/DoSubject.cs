@@ -1,50 +1,49 @@
 ﻿using System;
 using Paillave.Etl.Reactive.Core;
 
-namespace Paillave.Etl.Reactive.Operators
+namespace Paillave.Etl.Reactive.Operators;
+
+public class DoSubject<T> : PushSubject<T>
 {
-    public class DoSubject<T> : PushSubject<T>
+    private readonly IDisposable _subscription;
+    private readonly object _syncValue = new();
+
+    public DoSubject(IPushObservable<T> observable, Action<T> action) : base(observable.CancellationToken)
     {
-        private IDisposable _subscription;
-        private object _syncValue = new object();
-
-        public DoSubject(IPushObservable<T> observable, Action<T> action) : base(observable.CancellationToken)
+        this._subscription = observable.Subscribe(i =>
         {
-            this._subscription = observable.Subscribe(i =>
+            if (CancellationToken.IsCancellationRequested)
             {
-                if (CancellationToken.IsCancellationRequested)
-                {
-                    return;
-                }
-                lock (_syncValue)
-                {
-                    try
-                    {
-                        action(i);
-                        this.PushValue(i);
-                    }
-                    catch (Exception ex)
-                    {
-                        this.PushException(ex);
-                    }
-                }
-            }, this.Complete, this.PushException);
-        }
-
-        public override void Dispose()
-        {
+                return;
+            }
             lock (_syncValue)
             {
-                base.Dispose();
-                _subscription.Dispose();
+                try
+                {
+                    action(i);
+                    this.PushValue(i);
+                }
+                catch (Exception ex)
+                {
+                    this.PushException(ex);
+                }
             }
+        }, this.Complete, this.PushException);
+    }
+
+    public override void Dispose()
+    {
+        lock (_syncValue)
+        {
+            base.Dispose();
+            _subscription.Dispose();
         }
     }
-    public static partial class ObservableExtensions
+}
+public static partial class ObservableExtensions
+{
+    public static IPushObservable<T> Do<T>(this IPushObservable<T> observable, Action<T> action)
     {
-        public static IPushObservable<T> Do<T>(this IPushObservable<T> observable, Action<T> action)
-        {
-            return new DoSubject<T>(observable, action);
-        }
+        return new DoSubject<T>(observable, action);
     }
 }

@@ -24,10 +24,10 @@ public static class GraphApiAdapterConnectionParametersEx
         return graphClient;
     }
 }
-internal class CustomAuthenticationProvider : IAuthenticationProvider
+internal class CustomAuthenticationProvider(IConfidentialClientApplication app) : IAuthenticationProvider
 {
-    private readonly IConfidentialClientApplication _app;
-    public CustomAuthenticationProvider(IConfidentialClientApplication app) => _app = app;
+    private readonly IConfidentialClientApplication _app = app;
+
     public async Task AuthenticateRequestAsync(RequestInformation request, Dictionary<string, object>? additionalAuthenticationContext = null, CancellationToken cancellationToken = default)
     {
         var result = await _app.AcquireTokenForClient(["https://graph.microsoft.com/.default"]).ExecuteAsync(cancellationToken);
