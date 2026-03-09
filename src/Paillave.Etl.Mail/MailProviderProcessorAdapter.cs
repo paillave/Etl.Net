@@ -16,6 +16,7 @@ public class MailAdapterConnectionParameters : IMailConnectionInfo
     public int MaxAttempts { get; set; } = 3;
     public bool? Tls { get; set; }
     public bool? TlsWhenAvailable { get; set; }
+    public bool? ByPassCertificateValidation { get; set; }
 }
 public class MailAdapterProcessorParameters
 {

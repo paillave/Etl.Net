@@ -10,5 +10,6 @@ namespace Paillave.Etl.Mail
         bool? Tls { get; set; }
         bool? TlsWhenAvailable { get; set; }
         int MaxAttempts { get; set; }
+        bool? ByPassCertificateValidation { get; set; }
     }
 }
