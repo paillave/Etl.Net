@@ -12,7 +12,10 @@ public static class MailAdapterConnectionParametersEx
             : connectionInfo.PortNumber;
         var client = new ImapClient();
         if (connectionInfo.ByPassCertificateValidation ?? false)
+        {
             client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+            client.CheckCertificateRevocation = false;
+        }
         if (connectionInfo.Ssl != null)
         {
             client.Connect(connectionInfo.Server, portNumber, connectionInfo.Ssl.Value);
@@ -40,7 +43,10 @@ public static class MailAdapterConnectionParametersEx
             : connectionInfo.PortNumber;
         var client = new SmtpClient();
         if (connectionInfo.ByPassCertificateValidation ?? false)
+        {
             client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+            client.CheckCertificateRevocation = false;
+        }
         if (connectionInfo.Ssl != null)
         {
             client.Connect(connectionInfo.Server, portNumber, connectionInfo.Ssl.Value);
