@@ -11,7 +11,7 @@ public static class MailAdapterConnectionParametersEx
             ? (connectionInfo.Ssl != null && connectionInfo.Ssl.Value) ? 993 : 143
             : connectionInfo.PortNumber;
         var client = new ImapClient();
-            if (connectionInfo.ByPassCertificateValidation ?? false)
+        if (connectionInfo.ByPassCertificateValidation ?? false)
             client.ServerCertificateValidationCallback = (s, c, h, e) => true;
         if (connectionInfo.Ssl != null)
         {
@@ -39,8 +39,8 @@ public static class MailAdapterConnectionParametersEx
             ? (connectionInfo.Ssl != null && connectionInfo.Ssl.Value) ? 993 : 143
             : connectionInfo.PortNumber;
         var client = new SmtpClient();
-            if (connectionInfo.ByPassCertificateValidation ?? false)
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+        if (connectionInfo.ByPassCertificateValidation ?? false)
+            client.ServerCertificateValidationCallback = (s, c, h, e) => true;
         if (connectionInfo.Ssl != null)
         {
             client.Connect(connectionInfo.Server, portNumber, connectionInfo.Ssl.Value);
