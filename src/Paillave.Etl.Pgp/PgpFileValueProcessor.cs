@@ -36,7 +36,7 @@ public class PgpFileValueProcessor(string code, string name, string connectionNa
 {
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-    private EncryptionKeys CreateEncryptionKeys(PgpAdapterProcessorParameters processorParameters)
+    private static EncryptionKeys CreateEncryptionKeys(PgpAdapterProcessorParameters processorParameters)
     {
         if (!string.IsNullOrWhiteSpace(processorParameters.Passphrase) && !string.IsNullOrWhiteSpace(processorParameters.PublicKey) && !string.IsNullOrWhiteSpace(processorParameters.PrivateKey))
             return new EncryptionKeys(processorParameters.PublicKey, processorParameters.PrivateKey, processorParameters.Passphrase);
@@ -55,7 +55,7 @@ public class PgpFileValueProcessor(string code, string name, string connectionNa
         {
             case PgpOperation.Decrypt:
                 {
-                    var encryptionKeys = CreateEncryptionKeys(processorParameters);
+                    var encryptionKeys = PgpFileValueProcessor.CreateEncryptionKeys(processorParameters);
                     var pgp = new PGP(encryptionKeys);
                     var ms = new MemoryStream();
                     pgp.Decrypt(inputStream, ms);
@@ -65,7 +65,7 @@ public class PgpFileValueProcessor(string code, string name, string connectionNa
                 break;
             case PgpOperation.Encrypt:
                 {
-                    var encryptionKeys = CreateEncryptionKeys(processorParameters);
+                    var encryptionKeys = PgpFileValueProcessor.CreateEncryptionKeys(processorParameters);
                     var pgp = new PGP(encryptionKeys);
                     var ms = new MemoryStream();
                     pgp.Encrypt(inputStream, ms);
@@ -75,7 +75,7 @@ public class PgpFileValueProcessor(string code, string name, string connectionNa
                 break;
             case PgpOperation.Sign:
                 {
-                    var encryptionKeys = CreateEncryptionKeys(processorParameters);
+                    var encryptionKeys = PgpFileValueProcessor.CreateEncryptionKeys(processorParameters);
                     var pgp = new PGP(encryptionKeys);
                     var ms = new MemoryStream();
                     pgp.Sign(inputStream, ms);
@@ -85,7 +85,7 @@ public class PgpFileValueProcessor(string code, string name, string connectionNa
                 break;
             case PgpOperation.EncryptAndSign:
                 {
-                    var encryptionKeys = CreateEncryptionKeys(processorParameters);
+                    var encryptionKeys = PgpFileValueProcessor.CreateEncryptionKeys(processorParameters);
                     var pgp = new PGP(encryptionKeys);
                     var ms = new MemoryStream();
                     pgp.EncryptAndSign(inputStream, ms);
@@ -95,7 +95,7 @@ public class PgpFileValueProcessor(string code, string name, string connectionNa
                 break;
             case PgpOperation.UnSign:
                 {
-                    var encryptionKeys = CreateEncryptionKeys(processorParameters);
+                    var encryptionKeys = PgpFileValueProcessor.CreateEncryptionKeys(processorParameters);
                     var pgp = new PGP(encryptionKeys);
                     var ms = new MemoryStream();
                     pgp.ClearSign(inputStream, ms);
@@ -105,7 +105,7 @@ public class PgpFileValueProcessor(string code, string name, string connectionNa
                 break;
             case PgpOperation.Verify:
                 {
-                    var encryptionKeys = CreateEncryptionKeys(processorParameters);
+                    var encryptionKeys = PgpFileValueProcessor.CreateEncryptionKeys(processorParameters);
                     var pgp = new PGP(encryptionKeys);
                     var ms = new MemoryStream();
                     var verified = pgp.Verify(inputStream, ms);

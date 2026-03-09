@@ -8,6 +8,7 @@ namespace Paillave.Etl.Zip;
 
 public class ZipFileProcessorParams
 {
+    [Sensitive]
     public string Password { get; set; }
     public bool UseStreamCopy { get; set; } = true;
 }

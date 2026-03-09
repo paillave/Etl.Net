@@ -11,6 +11,7 @@ namespace Paillave.Etl.Zip;
 
 public class UnzipFileProcessorParams
 {
+    [Sensitive]
     public string Password { get; set; }
     public string FileNamePattern { get; set; }
     public bool UseStreamCopy { get; set; } = true;
