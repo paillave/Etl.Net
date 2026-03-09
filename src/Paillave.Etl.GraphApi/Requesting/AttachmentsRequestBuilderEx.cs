@@ -74,7 +74,7 @@ public static class AttachmentsRequestBuilderEx
                 i.QueryParameters.Filter = builder.Filter;
                 i.QueryParameters.Select = builder.Select;
             });
-        List<TOut> output = new List<TOut>();
+        List<TOut> output = new();
         var pageIterator = Microsoft.Graph.PageIterator<Attachment, AttachmentCollectionResponse>.CreatePageIterator(graphClient, withAttachmentAttachmentsPage, m =>
         {
             output.Add(selectAttachment(m));

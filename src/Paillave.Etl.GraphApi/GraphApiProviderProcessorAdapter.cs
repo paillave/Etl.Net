@@ -5,6 +5,8 @@ namespace Paillave.Etl.GraphApi;
 
 public class GraphApiAdapterConnectionParameters : IGraphApiConnectionInfo
 {
+    public string? From { get; set; }
+    public string? FromDisplayName { get; set; }
     [Required]
     public string TenantId { get; set; }
     [Required]
@@ -15,6 +17,7 @@ public class GraphApiAdapterConnectionParameters : IGraphApiConnectionInfo
     [Required]
     public string UserId { get; set; }
     public int MaxAttempts { get; set; } = 3;
+    public bool SaveToSentItems { get; set; } = true;
 }
 public class GraphApiAdapterProcessorParameters
 {

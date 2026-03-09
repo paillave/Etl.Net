@@ -5,7 +5,7 @@ namespace Paillave.Etl.GraphApi.Provider;
 
 public class ThreadSafeStore<TKey, TValue>
 {
-    private readonly object _lock = new object();
+    private readonly object _lock = new();
     private Dictionary<TKey, TValue> _store;
     private readonly Func<TKey, TValue> _creator;
 
@@ -45,7 +45,7 @@ public class ThreadSafeStore<TKey, TValue>
                 if (_store.TryGetValue(key, out checkValue))
                     return checkValue;
 
-                Dictionary<TKey, TValue> newStore = new Dictionary<TKey, TValue>(_store);
+                Dictionary<TKey, TValue> newStore = new(_store);
                 newStore[key] = value;
 
                 _store = newStore;

@@ -12,16 +12,11 @@ namespace Paillave.EntityFrameworkCoreExtension.BulkSave;
 
 public class ObjectDataReader : IDataReader
 {
-    private class ValueAccessor
+    private class ValueAccessor(Type type)
     {
-        private HashSet<string> _relatedProperties;
-        private TypeAccessor _accessor;
+        private readonly HashSet<string> _relatedProperties = new(type.GetProperties().Select(i => i.Name));
+        private readonly TypeAccessor _accessor = TypeAccessor.Create(type);
 
-        public ValueAccessor(Type type)
-        {
-            _accessor = TypeAccessor.Create(type);
-            _relatedProperties = new HashSet<string>(type.GetProperties().Select(i => i.Name));
-        }
         public object? this[object target, string key]
         {
             get
@@ -41,7 +36,7 @@ public class ObjectDataReader : IDataReader
     private readonly string[] _memberNames;
     private readonly Type[] _effectiveTypes;
     private readonly bool[] _allowNull;
-    private string? _tempColumnNumOrderName;
+    private readonly string? _tempColumnNumOrderName;
     private int _rowCounter = 0;
     public ObjectDataReader(IEnumerable source, ObjectDataReaderConfig config)
     {
@@ -183,7 +178,7 @@ public class ObjectDataReader : IDataReader
     {
         throw new NotImplementedException();
     }
-    private Dictionary<string, Dictionary<string, bool>> _shadowOfEntityDico = new Dictionary<string, Dictionary<string, bool>>();
+    private readonly Dictionary<string, Dictionary<string, bool>> _shadowOfEntityDico = new();
     public object this[string name]
     {
         get

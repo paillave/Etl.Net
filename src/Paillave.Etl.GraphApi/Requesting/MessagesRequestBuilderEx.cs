@@ -73,7 +73,7 @@ public static class MessagesRequestBuilderEx
                 i.QueryParameters.Filter = builder.Filter;
                 i.QueryParameters.Select = builder.Select;
             });
-        List<TOut> output = new List<TOut>();
+        List<TOut> output = new();
         var pageIterator = Microsoft.Graph.PageIterator<Message, MessageCollectionResponse>.CreatePageIterator(graphClient, withAttachmentMessagesPage, m =>
         {
             output.Add(selectMessage(m));

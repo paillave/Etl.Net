@@ -5,49 +5,48 @@ using System.Text;
 using System.Threading.Tasks;
 using Paillave.Etl.Reactive.Core;
 
-namespace Paillave.Etl.Reactive.Operators
-{
-    public class DistinctUntilChangedSubject<T> : FilterSubjectBase<T>
-    {
-        private IEqualityComparer<T> _comparer;
-        private T _lastValue = default(T);
-        private bool _hasLastValue = false;
-        private object _syncValue = new object();
-        public DistinctUntilChangedSubject(IPushObservable<T> observable, IEqualityComparer<T> comparer) : base(observable)
-        {
-            lock (_syncValue)
-            {
-                _comparer = comparer;
-            }
-        }
+namespace Paillave.Etl.Reactive.Operators;
 
-        protected override bool AcceptsValue(T value)
+public class DistinctUntilChangedSubject<T> : FilterSubjectBase<T>
+{
+    private readonly IEqualityComparer<T> _comparer;
+    private T _lastValue = default(T);
+    private bool _hasLastValue = false;
+    private readonly object _syncValue = new();
+    public DistinctUntilChangedSubject(IPushObservable<T> observable, IEqualityComparer<T> comparer) : base(observable)
+    {
+        lock (_syncValue)
         {
-            lock (_syncValue)
-            {
-                if (!_hasLastValue || !_comparer.Equals(_lastValue, value))
-                {
-                    _hasLastValue = true;
-                    _lastValue = value;
-                    return true;
-                }
-                return false;
-            }
+            _comparer = comparer;
         }
     }
-    public static partial class ObservableExtensions
+
+    protected override bool AcceptsValue(T value)
     {
-        public static IPushObservable<T> DistinctUntilChanged<T>(this IPushObservable<T> observable, IEqualityComparer<T> comparer)
+        lock (_syncValue)
         {
-            return new DistinctUntilChangedSubject<T>(observable, comparer);
+            if (!_hasLastValue || !_comparer.Equals(_lastValue, value))
+            {
+                _hasLastValue = true;
+                _lastValue = value;
+                return true;
+            }
+            return false;
         }
-        public static IPushObservable<T> DistinctUntilChanged<T>(this IPushObservable<T> observable, Func<T, T, bool> comparer)
-        {
-            return new DistinctUntilChangedSubject<T>(observable, new LambdaEqualityComparer<T>(comparer));
-        }
-        public static IPushObservable<T> DistinctUntilChanged<T>(this IPushObservable<T> observable) where T : IEquatable<T>
-        {
-            return new DistinctUntilChangedSubject<T>(observable, new LambdaEqualityComparer<T>((l, r) => l.Equals(r)));
-        }
+    }
+}
+public static partial class ObservableExtensions
+{
+    public static IPushObservable<T> DistinctUntilChanged<T>(this IPushObservable<T> observable, IEqualityComparer<T> comparer)
+    {
+        return new DistinctUntilChangedSubject<T>(observable, comparer);
+    }
+    public static IPushObservable<T> DistinctUntilChanged<T>(this IPushObservable<T> observable, Func<T, T, bool> comparer)
+    {
+        return new DistinctUntilChangedSubject<T>(observable, new LambdaEqualityComparer<T>(comparer));
+    }
+    public static IPushObservable<T> DistinctUntilChanged<T>(this IPushObservable<T> observable) where T : IEquatable<T>
+    {
+        return new DistinctUntilChangedSubject<T>(observable, new LambdaEqualityComparer<T>((l, r) => l.Equals(r)));
     }
 }

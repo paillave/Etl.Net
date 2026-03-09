@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
     <PackageId>Paillave.EtlNet.Bloomberg</PackageId>
     <PackageTags>ETL .net core SSIS reactive text file bloomberg</PackageTags>
     <Product>ETL.net bloomberg files extensions</Product>

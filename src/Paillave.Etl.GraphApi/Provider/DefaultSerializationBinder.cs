@@ -8,9 +8,9 @@ namespace Paillave.Etl.GraphApi.Provider;
 /// </summary>
 public class DefaultSerializationBinder : ISerializationBinder
 {
-    internal static readonly DefaultSerializationBinder Instance = new DefaultSerializationBinder();
+    internal static readonly DefaultSerializationBinder Instance = new();
 
-    private readonly ThreadSafeStore<TypeNameKey, Type> _typeCache = new ThreadSafeStore<TypeNameKey, Type>(GetTypeFromTypeNameKey);
+    private readonly ThreadSafeStore<TypeNameKey, Type> _typeCache = new(GetTypeFromTypeNameKey);
 
     private static Type GetTypeFromTypeNameKey(TypeNameKey typeNameKey)
     {
@@ -31,16 +31,10 @@ public class DefaultSerializationBinder : ISerializationBinder
         }
     }
 
-    internal struct TypeNameKey : IEquatable<TypeNameKey>
+    internal struct TypeNameKey(string assemblyName, string typeName) : IEquatable<TypeNameKey>
     {
-        internal readonly string AssemblyName;
-        internal readonly string TypeName;
-
-        public TypeNameKey(string assemblyName, string typeName)
-        {
-            AssemblyName = assemblyName;
-            TypeName = typeName;
-        }
+        internal readonly string AssemblyName = assemblyName;
+        internal readonly string TypeName = typeName;
 
         public override int GetHashCode()
         {

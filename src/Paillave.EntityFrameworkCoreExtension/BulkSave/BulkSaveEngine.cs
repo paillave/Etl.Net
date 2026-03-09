@@ -8,12 +8,8 @@ using Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer;
 
 namespace Paillave.EntityFrameworkCoreExtension.BulkSave;
 
-public class BulkSaveEngine<T> : BulkSaveEngineBase<T> where T : class
+public class BulkSaveEngine<T>(DbContext context, params Expression<Func<T, object>>[] pivotKeys) : BulkSaveEngineBase<T>(context, pivotKeys) where T : class
 {
-    public BulkSaveEngine(DbContext context, params Expression<Func<T, object>>[] pivotKeys) : base(context, pivotKeys)
-    {
-    }
-
     protected override SaveContextQueryBase<T> CreateSaveContextQueryInstance(DbContext context, string? schema, string table, List<IProperty> propertiesToInsert, List<IProperty> propertiesToUpdate, List<List<IProperty>> propertiesForPivotSet, List<IProperty> propertiesToBulkLoad, List<IEntityType> entityTypes, CancellationToken cancellationToken)
     {
         if (context.Database.IsSqlServer())

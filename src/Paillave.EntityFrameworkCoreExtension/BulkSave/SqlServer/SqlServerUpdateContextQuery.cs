@@ -8,15 +8,10 @@ using System.Linq;
 using System.Reflection;
 
 namespace Paillave.EntityFrameworkCoreExtension.BulkSave.SqlServer;
-public class SqlServerUpdateContextQuery<T> : UpdateContextQueryBase<T>
+public class SqlServerUpdateContextQuery<T>(DbContext context, string? schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType, IDictionary<string, MemberInfo> propertiesGetter, StoreObjectIdentifier storeObject) : UpdateContextQueryBase<T>(context, schema ?? "dbo", table, propertiesToUpdate, propertiesForPivot, propertiesToBulkLoad, baseType, propertiesGetter, storeObject)
 {
     private string SqlTargetTable => $"[{this.Schema}].[{this.Table}]";
     private string SqlStagingTableName => $"[{this.Schema}].[{this.Table}_temp_{this.StagingId}]";
-
-    public SqlServerUpdateContextQuery(DbContext context, string? schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType, IDictionary<string, MemberInfo> propertiesGetter, StoreObjectIdentifier storeObject)
-        : base(context, schema ?? "dbo", table, propertiesToUpdate, propertiesForPivot, propertiesToBulkLoad, baseType, propertiesGetter, storeObject)
-    {
-    }
 
     protected virtual string CreateStagingTableSql()
         => $@"SELECT TOP 0 {string.Join(",", PropertiesToBulkLoad.Select(i => $"T.{i.GetColumnName(base.StoreObject)}"))}

@@ -1,44 +1,43 @@
 ﻿using System;
 using Paillave.Etl.Reactive.Core;
 
-namespace Paillave.Etl.Reactive.Operators
+namespace Paillave.Etl.Reactive.Operators;
+
+public abstract class FilterSubjectBase<T> : PushSubject<T>
 {
-    public abstract class FilterSubjectBase<T> : PushSubject<T>
+    private readonly IDisposable _subscription;
+
+    protected abstract bool AcceptsValue(T value);
+    private readonly object _syncValue = new();
+
+    public FilterSubjectBase(IPushObservable<T> observable) : base(observable.CancellationToken)
     {
-        private IDisposable _subscription;
+        this._subscription = observable.Subscribe(HandlePushValue, this.Complete, this.PushException);
+    }
 
-        protected abstract bool AcceptsValue(T value);
-        private object _syncValue = new object();
-
-        public FilterSubjectBase(IPushObservable<T> observable) : base(observable.CancellationToken)
+    private void HandlePushValue(T value)
+    {
+        if (CancellationToken.IsCancellationRequested)
         {
-            this._subscription = observable.Subscribe(HandlePushValue, this.Complete, this.PushException);
+            return;
         }
-
-        private void HandlePushValue(T value)
+        lock (_syncValue)
         {
-            if (CancellationToken.IsCancellationRequested)
+            try
             {
-                return;
+                if (AcceptsValue(value))
+                    this.PushValue(value);
             }
-            lock (_syncValue)
+            catch (Exception ex)
             {
-                try
-                {
-                    if (AcceptsValue(value))
-                        this.PushValue(value);
-                }
-                catch (Exception ex)
-                {
-                    this.PushException(ex);
-                }
+                this.PushException(ex);
             }
         }
+    }
 
-        public override void Dispose()
-        {
-            base.Dispose();
-            _subscription.Dispose();
-        }
+    public override void Dispose()
+    {
+        base.Dispose();
+        _subscription.Dispose();
     }
 }

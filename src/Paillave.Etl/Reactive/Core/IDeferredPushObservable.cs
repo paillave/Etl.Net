@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Reactive.Core
+namespace Paillave.Etl.Reactive.Core;
+
+public interface IDeferredPushObservable<out T>: IPushObservable<T>
 {
-    public interface IDeferredPushObservable<out T>: IPushObservable<T>
-    {
-        void Start();
-    }
+    void Start();
 }

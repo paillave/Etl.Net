@@ -30,12 +30,8 @@ public class SelectWithIndexArgs<TIn, TOut>
     public ISelectWithIndexProcessor<TIn, TOut> Processor { get; set; }
     public bool WithNoDispose { get; set; }
 }
-public class SelectWithIndexStreamNode<TIn, TOut> : StreamNodeBase<TOut, IStream<TOut>, SelectWithIndexArgs<TIn, TOut>>
+public class SelectWithIndexStreamNode<TIn, TOut>(string name, SelectWithIndexArgs<TIn, TOut> args) : StreamNodeBase<TOut, IStream<TOut>, SelectWithIndexArgs<TIn, TOut>>(name, args)
 {
-    public SelectWithIndexStreamNode(string name, SelectWithIndexArgs<TIn, TOut> args) : base(name, args)
-    {
-    }
-
     public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
@@ -55,12 +51,8 @@ public class SelectSingleArgs<TIn, TOut>
     public ISelectProcessor<TIn, TOut> Processor { get; set; }
     public bool WithNoDispose { get; set; }
 }
-public class SelectSingleStreamNode<TIn, TOut> : StreamNodeBase<TOut, ISingleStream<TOut>, SelectSingleArgs<TIn, TOut>>
+public class SelectSingleStreamNode<TIn, TOut>(string name, SelectSingleArgs<TIn, TOut> args) : StreamNodeBase<TOut, ISingleStream<TOut>, SelectSingleArgs<TIn, TOut>>(name, args)
 {
-    public SelectSingleStreamNode(string name, SelectSingleArgs<TIn, TOut> args) : base(name, args)
-    {
-    }
-
     public override ProcessImpact PerformanceImpact => ProcessImpact.Light;
 
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;

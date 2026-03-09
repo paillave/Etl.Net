@@ -5,77 +5,76 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Reactive.Operators
+namespace Paillave.Etl.Reactive.Operators;
+
+public class SkipUntilConditionSubject<TIn> : PushSubject<TIn>
 {
-    public class SkipUntilConditionSubject<TIn> : PushSubject<TIn>
+    private readonly object _lockObject = new();
+    private readonly IDisposable _disp1;
+    private bool _isTriggered = false;
+    private readonly Func<TIn, bool> _condition;
+    private readonly bool _included;
+    public SkipUntilConditionSubject(IPushObservable<TIn> observable, Func<TIn, bool> condition, bool included = true) : base(observable.CancellationToken)
     {
-        private object _lockObject = new object();
-        private IDisposable _disp1;
-        private bool _isTriggered = false;
-        private Func<TIn, bool> _condition;
-        private bool _included;
-        public SkipUntilConditionSubject(IPushObservable<TIn> observable, Func<TIn, bool> condition, bool included = true) : base(observable.CancellationToken)
-        {
-            _condition = condition;
-            _included = included;
-            _disp1 = observable.Subscribe(HandleOnPush, HandleOnComplete, HandleOnError);
-        }
+        _condition = condition;
+        _included = included;
+        _disp1 = observable.Subscribe(HandleOnPush, HandleOnComplete, HandleOnError);
+    }
 
-        private void HandleOnError(Exception ex)
+    private void HandleOnError(Exception ex)
+    {
+        lock (_lockObject)
         {
-            lock (_lockObject)
-            {
-                if (_isTriggered) PushException(ex);
-            }
+            if (_isTriggered) PushException(ex);
         }
+    }
 
-        private void HandleOnComplete()
+    private void HandleOnComplete()
+    {
+        lock (_lockObject)
         {
-            lock (_lockObject)
-            {
-                Complete();
-            }
+            Complete();
         }
+    }
 
-        private void HandleOnPush(TIn value)
+    private void HandleOnPush(TIn value)
+    {
+        if (CancellationToken.IsCancellationRequested)
         {
-            if (CancellationToken.IsCancellationRequested)
+            return;
+        }
+        lock (_lockObject)
+        {
+            if (_isTriggered) PushValue(value);
+            else
             {
-                return;
-            }
-            lock (_lockObject)
-            {
-                if (_isTriggered) PushValue(value);
-                else
+                try
                 {
-                    try
+                    bool conditionReached = _condition(value);
+                    if (conditionReached)
                     {
-                        bool conditionReached = _condition(value);
-                        if (conditionReached)
-                        {
-                            _isTriggered = true;
-                            if (_included) PushValue(value);
-                        }
+                        _isTriggered = true;
+                        if (_included) PushValue(value);
                     }
-                    catch (Exception ex)
-                    {
-                        PushException(ex);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    PushException(ex);
                 }
             }
         }
-
-        public override void Dispose()
-        {
-            _disp1.Dispose();
-            base.Dispose();
-        }
     }
-    public static partial class ObservableExtensions
+
+    public override void Dispose()
     {
-        public static IPushObservable<TIn> SkipUntil<TIn>(this IPushObservable<TIn> observable, Func<TIn, bool> condition, bool included = true)
-        {
-            return new SkipUntilConditionSubject<TIn>(observable, condition, included);
-        }
+        _disp1.Dispose();
+        base.Dispose();
+    }
+}
+public static partial class ObservableExtensions
+{
+    public static IPushObservable<TIn> SkipUntil<TIn>(this IPushObservable<TIn> observable, Func<TIn, bool> condition, bool included = true)
+    {
+        return new SkipUntilConditionSubject<TIn>(observable, condition, included);
     }
 }

@@ -1,23 +1,17 @@
 ﻿using System.Collections.Concurrent;
 
-namespace Paillave.Etl.Core
+namespace Paillave.Etl.Core;
+
+public class LimitedQueue<T>(int limit) : ConcurrentQueue<T>()
 {
-    public class LimitedQueue<T> : ConcurrentQueue<T>
+    public int Limit { get; } = limit;
+
+    public new void Enqueue(T item)
     {
-        public int Limit { get; }
-
-        public LimitedQueue(int limit) : base()
+        while (Count >= Limit)
         {
-            Limit = limit;
+            TryDequeue(out T _);
         }
-
-        public new void Enqueue(T item)
-        {
-            while (Count >= Limit)
-            {
-                TryDequeue(out T _);
-            }
-            base.Enqueue(item);
-        }
+        base.Enqueue(item);
     }
 }

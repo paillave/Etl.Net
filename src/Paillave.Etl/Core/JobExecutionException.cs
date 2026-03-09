@@ -1,14 +1,9 @@
 using System;
 using Paillave.Etl.Core;
 
-namespace Paillave.Etl.Core
+namespace Paillave.Etl.Core;
+
+public class JobExecutionException(TraceEvent traceEvent) : Exception("Job execution failed", (traceEvent.Content as UnhandledExceptionStreamTraceContent)?.Exception)
 {
-    public class JobExecutionException : Exception
-    {
-        public TraceEvent TraceEvent { get; }
-        public JobExecutionException(TraceEvent traceEvent) : base("Job execution failed", (traceEvent.Content as UnhandledExceptionStreamTraceContent)?.Exception)
-        {
-            this.TraceEvent = traceEvent;
-        }
-    }
+    public TraceEvent TraceEvent { get; } = traceEvent;
 }

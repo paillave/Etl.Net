@@ -11,9 +11,9 @@ public class ODataExpressionConverterSettings
         get; set;
     } = new ODataExpressionConverterSettings();
 
-    private readonly List<IMethodCallWriter> _methodWriters = new List<IMethodCallWriter>();
-    private readonly List<IMemberCallWriter> _memberWriters = new List<IMemberCallWriter>();
-    private readonly List<IValueWriter> _valueWriters = new List<IValueWriter>();
+    private readonly List<IMethodCallWriter> _methodWriters = new();
+    private readonly List<IMemberCallWriter> _memberWriters = new();
+    private readonly List<IValueWriter> _valueWriters = new();
 
     public IEnumerable<IMethodCallWriter> MethodCallWriters
     {

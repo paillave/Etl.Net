@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Reactive.Core
+namespace Paillave.Etl.Reactive.Core;
+
+public interface IComparer<T1, T2>
 {
-    public interface IComparer<T1, T2>
-    {
-        int Compare(T1 x, T2 y);
-    }
+    int Compare(T1 x, T2 y);
 }

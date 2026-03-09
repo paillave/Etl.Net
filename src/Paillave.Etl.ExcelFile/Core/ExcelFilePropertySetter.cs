@@ -5,75 +5,74 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 
-namespace Paillave.Etl.ExcelFile.Core
+namespace Paillave.Etl.ExcelFile.Core;
+
+public class ExcelFilePropertySetter
 {
-    public class ExcelFilePropertySetter
+    private readonly CultureInfo _cultureInfo;
+    private readonly TypeConverter _typeConverter;
+    public PropertyInfo PropertyInfo { get; }
+    public string ColumnName { get; }
+    public string Column { get; }
+    public ExcelFilePropertySetter(PropertyInfo propertyInfo, CultureInfo cultureInfo, string columnName, string column = null)
     {
-        private readonly CultureInfo _cultureInfo;
-        private readonly TypeConverter _typeConverter;
-        public PropertyInfo PropertyInfo { get; }
-        public string ColumnName { get; }
-        public string Column { get; }
-        public ExcelFilePropertySetter(PropertyInfo propertyInfo, CultureInfo cultureInfo, string columnName, string column = null)
-        {
-            this.Column = column ?? columnName;
-            this.ColumnName = columnName;
-            this.PropertyInfo = propertyInfo;
-            this._typeConverter = TypeDescriptor.GetConverter(this.PropertyInfo.PropertyType);
-            this._cultureInfo = cultureInfo;
-        }
+        this.Column = column ?? columnName;
+        this.ColumnName = columnName;
+        this.PropertyInfo = propertyInfo;
+        this._typeConverter = TypeDescriptor.GetConverter(this.PropertyInfo.PropertyType);
+        this._cultureInfo = cultureInfo;
+    }
 
-        private object Deserialize(string text)
+    private object Deserialize(string text)
+    {
+        //TODO: Better exception handleling here
+        try
         {
-            //TODO: Better exception handleling here
-            try
+            
+            if (PropertyInfo.PropertyType == typeof(DateTime) || PropertyInfo.PropertyType == typeof(DateTime?))
             {
-                
-                if (PropertyInfo.PropertyType == typeof(DateTime) || PropertyInfo.PropertyType == typeof(DateTime?))
+                if (string.IsNullOrWhiteSpace(text) && PropertyInfo.PropertyType == typeof(DateTime?)) return (DateTime?)null;
+                Double outDouble;
+                if (Double.TryParse(text, out outDouble))
                 {
-                    if (string.IsNullOrWhiteSpace(text) && PropertyInfo.PropertyType == typeof(DateTime?)) return (DateTime?)null;
-                    Double outDouble;
-                    if (Double.TryParse(text, out outDouble))
-                    {
-                        return DateTime.FromOADate(outDouble);
-                    }
-                    return DateTime.ParseExact(text.Trim(), _cultureInfo.DateTimeFormat.LongDatePattern, _cultureInfo);
+                    return DateTime.FromOADate(outDouble);
                 }
-                return _typeConverter.ConvertFromString(null, _cultureInfo, text.Trim());
-            } catch (Exception ex)
-            {
-                throw new Exception($"Error reading field '{Column}' with value '{text}' for Type {PropertyInfo.PropertyType}", ex);
+                return DateTime.ParseExact(text.Trim(), _cultureInfo.DateTimeFormat.LongDatePattern, _cultureInfo);
             }
+            return _typeConverter.ConvertFromString(null, _cultureInfo, text.Trim());
+        } catch (Exception ex)
+        {
+            throw new Exception($"Error reading field '{Column}' with value '{text}' for Type {PropertyInfo.PropertyType}", ex);
         }
+    }
 
-        public object ParsedValue { get; private set; } = null;
-        public bool SetValue(ExcelWorksheet excelWorksheet, int row, int column)
+    public object ParsedValue { get; private set; } = null;
+    public bool SetValue(ExcelWorksheet excelWorksheet, int row, int column)
+    {
+        return SetValue(excelWorksheet.GetValue(row, column));
+    }
+    private bool SetValue(object value)
+    {
+        if (value != null)
         {
-            return SetValue(excelWorksheet.GetValue(row, column));
-        }
-        private bool SetValue(object value)
-        {
-            if (value != null)
+            if (PropertyInfo.PropertyType != value.GetType())
             {
-                if (PropertyInfo.PropertyType != value.GetType())
-                {
-                    var tmpVal = value.ToString();
-                    if (string.IsNullOrEmpty(tmpVal)) return false;
-                    SetValue(tmpVal);
-                }
-                else
-                {
-                    this.ParsedValue = value;
-                }
+                var tmpVal = value.ToString();
+                if (string.IsNullOrEmpty(tmpVal)) return false;
+                SetValue(tmpVal);
             }
             else
-                return false;
-            return true;
+            {
+                this.ParsedValue = value;
+            }
         }
+        else
+            return false;
+        return true;
+    }
 
-        private void SetValue(string text)
-        {
-            this.ParsedValue = Deserialize(text);
-        }
+    private void SetValue(string text)
+    {
+        this.ParsedValue = Deserialize(text);
     }
 }

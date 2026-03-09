@@ -1,14 +1,13 @@
-﻿using System.Diagnostics;
+﻿
 
-namespace Paillave.Etl.Core
+namespace Paillave.Etl.Core;
+
+public class SortWarningStreamTraceContent : StreamTraceContentBase
 {
-    public class SortWarningStreamTraceContent : StreamTraceContentBase
+    public SortWarningStreamTraceContent() : base()
     {
-        public SortWarningStreamTraceContent() : base()
-        {
-        }
-        public override TraceLevel Level => TraceLevel.Warning;
-
-        public override string Message => $"lots of rows are sorted and therefore set in memory";
     }
+    public override EtlTraceLevel Level => EtlTraceLevel.Warning;
+
+    public override string Message => $"lots of rows are sorted and therefore set in memory";
 }

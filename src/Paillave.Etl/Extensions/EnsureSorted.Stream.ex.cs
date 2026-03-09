@@ -1,33 +1,32 @@
 using Paillave.Etl.Reactive.Core;
 using System;
 
-namespace Paillave.Etl.Core
+namespace Paillave.Etl.Core;
+
+public static partial class EnsureSortedEx
 {
-    public static partial class EnsureSortedEx
+    public static ISortedStream<TIn, TKey> EnsureSorted<TIn, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, object sortPositions = null)
     {
-        public static ISortedStream<TIn, TKey> EnsureSorted<TIn, TKey>(this IStream<TIn> stream, string name, Func<TIn, TKey> getKey, object sortPositions = null)
+        return new EnsureSortedStreamNode<TIn, TKey>(name, new EnsureSortedArgs<TIn, TKey>
         {
-            return new EnsureSortedStreamNode<TIn, TKey>(name, new EnsureSortedArgs<TIn, TKey>
-            {
-                Input = stream,
-                SortDefinition = SortDefinition.Create(getKey, sortPositions)
-            }).Output;
-        }
-        public static ISortedStream<TIn, TKey> EnsureSorted<TIn, TKey>(this IStream<TIn> stream, string name, SortDefinition<TIn, TKey> sortDefinition)
+            Input = stream,
+            SortDefinition = SortDefinition.Create(getKey, sortPositions)
+        }).Output;
+    }
+    public static ISortedStream<TIn, TKey> EnsureSorted<TIn, TKey>(this IStream<TIn> stream, string name, SortDefinition<TIn, TKey> sortDefinition)
+    {
+        return new EnsureSortedStreamNode<TIn, TKey>(name, new EnsureSortedArgs<TIn, TKey>
         {
-            return new EnsureSortedStreamNode<TIn, TKey>(name, new EnsureSortedArgs<TIn, TKey>
-            {
-                Input = stream,
-                SortDefinition = sortDefinition
-            }).Output;
-        }
-        public static ISortedStream<Correlated<TIn>, TKey> EnsureSorted<TIn, TKey>(this IStream<Correlated<TIn>> stream, string name, Func<TIn, TKey> getKey, object sortPositions = null)
+            Input = stream,
+            SortDefinition = sortDefinition
+        }).Output;
+    }
+    public static ISortedStream<Correlated<TIn>, TKey> EnsureSorted<TIn, TKey>(this IStream<Correlated<TIn>> stream, string name, Func<TIn, TKey> getKey, object sortPositions = null)
+    {
+        return new EnsureSortedStreamNode<Correlated<TIn>, TKey>(name, new EnsureSortedArgs<Correlated<TIn>, TKey>
         {
-            return new EnsureSortedStreamNode<Correlated<TIn>, TKey>(name, new EnsureSortedArgs<Correlated<TIn>, TKey>
-            {
-                Input = stream,
-                SortDefinition = SortDefinition.Create((Correlated<TIn> i) => getKey(i.Row), sortPositions)
-            }).Output;
-        }
+            Input = stream,
+            SortDefinition = SortDefinition.Create((Correlated<TIn> i) => getKey(i.Row), sortPositions)
+        }).Output;
     }
 }

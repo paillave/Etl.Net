@@ -1,0 +1,12 @@
+PortfolioCode,SecurityCode,Isin,SecurityName,SecurityClass,Issuer,Date,Value
+P1,S1,ISIN1,Security1,A,,20201021,11
+P1,S2,ISIN2,Security2,B,,20201021,12
+P1,S3,,Security3,,Issuer1,20201021,13
+P2,S5,ISIN5,Security5,D,,20201021,21
+P2,S2,ISIN2,Security2,B,,20201021,22
+P2,S3,,Security3,,Issuer1,20201021,33
+P2,S3,,Security3,,Issuer1,20201021,33
+P2,S2,ISIN2,Security2,B,,20201021,32
+P2,S3,,Security3,,Issuer1,20201021,4
+P3,S2,ISIN2,Security2,B,,20201021,32
+P3,S3,,Security3,,Issuer1,20201021,4

@@ -5,24 +5,15 @@ using System.Linq;
 
 namespace Paillave.Etl.XmlFile.Core;
 
-public class XmlNodeParsed
+public class XmlNodeParsed(string sourceName, string nodeDefinitionName, string nodePath, Type type, object value, IList<XmlNodeLevel> correlationKeys)
 {
-    public XmlNodeParsed(string sourceName, string nodeDefinitionName, string nodePath, Type type, object value, IList<XmlNodeLevel> correlationKeys)
-    {
-        SourceName = sourceName;
-        NodeDefinitionName = nodeDefinitionName;
-        NodePath = nodePath;
-        Type = type;
-        Value = value;
-        CorrelationKeys = new ReadOnlyDictionary<string, XmlNodeLevel>(correlationKeys.ToDictionary(ck => ck.Path));
-    }
-    public string SourceName { get; }
-    public string NodeDefinitionName { get; }
-    public string NodePath { get; }
-    public Type Type { get; }
-    public object Value { get; }
+    public string SourceName { get; } = sourceName;
+    public string NodeDefinitionName { get; } = nodeDefinitionName;
+    public string NodePath { get; } = nodePath;
+    public Type Type { get; } = type;
+    public object Value { get; } = value;
     public T GetValue<T>() => (T)Value;
     // public object[] ParentValues { get; internal set; }
     // public T GetValue<T>(int level = 0) => (T)(level == 0 ? Value : ParentValues[level - 1]);
-    public IReadOnlyDictionary<string, XmlNodeLevel> CorrelationKeys { get; }
+    public IReadOnlyDictionary<string, XmlNodeLevel> CorrelationKeys { get; } = new ReadOnlyDictionary<string, XmlNodeLevel>(correlationKeys.ToDictionary(ck => ck.Path));
 }

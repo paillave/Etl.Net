@@ -11,11 +11,10 @@ public class ZipFileProcessorParams
     public string Password { get; set; }
     public bool UseStreamCopy { get; set; } = true;
 }
-public class ZipFileProcessorValuesProvider : ValuesProviderBase<IFileValue, IFileValue>
+public class ZipFileProcessorValuesProvider(ZipFileProcessorParams args) : ValuesProviderBase<IFileValue, IFileValue>
 {
-    private ZipFileProcessorParams _args;
-    public ZipFileProcessorValuesProvider(ZipFileProcessorParams args)
-        => _args = args;
+    private readonly ZipFileProcessorParams _args = args;
+
     public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
     public override void PushValues(IFileValue input, Action<IFileValue> push, CancellationToken cancellationToken, IExecutionContext context)

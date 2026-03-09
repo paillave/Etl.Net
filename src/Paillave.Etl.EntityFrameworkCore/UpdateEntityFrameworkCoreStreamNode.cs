@@ -7,68 +7,67 @@ using System.Linq;
 using System.Linq.Expressions;
 using Paillave.EntityFrameworkCoreExtension.BulkSave;
 
-namespace Paillave.Etl.EntityFrameworkCore
+namespace Paillave.Etl.EntityFrameworkCore;
+
+public class UpdateEntityFrameworkCoreArgs<TEntity, TSource>
+    where TEntity : class
 {
-    public class UpdateEntityFrameworkCoreArgs<TEntity, TSource>
-        where TEntity : class
-    {
-        public IStream<TSource> SourceStream { get; set; }
-        public string? ConnectionKey { get; set; }
-        public int BatchSize { get; set; } = 10000;
-        public UpdateMode BulkLoadMode { get; set; } = UpdateMode.SqlServerBulk;
-        public Expression<Func<TSource, TEntity>> UpdateKey { get; set; }
-        public Expression<Func<TSource, TEntity>> UpdateValues { get; set; }
-    }
-    public enum UpdateMode
-    {
-        //EntityFrameworkCore,
-        SqlServerBulk
-    }
-    public class UpdateEntityFrameworkCoreStreamNode<TEntity, TSource>(string name, UpdateEntityFrameworkCoreArgs<TEntity, TSource> args)
-        : StreamNodeBase<TSource, IStream<TSource>, UpdateEntityFrameworkCoreArgs<TEntity, TSource>>(name, args)
-        where TEntity : class
-    {
-        public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
+    public IStream<TSource> SourceStream { get; set; }
+    public string? ConnectionKey { get; set; }
+    public int BatchSize { get; set; } = 10000;
+    public UpdateMode BulkLoadMode { get; set; } = UpdateMode.SqlServerBulk;
+    public Expression<Func<TSource, TEntity>> UpdateKey { get; set; }
+    public Expression<Func<TSource, TEntity>> UpdateValues { get; set; }
+}
+public enum UpdateMode
+{
+    //EntityFrameworkCore,
+    SqlServerBulk
+}
+public class UpdateEntityFrameworkCoreStreamNode<TEntity, TSource>(string name, UpdateEntityFrameworkCoreArgs<TEntity, TSource> args)
+    : StreamNodeBase<TSource, IStream<TSource>, UpdateEntityFrameworkCoreArgs<TEntity, TSource>>(name, args)
+    where TEntity : class
+{
+    public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
 
-        public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
+    public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
 
-        protected override IStream<TSource> CreateOutputStream(UpdateEntityFrameworkCoreArgs<TEntity, TSource> args)
-        {
-            var ret = args.SourceStream.Observable
-                .Chunk(args.BatchSize)
-                .Do(i =>
-                {
-                    using var ctx = this.ExecutionContext.Services.GetDbContext(args.ConnectionKey);
-                    ProcessBatch(i.ToList(), ctx, args.BulkLoadMode);
-                })
-                .FlatMap((i, ct) => PushObservable.FromEnumerable(i, ct));
-            return base.CreateUnsortedStream(ret);
-        }
-        public void ProcessBatch(List<TSource> sources, DbContext dbContext, UpdateMode bulkLoadMode)
-        {
-            switch (bulkLoadMode)
+    protected override IStream<TSource> CreateOutputStream(UpdateEntityFrameworkCoreArgs<TEntity, TSource> args)
+    {
+        var ret = args.SourceStream.Observable
+            .Chunk(args.BatchSize)
+            .Do(i =>
             {
-                //case UpdateMode.EntityFrameworkCore:
-                //    dbContext.EfUpdate(entities, Args.PivotKey);
-                //    DetachAllEntities(dbContext);
-                //    break;
-                case UpdateMode.SqlServerBulk:
-                    dbContext.BulkUpdate<TEntity, TSource>(sources, Args.UpdateKey, Args.UpdateValues);
-                    break;
-                default:
-                    break;
-            }
-        }
-        public void DetachAllEntities(DbContext dbContext)
+                using var ctx = this.ExecutionContext.Services.GetDbContext(args.ConnectionKey);
+                ProcessBatch(i.ToList(), ctx, args.BulkLoadMode);
+            })
+            .FlatMap((i, ct) => PushObservable.FromEnumerable(i, ct));
+        return base.CreateUnsortedStream(ret);
+    }
+    public void ProcessBatch(List<TSource> sources, DbContext dbContext, UpdateMode bulkLoadMode)
+    {
+        switch (bulkLoadMode)
         {
-            var changedEntriesCopy = dbContext.ChangeTracker.Entries()
-                .Where(e => e.State == EntityState.Added ||
-                            e.State == EntityState.Modified ||
-                            e.State == EntityState.Deleted)
-                .ToList();
-
-            foreach (var entry in changedEntriesCopy)
-                entry.State = EntityState.Detached;
+            //case UpdateMode.EntityFrameworkCore:
+            //    dbContext.EfUpdate(entities, Args.PivotKey);
+            //    DetachAllEntities(dbContext);
+            //    break;
+            case UpdateMode.SqlServerBulk:
+                dbContext.BulkUpdate<TEntity, TSource>(sources, Args.UpdateKey, Args.UpdateValues);
+                break;
+            default:
+                break;
         }
+    }
+    public void DetachAllEntities(DbContext dbContext)
+    {
+        var changedEntriesCopy = dbContext.ChangeTracker.Entries()
+            .Where(e => e.State == EntityState.Added ||
+                        e.State == EntityState.Modified ||
+                        e.State == EntityState.Deleted)
+            .ToList();
+
+        foreach (var entry in changedEntriesCopy)
+            entry.State = EntityState.Detached;
     }
 }

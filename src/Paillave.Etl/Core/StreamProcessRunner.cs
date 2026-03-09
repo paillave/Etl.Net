@@ -5,7 +5,7 @@ using Paillave.Etl.Reactive.Operators;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
+
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -61,7 +61,7 @@ public class StreamProcessRunner<TConfig>(Action<ISingleStream<TConfig>> jobDefi
                             chunk.First().SequenceId,
                             chunk.Last().SequenceId,
                             chunk.Count(),
-                            chunk.Any(i => i.Content.Level == System.Diagnostics.TraceLevel.Error),
+                            chunk.Any(i => i.Content.Level == EtlTraceLevel.Error),
                             chunk.Select(i => (i.Content as RowProcessStreamTraceContent)?.Row).ToList()))));
     public Task<ExecutionStatus> ExecuteAsync(TConfig config, ExecutionOptions<TConfig> options = null, CancellationToken cancellationToken = default)
     {
@@ -71,7 +71,7 @@ public class StreamProcessRunner<TConfig>(Action<ISingleStream<TConfig>> jobDefi
         var combinedCancellationToken = combinedCancellationTokenSource.Token;
 
         Guid executionId = Guid.NewGuid();
-        EventWaitHandle startSynchronizer = new EventWaitHandle(false, EventResetMode.ManualReset);
+        EventWaitHandle startSynchronizer = new(false, EventResetMode.ManualReset);
         IPushSubject<TraceEvent> traceSubject = new PushSubject<TraceEvent>(CancellationToken.None);
         IPushSubject<TConfig> startupSubject = new PushSubject<TConfig>(combinedCancellationToken);
 
@@ -92,7 +92,7 @@ public class StreamProcessRunner<TConfig>(Action<ISingleStream<TConfig>> jobDefi
             traceSubject,
             new CompositeServiceProvider(internalServices, options?.Services),
             internalCancellationTokenSource,
-            (options?.UseDetailedTraces ?? false) || (this.DebugNodeStream != null && Debugger.IsAttached));
+            (options?.UseDetailedTraces ?? false) || (this.DebugNodeStream != null && System.Diagnostics.Debugger.IsAttached));
 
         cancellationToken.Register(() => traceSubject.PushValue(new TraceEvent(
             jobExecutionContext.ExecutionId,
@@ -113,7 +113,7 @@ public class StreamProcessRunner<TConfig>(Action<ISingleStream<TConfig>> jobDefi
         var startupStream = new SingleStream<TConfig>(rootNode, startupSubject.First(), false);
         var traceStartupStream = new SingleStream<TConfig>(new NotTraceExecutionNodeContext(traceExecutionContext), traceStartupSubject.First());
         options?.TraceProcessDefinition?.Invoke(traceStream, traceStartupStream);
-        if (Debugger.IsAttached)
+        if (System.Diagnostics.Debugger.IsAttached)
             DebugTraceProcess(traceStream, traceStartupStream);
         _jobDefinition(startupStream);
         Task<List<StreamStatisticCounter>> jobExecutionStatusTask = traceStream.GetStreamStatisticsAsync();

@@ -11,7 +11,7 @@ public static class IHttpConnectionInfoEx
         IHttpAdapterParameters adapterParameters
     )
     {
-        HttpClient client = new HttpClient();
+        HttpClient client = new();
         client = ManageHeaders(client, httpConnectionInfo.HttpHeaders);
         ApplyHeaders(client, adapterParameters.AdditionalHeaders);
         client = ManageAuthentication(client, httpConnectionInfo, adapterParameters);

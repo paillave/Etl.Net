@@ -9,7 +9,7 @@ using System.Xml;
 
 namespace Paillave.Etl.XmlFile.Core;
 [Obsolete]
-public class XmlObjectReader : IXmlObjectReader
+public class XmlObjectReader(XmlFileDefinition xmlFileDefinition, string sourceName, Action<XmlNodeParsed> pushResult) : IXmlObjectReader
 {
     private class XmlReadField
     {
@@ -19,22 +19,14 @@ public class XmlObjectReader : IXmlObjectReader
         public object Value { get; set; }
     }
 
-    private HashSet<string> _xmlFieldsDefinitionSearch;
-    private HashSet<string> _xmlNodesDefinitionSearch;
+    private readonly HashSet<string> _xmlFieldsDefinitionSearch = new(xmlFileDefinition.XmlNodeDefinitions.SelectMany(nd => nd.GetXmlFieldDefinitions().Select(fd => fd.NodePath)).Distinct());
+    private readonly HashSet<string> _xmlNodesDefinitionSearch = new(xmlFileDefinition.XmlNodeDefinitions.Select(i => i.NodePath).Distinct());
 
-    private readonly List<XmlReadField> _inScopeReadFields = new List<XmlReadField>();
-    private readonly XmlFileDefinition _xmlFileDefinition;
-    private readonly string _sourceName;
-    private readonly Action<XmlNodeParsed> _pushResult;
+    private readonly List<XmlReadField> _inScopeReadFields = new();
+    private readonly XmlFileDefinition _xmlFileDefinition = xmlFileDefinition;
+    private readonly string _sourceName = sourceName;
+    private readonly Action<XmlNodeParsed> _pushResult = pushResult;
 
-    public XmlObjectReader(XmlFileDefinition xmlFileDefinition, string sourceName, Action<XmlNodeParsed> pushResult)
-    {
-        _xmlFileDefinition = xmlFileDefinition;
-        this._sourceName = sourceName;
-        this._pushResult = pushResult;
-        _xmlNodesDefinitionSearch = new HashSet<string>(xmlFileDefinition.XmlNodeDefinitions.Select(i => i.NodePath).Distinct());
-        _xmlFieldsDefinitionSearch = new HashSet<string>(xmlFileDefinition.XmlNodeDefinitions.SelectMany(nd => nd.GetXmlFieldDefinitions().Select(fd => fd.NodePath)).Distinct());
-    }
     private bool XmlReadFieldShouldBeCleanedUp(XmlReadField xmlReadField, int depth)
     {
         var depthScope = xmlReadField.Definition.DepthScope;
@@ -113,7 +105,7 @@ public class XmlObjectReader : IXmlObjectReader
 
     public void Read(Stream fileStream, CancellationToken cancellationToken)
     {
-        XmlReaderSettings xrs = new XmlReaderSettings();
+        XmlReaderSettings xrs = new();
         foreach (var item in _xmlFileDefinition.PrefixToUriNameSpacesDictionary)
             xrs.Schemas.Add(item.Key, item.Value);
         xrs.IgnoreWhitespace = true;
@@ -121,7 +113,7 @@ public class XmlObjectReader : IXmlObjectReader
         xrs.IgnoreProcessingInstructions = true;
 
         var xmlReader = XmlReader.Create(fileStream, xrs);
-        Stack<NodeLevel> nodes = new Stack<NodeLevel>();
+        Stack<NodeLevel> nodes = new();
         string lastTextValue = null;
         while (xmlReader.Read())
         {

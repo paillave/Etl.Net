@@ -1,24 +1,19 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Paillave.EntityFrameworkCoreExtension.MigrationOperations
-{
-    public class ScriptsMigration : Migration
-    {
-        private string[] _scripts = new string[] { };
-        private string _rootPath;
-        public ScriptsMigration(string rootPath, params string[] scripts)
-        {
-            _scripts = scripts;
-            _rootPath = rootPath;
-        }
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.FromScripts(OperationType.Create, _rootPath, _scripts);
-        }
+namespace Paillave.EntityFrameworkCoreExtension.MigrationOperations;
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.FromScripts(OperationType.Drop, _rootPath, _scripts);
-        }
+public class ScriptsMigration(string rootPath, params string[] scripts) : Migration
+{
+    private readonly string[] _scripts = scripts;
+    private readonly string _rootPath = rootPath;
+
+    protected override void Up(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.FromScripts(OperationType.Create, _rootPath, _scripts);
+    }
+
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.FromScripts(OperationType.Drop, _rootPath, _scripts);
     }
 }

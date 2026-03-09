@@ -2,13 +2,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace Paillave.Etl.XmlFile.Core
+namespace Paillave.Etl.XmlFile.Core;
+
+public interface IXmlNodeDefinition
 {
-    public interface IXmlNodeDefinition
-    {
-        string Name { get; }
-        string NodePath { get; }
-        Type Type { get; }
-        IList<XmlFieldDefinition> GetXmlFieldDefinitions();
-    }
+    string Name { get; }
+    string NodePath { get; }
+    Type Type { get; }
+    IList<XmlFieldDefinition> GetXmlFieldDefinitions();
 }

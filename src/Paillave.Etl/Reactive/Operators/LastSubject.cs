@@ -5,55 +5,54 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Reactive.Operators
+namespace Paillave.Etl.Reactive.Operators;
+
+public class LastSubject<T> : PushSubject<T>
 {
-    public class LastSubject<T> : PushSubject<T>
+    private readonly IDisposable _subscription;
+    private readonly object _lockObject = new();
+    private bool _hasLastValue = false;
+    private T _lastValue;
+    public LastSubject(IPushObservable<T> observable) : base(observable.CancellationToken)
     {
-        private IDisposable _subscription;
-        private object _lockObject = new object();
-        private bool _hasLastValue = false;
-        private T _lastValue;
-        public LastSubject(IPushObservable<T> observable) : base(observable.CancellationToken)
+        lock (_lockObject)
         {
-            lock (_lockObject)
-            {
-                _subscription = observable.Subscribe(HandlePushValue, HandleCompleteValue);
-            }
-        }
-
-        private void HandleCompleteValue()
-        {
-            if (CancellationToken.IsCancellationRequested)
-            {
-                return;
-            }
-            lock (_lockObject)
-            {
-                if (_hasLastValue) PushValue(_lastValue);
-                Complete();
-            }
-        }
-
-        private void HandlePushValue(T value)
-        {
-            lock (_lockObject)
-            {
-                _hasLastValue = true;
-                _lastValue = value;
-            }
-        }
-
-        public override void Dispose()
-        {
-            base.Dispose();
-            _subscription.Dispose();
+            _subscription = observable.Subscribe(HandlePushValue, HandleCompleteValue);
         }
     }
-    public static partial class ObservableExtensions
+
+    private void HandleCompleteValue()
     {
-        public static IPushObservable<TIn> Last<TIn>(this IPushObservable<TIn> observable)
+        if (CancellationToken.IsCancellationRequested)
         {
-            return new LastSubject<TIn>(observable);
+            return;
         }
+        lock (_lockObject)
+        {
+            if (_hasLastValue) PushValue(_lastValue);
+            Complete();
+        }
+    }
+
+    private void HandlePushValue(T value)
+    {
+        lock (_lockObject)
+        {
+            _hasLastValue = true;
+            _lastValue = value;
+        }
+    }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+        _subscription.Dispose();
+    }
+}
+public static partial class ObservableExtensions
+{
+    public static IPushObservable<TIn> Last<TIn>(this IPushObservable<TIn> observable)
+    {
+        return new LastSubject<TIn>(observable);
     }
 }

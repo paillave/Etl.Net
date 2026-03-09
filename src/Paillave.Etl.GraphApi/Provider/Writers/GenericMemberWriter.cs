@@ -2,23 +2,16 @@
 using System.Linq.Expressions;
 
 namespace Paillave.Etl.GraphApi.Provider.Writers;
-public class GenericMemberWriter : IMemberCallWriter
+public class GenericMemberWriter(Type type, string methodName, Func<ODataExpressionConverterSettings, string> odataFunction) : IMemberCallWriter
 {
-    readonly Type type;
-    readonly string methodName;
-    readonly Func<ODataExpressionConverterSettings, string> odataFunction;
+    readonly Type type = type;
+    readonly string methodName = methodName;
+    readonly Func<ODataExpressionConverterSettings, string> odataFunction = odataFunction;
 
     public GenericMemberWriter(Type type, string methodName, string odataFunction)
         : this(type, methodName, (s) => odataFunction)
     {
 
-    }
-
-    public GenericMemberWriter(Type type, string methodName, Func<ODataExpressionConverterSettings, string> odataFunction)
-    {
-        this.odataFunction = odataFunction;
-        this.methodName = methodName;
-        this.type = type;
     }
 
     public bool CanHandle(MemberExpression expression)

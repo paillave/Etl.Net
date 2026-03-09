@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Paillave.Etl.Core
+namespace Paillave.Etl.Core;
+
+public interface IConfigurable<TConfig>
 {
-    public interface IConfigurable<TConfig>
-    {
-        void Configure(TConfig config);
-    }
+    void Configure(TConfig config);
 }

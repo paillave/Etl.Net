@@ -1,14 +1,13 @@
 ﻿using System;
 
-namespace Paillave.Etl.Core
+namespace Paillave.Etl.Core;
+
+public interface IErrorManagementItem<TIn1, TIn2>: IErrorManagementItem<TIn1>
 {
-    public interface IErrorManagementItem<TIn1, TIn2>: IErrorManagementItem<TIn1>
-    {
-        TIn2 Input2 { get; }
-    }
-    public interface IErrorManagementItem<TIn>
-    {
-        Exception Exception { get; }
-        TIn Input { get; }
-    }
+    TIn2 Input2 { get; }
+}
+public interface IErrorManagementItem<TIn>
+{
+    Exception Exception { get; }
+    TIn Input { get; }
 }

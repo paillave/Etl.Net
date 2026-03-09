@@ -6,42 +6,29 @@ using System.Reflection;
 
 namespace Paillave.EntityFrameworkCoreExtension.BulkSave;
 
-public abstract class UpdateContextQueryBase<TSource>
+public abstract class UpdateContextQueryBase<TSource>(DbContext context, string schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType, IDictionary<string, MemberInfo> propertyGetters, StoreObjectIdentifier storeObject)
 {
-    protected string Table { get; }
+    protected string Table { get; } = table;
     protected string StagingId { get; } = Guid.NewGuid().ToString().Substring(0, 8);
-    protected string Schema { get; }
-    protected IEntityType BaseType { get; }
-    protected StoreObjectIdentifier StoreObject { get; }
-    protected IDictionary<string, MemberInfo> PropertyGetters { get; }
+    protected string Schema { get; } = schema;
+    protected IEntityType BaseType { get; } = baseType;
+    protected StoreObjectIdentifier StoreObject { get; } = storeObject;
+    protected IDictionary<string, MemberInfo> PropertyGetters { get; } = propertyGetters;
     /// <summary>
     /// any column except pivot, computed
     /// </summary>
-    protected List<IProperty> PropertiesToUpdate { get; }
+    protected List<IProperty> PropertiesToUpdate { get; } = propertiesToUpdate;
     /// <summary>
     /// pivot columns
     /// </summary>
-    protected List<IProperty> PropertiesForPivot { get; }
+    protected List<IProperty> PropertiesForPivot { get; } = propertiesForPivot;
 
     /// <summary>
     /// Any column except computed that is not pivot
     /// </summary>
-    protected List<IProperty> PropertiesToBulkLoad { get; }
+    protected List<IProperty> PropertiesToBulkLoad { get; } = propertiesToBulkLoad;
 
-    protected DbContext Context { get; }
-    public UpdateContextQueryBase(DbContext context, string schema, string table, List<IProperty> propertiesToUpdate, List<IProperty> propertiesForPivot, List<IProperty> propertiesToBulkLoad, IEntityType baseType, IDictionary<string, MemberInfo> propertyGetters, StoreObjectIdentifier storeObject)
-    {
-        this.StoreObject = storeObject;
-        this.PropertiesToUpdate = propertiesToUpdate;
-        this.PropertiesForPivot = propertiesForPivot;
-        this.PropertiesToBulkLoad = propertiesToBulkLoad;
-        this.PropertyGetters = propertyGetters;
-
-        this.Schema = schema;
-        this.Table = table;
-        this.Context = context;
-        this.BaseType = baseType;
-    }
+    protected DbContext Context { get; } = context;
 
     /// <summary>
     /// Create the staging that is meant to receive the raw bulk load

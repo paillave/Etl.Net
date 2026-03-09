@@ -1,15 +1,9 @@
 using System;
 
-namespace Paillave.Etl.TextFile
+namespace Paillave.Etl.TextFile;
+
+public class FlatFileNoFieldDeserializeException(int sourceColumnIndex, string targetPropertyName, Exception innerException) : Exception($"could not get value to deserialize in source column {sourceColumnIndex} for target property {targetPropertyName}", innerException)
 {
-    public class FlatFileNoFieldDeserializeException : Exception
-    {
-        public int SourceColumnIndex { get; }
-        public string TargetPropertyName { get; }
-        public FlatFileNoFieldDeserializeException(int sourceColumnIndex, string targetPropertyName, Exception innerException) : base($"could not get value to deserialize in source column {sourceColumnIndex} for target property {targetPropertyName}", innerException)
-        {
-            this.SourceColumnIndex = sourceColumnIndex;
-            this.TargetPropertyName = targetPropertyName;
-        }
-    }
+    public int SourceColumnIndex { get; } = sourceColumnIndex;
+    public string TargetPropertyName { get; } = targetPropertyName;
 }

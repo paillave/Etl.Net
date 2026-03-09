@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Collections.Generic;
 
 namespace Paillave.Etl.Core;
 
@@ -29,4 +30,17 @@ public class NoFileValueProvider(string code) : IFileValueProvider
     }
 
     public void Test() { }
+
+    public IAsyncEnumerable<FileReference> EnumerateAsync(object? input = null, CancellationToken cancellationToken = default)
+    {
+        throw new Exception($"{Code}: this file value provider does not exist");
+    }
+
+    public Stream Open(JsonNode fileSpecific)
+        => Provide(fileSpecific).GetContent();
+
+    public IAsyncEnumerable<IFileValue> ProvideAsync(object? input = null, CancellationToken cancellationToken = default)
+    {
+        throw new Exception($"{Code}: this file value provider does not exist");
+    }
 }

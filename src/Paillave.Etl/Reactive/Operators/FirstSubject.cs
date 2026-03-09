@@ -5,59 +5,58 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Paillave.Etl.Reactive.Operators
+namespace Paillave.Etl.Reactive.Operators;
+
+public class FirstSubject<T> : PushSubject<T>
 {
-    public class FirstSubject<T> : PushSubject<T>
+    private readonly IDisposable _subscription;
+    private readonly object _lockObject = new();
+    private bool _isCompleted = false;
+    //private T _lastValue;
+    public FirstSubject(IPushObservable<T> observable) : base(observable.CancellationToken)
     {
-        private IDisposable _subscription;
-        private object _lockObject = new object();
-        private bool _isCompleted = false;
-        //private T _lastValue;
-        public FirstSubject(IPushObservable<T> observable) : base(observable.CancellationToken)
+        lock (_lockObject)
         {
-            lock (_lockObject)
-            {
-                _subscription = observable.Subscribe(HandlePushValue, HandleCompleteValue);
-            }
-        }
-
-        private void HandleCompleteValue()
-        {
-            lock (_lockObject)
-            {
-                if (!_isCompleted)
-                    Complete();
-            }
-        }
-
-        private void HandlePushValue(T value)
-        {
-            if (CancellationToken.IsCancellationRequested)
-            {
-                return;
-            }
-            lock (_lockObject)
-            {
-                if (!_isCompleted)
-                {
-                    PushValue(value);
-                    Complete();
-                }
-                _isCompleted = true;
-            }
-        }
-
-        public override void Dispose()
-        {
-            base.Dispose();
-            _subscription.Dispose();
+            _subscription = observable.Subscribe(HandlePushValue, HandleCompleteValue);
         }
     }
-    public static partial class ObservableExtensions
+
+    private void HandleCompleteValue()
     {
-        public static IPushObservable<TIn> First<TIn>(this IPushObservable<TIn> observable)
+        lock (_lockObject)
         {
-            return new FirstSubject<TIn>(observable);
+            if (!_isCompleted)
+                Complete();
         }
+    }
+
+    private void HandlePushValue(T value)
+    {
+        if (CancellationToken.IsCancellationRequested)
+        {
+            return;
+        }
+        lock (_lockObject)
+        {
+            if (!_isCompleted)
+            {
+                PushValue(value);
+                Complete();
+            }
+            _isCompleted = true;
+        }
+    }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+        _subscription.Dispose();
+    }
+}
+public static partial class ObservableExtensions
+{
+    public static IPushObservable<TIn> First<TIn>(this IPushObservable<TIn> observable)
+    {
+        return new FirstSubject<TIn>(observable);
     }
 }
