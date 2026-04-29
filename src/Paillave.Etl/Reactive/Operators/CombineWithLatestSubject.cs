@@ -130,6 +130,13 @@ public class CombineWithLatestSubject<TIn1, TIn2, TOut> : PushSubject<TOut>
         if (((_obsel1?.IsComplete) ?? false) && ((_obsel2?.IsComplete) ?? false))
             Complete();
     }
+    protected override void OnCompleted()
+    {
+        // Detach from both sources on completion (incl. cancellation /
+        // exception paths) so the upstream chains can be collected.
+        _obsel1?.Dispose();
+        _obsel2?.Dispose();
+    }
     public override void Dispose()
     {
         _obsel1.Dispose();

@@ -66,6 +66,13 @@ public class SkipUntilSubject<TIn, TFrom> : PushSubject<TIn>
             if (_isTriggered) PushValue(value);
         }
     }
+
+    protected override void OnCompleted()
+    {
+        _disp1?.Dispose();
+        _disp2?.Dispose();
+    }
+
     public override void Dispose()
     {
         _disp1.Dispose();

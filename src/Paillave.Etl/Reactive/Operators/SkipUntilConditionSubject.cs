@@ -65,6 +65,11 @@ public class SkipUntilConditionSubject<TIn> : PushSubject<TIn>
         }
     }
 
+    protected override void OnCompleted()
+    {
+        _disp1?.Dispose();
+    }
+
     public override void Dispose()
     {
         _disp1.Dispose();

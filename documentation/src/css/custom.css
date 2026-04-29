@@ -49,6 +49,15 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
+/* Highlighted code lines (`{1,3-5}` syntax) — make sure the light theme
+   uses a light tint so the syntax-highlighted text stays readable. */
+:root {
+  --docusaurus-highlighted-code-line-bg: rgba(82, 18, 189, 0.12);
+}
+html[data-theme='dark'] {
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.12);
+}
+
 .prism-code {
   counter-reset: line-number;
   max-height: 600px;

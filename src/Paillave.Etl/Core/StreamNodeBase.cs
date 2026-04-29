@@ -44,7 +44,13 @@ public abstract class StreamNodeBase<TOut, TOutStream, TArgs> : INodeContext, IS
         this.NodeName = name;
         this.ExecutionContext = this.GetExecutionContext(args);
         this.Output = CreateOutputStream(args);
-        this.Output.Observable.Subscribe(i => { }, PostProcess);
+        // The subscription is needed to drive PostProcess on completion, but
+        // its closure captures `this` (via PostProcess) and is otherwise never
+        // released — leaking the entire node graph for the lifetime of the
+        // observable. Hand it to the execution context so it is disposed
+        // when ReleaseResources() runs.
+        var postProcessSubscription = this.Output.Observable.Subscribe(i => { }, PostProcess);
+        this.ExecutionContext?.AddDisposable(postProcessSubscription);
         this.ExecutionContext.AddNode(this, this.Output.Observable);
         foreach (var item in this.GetInputStreams(args))
         {

@@ -23,9 +23,12 @@ export default function Presentation() {
               <li>Entity Framework</li>
               <li>CSV</li>
               <li>Excel</li>
+              <li>JSON</li>
+              <li>XML</li>
               <li>Bloomberg response files</li>
               <li>Searchable PDF</li>
-              <li>XML</li>
+              <li>HTTP / REST APIs</li>
+              <li>Microsoft Graph API</li>
               <li>Anything .NET can read or write whatsoever</li>
             </ul>
           </p>
@@ -36,8 +39,12 @@ export default function Presentation() {
               <li>SFTP</li>
               <li>FTPS</li>
               <li>Dropbox</li>
+              <li>Azure Blob Storage</li>
+              <li>Amazon S3</li>
               <li>eMail and MailBox</li>
+              <li>HTTP endpoints</li>
               <li>zip archives</li>
+              <li>PGP encrypted streams</li>
               <li>Anything .NET can access whatsoever</li>
             </ul>
           </p>

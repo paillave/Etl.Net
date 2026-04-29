@@ -23,6 +23,10 @@ function HomepageHeader() {
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
         <div className={clsx(styles.sponsor)}><a href='https://www.fundprocess.lu' ><SponsorImage /></a></div>
+        <div className={clsx(styles.lastRelease)} title="Last release date">
+          <span>Last release</span>
+          <strong>2026-04-29</strong>
+        </div>
         <Bot className={clsx(styles.kayakBot)} />
         <div className={clsx(styles.mainLogoBackground)}>
           <EtlNet />
