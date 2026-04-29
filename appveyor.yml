@@ -17,6 +17,15 @@ init:
         Update-AppveyorBuild -Version "$($env:APPVEYOR_REPO_TAG_NAME.TrimStart('v'))";
       }
 
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+
 before_build:
   - cmd: dotnet --info
   - cmd: dotnet restore src/Paillave.Etl.sln
@@ -34,7 +43,7 @@ artifacts:
 deploy:
   - provider: NuGet
     api_key:
-      secure: UgPSmSDViCSpE60+tlJDDe+ocxa2hm7ESlbze7yeh1jE0nFfS0QD71I0JipJ3fbG
+      secure: 1I1CNeiBXV8Bj1TXccsotLm6YebTMkHKml/chG9VvFItQGrIdeDCN8D6Iz9kXWFP
     skip_symbols: false
     artifact: /.*\.nupkg/
     on:

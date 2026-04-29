@@ -1,9 +1,12 @@
 name: ETL.NET - Release
 
+# Disabled: NuGet publishing is handled by AppVeyor (see appveyor.yml).
+# Re-enable by restoring the `release` trigger below if AppVeyor is removed.
 on:
-  release:
-    types:
-      - published
+  workflow_dispatch:
+  # release:
+  #   types:
+  #     - published
 
 jobs:
   publish-nuget:
