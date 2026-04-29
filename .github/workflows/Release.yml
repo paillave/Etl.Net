@@ -1,55 +1,71 @@
 name: ETL.NET - Release
 
-# Disabled: NuGet publishing is handled by AppVeyor (see appveyor.yml).
-# Re-enable by restoring the `release` trigger below if AppVeyor is removed.
 on:
+  release:
+    types:
+      - published
   workflow_dispatch:
-  # release:
-  #   types:
-  #     - published
+    inputs:
+      version:
+        description: 'NuGet package version (e.g. 2.4.0-beta.2). Defaults to release tag.'
+        required: false
 
 jobs:
   publish-nuget:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '9.x'
-    - name: Install dependencies
-      working-directory: src
-      run: dotnet restore
-    - name: Build
-      working-directory: src
-      run: dotnet build --configuration Release --no-restore
-    - name: Publish to NuGet
-      working-directory: src
-      run: dotnet nuget push **\*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      - uses: actions/checkout@v4
 
-    # - uses: actions/setup-node@v1
-    #   with:
-    #     node-version: '12.x'
-    # run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
-    # - name: Publish to NuGet
-    #   uses: brandedoutcast/publish-nuget@v2
-    #   with:
-    #     PROJECT_FILE_PATH: NetLicensingClient/NetLicensingClient.csproj
-    #     VERSION_REGEX: '^\s*<Version>(.*)<\/Version>\s*$'
-    #     TAG_FORMAT: '*'
-    #     NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-#${{ github.event.release.tag_name }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
 
+      - name: Compute package version
+        id: version
+        run: |
+          if [[ -n "${{ inputs.version }}" ]]; then
+            VERSION="${{ inputs.version }}"
+          else
+            TAG="${GITHUB_REF_NAME}"
+            VERSION="${TAG#v}"
+          fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Publishing version: ${VERSION}"
 
+      - name: Restore
+        working-directory: src
+        run: dotnet restore Paillave.Etl.sln
 
+      - name: Build
+        working-directory: src
+        run: >-
+          dotnet build Paillave.Etl.sln
+          --configuration Release
+          --no-restore
+          -p:Version=${{ steps.version.outputs.version }}
+          -p:PackageVersion=${{ steps.version.outputs.version }}
+          -p:WarningLevel=0
 
-# Etl.Net
-# Etl.Net.EntityFrameworkCore
-# Etl.Net.ExcelFile
-# Etl.Net.ExecutionPlan
-# Etl.Net.Ftp
-# Etl.Net.Sftp
-# Etl.Net.SqlServer
-# Etl.Net.TextFile
-# Etl.Net.XmlFile
-# Paillave.EntityFrameworkCoreExtension
+      - name: Test
+        working-directory: src
+        run: dotnet test Paillave.Etl.Tests/Paillave.Etl.Tests.csproj --configuration Release --no-build
+
+      - name: Pack
+        working-directory: src
+        run: >-
+          dotnet pack Paillave.Etl.sln
+          --configuration Release
+          --no-build
+          --output ../artifacts
+          -p:Version=${{ steps.version.outputs.version }}
+          -p:PackageVersion=${{ steps.version.outputs.version }}
+
+      - name: Publish to NuGet
+        run: >-
+          dotnet nuget push "artifacts/*.nupkg"
+          -k ${{ secrets.NUGET_API_KEY }}
+          -s https://api.nuget.org/v3/index.json
+          --skip-duplicate

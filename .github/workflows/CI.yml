@@ -10,16 +10,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '9.x'
-    - name: Install dependencies
-      working-directory: src
-      run: dotnet restore
-    - name: Build
-      working-directory: src
-      run: dotnet build --configuration Release --no-restore
-    # - name: Test
-    #   run: dotnet run --project NetLicensingClient-demo
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+      - name: Restore
+        working-directory: src
+        run: dotnet restore Paillave.Etl.sln
+      - name: Build
+        working-directory: src
+        run: dotnet build Paillave.Etl.sln --configuration Release --no-restore -p:WarningLevel=0
+      - name: Test
+        working-directory: src
+        run: dotnet test Paillave.Etl.Tests/Paillave.Etl.Tests.csproj --configuration Release --no-build
