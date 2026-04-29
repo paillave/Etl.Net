@@ -26,6 +26,16 @@ public class TakeUntilSubject<TIn, TFrom> : PushSubject<TIn>
             Complete();
         }
     }
+
+    protected override void OnCompleted()
+    {
+        // Detach from both sources on completion (either source completed,
+        // or the trigger fired): otherwise the source keeps pushing into a
+        // closed subject and the chain remains rooted.
+        _disp1?.Dispose();
+        _disp2?.Dispose();
+    }
+
     public override void Dispose()
     {
         _disp1.Dispose();

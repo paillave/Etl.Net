@@ -47,6 +47,12 @@ public class FirstSubject<T> : PushSubject<T>
         }
     }
 
+    protected override void OnCompleted()
+    {
+        // Detach from upstream as soon as we've emitted the first value.
+        _subscription?.Dispose();
+    }
+
     public override void Dispose()
     {
         base.Dispose();

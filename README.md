@@ -3,6 +3,8 @@
 [![ETL.NET](streams.jpg)](https://paillave.github.io/Etl.Net/)
 [Go to full documentation](https://paillave.github.io/Etl.Net/)
 
+![Last release](https://img.shields.io/badge/last%20release-2026--04--29-blue?style=flat-square)
+
 ## :rotating_light: I need some help!!!  :ambulance:
 
 I need some serious help for the following subject:
@@ -24,6 +26,7 @@ Extend it takes 5mn... literally.
 |-|-|-|
 | Paillave.EtlNet.Core | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Core.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Core) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Core.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Core) |
 | Paillave.EtlNet.Autofac | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Autofac.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Autofac) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Autofac.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Autofac) |
+| Paillave.EtlNet.AzureStorageAccount | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.AzureStorageAccount.svg)](https://www.nuget.org/packages/Paillave.EtlNet.AzureStorageAccount) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.AzureStorageAccount.svg)](https://www.nuget.org/packages/Paillave.EtlNet.AzureStorageAccount) |
 | Paillave.EtlNet.Dropbox | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Dropbox.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Dropbox) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Dropbox.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Dropbox) |
 | Paillave.EtlNet.EntityFrameworkCore | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Paillave.EtlNet.EntityFrameworkCore) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.EntityFrameworkCore.svg)](https://www.nuget.org/packages/Paillave.EtlNet.EntityFrameworkCore) |
 | Paillave.EtlNet.ExcelFile | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.ExcelFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.ExcelFile) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.ExcelFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.ExcelFile) |
@@ -33,7 +36,11 @@ Extend it takes 5mn... literally.
 | Paillave.EtlNet.Ftp | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Ftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Ftp) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Ftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Ftp) |
 | Paillave.EtlNet.Mail | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Mail.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Mail) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Mail.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Mail) |
 | Paillave.EtlNet.GraphApi | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.GraphApi.svg)](https://www.nuget.org/packages/Paillave.EtlNet.GraphApi) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.GraphApi.svg)](https://www.nuget.org/packages/Paillave.EtlNet.GraphApi) |
+| Paillave.EtlNet.Http | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Http.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Http) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Http.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Http) |
+| Paillave.EtlNet.JsonFile | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.JsonFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.JsonFile) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.JsonFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.JsonFile) |
 | Paillave.EtlNet.Sftp | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Sftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Sftp) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Sftp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Sftp) |
+| Paillave.EtlNet.Pgp | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Pgp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Pgp) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Pgp.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Pgp) |
+| Paillave.EtlNet.S3 | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.S3.svg)](https://www.nuget.org/packages/Paillave.EtlNet.S3) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.S3.svg)](https://www.nuget.org/packages/Paillave.EtlNet.S3) |
 | Paillave.EtlNet.SqlServer | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.SqlServer.svg)](https://www.nuget.org/packages/Paillave.EtlNet.SqlServer) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.SqlServer.svg)](https://www.nuget.org/packages/Paillave.EtlNet.SqlServer) |
 | Paillave.EtlNet.TextFile | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.TextFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.TextFile) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.TextFile.svg)](https://www.nuget.org/packages/Paillave.EtlNet.TextFile) |
 | Paillave.EtlNet.Bloomberg | [![NuGet](https://img.shields.io/nuget/v/Paillave.EtlNet.Bloomberg.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Bloomberg) | [![NuGet](https://img.shields.io/nuget/dt/Paillave.EtlNet.Bloomberg.svg)](https://www.nuget.org/packages/Paillave.EtlNet.Bloomberg) |

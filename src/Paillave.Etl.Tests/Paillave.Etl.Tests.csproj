@@ -13,6 +13,7 @@
     <PackageReference Include="xunit" Version="2.9.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
     <PackageReference Include="coverlet.collector" Version="6.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +21,9 @@
     <ProjectReference Include="..\Paillave.Etl.FileSystem\Paillave.Etl.FileSystem.csproj" />
     <ProjectReference Include="..\Paillave.Etl.TextFile\Paillave.Etl.TextFile.csproj" />
     <ProjectReference Include="..\Paillave.Etl.EntityFrameworkCore\Paillave.Etl.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.SqlServer\Paillave.Etl.SqlServer.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.ExcelFile\Paillave.Etl.ExcelFile.csproj" />
+    <ProjectReference Include="..\Paillave.Etl.XmlFile\Paillave.Etl.XmlFile.csproj" />
   </ItemGroup>
 
 </Project>

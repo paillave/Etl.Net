@@ -35,6 +35,13 @@ public class TakeSubject<T> : PushSubject<T>
         });
     }
 
+    protected override void OnCompleted()
+    {
+        // Stop pulling from upstream as soon as we've taken enough; otherwise
+        // the upstream chain stays rooted via its subscription list.
+        _subscription.Dispose();
+    }
+
     public override void Dispose()
     {
         base.Dispose();

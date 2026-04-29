@@ -38,6 +38,7 @@ public class PushSubject<T> : IPushSubject<T>
 {
     public CancellationToken CancellationToken { get; }
     private readonly Guid _id = Guid.NewGuid();
+    private CancellationTokenRegistration _ctRegistration;
     public PushSubject(CancellationToken cancellationToken)
     {
 #if ETL_DEBUG
@@ -46,7 +47,12 @@ public class PushSubject<T> : IPushSubject<T>
         TmpClass.Log(msg);
 #endif
         this.CancellationToken = cancellationToken;
-        cancellationToken.Register(this.Complete);
+        // Only register when the token can actually be cancelled. Otherwise
+        // CancellationToken.Register pins this subject (and its operator graph)
+        // to the token's callback list for the lifetime of the token, which
+        // for long-lived / external tokens leaks the whole pipeline.
+        if (cancellationToken.CanBeCanceled)
+            _ctRegistration = cancellationToken.Register(this.Complete);
     }
 
     private bool _isComplete = false;
@@ -84,8 +90,25 @@ public class PushSubject<T> : IPushSubject<T>
             foreach (var item in this.Subscriptions.ToList())
                 if (item.OnComplete != null)
                     item.OnComplete();
+            OnCompleted();
         }
+        // Release the registration so the subject and its captured graph can
+        // be collected even when the CancellationToken outlives them.
+        // We use Unregister() (not Dispose()) to avoid a deadlock when this
+        // Complete() is itself running as the cancellation callback on
+        // another thread: Dispose() would wait for that callback while the
+        // callback is waiting for our LockObject.
+        _ctRegistration.Unregister();
+        _ctRegistration = default;
     }
+
+    /// <summary>
+    /// Hook invoked exactly once when this subject completes. Operators
+    /// override this to release upstream subscriptions on early termination
+    /// (Take, First, TakeUntil, ...) instead of waiting for an explicit
+    /// Dispose() call that often never comes.
+    /// </summary>
+    protected virtual void OnCompleted() { }
 
     public virtual void Dispose()
     {
