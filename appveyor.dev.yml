@@ -8,6 +8,15 @@ image: Visual Studio 2022
 configuration: Release
 platform: Any CPU
 
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+
 before_build:
   - cmd: dotnet --info
   - cmd: dotnet restore src/Paillave.Etl.sln
