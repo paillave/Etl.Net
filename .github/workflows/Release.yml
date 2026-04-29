@@ -28,9 +28,12 @@ jobs:
         run: |
           if [[ -n "${{ inputs.version }}" ]]; then
             VERSION="${{ inputs.version }}"
-          else
-            TAG="${GITHUB_REF_NAME}"
+          elif [[ -n "${{ github.event.release.tag_name }}" ]]; then
+            TAG="${{ github.event.release.tag_name }}"
             VERSION="${TAG#v}"
+          else
+            echo "::error::No version available. Trigger this workflow from a published Release, or provide the 'version' input via workflow_dispatch." >&2
+            exit 1
           fi
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
           echo "Publishing version: ${VERSION}"
