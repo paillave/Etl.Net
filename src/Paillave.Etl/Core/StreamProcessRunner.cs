@@ -63,22 +63,23 @@ public class StreamProcessRunner<TConfig>(Action<ISingleStream<TConfig>> jobDefi
                             chunk.Count(),
                             chunk.Any(i => i.Content.Level == EtlTraceLevel.Error),
                             chunk.Select(i => (i.Content as RowProcessStreamTraceContent)?.Row).ToList()))));
-    public Task<ExecutionStatus> ExecuteAsync(TConfig config, ExecutionOptions<TConfig> options = null, CancellationToken cancellationToken = default)
+    public async Task<ExecutionStatus> ExecuteAsync(TConfig config, ExecutionOptions<TConfig> options = null, CancellationToken cancellationToken = default)
     {
-        var internalCancellationTokenSource = new CancellationTokenSource();
+        // Resources to dispose at the end of execution (memory leak fix).
+        using var internalCancellationTokenSource = new CancellationTokenSource();
         var internalCancellationToken = internalCancellationTokenSource.Token;
-        var combinedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(internalCancellationToken, cancellationToken);
+        using var combinedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(internalCancellationToken, cancellationToken);
         var combinedCancellationToken = combinedCancellationTokenSource.Token;
 
         Guid executionId = Guid.NewGuid();
-        EventWaitHandle startSynchronizer = new(false, EventResetMode.ManualReset);
+        using EventWaitHandle startSynchronizer = new(false, EventResetMode.ManualReset);
         IPushSubject<TraceEvent> traceSubject = new PushSubject<TraceEvent>(CancellationToken.None);
         IPushSubject<TConfig> startupSubject = new PushSubject<TConfig>(combinedCancellationToken);
 
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddLogging();
         serviceCollection.AddMemoryCache();
-        var internalServices = serviceCollection.BuildServiceProvider();
+        await using var internalServices = serviceCollection.BuildServiceProvider();
 
 
         var traceExecutionContext = new TraceExecutionContext(
@@ -94,14 +95,17 @@ public class StreamProcessRunner<TConfig>(Action<ISingleStream<TConfig>> jobDefi
             internalCancellationTokenSource,
             (options?.UseDetailedTraces ?? false) || (this.DebugNodeStream != null && System.Diagnostics.Debugger.IsAttached));
 
-        cancellationToken.Register(() => traceSubject.PushValue(new TraceEvent(
+        // Capture token registrations so they can be released — otherwise each call
+        // pins this closure (and the whole job graph) onto the caller's CancellationToken
+        // for the lifetime of that token, which is the dominant ETL memory leak.
+        using var externalCancellationRegistration = cancellationToken.Register(() => traceSubject.PushValue(new TraceEvent(
             jobExecutionContext.ExecutionId,
             "Job",
             "Job",
             new CancellationTraceContent(CancellationCause.CancelledFromOutside),
             jobExecutionContext.NextTraceSequence())));
 
-        internalCancellationToken.Register(() => traceSubject.PushValue(new TraceEvent(
+        using var internalCancellationRegistration = internalCancellationToken.Register(() => traceSubject.PushValue(new TraceEvent(
             jobExecutionContext.ExecutionId,
             "Job",
             "Job",
@@ -136,7 +140,7 @@ public class StreamProcessRunner<TConfig>(Action<ISingleStream<TConfig>> jobDefi
         traceStartupSubject.PushValue(config);
         startupSubject.Complete();
         traceStartupSubject.Complete();
-        return task;
+        return await task.ConfigureAwait(false);
     }
     public JobDefinitionStructure GetDefinitionStructure()
     {
