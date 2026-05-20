@@ -14,6 +14,7 @@ public class LeftJoinSubject<TInLeft, TInRight, TOut> : PushSubject<TOut>
     private readonly IDisposable _leftSubscription;
     private readonly IDisposable _rightSubscription;
     private readonly object _sync = new();
+    private readonly CancellationTokenSource _linkedCts;
 
     private class Side<T>
     {
@@ -70,8 +71,12 @@ public class LeftJoinSubject<TInLeft, TInRight, TOut> : PushSubject<TOut>
         if (lSide.IsComplete && (lSide.IsEmpty || rSide.IsComplete)) this.Complete();
     }
 
-    public LeftJoinSubject(IPushObservable<TInLeft> leftS, IPushObservable<TInRight> rightS, LeftJoinParams<TInLeft, TInRight, TOut> leftJoinParams) : base(CancellationTokenSource.CreateLinkedTokenSource(leftS.CancellationToken, rightS.CancellationToken).Token)
+    public LeftJoinSubject(IPushObservable<TInLeft> leftS, IPushObservable<TInRight> rightS, LeftJoinParams<TInLeft, TInRight, TOut> leftJoinParams)
+        : this(CancellationTokenSource.CreateLinkedTokenSource(leftS.CancellationToken, rightS.CancellationToken), leftS, rightS, leftJoinParams) { }
+
+    private LeftJoinSubject(CancellationTokenSource linkedCts, IPushObservable<TInLeft> leftS, IPushObservable<TInRight> rightS, LeftJoinParams<TInLeft, TInRight, TOut> leftJoinParams) : base(linkedCts.Token)
     {
+        _linkedCts = linkedCts;
         var leftSide = new Side<TInLeft>();
         var rightSide = new Side<TInRight>();
 
@@ -121,11 +126,19 @@ public class LeftJoinSubject<TInLeft, TInRight, TOut> : PushSubject<TOut>
             );
     }
 
+    protected override void OnCompleted()
+    {
+        _leftSubscription?.Dispose();
+        _rightSubscription?.Dispose();
+        _linkedCts?.Dispose();
+    }
+
     public override void Dispose()
     {
         base.Dispose();
         _leftSubscription.Dispose();
         _rightSubscription.Dispose();
+        _linkedCts?.Dispose();
     }
 }
 public class LeftJoinParams<TInLeft, TInRight, TOut>

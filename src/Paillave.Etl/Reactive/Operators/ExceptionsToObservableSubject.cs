@@ -30,6 +30,8 @@ public class ExceptionsToObservableSubject<T> : PushSubject<Exception>
         PushValue(obj);
     }
 
+    protected override void OnCompleted() => _subscription?.Dispose();
+
     public override void Dispose()
     {
         base.Dispose();

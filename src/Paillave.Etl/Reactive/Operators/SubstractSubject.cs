@@ -41,6 +41,7 @@ public class SubstractSubject<TLeft, TRight, TKey> : PushSubject<TLeft>
     private readonly SubscriptionItem<TLeft> _leftSubscriptionItem;
     private readonly SubscriptionItem<TRight> _rightSubscriptionItem;
     private readonly IComparer<TLeft, TRight> _comparer;
+    private readonly CancellationTokenSource _linkedCts;
     private class SubscriptionItem<T>(IPushObservable<T> observable, Action<T> onPushValue, Action onComplete, Action<Exception> onException) : IDisposable
     {
         private T _lastValue;
@@ -58,8 +59,12 @@ public class SubstractSubject<TLeft, TRight, TKey> : PushSubject<TLeft>
 
         public void Dispose() => this._subscription.Dispose();
     }
-    public SubstractSubject(IPushObservable<TLeft> observable, IPushObservable<TRight> observableToRemove, IComparer<TLeft, TRight> comparer) : base(CancellationTokenSource.CreateLinkedTokenSource(observable.CancellationToken, observableToRemove.CancellationToken).Token)
+    public SubstractSubject(IPushObservable<TLeft> observable, IPushObservable<TRight> observableToRemove, IComparer<TLeft, TRight> comparer)
+        : this(CancellationTokenSource.CreateLinkedTokenSource(observable.CancellationToken, observableToRemove.CancellationToken), observable, observableToRemove, comparer) { }
+
+    private SubstractSubject(CancellationTokenSource linkedCts, IPushObservable<TLeft> observable, IPushObservable<TRight> observableToRemove, IComparer<TLeft, TRight> comparer) : base(linkedCts.Token)
     {
+        _linkedCts = linkedCts;
         _comparer = comparer;
         _leftSubscriptionItem = new SubscriptionItem<TLeft>(observable, HandlePushValueLeft, HandleCompleteLeft, PushException);
         _rightSubscriptionItem = new SubscriptionItem<TRight>(observableToRemove, HandlePushValueRight, HandleCompleteRight, PushException);
@@ -167,6 +172,13 @@ public class SubstractSubject<TLeft, TRight, TKey> : PushSubject<TLeft>
             TryComplete();
         }
     }
+    protected override void OnCompleted()
+    {
+        _leftSubscriptionItem?.Dispose();
+        _rightSubscriptionItem?.Dispose();
+        _linkedCts?.Dispose();
+    }
+
     public override void Dispose()
     {
         lock (_lockObject)
@@ -174,6 +186,7 @@ public class SubstractSubject<TLeft, TRight, TKey> : PushSubject<TLeft>
             base.Dispose();
             _leftSubscriptionItem.Dispose();
             _rightSubscriptionItem.Dispose();
+            _linkedCts?.Dispose();
         }
     }
 }

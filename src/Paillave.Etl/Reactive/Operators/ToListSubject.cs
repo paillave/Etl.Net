@@ -39,6 +39,8 @@ public class ToListSubject<TIn> : PushSubject<List<TIn>>
             this.Complete();
         }
     }
+    protected override void OnCompleted() => _subscription?.Dispose();
+
     public override void Dispose()
     {
         lock (_lockSync)

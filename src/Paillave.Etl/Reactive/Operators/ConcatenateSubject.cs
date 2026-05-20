@@ -14,9 +14,14 @@ public class ConcatenateSubject<TIn> : PushSubject<TIn>
     private readonly List<TIn> _bottomBuffer = new();
     private bool _topComplete = false;
     private bool _bottomComplete = false;
+    private readonly CancellationTokenSource _linkedCts;
 
-    public ConcatenateSubject(IPushObservable<TIn> topObservable, IPushObservable<TIn> bottomObservable) : base(CancellationTokenSource.CreateLinkedTokenSource(topObservable.CancellationToken, bottomObservable.CancellationToken).Token)
+    public ConcatenateSubject(IPushObservable<TIn> topObservable, IPushObservable<TIn> bottomObservable)
+        : this(CancellationTokenSource.CreateLinkedTokenSource(topObservable.CancellationToken, bottomObservable.CancellationToken), topObservable, bottomObservable) { }
+
+    private ConcatenateSubject(CancellationTokenSource linkedCts, IPushObservable<TIn> topObservable, IPushObservable<TIn> bottomObservable) : base(linkedCts.Token)
     {
+        _linkedCts = linkedCts;
         _topSubscription = topObservable.Subscribe(this.HandlePushTop, this.HandleCompleteTop, this.HandleException);
         _bottomSubscription = bottomObservable.Subscribe(this.HandlePushBottom, this.HandleCompleteBottom, this.HandleException);
     }
@@ -86,10 +91,19 @@ public class ConcatenateSubject<TIn> : PushSubject<TIn>
             this.PushValue(obj);
         }
     }
+    protected override void OnCompleted()
+    {
+        _topSubscription?.Dispose();
+        _bottomSubscription?.Dispose();
+        _linkedCts?.Dispose();
+    }
+
     public override void Dispose()
     {
         _topSubscription.Dispose();
         _bottomSubscription.Dispose();
+        _linkedCts?.Dispose();
+        base.Dispose();
     }
 }
 public static partial class ObservableExtensions

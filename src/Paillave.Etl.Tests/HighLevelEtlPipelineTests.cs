@@ -16,6 +16,7 @@ namespace Paillave.Etl.Tests;
 /// <c>Tutorials/Paillave.Etl.Samples/TestImport.cs</c> but at a much larger
 /// scale and without depending on file connectors or EF Core.
 /// </summary>
+[Collection("MemorySensitive")]
 public class HighLevelEtlPipelineTests
 {
     // -------------------------------------------------------------------

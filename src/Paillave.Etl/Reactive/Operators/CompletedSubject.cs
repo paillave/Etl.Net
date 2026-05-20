@@ -32,6 +32,8 @@ public class CompletedSubject<TIn> : PushSubject<int>
         }
     }
 
+    protected override void OnCompleted() => _subscription?.Dispose();
+
     public override void Dispose()
     {
         base.Dispose();
