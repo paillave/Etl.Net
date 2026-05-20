@@ -14,8 +14,14 @@ public class SkipUntilSubject<TIn, TFrom> : PushSubject<TIn>
     private readonly IDisposable _disp1;
     private readonly IDisposable _disp2;
     private bool _isTriggered = false;
-    public SkipUntilSubject(IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable) : base(CancellationTokenSource.CreateLinkedTokenSource(observable.CancellationToken, fromObservable.CancellationToken).Token)
+    private readonly CancellationTokenSource _linkedCts;
+
+    public SkipUntilSubject(IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable)
+        : this(CancellationTokenSource.CreateLinkedTokenSource(observable.CancellationToken, fromObservable.CancellationToken), observable, fromObservable) { }
+
+    private SkipUntilSubject(CancellationTokenSource linkedCts, IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable) : base(linkedCts.Token)
     {
+        _linkedCts = linkedCts;
         _disp1 = observable.Subscribe(HandleOnPush, HandleOnComplete, HandleOnError);
         _disp2 = fromObservable.Subscribe(HandleOnPushTrigger, HandleOnCompleteTrigger);
     }
@@ -71,12 +77,14 @@ public class SkipUntilSubject<TIn, TFrom> : PushSubject<TIn>
     {
         _disp1?.Dispose();
         _disp2?.Dispose();
+        _linkedCts?.Dispose();
     }
 
     public override void Dispose()
     {
         _disp1.Dispose();
         _disp2.Dispose();
+        _linkedCts?.Dispose();
         base.Dispose();
     }
 }

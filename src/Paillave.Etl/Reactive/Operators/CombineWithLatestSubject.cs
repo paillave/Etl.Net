@@ -13,10 +13,16 @@ public class CombineWithLatestSubject<TIn1, TIn2, TOut> : PushSubject<TOut>
     private readonly ObservableElement<TIn2> _obsel2;
     private readonly Func<TIn1, TIn2, TOut> _selector;
     private readonly bool _bufferTillFirstMatch;
-    public CombineWithLatestSubject(IPushObservable<TIn1> observable1, IPushObservable<TIn2> observable2, Func<TIn1, TIn2, TOut> selector, bool bufferTillFirstMatch = false) : base(CancellationTokenSource.CreateLinkedTokenSource(observable1.CancellationToken, observable2.CancellationToken).Token)
+    private readonly CancellationTokenSource _linkedCts;
+
+    public CombineWithLatestSubject(IPushObservable<TIn1> observable1, IPushObservable<TIn2> observable2, Func<TIn1, TIn2, TOut> selector, bool bufferTillFirstMatch = false)
+        : this(CancellationTokenSource.CreateLinkedTokenSource(observable1.CancellationToken, observable2.CancellationToken), observable1, observable2, selector, bufferTillFirstMatch) { }
+
+    private CombineWithLatestSubject(CancellationTokenSource linkedCts, IPushObservable<TIn1> observable1, IPushObservable<TIn2> observable2, Func<TIn1, TIn2, TOut> selector, bool bufferTillFirstMatch) : base(linkedCts.Token)
     {
         lock (_lockObject)
         {
+            _linkedCts = linkedCts;
             _bufferTillFirstMatch = bufferTillFirstMatch;
             _selector = selector;
             var disp1 = observable1.Subscribe(HandlePushValue1, HandleComplete1, this.PushException);
@@ -132,15 +138,15 @@ public class CombineWithLatestSubject<TIn1, TIn2, TOut> : PushSubject<TOut>
     }
     protected override void OnCompleted()
     {
-        // Detach from both sources on completion (incl. cancellation /
-        // exception paths) so the upstream chains can be collected.
         _obsel1?.Dispose();
         _obsel2?.Dispose();
+        _linkedCts?.Dispose();
     }
     public override void Dispose()
     {
         _obsel1.Dispose();
         _obsel2.Dispose();
+        _linkedCts?.Dispose();
         base.Dispose();
     }
     private class ObservableElement<T>(IDisposable disposable) : IDisposable

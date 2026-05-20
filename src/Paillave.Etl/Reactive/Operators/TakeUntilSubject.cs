@@ -13,8 +13,14 @@ public class TakeUntilSubject<TIn, TFrom> : PushSubject<TIn>
     private readonly object _lockObject = new();
     private readonly IDisposable _disp1;
     private readonly IDisposable _disp2;
-    public TakeUntilSubject(IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable) : base(CancellationTokenSource.CreateLinkedTokenSource(observable.CancellationToken, fromObservable.CancellationToken).Token)
+    private readonly CancellationTokenSource _linkedCts;
+
+    public TakeUntilSubject(IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable)
+        : this(CancellationTokenSource.CreateLinkedTokenSource(observable.CancellationToken, fromObservable.CancellationToken), observable, fromObservable) { }
+
+    private TakeUntilSubject(CancellationTokenSource linkedCts, IPushObservable<TIn> observable, IPushObservable<TFrom> fromObservable) : base(linkedCts.Token)
     {
+        _linkedCts = linkedCts;
         _disp1 = observable.Subscribe(PushValue, Complete, PushException);
         _disp2 = fromObservable.Subscribe(HandleOnPushTrigger);
     }
@@ -29,17 +35,16 @@ public class TakeUntilSubject<TIn, TFrom> : PushSubject<TIn>
 
     protected override void OnCompleted()
     {
-        // Detach from both sources on completion (either source completed,
-        // or the trigger fired): otherwise the source keeps pushing into a
-        // closed subject and the chain remains rooted.
         _disp1?.Dispose();
         _disp2?.Dispose();
+        _linkedCts?.Dispose();
     }
 
     public override void Dispose()
     {
         _disp1.Dispose();
         _disp2.Dispose();
+        _linkedCts?.Dispose();
         base.Dispose();
     }
 }
