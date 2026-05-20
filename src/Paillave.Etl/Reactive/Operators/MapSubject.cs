@@ -15,6 +15,8 @@ public class MapSubject<TIn, TOut> : PushSubject<TOut>
         int counter = 0;
         this._subscription = observable.Subscribe(i => this.TryPushValue(() => selector(i, counter++)), this.Complete, this.PushException);
     }
+    protected override void OnCompleted() => _subscription?.Dispose();
+
     public override void Dispose()
     {
         base.Dispose();

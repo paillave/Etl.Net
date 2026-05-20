@@ -29,6 +29,8 @@ public class CompletesOnExceptionSubject<T, E> : PushSubject<T> where E : Except
             });
         }
     }
+    protected override void OnCompleted() => _subscription?.Dispose();
+
     public override void Dispose()
     {
         base.Dispose();

@@ -26,6 +26,8 @@ public class OfTypeSubject<TIn, TOut> : PushSubject<TOut> where TOut : TIn
         }, this.Complete, this.PushException);
     }
 
+    protected override void OnCompleted() => _subscription?.Dispose();
+
     public override void Dispose()
     {
         base.Dispose();

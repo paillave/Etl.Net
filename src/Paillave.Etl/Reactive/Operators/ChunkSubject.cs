@@ -53,6 +53,8 @@ public class ChunkSubject<TIn> : PushSubject<IEnumerable<TIn>>
         }
     }
 
+    protected override void OnCompleted() => _subscription?.Dispose();
+
     public override void Dispose()
     {
         lock (syncLock)

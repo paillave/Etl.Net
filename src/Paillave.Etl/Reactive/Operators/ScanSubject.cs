@@ -29,6 +29,8 @@ public class ScanSubject<TIn, TOut> : PushSubject<TOut>
             }
         }, this.Complete, this.PushException);
     }
+    protected override void OnCompleted() => _subscription?.Dispose();
+
     public override void Dispose()
     {
         base.Dispose();

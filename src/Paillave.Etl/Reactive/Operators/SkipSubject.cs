@@ -36,6 +36,8 @@ public class SkipSubject<T> : PushSubject<T>
         });
     }
 
+    protected override void OnCompleted() => _subscription?.Dispose();
+
     public override void Dispose()
     {
         base.Dispose();

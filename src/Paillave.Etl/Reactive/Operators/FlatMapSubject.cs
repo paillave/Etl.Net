@@ -83,7 +83,8 @@ public abstract class FlatMapSubjectBase<TIn, TOut> : PushSubject<TOut>
     {
         lock (_syncLock)
         {
-            this._sourceSubscription = null;
+            _sourceSubscription?.Dispose();
+            _sourceSubscription = null;
             TryComplete();
         }
     }

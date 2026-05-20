@@ -17,6 +17,7 @@ namespace Paillave.Etl.Tests;
 /// larger volume. Primary goal: exercise the correlation/lookup machinery
 /// hard enough to surface any deadlock in the heavy-normalization path.
 /// </summary>
+[Collection("MemorySensitive")]
 public class FinanceTradeImportPipelineTests
 {
     // Volumes: tuned to be heavy enough to stress the correlation buffers
@@ -532,32 +533,58 @@ public class FinanceTradeImportPipelineTests
             + status.ErrorTraceEvent?.ToString());
 
         // Cardinalities must match the LINQ reference.
-        var trades = GenerateTrades().ToList();
-        var positions = GeneratePositions().ToList();
+        // Stream through generators (no full materialisation — avoids multi-GB
+        // heap allocations that would disturb concurrent memory-leak tests).
+        var expCountries     = new HashSet<string>();
+        var expCurrencies    = new HashSet<string>();
+        var expExchanges     = new HashSet<string>();
+        var expAssetClasses  = new HashSet<string>();
+        var expSectors       = new HashSet<string>();
+        var expIndustries    = new HashSet<string>();
+        var expDesks         = new HashSet<string>();
+        var expAccounts      = new HashSet<string>();
+        var expBooks         = new HashSet<string>();
+        var expTraders       = new HashSet<string>();
+        var expCps           = new HashSet<string>();
+        var expSecurities    = new HashSet<string>();
+        decimal expectedNotional = 0m;
+        foreach (var t in GenerateTrades())
+        {
+            expCountries.Add(t.IssuerCountry);
+            expCurrencies.Add(t.Currency);
+            expExchanges.Add(t.ExchangeMic);
+            expAssetClasses.Add(t.AssetClass);
+            expSectors.Add(t.Sector);
+            expIndustries.Add(t.Industry);
+            expDesks.Add(t.Desk);
+            expAccounts.Add(t.AccountCode);
+            expBooks.Add(t.BookCode);
+            expTraders.Add(t.TraderId);
+            expCps.Add(t.CounterpartyCode);
+            expSecurities.Add(t.Isin);
+            expectedNotional += t.Side == "BUY" ? t.NetAmount : -t.NetAmount;
+        }
+        decimal expectedMv = GeneratePositions().Sum(p => p.MarketValue * p.FxRate);
 
-        Assert.Equal(trades.Select(t => t.IssuerCountry).Distinct().Count(), countryCount);
-        Assert.Equal(trades.Select(t => t.Currency).Distinct().Count(), currencyCount);
-        Assert.Equal(trades.Select(t => t.ExchangeMic).Distinct().Count(), exchangeCount);
-        Assert.Equal(trades.Select(t => t.AssetClass).Distinct().Count(), assetClassCount);
-        Assert.Equal(trades.Select(t => t.Sector).Distinct().Count(), sectorCount);
-        Assert.Equal(trades.Select(t => t.Industry).Distinct().Count(), industryCount);
-        Assert.Equal(trades.Select(t => t.Desk).Distinct().Count(), deskCount);
-        Assert.Equal(trades.Select(t => t.AccountCode).Distinct().Count(), accountCount);
-        Assert.Equal(trades.Select(t => t.BookCode).Distinct().Count(), bookCount);
-        Assert.Equal(trades.Select(t => t.TraderId).Distinct().Count(), traderCount);
-        Assert.Equal(trades.Select(t => t.CounterpartyCode).Distinct().Count(), counterpartyCount);
-        Assert.Equal(trades.Select(t => t.Isin).Distinct().Count(), securityCount);
+        Assert.Equal(expCountries.Count,    countryCount);
+        Assert.Equal(expCurrencies.Count,   currencyCount);
+        Assert.Equal(expExchanges.Count,    exchangeCount);
+        Assert.Equal(expAssetClasses.Count, assetClassCount);
+        Assert.Equal(expSectors.Count,      sectorCount);
+        Assert.Equal(expIndustries.Count,   industryCount);
+        Assert.Equal(expDesks.Count,        deskCount);
+        Assert.Equal(expAccounts.Count,     accountCount);
+        Assert.Equal(expBooks.Count,        bookCount);
+        Assert.Equal(expTraders.Count,      traderCount);
+        Assert.Equal(expCps.Count,          counterpartyCount);
+        Assert.Equal(expSecurities.Count,   securityCount);
 
         // Fact rows must match input volumes (no row dropped or duplicated).
         Assert.Equal(NbTrades, tradeFactCount);
         Assert.Equal(NbPositions, positionFactCount);
 
         // Aggregate totals must match LINQ reference.
-        decimal expectedNotional = trades.Sum(
-            t => t.Side == "BUY" ? t.NetAmount : -t.NetAmount);
         Assert.Equal(expectedNotional, tradeNotional);
-
-        decimal expectedMv = positions.Sum(p => p.MarketValue * p.FxRate);
         Assert.Equal(expectedMv, positionMvBase);
 
         // Heavy normalization must complete in reasonable time. With a

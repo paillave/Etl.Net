@@ -55,6 +55,8 @@ public class AggregateSubject<TIn, TAggr, TKey, TOut> : PushSubject<TOut>
         }
     }
 
+    protected override void OnCompleted() => _subscription?.Dispose();
+
     public override void Dispose()
     {
         base.Dispose();
