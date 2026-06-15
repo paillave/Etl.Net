@@ -12,4 +12,9 @@ public static class ConnectorsStreamEx
              Input = stream,
              OutputConnectorCode = outputConnectorCode,
          }).Output;
+    public static IStream<IFileValue> ToFileValue(this IStream<FileReference> stream, string name)
+    {
+        var connectors = stream.SourceNode.ExecutionContext.Services.GetRequiredService<IFileValueConnectors>();
+        return stream.Select(name, fileRef => connectors.GetProvider(fileRef.Connector).Provide(fileRef.FileSpecific));
+    }
 }
