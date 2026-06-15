@@ -14,8 +14,7 @@ public class GraphApiAdapterConnectionParameters : IGraphApiConnectionInfo
     [Required]
     [Sensitive]
     public string ClientSecret { get; set; }
-    [Required]
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
     public int MaxAttempts { get; set; } = 3;
     public bool SaveToSentItems { get; set; } = true;
 }

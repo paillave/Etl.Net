@@ -7,7 +7,8 @@ public interface IGraphApiConnectionInfo
     string TenantId { get; set; }
     string ClientId { get; set; }
     string ClientSecret { get; set; }
-    string UserId { get; set; }
+    /// <summary>Object ID (GUID) or UPN / email address of the Azure AD user (both accepted by Graph API).</summary>
+    string? UserId { get; set; }
     int MaxAttempts { get; set; }
     bool SaveToSentItems { get; set; }
 }
