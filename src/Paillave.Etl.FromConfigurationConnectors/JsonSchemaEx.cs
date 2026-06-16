@@ -23,7 +23,7 @@ internal static class JsonSchemaEx
     {
         if (schemaProperty.Reference != null)
         {
-            schema.Properties.Add(name, new JsonSchemaProperty { Reference = schemaProperty });
+            schema.Properties.Add(name, new JsonSchemaProperty { Reference = schemaProperty.Reference });
         }
         else
         {
