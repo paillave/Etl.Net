@@ -1,3 +1,4 @@
+using System.Linq;
 using NJsonSchema;
 
 namespace Paillave.Etl.FromConfigurationConnectors;
@@ -119,8 +120,20 @@ internal static class JsonSchemaEx
     }
     public static JsonSchema AddAsDefinition(this JsonSchema schema, JsonSchema targetSchema)
     {
+        PromoteNestedDefinitions(schema, targetSchema);
         targetSchema.Definitions[schema.Title] = schema;
-
         return new JsonSchema { Reference = schema };
+    }
+    private static void PromoteNestedDefinitions(JsonSchema source, JsonSchema root)
+    {
+        foreach (var (key, nested) in source.Definitions.ToList())
+        {
+            source.Definitions.Remove(key);
+            if (!root.Definitions.ContainsKey(key))
+            {
+                root.Definitions[key] = nested;
+                PromoteNestedDefinitions(nested, root);
+            }
+        }
     }
 }
