@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using NJsonSchema;
+using NJsonSchema.Generation;
 using Paillave.Etl.Core;
 
 namespace Paillave.Etl.FromConfigurationConnectors;
@@ -110,7 +111,7 @@ public class ConfigurationFileValueConnectorParser(params IProviderProcessorAdap
         return adapter.CreateProvider(code, name, connectionName, connectionParameters, parameters);
     }
     public string GetConnectorsSchemaJson() => GetConnectorsSchema().ToJson();
-    private static JsonSchema CreateAddonAdapters(JsonSchema docSchema, string title, IProviderProcessorAdapter[] dictionary)
+    private static JsonSchema CreateAddonAdapters(JsonSchema docSchema, string title, IProviderProcessorAdapter[] dictionary, JsonSchemaGenerator generator, JsonSchemaResolver resolver)
     {
         var schema = new JsonSchema
         {
@@ -125,14 +126,19 @@ public class ConfigurationFileValueConnectorParser(params IProviderProcessorAdap
                   return s;
               })]);
         foreach (var item in dictionary)
-            schema.AnyOf.Add(CreateAddonAdapter(docSchema, item));
+            schema.AnyOf.Add(CreateAddonAdapter(docSchema, item, generator, resolver));
         return schema;
     }
-    private static JsonSchema CreateAddonAdapter(JsonSchema docSchema, IProviderProcessorAdapter inputOutputAdapter)
+    private static JsonSchema CreateAddonAdapter(JsonSchema docSchema, IProviderProcessorAdapter inputOutputAdapter, JsonSchemaGenerator generator, JsonSchemaResolver resolver)
     {
-        var connectionParameterSchema = JsonSchema
-            .FromType(inputOutputAdapter.ConnectionParametersType)
-            .AddAsDefinition(docSchema);
+        // Use a shared resolver so each .NET type maps to exactly one JsonSchema instance.
+        // Multiple adapters referencing the same type (e.g. an enum) would otherwise produce
+        // independent instances; only one would land in Definitions, leaving the others as
+        // dangling references that ToJson() cannot resolve.
+        var connectionParameterSchema = new JsonSchema
+        {
+            Reference = generator.Generate(inputOutputAdapter.ConnectionParametersType, resolver)
+        };
 
         var adapterSchema = JsonSchemaEx
             .CreateObject($"Adapter_{inputOutputAdapter.Name}")
@@ -141,11 +147,11 @@ public class ConfigurationFileValueConnectorParser(params IProviderProcessorAdap
 
         if (inputOutputAdapter.ProviderParametersType != null)
         {
-            var providerParameterSchema = JsonSchema
-                .FromType(inputOutputAdapter.ProviderParametersType)
-                .AddStringProperty("Name", false);
+            var providerParameterSchema = generator.Generate(inputOutputAdapter.ProviderParametersType, resolver);
+            if (!providerParameterSchema.Properties.ContainsKey("Name"))
+                providerParameterSchema.AddStringProperty("Name", false);
             var providersSchema = JsonSchemaEx
-                .CreateDictionary($"Sources_{inputOutputAdapter.Name}", providerParameterSchema)
+                .CreateDictionary($"Sources_{inputOutputAdapter.Name}", new JsonSchema { Reference = providerParameterSchema })
                 .AddAsDefinition(docSchema);
             adapterSchema
                 .AddProperty("Providers", providersSchema, false);
@@ -153,11 +159,11 @@ public class ConfigurationFileValueConnectorParser(params IProviderProcessorAdap
 
         if (inputOutputAdapter.ProcessorParametersType != null)
         {
-            var processorParameterSchema = JsonSchema
-                .FromType(inputOutputAdapter.ProcessorParametersType)
-                .AddStringProperty("Name", false);
+            var processorParameterSchema = generator.Generate(inputOutputAdapter.ProcessorParametersType, resolver);
+            if (!processorParameterSchema.Properties.ContainsKey("Name"))
+                processorParameterSchema.AddStringProperty("Name", false);
             var processorsSchema = JsonSchemaEx
-                .CreateDictionary($"Processes_{inputOutputAdapter.Name}", processorParameterSchema)
+                .CreateDictionary($"Processes_{inputOutputAdapter.Name}", new JsonSchema { Reference = processorParameterSchema })
                 .AddAsDefinition(docSchema);
             adapterSchema
                 .AddProperty("Processors", processorsSchema, false);
@@ -168,8 +174,11 @@ public class ConfigurationFileValueConnectorParser(params IProviderProcessorAdap
     public JsonSchema GetConnectorsSchema()
     {
         var docSchema = JsonSchemaEx.CreateObject("Document");
+        var settings = new SystemTextJsonSchemaGeneratorSettings();
+        var generator = new JsonSchemaGenerator(settings);
+        var resolver = new JsonSchemaResolver(docSchema, settings);
 
-        var connectionSchema = CreateAddonAdapters(docSchema, "Connection", providerProcessorAdapters)
+        var connectionSchema = CreateAddonAdapters(docSchema, "Connection", providerProcessorAdapters, generator, resolver)
             .AddAsDefinition(docSchema);
 
         docSchema
