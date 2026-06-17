@@ -11,9 +11,14 @@ namespace Paillave.Etl.FromConfigurationConnectors;
 
 public class ConfigurationFileValueConnectorParser(params IProviderProcessorAdapter[] providerProcessorAdapters)
 {
-    // Composite is a framework built-in — callers never register it explicitly.
+    // Composite is a framework built-in. If a caller registers it explicitly, deduplicate by name
+    // so the schema generator never sees the same adapter title twice (which corrupts the
+    // NJsonSchema definitions and causes ToJson() to throw InvalidOperationException).
     private readonly IProviderProcessorAdapter[] _adapters =
-        [new CompositeFileValueProviderAdapter(), .. providerProcessorAdapters];
+        new[] { (IProviderProcessorAdapter)new CompositeFileValueProviderAdapter() }
+            .Concat(providerProcessorAdapters)
+            .DistinctBy(a => a.Name)
+            .ToArray();
 
     public IFileValueConnectors GetConnectors(string jsonConfig, Func<string, string> resolveSensitiveValue)
     {
