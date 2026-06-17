@@ -10,19 +10,22 @@ public class CompositeProviderParameters
 // Adapter that exposes only a provider (no processor).
 // The provider aggregates files from other already-registered source connectors,
 // identified by their codes in ProviderCodes.
-public class CompositeFileValueProviderAdapter(IFileValueConnectors connectors) : IProviderProcessorAdapter
+// Implements IDeferredProviderAdapter so the parser resolves it in a second pass,
+// after all regular providers are built — avoiding the circular dependency that
+// would arise from injecting IFileValueConnectors at construction time.
+public class CompositeFileValueProviderAdapter : IProviderProcessorAdapter, IDeferredProviderAdapter
 {
     public string Name => "Composite";
     public string Description => "Aggregates files from multiple already-registered source connectors";
 
-    // No connection parameters — composites reference existing connectors, not a remote service
-    public Type ConnectionParametersType => typeof(object);
+    public Type? ConnectionParametersType => null;
     public Type ProviderParametersType => typeof(CompositeProviderParameters);
-
-    // null signals the configuration system that this adapter has no processor
     public Type? ProcessorParametersType => null;
 
     public IFileValueProvider CreateProvider(string code, string name, string connectionName, object connectionParameters, object inputParameters)
+        => throw new NotSupportedException("Composite providers must be built via IDeferredProviderAdapter.CreateDeferredProvider");
+
+    public IFileValueProvider CreateDeferredProvider(string code, string name, string connectionName, object inputParameters, IFileValueConnectors connectors)
     {
         var parameters = (CompositeProviderParameters)inputParameters;
         return new CompositeFileValueProvider(code, connectors, parameters.ProviderCodes);

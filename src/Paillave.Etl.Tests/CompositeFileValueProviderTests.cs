@@ -66,37 +66,35 @@ public class CompositeFileValueProviderTests
     [Fact]
     public void Adapter_ProcessorParametersType_IsNull()
     {
-        var adapter = new CompositeFileValueProviderAdapter(new FileValueConnectors());
+        var adapter = new CompositeFileValueProviderAdapter();
         Assert.Null(adapter.ProcessorParametersType);
     }
 
     [Fact]
     public void Adapter_ProviderParametersType_IsCompositeProviderParameters()
     {
-        var adapter = new CompositeFileValueProviderAdapter(new FileValueConnectors());
+        var adapter = new CompositeFileValueProviderAdapter();
         Assert.Equal(typeof(CompositeProviderParameters), adapter.ProviderParametersType);
     }
 
     [Fact]
     public void Adapter_Name_IsComposite()
     {
-        var adapter = new CompositeFileValueProviderAdapter(new FileValueConnectors());
+        var adapter = new CompositeFileValueProviderAdapter();
         Assert.Equal("Composite", adapter.Name);
     }
 
-    // --- Provider created by adapter ---
+    // --- CompositeFileValueProvider behavior ---
 
     [Fact]
-    public void Adapter_CreateProvider_Test_CallsTestOnAllUnderlyingProviders()
+    public void Provider_Test_CallsTestOnAllUnderlyingProviders()
     {
         var p1 = new FakeProvider("A", ProcessImpact.Light, "a1.csv");
         var p2 = new FakeProvider("B", ProcessImpact.Light, "b1.csv");
         var connectors = new FileValueConnectors();
         connectors.Register(p1).Register(p2);
 
-        var adapter = new CompositeFileValueProviderAdapter(connectors);
-        var composite = adapter.CreateProvider("C", "Composite", "cnx", null, new CompositeProviderParameters { ProviderCodes = ["A", "B"] });
-
+        var composite = new CompositeFileValueProvider("C", connectors, "A", "B");
         composite.Test();
 
         Assert.True(p1.WasTested);
@@ -104,15 +102,14 @@ public class CompositeFileValueProviderTests
     }
 
     [Fact]
-    public void Adapter_CreateProvider_Provide_AggregatesFilesInOrder()
+    public void Provider_Provide_AggregatesFilesInOrder()
     {
         var connectors = new FileValueConnectors();
         connectors
             .Register(new FakeProvider("A", ProcessImpact.Light, "a1.csv", "a2.csv"))
             .Register(new FakeProvider("B", ProcessImpact.Light, "b1.csv"));
 
-        var adapter = new CompositeFileValueProviderAdapter(connectors);
-        var composite = adapter.CreateProvider("C", "Composite", "cnx", null, new CompositeProviderParameters { ProviderCodes = ["A", "B"] });
+        var composite = new CompositeFileValueProvider("C", connectors, "A", "B");
 
         var collected = new List<string>();
         composite.Provide(null, (fv, _) => collected.Add(fv.Name), CancellationToken.None);
@@ -121,15 +118,14 @@ public class CompositeFileValueProviderTests
     }
 
     [Fact]
-    public async Task Adapter_CreateProvider_ProvideAsync_AggregatesFilesInOrder()
+    public async Task Provider_ProvideAsync_AggregatesFilesInOrder()
     {
         var connectors = new FileValueConnectors();
         connectors
             .Register(new FakeProvider("A", ProcessImpact.Light, "a1.csv", "a2.csv"))
             .Register(new FakeProvider("B", ProcessImpact.Light, "b1.csv"));
 
-        var adapter = new CompositeFileValueProviderAdapter(connectors);
-        var composite = adapter.CreateProvider("C", "Composite", "cnx", null, new CompositeProviderParameters { ProviderCodes = ["A", "B"] });
+        var composite = new CompositeFileValueProvider("C", connectors, "A", "B");
 
         var collected = new List<string>();
         await foreach (var fv in composite.ProvideAsync())
@@ -139,29 +135,27 @@ public class CompositeFileValueProviderTests
     }
 
     [Fact]
-    public void Adapter_CreateProvider_PerformanceImpact_IsMaxOfUnderlying()
+    public void Provider_PerformanceImpact_IsMaxOfUnderlying()
     {
         var connectors = new FileValueConnectors();
         connectors
             .Register(new FakeProvider("A", ProcessImpact.Light))
             .Register(new FakeProvider("B", ProcessImpact.Heavy));
 
-        var adapter = new CompositeFileValueProviderAdapter(connectors);
-        var composite = adapter.CreateProvider("C", "Composite", "cnx", null, new CompositeProviderParameters { ProviderCodes = ["A", "B"] });
+        var composite = new CompositeFileValueProvider("C", connectors, "A", "B");
 
         Assert.Equal(ProcessImpact.Heavy, composite.PerformanceImpact);
     }
 
     [Fact]
-    public void Adapter_CreateProvider_FileReferences_PointToUnderlyingProviderCodes()
+    public void Provider_FileReferences_PointToUnderlyingProviderCodes()
     {
         var connectors = new FileValueConnectors();
         connectors
             .Register(new FakeProvider("A", ProcessImpact.Light, "a1.csv"))
             .Register(new FakeProvider("B", ProcessImpact.Light, "b1.csv"));
 
-        var adapter = new CompositeFileValueProviderAdapter(connectors);
-        var composite = adapter.CreateProvider("C", "Composite", "cnx", null, new CompositeProviderParameters { ProviderCodes = ["A", "B"] });
+        var composite = new CompositeFileValueProvider("C", connectors, "A", "B");
 
         var refs = new List<FileReference>();
         composite.Provide(null, (_, fr) => refs.Add(fr), CancellationToken.None);
@@ -171,7 +165,7 @@ public class CompositeFileValueProviderTests
     }
 
     [Fact]
-    public void Adapter_CreateProvider_Provide_StopsOnCancellation()
+    public void Provider_Provide_StopsOnCancellation()
     {
         var cts = new CancellationTokenSource();
         cts.Cancel();
@@ -181,8 +175,7 @@ public class CompositeFileValueProviderTests
             .Register(new FakeProvider("A", ProcessImpact.Light, "a1.csv"))
             .Register(new FakeProvider("B", ProcessImpact.Light, "b1.csv"));
 
-        var adapter = new CompositeFileValueProviderAdapter(connectors);
-        var composite = adapter.CreateProvider("C", "Composite", "cnx", null, new CompositeProviderParameters { ProviderCodes = ["A", "B"] });
+        var composite = new CompositeFileValueProvider("C", connectors, "A", "B");
 
         var collected = new List<string>();
         composite.Provide(null, (fv, _) => collected.Add(fv.Name), cts.Token);
@@ -190,18 +183,14 @@ public class CompositeFileValueProviderTests
         Assert.Empty(collected);
     }
 
-    // --- Lazy resolution: providers can be registered after adapter creation ---
+    // --- Lazy resolution: underlying providers registered after composite is created ---
 
     [Fact]
-    public void Adapter_CreateProvider_ResolvesProvidersLazily()
+    public void Provider_ResolvesProvidersLazily()
     {
         var connectors = new FileValueConnectors();
-        var adapter = new CompositeFileValueProviderAdapter(connectors);
+        var composite = new CompositeFileValueProvider("C", connectors, "A", "B");
 
-        // composite created before underlying providers are registered
-        var composite = adapter.CreateProvider("C", "Composite", "cnx", null, new CompositeProviderParameters { ProviderCodes = ["A", "B"] });
-
-        // register underlying providers afterwards
         connectors
             .Register(new FakeProvider("A", ProcessImpact.Light, "a1.csv"))
             .Register(new FakeProvider("B", ProcessImpact.Light, "b1.csv"));

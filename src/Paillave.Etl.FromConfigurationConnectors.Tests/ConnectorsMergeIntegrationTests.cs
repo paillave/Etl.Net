@@ -167,4 +167,35 @@ public class ConnectorsMergeIntegrationTests
         Assert.Contains("INPUTPOSITIONS", real.Providers);
         Assert.IsType<SftpFileValueProvider>(real.GetProvider("INPUTPOSITIONS"));
     }
+
+    // -----------------------------------------------------------------------
+    // Composite provider defined in the same JSON as the sub-connectors.
+    // -----------------------------------------------------------------------
+    private const string DefinitionComposite = """
+    {
+        "AllFiles": {
+            "Type": "Composite",
+            "Providers": {
+                "ALL_INPUTS": {
+                    "ProviderCodes": ["INPUTPOSITIONS", "INPUTDOCUMENTS"]
+                }
+            }
+        }
+    }
+    """;
+
+    [Fact]
+    public void GetConnectors_CompositeDefinitionMergedWithSftp_ReturnsCompositeProvider()
+    {
+        var merged = MergeDefinitions(Definition1, Definition2, DefinitionComposite);
+
+        var parser = new ConfigurationFileValueConnectorParser(new SftpProviderProcessorAdapter());
+        var connectors = parser.GetConnectors(merged, PassThroughResolver);
+
+        var real = Assert.IsType<FileValueConnectors>(connectors);
+        Assert.Contains("INPUTPOSITIONS", real.Providers);
+        Assert.Contains("INPUTDOCUMENTS", real.Providers);
+        Assert.Contains("ALL_INPUTS", real.Providers);
+        Assert.IsType<Paillave.Etl.Core.CompositeFileValueProvider>(real.GetProvider("ALL_INPUTS"));
+    }
 }
