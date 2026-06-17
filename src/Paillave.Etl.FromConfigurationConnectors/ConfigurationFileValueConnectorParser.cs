@@ -11,6 +11,10 @@ namespace Paillave.Etl.FromConfigurationConnectors;
 
 public class ConfigurationFileValueConnectorParser(params IProviderProcessorAdapter[] providerProcessorAdapters)
 {
+    // Composite is a framework built-in — callers never register it explicitly.
+    private readonly IProviderProcessorAdapter[] _adapters =
+        [new CompositeFileValueProviderAdapter(), .. providerProcessorAdapters];
+
     public IFileValueConnectors GetConnectors(string jsonConfig, Func<string, string> resolveSensitiveValue)
     {
         if (string.IsNullOrWhiteSpace(jsonConfig))
@@ -27,19 +31,31 @@ public class ConfigurationFileValueConnectorParser(params IProviderProcessorAdap
         {
             return new NoFileValueConnectors();
         }
-        Dictionary<string, IProviderProcessorAdapter> adapterDictionary = providerProcessorAdapters.ToDictionary(i => i.Name);
+        Dictionary<string, IProviderProcessorAdapter> adapterDictionary = _adapters.ToDictionary(i => i.Name);
         JObject o = JObject.Parse(jsonConfig);
-        var elts = o.Properties()
-            .Where(p => p.Path != "$schema")
-            .Select(i => ParseConnections(i, adapterDictionary, resolveSensitiveValue));
-        var processors = elts.SelectMany(i => i.processors).ToDictionary(i => i.Code);
-        var providers = elts.SelectMany(i => i.providers).ToDictionary(i => i.Code);
-        return new FileValueConnectors(providers, processors);
+        var connectionProperties = o.Properties().Where(p => p.Path != "$schema").ToList();
+
+        // Pass 1: build all regular (non-deferred) providers and processors.
+        var regularConnections = connectionProperties
+            .Where(p => GetAdapterType(p, adapterDictionary) is { } a && a is not IDeferredProviderAdapter)
+            .Select(p => ParseConnections(p, adapterDictionary, resolveSensitiveValue));
+        var processors = regularConnections.SelectMany(i => i.processors).ToDictionary(i => i.Code);
+        var providers = regularConnections.SelectMany(i => i.providers).ToDictionary(i => i.Code);
+        var connectors = new FileValueConnectors(providers, processors);
+
+        // Pass 2: build deferred providers (e.g. composites) now that the registry is populated.
+        var deferredProviders = connectionProperties
+            .Where(p => GetAdapterType(p, adapterDictionary) is IDeferredProviderAdapter)
+            .SelectMany(p => ParseDeferredConnection(p, adapterDictionary, connectors));
+        foreach (var provider in deferredProviders)
+            connectors.Register(provider);
+
+        return connectors;
     }
     public IFileValueProvider GetProvider(IConfigurationSection configurationSection)
     {
         var type = configurationSection.GetSection("Type").Value;
-        var providerProcessorAdapter = providerProcessorAdapters.Single(a => a.Name.Equals(type, StringComparison.InvariantCultureIgnoreCase));
+        var providerProcessorAdapter = _adapters.Single(a => a.Name.Equals(type, StringComparison.InvariantCultureIgnoreCase));
         var connectionConfiguration = configurationSection.GetSection("Connection");
         var connectionParameters = connectionConfiguration.Get(providerProcessorAdapter.ConnectionParametersType);
         var providerSection = configurationSection.GetSection("Provider");
@@ -49,12 +65,37 @@ public class ConfigurationFileValueConnectorParser(params IProviderProcessorAdap
     public IFileValueProcessor GetProcessor(IConfigurationSection configurationSection)
     {
         var type = configurationSection.GetSection("Type").Value;
-        var providerProcessorAdapter = providerProcessorAdapters.Single(a => a.Name.Equals(type, StringComparison.InvariantCultureIgnoreCase));
+        var providerProcessorAdapter = _adapters.Single(a => a.Name.Equals(type, StringComparison.InvariantCultureIgnoreCase));
         var connectionConfiguration = configurationSection.GetSection("Connection");
         var connectionParameters = connectionConfiguration.Get(providerProcessorAdapter.ConnectionParametersType);
         var processorSection = configurationSection.GetSection("Processor");
         var processorParameters = processorSection.Get(providerProcessorAdapter.ProcessorParametersType) ?? Activator.CreateInstance(providerProcessorAdapter.ProcessorParametersType);
         return providerProcessorAdapter.CreateProcessor("code", "name", "cnx", connectionParameters, processorParameters);
+    }
+    private static IProviderProcessorAdapter? GetAdapterType(JProperty property, Dictionary<string, IProviderProcessorAdapter> adapterDictionary)
+    {
+        var typeCode = (string?)((JObject)property.Value)["Type"];
+        return typeCode != null && adapterDictionary.TryGetValue(typeCode, out var adapter) ? adapter : null;
+    }
+    private static IEnumerable<IFileValueProvider> ParseDeferredConnection(JProperty property, Dictionary<string, IProviderProcessorAdapter> adapterDictionary, IFileValueConnectors connectors)
+    {
+        var connectionNode = (JObject)property.Value;
+        string connectionName = property.Name;
+        // Type is guaranteed non-null — this method is only called after GetAdapterType filtering.
+        string connectionTypeCode = ((string?)connectionNode["Type"])!;
+        var adapter = adapterDictionary[connectionTypeCode];
+        var deferredAdapter = (IDeferredProviderAdapter)adapter;
+        var providersNode = (JObject?)connectionNode["Providers"];
+        if (providersNode == null || adapter.ProviderParametersType == null) yield break;
+        foreach (var providerProp in providersNode.Properties())
+        {
+            var connectorNode = (JObject)providerProp.Value;
+            var code = providerProp.Name;
+            var name = ((string?)connectorNode["Name"]) ?? code;
+            var parameters = connectorNode.ToObject(adapter.ProviderParametersType)
+                ?? Activator.CreateInstance(adapter.ProviderParametersType)!;
+            yield return deferredAdapter.CreateDeferredProvider(code, name, connectionName, parameters, connectors);
+        }
     }
     private (List<IFileValueProvider> providers, List<IFileValueProcessor> processors) ParseConnections(JProperty property, Dictionary<string, IProviderProcessorAdapter> adapterDictionary, Func<string, string> resolveSensitiveValue)
     {
@@ -135,15 +176,18 @@ public class ConfigurationFileValueConnectorParser(params IProviderProcessorAdap
         // Multiple adapters referencing the same type (e.g. an enum) would otherwise produce
         // independent instances; only one would land in Definitions, leaving the others as
         // dangling references that ToJson() cannot resolve.
-        var connectionParameterSchema = new JsonSchema
-        {
-            Reference = generator.Generate(inputOutputAdapter.ConnectionParametersType, resolver)
-        };
-
         var adapterSchema = JsonSchemaEx
             .CreateObject($"Adapter_{inputOutputAdapter.Name}")
-            .AddProperty("Type", new JsonSchemaProperty { Pattern = $"^{inputOutputAdapter.Name}$" }, true)
-            .AddProperty("Connection", connectionParameterSchema, false);
+            .AddProperty("Type", new JsonSchemaProperty { Pattern = $"^{inputOutputAdapter.Name}$" }, true);
+
+        if (inputOutputAdapter.ConnectionParametersType != null)
+        {
+            var connectionParameterSchema = new JsonSchema
+            {
+                Reference = generator.Generate(inputOutputAdapter.ConnectionParametersType, resolver)
+            };
+            adapterSchema.AddProperty("Connection", connectionParameterSchema, false);
+        }
 
         if (inputOutputAdapter.ProviderParametersType != null)
         {
@@ -178,7 +222,7 @@ public class ConfigurationFileValueConnectorParser(params IProviderProcessorAdap
         var generator = new JsonSchemaGenerator(settings);
         var resolver = new JsonSchemaResolver(docSchema, settings);
 
-        var connectionSchema = CreateAddonAdapters(docSchema, "Connection", providerProcessorAdapters, generator, resolver)
+        var connectionSchema = CreateAddonAdapters(docSchema, "Connection", _adapters, generator, resolver)
             .AddAsDefinition(docSchema);
 
         docSchema
