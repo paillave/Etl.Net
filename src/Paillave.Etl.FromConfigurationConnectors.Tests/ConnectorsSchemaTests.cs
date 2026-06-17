@@ -184,4 +184,33 @@ public class ConnectorsSchemaTests
         var json = parser.GetConnectorsSchemaJson();
         Assert.False(string.IsNullOrWhiteSpace(json));
     }
+
+    // -----------------------------------------------------------------------
+    // Case 9 — regression for the production crash.
+    //
+    // ConfigurationFileValueConnectorParser always auto-prepends
+    // CompositeFileValueProviderAdapter internally. Production code in PMSv2
+    // also passed it explicitly, resulting in TWO Composite adapters in the
+    // list. The second pass overwrites docSchema.Definitions["Sources_Composite"],
+    // leaving the first adapter's AdditionalPropertiesSchema reference dangling.
+    // ToJson() then throws:
+    //   System.InvalidOperationException: Could not find the JSON path of a
+    //   referenced schema: NJsonSchema.JsonSchema,NJsonSchema.JsonSchema.
+    //
+    // The fix deduplicates adapters by Name in the constructor so that passing
+    // CompositeFileValueProviderAdapter explicitly is silently ignored.
+    // -----------------------------------------------------------------------
+    [Fact]
+    public void GetConnectorsSchemaJson_CompositePassedExplicitly_DoesNotThrow()
+    {
+        // Mirrors the production GetParser() call that explicitly includes
+        // CompositeFileValueProviderAdapter even though the constructor already
+        // auto-prepends it — should not throw InvalidOperationException.
+        var parser = new ConfigurationFileValueConnectorParser(
+            new SftpProviderProcessorAdapter(),
+            new CompositeFileValueProviderAdapter()
+        );
+        var json = parser.GetConnectorsSchemaJson();
+        Assert.False(string.IsNullOrWhiteSpace(json));
+    }
 }
