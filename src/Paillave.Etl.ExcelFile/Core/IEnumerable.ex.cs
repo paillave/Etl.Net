@@ -62,7 +62,7 @@ public static class IEnumerableExcelEx
         return pck;
     }
 
-    private static void TryAutoFitColumns(OfficeOpenXml.ExcelRange range)
+    private static void TryAutoFitColumns(OfficeOpenXml.ExcelRangeBase range)
     {
         try { range.AutoFitColumns(); }
         catch (TypeInitializationException) { }
