@@ -46,7 +46,7 @@ public static class IEnumerableExcelEx
                 if (item.Type == typeof(DateTime))
                     table.Columns[item.ColumnIndex].DataCellStyleName = "Date";
             }
-            r1.AutoFitColumns();
+            TryAutoFitColumns(r1);
         }
         else
         {
@@ -57,8 +57,15 @@ public static class IEnumerableExcelEx
             {
                 table.Columns[item.Index].DataCellStyleName = "Date";
             }
-            r1.AutoFitColumns();
+            TryAutoFitColumns(r1);
         }
         return pck;
+    }
+
+    private static void TryAutoFitColumns(OfficeOpenXml.ExcelRange range)
+    {
+        try { range.AutoFitColumns(); }
+        catch (TypeInitializationException) { }
+        catch (DllNotFoundException) { }
     }
 }
