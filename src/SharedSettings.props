@@ -2,7 +2,7 @@
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>2.5.8</Version>
+    <Version>2.5.9</Version>
     <PackageIcon>NugetIcon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>Stéphane Royer</Authors>
