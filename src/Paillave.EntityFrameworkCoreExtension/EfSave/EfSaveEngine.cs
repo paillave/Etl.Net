@@ -101,8 +101,18 @@ public class EfSaveEngine<T> where T : class
     {
         Expression leftValue = Expression.Property(leftParam, propertyInfo);
         Expression rightValue = Expression.Property(rightParam, propertyInfo);
-        return Expression.Equal(leftValue, rightValue);
+        Expression equality = Expression.Equal(leftValue, rightValue);
+        if (IsPotentiallyNull(propertyInfo.PropertyType))
+        {
+            // matches SqlServerSaveContextQuery.CreateEqualityConditionSql: a null seek value on the incoming
+            // entity must not match rows where the target column is also null, otherwise this pivot key would
+            // never fall through to the next AlternativelySeekOn key when the value is missing.
+            Expression leftIsNotNull = Expression.NotEqual(leftValue, Expression.Constant(null, propertyInfo.PropertyType));
+            return Expression.AndAlso(leftIsNotNull, equality);
+        }
+        return equality;
     }
+    private static bool IsPotentiallyNull(Type type) => !type.IsValueType || Nullable.GetUnderlyingType(type) != null;
     public async Task SaveAsync(IList<T> entities, bool doNotUpdateIfExists = false, bool insertOnly = false)
     {
         var contextSet = _context.Set<T>();

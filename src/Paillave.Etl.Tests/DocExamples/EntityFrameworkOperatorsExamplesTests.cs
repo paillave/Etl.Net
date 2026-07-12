@@ -43,10 +43,19 @@ public class EntityFrameworkOperatorsExamplesTests
         public int CountryId { get; set; }
     }
 
+    public class Security
+    {
+        [Key] public int Id { get; set; }
+        public string? Isin { get; set; }
+        public string InternalCode { get; set; } = "";
+        public string Name { get; set; } = "";
+    }
+
     public class DocDbContext(DbContextOptions<DocDbContext> options) : DbContext(options)
     {
         public DbSet<Country> Countries => Set<Country>();
         public DbSet<Person> People => Set<Person>();
+        public DbSet<Security> Securities => Set<Security>();
     }
 
     // ===================================================================
@@ -229,6 +238,39 @@ public class EntityFrameworkOperatorsExamplesTests
         var dict = ctx.Countries.ToDictionary(c => c.Code, c => c.Name);
         Assert.Equal("OLD", dict["FR"]);
         Assert.Equal("Spain", dict["ES"]);
+        ctx.Dispose();
+        cnx.Dispose();
+    }
+
+    // ===================================================================
+    // EfCoreSave + SeekOn + AlternativelySeekOn — a null value on the
+    // primary seek key must fall back to the alternative key instead of
+    // matching any other row whose primary key column is also null
+    // ===================================================================
+
+    [Fact]
+    public async Task EfCoreSave_AlternativelySeekOn_FallsBackWhenPrimaryKeyIsNull()
+    {
+        var (status, ctx, cnx) = await RunAsync<string>(
+            "go",
+            seed =>
+            {
+                seed.Securities.AddRange(
+                    new Security { Isin = null, InternalCode = "OTHER", Name = "Unrelated row with null ISIN" },
+                    new Security { Isin = null, InternalCode = "TARGET", Name = "OLD" });
+            },
+            root => root
+                .CrossApply("rows", _ => new[]
+                {
+                    new Security { Isin = null, InternalCode = "TARGET", Name = "New name" },
+                })
+                .EfCoreSave("save", o => o.SeekOn(s => s.Isin).AlternativelySeekOn(s => s.InternalCode)));
+
+        Assert.False(status.Failed);
+        var dict = ctx.Securities.ToDictionary(s => s.InternalCode, s => s.Name);
+        Assert.Equal(2, dict.Count);
+        Assert.Equal("New name", dict["TARGET"]);
+        Assert.Equal("Unrelated row with null ISIN", dict["OTHER"]);
         ctx.Dispose();
         cnx.Dispose();
     }
