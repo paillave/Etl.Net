@@ -221,6 +221,37 @@ public class TextFileOperatorsExamplesTests
     }
 
     // ===================================================================
+    // ToSourceName with positional (no header) columns
+    // ===================================================================
+
+    [Fact]
+    public async Task CrossApplyTextFile_ToSourceNameWithoutHeader()
+    {
+        const string content =
+            "AAPL:100\n" +
+            "MSFT\n";
+
+        var collected = new ConcurrentBag<(string FileName, string Text)>();
+
+        var status = await StreamProcessRunner.CreateAndExecuteAsync(
+            new InMemoryFileValue("Transactions (10).csv", content),
+            root => root
+                .CrossApply("emit file", file => new[] { file })
+                .CrossApplyTextFile("parse", FlatFileDefinition.Create(i => new
+                {
+                    FileName = i.ToSourceName(),
+                    Text = i.ToColumn(0),
+                }).IsColumnSeparated(':'))
+                .Do("collect", row => collected.Add((row.FileName, row.Text))));
+
+        Assert.False(status.Failed);
+        Assert.Equal(2, collected.Count);
+        Assert.All(collected, t => Assert.Equal("Transactions (10).csv", t.FileName));
+        Assert.Contains(collected, t => t.Text == "AAPL");
+        Assert.Contains(collected, t => t.Text == "MSFT");
+    }
+
+    // ===================================================================
     // ToTextFileValue — write the stream out as a CSV
     // ===================================================================
 
