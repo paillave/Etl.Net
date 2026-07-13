@@ -11,6 +11,7 @@ public class ZipFileProcessorParams
     [Sensitive]
     public string Password { get; set; }
     public bool UseStreamCopy { get; set; } = true;
+    public string FileName { get; set; }
 }
 public class ZipFileProcessorValuesProvider(ZipFileProcessorParams args) : ValuesProviderBase<IFileValue, IFileValue>
 {
@@ -22,17 +23,19 @@ public class ZipFileProcessorValuesProvider(ZipFileProcessorParams args) : Value
         => PushValues(input, push, cancellationToken);
     public void PushValues(IFileValue input, Action<IFileValue> push, CancellationToken cancellationToken)
     {
-        var destinations = input.Destinations;
         if (cancellationToken.IsCancellationRequested) return;
         using var stream = input.Get(_args.UseStreamCopy);
         var ms = new MemoryStream();
-        var fileName = $"{input.Name}.zip";
+        var zipFileName = Path.ChangeExtension(
+            string.IsNullOrEmpty(_args.FileName) ? Path.GetFileNameWithoutExtension(input.Name) : _args.FileName,
+            ".zip");
         using (var zipStream = new ZipOutputStream(ms))
         {
-            if (!String.IsNullOrEmpty(_args.Password))
+            zipStream.IsStreamOwner = false;
+            if (!string.IsNullOrEmpty(_args.Password))
                 zipStream.Password = _args.Password;
 
-            var zipEntry = new ZipEntry(fileName)
+            var zipEntry = new ZipEntry(ZipEntry.CleanName(input.Name))
             {
                 DateTime = DateTime.Now,
                 IsUnicodeText = true
@@ -43,6 +46,6 @@ public class ZipFileProcessorValuesProvider(ZipFileProcessorParams args) : Value
             zipStream.CloseEntry();
         }
         ms.Seek(0, SeekOrigin.Begin);
-        push(new ZippedFileValue(ms, input.Name, input));
+        push(new ZippedFileValue(ms, zipFileName, input));
     }
 }
