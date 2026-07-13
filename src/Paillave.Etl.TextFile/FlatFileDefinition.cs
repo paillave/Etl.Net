@@ -138,6 +138,7 @@ public class FlatFileDefinition<T>
         else
         {
             var indexToPropertySerializerDictionary = _fieldDefinitions
+                .Where(i => !i.ForSourceName && !i.ForLineNumber && !i.ForRowGuid)
                 .OrderBy(i => i.Position)
                 .Select((fd, idx) => new
                 {
