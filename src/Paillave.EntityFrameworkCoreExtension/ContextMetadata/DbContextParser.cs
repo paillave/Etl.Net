@@ -23,6 +23,7 @@ public class DbContextParser<TCtx> where TCtx : DbContext
         var modelStructureEntities = entityTypes.Select(CreateEntitySummary).ToDictionary(i => i.Name);
         var modelStructureLinks = entityTypes
             .SelectMany(i => i.GetNavigations().Where(navigation => navigation.DeclaringType.ClrType.Name == i.ClrType.Name).Select(n => CreateLinkSummary(i, n)))
+            .Union(entityTypes.SelectMany(i => i.GetSkipNavigations().Where(navigation => navigation.DeclaringType.ClrType.Name == i.ClrType.Name).Select(n => CreateSkipLinkSummary(i, n))))
             .Union(entityTypes.Where(i => i.BaseType != null).Select(i => CreateInheritLinkSummary(i, i.BaseType!))).ToList();
         return new ModelStructure
         {
@@ -46,6 +47,27 @@ public class DbContextParser<TCtx> where TCtx : DbContext
             Name = navigation.Name,
             Type = navigation.IsCollection ? LinkType.Aggregates : LinkType.References,
             Required = navigation.ForeignKey.IsRequired
+        };
+    }
+    /// <summary>Same as <see cref="CreateLinkSummary(IEntityType, INavigation)"/>, but for a many-to-many
+    /// relationship (<see cref="ISkipNavigation"/>), which <see cref="IEntityType.GetNavigations"/> never
+    /// returns — it has to be fetched separately via <see cref="IEntityType.GetSkipNavigations"/>.</summary>
+    public static LinkSummary CreateSkipLinkSummary(IEntityType entityType, ISkipNavigation navigation)
+    {
+        var from = entityType.GetEntityEssentials();
+        var to = navigation.TargetEntityType.GetEntityEssentials();
+
+        return new LinkSummary
+        {
+            FromName = from.Name,
+            FromSchema = from.Schema,
+            From = $"{from.Schema}.{from.Name}",
+            ToName = to.Name,
+            ToSchema = to.Schema,
+            To = $"{to.Schema}.{to.Name}",
+            Name = navigation.Name,
+            Type = LinkType.Aggregates,
+            Required = false
         };
     }
     public static LinkSummary CreateInheritLinkSummary(IEntityType from, IEntityType to)
@@ -77,6 +99,7 @@ public class DbContextParser<TCtx> where TCtx : DbContext
         return new PropertySummary
         {
             Name = property.GetColumnName(storeObject) ?? throw new InvalidOperationException("Column name is not defined"),
+            ClrName = property.Name,
             Type = GetTypeLabel(property.ClrType),
             IsForeignKey = property.IsForeignKey(),
             IsKey = property.IsKey(),
@@ -129,6 +152,7 @@ public class DbContextParser(Assembly assembly, XDocument xmlDocumentation, stri
         var modelStructureEntities = entityTypes.Select(CreateEntitySummary).ToDictionary(i => i.Name);
         var modelStructureLinks = entityTypes
             .SelectMany(i => i.GetNavigations().Where(navigation => navigation.DeclaringType.ClrType.Name == i.ClrType.Name).Select(n => CreateLinkSummary(i, n)))
+            .Union(entityTypes.SelectMany(i => i.GetSkipNavigations().Where(navigation => navigation.DeclaringType.ClrType.Name == i.ClrType.Name).Select(n => CreateSkipLinkSummary(i, n))))
             .Union(entityTypes.Where(i => i.BaseType != null).Select(i => CreateInheritLinkSummary(i, i.BaseType!))).ToList();
         return new ModelStructure
         {
@@ -152,6 +176,26 @@ public class DbContextParser(Assembly assembly, XDocument xmlDocumentation, stri
             Name = navigation.Name,
             Type = navigation.IsCollection ? LinkType.Aggregates : LinkType.References,
             Required = navigation.ForeignKey.IsRequired
+        };
+    }
+    /// <summary>Same as <see cref="CreateLinkSummary(IEntityType, INavigation)"/>, but for a many-to-many
+    /// relationship (<see cref="ISkipNavigation"/>), which <see cref="IEntityType.GetNavigations"/> never
+    /// returns — it has to be fetched separately via <see cref="IEntityType.GetSkipNavigations"/>.</summary>
+    public static LinkSummary CreateSkipLinkSummary(IEntityType entityType, ISkipNavigation navigation)
+    {
+        var from = entityType.GetEntityEssentials();
+        var to = navigation.TargetEntityType.GetEntityEssentials();
+        return new LinkSummary
+        {
+            From = $"{from.Schema}.{from.Name}",
+            FromSchema = from.Schema,
+            FromName = from.Name,
+            To = $"{to.Schema}.{to.Name}",
+            ToSchema = to.Schema,
+            ToName = to.Name,
+            Name = navigation.Name,
+            Type = LinkType.Aggregates,
+            Required = false
         };
     }
     public static LinkSummary CreateInheritLinkSummary(IEntityType from, IEntityType to)
@@ -188,6 +232,7 @@ public class DbContextParser(Assembly assembly, XDocument xmlDocumentation, stri
         return new PropertySummary
         {
             Name = property.GetColumnName(storeObject) ?? throw new InvalidOperationException("Column name is not defined"),
+            ClrName = property.Name,
             Type = GetTypeLabel(property.ClrType),
             IsForeignKey = property.IsForeignKey(),
             IsKey = property.IsKey(),
