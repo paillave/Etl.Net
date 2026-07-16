@@ -1,5 +1,3 @@
-﻿
-
 namespace Paillave.Etl.Core;
 
 public class CounterSummaryStreamTraceContent(int counter) : StreamTraceContentBase
@@ -8,5 +6,5 @@ public class CounterSummaryStreamTraceContent(int counter) : StreamTraceContentB
 
     public int Counter { get; } = counter;
 
-    public override string Message => $"{this.Counter} row(s) issued";
+    public override string Message => this.Counter == 1 ? "1 row issued" : $"{this.Counter} rows issued";
 }
