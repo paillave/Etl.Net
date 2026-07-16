@@ -143,7 +143,7 @@ root
     .CrossApply("rows", _ => trades)
     .SqlServerSave("save trades", o => o
         .ToTable("dbo.Trade")
-        .PivotOn(t => new { t.TradeId })   // business key — used to detect existing rows
+        .SeekOn(t => t.TradeId)   // business key — used to detect existing rows
         .ComputedColumns(t => new { t.RowVersion })); // columns the DB writes itself
 ```
 
@@ -163,8 +163,18 @@ drivers (positional `?` placeholders).
 
 For provider-agnostic upserts, prefer the
 [Entity Framework Core operators](./4_entityFramework.md) — they
-handle SQLite / PostgreSQL / MySQL transparently and offer the same
+handle SQLite / PostgreSQL / MySQL transparently and offer similar
 `SeekOn` / `DoNotUpdateIfExists` / `InsertOnly` switches.
+
+## Upserts with composite keys
+To match rows to update on multiple columns, pass an anonymous object containing the desired property names:
+```cs
+    .SqlServerSave("Save employment contracts", o => o
+        .ToTable("dbo.Contracts")
+        .SeekOn(t => new { t.EmployeeId, t.ContractId })
+```
+ETL.NET uses reflection to build the SQL conditions from the property names.
+
 
 ## Cheat sheet
 
@@ -175,5 +185,5 @@ handle SQLite / PostgreSQL / MySQL transparently and offer the same
 | Custom mapping | `WithMapping<T>(i => new T { X = i.ToColumn<int>("X") })` |
 | Run an `INSERT`/`UPDATE`/`DELETE` per row | `ToSqlCommand(name, "INSERT ... @Param ...")` |
 | Round-trip generated columns | add `OUTPUT inserted.*` (SQL Server) or `RETURNING ...` (PG/SQLite) |
-| Bulk SQL Server upsert | `SqlServerSave(name, o => o.ToTable("X").PivotOn(...))` |
+| Bulk SQL Server upsert | `SqlServerSave(name, o => o.ToTable("X").SeekOn(t => t.TradeId))` |
 | Provider-agnostic upsert | use `EfCoreSave` from `Paillave.Etl.EntityFrameworkCore` |
