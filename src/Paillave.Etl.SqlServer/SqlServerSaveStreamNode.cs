@@ -95,9 +95,9 @@ public class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, SqlServe
     }
     private void ProcessItem(TValue item, string connectionName)
     {
-    var sqlConnection = connectionName == null 
-        ? this.ExecutionContext.Services.GetRequiredService<IDbConnection>() 
-        : this.ExecutionContext.Services.GetRequiredKeyedService<IDbConnection>(connectionName);
+        using var sqlConnection = connectionName == null 
+                                ? this.ExecutionContext.Services.GetRequiredService<IDbConnection>() 
+                                : this.ExecutionContext.Services.GetRequiredKeyedService<IDbConnection>(connectionName);
         // List<PropertyInfo> pivot = base.Args.Pivot == null ? new List<PropertyInfo>() : base.Args.Pivot.GetPropertyInfos();
         // List<PropertyInfo> computed = base.Args.Computed == null ? new List<PropertyInfo>() : base.Args.Computed.GetPropertyInfos();
         // var sqlQuery = CreateSqlQuery(base.Args.Table, typeof(TIn).GetProperties().ToList(), pivot, computed);
