@@ -126,7 +126,7 @@ public class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, SqlServe
         
         using (var reader = command.ExecuteReader())
             if (reader.Read())
-                UpdateRecord(reader, item);
+                UpdateItem(item, reader);
     }
 
     private static IDbCommand AdjustCommandForOdbcOrOleDb(IDbConnection connection, IDbCommand command)
@@ -151,18 +151,16 @@ public class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, SqlServe
 
        return adjustedCommand;
     }
-    
-    private void UpdateRecord(IDataReader record, TValue item)
+
+    private void UpdateItem(TValue item, IDataReader record)
     {
-        IDictionary<string, object> values = new Dictionary<string, object>();
         for (int i = 0; i < record.FieldCount; i++)
         {
-            var recordValue = record.GetValue(i);
-            values[record.GetName(i)] = recordValue == DBNull.Value
-                ? null
-                : Convert.ChangeType(recordValue, record.GetFieldType(i));
+            var val = record.GetValue(i);
+            val = val == DBNull.Value ? null : Convert.ChangeType(val, record.GetFieldType(i));
+            if (_inPropertyInfos.TryGetValue(record.GetName(i), out var prop))
+                prop.SetValue(item, val);
         }
-        var updates = _inPropertyInfos.Join(values, i => i.Key, i => i.Key, (l, r) => new { Target = l.Value, NewValue = r.Value }, StringComparer.InvariantCultureIgnoreCase).ToList();
     }
 
     private string CreateSqlQuery(string table, List<PropertyInfo> allProperties, List<PropertyInfo> pivot, List<PropertyInfo> computed)
@@ -174,7 +172,7 @@ public class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, SqlServe
         if (pivot.Count > 0)
         {
             var pivotCondition = string.Join(" AND ", pivot.Select(p => $"p.[{p.Name}] = @{p.Name}"));
-            sb.AppendLine($"if(exists(select 1 from {table} as p where {pivotCondition} ))");
+            sb.AppendLine($"if (exists(select 1 from {table} as p where {pivotCondition}))");
             var setStatement = string.Join(", ", allPropertyNames.Except(pivotsNames).Except(computedNames).Select(i => $"[{i}] = @{i}").ToList());
             sb.AppendLine($"update p set {setStatement} output inserted.* from {table} as p where {pivotCondition};");
             sb.AppendLine("else");
