@@ -1,7 +1,6 @@
 using Paillave.Etl.Core;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Paillave.Etl.Reactive.Operators;
 using System.Linq;
 using System.Reflection;
@@ -88,16 +87,19 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
     private string _sqlStatement = null!;
     private List<PropertyInfo> _pivot = null!;
     private List<PropertyInfo> _computed = null!;
+    private bool _usePositionalParameters = false;
     private List<string> _positionalParamsMap = [];
 
 
-    private string GetSqlStatement(bool usePositionalParameters)
+    private string GetSqlStatement()
     {
         if (_sqlStatement == null)
         {
             _pivot = base.Args.Pivot == null ? new List<PropertyInfo>() : base.Args.Pivot.GetPropertyInfos();
             _computed = base.Args.Computed == null ? new List<PropertyInfo>() : base.Args.Computed.GetPropertyInfos();
-            _sqlStatement = CreateSqlQuery(base.Args.Table, typeof(TIn).GetProperties().ToList(), _pivot, _computed, usePositionalParameters);
+            _sqlStatement = CreateSqlQuery(Args.Table, _inPropertyInfos.Values.Except(_computed), _pivot);
+            if (_usePositionalParameters)
+                (_sqlStatement, _positionalParamsMap) = AdjustQueryForPositionalParameters(_sqlStatement);
         }
         return _sqlStatement;
     }
@@ -113,8 +115,8 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
         // List<PropertyInfo> pivot = base.Args.Pivot == null ? new List<PropertyInfo>() : base.Args.Pivot.GetPropertyInfos();
         // List<PropertyInfo> computed = base.Args.Computed == null ? new List<PropertyInfo>() : base.Args.Computed.GetPropertyInfos();
         // var sqlQuery = CreateSqlQuery(base.Args.Table, typeof(TIn).GetProperties().ToList(), pivot, computed);
-        var usePositionalParameters = sqlConnection is OdbcConnection or OleDbConnection;
-        var sqlStatement = GetSqlStatement(usePositionalParameters);
+        _usePositionalParameters = sqlConnection is OdbcConnection or OleDbConnection;
+        var sqlStatement = GetSqlStatement();
         var command = sqlConnection.CreateCommand();
         command.CommandText = sqlStatement;
         command.CommandType = CommandType.Text;
@@ -124,7 +126,7 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
 
         //Positional parameters must adhere to their position in the SQL statement, including repeat uses.
         //Otherwise just use all relevant properties of the item.
-        var parameterNames = usePositionalParameters
+        var parameterNames = _usePositionalParameters
                            ? _positionalParamsMap
                            : _inPropertyInfos.Keys.Except(_computed.Select(i => i.Name));
 
@@ -160,35 +162,49 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
     }
 
 
+    private string CreateSqlQuery(string table, IEnumerable<PropertyInfo> upsertProperties, IEnumerable<PropertyInfo> matchProperties)
+    {
+        var upsertProps = upsertProperties.ToList();
+        var matchProps = matchProperties.ToList();
+
+        var insert = $"""
+            insert into {table} ({string.Join(", ", upsertProps.Select(o => $"[{o.Name}]"))})
+            output inserted.*
+            values ({string.Join(", ", upsertProps.Select(i => $"@{i.Name}"))})
+            """;
+
+        if (matchProps.Count == 0)
+            return insert;
+
+        var pivotCondition = string.Join(" and ", matchProps.Select(p => $"p.[{p.Name}] = @{p.Name}"));
+        var setStatement = string.Join(", ", upsertProps.Except(matchProps).Select(i => $"[{i.Name}] = @{i.Name}"));
+        var query = $"""
+            if (exists(select 1 from {table} as p where {pivotCondition}))
+                update p
+                set {setStatement}
+                output inserted.*
+                from {table} as p where {pivotCondition}
+            else
+                {insert}
+            """;
+
+        return query;
+    }
+
+
     [GeneratedRegex(@"@(\w+)")]
     private static partial Regex ParameterRegex();
-
-    private string CreateSqlQuery(string table, List<PropertyInfo> allProperties, List<PropertyInfo> pivot, List<PropertyInfo> computed, bool usePositionalParameters)
+    /// <summary>
+    /// Converts parameters to <c>?</c> and notes their order for later in <see cref="_positionalParamsMap"/>.
+    /// </summary>
+    private static (string Query, List<string> PositionalParameterOrder) AdjustQueryForPositionalParameters(string query)
     {
-        var pivotsNames = pivot.Select(i => i.Name).ToList();
-        var computedNames = computed.Select(i => i.Name).ToList();
-        var allPropertyNames = allProperties.Select(i => i.Name).ToList();
-        StringBuilder sb = new();
-        if (pivot.Count > 0)
+        var parameters = new List<string>();
+        var newQuery = ParameterRegex().Replace(query, m =>
         {
-            var pivotCondition = string.Join(" and ", pivot.Select(p => $"p.[{p.Name}] = @{p.Name}"));
-            sb.AppendLine($"if(exists(select 1 from {table} as p where {pivotCondition} ))");
-            var setStatement = string.Join(", ", allPropertyNames.Except(pivotsNames).Except(computedNames).Select(i => $"[{i}] = @{i}").ToList());
-            sb.AppendLine($"update p set {setStatement} output inserted.* from {table} as p where {pivotCondition};");
-            sb.AppendLine("else");
-        }
-        var propsToInsert = allPropertyNames.Except(computedNames).ToList();
-        sb.AppendLine($"insert into {table} ({string.Join(", ", propsToInsert.Select(o => $"[{o}]"))}) output inserted.*");
-        sb.AppendLine($"values ({string.Join(", ", propsToInsert.Select(i => $"@{i}"))});");
-
-        if (!usePositionalParameters)
-            return sb.ToString();
-
-        //Convert parameters to ? and note their order for later
-        return ParameterRegex().Replace(sb.ToString(), m =>
-        {
-            _positionalParamsMap.Add(m.Groups[1].Value);
+            parameters.Add(m.Groups[1].Value);
             return "?";
         });
+        return (newQuery, parameters);
     }
 }
