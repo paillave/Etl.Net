@@ -79,7 +79,7 @@ public record SqlServerSaveCommandArgs<TIn, TStream, TValue>(TStream SourceStrea
                                                              ) where TIn : class where TStream : IStream<TIn>;
 
 
-public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, SqlServerSaveCommandArgs<TIn, TStream, TValue> args) : StreamNodeBase<TIn, TStream, SqlServerSaveCommandArgs<TIn, TStream, TValue>>(name, args)
+public partial class SqlServerSaveStreamNode<TIn, TStream, TValue> : StreamNodeBase<TIn, TStream, SqlServerSaveCommandArgs<TIn, TStream, TValue>>
     where TIn : class
     where TStream : IStream<TIn>
 {
@@ -92,40 +92,38 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
         var ret = args.SourceStream.Observable.Do(i => ProcessItem(args.GetValue(i)));
         return base.CreateMatchingStream(ret, args.SourceStream);
     }
-
-    private string _sqlStatement = null!;
-    private List<PropertyInfo> _pivot = null!;
-    private List<PropertyInfo> _computed = null!;
-    private bool _usePositionalParameters = false;
+    
+    private IDbConnection _sqlConnection;
+    private string _sqlStatement;
+    private List<PropertyInfo> _pivot;
+    private List<PropertyInfo> _computed;
+    private bool _usePositionalParameters;
     private List<string> _positionalParamsMap = [];
 
 
-    private string GetSqlStatement()
+    public SqlServerSaveStreamNode(string name, SqlServerSaveCommandArgs<TIn, TStream, TValue> args) : base(name, args)
     {
-        if (_sqlStatement == null)
-        {
-            _pivot = Args.Pivot == null ? [] : Args.Pivot.GetPropertyInfos();
-            _computed = Args.Computed == null ? [] : Args.Computed.GetPropertyInfos();
-            _sqlStatement = CreateSqlQuery(Args.Table, _inPropertyInfos.Values.Except(_computed), _pivot, Args.ReadBackChanges);
-            if (_usePositionalParameters)
-                (_sqlStatement, _positionalParamsMap) = AdjustQueryForPositionalParameters(_sqlStatement);
-        }
-        return _sqlStatement;
+        _sqlConnection = args.ConnectionName == null
+                       ? this.ExecutionContext.Services.GetRequiredService<IDbConnection>()
+                       : this.ExecutionContext.Services.GetRequiredKeyedService<IDbConnection>(args.ConnectionName);
+        this.ExecutionContext.AddDisposable(_sqlConnection);
+
+        _usePositionalParameters = _sqlConnection is OdbcConnection or OleDbConnection;
+        _pivot = Args.Pivot == null ? [] : Args.Pivot.GetPropertyInfos();
+        _computed = Args.Computed == null ? [] : Args.Computed.GetPropertyInfos();
+        _sqlStatement = CreateSqlQuery(Args.Table, _inPropertyInfos.Values.Except(_computed), _pivot, Args.ReadBackChanges);
+        if (_usePositionalParameters)
+            (_sqlStatement, _positionalParamsMap) = AdjustQueryForPositionalParameters(_sqlStatement);
     }
 
 
     private void ProcessItem(TValue item)
     {
-        using var sqlConnection = Args.ConnectionName == null
-                                ? this.ExecutionContext.Services.GetRequiredService<IDbConnection>() 
-                                : this.ExecutionContext.Services.GetRequiredKeyedService<IDbConnection>(Args.ConnectionName);
-        if (sqlConnection.State != ConnectionState.Open)
-            sqlConnection.Open();
+        if (_sqlConnection.State != ConnectionState.Open)
+            _sqlConnection.Open();
 
-        _usePositionalParameters = sqlConnection is OdbcConnection or OleDbConnection;
-        var sqlStatement = GetSqlStatement();
-        var command = sqlConnection.CreateCommand();
-        command.CommandText = sqlStatement;
+        var command = _sqlConnection.CreateCommand();
+        command.CommandText = _sqlStatement;
         command.CommandType = CommandType.Text;
 
         //Positional parameters must adhere to their position in the SQL statement, including repeat uses.
