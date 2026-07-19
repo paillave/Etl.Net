@@ -21,21 +21,34 @@ public class SqlServerSaveCommandArgsBuilder<TIn, TValue>(Func<TIn, TValue> GetV
     internal Expression<Func<TValue, object>>? Pivot { get; private set; } = null;
     internal Expression<Func<TValue, object>>? Computed { get; private set; } = null;
 
+    /// <summary>
+    /// The name of the table to which items will be saved, including schema as necessary. If omitted, <see cref="TValue"/>’s type name will be used.
+    /// </summary>
     public SqlServerSaveCommandArgsBuilder<TIn, TValue> ToTable(string table)
     {
         Table = table;
         return this;
     }
+    /// <summary>
+    /// Properties specified here will be used to match existing database rows to update rather than insert (“upsert”).
+    /// </summary>
     public SqlServerSaveCommandArgsBuilder<TIn, TValue> SeekOn(Expression<Func<TValue, object>> pivot)
     {
         Pivot = pivot;
         return this;
     }
-    public SqlServerSaveCommandArgsBuilder<TIn, TValue> DoNotSave(Expression<Func<TValue, object>> computed)
+    /// <summary>
+    /// Use this to exclude properties from the upsert. E.g. database-generated columns like ids and timestamps, or properties with no associated column.
+    /// </summary>
+    public SqlServerSaveCommandArgsBuilder<TIn, TValue> DoNotSave(Expression<Func<TValue, object>> propertiesToExclude)
     {
-        Computed = computed;
+        Computed = propertiesToExclude;
         return this;
     }
+    /// <summary>
+    /// Service key of the <see cref="IDbConnection"/> to use. <strong>This functionality is currently broken!</strong>
+    /// </summary>
+    [Obsolete("Keyed Services are not implemented yet. Using this will currently throw.", error: true)]
     public SqlServerSaveCommandArgsBuilder<TIn, TValue> WithConnection(string connectionName)
     {
         ConnectionName = connectionName;
