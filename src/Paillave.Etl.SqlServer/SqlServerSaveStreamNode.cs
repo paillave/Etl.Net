@@ -23,6 +23,7 @@ public class SqlServerSaveCommandArgsBuilder<TIn, TValue> where TIn : class
     internal Expression<Func<TValue, object>> Pivot { get; private set; } = null;
     internal Expression<Func<TValue, object>> Computed { get; private set; } = null;
     internal SqlServerSaveCommandArgsBuilder(Func<TIn, TValue> getValue) => (GetValue) = (getValue);
+
     public SqlServerSaveCommandArgsBuilder<TIn, TValue> ToTable(string table)
     {
         this.Table = table;
@@ -43,6 +44,7 @@ public class SqlServerSaveCommandArgsBuilder<TIn, TValue> where TIn : class
         this.ConnectionName = connectionName;
         return this;
     }
+
     internal SqlServerSaveCommandArgs<TIn, TStream, TValue> GetArgs<TStream>(TStream sourceStream) where TStream : IStream<TIn>
         => new()
         {
@@ -67,6 +69,8 @@ public class SqlServerSaveCommandArgs<TIn, TStream, TValue>
     public TStream SourceStream { get; set; }
     public Func<TIn, TValue> GetValue { get; set; }
 }
+
+
 public class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, SqlServerSaveCommandArgs<TIn, TStream, TValue> args) : StreamNodeBase<TIn, TStream, SqlServerSaveCommandArgs<TIn, TStream, TValue>>(name, args)
     where TIn : class
     where TStream : IStream<TIn>
@@ -80,9 +84,12 @@ public class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, SqlServe
         var ret = args.SourceStream.Observable.Do(i => ProcessItem(args.GetValue(i), args.ConnectionName));
         return base.CreateMatchingStream(ret, args.SourceStream);
     }
-    private string _sqlStatement = null;
-    private List<PropertyInfo> _pivot = null;
-    private List<PropertyInfo> _computed = null;
+
+    private string _sqlStatement = null!;
+    private List<PropertyInfo> _pivot = null!;
+    private List<PropertyInfo> _computed = null!;
+
+
     private string GetSqlStatement()
     {
         if (_sqlStatement == null)
@@ -93,6 +100,8 @@ public class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, SqlServe
         }
         return _sqlStatement;
     }
+
+
     private void ProcessItem(TValue item, string connectionName)
     {
     var sqlConnection = connectionName == null 
@@ -129,6 +138,7 @@ public class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, SqlServe
                 UpdateRecord(reader, item);
     }
 
+
     private static IDbCommand AdjustCommandForOdbcOrOleDb(IDbConnection connection, IDbCommand command)
     {
        var adjustedCommand = connection.CreateCommand();
@@ -152,9 +162,10 @@ public class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, SqlServe
        return adjustedCommand;
     }
     
-    private void UpdateRecord(IDataReader record, TValue item)
+    
+    private static void UpdateRecord(IDataReader record, TValue item)
     {
-        IDictionary<string, object> values = new Dictionary<string, object>();
+        var values = new Dictionary<string, object?>();
         for (int i = 0; i < record.FieldCount; i++)
         {
             var recordValue = record.GetValue(i);
@@ -165,7 +176,8 @@ public class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, SqlServe
         var updates = _inPropertyInfos.Join(values, i => i.Key, i => i.Key, (l, r) => new { Target = l.Value, NewValue = r.Value }, StringComparer.InvariantCultureIgnoreCase).ToList();
     }
 
-    private string CreateSqlQuery(string table, List<PropertyInfo> allProperties, List<PropertyInfo> pivot, List<PropertyInfo> computed)
+
+    private static string CreateSqlQuery(string table, List<PropertyInfo> allProperties, List<PropertyInfo> pivot, List<PropertyInfo> computed)
     {
         var pivotsNames = pivot.Select(i => i.Name).ToList();
         var computedNames = computed.Select(i => i.Name).ToList();
