@@ -133,7 +133,7 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
 
         using var reader = command.ExecuteReader();
         if (reader.Read())
-            UpdateRecord(reader, item);
+            UpdateItem(item, reader);
     }
 
 
@@ -147,18 +147,16 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
         return parameter;
     }
 
-    
-    private static void UpdateRecord(IDataReader record, TValue item)
+
+    private void UpdateItem(TValue item, IDataReader record)
     {
-        var values = new Dictionary<string, object?>();
         for (int i = 0; i < record.FieldCount; i++)
         {
-            var recordValue = record.GetValue(i);
-            values[record.GetName(i)] = recordValue == DBNull.Value
-                ? null
-                : Convert.ChangeType(recordValue, record.GetFieldType(i));
+            var val = record.GetValue(i);
+            val = val == DBNull.Value ? null : Convert.ChangeType(val, record.GetFieldType(i));
+            if (_inPropertyInfos.TryGetValue(record.GetName(i), out var prop) && prop.GetSetMethod() is not null)
+                prop.SetValue(item, val);
         }
-        var updates = _inPropertyInfos.Join(values, i => i.Key, i => i.Key, (l, r) => new { Target = l.Value, NewValue = r.Value }, StringComparer.InvariantCultureIgnoreCase).ToList();
     }
 
 
