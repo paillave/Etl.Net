@@ -14,60 +14,46 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Paillave.Etl.SqlServer;
 
 
-public class SqlServerSaveCommandArgsBuilder<TIn, TValue> where TIn : class
+public class SqlServerSaveCommandArgsBuilder<TIn, TValue>(Func<TIn, TValue> GetValue) where TIn : class
 {
-    internal Func<TIn, TValue> GetValue { get; }
-    internal string ConnectionName { get; private set; }
+    internal string? ConnectionName { get; private set; }
     internal string Table { get; private set; } = typeof(TValue).Name;
-    internal Expression<Func<TValue, object>> Pivot { get; private set; } = null;
-    internal Expression<Func<TValue, object>> Computed { get; private set; } = null;
-    internal SqlServerSaveCommandArgsBuilder(Func<TIn, TValue> getValue) => (GetValue) = (getValue);
+    internal Expression<Func<TValue, object>>? Pivot { get; private set; } = null;
+    internal Expression<Func<TValue, object>>? Computed { get; private set; } = null;
 
     public SqlServerSaveCommandArgsBuilder<TIn, TValue> ToTable(string table)
     {
-        this.Table = table;
+        Table = table;
         return this;
     }
     public SqlServerSaveCommandArgsBuilder<TIn, TValue> SeekOn(Expression<Func<TValue, object>> pivot)
     {
-        this.Pivot = pivot;
+        Pivot = pivot;
         return this;
     }
     public SqlServerSaveCommandArgsBuilder<TIn, TValue> DoNotSave(Expression<Func<TValue, object>> computed)
     {
-        this.Computed = computed;
+        Computed = computed;
         return this;
     }
     public SqlServerSaveCommandArgsBuilder<TIn, TValue> WithConnection(string connectionName)
     {
-        this.ConnectionName = connectionName;
+        ConnectionName = connectionName;
         return this;
     }
 
     internal SqlServerSaveCommandArgs<TIn, TStream, TValue> GetArgs<TStream>(TStream sourceStream) where TStream : IStream<TIn>
-        => new()
-        {
-            Table = this.Table,
-            Computed = this.Computed,
-            ConnectionName = this.ConnectionName,
-            GetValue = this.GetValue,
-            Pivot = this.Pivot,
-            SourceStream = sourceStream
-        };
+        => new(sourceStream, GetValue, Table, Pivot, Computed, ConnectionName);
 }
 
 
-public class SqlServerSaveCommandArgs<TIn, TStream, TValue>
-    where TIn : class
-    where TStream : IStream<TIn>
-{
-    public string Table { get; set; }
-    public Expression<Func<TValue, object>> Pivot { get; set; }
-    public Expression<Func<TValue, object>> Computed { get; set; }
-    public string ConnectionName { get; set; }
-    public TStream SourceStream { get; set; }
-    public Func<TIn, TValue> GetValue { get; set; }
-}
+public record SqlServerSaveCommandArgs<TIn, TStream, TValue>(TStream SourceStream,
+                                                             Func<TIn, TValue> GetValue,
+                                                             string Table,
+                                                             Expression<Func<TValue, object>>? Pivot,
+                                                             Expression<Func<TValue, object>>? Computed,
+                                                             string? ConnectionName
+                                                             ) where TIn : class where TStream : IStream<TIn>;
 
 
 public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, SqlServerSaveCommandArgs<TIn, TStream, TValue> args) : StreamNodeBase<TIn, TStream, SqlServerSaveCommandArgs<TIn, TStream, TValue>>(name, args)
@@ -105,24 +91,19 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
     }
 
 
-    private void ProcessItem(TValue item, string connectionName)
+    private void ProcessItem(TValue item, string? connectionName)
     {
         using var sqlConnection = connectionName == null
                                 ? this.ExecutionContext.Services.GetRequiredService<IDbConnection>() 
                                 : this.ExecutionContext.Services.GetRequiredKeyedService<IDbConnection>(connectionName);
         if (sqlConnection.State != ConnectionState.Open)
             sqlConnection.Open();
-        // List<PropertyInfo> pivot = base.Args.Pivot == null ? new List<PropertyInfo>() : base.Args.Pivot.GetPropertyInfos();
-        // List<PropertyInfo> computed = base.Args.Computed == null ? new List<PropertyInfo>() : base.Args.Computed.GetPropertyInfos();
-        // var sqlQuery = CreateSqlQuery(base.Args.Table, typeof(TIn).GetProperties().ToList(), pivot, computed);
+
         _usePositionalParameters = sqlConnection is OdbcConnection or OleDbConnection;
         var sqlStatement = GetSqlStatement();
         var command = sqlConnection.CreateCommand();
         command.CommandText = sqlStatement;
         command.CommandType = CommandType.Text;
-        // var command = new SqlCommand(sqlStatement, sqlConnection);
-        // Regex getParamRegex = new Regex(@"@(?<param>\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        // var allMatches = getParamRegex.Matches(base.Args.SqlQuery).ToList().Select(match => match.Groups["param"].Value).Distinct().ToList();
 
         //Positional parameters must adhere to their position in the SQL statement, including repeat uses.
         //Otherwise just use all relevant properties of the item.
