@@ -20,6 +20,7 @@ public class SqlServerSaveCommandArgsBuilder<TIn, TValue>(Func<TIn, TValue> GetV
     internal string Table { get; private set; } = typeof(TValue).Name;
     internal Expression<Func<TValue, object>>? Pivot { get; private set; } = null;
     internal Expression<Func<TValue, object>>? Computed { get; private set; } = null;
+    internal bool ReadBack { get; private set; } = false;
 
     /// <summary>
     /// The name of the table to which items will be saved, including schema as necessary. If omitted, <see cref="TValue"/>’s type name will be used.
@@ -46,6 +47,14 @@ public class SqlServerSaveCommandArgsBuilder<TIn, TValue>(Func<TIn, TValue> GetV
         return this;
     }
     /// <summary>
+    /// Request rows back from the database and apply changes to the processed items.
+    /// </summary>
+    public SqlServerSaveCommandArgsBuilder<TIn, TValue> ReadBackChanges()
+    {
+        ReadBack = true;
+        return this;
+    }
+    /// <summary>
     /// Service key of the <see cref="IDbConnection"/> to use. <strong>This functionality is currently broken!</strong>
     /// </summary>
     [Obsolete("Keyed Services are not implemented yet. Using this will currently throw.", error: true)]
@@ -56,7 +65,7 @@ public class SqlServerSaveCommandArgsBuilder<TIn, TValue>(Func<TIn, TValue> GetV
     }
 
     internal SqlServerSaveCommandArgs<TIn, TStream, TValue> GetArgs<TStream>(TStream sourceStream) where TStream : IStream<TIn>
-        => new(sourceStream, GetValue, Table, Pivot, Computed, ConnectionName);
+        => new(sourceStream, GetValue, Table, Pivot, Computed, ConnectionName, ReadBack);
 }
 
 
@@ -65,7 +74,8 @@ public record SqlServerSaveCommandArgs<TIn, TStream, TValue>(TStream SourceStrea
                                                              string Table,
                                                              Expression<Func<TValue, object>>? Pivot,
                                                              Expression<Func<TValue, object>>? Computed,
-                                                             string? ConnectionName
+                                                             string? ConnectionName,
+                                                             bool ReadBackChanges
                                                              ) where TIn : class where TStream : IStream<TIn>;
 
 
@@ -96,7 +106,7 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
         {
             _pivot = base.Args.Pivot == null ? new List<PropertyInfo>() : base.Args.Pivot.GetPropertyInfos();
             _computed = base.Args.Computed == null ? new List<PropertyInfo>() : base.Args.Computed.GetPropertyInfos();
-            _sqlStatement = CreateSqlQuery(Args.Table, _inPropertyInfos.Values.Except(_computed), _pivot);
+            _sqlStatement = CreateSqlQuery(Args.Table, _inPropertyInfos.Values.Except(_computed), _pivot, Args.ReadBackChanges);
             if (_usePositionalParameters)
                 (_sqlStatement, _positionalParamsMap) = AdjustQueryForPositionalParameters(_sqlStatement);
         }
@@ -128,7 +138,7 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
             command.Parameters.Add(MakeParameterFromPropertyname(command, item, parameterName));
 
         using var reader = command.ExecuteReader();
-        if (reader.Read())
+        if (Args.ReadBackChanges && reader.Read())
             UpdateItem(item, reader);
     }
 
@@ -160,10 +170,11 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
     {
         var upsertProps = upsertProperties.ToList();
         var matchProps = matchProperties.ToList();
+        var outputClause = readBackChanges ? "output inserted.*" : "";
 
         var insert = $"""
             insert into {table} ({string.Join(", ", upsertProps.Select(o => $"[{o.Name}]"))})
-            output inserted.*
+            {outputClause}
             values ({string.Join(", ", upsertProps.Select(i => $"@{i.Name}"))})
             """;
 
@@ -176,7 +187,7 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
             if (exists(select 1 from {table} as p where {pivotCondition}))
                 update p
                 set {setStatement}
-                output inserted.*
+                {outputClause}
                 from {table} as p where {pivotCondition}
             else
                 {insert}
