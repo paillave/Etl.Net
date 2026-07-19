@@ -122,7 +122,7 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue> : StreamNodeB
         if (_sqlConnection.State != ConnectionState.Open)
             _sqlConnection.Open();
 
-        var command = _sqlConnection.CreateCommand();
+        using var command = _sqlConnection.CreateCommand();
         command.CommandText = _sqlStatement;
         command.CommandType = CommandType.Text;
 
@@ -179,23 +179,25 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue> : StreamNodeB
         if (matchProps.Count == 0)
             return insert;
 
-        var pivotCondition = string.Join(" and ", matchProps.Select(p => $"p.[{p.Name}] = @{p.Name}"));
+        var pivotCondition = string.Join(" and ", matchProps.Select(p => $"[{p.Name}] = @{p.Name}"));
         var setStatement = string.Join(", ", upsertProps.Except(matchProps).Select(i => $"[{i.Name}] = @{i.Name}"));
         var query = $"""
-            if (exists(select 1 from {table} as p where {pivotCondition}))
-                update p
-                set {setStatement}
-                {outputClause}
-                from {table} as p where {pivotCondition}
-            else
+            update {table} with (updlock, serializable)
+            set {setStatement}
+            {outputClause}
+            where {pivotCondition}
+            
+            if (@@ROWCOUNT = 0)
+            begin
                 {insert}
+            end
             """;
 
         return query;
     }
 
 
-    [GeneratedRegex(@"@(\w+)")]
+    [GeneratedRegex(@"(?<!@)@(\w+)")]
     private static partial Regex ParameterRegex();
     /// <summary>
     /// Converts parameters to <c>?</c> and notes their order for later in <see cref="_positionalParamsMap"/>.
