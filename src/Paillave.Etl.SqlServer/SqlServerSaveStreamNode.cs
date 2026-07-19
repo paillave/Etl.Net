@@ -16,11 +16,11 @@ namespace Paillave.Etl.SqlServer;
 
 public class SqlServerSaveCommandArgsBuilder<TIn, TValue>(Func<TIn, TValue> GetValue) where TIn : class
 {
-    internal string? ConnectionName { get; private set; }
-    internal string Table { get; private set; } = typeof(TValue).Name;
-    internal Expression<Func<TValue, object>>? Pivot { get; private set; } = null;
-    internal Expression<Func<TValue, object>>? Computed { get; private set; } = null;
-    internal bool ReadBack { get; private set; } = false;
+    private string? ConnectionName;
+    private string Table = typeof(TValue).Name;
+    private Expression<Func<TValue, object>>? Pivot;
+    private Expression<Func<TValue, object>>? Computed;
+    private bool ReadBack = false;
 
     /// <summary>
     /// The name of the table to which items will be saved, including schema as necessary. If omitted, <see cref="TValue"/>’s type name will be used.
@@ -89,7 +89,7 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
 
     protected override TStream CreateOutputStream(SqlServerSaveCommandArgs<TIn, TStream, TValue> args)
     {
-        var ret = args.SourceStream.Observable.Do(i => ProcessItem(args.GetValue(i), args.ConnectionName));
+        var ret = args.SourceStream.Observable.Do(i => ProcessItem(args.GetValue(i)));
         return base.CreateMatchingStream(ret, args.SourceStream);
     }
 
@@ -104,8 +104,8 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
     {
         if (_sqlStatement == null)
         {
-            _pivot = base.Args.Pivot == null ? new List<PropertyInfo>() : base.Args.Pivot.GetPropertyInfos();
-            _computed = base.Args.Computed == null ? new List<PropertyInfo>() : base.Args.Computed.GetPropertyInfos();
+            _pivot = Args.Pivot == null ? [] : Args.Pivot.GetPropertyInfos();
+            _computed = Args.Computed == null ? [] : Args.Computed.GetPropertyInfos();
             _sqlStatement = CreateSqlQuery(Args.Table, _inPropertyInfos.Values.Except(_computed), _pivot, Args.ReadBackChanges);
             if (_usePositionalParameters)
                 (_sqlStatement, _positionalParamsMap) = AdjustQueryForPositionalParameters(_sqlStatement);
@@ -114,11 +114,11 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
     }
 
 
-    private void ProcessItem(TValue item, string? connectionName)
+    private void ProcessItem(TValue item)
     {
-        using var sqlConnection = connectionName == null
+        using var sqlConnection = Args.ConnectionName == null
                                 ? this.ExecutionContext.Services.GetRequiredService<IDbConnection>() 
-                                : this.ExecutionContext.Services.GetRequiredKeyedService<IDbConnection>(connectionName);
+                                : this.ExecutionContext.Services.GetRequiredKeyedService<IDbConnection>(Args.ConnectionName);
         if (sqlConnection.State != ConnectionState.Open)
             sqlConnection.Open();
 
@@ -154,7 +154,7 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
     }
 
 
-    private void UpdateItem(TValue item, IDataReader record)
+    private static void UpdateItem(TValue item, IDataReader record)
     {
         for (int i = 0; i < record.FieldCount; i++)
         {
@@ -166,7 +166,7 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, 
     }
 
 
-    private string CreateSqlQuery(string table, IEnumerable<PropertyInfo> upsertProperties, IEnumerable<PropertyInfo> matchProperties)
+    private static string CreateSqlQuery(string table, IEnumerable<PropertyInfo> upsertProperties, IEnumerable<PropertyInfo> matchProperties, bool readBackChanges)
     {
         var upsertProps = upsertProperties.ToList();
         var matchProps = matchProperties.ToList();
