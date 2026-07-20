@@ -25,6 +25,10 @@ public class SqlServerSaveCommandArgsBuilder<TIn, TValue>(Func<TIn, TValue> GetV
     /// <summary>
     /// The name of the table to which items will be saved, including schema as necessary. If omitted, <see cref="TValue"/>’s type name will be used.
     /// </summary>
+    /// <remarks>
+    /// This string is used verbatim in generated SQL and cannot be parameterized.
+    /// <strong>This is an SQL injection vector. Validate and escape untrusted input appropriately.</strong>
+    /// </remarks>
     public SqlServerSaveCommandArgsBuilder<TIn, TValue> ToTable(string table)
     {
         Table = table;
@@ -51,6 +55,9 @@ public class SqlServerSaveCommandArgsBuilder<TIn, TValue>(Func<TIn, TValue> GetV
     /// </summary>
     public SqlServerSaveCommandArgsBuilder<TIn, TValue> ReadBackChanges()
     {
+        if (typeof(TValue).IsValueType)
+            throw new InvalidOperationException($"Type {typeof(TValue).Name} must be a reference type if {nameof(ReadBackChanges)}() is used.");
+
         ReadBack = true;
         return this;
     }
@@ -135,9 +142,16 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue> : StreamNodeB
         foreach (var parameterName in parameterNames)
             command.Parameters.Add(MakeParameterFromPropertyname(command, item, parameterName));
 
-        using var reader = command.ExecuteReader();
-        if (Args.ReadBackChanges && reader.Read())
-            UpdateItem(item, reader);
+        if (!Args.ReadBackChanges)
+        {
+            command.ExecuteNonQuery();
+        }
+        else
+        {
+            using var reader = command.ExecuteReader();
+            if (reader.Read())
+                UpdateItem(item, reader);
+        }
     }
 
 
@@ -170,6 +184,9 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue> : StreamNodeB
         var matchProps = matchProperties.ToList();
         var outputClause = readBackChanges ? "output inserted.*" : "";
 
+        if (upsertProps.Count == 0)
+            throw new InvalidOperationException($"No properties to save were found on type {typeof(TIn).Name} after excluding those in {nameof(SqlServerSaveCommandArgsBuilder<,>.DoNotSave)}().");
+
         var insert = $"""
             insert into {table} ({string.Join(", ", upsertProps.Select(o => $"[{o.Name}]"))})
             {outputClause}
@@ -179,10 +196,14 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue> : StreamNodeB
         if (matchProps.Count == 0)
             return insert;
 
-        var pivotCondition = string.Join(" and ", matchProps.Select(p => $"[{p.Name}] = @{p.Name}"));
-        var setStatement = string.Join(", ", upsertProps.Except(matchProps).Select(i => $"[{i.Name}] = @{i.Name}"));
+        var updateProps = upsertProps.Except(matchProps).ToList();
+        if (updateProps.Count == 0)
+            throw new InvalidOperationException($"No properties to save were found on type {typeof(TIn).Name} after excluding those in {nameof(SqlServerSaveCommandArgsBuilder<,>.DoNotSave)}() and {nameof(SqlServerSaveCommandArgsBuilder<,>.SeekOn)}().");
+
+        var pivotCondition = string.Join(" and ", matchProps.Select(p => $"([{p.Name}] = @{p.Name} or ([{p.Name}] is null and @{p.Name} is null))"));
+        var setStatement = string.Join(", ", updateProps.Select(i => $"[{i.Name}] = @{i.Name}"));
         var query = $"""
-            update {table} with (updlock, serializable)
+            update top(1) {table} with (updlock, serializable)
             set {setStatement}
             {outputClause}
             where {pivotCondition}
