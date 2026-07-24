@@ -12,49 +12,35 @@ using System.Threading;
 
 namespace Paillave.Etl.SqlServer;
 
-public class SqlCommandValueProviderArgsBuilder<TIn>
+public class SqlCommandValueProviderArgsBuilder<TIn>(string? connectionName = null)
 {
-    private readonly string _connectionName;
-
-    public SqlCommandValueProviderArgsBuilder(string connectionName) => (_connectionName) = (connectionName);
-    public SqlCommandValueProviderArgsBuilder() { }
-
     public SqlCommandValueProviderWithQueryArgsBuilder<TIn> FromQuery(string query)
-        => new(query, _connectionName);
+        => new(query, connectionName);
+
     public SqlCommandValueProviderArgsBuilder<TIn> WithKeyedConnection(string keyedConnection)
         => new(keyedConnection);
 }
-public class SqlCommandValueProviderWithQueryArgsBuilder<TIn>
+
+
+public class SqlCommandValueProviderWithQueryArgsBuilder<TIn>(string query, string? connectionName)
 {
-    private readonly string _query;
-    private readonly string _connectionName;
-    public SqlCommandValueProviderWithQueryArgsBuilder(string query, string connectionName) => (_query, _connectionName) = (query, connectionName);
     public SqlCommandValueProviderArgsBuilder<TIn, TOut> WithMapping<TOut>()
-        => new(SqlResultMapDefinition.Create<TOut>(), _query, _connectionName);
+        => new(SqlResultMapDefinition.Create<TOut>(), query, connectionName);
     public SqlCommandValueProviderArgsBuilder<TIn, TOut> WithMapping<TOut>(Expression<Func<ISqlResultMapper, TOut>> expression)
-        => new(SqlResultMapDefinition.Create<TOut>(expression), _query, _connectionName);
+        => new(SqlResultMapDefinition.Create<TOut>(expression), query, connectionName);
 }
-public class SqlCommandValueProviderArgsBuilder<TIn, TOut>
+
+
+public class SqlCommandValueProviderArgsBuilder<TIn, TOut>(SqlResultMapDefinition<TOut> mapping, string query, string? connectionName)
 {
-    private readonly SqlResultMapDefinition<TOut> _mapping;
-    private readonly string _query;
-    private readonly string _connectionName;
-    public SqlCommandValueProviderArgsBuilder(SqlResultMapDefinition<TOut> mapping, string query, string connectionName)
-        => (_mapping, _query, _connectionName) = (mapping, query, connectionName);
     internal SqlCommandValueProviderArgs<TIn, TOut> GetArgs()
-        => new()
-        {
-            ConnectionName = _connectionName,
-            Mapping = _mapping,
-            SqlQuery = _query
-        };
+        => new(mapping, query, connectionName);
 }
-public class SqlCommandValueProviderArgs<TIn, TOut>
-{
-    public SqlResultMapDefinition<TOut> Mapping { get; set; }
-    public string SqlQuery { get; set; }
-    public string ConnectionName { get; set; }
-}
+
+
+public record SqlCommandValueProviderArgs<TIn, TOut>(SqlResultMapDefinition<TOut> Mapping, string SqlQuery, string? ConnectionName = null);
+
+
 public class SqlCommandValueProvider<TIn, TOut> : ValuesProviderBase<TIn, TOut>
 {
     private readonly SqlCommandValueProviderArgs<TIn, TOut> _args;
@@ -62,9 +48,9 @@ public class SqlCommandValueProvider<TIn, TOut> : ValuesProviderBase<TIn, TOut>
     public SqlCommandValueProvider(SqlCommandValueProviderArgs<TIn, TOut> args) => (_args) = (args);
     public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-    private TOut CreateRecord(IDataReader record, IList<SqlResultFieldDefinition> fieldDefinitions)
+    private TOut CreateRecord(IDataReader record, IList<SqlResultFieldDefinition>? fieldDefinitions)
     {
-        IDictionary<string, object> values = new Dictionary<string, object>();
+        IDictionary<string, object?> values = new Dictionary<string, object?>();
         for (int i = 0; i < record.FieldCount; i++)
             values[record.GetName(i)] = record.GetValue(i) != DBNull.Value ? Convert.ChangeType(record.GetValue(i), record.GetFieldType(i)) : null;
         if (fieldDefinitions != null)
@@ -98,7 +84,7 @@ public class SqlCommandValueProvider<TIn, TOut> : ValuesProviderBase<TIn, TOut>
             // command.Parameters.Add(new SqlParameter($"@{parameterName}", _inPropertyInfos[parameterName].GetValue(input) ?? DBNull.Value));
         }
 
-        IList<SqlResultFieldDefinition> fieldDefinitions = _args.Mapping != null ? _args.Mapping.GetDefinitions() : null;
+        IList<SqlResultFieldDefinition>? fieldDefinitions = _args.Mapping != null ? _args.Mapping.GetDefinitions() : null;
         using (var reader = command.ExecuteReader())
             while (reader.Read())
                 push(CreateRecord(reader, fieldDefinitions));
