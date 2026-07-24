@@ -76,10 +76,14 @@ public class SqlCommandValueProvider<TIn, TOut> : ValuesProviderBase<TIn, TOut>
     {
         // https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/ado-net-code-examples
         // https://stackoverflow.com/questions/5980615/parameterized-query-in-oracle-trouble
-        var sqlConnection = _args.ConnectionName == null 
-            ? context.Services.GetRequiredService<IDbConnection>() 
-            : context.Services.GetRequiredKeyedService<IDbConnection>(_args.ConnectionName);
-        var command = sqlConnection.CreateCommand();
+        using var sqlConnection = _args.ConnectionName == null 
+                                ? context.Services.GetRequiredService<IDbConnection>() 
+                                : context.Services.GetRequiredKeyedService<IDbConnection>(_args.ConnectionName);
+
+        if (sqlConnection.State != ConnectionState.Open)
+            sqlConnection.Open();
+
+        using var command = sqlConnection.CreateCommand();
         command.CommandText = _args.SqlQuery;
         command.CommandType = CommandType.Text;
         // var command = new SqlCommand(_args.SqlQuery, sqlConnection);
