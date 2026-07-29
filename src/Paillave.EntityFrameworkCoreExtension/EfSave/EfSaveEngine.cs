@@ -136,8 +136,14 @@ public class EfSaveEngine<T> where T : class
         var existingEntity = contextSet.AsNoTracking().FirstOrDefault(entityCondition);
         if (existingEntity == null)
         {
-            // _context.Entry(entity).State = EntityState.Added;
-            contextSet.Update(entity);
+            // For an entity with a store-generated surrogate Id, contextSet.Update(entity) here happened to
+            // be harmless: EF Core auto-promotes an Update() call on an entity whose store-generated key
+            // still has its default value to EntityState.Added. But for a pure composite NATURAL key entity
+            // (no store-generated key at all — e.g. SecurityHistoricalValue, keyed on
+            // {SecurityId, Type, Date}), EF takes Update() literally and emits an UPDATE statement that
+            // matches 0 rows (the row doesn't exist yet), throwing a DbUpdateConcurrencyException on every
+            // first-time insert. Add(...) is correct for a genuinely-new entity regardless of key shape.
+            contextSet.Add(entity);
         }
         else
         {
