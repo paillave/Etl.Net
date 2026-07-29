@@ -97,7 +97,7 @@ static async Task Main3(string[] args)
 private static void DefineProcess20(ISingleStream<Stream> contextStream)
 {
     contextStream
-        .Select("Create file value", i => FileValue.Create(i, i is FileStream fileStream ? fileStream.Name : "fileName.csv", "from stream"))
+        .Select("Create file value", i => InMemoryFileValue.Create(i, i is FileStream fileStream ? fileStream.Name : "fileName.csv", "from stream"))
         .CrossApplyTextFile("parse file", FlatFileDefinition.Create(i => new
         {
             Email = i.ToColumn("email"),
