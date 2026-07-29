@@ -143,7 +143,7 @@ public class EfSaveEngine<T> where T : class
             // {SecurityId, Type, Date}), EF takes Update() literally and emits an UPDATE statement that
             // matches 0 rows (the row doesn't exist yet), throwing a DbUpdateConcurrencyException on every
             // first-time insert. Add(...) is correct for a genuinely-new entity regardless of key shape.
-            contextSet.Add(entity);
+            AddGraphRespectingExistingKeys(entity);
         }
         else
         {
@@ -162,6 +162,40 @@ public class EfSaveEngine<T> where T : class
             contextSet.Update(entity);
         }
     }
+
+    // contextSet.Add(entity) marks entity AND every not-yet-tracked entity reachable through its navigation
+    // properties as Added — "unless they are already being tracked" (EF Core's own documented Add() contract).
+    // A macro that builds a new entity by pointing a reference navigation at an object returned from an
+    // EARLIER, already-completed EfCoreSave call (a common pattern: look up or save a "type"/"parent" row
+    // first, then reuse that in-memory object as the .TypeNavigation of many child rows saved afterwards)
+    // hits this the moment that earlier save ran against a DIFFERENT DbContext instance than this one — the
+    // referenced object already has a real, non-default database key, but THIS context has never seen it, so
+    // Add() happily tries to INSERT it a second time and throws a UNIQUE-constraint violation on its Id.
+    // Production never notices because one ASP.NET request shares a single DbContext for its whole unit of
+    // work, so the earlier save's tracked instance is still tracked when the later save runs. A caller whose
+    // DbContext genuinely is scoped per logical operation (e.g. a disconnected multi-DbContext test harness)
+    // hits it for real — confirmed running BDLCashMovImportEtl end-to-end, 2026-07-29:
+    // `Classification { ClassificationType = <already-saved SecurityClassificationType> }` re-inserted its
+    // already-existing ClassificationType, throwing "UNIQUE constraint failed: ClassificationType.Id".
+    // Fix: ChangeTracker.TrackGraph — EF Core's own built-in API for exactly this "disconnected graph, decide
+    // each node's state from whether it already has a key" scenario (Microsoft's own docs use the identical
+    // `node.Entry.State = node.Entry.IsKeySet ? EntityState.Unchanged : EntityState.Added;` recipe for
+    // attaching a graph that arrived from outside the current DbContext), used here in place of
+    // contextSet.Add(entity): a REFERENCED node whose primary key is already populated is marked Unchanged —
+    // it's assumed to already exist — instead of being re-inserted. The ROOT entity is force-Added regardless
+    // of IsKeySet: this class already proved it's new via the `existingEntity == null` pivot-key lookup above,
+    // and unlike the reference data this fix targets (e.g. ClassificationType, an EF-generated surrogate Id),
+    // some root entities use a purely NATURAL composite key with no store-generated column at all (e.g.
+    // SecurityHistoricalValue, keyed on {SecurityId, Type, Date} — see the DbUpdateConcurrencyException comment
+    // above) whose key properties are always populated by the caller before save, new row or not, so IsKeySet
+    // is true even for a genuinely brand-new row — applying the IsKeySet heuristic to the root as well as its
+    // references would silently turn this back into the exact "UPDATE affects 0 rows" bug this method's
+    // sibling fix (above) exists to prevent.
+    private void AddGraphRespectingExistingKeys(T entity)
+        => _context.ChangeTracker.TrackGraph(entity, node =>
+            node.Entry.State = ReferenceEquals(node.Entry.Entity, entity)
+                ? EntityState.Added
+                : node.Entry.IsKeySet ? EntityState.Unchanged : EntityState.Added);
 }
 
 
