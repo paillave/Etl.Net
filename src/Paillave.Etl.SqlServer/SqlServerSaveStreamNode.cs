@@ -86,7 +86,7 @@ public record SqlServerSaveCommandArgs<TIn, TStream, TValue>(TStream SourceStrea
                                                              ) where TIn : class where TStream : IStream<TIn>;
 
 
-public partial class SqlServerSaveStreamNode<TIn, TStream, TValue> : StreamNodeBase<TIn, TStream, SqlServerSaveCommandArgs<TIn, TStream, TValue>>
+public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, SqlServerSaveCommandArgs<TIn, TStream, TValue> args) : StreamNodeBase<TIn, TStream, SqlServerSaveCommandArgs<TIn, TStream, TValue>>(name, args)
     where TIn : class
     where TStream : IStream<TIn>
 {
@@ -99,37 +99,19 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue> : StreamNodeB
         var ret = args.SourceStream.Observable.Do(i => ProcessItem(args.GetValue(i)));
         return base.CreateMatchingStream(ret, args.SourceStream);
     }
-    
-    private IDbConnection _sqlConnection;
-    private string _sqlStatement;
+
+    private bool _isInitialized = false;
+    private IDbConnection? _sqlConnection;
+    private string? _sqlStatement;
     private List<string>? _paramPropertyNames;
-
-
-    public SqlServerSaveStreamNode(string name, SqlServerSaveCommandArgs<TIn, TStream, TValue> args) : base(name, args)
-    {
-        _sqlConnection = args.ConnectionName == null
-                       ? this.ExecutionContext.Services.GetRequiredService<IDbConnection>()
-                       : this.ExecutionContext.Services.GetRequiredKeyedService<IDbConnection>(args.ConnectionName);
-        this.ExecutionContext.AddDisposable(_sqlConnection);
-
-        var usePositionalParameters = _sqlConnection is OdbcConnection or OleDbConnection;
-        var pivotProperties = Args.Pivot == null ? [] : Args.Pivot.GetPropertyInfos();
-        var computedProperties = Args.Computed == null ? [] : Args.Computed.GetPropertyInfos();
-        var upsertProperties = _inPropertyInfos.Values.Except(computedProperties).ToList();
-        _sqlStatement = CreateSqlQuery(Args.Table, upsertProperties, pivotProperties, Args.ReadBackChanges);
-
-        //Positional parameters must adhere to their position in the SQL statement, including repeat uses.
-        //Otherwise just use all relevant properties of the item.
-        if (usePositionalParameters)
-            (_sqlStatement, _paramPropertyNames) = AdjustQueryForPositionalParameters(_sqlStatement);
-        else
-            _paramPropertyNames = upsertProperties.Union(pivotProperties).Select(i => i.Name).ToList();
-    }
-
+    
 
     private void ProcessItem(TValue item)
     {
-        if (_sqlConnection.State != ConnectionState.Open)
+        if (!_isInitialized)
+            Initialize();
+
+        if (_sqlConnection!.State != ConnectionState.Open)
             _sqlConnection.Open();
 
         using var command = _sqlConnection.CreateCommand();
@@ -148,6 +130,30 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue> : StreamNodeB
             if (reader.Read() || (reader.NextResult() && reader.Read()))
                 UpdateItem(item, reader);
         }
+    }
+
+    
+    private void Initialize()
+    {
+        _sqlConnection = args.ConnectionName == null
+                       ? this.ExecutionContext.Services.GetRequiredService<IDbConnection>()
+                       : this.ExecutionContext.Services.GetRequiredKeyedService<IDbConnection>(args.ConnectionName);
+        this.ExecutionContext.AddDisposable(_sqlConnection);
+
+        var usePositionalParameters = _sqlConnection is OdbcConnection or OleDbConnection;
+        var pivotParameters = Args.Pivot == null ? [] : Args.Pivot.GetPropertyInfos();
+        var computedProperties = Args.Computed == null ? [] : Args.Computed.GetPropertyInfos();
+        var upsertProperties = _inPropertyInfos.Values.Except(computedProperties).ToList();
+        _sqlStatement = CreateSqlQuery(Args.Table, upsertProperties, pivotParameters, Args.ReadBackChanges);
+
+        //Positional parameters must adhere to their position in the SQL statement, including repeat uses.
+        //Otherwise just use all relevant properties of the item.
+        if (usePositionalParameters)
+            (_sqlStatement, _paramPropertyNames) = AdjustQueryForPositionalParameters(_sqlStatement);
+        else
+            _paramPropertyNames = upsertProperties.Union(pivotParameters).Select(i => i.Name).ToList();
+
+        _isInitialized = true;
     }
 
 
