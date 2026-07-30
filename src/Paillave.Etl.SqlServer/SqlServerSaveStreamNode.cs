@@ -149,7 +149,7 @@ public partial class SqlServerSaveStreamNode<TIn, TStream, TValue> : StreamNodeB
         else
         {
             using var reader = command.ExecuteReader();
-            if (reader.Read())
+            if (reader.Read() || (reader.NextResult() && reader.Read()))
                 UpdateItem(item, reader);
         }
     }
