@@ -5,6 +5,7 @@ using Paillave.Etl.SqlServer.Tests;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -21,14 +22,39 @@ public sealed class SqlServerSaveTests(DatabaseFixture databaseFixture)
         new(null, "Laurent", "Garnier", null, "Techno god",  new Expectation(Id: 5, WasInserted: true,  WasChanged: true)),
     ];
 
-
-    [Fact]
-    public async Task Insert_ReservedColumnName() => await ProcessInsert(databaseFixture.CreateConnection, [ new(1, "Daft Punk"), new(2, "Daft Punk") ]);
+    private readonly Groups[] groupsSource = [ new(1, "Daft Punk"), new(4, "Air")];
 
 
     [Fact]
-    public async Task Insert_ReservedColumnName_OdbC() => await ProcessInsert(databaseFixture.CreateOdbcConnection, [new(1, "Daft Punk"), new(2, "Daft Punk")]);
-    
+    public async Task Insert_ReservedColumnName() => await ProcessInsert(databaseFixture.CreateConnection, groupsSource);
+
+
+    [Fact]
+    public async Task Insert_ReservedColumnName_OdbC() => await ProcessInsert(databaseFixture.CreateOdbcConnection, groupsSource);
+
+
+    [Fact(DisplayName = "Table name is derived from item type if unspecified")]
+    public async Task Insert_TableNameFromType()
+    {
+        await databaseFixture.ResetSeedDataAsync();
+
+        var executionOptions = new ExecutionOptions<IEnumerable<Groups>>
+        {
+            Services = new ServiceCollection().AddTransient<IDbConnection>(_ => databaseFixture.CreateConnection()).BuildServiceProvider(),
+        };
+
+        var result = await StreamProcessRunner.CreateAndExecuteAsync(
+            groupsSource,
+            contextStream => contextStream
+                .CrossApply("Create values from enumeration", context => context)
+                .SqlServerSave("Insert into table matching items’ type name"),
+            executionOptions);
+
+        Assert.False(result.Failed, $"Process failed: {result.ErrorTraceEvent?.NodeName} ({result.ErrorTraceEvent?.NodeTypeName}): {result.ErrorTraceEvent?.Content?.Message}");
+
+        await AssertGroupsInDatabaseEqual(groupsSource);
+    }
+
 
     [Fact]
     public async Task Upsert_WithReadBack() => await ProcessUpsert(databaseFixture.CreateConnection);
@@ -38,11 +64,11 @@ public sealed class SqlServerSaveTests(DatabaseFixture databaseFixture)
     public async Task Upsert_WithReadBack_Odbc() => await ProcessUpsert(databaseFixture.CreateOdbcConnection);
 
     
-    private async Task ProcessInsert(Func<IDbConnection> connectionFactory, IEnumerable<GroupAssociation> sourceData)
+    private async Task ProcessInsert(Func<IDbConnection> connectionFactory, IEnumerable<Groups> sourceData)
     {
         await databaseFixture.ResetSeedDataAsync();
 
-        var executionOptions = new ExecutionOptions<IEnumerable<GroupAssociation>>
+        var executionOptions = new ExecutionOptions<IEnumerable<Groups>>
         {
             Services = new ServiceCollection().AddTransient(_ => connectionFactory()).BuildServiceProvider(),
         };
@@ -56,6 +82,8 @@ public sealed class SqlServerSaveTests(DatabaseFixture databaseFixture)
             executionOptions);
 
         Assert.False(result.Failed, $"Process failed: {result.ErrorTraceEvent?.NodeName} ({result.ErrorTraceEvent?.NodeTypeName}): {result.ErrorTraceEvent?.Content?.Message}");
+
+        await AssertGroupsInDatabaseEqual(sourceData);
     }
 
 
@@ -126,6 +154,22 @@ public sealed class SqlServerSaveTests(DatabaseFixture databaseFixture)
         //else
         //    Assert.True(reader.GetDateTime("ValidFromUtc") < startTimeUtc, $"Row without changes (Id {person.Id}) received an UPDATE and triggered system-versioning.");
     }
+
+
+    private async Task AssertGroupsInDatabaseEqual(IEnumerable<Groups> expectedData)
+    {
+        await using var connection = databaseFixture.CreateConnection();
+        await connection.OpenAsync();
+
+        await using var command = connection.CreateCommand();
+        command.CommandText = $"select * from {nameof(Groups)} order by PersonId";
+        using var reader = await command.ExecuteReaderAsync();
+        var actualData = new List<Groups>();
+        while (await reader.ReadAsync())
+            actualData.Add(new(reader.GetInt32(nameof(Groups.PersonId)), reader.GetString(nameof(Groups.Group))));
+
+        Assert.True(Enumerable.SequenceEqual(expectedData.OrderBy(g => g.PersonId), actualData), "Groups in database do not match Groups sent.");
+    }
 }
 
 
@@ -144,4 +188,4 @@ internal class Person(int? Id, string Firstname, string Lastname, string? Lastna
     public Expectation Expectation { get; } = Expectation;
 }
 
-internal record GroupAssociation(int PersonId, string Group);
+internal record Groups(int PersonId, string Group);
