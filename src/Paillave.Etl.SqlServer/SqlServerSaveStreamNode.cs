@@ -23,7 +23,8 @@ public class SqlServerSaveCommandArgsBuilder<TIn, TValue>(Func<TIn, TValue> GetV
     private bool ReadBack = false;
 
     /// <summary>
-    /// The name of the table to which items will be saved, including schema as necessary. If omitted, <see cref="TValue"/>’s type name will be used.
+    /// The name of the table to which items will be saved, including schema as necessary.
+    /// If omitted, <typeparamref name="TValue"/>’s type name will be used.
     /// </summary>
     /// <remarks>
     /// This string is used verbatim in generated SQL and cannot be parameterized.
@@ -53,6 +54,7 @@ public class SqlServerSaveCommandArgsBuilder<TIn, TValue>(Func<TIn, TValue> GetV
     /// <summary>
     /// Request rows back from the database and apply changes to the processed items.
     /// </summary>
+    /// <remarks>Only affects settable properties of <typeparamref name="TValue"/>.</remarks>
     public SqlServerSaveCommandArgsBuilder<TIn, TValue> ReadBackChanges()
     {
         if (typeof(TValue).IsValueType)
