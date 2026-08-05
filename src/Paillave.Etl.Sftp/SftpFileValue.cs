@@ -29,7 +29,11 @@ public class SftpFileValue : FileValueBase
         using (var client = new SftpClient(connectionInfo))
         {
             client.Connect();
-            return new MemoryStream(client.ReadAllBytes(StringEx.ConcatenatePath(_folder, Name)));
+            var ms = new MemoryStream();
+            using (var remoteStream = client.OpenRead(StringEx.ConcatenatePath(_folder, Name)))
+                remoteStream.CopyTo(ms, 81920);
+            ms.Position = 0;
+            return ms;
         }
     }
     private StreamWithResource OpenContentSingleTime()
