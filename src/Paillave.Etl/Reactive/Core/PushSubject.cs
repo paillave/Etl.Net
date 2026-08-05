@@ -78,6 +78,7 @@ public class PushSubject<T> : IPushSubject<T>
     }
     public void  Complete()
     {
+        List<ISubscription<T>> subscriptionsSnapshot;
         lock (LockObject)
         {
             if (this._isComplete) return;
@@ -87,11 +88,14 @@ public class PushSubject<T> : IPushSubject<T>
             TmpClass.Log(msg);
 #endif
             this._isComplete = true;
-            foreach (var item in this.Subscriptions.ToList())
-                if (item.OnComplete != null)
-                    item.OnComplete();
-            OnCompleted();
+            subscriptionsSnapshot = this.Subscriptions.ToList();
         }
+        // Run outside the lock: these can call back into another subject's Complete() on a different
+        // thread, and holding LockObject here can deadlock against it (AB-BA). _isComplete is already
+        // latched above, so this still runs at most once.
+        foreach (var item in subscriptionsSnapshot)
+            item.OnComplete?.Invoke();
+        OnCompleted();
         // Release the registration so the subject and its captured graph can
         // be collected even when the CancellationToken outlives them.
         // We use Unregister() (not Dispose()) to avoid a deadlock when this
