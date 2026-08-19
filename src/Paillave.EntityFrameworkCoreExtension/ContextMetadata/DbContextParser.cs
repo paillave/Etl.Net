@@ -46,7 +46,9 @@ public class DbContextParser<TCtx> where TCtx : DbContext
             To = $"{to.Schema}.{to.Name}",
             Name = navigation.Name,
             Type = navigation.IsCollection ? LinkType.Aggregates : LinkType.References,
-            Required = navigation.ForeignKey.IsRequired
+            Required = navigation.ForeignKey.IsRequired,
+            CascadeDelete = navigation.ForeignKey.DeleteBehavior == DeleteBehavior.Cascade,
+            ForeignKeyProperties = navigation.ForeignKey.Properties.Select(fkProperty => fkProperty.Name).ToList()
         };
     }
     /// <summary>Same as <see cref="CreateLinkSummary(IEntityType, INavigation)"/>, but for a many-to-many
@@ -67,7 +69,9 @@ public class DbContextParser<TCtx> where TCtx : DbContext
             To = $"{to.Schema}.{to.Name}",
             Name = navigation.Name,
             Type = LinkType.Aggregates,
-            Required = false
+            Required = false,
+            CascadeDelete = false,
+            ForeignKeyProperties = []
         };
     }
     public static LinkSummary CreateInheritLinkSummary(IEntityType from, IEntityType to)
@@ -83,7 +87,9 @@ public class DbContextParser<TCtx> where TCtx : DbContext
             ToSchema = toMapping.Schema,
             To = $"{toMapping.Schema}.{toMapping.Name}",
             Type = LinkType.Inherits,
-            Required = false
+            Required = false,
+            CascadeDelete = false,
+            ForeignKeyProperties = []
         };
     }
     public static EntitySummary CreateEntitySummary(IEntityType entityType)
@@ -175,7 +181,9 @@ public class DbContextParser(Assembly assembly, XDocument xmlDocumentation, stri
             ToName = to.Name,
             Name = navigation.Name,
             Type = navigation.IsCollection ? LinkType.Aggregates : LinkType.References,
-            Required = navigation.ForeignKey.IsRequired
+            Required = navigation.ForeignKey.IsRequired,
+            CascadeDelete = navigation.ForeignKey.DeleteBehavior == DeleteBehavior.Cascade,
+            ForeignKeyProperties = navigation.ForeignKey.Properties.Select(fkProperty => fkProperty.Name).ToList()
         };
     }
     /// <summary>Same as <see cref="CreateLinkSummary(IEntityType, INavigation)"/>, but for a many-to-many
@@ -195,7 +203,9 @@ public class DbContextParser(Assembly assembly, XDocument xmlDocumentation, stri
             ToName = to.Name,
             Name = navigation.Name,
             Type = LinkType.Aggregates,
-            Required = false
+            Required = false,
+            CascadeDelete = false,
+            ForeignKeyProperties = []
         };
     }
     public static LinkSummary CreateInheritLinkSummary(IEntityType from, IEntityType to)
@@ -211,7 +221,9 @@ public class DbContextParser(Assembly assembly, XDocument xmlDocumentation, stri
             ToSchema = toSummary.Schema,
             ToName = toSummary.Name,
             Type = LinkType.Inherits,
-            Required = false
+            Required = false,
+            CascadeDelete = false,
+            ForeignKeyProperties = []
         };
     }
     public static EntitySummary CreateEntitySummary(IEntityType entityType)

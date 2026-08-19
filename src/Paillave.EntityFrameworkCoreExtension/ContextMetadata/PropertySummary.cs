@@ -10,7 +10,10 @@ public class PropertySummary
     public required string Type { get; set; }
     public required bool IsNullable { get; set; }
     public required bool IsKey { get; set; }
+    /// <summary>See <see cref="LinkSummary"/> for the relationship this foreign key belongs to (matched
+    /// via <see cref="LinkSummary.ForeignKeyProperties"/>), including whether it cascades on delete.</summary>
     public required bool IsForeignKey { get; set; }
+
     public int? MaxLength { get; set; }
     public override string ToString() => $"{this.Name}:{this.Type}";
 }
