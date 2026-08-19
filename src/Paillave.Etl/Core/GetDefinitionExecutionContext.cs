@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl.Core;
 
-public class GetDefinitionExecutionContext : IExecutionContext
+public class GetDefinitionExecutionContext(IServiceProvider? services = null) : IExecutionContext
 {
     private readonly List<StreamToNodeLink> _streamToNodeLinks = [];
     private readonly List<INodeDescription> _nodes = [];
@@ -21,7 +21,10 @@ public class GetDefinitionExecutionContext : IExecutionContext
     public void AddNode<T>(INodeDescription nodeContext, IPushObservable<T> observable) => _nodes.Add(nodeContext);
     // public IMemoryCache ContextBag => new MemoryCache();
     // public IFileValueConnectors Connectors { get; }
-    public IServiceProvider Services { get; } = new ServiceCollection().BuildServiceProvider();
+    // Nodes that need a DI service at graph-construction time (e.g. FromConnector resolving
+    // IFileValueConnectors) can't get it from anywhere else, since GetDefinitionStructure() never
+    // runs the pipeline — the caller is the only one who knows what's safe to stand in here.
+    public IServiceProvider Services { get; } = services ?? new ServiceCollection().BuildServiceProvider();
 
     public bool Terminating => throw new NotImplementedException();
 
