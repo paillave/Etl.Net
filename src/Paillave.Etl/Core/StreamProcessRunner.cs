@@ -142,7 +142,8 @@ public class StreamProcessRunner<TConfig>(Action<ISingleStream<TConfig>> jobDefi
         traceStartupSubject.Complete();
         return await task.ConfigureAwait(false);
     }
-    public JobDefinitionStructure GetDefinitionStructure(IServiceProvider? services = null)
+    public JobDefinitionStructure GetDefinitionStructure() => GetDefinitionStructure(null);
+    public JobDefinitionStructure GetDefinitionStructure(IServiceProvider? services)
     {
         var jobExecutionContext = new GetDefinitionExecutionContext(services);
         var rootNode = new CurrentExecutionNodeContext("<Process>", jobExecutionContext);
