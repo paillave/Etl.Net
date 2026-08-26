@@ -7,17 +7,22 @@ namespace Paillave.Etl.Core;
 public abstract class JobPoolBase(int delayBetweenCall = 0) : IDisposable
 {
     private readonly object _lock = new();
-    private bool _isStopped = false;
+    // Volatile: Dispose reads and writes it without holding _lock.
+    private volatile bool _isStopped = false;
+    private static readonly TimeSpan ShutdownCheckInterval = TimeSpan.FromSeconds(1);
 
     private readonly Queue<Action> _actionQueue = new();
     private readonly int _delayBetweenCall = delayBetweenCall;
-    private readonly System.Threading.EventWaitHandle _mtxWaitNewProcess = new(false, System.Threading.EventResetMode.AutoReset);
 
+    // Monitor.Wait on _lock rather than an EventWaitHandle: the handle was a kernel object created
+    // once per pool and never disposed - Dispose only signalled it - so every job handed a batch of
+    // handles to the finalizer queue. Waiting on the lock we already hold needs no handle at all, and
+    // it closes the lost-wakeup window the old code had between leaving the lock and calling WaitOne.
     protected void BackgroundProcess()
     {
-        while (!_isStopped)
+        lock (_lock)
         {
-            lock (_lock)
+            while (true)
             {
                 while (_actionQueue.Count > 0)
                 {
@@ -25,8 +30,14 @@ public abstract class JobPoolBase(int delayBetweenCall = 0) : IDisposable
                     if (_delayBetweenCall != 0)
                         System.Threading.Thread.Sleep(_delayBetweenCall);
                 }
+                if (_isStopped) return;
+                // Releases _lock while waiting, reacquires it on wake, so producers can enqueue.
+                // The timeout only covers one race: Dispose can set _isStopped just after the check
+                // above, and its TryEnter then fails because we still hold the lock, so the pulse is
+                // lost and an untimed wait would never end - the very thread leak this is fixing.
+                // Producers cannot lose a pulse, they signal while holding the lock.
+                System.Threading.Monitor.Wait(_lock, ShutdownCheckInterval);
             }
-            _mtxWaitNewProcess.WaitOne();
         }
     }
     public Task ExecuteAsync(Action action)
@@ -46,7 +57,7 @@ public abstract class JobPoolBase(int delayBetweenCall = 0) : IDisposable
                     tsc.SetException(ex);
                 }
             });
-            _mtxWaitNewProcess.Set();
+            System.Threading.Monitor.Pulse(_lock);
         }
         return tsc.Task;
     }
@@ -67,7 +78,7 @@ public abstract class JobPoolBase(int delayBetweenCall = 0) : IDisposable
                     tsc.SetException(ex);
                 }
             });
-            _mtxWaitNewProcess.Set();
+            System.Threading.Monitor.Pulse(_lock);
         }
         return tsc.Task;
     }
@@ -87,7 +98,7 @@ public abstract class JobPoolBase(int delayBetweenCall = 0) : IDisposable
                     tsc.SetException(ex);
                 }
             });
-            _mtxWaitNewProcess.Set();
+            System.Threading.Monitor.Pulse(_lock);
         }
         return tsc.Task;
     }
@@ -107,7 +118,7 @@ public abstract class JobPoolBase(int delayBetweenCall = 0) : IDisposable
                     tsc.SetException(ex);
                 }
             });
-            _mtxWaitNewProcess.Set();
+            System.Threading.Monitor.Pulse(_lock);
         }
         return tsc.Task;
     }
@@ -121,7 +132,15 @@ public abstract class JobPoolBase(int delayBetweenCall = 0) : IDisposable
             if (disposing)
             {
                 _isStopped = true;
-                _mtxWaitNewProcess.Set();
+                // Deliberately non blocking. If the lock is free the pool is idle in Monitor.Wait and
+                // needs a pulse to notice the flag; if it is taken the pool is draining its queue and
+                // will re-read _isStopped as soon as it is done, so no pulse is needed. Taking the
+                // lock unconditionally here would instead make Dispose wait out the running job.
+                if (System.Threading.Monitor.TryEnter(_lock))
+                {
+                    try { System.Threading.Monitor.PulseAll(_lock); }
+                    finally { System.Threading.Monitor.Exit(_lock); }
+                }
             }
             disposedValue = true;
         }
@@ -137,7 +156,18 @@ public abstract class JobPoolBase(int delayBetweenCall = 0) : IDisposable
 
 public class JobPool : JobPoolBase
 {
-    public JobPool(int delayBetweenCall = 0) : base(delayBetweenCall) => Task.Run(() => BackgroundProcess());
+    // A dedicated background thread, not Task.Run: BackgroundProcess spends its life blocked, and
+    // blocking a ThreadPool worker indefinitely makes the pool inject replacement threads (roughly one
+    // per second) whose stacks are working set the GC cannot account for.
+    public JobPool(int delayBetweenCall = 0) : base(delayBetweenCall)
+    {
+        var thread = new System.Threading.Thread(BackgroundProcess)
+        {
+            IsBackground = true,
+            Name = "EtlJobPool",
+        };
+        thread.Start();
+    }
 }
 public class InThreadJobPool : JobPoolBase
 {
