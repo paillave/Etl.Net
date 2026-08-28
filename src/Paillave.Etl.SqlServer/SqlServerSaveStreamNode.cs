@@ -1,7 +1,6 @@
 using Paillave.Etl.Core;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Paillave.Etl.Reactive.Operators;
 using System.Linq;
 using System.Reflection;
@@ -15,59 +14,81 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Paillave.Etl.SqlServer;
 
 
-public class SqlServerSaveCommandArgsBuilder<TIn, TValue> where TIn : class
+public class SqlServerSaveCommandArgsBuilder<TIn, TValue>(Func<TIn, TValue> GetValue) where TIn : class
 {
-    internal Func<TIn, TValue> GetValue { get; }
-    internal string ConnectionName { get; private set; }
-    internal string Table { get; private set; } = typeof(TValue).Name;
-    internal Expression<Func<TValue, object>> Pivot { get; private set; } = null;
-    internal Expression<Func<TValue, object>> Computed { get; private set; } = null;
-    internal SqlServerSaveCommandArgsBuilder(Func<TIn, TValue> getValue) => (GetValue) = (getValue);
+    private string? ConnectionName;
+    private string Table = typeof(TValue).Name;
+    private Expression<Func<TValue, object>>? Pivot;
+    private Expression<Func<TValue, object>>? Computed;
+    private bool ReadBack = false;
+
+    /// <summary>
+    /// The name of the table to which items will be saved, including schema as necessary.
+    /// If omitted, <typeparamref name="TValue"/>’s type name will be used.
+    /// </summary>
+    /// <remarks>
+    /// This string is used verbatim in generated SQL and cannot be parameterized.
+    /// <strong>This is an SQL injection vector. Validate and escape untrusted input appropriately.</strong>
+    /// </remarks>
     public SqlServerSaveCommandArgsBuilder<TIn, TValue> ToTable(string table)
     {
-        this.Table = table;
+        Table = table;
         return this;
     }
+    /// <summary>
+    /// Properties specified here will be used to match existing database rows to update rather than insert (“upsert”).
+    /// </summary>
     public SqlServerSaveCommandArgsBuilder<TIn, TValue> SeekOn(Expression<Func<TValue, object>> pivot)
     {
-        this.Pivot = pivot;
+        Pivot = pivot;
         return this;
     }
-    public SqlServerSaveCommandArgsBuilder<TIn, TValue> DoNotSave(Expression<Func<TValue, object>> computed)
+    /// <summary>
+    /// Use this to exclude properties from the upsert. E.g. database-generated columns like ids and timestamps, or properties with no associated column.
+    /// </summary>
+    public SqlServerSaveCommandArgsBuilder<TIn, TValue> DoNotSave(Expression<Func<TValue, object>> propertiesToExclude)
     {
-        this.Computed = computed;
+        Computed = propertiesToExclude;
         return this;
     }
+    /// <summary>
+    /// Request rows back from the database and apply changes to the processed items.
+    /// </summary>
+    /// <remarks>Only affects settable properties of <typeparamref name="TValue"/>.</remarks>
+    public SqlServerSaveCommandArgsBuilder<TIn, TValue> ReadBackChanges()
+    {
+        if (typeof(TValue).IsValueType)
+            throw new InvalidOperationException($"Type {typeof(TValue).Name} must be a reference type if {nameof(ReadBackChanges)}() is used.");
+
+        ReadBack = true;
+        return this;
+    }
+    /// <summary>
+    /// Service key of the <see cref="IDbConnection"/> to use. <strong>This functionality is currently broken!</strong>
+    /// </summary>
+    [Obsolete("Keyed Services are not implemented yet. Using this will currently throw.", error: true)]
     public SqlServerSaveCommandArgsBuilder<TIn, TValue> WithConnection(string connectionName)
     {
-        this.ConnectionName = connectionName;
+        ConnectionName = connectionName;
         return this;
     }
+
     internal SqlServerSaveCommandArgs<TIn, TStream, TValue> GetArgs<TStream>(TStream sourceStream) where TStream : IStream<TIn>
-        => new()
-        {
-            Table = this.Table,
-            Computed = this.Computed,
-            ConnectionName = this.ConnectionName,
-            GetValue = this.GetValue,
-            Pivot = this.Pivot,
-            SourceStream = sourceStream
-        };
+        => new(sourceStream, GetValue, Table, Pivot, Computed, ConnectionName, ReadBack);
 }
 
 
-public class SqlServerSaveCommandArgs<TIn, TStream, TValue>
-    where TIn : class
-    where TStream : IStream<TIn>
-{
-    public string Table { get; set; }
-    public Expression<Func<TValue, object>> Pivot { get; set; }
-    public Expression<Func<TValue, object>> Computed { get; set; }
-    public string ConnectionName { get; set; }
-    public TStream SourceStream { get; set; }
-    public Func<TIn, TValue> GetValue { get; set; }
-}
-public class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, SqlServerSaveCommandArgs<TIn, TStream, TValue> args) : StreamNodeBase<TIn, TStream, SqlServerSaveCommandArgs<TIn, TStream, TValue>>(name, args)
+public record SqlServerSaveCommandArgs<TIn, TStream, TValue>(TStream SourceStream,
+                                                             Func<TIn, TValue> GetValue,
+                                                             string Table,
+                                                             Expression<Func<TValue, object>>? Pivot,
+                                                             Expression<Func<TValue, object>>? Computed,
+                                                             string? ConnectionName,
+                                                             bool ReadBackChanges
+                                                             ) where TIn : class where TStream : IStream<TIn>;
+
+
+public partial class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, SqlServerSaveCommandArgs<TIn, TStream, TValue> args) : StreamNodeBase<TIn, TStream, SqlServerSaveCommandArgs<TIn, TStream, TValue>>(name, args)
     where TIn : class
     where TStream : IStream<TIn>
 {
@@ -77,111 +98,143 @@ public class SqlServerSaveStreamNode<TIn, TStream, TValue>(string name, SqlServe
 
     protected override TStream CreateOutputStream(SqlServerSaveCommandArgs<TIn, TStream, TValue> args)
     {
-        var ret = args.SourceStream.Observable.Do(i => ProcessItem(args.GetValue(i), args.ConnectionName));
+        var ret = args.SourceStream.Observable.Do(i => ProcessItem(args.GetValue(i)));
         return base.CreateMatchingStream(ret, args.SourceStream);
     }
-    private string _sqlStatement = null;
-    private List<PropertyInfo> _pivot = null;
-    private List<PropertyInfo> _computed = null;
-    private string GetSqlStatement()
-    {
-        if (_sqlStatement == null)
-        {
-            _pivot = base.Args.Pivot == null ? new List<PropertyInfo>() : base.Args.Pivot.GetPropertyInfos();
-            _computed = base.Args.Computed == null ? new List<PropertyInfo>() : base.Args.Computed.GetPropertyInfos();
-            _sqlStatement = CreateSqlQuery(base.Args.Table, typeof(TIn).GetProperties().ToList(), _pivot, _computed);
-        }
-        return _sqlStatement;
-    }
-    private void ProcessItem(TValue item, string connectionName)
-    {
-    var sqlConnection = connectionName == null 
-        ? this.ExecutionContext.Services.GetRequiredService<IDbConnection>() 
-        : this.ExecutionContext.Services.GetRequiredKeyedService<IDbConnection>(connectionName);
-        // List<PropertyInfo> pivot = base.Args.Pivot == null ? new List<PropertyInfo>() : base.Args.Pivot.GetPropertyInfos();
-        // List<PropertyInfo> computed = base.Args.Computed == null ? new List<PropertyInfo>() : base.Args.Computed.GetPropertyInfos();
-        // var sqlQuery = CreateSqlQuery(base.Args.Table, typeof(TIn).GetProperties().ToList(), pivot, computed);
-        var sqlStatement = GetSqlStatement();
-        var command = sqlConnection.CreateCommand();
-        command.CommandText = sqlStatement;
-        command.CommandType = CommandType.Text;
-        // var command = new SqlCommand(sqlStatement, sqlConnection);
-        // Regex getParamRegex = new Regex(@"@(?<param>\w*)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        // var allMatches = getParamRegex.Matches(base.Args.SqlQuery).ToList().Select(match => match.Groups["param"].Value).Distinct().ToList();
-        foreach (var parameterName in _inPropertyInfos.Keys.Except(_computed.Select(i => i.Name)))
-        {
-            var parameter = command.CreateParameter();
-            parameter.ParameterName = $"@{parameterName}";
-            parameter.Value = _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value;
-            if (_inPropertyInfos[parameterName].PropertyType == typeof(byte[]))
-                parameter.DbType = DbType.Binary;
-            command.Parameters.Add(parameter);
-            // command.Parameters.Add(new SqlParameter($"@{parameterName}", _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value));
-        }
-        
-        if (sqlConnection is OdbcConnection or OleDbConnection)
-        {
-            command = AdjustCommandForOdbcOrOleDb(sqlConnection, command);
-        }
-        
-        using (var reader = command.ExecuteReader())
-            if (reader.Read())
-                UpdateRecord(reader, item);
-    }
 
-    private static IDbCommand AdjustCommandForOdbcOrOleDb(IDbConnection connection, IDbCommand command)
-    {
-       var adjustedCommand = connection.CreateCommand();
-       adjustedCommand.CommandType = CommandType.Text;
-       
-       var regex = new Regex(@"@\w+");
-       adjustedCommand.CommandText = regex.Replace(command.CommandText, "?");
-
-       var parameterUsages = regex
-           .Matches(command.CommandText)
-           .Select(match => match.Value);
-
-       foreach (var parameterName in parameterUsages)
-       {
-           var parameter = adjustedCommand.CreateParameter();
-           parameter.ParameterName = parameterName;
-           parameter.Value = ((IDataParameter)command.Parameters[parameterName]).Value;
-           adjustedCommand.Parameters.Add(parameter);
-       }
-
-       return adjustedCommand;
-    }
+    private bool _isInitialized = false;
+    private IDbConnection? _sqlConnection;
+    private string? _sqlStatement;
+    private List<string>? _paramPropertyNames;
     
-    private void UpdateRecord(IDataReader record, TValue item)
+
+    private void ProcessItem(TValue item)
     {
-        IDictionary<string, object> values = new Dictionary<string, object>();
+        if (!_isInitialized)
+            Initialize();
+
+        if (_sqlConnection!.State != ConnectionState.Open)
+            _sqlConnection.Open();
+
+        using var command = _sqlConnection.CreateCommand();
+        command.CommandText = _sqlStatement;
+
+        foreach (var parameterName in _paramPropertyNames!)
+            command.Parameters.Add(MakeParameterFromPropertyname(command, item, parameterName));
+
+        if (!Args.ReadBackChanges)
+        {
+            command.ExecuteNonQuery();
+        }
+        else
+        {
+            using var reader = command.ExecuteReader();
+            if (reader.Read() || (reader.NextResult() && reader.Read()))
+                UpdateItem(item, reader);
+        }
+    }
+
+    
+    private void Initialize()
+    {
+        _sqlConnection = args.ConnectionName == null
+                       ? this.ExecutionContext.Services.GetRequiredService<IDbConnection>()
+                       : this.ExecutionContext.Services.GetRequiredKeyedService<IDbConnection>(args.ConnectionName);
+        this.ExecutionContext.AddDisposable(_sqlConnection);
+
+        var usePositionalParameters = _sqlConnection is OdbcConnection or OleDbConnection;
+        var pivotParameters = Args.Pivot == null ? [] : Args.Pivot.GetPropertyInfos();
+        var computedProperties = Args.Computed == null ? [] : Args.Computed.GetPropertyInfos();
+        var upsertProperties = _inPropertyInfos.Values.Except(computedProperties).ToList();
+        _sqlStatement = CreateSqlQuery(Args.Table, upsertProperties, pivotParameters, Args.ReadBackChanges);
+
+        //Positional parameters must adhere to their position in the SQL statement, including repeat uses.
+        //Otherwise just use all relevant properties of the item.
+        if (usePositionalParameters)
+            (_sqlStatement, _paramPropertyNames) = AdjustQueryForPositionalParameters(_sqlStatement);
+        else
+            _paramPropertyNames = upsertProperties.Union(pivotParameters).Select(i => i.Name).ToList();
+
+        _isInitialized = true;
+    }
+
+
+    private static IDbDataParameter MakeParameterFromPropertyname(IDbCommand command, TValue item, string parameterName)
+    {
+        var parameter = command.CreateParameter();
+        parameter.ParameterName = $"@{parameterName}";
+        parameter.Value = _inPropertyInfos[parameterName].GetValue(item) ?? DBNull.Value;
+        if (_inPropertyInfos[parameterName].PropertyType == typeof(byte[]))
+            parameter.DbType = DbType.Binary;
+        return parameter;
+    }
+
+
+    private static void UpdateItem(TValue item, IDataReader record)
+    {
         for (int i = 0; i < record.FieldCount; i++)
         {
-            var recordValue = record.GetValue(i);
-            values[record.GetName(i)] = recordValue == DBNull.Value
-                ? null
-                : Convert.ChangeType(recordValue, record.GetFieldType(i));
+            var val = record.GetValue(i);
+            val = val == DBNull.Value ? null : Convert.ChangeType(val, record.GetFieldType(i));
+            if (_inPropertyInfos.TryGetValue(record.GetName(i), out var prop) && prop.GetSetMethod() is not null)
+                prop.SetValue(item, val);
         }
-        var updates = _inPropertyInfos.Join(values, i => i.Key, i => i.Key, (l, r) => new { Target = l.Value, NewValue = r.Value }, StringComparer.InvariantCultureIgnoreCase).ToList();
     }
 
-    private string CreateSqlQuery(string table, List<PropertyInfo> allProperties, List<PropertyInfo> pivot, List<PropertyInfo> computed)
+
+    private static string CreateSqlQuery(string table, IEnumerable<PropertyInfo> upsertProperties, IEnumerable<PropertyInfo> matchProperties, bool readBackChanges)
     {
-        var pivotsNames = pivot.Select(i => i.Name).ToList();
-        var computedNames = computed.Select(i => i.Name).ToList();
-        var allPropertyNames = allProperties.Select(i => i.Name).ToList();
-        StringBuilder sb = new();
-        if (pivot.Count > 0)
+        var upsertProps = upsertProperties.ToList();
+        var matchProps = matchProperties.ToList();
+        var outputClause = readBackChanges ? "output inserted.*" : "";
+
+        if (upsertProps.Count == 0)
+            throw new InvalidOperationException($"No properties to save were found on type {typeof(TIn).Name} after excluding those in {nameof(SqlServerSaveCommandArgsBuilder<,>.DoNotSave)}().");
+
+        var insert = $"""
+            insert into {table} ({string.Join(", ", upsertProps.Select(o => $"[{o.Name}]"))})
+            {outputClause}
+            values ({string.Join(", ", upsertProps.Select(i => $"@{i.Name}"))})
+            """;
+
+        if (matchProps.Count == 0)
+            return insert;
+
+        var updateProps = upsertProps.Except(matchProps).ToList();
+        if (updateProps.Count == 0)
+            throw new InvalidOperationException($"No properties to save were found on type {typeof(TIn).Name} after excluding those in {nameof(SqlServerSaveCommandArgsBuilder<,>.DoNotSave)}() and {nameof(SqlServerSaveCommandArgsBuilder<,>.SeekOn)}().");
+
+        var pivotCondition = string.Join(" and ", matchProps.Select(p => $"([{p.Name}] = @{p.Name} or ([{p.Name}] is null and @{p.Name} is null))"));
+        var setStatement = string.Join(", ", updateProps.Select(i => $"[{i.Name}] = @{i.Name}"));
+        var query = $"""
+            update top(1) {table} with (updlock, serializable)
+            set {setStatement}
+            {outputClause}
+            where {pivotCondition}
+            
+            if (@@ROWCOUNT = 0)
+            begin
+                {insert}
+            end
+            """;
+
+        return query;
+    }
+
+
+    [GeneratedRegex(@"(?<!@)@(\w+)")]
+    private static partial Regex ParameterRegex();
+    /// <summary>
+    /// Converts parameters to <c>?</c> and notes their order for later in <see cref="_positionalParamsMap"/>.
+    /// </summary>
+    private static (string Query, List<string> PositionalParameterOrder) AdjustQueryForPositionalParameters(string query)
+    {
+        var parameters = new List<string>();
+        var newQuery = ParameterRegex().Replace(query, m =>
         {
-            var pivotCondition = string.Join(" AND ", pivot.Select(p => $"p.[{p.Name}] = @{p.Name}"));
-            sb.AppendLine($"if(exists(select 1 from {table} as p where {pivotCondition} ))");
-            var setStatement = string.Join(", ", allPropertyNames.Except(pivotsNames).Except(computedNames).Select(i => $"[{i}] = @{i}").ToList());
-            sb.AppendLine($"update p set {setStatement} output inserted.* from {table} as p where {pivotCondition};");
-            sb.AppendLine("else");
-        }
-        var propsToInsert = allPropertyNames.Except(computedNames).ToList();
-        sb.AppendLine($"insert into {table} ({string.Join(", ", propsToInsert.Select(o => $"[{o}]"))}) output inserted.*");
-        sb.AppendLine($"values ({string.Join(", ", propsToInsert.Select(i => $"@{i}"))});");
-        return sb.ToString();
+            parameters.Add(m.Groups[1].Value);
+            return "?";
+        });
+        return (newQuery, parameters);
     }
 }
