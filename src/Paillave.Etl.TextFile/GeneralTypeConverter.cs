@@ -242,6 +242,51 @@ internal class DateTimeTypeConverter : TypeConverter
     {
         var text = value as string;
         if (string.IsNullOrWhiteSpace(text)) return null;
-        return DateTime.ParseExact(text.Trim(), culture.DateTimeFormat.LongDatePattern, culture);
+        text = text.Trim();
+        var pattern = culture.DateTimeFormat.LongDatePattern;
+        try
+        {
+            return DateTime.ParseExact(text, pattern, culture);
+        }
+        catch (FormatException)
+        {
+            // Some source files spell the month abbreviation differently than the runtime's
+            // culture data expects (e.g. ICU/CLDR uses "Sept" for September where NLS on
+            // Windows uses "Sep"). Retry once by swapping the month token for whichever of the
+            // culture's own month names it is a prefix of (or vice versa), so behavior only
+            // changes for values that would otherwise fail, never for ones that already parse.
+            var normalizedText = NormalizeMonthToken(text, culture, pattern);
+            if (normalizedText == null) throw;
+            return DateTime.ParseExact(normalizedText, pattern, culture);
+        }
+    }
+
+    private static string NormalizeMonthToken(string text, CultureInfo culture, string pattern)
+    {
+        if (!pattern.Contains("MMM", StringComparison.Ordinal)) return null;
+        var candidateMonthNames = pattern.Contains("MMMM", StringComparison.Ordinal)
+            ? culture.DateTimeFormat.MonthNames
+            : culture.DateTimeFormat.AbbreviatedMonthNames;
+
+        int start = -1, length = 0;
+        for (int i = 0; i < text.Length; i++)
+        {
+            if (char.IsLetter(text[i]))
+            {
+                if (start == -1) start = i;
+                length++;
+            }
+            else if (start != -1) break;
+        }
+        if (start == -1) return null;
+        var token = text.Substring(start, length);
+
+        foreach (var monthName in candidateMonthNames)
+        {
+            if (string.IsNullOrEmpty(monthName)) continue;
+            if (monthName.StartsWith(token, StringComparison.OrdinalIgnoreCase) || token.StartsWith(monthName, StringComparison.OrdinalIgnoreCase))
+                return string.Concat(text.AsSpan(0, start), monthName, text.AsSpan(start + length));
+        }
+        return null;
     }
 }
