@@ -27,7 +27,7 @@ public class AzureStorageAccountFileValueProvider(string code, string name, stri
         var searchPattern = string.IsNullOrEmpty(providerParameters.FileNamePattern) ? "*" : providerParameters.FileNamePattern;
         var matcher = new Matcher().AddInclude(searchPattern);
         var blobContainerClient = azureBlobOptions.GetBlobContainerClient();
-        foreach (var blobHierarchyItem in blobContainerClient.GetDirectoryContents(providerParameters.SubFolder ?? string.Empty, cancellationToken).Cast<AzureBlobFileInfo>())
+        foreach (var blobHierarchyItem in blobContainerClient.GetDirectoryContents(ToFolderPrefix(providerParameters.SubFolder), cancellationToken).Cast<AzureBlobFileInfo>())
         {
             if (cancellationToken.IsCancellationRequested) break;
             if (!blobHierarchyItem.IsDirectory)
@@ -35,7 +35,7 @@ public class AzureStorageAccountFileValueProvider(string code, string name, stri
                 if (matcher.Match(blobHierarchyItem.Name).HasMatches)
                 {
                     var fileValue = new AzureStorageAccountFileValue(blobHierarchyItem);
-                    var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.SerializeToNode(new FileSpecificData { Folder = blobHierarchyItem.Name }));
+                    var fileReference = new FileReference(fileValue.Name, this.Code, JsonSerializer.SerializeToNode(new FileSpecificData { Folder = blobHierarchyItem.PhysicalPath! }));
                     pushFileValue(fileValue, fileReference);
                 }
             }
@@ -43,8 +43,13 @@ public class AzureStorageAccountFileValueProvider(string code, string name, stri
     }
     protected override void Test(AzureBlobOptions connectionParameters, AzureStorageAccountAdapterProviderParameters inputParameters)
     {
-        connectionParameters.GetBlobContainerClient().GetDirectoryContents(inputParameters.SubFolder ?? string.Empty);
+        connectionParameters.GetBlobContainerClient().GetDirectoryContents(ToFolderPrefix(inputParameters.SubFolder));
     }
+
+    // Hierarchical listing needs the trailing "/": without it the folder itself comes back as a
+    // single directory entry and none of its blobs are listed.
+    private static string ToFolderPrefix(string? subFolder)
+        => string.IsNullOrWhiteSpace(subFolder) ? string.Empty : $"{subFolder.TrimEnd('/')}/";
 
     private class FileSpecificData
     {
