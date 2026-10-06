@@ -8,7 +8,6 @@ public class ProcessFileToConnectorArgs
 {
     public IStream<IFileValue> Input { get; set; }
     public string OutputConnectorCode { get; set; }
-    public bool UseNewVersion { get; set; }
 }
 public class ProcessFileToConnectorStreamNode : StreamNodeBase<IFileValue, IStream<IFileValue>, ProcessFileToConnectorArgs>
 {
@@ -25,6 +24,6 @@ public class ProcessFileToConnectorStreamNode : StreamNodeBase<IFileValue, IStre
     protected override IStream<IFileValue> CreateOutputStream(ProcessFileToConnectorArgs args)
         => base.CreateUnsortedStream(args.Input.Observable.FlatMap((i, ct) => new DeferredPushObservable<IFileValue>((af, c) =>
         {
-            _processor.Process(i, af, args.UseNewVersion, c);
+            _processor.Process(i, af, c);
         }, ct)));
 }

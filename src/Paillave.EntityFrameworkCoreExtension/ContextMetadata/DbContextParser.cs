@@ -18,12 +18,12 @@ public class DbContextParser<TCtx> where TCtx : DbContext
         // var modelStructure = new ModelStructure();
         var model = dbContext.GetService<IDesignTimeModel>().Model;
         // var model = dbContext.Model;
-        var entityTypes = model.GetEntityTypes().Where(i => !i.IsPropertyBag).OrderBy(i => i.Name).ToList();
+        var entityTypes = model.GetEntityTypes().Where(i => !i.IsPropertyBag && !i.IsMappedToJson()).OrderBy(i => i.Name).ToList();
 
-        var modelStructureEntities = entityTypes.Select(CreateEntitySummary).ToDictionary(i => i.Name);
+        var modelStructureEntities = entityTypes.Select(CreateEntitySummary).GroupBy(i => i.Name).ToDictionary(g => g.Key, g => g.First());
         var modelStructureLinks = entityTypes
-            .SelectMany(i => i.GetNavigations().Where(navigation => navigation.DeclaringType.ClrType.Name == i.ClrType.Name).Select(n => CreateLinkSummary(i, n)))
-            .Union(entityTypes.SelectMany(i => i.GetSkipNavigations().Where(navigation => navigation.DeclaringType.ClrType.Name == i.ClrType.Name).Select(n => CreateSkipLinkSummary(i, n))))
+            .SelectMany(i => i.GetNavigations().Where(navigation => navigation.DeclaringType == i && !navigation.TargetEntityType.IsMappedToJson()).Select(n => CreateLinkSummary(i, n)))
+            .Union(entityTypes.SelectMany(i => i.GetSkipNavigations().Where(navigation => navigation.DeclaringType == i && !navigation.TargetEntityType.IsMappedToJson()).Select(n => CreateSkipLinkSummary(i, n))))
             .Union(entityTypes.Where(i => i.BaseType != null).Select(i => CreateInheritLinkSummary(i, i.BaseType!))).ToList();
         return new ModelStructure
         {
@@ -34,7 +34,9 @@ public class DbContextParser<TCtx> where TCtx : DbContext
     public static LinkSummary CreateLinkSummary(IEntityType entityType, INavigation navigation)
     {
         var from = entityType.GetEntityEssentials();
+        from.Name = entityType.GetSummaryName();
         var to = navigation.TargetEntityType.GetEntityEssentials();
+        to.Name = navigation.TargetEntityType.GetSummaryName();
 
         return new LinkSummary
         {
@@ -57,7 +59,9 @@ public class DbContextParser<TCtx> where TCtx : DbContext
     public static LinkSummary CreateSkipLinkSummary(IEntityType entityType, ISkipNavigation navigation)
     {
         var from = entityType.GetEntityEssentials();
+        from.Name = entityType.GetSummaryName();
         var to = navigation.TargetEntityType.GetEntityEssentials();
+        to.Name = navigation.TargetEntityType.GetSummaryName();
 
         return new LinkSummary
         {
@@ -77,7 +81,9 @@ public class DbContextParser<TCtx> where TCtx : DbContext
     public static LinkSummary CreateInheritLinkSummary(IEntityType from, IEntityType to)
     {
         var fromMapping = from.GetEntityEssentials();
+        fromMapping.Name = from.GetSummaryName();
         var toMapping = to.GetEntityEssentials();
+        toMapping.Name = to.GetSummaryName();
         return new LinkSummary
         {
             FromName = fromMapping.Name,
@@ -95,6 +101,7 @@ public class DbContextParser<TCtx> where TCtx : DbContext
     public static EntitySummary CreateEntitySummary(IEntityType entityType)
     {
         var mapping = entityType.GetEntityEssentials();
+        mapping.Name = entityType.GetSummaryName();
         mapping.Comment = entityType.GetComment();
         var storeObject = StoreObjectIdentifier.Create(entityType, mapping.IsView ? StoreObjectType.View : StoreObjectType.Table).GetValueOrDefault();
         mapping.Properties = entityType.GetDeclaredProperties().Where(i => !i.IsShadowProperty()).Select(i => CreatePropertySummary(i, storeObject)).ToList();
@@ -104,7 +111,7 @@ public class DbContextParser<TCtx> where TCtx : DbContext
     {
         return new PropertySummary
         {
-            Name = property.GetColumnName(storeObject) ?? throw new InvalidOperationException("Column name is not defined"),
+            Name = (storeObject.StoreObjectType == StoreObjectType.Table || storeObject.StoreObjectType == StoreObjectType.View ? property.GetColumnName(storeObject) : null) ?? property.Name,
             ClrName = property.Name,
             Type = GetTypeLabel(property.ClrType),
             IsForeignKey = property.IsForeignKey(),
@@ -140,7 +147,7 @@ public class DbContextParser(Assembly assembly, XDocument xmlDocumentation, stri
     {
         // var modelStructure = new ModelStructure();
         var dbContext = CreateDbContextInstance(_assembly, _args);
-        var entityTypes = dbContext.Model.GetEntityTypes().Where(i => !i.IsPropertyBag).ToList();
+        var entityTypes = dbContext.Model.GetEntityTypes().Where(i => !i.IsPropertyBag && !i.IsMappedToJson()).ToList();
         Dictionary<string, string>? modelStructureComments = null;
         if (_xmlDocumentation != null)
         {
@@ -155,10 +162,10 @@ public class DbContextParser(Assembly assembly, XDocument xmlDocumentation, stri
                .Where(i => i.Comment != null && i.TypeName != null)
                .ToDictionary(i => i.TypeName!, i => i.Comment!);
         }
-        var modelStructureEntities = entityTypes.Select(CreateEntitySummary).ToDictionary(i => i.Name);
+        var modelStructureEntities = entityTypes.Select(CreateEntitySummary).GroupBy(i => i.Name).ToDictionary(g => g.Key, g => g.First());
         var modelStructureLinks = entityTypes
-            .SelectMany(i => i.GetNavigations().Where(navigation => navigation.DeclaringType.ClrType.Name == i.ClrType.Name).Select(n => CreateLinkSummary(i, n)))
-            .Union(entityTypes.SelectMany(i => i.GetSkipNavigations().Where(navigation => navigation.DeclaringType.ClrType.Name == i.ClrType.Name).Select(n => CreateSkipLinkSummary(i, n))))
+            .SelectMany(i => i.GetNavigations().Where(navigation => navigation.DeclaringType == i && !navigation.TargetEntityType.IsMappedToJson()).Select(n => CreateLinkSummary(i, n)))
+            .Union(entityTypes.SelectMany(i => i.GetSkipNavigations().Where(navigation => navigation.DeclaringType == i && !navigation.TargetEntityType.IsMappedToJson()).Select(n => CreateSkipLinkSummary(i, n))))
             .Union(entityTypes.Where(i => i.BaseType != null).Select(i => CreateInheritLinkSummary(i, i.BaseType!))).ToList();
         return new ModelStructure
         {
@@ -170,7 +177,9 @@ public class DbContextParser(Assembly assembly, XDocument xmlDocumentation, stri
     public static LinkSummary CreateLinkSummary(IEntityType entityType, INavigation navigation)
     {
         var from = entityType.GetEntityEssentials();
+        from.Name = entityType.GetSummaryName();
         var to = navigation.TargetEntityType.GetEntityEssentials();
+        to.Name = navigation.TargetEntityType.GetSummaryName();
         return new LinkSummary
         {
             From = $"{from.Schema}.{from.Name}",
@@ -192,7 +201,9 @@ public class DbContextParser(Assembly assembly, XDocument xmlDocumentation, stri
     public static LinkSummary CreateSkipLinkSummary(IEntityType entityType, ISkipNavigation navigation)
     {
         var from = entityType.GetEntityEssentials();
+        from.Name = entityType.GetSummaryName();
         var to = navigation.TargetEntityType.GetEntityEssentials();
+        to.Name = navigation.TargetEntityType.GetSummaryName();
         return new LinkSummary
         {
             From = $"{from.Schema}.{from.Name}",
@@ -211,7 +222,9 @@ public class DbContextParser(Assembly assembly, XDocument xmlDocumentation, stri
     public static LinkSummary CreateInheritLinkSummary(IEntityType from, IEntityType to)
     {
         var fromSummary = from.GetEntityEssentials();
+        fromSummary.Name = from.GetSummaryName();
         var toSummary = to.GetEntityEssentials();
+        toSummary.Name = to.GetSummaryName();
         return new LinkSummary
         {
             From = $"{fromSummary.Schema}.{fromSummary.Name}",
@@ -233,7 +246,7 @@ public class DbContextParser(Assembly assembly, XDocument xmlDocumentation, stri
         {
             IsAbstract = entityType.IsAbstract(),
             IsView = entityType.IsTableExcludedFromMigrations(),
-            Name = entityType.ClrType.Name,
+            Name = entityType.GetSummaryName(),
             Schema = entityType.GetSchema(),
             Properties = entityType.GetDeclaredProperties().Where(i => !i.IsShadowProperty()).Select(i => CreatePropertySummary(i, storeObject)).ToList(),
             Comment = entityType.GetComment()
@@ -243,7 +256,7 @@ public class DbContextParser(Assembly assembly, XDocument xmlDocumentation, stri
     {
         return new PropertySummary
         {
-            Name = property.GetColumnName(storeObject) ?? throw new InvalidOperationException("Column name is not defined"),
+            Name = (storeObject.StoreObjectType == StoreObjectType.Table || storeObject.StoreObjectType == StoreObjectType.View ? property.GetColumnName(storeObject) : null) ?? property.Name,
             ClrName = property.Name,
             Type = GetTypeLabel(property.ClrType),
             IsForeignKey = property.IsForeignKey(),
@@ -293,6 +306,11 @@ public class DbContextParser(Assembly assembly, XDocument xmlDocumentation, stri
 }
 public static class EntityTypeEx
 {
+    /// <summary>CLR type name, unless several entity types of the model share that CLR type (typically an owned type
+    /// attached to several owners), in which case the unique EF entity type name is used.</summary>
+    public static string GetSummaryName(this IEntityType entityType)
+        => entityType.Model.GetEntityTypes().Count(i => i.ClrType == entityType.ClrType) > 1 ? entityType.Name : entityType.ClrType.Name;
+
     public static EntitySummary GetEntityEssentials(this IEntityType entityType)
     {
         ITableMappingBase? viewMapping = entityType.GetViewMappings().FirstOrDefault();
