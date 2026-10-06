@@ -10,7 +10,7 @@ public class SftpFileValueProcessor(string code, string name, string connectionN
 {
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-    protected override void Process(IFileValue fileValue, SftpAdapterConnectionParameters connectionParameters, SftpAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken)
+    protected override void Process(IFileValue fileValue, SftpAdapterConnectionParameters connectionParameters, SftpAdapterProcessorParameters processorParameters, Action<IFileValue> push, bool useNewVersion, CancellationToken cancellationToken)
     {
         var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : StringEx.ConcatenatePath(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
@@ -21,7 +21,7 @@ public class SftpFileValueProcessor(string code, string name, string connectionN
             fileContents = ms.ToArray();
         }
         ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => UploadSingleTime(connectionParameters, fileContents, StringEx.ConcatenatePath(folder, fileValue.Name)));
-        push(fileValue);
+        PushResult(fileValue, useNewVersion, () => new SftpFileValue(connectionParameters, folder, fileValue.Name), push);
     }
     private void UploadSingleTime(SftpAdapterConnectionParameters connectionParameters, byte[] fileContents, string filePath)
     {

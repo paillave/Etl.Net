@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,12 +19,69 @@ public abstract class FileValueProcessorBase<TConnectionParameters, TProcessorPa
     private readonly TProcessorParameters _processorParameters = processorParameters;
 
     public void Process(IFileValue fileValue, Action<IFileValue> push, CancellationToken cancellationToken)
-        => Process(fileValue, _connectionParameters, _processorParameters, push, cancellationToken);
-    protected abstract void Process(IFileValue fileValue, TConnectionParameters connectionParameters, TProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken);
+        => Process(fileValue, _connectionParameters, _processorParameters, push, false, cancellationToken);
+    public void Process(IFileValue fileValue, Action<IFileValue> push, bool useNewVersion, CancellationToken cancellationToken)
+        => Process(fileValue, _connectionParameters, _processorParameters, push, useNewVersion, cancellationToken);
+    /// <summary>
+    /// Processors that don't need to support useNewVersion only override this method.
+    /// </summary>
+    protected virtual void Process(IFileValue fileValue, TConnectionParameters connectionParameters, TProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken)
+        => throw new NotImplementedException($"{Code}: Process is not implemented");
+    /// <summary>
+    /// Processors that can give back the file value of what they just saved override this method.
+    /// By default, when useNewVersion is true, the source is read once into memory and the processor works on this copy,
+    /// so that downstream reads never hit the source again (some sources delete the file once it has been read).
+    /// </summary>
+    protected virtual void Process(IFileValue fileValue, TConnectionParameters connectionParameters, TProcessorParameters processorParameters, Action<IFileValue> push, bool useNewVersion, CancellationToken cancellationToken)
+    {
+        if (!useNewVersion)
+        {
+            Process(fileValue, connectionParameters, processorParameters, push, cancellationToken);
+            return;
+        }
+        byte[] content;
+        using (var stream = fileValue.Get(false))
+        using (var ms = new MemoryStream())
+        {
+            stream.CopyTo(ms);
+            content = ms.ToArray();
+        }
+        var copy = new BufferedFileValue(content, fileValue.Name)
+        {
+            Metadata = fileValue.Metadata,
+            Destinations = fileValue.Destinations
+        };
+        Process(copy, connectionParameters, processorParameters, push, cancellationToken);
+    }
+    private class BufferedFileValue(byte[] content, string name) : FileValueBase
+    {
+        public override string Name => name;
+        public override Stream GetContent() => new MemoryStream(content, false);
+        public override StreamWithResource OpenContent() => new(GetContent());
+        protected override void DeleteFile() { }
+    }
+    /// <summary>
+    /// Pushes either the input file value, or the new version built from what has been saved on the connector.
+    /// Metadata and destinations are carried over to the new version.
+    /// </summary>
+    protected static void PushResult(IFileValue fileValue, bool useNewVersion, Func<IFileValue> createNewVersion, Action<IFileValue> push)
+    {
+        if (!useNewVersion)
+        {
+            push(fileValue);
+            return;
+        }
+        var newVersion = createNewVersion();
+        newVersion.Metadata = fileValue.Metadata;
+        newVersion.Destinations = fileValue.Destinations;
+        push(newVersion);
+    }
     public void Test() => Test(_connectionParameters, _processorParameters);
     protected abstract void Test(TConnectionParameters connectionParameters, TProcessorParameters processorParameters);
 
-    public async IAsyncEnumerable<IFileValue> ProcessAsync(IFileValue input, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public IAsyncEnumerable<IFileValue> ProcessAsync(IFileValue input, CancellationToken cancellationToken = default)
+        => ProcessAsync(input, false, cancellationToken);
+    public async IAsyncEnumerable<IFileValue> ProcessAsync(IFileValue input, bool useNewVersion, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         using var fileValues = new BlockingCollection<IFileValue>();
@@ -31,7 +89,7 @@ public abstract class FileValueProcessorBase<TConnectionParameters, TProcessorPa
         {
             try
             {
-                Process(input, fileValue => fileValues.Add(fileValue, linkedCts.Token), linkedCts.Token);
+                Process(input, fileValue => fileValues.Add(fileValue, linkedCts.Token), useNewVersion, linkedCts.Token);
             }
             catch (OperationCanceledException) when (linkedCts.IsCancellationRequested)
             {

@@ -11,7 +11,7 @@ public class DropboxFileValueProcessor(string code, string name, string connecti
 {
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-    protected override void Process(IFileValue fileValue, DropboxAdapterConnectionParameters connectionParameters, DropboxAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken)
+    protected override void Process(IFileValue fileValue, DropboxAdapterConnectionParameters connectionParameters, DropboxAdapterProcessorParameters processorParameters, Action<IFileValue> push, bool useNewVersion, CancellationToken cancellationToken)
     {
         var path = $"/{Path.Combine(connectionParameters.RootFolder ?? "", processorParameters.SubFolder ?? "", fileValue.Name)}".Replace("\\", "/").Replace("//", "/");
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
@@ -22,7 +22,7 @@ public class DropboxFileValueProcessor(string code, string name, string connecti
             fileContents = ms.ToArray();
         }
         ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => UploadSingleTime(connectionParameters, fileContents, path));
-        push(fileValue);
+        PushResult(fileValue, useNewVersion, () => new DropboxFileValue(connectionParameters, $"/{Path.Combine(connectionParameters.RootFolder ?? "", processorParameters.SubFolder ?? "")}".Replace("\\", "/").Replace("//", "/"), fileValue.Name), push);
     }
     private void UploadSingleTime(DropboxAdapterConnectionParameters connectionParameters, byte[] fileContents, string filePath)
     {

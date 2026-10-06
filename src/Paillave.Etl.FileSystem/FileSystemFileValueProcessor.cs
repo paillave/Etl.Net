@@ -14,7 +14,7 @@ public class FileSystemFileValueProcessor : FileValueProcessorBase<FileSystemAda
 
     public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
-    protected override void Process(IFileValue fileValue, FileSystemAdapterConnectionParameters connectionParameters, FileSystemAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken)
+    protected override void Process(IFileValue fileValue, FileSystemAdapterConnectionParameters connectionParameters, FileSystemAdapterProcessorParameters processorParameters, Action<IFileValue> push, bool useNewVersion, CancellationToken cancellationToken)
     {
         using var l = fileValue.Get(processorParameters.UseStreamCopy);
         var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : Path.Combine(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
@@ -28,7 +28,7 @@ public class FileSystemFileValueProcessor : FileValueProcessorBase<FileSystemAda
         }
         using (var fileStream = File.OpenWrite(outputFilePath))
             l.CopyTo(fileStream);
-        push(fileValue);
+        PushResult(fileValue, useNewVersion, () => new FileSystemFileValue(new FileInfo(outputFilePath)), push);
     }
 
     protected override void Test(FileSystemAdapterConnectionParameters connectionParameters, FileSystemAdapterProcessorParameters processorParameters)

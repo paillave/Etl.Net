@@ -14,20 +14,20 @@ public class AzureStorageAccountFileValueProcessor(string code, string name, str
     public override ProcessImpact PerformanceImpact => ProcessImpact.Average;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Light;
     protected override void Process(IFileValue fileValue, AzureBlobOptions connectionParameters,
-        AzureStorageAccountAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken)
+        AzureStorageAccountAdapterProcessorParameters processorParameters, Action<IFileValue> push, bool useNewVersion, CancellationToken cancellationToken)
     {
         IDictionary<string, string>? metadata = ExtractMetadataRecursively(fileValue.Metadata);
         var blobContainerClient = connectionParameters.GetBlobContainerClient();
         var subpath = string.IsNullOrWhiteSpace(processorParameters.SubFolder)
             ? fileValue.Name
             : $"{processorParameters.SubFolder.TrimEnd('/')}/{fileValue.Name}";
-        blobContainerClient.SaveFileAsync(
+        var savedFileInfo = blobContainerClient.SaveFileAsync(
             subpath,
             fileValue.GetContent(),
             processorParameters.OverwriteIfAlreadyExists ?? false,
             metadata,
-            cancellationToken).Wait(cancellationToken);
-        push(fileValue);
+            cancellationToken).GetAwaiter().GetResult();
+        PushResult(fileValue, useNewVersion, () => new AzureStorageAccountFileValue(savedFileInfo), push);
     }
 
     private static IDictionary<string, string>? ExtractMetadataRecursively(object? metadata)

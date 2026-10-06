@@ -10,7 +10,7 @@ public class FtpFileValueProcessor(string code, string name, string connectionNa
 {
     public override ProcessImpact PerformanceImpact => ProcessImpact.Heavy;
     public override ProcessImpact MemoryFootPrint => ProcessImpact.Average;
-    protected override void Process(IFileValue fileValue, FtpAdapterConnectionParameters connectionParameters, FtpAdapterProcessorParameters processorParameters, Action<IFileValue> push, CancellationToken cancellationToken)
+    protected override void Process(IFileValue fileValue, FtpAdapterConnectionParameters connectionParameters, FtpAdapterProcessorParameters processorParameters, Action<IFileValue> push, bool useNewVersion, CancellationToken cancellationToken)
     {
         var folder = string.IsNullOrWhiteSpace(connectionParameters.RootFolder) ? (processorParameters.SubFolder ?? "") : StringEx.ConcatenatePath(connectionParameters.RootFolder, processorParameters.SubFolder ?? "");
 
@@ -25,7 +25,13 @@ public class FtpFileValueProcessor(string code, string name, string connectionNa
             fileContents = ms.ToArray();
         }
         ActionRunner.TryExecute(connectionParameters.MaxAttempts, () => UploadSingleTime(connectionParameters, fileContents, filePath, processorParameters.BuildMissingSubFolders));
-        push(fileValue);
+        PushResult(fileValue, useNewVersion, () =>
+        {
+            var separatorIndex = filePath.Replace('\\', '/').LastIndexOf('/');
+            return separatorIndex < 0
+                ? new FtpFileValue(connectionParameters, null, filePath)
+                : new FtpFileValue(connectionParameters, filePath[..separatorIndex], filePath[(separatorIndex + 1)..]);
+        }, push);
     }
     private void UploadSingleTime(FtpAdapterConnectionParameters connectionParameters, byte[] fileContents, string filePath, bool buildMissingSubFolders)
     {
