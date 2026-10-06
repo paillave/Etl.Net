@@ -58,19 +58,20 @@ public class GraphApiOneDriveFileValueProcessor(string code, string name, string
         GraphApiAdapterConnectionParameters connectionParameters,
         GraphApiOneDriveAdapterProcessorParameters processorParameters,
         Action<IFileValue> push,
+        bool useNewVersion,
         CancellationToken cancellationToken)
     {
         using var stream = fileValue.Get(processorParameters.UseStreamCopy);
         var ms = new MemoryStream();
         stream.CopyTo(ms);
 
-        ActionRunner.TryExecute(connectionParameters.MaxAttempts,
+        var (driveId, driveItemId) = ActionRunner.TryExecute(connectionParameters.MaxAttempts,
             () => UploadFileSingleTime(connectionParameters, processorParameters, fileValue.Name, ms));
 
-        push(fileValue);
+        PushResult(fileValue, useNewVersion, () => new GraphApiOneDriveFileValue(connectionParameters, driveId, driveItemId, fileValue.Name, processorParameters.FolderPath?.Trim('/') ?? ""), push);
     }
 
-    private static void UploadFileSingleTime(GraphApiAdapterConnectionParameters connectionParameters,
+    private static (string driveId, string driveItemId) UploadFileSingleTime(GraphApiAdapterConnectionParameters connectionParameters,
         GraphApiOneDriveAdapterProcessorParameters processorParameters, string fileName, MemoryStream ms)
     {
         ms.Seek(0, SeekOrigin.Begin);
@@ -115,7 +116,8 @@ public class GraphApiOneDriveFileValueProcessor(string code, string name, string
 
         // 320 KB chunks — must be a multiple of 320 KB per OneDrive spec
         var uploadTask = new LargeFileUploadTask<DriveItem>(uploadSession, ms, 320 * 1024, graphClient.RequestAdapter);
-        uploadTask.UploadAsync().GetAwaiter().GetResult();
+        var uploadResult = uploadTask.UploadAsync().GetAwaiter().GetResult();
+        return (driveId, uploadResult.ItemResponse?.Id ?? throw new Exception("OneDrive upload did not return the uploaded item"));
     }
 
     protected override void Test(GraphApiAdapterConnectionParameters connectionParameters,
