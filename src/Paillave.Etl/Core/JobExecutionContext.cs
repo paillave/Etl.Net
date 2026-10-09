@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Paillave.Etl.Core;
 
-internal class JobExecutionContext(Guid executionId, IPushSubject<TraceEvent> traceSubject, IServiceProvider services, CancellationTokenSource internalCancellationTokenSource, bool useDetailedTraces) : IExecutionContext
+internal class JobExecutionContext(Guid executionId, IPushSubject<TraceEvent> traceSubject, IServiceProvider services, CancellationTokenSource internalCancellationTokenSource, bool useDetailedTraces, LiveCounters? liveCounters = null) : IExecutionContext
 {
     public TraceEvent? EndOfProcessTraceEvent { get; private set; } = null;
     private readonly IPushSubject<TraceEvent> _traceSubject = traceSubject;
@@ -27,6 +27,7 @@ internal class JobExecutionContext(Guid executionId, IPushSubject<TraceEvent> tr
     public bool Terminating => EndOfProcessTraceEvent != null;
 
     public bool UseDetailedTraces { get; } = useDetailedTraces;
+    public LiveCounters? LiveCounters { get; } = liveCounters;
 
     public void AddNode<T>(INodeDescription nodeContext, IPushObservable<T> observable)
     {

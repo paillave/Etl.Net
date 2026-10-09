@@ -8,6 +8,8 @@ public interface IExecutionContext
 {
     Guid ExecutionId { get; }
     bool UseDetailedTraces { get; }
+    /// <summary>When set, every stream counts its rows in it. Null by default (no cost).</summary>
+    LiveCounters? LiveCounters => null;
     bool Terminating { get; }
     void AddNode<T>(INodeDescription nodeContext, IPushObservable<T> observable);
     Task GetCompletionTask();
