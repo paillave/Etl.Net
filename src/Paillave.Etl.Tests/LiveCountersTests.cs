@@ -61,6 +61,57 @@ public class LiveCountersTests
     }
 
     [Fact]
+    public async Task CompletedNodes_ListsEveryNode_OnceTheProcessIsOver()
+    {
+        var liveCounters = new LiveCounters();
+        var runner = StreamProcessRunner.Create<int>(root => root
+            .CrossApply("gen", _ => Enumerable.Range(0, 10))
+            .Where("evens", i => i % 2 == 0));
+
+        var status = await runner.ExecuteAsync(0, new ExecutionOptions<int> { LiveCounters = liveCounters });
+
+        Assert.False(status.Failed);
+        Assert.Contains("gen", liveCounters.CompletedNodes());
+        Assert.Contains("evens", liveCounters.CompletedNodes());
+    }
+
+    [Fact]
+    public async Task CompletedNodes_ExcludesANodeStillRunning()
+    {
+        var liveCounters = new LiveCounters();
+        using var release = new ManualResetEventSlim(false);
+        var runner = StreamProcessRunner.Create<int>(root => root
+            .CrossApply("gen", _ => SlowSource(release)));
+
+        var running = runner.ExecuteAsync(0, new ExecutionOptions<int> { LiveCounters = liveCounters });
+        try
+        {
+            var deadline = DateTime.UtcNow.AddSeconds(10);
+            while (DateTime.UtcNow < deadline && !(liveCounters.Snapshot().TryGetValue("gen", out var seen) && seen >= 100))
+                await Task.Delay(20);
+            Assert.DoesNotContain("gen", liveCounters.CompletedNodes());
+        }
+        finally { release.Set(); }
+        await running;
+
+        Assert.Contains("gen", liveCounters.CompletedNodes());
+    }
+
+    [Fact]
+    public async Task CompletedNodes_ExcludesTheFailingNode()
+    {
+        var liveCounters = new LiveCounters();
+        var runner = StreamProcessRunner.Create<int>(root => root
+            .CrossApply("gen", _ => Enumerable.Range(0, 10))
+            .Select("boom", i => i < 5 ? i : throw new InvalidOperationException("boom")));
+
+        var status = await runner.ExecuteAsync(0, new ExecutionOptions<int> { LiveCounters = liveCounters });
+
+        Assert.True(status.Failed);
+        Assert.DoesNotContain("boom", liveCounters.CompletedNodes());
+    }
+
+    [Fact]
     public async Task WithoutLiveCounters_NothingChanges()
     {
         var runner = StreamProcessRunner.Create<int>(root => root.CrossApply("gen", _ => Enumerable.Range(0, 10)));

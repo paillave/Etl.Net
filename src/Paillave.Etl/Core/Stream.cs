@@ -43,7 +43,14 @@ public class Stream<T> : IStream<T>
             if (executionContext.LiveCounters is { } liveCounters)
             {
                 var cell = liveCounters.GetCell(sourceNode.NodeName);
+                Interlocked.Increment(ref cell.Streams);
                 this.Observable.Do(_ => Interlocked.Increment(ref cell.Value));
+                // Count only emits once the stream completes. A stream cut short by the process terminating (after an
+                // error elsewhere) completes too, but the node did not get to finish its work: it is not counted done.
+                this.Observable.Count().Do(_ =>
+                {
+                    if (!executionContext.Terminating) Interlocked.Increment(ref cell.CompletedStreams);
+                });
             }
             if (executionContext.UseDetailedTraces)
                 PushObservable.Merge<ITraceContent>(
