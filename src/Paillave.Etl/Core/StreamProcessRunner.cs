@@ -32,6 +32,8 @@ public class DebugNodeStreamEventArgs(string nodeName, int fromSequenceId, int t
 public class ExecutionOptions<TConfig>
 {
     public bool UseDetailedTraces { get; set; } = false;
+    /// <summary>Lightweight alternative to <see cref="UseDetailedTraces"/> to follow the progress: filled with the number of rows per node while the process runs.</summary>
+    public LiveCounters? LiveCounters { get; set; } = null;
     public Action<IStream<TraceEvent>, ISingleStream<TConfig>>? TraceProcessDefinition { get; set; } = null;
     public IServiceProvider? Services { get; set; } = null;
     public IServiceProvider? TraceServices { get; set; } = null;
@@ -93,7 +95,8 @@ public class StreamProcessRunner<TConfig>(Action<ISingleStream<TConfig>> jobDefi
             traceSubject,
             new CompositeServiceProvider(internalServices, options?.Services),
             internalCancellationTokenSource,
-            (options?.UseDetailedTraces ?? false) || (this.DebugNodeStream != null && System.Diagnostics.Debugger.IsAttached));
+            (options?.UseDetailedTraces ?? false) || (this.DebugNodeStream != null && System.Diagnostics.Debugger.IsAttached),
+            options?.LiveCounters);
 
         // Capture token registrations so they can be released — otherwise each call
         // pins this closure (and the whole job graph) onto the caller's CancellationToken

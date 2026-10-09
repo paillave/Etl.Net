@@ -40,6 +40,11 @@ public class Stream<T> : IStream<T>
 
         if (!this.SourceNode.ExecutionContext.IsTracingContext && trace)
         {
+            if (executionContext.LiveCounters is { } liveCounters)
+            {
+                var cell = liveCounters.GetCell(sourceNode.NodeName);
+                this.Observable.Do(_ => Interlocked.Increment(ref cell.Value));
+            }
             if (executionContext.UseDetailedTraces)
                 PushObservable.Merge<ITraceContent>(
                     this.Observable.Map(rowTracer.ProcessRow),
