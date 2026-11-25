@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
     <PackageId>Paillave.EtlNet.XmlFile</PackageId>
     <PackageTags>ETL .net core SSIS reactive text file xml</PackageTags>
     <Product>ETL.net XML files extensions</Product>

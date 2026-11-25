@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
     <PackageId>Paillave.EtlNet.JsonFile</PackageId>
     <PackageTags>ETL .net core SSIS JsonFile Connectors</PackageTags>
     <Product>ETL.net JsonFile extensions</Product>
