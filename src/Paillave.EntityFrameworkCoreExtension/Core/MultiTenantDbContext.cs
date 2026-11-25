@@ -69,9 +69,9 @@ public class MultiTenantDbContext(DbContextOptions options) : DbContext(options)
     {
         var entityTypeBuilder = modelBuilder.Entity<TEntity>();
         var entityType = entityTypeBuilder.Metadata;
-        if (entityType.FindProperty("TenantId") != null && entityType.GetQueryFilter() == null && entityType.BaseType == null)
+        if (entityType.FindProperty("TenantId") != null && entityType.GetDeclaredQueryFilters().Count == 0 && entityType.BaseType == null)
             //     entityTypeBuilder.Property<int>("TenantId").IsRequired();
-            // if (entityType.GetQueryFilter() == null)
+            // if (entityType.GetDeclaredQueryFilters().Count == 0)
             entityTypeBuilder.HasQueryFilter(i => EF.Property<int>(i, "TenantId") == TenantProvider.Current);
     }
     // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

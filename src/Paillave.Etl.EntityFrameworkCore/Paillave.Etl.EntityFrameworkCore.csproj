@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
     <PackageId>Paillave.EtlNet.EntityFrameworkCore</PackageId>
     <PackageTags>ETL .net core SSIS reactive Entity Framework core</PackageTags>
     <Product>ETL.net EntityFrameworkCore extensions</Product>
@@ -9,9 +8,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FastMember" Version="1.5.0" allowedVersions="1.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" allowedVersions="6.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" allowedVersions="6.0.0" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" allowedVersions="5.2.0"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="$(DotNetVersion)" allowedVersions="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(DotNetVersion)" allowedVersions="6.0.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.8" allowedVersions="5.2.0"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Paillave.Etl\Paillave.Etl.csproj" />

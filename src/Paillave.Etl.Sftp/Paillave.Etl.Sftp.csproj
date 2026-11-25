@@ -1,14 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\SharedSettings.props" />
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
     <PackageId>Paillave.EtlNet.Sftp</PackageId>
     <PackageTags>ETL .net core SSIS reactive SFTP</PackageTags>
     <Product>ETL.net SFTP extensions</Product>
     <Description>Extensions for Etl.Net to query against SFTP</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="9.0.0" allowedVersions="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="$(DotNetVersion)" allowedVersions="6.0.0" />
     <PackageReference Include="SSH.NET" Version="2025.1.0" />
   </ItemGroup>
   <ItemGroup>
